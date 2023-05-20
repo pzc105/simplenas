@@ -1,0 +1,1 @@
+set PORT=3000&&set HTTPS=true&&set SSL_CRT_FILE=../../tls/http.crt&&set SSL_KEY_FILE=../../tls/http.key&&npm start

@@ -1,0 +1,32 @@
+﻿server:
+  domain: pnas.top
+  boundIp: 0.0.0.0
+  port: 11234
+  restPort: 11235
+  webPort: 11236
+  crtFile: ../../tls/rpc.crt
+  keyFile: ../../tls/rpc.key
+  mediaPath: ./media
+
+bt:
+  ip: 192.168.2.241
+  port: 12345
+  savePath: .
+
+log:
+  fileName: ./pnas.log
+  level: info
+
+redis:
+  ip        : 172.21.249.2
+  port      : 6379
+  password  : 
+
+mysql:
+  ip        : 172.21.249.2
+  port      : 3306
+  user      : root
+  password  : 123
+  dbname    : pnas
+  maxOpenConns : 10
+  maxIdleConns : 10

@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package prpc;
+
+option go_package = "./prpc";
+
+import public "google/protobuf/timestamp.proto";
+
+message VideoStream {
+  int32 index = 1;
+	string codec_name = 2;
+	string codec_long_name = 3;
+	string profile = 4;
+	string codec_type = 5;
+	int32 width = 6;
+	int32 height = 7;
+	string r_frame_rate = 9;
+}
+
+message VideoFormat {
+  string filename = 1;
+	int32  nb_streams = 2;
+	string format_name = 3;
+	string format_long_name = 4;
+	string start_time = 5;
+	string duration = 6;
+	string size = 7;
+	string bit_rate = 8;
+}
+
+message VideoMetadata {
+  repeated VideoStream streams = 1;
+	VideoFormat format = 2;
+}
+
+message Video {
+  int64 id = 1;
+  string name = 2;
+  string introduce = 3;
+  string poster_path = 4;
+}

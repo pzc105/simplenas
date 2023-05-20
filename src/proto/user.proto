@@ -1,0 +1,175 @@
+﻿syntax = "proto3";
+
+package prpc;
+
+option go_package = "./prpc";
+
+import "category.proto";
+import "video.proto";
+import "bt.proto";
+import "google/api/annotations.proto";
+
+
+service UserService {
+
+  rpc Register (RegisterInfo) returns (RegisterRet) {
+    option (google.api.http) = {
+    post: "/register"
+    body: "*"
+    };
+  };
+
+  rpc IsUsedEmail (EmailInfo) returns (IsUsedEmailRet) {
+    option (google.api.http) = {
+    post: "/isusedemail"
+    body: "*"
+    };
+  };
+
+  rpc Login (LoginInfo) returns (LoginRet) {
+    option (google.api.http) = {
+    post: "/login"
+    body: "*"
+    };
+  };
+
+  rpc FastLogin (LoginInfo) returns (LoginRet) {
+    option (google.api.http) = {
+    post: "/fastlogin"
+    body: "*"
+    };
+  }
+
+   rpc IsLogined (LoginInfo) returns (LoginRet) {
+    option (google.api.http) = {
+    post: "/islogged"
+    body: "*"
+    };
+  }
+
+  rpc Download(DownloadRequest) returns (DownloadRespone) {
+    option (google.api.http) = {
+    post: "/download"
+    body: "*"
+    };
+  }
+  rpc RemoveTorrent(RemoveTorrentReq) returns (RemoveTorrentRes);
+  
+  rpc OnStatus(StatusRequest) returns (stream StatusRespone);
+
+  rpc QueryBtVideos(QueryBtVideosReq) returns (QueryBtVideosRes);
+
+  rpc NewCategoryItem(NewCategoryItemReq) returns (NewCategoryItemRes);
+  rpc DelCategoryItem(DelCategoryItemReq) returns (DelCategoryItemRes);
+  rpc QuerySubItems(QuerySubItemsReq) returns (QuerySubItemsRes);
+  rpc AddBtVideos(AddBtVideosReq) returns (AddBtVideosRes);
+
+  rpc QueryVideoInfo(QueryVideoInfoReq) returns (QueryVideoInfoRes);
+  rpc RefreshSubtitle(RefreshSubtitleReq) returns (RefreshSubtitleRes);
+}
+
+
+message UserInfo {
+  int64  id = 1;
+  string name = 2;
+  string email = 3;
+  string passwd = 4;
+  int64 home_directory_id = 5;
+}
+
+message RegisterInfo {
+  UserInfo user_info = 1;
+}
+
+message RegisterRet {
+
+}
+
+message EmailInfo {
+  string email = 1;
+}
+
+message IsUsedEmailRet {
+
+}
+
+message LoginInfo {
+  string email = 1;
+  string passwd = 2;
+  bool remember_me = 3;
+}
+
+message LoginRet {
+  string token = 1;
+  UserInfo user_info = 2;
+  bool remember_me = 3;
+}
+
+message NewCategoryItemReq {
+  string name = 1;
+  CategoryItem.Type type_id = 2;
+  string resource_path = 3;
+  string introduce = 4;
+  int64 parent_id = 5;
+}
+
+message NewCategoryItemRes {
+  
+}
+
+message DelCategoryItemReq {
+  int64 item_id = 1;
+}
+
+message DelCategoryItemRes {
+  
+}
+
+message QuerySubItemsReq {
+  int64 parent_id = 1;
+}
+
+message QuerySubItemsRes {
+  CategoryItem parent_item = 1;
+  repeated CategoryItem items = 2;
+}
+
+message QueryBtVideosReq {
+  InfoHash info_hash = 1;
+}
+
+message BtFileMetadata {
+  int32 file_index = 1;
+  VideoMetadata meta = 2;
+}
+
+message QueryBtVideosRes {
+  repeated BtFileMetadata data = 1;
+}
+
+message AddBtVideosReq {
+  InfoHash info_hash = 1;
+  repeated int32 file_indexes = 2;
+  int64 category_item_id = 3;
+}
+
+message AddBtVideosRes {
+
+}
+
+message QueryVideoInfoReq {
+  int64 item_id = 1;
+}
+
+message QueryVideoInfoRes {
+  int64 video_id = 1;
+  repeated string subtitles = 2;
+}
+
+message RefreshSubtitleReq {
+  int64 item_id = 1;
+}
+
+message RefreshSubtitleRes {
+
+}

@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package prpc;
+
+option go_package = "./prpc";
+
+message CategoryItem {
+  enum Type {
+    Unknown = 0;
+    Home = 1;
+    Directory = 2;
+    Video = 3;
+    OtherFile = 4;
+  }
+  int64 id = 1;
+  Type type_id = 2;
+  int64 creator = 3;
+  string name = 4;
+  string resource_path = 5;
+  string poster_path = 6;
+  string introduce = 7;
+  int64 parent_id = 8;
+  repeated int64 sub_item_ids = 9;
+}
+
