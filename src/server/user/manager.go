@@ -17,6 +17,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/pkg/errors"
 )
@@ -204,34 +205,30 @@ func updateBtFileType(st *bt.Torrent, fileIndex int, absFileName string) {
 	}
 }
 
-func (um *UserManger) UpdateTorrentState(infoHash bt.InfoHash, state prpc.BtStateEnum) error {
+func (um *UserManger) UpdateTorrentState(infoHash bt.InfoHash, state prpc.BtStateEnum) {
 	srcState := prpc.BtStateEnum_unknown
 	um.mtx.Lock()
 	st, ok := um.torrents[infoHash]
 	if !ok {
 		um.mtx.Unlock()
-		return errors.New("not found")
+		return
 	}
 	um.mtx.Unlock()
 	srcState = st.GetState()
 
 	if srcState == state {
-		return nil
+		return
 	}
-
-	st.UpdateState(state)
-
-	sql := "update torrent state=? where info_hash=? and version=?"
-	db.Exec(sql, state, infoHash.Hash, infoHash.Version)
+	st.Update(nil, &state, []bt.File{}, []byte{})
 
 	if state != prpc.BtStateEnum_seeding {
-		return nil
+		return
 	}
 
 	_, err := um.LoadUser(AdminId)
 	if err != nil {
 		log.Warnf("[user] %d load err: %v", AdminId, err)
-		return nil
+		return
 	}
 	files := st.GetFiles()
 	var fileIndexes []int32
@@ -253,12 +250,12 @@ func (um *UserManger) UpdateTorrentState(infoHash bt.InfoHash, state prpc.BtStat
 		}
 	}
 	if len(fileIndexes) == 0 {
-		return nil
+		return
 	}
-	return nil
 }
 
-func (um *UserManger) UpdateTorrent(base *bt.TorrentBase, btst prpc.BtStateEnum, fileNames []bt.File, resumeData []byte) {
+func (um *UserManger) UpdateTorrent(base *bt.TorrentBase, state prpc.BtStateEnum, fileNames []bt.File, resumeData []byte) {
+	srcState := prpc.BtStateEnum_unknown
 	um.mtx.Lock()
 	st, ok := um.torrents[base.InfoHash]
 	if !ok {
@@ -266,18 +263,26 @@ func (um *UserManger) UpdateTorrent(base *bt.TorrentBase, btst prpc.BtStateEnum,
 		um.torrents[base.InfoHash] = st
 	}
 	um.mtx.Unlock()
-	st.UpdateBaseInfo(base)
-	st.UpdateFilesInfo(fileNames)
-	st.UpdateResumeData(resumeData)
+	srcState = st.GetState()
+
+	lastUpdateTime := st.GetUpdateTime()
+
+	if srcState == prpc.BtStateEnum_seeding && time.Since(lastUpdateTime) < time.Hour*1 {
+		return
+	}
+
+	st.Update(base, &state, fileNames, resumeData)
 
 	baseInfo := st.GetBaseInfo()
 	sql := "update torrent set name=?, state=?, total_size=?, piece_length=?, num_pieces=?, resume_data=? where info_hash=? and version=?"
-	_, err := db.Exec(sql, baseInfo.Name, st.GetState(),
+	_, err := db.Exec(sql, baseInfo.Name, state,
 		baseInfo.TotalSize, baseInfo.PieceLength, baseInfo.NumPieces,
 		st.GetResumeData(), baseInfo.InfoHash.Hash, baseInfo.InfoHash.Version)
 	if err != nil {
 		log.Warnf("[bt] failed to update torrent %s err: %v", hex.EncodeToString([]byte(base.InfoHash.Hash)), err)
 	}
+
+	um.UpdateTorrentState(base.InfoHash, state)
 }
 
 type FileCompleted struct {

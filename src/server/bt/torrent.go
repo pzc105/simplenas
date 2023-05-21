@@ -6,6 +6,7 @@ import (
 	"pnas/prpc"
 	"pnas/video"
 	"sync"
+	"time"
 )
 
 type InfoHash struct {
@@ -29,6 +30,7 @@ type Torrent struct {
 	files      []File
 	state      prpc.BtStateEnum
 	resumeData []byte
+	updateTime time.Time
 }
 
 func NewTorrent(base *TorrentBase) *Torrent {
@@ -37,22 +39,32 @@ func NewTorrent(base *TorrentBase) *Torrent {
 	}
 }
 
-func (t *Torrent) UpdateBaseInfo(base *TorrentBase) {
-	t.mtx.Lock()
-	defer t.mtx.Unlock()
-	t.base = *base
-}
-
 func (t *Torrent) GetBaseInfo() TorrentBase {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
 	return t.base
 }
 
-func (t *Torrent) UpdateState(newState prpc.BtStateEnum) {
+func (t *Torrent) Update(base *TorrentBase, newState *prpc.BtStateEnum, fileNames []File, r []byte) {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
-	t.state = newState
+	if base != nil {
+		t.base = *base
+	}
+	if newState != nil {
+		t.state = *newState
+	}
+	if len(fileNames) > 0 && len(t.files) != len(fileNames) {
+		if len(t.files) > 0 {
+			log.Warnf("torrent:%s change file:%v, new name:%v", t.base.Name, t.files, fileNames)
+		}
+		t.files = make([]File, len(fileNames))
+		copy(t.files, fileNames)
+	}
+	if len(r) > 0 {
+		t.resumeData = r
+	}
+	t.updateTime = time.Now()
 }
 
 func (t *Torrent) GetState() prpc.BtStateEnum {
@@ -65,18 +77,6 @@ func (t *Torrent) GetInfoHash() InfoHash {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
 	return t.base.InfoHash
-}
-
-func (t *Torrent) UpdateFilesInfo(fs []File) {
-	t.mtx.Lock()
-	defer t.mtx.Unlock()
-	if len(t.files) != len(fs) {
-		if len(t.files) > 0 {
-			log.Warnf("torrent:%s change file:%v, new name:%v", t.base.Name, t.files, fs)
-		}
-		t.files = make([]File, len(fs))
-		copy(t.files, fs)
-	}
 }
 
 func (t *Torrent) GetFiles() []File {
@@ -154,4 +154,10 @@ func (t *Torrent) GetResumeData() []byte {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
 	return t.resumeData
+}
+
+func (t *Torrent) GetUpdateTime() time.Time {
+	t.mtx.Lock()
+	defer t.mtx.Unlock()
+	return t.updateTime
 }
