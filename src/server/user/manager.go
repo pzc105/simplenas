@@ -180,17 +180,6 @@ func (um *UserManger) ChangeUserName(id ID, name string) error {
 	return u.ChangeUserName(name)
 }
 
-// TODO move this function to bt package
-func (um *UserManger) NeedUpdateTorrent(info_hash bt.InfoHash) bool {
-	um.mtx.Lock()
-	defer um.mtx.Unlock()
-	t, ok := um.torrents[info_hash]
-	if !ok {
-		return true
-	}
-	return t.GetState() != prpc.BtStateEnum_seeding
-}
-
 func updateBtFileType(st *bt.Torrent, fileIndex int, absFileName string) {
 	if video.IsVideo(absFileName) {
 		st.UpdateFileType(fileIndex, bt.FileVideoType)
@@ -202,55 +191,6 @@ func updateBtFileType(st *bt.Torrent, fileIndex int, absFileName string) {
 	}
 	if video.IsAudio(absFileName) {
 		st.UpdateFileType(fileIndex, bt.FileAudioType)
-	}
-}
-
-func (um *UserManger) UpdateTorrentState(infoHash bt.InfoHash, state prpc.BtStateEnum) {
-	srcState := prpc.BtStateEnum_unknown
-	um.mtx.Lock()
-	st, ok := um.torrents[infoHash]
-	if !ok {
-		um.mtx.Unlock()
-		return
-	}
-	um.mtx.Unlock()
-	srcState = st.GetState()
-
-	if srcState == state {
-		return
-	}
-	st.Update(nil, &state, []bt.File{}, []byte{})
-
-	if state != prpc.BtStateEnum_seeding {
-		return
-	}
-
-	_, err := um.LoadUser(AdminId)
-	if err != nil {
-		log.Warnf("[user] %d load err: %v", AdminId, err)
-		return
-	}
-	files := st.GetFiles()
-	var fileIndexes []int32
-	for i := range files {
-		fileName := files[i].Name
-
-		if files[i].FileType == bt.FileUnknownType {
-			absFileName := setting.GS.Bt.SavePath + "/" + fileName
-			updateBtFileType(st, i, absFileName)
-		}
-
-		v, err := video.GetVideoByFileName(fileName)
-		if err == nil && v.HlsCreated {
-			continue
-		}
-
-		if ft, _ := st.GetFileType(i); (ft | bt.FileVideoType) != 0 {
-			fileIndexes = append(fileIndexes, int32(i))
-		}
-	}
-	if len(fileIndexes) == 0 {
-		return
 	}
 }
 
@@ -282,7 +222,37 @@ func (um *UserManger) UpdateTorrent(base *bt.TorrentBase, state prpc.BtStateEnum
 		log.Warnf("[bt] failed to update torrent %s err: %v", hex.EncodeToString([]byte(base.InfoHash.Hash)), err)
 	}
 
-	um.UpdateTorrentState(base.InfoHash, state)
+	if state != prpc.BtStateEnum_seeding {
+		return
+	}
+
+	_, err = um.LoadUser(AdminId)
+	if err != nil {
+		log.Warnf("[user] %d load err: %v", AdminId, err)
+		return
+	}
+	files := st.GetFiles()
+	var fileIndexes []int32
+	for i := range files {
+		fileName := files[i].Name
+
+		if files[i].FileType == bt.FileUnknownType {
+			absFileName := setting.GS.Bt.SavePath + "/" + fileName
+			updateBtFileType(st, i, absFileName)
+		}
+
+		v, err := video.GetVideoByFileName(fileName)
+		if err == nil && v.HlsCreated {
+			continue
+		}
+
+		if ft, _ := st.GetFileType(i); (ft | bt.FileVideoType) != 0 {
+			fileIndexes = append(fileIndexes, int32(i))
+		}
+	}
+	if len(fileIndexes) == 0 {
+		return
+	}
 }
 
 type FileCompleted struct {
@@ -316,28 +286,6 @@ func (um *UserManger) BtFileStateComplete(fs *FileCompleted) {
 	fileName := files[fs.FileIndex].Name
 	absFileName := baseInfo.SavePath + "/" + fileName
 	updateBtFileType(t, int(fs.FileIndex), absFileName)
-
-	addVideo := func() {
-		admin, err := um.LoadUser(AdminId)
-		if err != nil {
-			return
-		}
-
-		v, err := video.GetVideoByFileName(fileName)
-		if err == nil && v.HlsCreated {
-			return
-		}
-		if ft, _ := t.GetFileType(int(fs.FileIndex)); (ft | bt.FileVideoType) == 0 {
-			return
-		}
-		um.AddBtVideos(&AddBtVideosParams{
-			UserId:         admin.userInfo.Id,
-			CategoryItemId: 2,
-			InfoHash:       baseInfo.InfoHash,
-			FileIndexes:    []int32{fs.FileIndex},
-		})
-	}
-	addVideo()
 }
 
 func (um *UserManger) AddTorrent(userId ID, t *bt.TorrentBase) error {

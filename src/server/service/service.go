@@ -170,15 +170,6 @@ func (ser *CoreService) handleTorrentInfo(tis *prpc.TorrentInfoRes) {
 }
 
 func (ser *CoreService) handleBtStatus(sr *prpc.StatusRespone) {
-	for _, st := range sr.StatusArray {
-		// fmt.Printf("name: %s total: %d, total_done: %d state: %d\n",
-		// 	st.Name,
-		// 	st.Total,
-		// 	st.TotalDone,
-		// 	st.State)
-		go ser.um.UpdateTorrentState(TranInfoHash(st.InfoHash), st.State)
-	}
-
 	ser.sessionsMtx.Lock()
 	defer ser.sessionsMtx.Unlock()
 
