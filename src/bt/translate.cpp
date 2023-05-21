@@ -65,15 +65,8 @@ namespace prpc
       ret.set_piece_length(ti->piece_length());
       ret.set_num_pieces(ti->num_pieces());
     }
-    if (params.seeding_time > 0) {
-      ret.set_state(prpc::BtStateEnum::seeding);
-    }
-    else if (params.finished_time > 0) {
-      ret.set_state(prpc::BtStateEnum::finished);
-    }
-    else {
-      ret.set_state(prpc::BtStateEnum::downloading);
-    }
+    ret.set_state(static_cast<prpc::BtStateEnum>(params.state));
+
     auto const b = lt::write_resume_data_buf(params);
     *ret.mutable_resume_data() = std::string(b.data(), b.size());
     return ret;

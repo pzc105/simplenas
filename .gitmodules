@@ -1,3 +1,6 @@
 [submodule "third_party/yaml-cpp"]
 	path = third_party/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp.git
+[submodule "third_party/libtorrent"]
+	path = third_party/libtorrent
+	url = git@github.com:pzc105/libtorrent.git

@@ -807,7 +807,7 @@ func (um *UserManger) RefreshSubtitle(vid video.ID) error {
 	var fs []string
 	fn := utils.GetFileName(videoFileName)
 	baseName := path.Base(videoFileName)
-	walkPath := setting.GS.Bt.SavePath + "/" + path.Dir(videoFileName)
+	walkPath := path.Dir(setting.GS.Bt.SavePath + "/" + utils.FileNameFormat(videoFileName))
 	filepath.Walk(walkPath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			log.Warnf("refresh subtitle err: %v", err)

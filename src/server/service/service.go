@@ -25,6 +25,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 
 	"github.com/gorilla/mux"
@@ -336,8 +337,17 @@ func (ser *CoreService) Login(
 	}
 	userInfo := user.GetUserInfo()
 
-	md, session := GenCookieSession(loginInfo.RememberMe, userInfo.Id)
-	grpc.SendHeader(ctx, md)
+	session := ser.getSession(ctx)
+	if session == nil {
+		var md metadata.MD
+		md, session = GenCookieSession(loginInfo.RememberMe, userInfo.Id)
+		grpc.SendHeader(ctx, md)
+	} else {
+		var md metadata.MD
+		md, session = GenCookieSessionById(session.Id, loginInfo.RememberMe, userInfo.Id)
+		grpc.SendHeader(ctx, md)
+	}
+
 	ser.sessionsMtx.Lock()
 	defer ser.sessionsMtx.Unlock()
 	ser.sessions[session.Id] = session
@@ -641,7 +651,8 @@ func (ser *CoreService) QueryVideoInfo(ctx context.Context, req *prpc.QueryVideo
 			}
 			return nil
 		}
-		if !info.IsDir() && (strings.HasSuffix(info.Name(), ".vtt") || strings.HasSuffix(info.Name(), ".ass")) {
+		if !info.IsDir() && info.Size() > 0 &&
+			(strings.HasSuffix(info.Name(), ".vtt")) {
 			fs = append(fs, info.Name())
 		}
 		return nil
