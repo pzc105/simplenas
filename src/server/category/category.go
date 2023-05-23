@@ -63,6 +63,7 @@ func _loadItem(itemId ID) (*CategoryItem, error) {
 		return nil, errors.WithStack(err)
 	}
 	item.auth = utils.NewBitSet(AuthMax)
+	item.auth.UnmarshalBinary(byteAuth)
 
 	sql = `select item_id from pnas.sub_items s
 				 left join pnas.category_item c on s.parent_id = c.id

@@ -28,6 +28,7 @@ func (p *IdPool) NewId() int64 {
 		p.idIndex += 1
 		ret = p.idIndex
 	}
+	p.allocatedIds[ret] = true
 	p.idIndex += 1
 	return ret
 }

@@ -2,7 +2,7 @@ package service
 
 import "testing"
 
-func IdPoolTest(t *testing.T) {
+func TestIdPool(t *testing.T) {
 	var idPool IdPool
 	idPool.Init()
 

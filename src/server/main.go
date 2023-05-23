@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	setting.Init()
+	setting.Init(".")
 	log.Init()
 	db.Init()
 

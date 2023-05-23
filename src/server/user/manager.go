@@ -117,7 +117,7 @@ func (um *UserManger) LoadUser(userId ID) (*User, error) {
 	}
 	um.mtx.Unlock()
 
-	user, err := LoadUser(userId)
+	user, err := loadUser(userId)
 	if err != nil {
 		return nil, err
 	}
@@ -460,7 +460,14 @@ func (um *UserManger) NewCategoryItem(userId ID, params *category.NewCategoryPar
 	if params.ParentId <= 0 {
 		params.ParentId = user.GetHomeDirectoryId()
 	}
-	_, err := um.categoryMgr.NewItem(params)
+	pitem, err := um.categoryMgr.GetItem(params.ParentId)
+	if err != nil {
+		return errors.New("not found parent")
+	}
+	if !pitem.HasWriteAuth(int64(userId)) && userId != AdminId {
+		return errors.New("not auth")
+	}
+	_, err = um.categoryMgr.NewItem(params)
 	return err
 }
 

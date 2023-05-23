@@ -39,6 +39,17 @@ func (m *Manager) delDbMtx(itemId ID) {
 	}
 }
 
+func (m *Manager) addItem(item *CategoryItem) {
+	m.itemsMtx.Lock()
+	defer m.itemsMtx.Unlock()
+	_, ok := m.items[item.base.Id]
+	if ok {
+		log.Warnf("[category] duplicate add item: %d", item.base.Id)
+		return
+	}
+	m.items[item.base.Id] = item
+}
+
 func (m *Manager) queryItem(itemId ID) *CategoryItem {
 	m.itemsMtx.Lock()
 	defer m.itemsMtx.Unlock()
@@ -72,6 +83,7 @@ func (m *Manager) NewItem(params *NewCategoryParams) (*CategoryItem, error) {
 	if err == nil {
 		parentItem.addedSubItem(item.base.Id)
 	}
+	m.addItem(item)
 	return item, err
 }
 

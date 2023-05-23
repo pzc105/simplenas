@@ -85,7 +85,7 @@ func IsUsedEmail(email string) bool {
 	return false
 }
 
-func LoadUser(userId ID) (*User, error) {
+func loadUser(userId ID) (*User, error) {
 	var user User
 	user.userInfo.Id = userId
 	sql := "select name, email, auth, directory_id from pnas.user where id=?"

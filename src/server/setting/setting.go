@@ -60,14 +60,13 @@ type MysqlSetting struct {
 
 var GS *Setting = new(Setting)
 
-func Init() {
+func Init(configPath string) {
 	file_name := "local_setting.yml"
-	config_path := "."
-	_, err := os.Stat(config_path + "/" + file_name)
+	_, err := os.Stat(configPath + "/" + file_name)
 	if err != nil {
 		file_name = "setting.yml"
 	}
-	yamlFile, err := ioutil.ReadFile(config_path + "/" + file_name)
+	yamlFile, err := ioutil.ReadFile(configPath + "/" + file_name)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
