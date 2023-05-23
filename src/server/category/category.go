@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
+	"golang.org/x/exp/slices"
 )
 
 type ID int64
@@ -143,14 +144,6 @@ func _loadItems(itemIds ...ID) ([]*CategoryItem, error) {
 	return items, nil
 }
 
-func LoadItem(itemId ID) (*CategoryItem, error) {
-	return _loadItem(itemId)
-}
-
-func LoadItems(itemIds ...ID) ([]*CategoryItem, error) {
-	return _loadItems(itemIds...)
-}
-
 type NewCategoryParams struct {
 	ParentId     ID
 	Creator      int64
@@ -162,7 +155,7 @@ type NewCategoryParams struct {
 	Auth         utils.AuthBitSet
 }
 
-func NewItem(params *NewCategoryParams) (*CategoryItem, error) {
+func newItem(params *NewCategoryParams) (*CategoryItem, error) {
 	var newId ID
 	byteAuth, err := params.Auth.MarshalBinary()
 	if err != nil {
@@ -184,30 +177,28 @@ func NewItem(params *NewCategoryParams) (*CategoryItem, error) {
 	if newId == NotExisted {
 		return nil, errors.New("parent not existed")
 	}
-	return LoadItem(newId)
+	return _loadItem(newId)
 }
 
-func RemoveItem(itemId ID) error {
-	item, err := _loadItem(itemId)
-	if err != nil {
-		return err
+func (c *CategoryItem) addedSubItem(subItemId ID) {
+	c.mtx.Lock()
+	defer c.mtx.Unlock()
+	if slices.IndexFunc(c.subItemIds, func(sid ID) bool { return subItemId == sid }) != -1 {
+		log.Warnf("[category] duplicate added sub id: %d", subItemId)
+		return
 	}
-	var toDelItems []*CategoryItem
-	toDelItems = append(toDelItems, item)
-	for len(toDelItems) > 0 {
-		item := toDelItems[len(toDelItems)-1]
-		tmp, _ := _loadItems(item.GetSubItemIds()...)
-		if len(tmp) > 0 {
-			toDelItems = append(toDelItems, tmp...)
-		} else {
-			toDelItems = toDelItems[:len(toDelItems)-1]
-			_, err = db.Exec("call del_category(?)", item.base.Id)
-			if err != nil {
-				return err
-			}
-		}
+	c.subItemIds = append(c.subItemIds, subItemId)
+}
+
+func (c *CategoryItem) deletedSubItem(subItemId ID) {
+	c.mtx.Lock()
+	defer c.mtx.Unlock()
+	index := slices.IndexFunc(c.subItemIds, func(sid ID) bool { return subItemId == sid })
+	if index == -1 {
+		log.Warnf("[category] not found sub id: %d", subItemId)
+		return
 	}
-	return nil
+	c.subItemIds = append(c.subItemIds[:index], c.subItemIds[index+1:]...)
 }
 
 func (c *CategoryItem) GetItemInfo() BaseItem {

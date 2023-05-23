@@ -28,6 +28,7 @@ type UserManger struct {
 	torrents     map[bt.InfoHash]*bt.Torrent
 	dlUser       map[bt.InfoHash]map[ID]bool
 	genHslRecord map[video.ID]bool
+	categoryMgr  category.Manager
 
 	cudaQueue utils.TaskQueue
 	qsvQueue  utils.TaskQueue
@@ -42,6 +43,8 @@ func (um *UserManger) Init() {
 	um.torrents = make(map[bt.InfoHash]*bt.Torrent)
 	um.dlUser = make(map[bt.InfoHash]map[ID]bool)
 	um.genHslRecord = make(map[video.ID]bool)
+
+	um.categoryMgr.Init()
 
 	um.cudaQueue.Init(utils.WithMaxQueue(1024))
 	um.qsvQueue.Init(utils.WithMaxQueue(1024))
@@ -457,19 +460,19 @@ func (um *UserManger) NewCategoryItem(userId ID, params *category.NewCategoryPar
 	if params.ParentId <= 0 {
 		params.ParentId = user.GetHomeDirectoryId()
 	}
-	_, err := category.NewItem(params)
+	_, err := um.categoryMgr.NewItem(params)
 	return err
 }
 
 func (um *UserManger) DelCategoryItem(userId ID, itemId category.ID) error {
-	item, err := category.LoadItem(itemId)
+	item, err := um.categoryMgr.GetItem(itemId)
 	if err != nil {
 		return err
 	}
 	if !item.HasWriteAuth(int64(userId)) && userId != AdminId {
 		return errors.New("not auth")
 	}
-	return category.RemoveItem(itemId)
+	return um.categoryMgr.DelItem(itemId)
 }
 
 func (um *UserManger) QueryItem(userId ID, itemId category.ID) (*category.CategoryItem, error) {
@@ -477,7 +480,7 @@ func (um *UserManger) QueryItem(userId ID, itemId category.ID) (*category.Catego
 	if err != nil {
 		return nil, err
 	}
-	item, err := category.LoadItem(itemId)
+	item, err := um.categoryMgr.GetItem(itemId)
 	if err != nil {
 		return nil, err
 	}
@@ -494,7 +497,7 @@ func (um *UserManger) QueryItems(userId ID, parentId category.ID) []*category.Ca
 		return []*category.CategoryItem{}
 	}
 
-	item, err := category.LoadItem(parentId)
+	item, err := um.categoryMgr.GetItem(parentId)
 	if err != nil {
 		log.Warnf("[user] %d query items err: %v", userId, err)
 		return []*category.CategoryItem{}
@@ -502,7 +505,7 @@ func (um *UserManger) QueryItems(userId ID, parentId category.ID) []*category.Ca
 	if !item.HasReadAuth(int64(user.userInfo.Id)) && userId != AdminId {
 		return []*category.CategoryItem{}
 	}
-	items, err := category.LoadItems(item.GetSubItemIds()...)
+	items, err := um.categoryMgr.GetItems(item.GetSubItemIds()...)
 	if err != nil {
 		log.Warnf("[user] %d load items err: %v", userId, err)
 	}
@@ -566,7 +569,7 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	parentItem, err := category.LoadItem(category.ID(params.CategoryItemId))
+	parentItem, err := um.categoryMgr.GetItem(category.ID(params.CategoryItemId))
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -622,7 +625,7 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 			Introduce:    "",
 			Auth:         utils.NewBitSet(category.AuthMax),
 		}
-		item, err := category.NewItem(newCParams)
+		item, err := um.categoryMgr.NewItem(newCParams)
 		if err != nil {
 			return err
 		}

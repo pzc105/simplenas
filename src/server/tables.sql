@@ -103,7 +103,7 @@ create procedure new_category(in type_id int,
 begin
   declare parent_count int default 0;
   start transaction;
-  select count(*) into parent_count from pnas.category_item where id = parent_id;
+  select count(*) into parent_count from pnas.category_item where id = parent_id for update;
   if parent_count = 1 then
     insert into pnas.category_item (type_id, name, creator, auth, resource_path, poster_path, introduce) values 
       (type_id, name, creator, auth, resource_path, poster_path, introduce);

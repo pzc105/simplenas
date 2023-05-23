@@ -215,7 +215,7 @@ export default function CategoryItemPage() {
   return (
     <CategoryContainer>
       <CssBaseline />
-      <SideUtils name="管理" child={CategoryItemCreator(itemId)} />
+      <SideUtils name="管理" child={CategoryItemCreator({ parentId: itemId })} />
       <CategoryItems parentId={itemId} />
     </CategoryContainer>
   );
