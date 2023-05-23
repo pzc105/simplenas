@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
-  CssBaseline, Button, TextField, Menu, MenuItem, Container, Grid, Paper,
+  CssBaseline, Button, TextField, Menu, MenuItem, Container, Grid, Paper, Box,
   Typography, Tooltip, Card, CardContent, CardActions, CardMedia, InputAdornment
 } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
@@ -68,22 +68,18 @@ const CategoryItems = ({ parentId }) => {
 
 
   return (
-    <Paper style={{ width: "100em", maxHeight: '90vh', overflow: 'auto' }}>
+    <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }}>
       <Grid container spacing={2} sx={{ display: "flex" }}>
         <Grid item xs={12}>
           <Grid container spacing={2}>
             {items ?
               items.map((item) => (
-                <Grid key={item.id} item xs={2}>
-                  <Card onContextMenu={(e) => handleContextMenu(e, item.id)}
-                    sx={{ width: "10em", marginBottom: "0", mt: "0" }}>
-                    <CardMedia
-                      component="img"
-                      alt="Movie Poster"
-                      width="100em"
-                      image={serverAddress + "/poster/item/" + item.id}
-                    />
-                    <CardContent>
+                <Grid key={item.id} item xs={2} sx={{ ml: "0.5em", mt: "0.5em" }}>
+                  <Card onContextMenu={(e) => handleContextMenu(e, item.id)}>
+                    <Box sx={{ display: "flex", justifyContent: "center", height: "4.3em" }}>
+                      <img style={{ maxHeight: "5em" }} alt="Movie Poster" src={serverAddress + "/poster/item/" + item.id} />
+                    </Box>
+                    <CardContent sx={{ display: "flex", justifyContent: "center" }}>
                       <Tooltip title={item.name}>
                         <Typography variant="button" component="div" noWrap>
                           <Button onClick={() => onClick(item)}>
@@ -95,7 +91,7 @@ const CategoryItems = ({ parentId }) => {
                         {item.introduce}
                       </Typography>
                     </CardContent>
-                    <CardActions>
+                    <CardActions sx={{ display: "flex", justifyContent: "center" }}>
                       {
                         item.typeId === Category.CategoryItem.Type.VIDEO ?
                           <div>

@@ -126,7 +126,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <Container sx={{ backgroundColor: 'background.default', ml: "0", width: "100em" }}>
+    <Container sx={{ backgroundColor: 'background.default', ml: "0", width: "100%" }}>
       <IconButton onClick={handleToggleSidebar} edge="start" color="inherit" aria-label="menu">
         <MenuIcon />
       </IconButton>
