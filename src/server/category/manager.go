@@ -163,10 +163,13 @@ func (m *Manager) DelItem(itemId ID) error {
 	defer parentDbMtx.Unlock()
 	toDelItemsDbMtx[0].Lock()
 
+	flags := make(map[ID]bool)
+
 	for len(toDelItems) > 0 {
 		item := toDelItems[len(toDelItems)-1]
-		items, _ := m.GetItems(item.GetSubItemIds()...)
-		if len(items) > 0 {
+		if _, ok := flags[item.base.Id]; !ok {
+			flags[item.base.Id] = true
+			items, _ := m.GetItems(item.GetSubItemIds()...)
 			toDelItems = append(toDelItems, items...)
 			for _, item := range items {
 				dbmtx := m.requireDbMtx(item.base.Id)
