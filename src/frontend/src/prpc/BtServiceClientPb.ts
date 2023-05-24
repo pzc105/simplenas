@@ -168,48 +168,5 @@ export class BtServiceClient {
     this.methodDescriptorRemoveTorrent);
   }
 
-  methodDescriptorFileProgress = new grpcWeb.MethodDescriptor(
-    '/prpc.BtService/FileProgress',
-    grpcWeb.MethodType.UNARY,
-    bt_pb.FileProgressReq,
-    bt_pb.FileProgressRes,
-    (request: bt_pb.FileProgressReq) => {
-      return request.serializeBinary();
-    },
-    bt_pb.FileProgressRes.deserializeBinary
-  );
-
-  fileProgress(
-    request: bt_pb.FileProgressReq,
-    metadata: grpcWeb.Metadata | null): Promise<bt_pb.FileProgressRes>;
-
-  fileProgress(
-    request: bt_pb.FileProgressReq,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.RpcError,
-               response: bt_pb.FileProgressRes) => void): grpcWeb.ClientReadableStream<bt_pb.FileProgressRes>;
-
-  fileProgress(
-    request: bt_pb.FileProgressReq,
-    metadata: grpcWeb.Metadata | null,
-    callback?: (err: grpcWeb.RpcError,
-               response: bt_pb.FileProgressRes) => void) {
-    if (callback !== undefined) {
-      return this.client_.rpcCall(
-        this.hostname_ +
-          '/prpc.BtService/FileProgress',
-        request,
-        metadata || {},
-        this.methodDescriptorFileProgress,
-        callback);
-    }
-    return this.client_.unaryCall(
-    this.hostname_ +
-      '/prpc.BtService/FileProgress',
-    request,
-    metadata || {},
-    this.methodDescriptorFileProgress);
-  }
-
 }
 

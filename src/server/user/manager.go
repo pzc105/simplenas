@@ -810,3 +810,24 @@ func (um *UserManger) RefreshSubtitle(vid video.ID) error {
 	})
 	return nil
 }
+
+func (um *UserManger) IsItemShared(sharedItemId category.ID, itemId category.ID) bool {
+	_, err := um.categoryMgr.GetItem(sharedItemId)
+	if err != nil {
+		log.Warnf("not found shared item id %d", sharedItemId)
+		return false
+	}
+	var nextParentId = itemId
+	for {
+		item, err := um.categoryMgr.GetItem(nextParentId)
+		if err != nil {
+			log.Warnf("not found shared item id :%d, next parent: %d, share item id: %d", itemId, nextParentId, sharedItemId)
+			return false
+		}
+		ii := item.GetItemInfo()
+		if ii.Id == sharedItemId {
+			return true
+		}
+		nextParentId = ii.ParentId
+	}
+}

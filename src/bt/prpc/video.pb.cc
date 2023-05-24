@@ -118,18 +118,12 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 VideoMetadataDefaultTypeInternal _VideoMetadata_default_instance_;
 PROTOBUF_CONSTEXPR Video::Video(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.name_)*/ {
+    /*decltype(_impl_.subtitle_paths_)*/{}
+  , /*decltype(_impl_.name_)*/ {
     &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
   }
 
-  , /*decltype(_impl_.introduce_)*/ {
-    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
-  }
-
-  , /*decltype(_impl_.poster_path_)*/ {
-    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
-  }
-
+  , /*decltype(_impl_.meta_)*/nullptr
   , /*decltype(_impl_.id_)*/ ::int64_t{0}
 
   , /*decltype(_impl_._cached_size_)*/{}} {}
@@ -203,8 +197,8 @@ const ::uint32_t TableStruct_video_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::Video, _impl_.id_),
     PROTOBUF_FIELD_OFFSET(::prpc::Video, _impl_.name_),
-    PROTOBUF_FIELD_OFFSET(::prpc::Video, _impl_.introduce_),
-    PROTOBUF_FIELD_OFFSET(::prpc::Video, _impl_.poster_path_),
+    PROTOBUF_FIELD_OFFSET(::prpc::Video, _impl_.meta_),
+    PROTOBUF_FIELD_OFFSET(::prpc::Video, _impl_.subtitle_paths_),
 };
 
 static const ::_pbi::MigrationSchema
@@ -233,10 +227,10 @@ const char descriptor_table_protodef_video_2eproto[] PROTOBUF_SECTION_VARIABLE(p
     "\022\n\nstart_time\030\005 \001(\t\022\020\n\010duration\030\006 \001(\t\022\014\n"
     "\004size\030\007 \001(\t\022\020\n\010bit_rate\030\010 \001(\t\"V\n\rVideoMe"
     "tadata\022\"\n\007streams\030\001 \003(\0132\021.prpc.VideoStre"
-    "am\022!\n\006format\030\002 \001(\0132\021.prpc.VideoFormat\"I\n"
-    "\005Video\022\n\n\002id\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\022\021\n\tintr"
-    "oduce\030\003 \001(\t\022\023\n\013poster_path\030\004 \001(\tB\010Z\006./pr"
-    "pcP\000b\006proto3"
+    "am\022!\n\006format\030\002 \001(\0132\021.prpc.VideoFormat\"\\\n"
+    "\005Video\022\n\n\002id\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\022!\n\004meta"
+    "\030\003 \001(\0132\023.prpc.VideoMetadata\022\026\n\016subtitle_"
+    "paths\030\004 \003(\tB\010Z\006./prpcP\000b\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_video_2eproto_deps[1] =
     {
@@ -246,7 +240,7 @@ static ::absl::once_flag descriptor_table_video_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_video_2eproto = {
     false,
     false,
-    572,
+    591,
     descriptor_table_protodef_video_2eproto,
     "video.proto",
     &descriptor_table_video_2eproto_once,
@@ -1502,8 +1496,13 @@ void VideoMetadata::InternalSwap(VideoMetadata* other) {
 
 class Video::_Internal {
  public:
+  static const ::prpc::VideoMetadata& meta(const Video* msg);
 };
 
+const ::prpc::VideoMetadata&
+Video::_Internal::meta(const Video* msg) {
+  return *msg->_impl_.meta_;
+}
 Video::Video(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor(arena);
@@ -1513,12 +1512,10 @@ Video::Video(const Video& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   Video* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.name_) {}
+      decltype(_impl_.subtitle_paths_){from._impl_.subtitle_paths_}
+    , decltype(_impl_.name_) {}
 
-    , decltype(_impl_.introduce_) {}
-
-    , decltype(_impl_.poster_path_) {}
-
+    , decltype(_impl_.meta_){nullptr}
     , decltype(_impl_.id_) {}
 
     , /*decltype(_impl_._cached_size_)*/{}};
@@ -1531,19 +1528,8 @@ Video::Video(const Video& from)
   if (!from._internal_name().empty()) {
     _this->_impl_.name_.Set(from._internal_name(), _this->GetArenaForAllocation());
   }
-  _impl_.introduce_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.introduce_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_introduce().empty()) {
-    _this->_impl_.introduce_.Set(from._internal_introduce(), _this->GetArenaForAllocation());
-  }
-  _impl_.poster_path_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.poster_path_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_poster_path().empty()) {
-    _this->_impl_.poster_path_.Set(from._internal_poster_path(), _this->GetArenaForAllocation());
+  if (from._internal_has_meta()) {
+    _this->_impl_.meta_ = new ::prpc::VideoMetadata(*from._impl_.meta_);
   }
   _this->_impl_.id_ = from._impl_.id_;
   // @@protoc_insertion_point(copy_constructor:prpc.Video)
@@ -1552,12 +1538,10 @@ Video::Video(const Video& from)
 inline void Video::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.name_) {}
+      decltype(_impl_.subtitle_paths_){arena}
+    , decltype(_impl_.name_) {}
 
-    , decltype(_impl_.introduce_) {}
-
-    , decltype(_impl_.poster_path_) {}
-
+    , decltype(_impl_.meta_){nullptr}
     , decltype(_impl_.id_) { ::int64_t{0} }
 
     , /*decltype(_impl_._cached_size_)*/{}
@@ -1565,14 +1549,6 @@ inline void Video::SharedCtor(::_pb::Arena* arena) {
   _impl_.name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
         _impl_.name_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.introduce_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.introduce_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.poster_path_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.poster_path_.Set("", GetArenaForAllocation());
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
@@ -1587,9 +1563,9 @@ Video::~Video() {
 
 inline void Video::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.subtitle_paths_.~RepeatedPtrField();
   _impl_.name_.Destroy();
-  _impl_.introduce_.Destroy();
-  _impl_.poster_path_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.meta_;
 }
 
 void Video::SetCachedSize(int size) const {
@@ -1602,9 +1578,12 @@ void Video::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  _impl_.subtitle_paths_.Clear();
   _impl_.name_.ClearToEmpty();
-  _impl_.introduce_.ClearToEmpty();
-  _impl_.poster_path_.ClearToEmpty();
+  if (GetArenaForAllocation() == nullptr && _impl_.meta_ != nullptr) {
+    delete _impl_.meta_;
+  }
+  _impl_.meta_ = nullptr;
   _impl_.id_ = ::int64_t{0};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -1635,24 +1614,27 @@ const char* Video::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
           goto handle_unusual;
         }
         continue;
-      // string introduce = 3;
+      // .prpc.VideoMetadata meta = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_introduce();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          ptr = ctx->ParseMessage(_internal_mutable_meta(), ptr);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "prpc.Video.introduce"));
         } else {
           goto handle_unusual;
         }
         continue;
-      // string poster_path = 4;
+      // repeated string subtitle_paths = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 34)) {
-          auto str = _internal_mutable_poster_path();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "prpc.Video.poster_path"));
+          ptr -= 1;
+          do {
+            ptr += 1;
+            auto str = _internal_add_subtitle_paths();
+            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+            CHK_(ptr);
+            CHK_(::_pbi::VerifyUTF8(str, "prpc.Video.subtitle_paths"));
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<34>(ptr));
         } else {
           goto handle_unusual;
         }
@@ -1701,20 +1683,19 @@ failure:
     target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
-  // string introduce = 3;
-  if (!this->_internal_introduce().empty()) {
-    const std::string& _s = this->_internal_introduce();
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.Video.introduce");
-    target = stream->WriteStringMaybeAliased(3, _s, target);
+  // .prpc.VideoMetadata meta = 3;
+  if (this->_internal_has_meta()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(3, _Internal::meta(this),
+        _Internal::meta(this).GetCachedSize(), target, stream);
   }
 
-  // string poster_path = 4;
-  if (!this->_internal_poster_path().empty()) {
-    const std::string& _s = this->_internal_poster_path();
+  // repeated string subtitle_paths = 4;
+  for (int i = 0, n = this->_internal_subtitle_paths_size(); i < n; ++i) {
+    const auto& s = this->_internal_subtitle_paths(i);
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.Video.poster_path");
-    target = stream->WriteStringMaybeAliased(4, _s, target);
+        s.data(), static_cast<int>(s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.Video.subtitle_paths");
+    target = stream->WriteString(4, s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1733,22 +1714,23 @@ failure:
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  // repeated string subtitle_paths = 4;
+  total_size += 1 * ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.subtitle_paths_.size());
+  for (int i = 0, n = _impl_.subtitle_paths_.size(); i < n; ++i) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(_impl_.subtitle_paths_.Get(i));
+  }
+
   // string name = 2;
   if (!this->_internal_name().empty()) {
     total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
                                     this->_internal_name());
   }
 
-  // string introduce = 3;
-  if (!this->_internal_introduce().empty()) {
-    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-                                    this->_internal_introduce());
-  }
-
-  // string poster_path = 4;
-  if (!this->_internal_poster_path().empty()) {
-    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-                                    this->_internal_poster_path());
+  // .prpc.VideoMetadata meta = 3;
+  if (this->_internal_has_meta()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.meta_);
   }
 
   // int64 id = 1;
@@ -1775,14 +1757,13 @@ void Video::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  _this->_impl_.subtitle_paths_.MergeFrom(from._impl_.subtitle_paths_);
   if (!from._internal_name().empty()) {
     _this->_internal_set_name(from._internal_name());
   }
-  if (!from._internal_introduce().empty()) {
-    _this->_internal_set_introduce(from._internal_introduce());
-  }
-  if (!from._internal_poster_path().empty()) {
-    _this->_internal_set_poster_path(from._internal_poster_path());
+  if (from._internal_has_meta()) {
+    _this->_internal_mutable_meta()->::prpc::VideoMetadata::MergeFrom(
+        from._internal_meta());
   }
   if (from._internal_id() != 0) {
     _this->_internal_set_id(from._internal_id());
@@ -1806,14 +1787,15 @@ void Video::InternalSwap(Video* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.subtitle_paths_.InternalSwap(&other->_impl_.subtitle_paths_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, lhs_arena,
                                        &other->_impl_.name_, rhs_arena);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.introduce_, lhs_arena,
-                                       &other->_impl_.introduce_, rhs_arena);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.poster_path_, lhs_arena,
-                                       &other->_impl_.poster_path_, rhs_arena);
-
-  swap(_impl_.id_, other->_impl_.id_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Video, _impl_.id_)
+      + sizeof(Video::_impl_.id_)
+      - PROTOBUF_FIELD_OFFSET(Video, _impl_.meta_)>(
+          reinterpret_cast<char*>(&_impl_.meta_),
+          reinterpret_cast<char*>(&other->_impl_.meta_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Video::GetMetadata() const {

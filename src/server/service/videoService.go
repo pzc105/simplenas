@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"pnas/category"
 	"pnas/db"
 	"pnas/log"
 	"pnas/setting"
@@ -56,10 +57,27 @@ func (v *VideoService) checkAuth(next http.Handler) http.Handler {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
+
 		s := v.coreSer.GetSession(r)
-		if s == nil || !v.coreSer.GetUserManager().HasVideo(s.UserId, video.ID(vid)) {
-			w.WriteHeader(http.StatusBadRequest)
-			return
+		if s == nil {
+			queryParams := r.URL.Query()
+			itemid, _ := strconv.ParseInt(queryParams.Get("itemid"), 10, 64)
+			shareid := queryParams.Get("shareid")
+			sii, err := v.coreSer.GetShareItemInfo(shareid)
+			if err != nil {
+				log.Warn("[video] %v", err)
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+			if !v.coreSer.GetUserManager().IsItemShared(sii.ItemId, category.ID(itemid)) {
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+		} else {
+			if !v.coreSer.GetUserManager().HasVideo(s.UserId, video.ID(vid)) {
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
 		}
 		next.ServeHTTP(w, r)
 	})
@@ -97,13 +115,22 @@ func (v *VideoService) handlerHlsMasterList(w http.ResponseWriter, r *http.Reque
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+	queryParams := r.URL.Query()
+	itemid := queryParams.Get("itemid")
+	shareid := queryParams.Get("shareid")
 	for _, v := range masterpl.Variants {
 		v.URI = fmt.Sprintf("/video/%s/%s", vid, v.URI)
+		if len(shareid) > 0 && len(itemid) > 0 {
+			v.URI += fmt.Sprintf("?shareid=%s&itemid=%s", shareid, itemid)
+		}
 		for _, al := range v.Alternatives {
 			if al == nil {
 				continue
 			}
 			al.URI = fmt.Sprintf("/video/%s/%s", vid, al.URI)
+			if len(shareid) > 0 && len(itemid) > 0 {
+				al.URI += fmt.Sprintf("?shareid=%s&itemid=%s", shareid, itemid)
+			}
 		}
 	}
 	w.Header().Set("Content-Type", "application/vnd.apple.mpegurl")
@@ -140,11 +167,17 @@ func (v *VideoService) handlerHlsPlayList(w http.ResponseWriter, r *http.Request
 	if pl.Map != nil {
 		pl.Map.URI = fmt.Sprintf("/video/%s/stream_%s/segment/%s", vid, sid, pl.Map.URI)
 	}
+	queryParams := r.URL.Query()
+	itemid := queryParams.Get("itemid")
+	shareid := queryParams.Get("shareid")
 	for _, v := range pl.Segments {
 		if v == nil {
 			continue
 		}
 		v.URI = fmt.Sprintf("/video/%s/stream_%s/segment/%s", vid, sid, v.URI)
+		if len(shareid) > 0 && len(itemid) > 0 {
+			v.URI += fmt.Sprintf("?shareid=%s&itemid=%s", shareid, itemid)
+		}
 	}
 	w.Header().Set("Content-Type", "application/vnd.apple.mpegurl")
 	pl.Encode().WriteTo(w)

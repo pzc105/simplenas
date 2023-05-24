@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Container, CssBaseline } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 
 import Plyr from './lib/plyr/dist/plyr';
 import './lib/plyr/dist/plyr.css';
@@ -8,20 +8,28 @@ import Hls from 'hls.js'
 
 import { serverAddress } from './rpcClient.js'
 import * as User from './prpc/user_pb.js'
+import * as Category from './prpc/category_pb.js'
 import userService from './rpcClient.js'
 import { isNumber } from './utils';
 
 
 export default function PlyrWrap() {
+  const { itemId } = useParams()
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+  const shareid = searchParams.get('shareid');
+
   const player = useRef(null)
   const hls = useRef(null)
-  const { itemId } = useParams()
   const [url, setUrl] = useState('')
   const [subtitles, setSubtitles] = useState([])
   const videoRef = useRef(null);
   const vidRef = useRef(-1);
 
   const requestStartOffset = () => {
+    if (shareid) {
+      return
+    }
     fetch(serverAddress + "/video/" + vidRef.current + "/get_offsettime", {
       method: 'GET',
       mode: 'cors',
@@ -43,6 +51,9 @@ export default function PlyrWrap() {
 
   let lastOffsetTime = useRef(0.0)
   useEffect(() => {
+    if (shareid) {
+      return
+    }
     const saveStartOffset = () => {
       if (!videoRef.current) {
         return
@@ -183,33 +194,51 @@ export default function PlyrWrap() {
   }, [url])
 
   useEffect(() => {
-    var req = new User.QueryVideoInfoReq()
+    var req = new User.QueryItemInfoReq()
     req.setItemId(itemId)
-    userService.queryVideoInfo(req, {}, (err, res) => {
+    if (shareid) {
+      req.setShareId(shareid)
+    }
+    userService.queryItemInfo(req, {}, (err, res) => {
       if (err != null || !res) {
         console.log(err)
         return
       }
-      vidRef.current = res.getVideoId()
-      setUrl(serverAddress + "/video/" + res.getVideoId())
+      const itemInfo = res.getItemInfo()
+      if (itemInfo.getTypeId() !== Category.CategoryItem.Type.VIDEO) {
+        return
+      }
+
+      const videoInfo = res.getVideoInfo()
+      const vid = videoInfo.getId()
+      vidRef.current = vid
+      let urlPath = serverAddress + "/video/" + vid
+      if (shareid) {
+        urlPath += "?shareid=" + shareid + "&itemid=" + itemId
+      }
+      setUrl(urlPath)
       let cs = []
-      res.getSubtitlesList().map((c) => {
+      videoInfo.getSubtitlePathsList().map((c) => {
         let suffixes = c.split(".")
         let lang = "unknown"
         if (suffixes.length > 2) {
           suffixes.pop()
           lang = suffixes.pop()
         }
+        let urlPath = serverAddress + "/video/" + vid + "/subtitle/" + c
+        if (shareid) {
+          urlPath += "?shareid=" + shareid + "&itemid=" + itemId
+        }
         cs.push({
           kind: "subtitles",
-          src: serverAddress + "/video/" + res.getVideoId() + "/subtitle/" + c,
+          src: urlPath,
           srcLang: lang,
         })
         setSubtitles(cs)
         return null
       })
     })
-  }, [itemId]);
+  }, [itemId, shareid]);
 
   var touchStartX = useRef(0);
   var touchEndX = useRef(0);

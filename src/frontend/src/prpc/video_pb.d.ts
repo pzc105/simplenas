@@ -128,11 +128,15 @@ export class Video extends jspb.Message {
   getName(): string;
   setName(value: string): Video;
 
-  getIntroduce(): string;
-  setIntroduce(value: string): Video;
+  getMeta(): VideoMetadata | undefined;
+  setMeta(value?: VideoMetadata): Video;
+  hasMeta(): boolean;
+  clearMeta(): Video;
 
-  getPosterPath(): string;
-  setPosterPath(value: string): Video;
+  getSubtitlePathsList(): Array<string>;
+  setSubtitlePathsList(value: Array<string>): Video;
+  clearSubtitlePathsList(): Video;
+  addSubtitlePaths(value: string, index?: number): Video;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Video.AsObject;
@@ -146,8 +150,8 @@ export namespace Video {
   export type AsObject = {
     id: number,
     name: string,
-    introduce: string,
-    posterPath: string,
+    meta?: VideoMetadata.AsObject,
+    subtitlePathsList: Array<string>,
   }
 }
 

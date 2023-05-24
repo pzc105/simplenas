@@ -61,10 +61,10 @@ service UserService {
 
   rpc NewCategoryItem(NewCategoryItemReq) returns (NewCategoryItemRes);
   rpc DelCategoryItem(DelCategoryItemReq) returns (DelCategoryItemRes);
-  rpc QuerySubItems(QuerySubItemsReq) returns (QuerySubItemsRes);
   rpc AddBtVideos(AddBtVideosReq) returns (AddBtVideosRes);
-
-  rpc QueryVideoInfo(QueryVideoInfoReq) returns (QueryVideoInfoRes);
+  rpc ShareItem(ShareItemReq) returns (ShareItemRes);
+  rpc QuerySubItems(QuerySubItemsReq) returns (QuerySubItemsRes);
+  rpc QueryItemInfo(QueryItemInfoReq) returns (QueryItemInfoRes);
   rpc RefreshSubtitle(RefreshSubtitleReq) returns (RefreshSubtitleRes);
 }
 
@@ -127,6 +127,7 @@ message DelCategoryItemRes {
 
 message QuerySubItemsReq {
   int64 parent_id = 1;
+  string share_id = 2;
 }
 
 message QuerySubItemsRes {
@@ -157,13 +158,23 @@ message AddBtVideosRes {
 
 }
 
-message QueryVideoInfoReq {
+message QueryItemInfoReq {
+  int64 item_id = 1;
+  string share_id = 2;
+}
+
+message QueryItemInfoRes {
+  CategoryItem item_info = 1;
+  Video video_info = 2;
+}
+
+message ShareItemReq {
   int64 item_id = 1;
 }
 
-message QueryVideoInfoRes {
-  int64 video_id = 1;
-  repeated string subtitles = 2;
+message ShareItemRes {
+  int64 item_id = 1;
+  string share_id = 2;
 }
 
 message RefreshSubtitleReq {

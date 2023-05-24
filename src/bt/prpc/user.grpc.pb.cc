@@ -33,9 +33,10 @@ static const char* UserService_method_names[] = {
   "/prpc.UserService/QueryBtVideos",
   "/prpc.UserService/NewCategoryItem",
   "/prpc.UserService/DelCategoryItem",
-  "/prpc.UserService/QuerySubItems",
   "/prpc.UserService/AddBtVideos",
-  "/prpc.UserService/QueryVideoInfo",
+  "/prpc.UserService/ShareItem",
+  "/prpc.UserService/QuerySubItems",
+  "/prpc.UserService/QueryItemInfo",
   "/prpc.UserService/RefreshSubtitle",
 };
 
@@ -57,10 +58,11 @@ UserService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channe
   , rpcmethod_QueryBtVideos_(UserService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_NewCategoryItem_(UserService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_DelCategoryItem_(UserService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QuerySubItems_(UserService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_AddBtVideos_(UserService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QueryVideoInfo_(UserService_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RefreshSubtitle_(UserService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AddBtVideos_(UserService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ShareItem_(UserService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QuerySubItems_(UserService_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QueryItemInfo_(UserService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RefreshSubtitle_(UserService_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status UserService::Stub::Register(::grpc::ClientContext* context, const ::prpc::RegisterInfo& request, ::prpc::RegisterRet* response) {
@@ -309,29 +311,6 @@ void UserService::Stub::async::DelCategoryItem(::grpc::ClientContext* context, c
   return result;
 }
 
-::grpc::Status UserService::Stub::QuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::prpc::QuerySubItemsRes* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_QuerySubItems_, context, request, response);
-}
-
-void UserService::Stub::async::QuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QuerySubItems_, context, request, response, std::move(f));
-}
-
-void UserService::Stub::async::QuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QuerySubItems_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::prpc::QuerySubItemsRes>* UserService::Stub::PrepareAsyncQuerySubItemsRaw(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::QuerySubItemsRes, ::prpc::QuerySubItemsReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_QuerySubItems_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::prpc::QuerySubItemsRes>* UserService::Stub::AsyncQuerySubItemsRaw(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncQuerySubItemsRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
 ::grpc::Status UserService::Stub::AddBtVideos(::grpc::ClientContext* context, const ::prpc::AddBtVideosReq& request, ::prpc::AddBtVideosRes* response) {
   return ::grpc::internal::BlockingUnaryCall< ::prpc::AddBtVideosReq, ::prpc::AddBtVideosRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_AddBtVideos_, context, request, response);
 }
@@ -355,25 +334,71 @@ void UserService::Stub::async::AddBtVideos(::grpc::ClientContext* context, const
   return result;
 }
 
-::grpc::Status UserService::Stub::QueryVideoInfo(::grpc::ClientContext* context, const ::prpc::QueryVideoInfoReq& request, ::prpc::QueryVideoInfoRes* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::prpc::QueryVideoInfoReq, ::prpc::QueryVideoInfoRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_QueryVideoInfo_, context, request, response);
+::grpc::Status UserService::Stub::ShareItem(::grpc::ClientContext* context, const ::prpc::ShareItemReq& request, ::prpc::ShareItemRes* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::ShareItemReq, ::prpc::ShareItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ShareItem_, context, request, response);
 }
 
-void UserService::Stub::async::QueryVideoInfo(::grpc::ClientContext* context, const ::prpc::QueryVideoInfoReq* request, ::prpc::QueryVideoInfoRes* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::prpc::QueryVideoInfoReq, ::prpc::QueryVideoInfoRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QueryVideoInfo_, context, request, response, std::move(f));
+void UserService::Stub::async::ShareItem(::grpc::ClientContext* context, const ::prpc::ShareItemReq* request, ::prpc::ShareItemRes* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::ShareItemReq, ::prpc::ShareItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ShareItem_, context, request, response, std::move(f));
 }
 
-void UserService::Stub::async::QueryVideoInfo(::grpc::ClientContext* context, const ::prpc::QueryVideoInfoReq* request, ::prpc::QueryVideoInfoRes* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QueryVideoInfo_, context, request, response, reactor);
+void UserService::Stub::async::ShareItem(::grpc::ClientContext* context, const ::prpc::ShareItemReq* request, ::prpc::ShareItemRes* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ShareItem_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::prpc::QueryVideoInfoRes>* UserService::Stub::PrepareAsyncQueryVideoInfoRaw(::grpc::ClientContext* context, const ::prpc::QueryVideoInfoReq& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::QueryVideoInfoRes, ::prpc::QueryVideoInfoReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_QueryVideoInfo_, context, request);
+::grpc::ClientAsyncResponseReader< ::prpc::ShareItemRes>* UserService::Stub::PrepareAsyncShareItemRaw(::grpc::ClientContext* context, const ::prpc::ShareItemReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::ShareItemRes, ::prpc::ShareItemReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ShareItem_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::prpc::QueryVideoInfoRes>* UserService::Stub::AsyncQueryVideoInfoRaw(::grpc::ClientContext* context, const ::prpc::QueryVideoInfoReq& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::prpc::ShareItemRes>* UserService::Stub::AsyncShareItemRaw(::grpc::ClientContext* context, const ::prpc::ShareItemReq& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncQueryVideoInfoRaw(context, request, cq);
+    this->PrepareAsyncShareItemRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status UserService::Stub::QuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::prpc::QuerySubItemsRes* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_QuerySubItems_, context, request, response);
+}
+
+void UserService::Stub::async::QuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QuerySubItems_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::QuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QuerySubItems_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::QuerySubItemsRes>* UserService::Stub::PrepareAsyncQuerySubItemsRaw(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::QuerySubItemsRes, ::prpc::QuerySubItemsReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_QuerySubItems_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::QuerySubItemsRes>* UserService::Stub::AsyncQuerySubItemsRaw(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncQuerySubItemsRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status UserService::Stub::QueryItemInfo(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq& request, ::prpc::QueryItemInfoRes* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::QueryItemInfoReq, ::prpc::QueryItemInfoRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_QueryItemInfo_, context, request, response);
+}
+
+void UserService::Stub::async::QueryItemInfo(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::QueryItemInfoReq, ::prpc::QueryItemInfoRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QueryItemInfo_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::QueryItemInfo(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QueryItemInfo_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::QueryItemInfoRes>* UserService::Stub::PrepareAsyncQueryItemInfoRaw(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::QueryItemInfoRes, ::prpc::QueryItemInfoReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_QueryItemInfo_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::QueryItemInfoRes>* UserService::Stub::AsyncQueryItemInfoRaw(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncQueryItemInfoRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -515,16 +540,6 @@ UserService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[11],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](UserService::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::prpc::QuerySubItemsReq* req,
-             ::prpc::QuerySubItemsRes* resp) {
-               return service->QuerySubItems(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[12],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::AddBtVideosReq, ::prpc::AddBtVideosRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
              ::grpc::ServerContext* ctx,
@@ -533,17 +548,37 @@ UserService::Service::Service() {
                return service->AddBtVideos(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[13],
+      UserService_method_names[12],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QueryVideoInfoReq, ::prpc::QueryVideoInfoRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::ShareItemReq, ::prpc::ShareItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::prpc::QueryVideoInfoReq* req,
-             ::prpc::QueryVideoInfoRes* resp) {
-               return service->QueryVideoInfo(ctx, req, resp);
+             const ::prpc::ShareItemReq* req,
+             ::prpc::ShareItemRes* resp) {
+               return service->ShareItem(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[13],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::QuerySubItemsReq* req,
+             ::prpc::QuerySubItemsRes* resp) {
+               return service->QuerySubItems(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[14],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QueryItemInfoReq, ::prpc::QueryItemInfoRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::QueryItemInfoReq* req,
+             ::prpc::QueryItemInfoRes* resp) {
+               return service->QueryItemInfo(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[15],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::RefreshSubtitleReq, ::prpc::RefreshSubtitleRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -634,13 +669,6 @@ UserService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status UserService::Service::QuerySubItems(::grpc::ServerContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response) {
-  (void) context;
-  (void) request;
-  (void) response;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
 ::grpc::Status UserService::Service::AddBtVideos(::grpc::ServerContext* context, const ::prpc::AddBtVideosReq* request, ::prpc::AddBtVideosRes* response) {
   (void) context;
   (void) request;
@@ -648,7 +676,21 @@ UserService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status UserService::Service::QueryVideoInfo(::grpc::ServerContext* context, const ::prpc::QueryVideoInfoReq* request, ::prpc::QueryVideoInfoRes* response) {
+::grpc::Status UserService::Service::ShareItem(::grpc::ServerContext* context, const ::prpc::ShareItemReq* request, ::prpc::ShareItemRes* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::QuerySubItems(::grpc::ServerContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::QueryItemInfo(::grpc::ServerContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response) {
   (void) context;
   (void) request;
   (void) response;

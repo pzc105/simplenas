@@ -556,24 +556,24 @@ const char descriptor_table_protodef_bt_2eproto[] PROTOBUF_SECTION_VARIABLE(prot
     "\013\n\007unknown\020\000\022\022\n\016checking_files\020\001\022\030\n\024down"
     "loading_metadata\020\002\022\017\n\013downloading\020\003\022\014\n\010f"
     "inished\020\004\022\013\n\007seeding\020\005\022\030\n\024checking_resum"
-    "e_data\020\0072\275\003\n\tBtService\0225\n\005Parse\022\025.prpc.D"
+    "e_data\020\0072\301\003\n\tBtService\0225\n\005Parse\022\025.prpc.D"
     "ownloadRequest\032\025.prpc.DownloadRespone\0228\n"
     "\010Download\022\025.prpc.DownloadRequest\032\025.prpc."
     "DownloadRespone\022\?\n\rRemoveTorrent\022\026.prpc."
     "RemoveTorrentReq\032\026.prpc.RemoveTorrentRes"
-    "\022<\n\014FileProgress\022\025.prpc.FileProgressReq\032"
-    "\025.prpc.FileProgressRes\0228\n\010OnStatus\022\023.prp"
-    "c.StatusRequest\032\023.prpc.StatusRespone(\0010\001"
-    "\022\?\n\rOnTorrentInfo\022\024.prpc.TorrentInfoReq\032"
-    "\024.prpc.TorrentInfoRes(\0010\001\022E\n\017OnFileCompl"
-    "eted\022\026.prpc.FileCompletedReq\032\026.prpc.File"
-    "CompletedRes(\0010\001B\010Z\006./prpcb\006proto3"
+    "\0228\n\010OnStatus\022\023.prpc.StatusRequest\032\023.prpc"
+    ".StatusRespone(\0010\001\022\?\n\rOnTorrentInfo\022\024.pr"
+    "pc.TorrentInfoReq\032\024.prpc.TorrentInfoRes("
+    "\0010\001\022E\n\017OnFileCompleted\022\026.prpc.FileComple"
+    "tedReq\032\026.prpc.FileCompletedRes(\0010\001\022@\n\014Fi"
+    "leProgress\022\025.prpc.FileProgressReq\032\025.prpc"
+    ".FileProgressRes(\0010\001B\010Z\006./prpcb\006proto3"
 };
 static ::absl::once_flag descriptor_table_bt_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_bt_2eproto = {
     false,
     false,
-    1994,
+    1998,
     descriptor_table_protodef_bt_2eproto,
     "bt.proto",
     &descriptor_table_bt_2eproto_once,

@@ -244,6 +244,9 @@ export class QuerySubItemsReq extends jspb.Message {
   getParentId(): number;
   setParentId(value: number): QuerySubItemsReq;
 
+  getShareId(): string;
+  setShareId(value: string): QuerySubItemsReq;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): QuerySubItemsReq.AsObject;
   static toObject(includeInstance: boolean, msg: QuerySubItemsReq): QuerySubItemsReq.AsObject;
@@ -255,6 +258,7 @@ export class QuerySubItemsReq extends jspb.Message {
 export namespace QuerySubItemsReq {
   export type AsObject = {
     parentId: number,
+    shareId: string,
   }
 }
 
@@ -392,45 +396,91 @@ export namespace AddBtVideosRes {
   }
 }
 
-export class QueryVideoInfoReq extends jspb.Message {
+export class QueryItemInfoReq extends jspb.Message {
   getItemId(): number;
-  setItemId(value: number): QueryVideoInfoReq;
+  setItemId(value: number): QueryItemInfoReq;
+
+  getShareId(): string;
+  setShareId(value: string): QueryItemInfoReq;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): QueryVideoInfoReq.AsObject;
-  static toObject(includeInstance: boolean, msg: QueryVideoInfoReq): QueryVideoInfoReq.AsObject;
-  static serializeBinaryToWriter(message: QueryVideoInfoReq, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): QueryVideoInfoReq;
-  static deserializeBinaryFromReader(message: QueryVideoInfoReq, reader: jspb.BinaryReader): QueryVideoInfoReq;
+  toObject(includeInstance?: boolean): QueryItemInfoReq.AsObject;
+  static toObject(includeInstance: boolean, msg: QueryItemInfoReq): QueryItemInfoReq.AsObject;
+  static serializeBinaryToWriter(message: QueryItemInfoReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): QueryItemInfoReq;
+  static deserializeBinaryFromReader(message: QueryItemInfoReq, reader: jspb.BinaryReader): QueryItemInfoReq;
 }
 
-export namespace QueryVideoInfoReq {
+export namespace QueryItemInfoReq {
+  export type AsObject = {
+    itemId: number,
+    shareId: string,
+  }
+}
+
+export class QueryItemInfoRes extends jspb.Message {
+  getItemInfo(): category_pb.CategoryItem | undefined;
+  setItemInfo(value?: category_pb.CategoryItem): QueryItemInfoRes;
+  hasItemInfo(): boolean;
+  clearItemInfo(): QueryItemInfoRes;
+
+  getVideoInfo(): video_pb.Video | undefined;
+  setVideoInfo(value?: video_pb.Video): QueryItemInfoRes;
+  hasVideoInfo(): boolean;
+  clearVideoInfo(): QueryItemInfoRes;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): QueryItemInfoRes.AsObject;
+  static toObject(includeInstance: boolean, msg: QueryItemInfoRes): QueryItemInfoRes.AsObject;
+  static serializeBinaryToWriter(message: QueryItemInfoRes, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): QueryItemInfoRes;
+  static deserializeBinaryFromReader(message: QueryItemInfoRes, reader: jspb.BinaryReader): QueryItemInfoRes;
+}
+
+export namespace QueryItemInfoRes {
+  export type AsObject = {
+    itemInfo?: category_pb.CategoryItem.AsObject,
+    videoInfo?: video_pb.Video.AsObject,
+  }
+}
+
+export class ShareItemReq extends jspb.Message {
+  getItemId(): number;
+  setItemId(value: number): ShareItemReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ShareItemReq.AsObject;
+  static toObject(includeInstance: boolean, msg: ShareItemReq): ShareItemReq.AsObject;
+  static serializeBinaryToWriter(message: ShareItemReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ShareItemReq;
+  static deserializeBinaryFromReader(message: ShareItemReq, reader: jspb.BinaryReader): ShareItemReq;
+}
+
+export namespace ShareItemReq {
   export type AsObject = {
     itemId: number,
   }
 }
 
-export class QueryVideoInfoRes extends jspb.Message {
-  getVideoId(): number;
-  setVideoId(value: number): QueryVideoInfoRes;
+export class ShareItemRes extends jspb.Message {
+  getItemId(): number;
+  setItemId(value: number): ShareItemRes;
 
-  getSubtitlesList(): Array<string>;
-  setSubtitlesList(value: Array<string>): QueryVideoInfoRes;
-  clearSubtitlesList(): QueryVideoInfoRes;
-  addSubtitles(value: string, index?: number): QueryVideoInfoRes;
+  getShareId(): string;
+  setShareId(value: string): ShareItemRes;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): QueryVideoInfoRes.AsObject;
-  static toObject(includeInstance: boolean, msg: QueryVideoInfoRes): QueryVideoInfoRes.AsObject;
-  static serializeBinaryToWriter(message: QueryVideoInfoRes, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): QueryVideoInfoRes;
-  static deserializeBinaryFromReader(message: QueryVideoInfoRes, reader: jspb.BinaryReader): QueryVideoInfoRes;
+  toObject(includeInstance?: boolean): ShareItemRes.AsObject;
+  static toObject(includeInstance: boolean, msg: ShareItemRes): ShareItemRes.AsObject;
+  static serializeBinaryToWriter(message: ShareItemRes, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ShareItemRes;
+  static deserializeBinaryFromReader(message: ShareItemRes, reader: jspb.BinaryReader): ShareItemRes;
 }
 
-export namespace QueryVideoInfoRes {
+export namespace ShareItemRes {
   export type AsObject = {
-    videoId: number,
-    subtitlesList: Array<string>,
+    itemId: number,
+    shareId: string,
   }
 }
 

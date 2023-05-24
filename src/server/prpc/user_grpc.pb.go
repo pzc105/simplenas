@@ -30,9 +30,10 @@ const (
 	UserService_QueryBtVideos_FullMethodName   = "/prpc.UserService/QueryBtVideos"
 	UserService_NewCategoryItem_FullMethodName = "/prpc.UserService/NewCategoryItem"
 	UserService_DelCategoryItem_FullMethodName = "/prpc.UserService/DelCategoryItem"
-	UserService_QuerySubItems_FullMethodName   = "/prpc.UserService/QuerySubItems"
 	UserService_AddBtVideos_FullMethodName     = "/prpc.UserService/AddBtVideos"
-	UserService_QueryVideoInfo_FullMethodName  = "/prpc.UserService/QueryVideoInfo"
+	UserService_ShareItem_FullMethodName       = "/prpc.UserService/ShareItem"
+	UserService_QuerySubItems_FullMethodName   = "/prpc.UserService/QuerySubItems"
+	UserService_QueryItemInfo_FullMethodName   = "/prpc.UserService/QueryItemInfo"
 	UserService_RefreshSubtitle_FullMethodName = "/prpc.UserService/RefreshSubtitle"
 )
 
@@ -51,9 +52,10 @@ type UserServiceClient interface {
 	QueryBtVideos(ctx context.Context, in *QueryBtVideosReq, opts ...grpc.CallOption) (*QueryBtVideosRes, error)
 	NewCategoryItem(ctx context.Context, in *NewCategoryItemReq, opts ...grpc.CallOption) (*NewCategoryItemRes, error)
 	DelCategoryItem(ctx context.Context, in *DelCategoryItemReq, opts ...grpc.CallOption) (*DelCategoryItemRes, error)
-	QuerySubItems(ctx context.Context, in *QuerySubItemsReq, opts ...grpc.CallOption) (*QuerySubItemsRes, error)
 	AddBtVideos(ctx context.Context, in *AddBtVideosReq, opts ...grpc.CallOption) (*AddBtVideosRes, error)
-	QueryVideoInfo(ctx context.Context, in *QueryVideoInfoReq, opts ...grpc.CallOption) (*QueryVideoInfoRes, error)
+	ShareItem(ctx context.Context, in *ShareItemReq, opts ...grpc.CallOption) (*ShareItemRes, error)
+	QuerySubItems(ctx context.Context, in *QuerySubItemsReq, opts ...grpc.CallOption) (*QuerySubItemsRes, error)
+	QueryItemInfo(ctx context.Context, in *QueryItemInfoReq, opts ...grpc.CallOption) (*QueryItemInfoRes, error)
 	RefreshSubtitle(ctx context.Context, in *RefreshSubtitleReq, opts ...grpc.CallOption) (*RefreshSubtitleRes, error)
 }
 
@@ -187,15 +189,6 @@ func (c *userServiceClient) DelCategoryItem(ctx context.Context, in *DelCategory
 	return out, nil
 }
 
-func (c *userServiceClient) QuerySubItems(ctx context.Context, in *QuerySubItemsReq, opts ...grpc.CallOption) (*QuerySubItemsRes, error) {
-	out := new(QuerySubItemsRes)
-	err := c.cc.Invoke(ctx, UserService_QuerySubItems_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *userServiceClient) AddBtVideos(ctx context.Context, in *AddBtVideosReq, opts ...grpc.CallOption) (*AddBtVideosRes, error) {
 	out := new(AddBtVideosRes)
 	err := c.cc.Invoke(ctx, UserService_AddBtVideos_FullMethodName, in, out, opts...)
@@ -205,9 +198,27 @@ func (c *userServiceClient) AddBtVideos(ctx context.Context, in *AddBtVideosReq,
 	return out, nil
 }
 
-func (c *userServiceClient) QueryVideoInfo(ctx context.Context, in *QueryVideoInfoReq, opts ...grpc.CallOption) (*QueryVideoInfoRes, error) {
-	out := new(QueryVideoInfoRes)
-	err := c.cc.Invoke(ctx, UserService_QueryVideoInfo_FullMethodName, in, out, opts...)
+func (c *userServiceClient) ShareItem(ctx context.Context, in *ShareItemReq, opts ...grpc.CallOption) (*ShareItemRes, error) {
+	out := new(ShareItemRes)
+	err := c.cc.Invoke(ctx, UserService_ShareItem_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) QuerySubItems(ctx context.Context, in *QuerySubItemsReq, opts ...grpc.CallOption) (*QuerySubItemsRes, error) {
+	out := new(QuerySubItemsRes)
+	err := c.cc.Invoke(ctx, UserService_QuerySubItems_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) QueryItemInfo(ctx context.Context, in *QueryItemInfoReq, opts ...grpc.CallOption) (*QueryItemInfoRes, error) {
+	out := new(QueryItemInfoRes)
+	err := c.cc.Invoke(ctx, UserService_QueryItemInfo_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -238,9 +249,10 @@ type UserServiceServer interface {
 	QueryBtVideos(context.Context, *QueryBtVideosReq) (*QueryBtVideosRes, error)
 	NewCategoryItem(context.Context, *NewCategoryItemReq) (*NewCategoryItemRes, error)
 	DelCategoryItem(context.Context, *DelCategoryItemReq) (*DelCategoryItemRes, error)
-	QuerySubItems(context.Context, *QuerySubItemsReq) (*QuerySubItemsRes, error)
 	AddBtVideos(context.Context, *AddBtVideosReq) (*AddBtVideosRes, error)
-	QueryVideoInfo(context.Context, *QueryVideoInfoReq) (*QueryVideoInfoRes, error)
+	ShareItem(context.Context, *ShareItemReq) (*ShareItemRes, error)
+	QuerySubItems(context.Context, *QuerySubItemsReq) (*QuerySubItemsRes, error)
+	QueryItemInfo(context.Context, *QueryItemInfoReq) (*QueryItemInfoRes, error)
 	RefreshSubtitle(context.Context, *RefreshSubtitleReq) (*RefreshSubtitleRes, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
@@ -282,14 +294,17 @@ func (UnimplementedUserServiceServer) NewCategoryItem(context.Context, *NewCateg
 func (UnimplementedUserServiceServer) DelCategoryItem(context.Context, *DelCategoryItemReq) (*DelCategoryItemRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DelCategoryItem not implemented")
 }
-func (UnimplementedUserServiceServer) QuerySubItems(context.Context, *QuerySubItemsReq) (*QuerySubItemsRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method QuerySubItems not implemented")
-}
 func (UnimplementedUserServiceServer) AddBtVideos(context.Context, *AddBtVideosReq) (*AddBtVideosRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddBtVideos not implemented")
 }
-func (UnimplementedUserServiceServer) QueryVideoInfo(context.Context, *QueryVideoInfoReq) (*QueryVideoInfoRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method QueryVideoInfo not implemented")
+func (UnimplementedUserServiceServer) ShareItem(context.Context, *ShareItemReq) (*ShareItemRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ShareItem not implemented")
+}
+func (UnimplementedUserServiceServer) QuerySubItems(context.Context, *QuerySubItemsReq) (*QuerySubItemsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QuerySubItems not implemented")
+}
+func (UnimplementedUserServiceServer) QueryItemInfo(context.Context, *QueryItemInfoReq) (*QueryItemInfoRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryItemInfo not implemented")
 }
 func (UnimplementedUserServiceServer) RefreshSubtitle(context.Context, *RefreshSubtitleReq) (*RefreshSubtitleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshSubtitle not implemented")
@@ -508,24 +523,6 @@ func _UserService_DelCategoryItem_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_QuerySubItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QuerySubItemsReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServiceServer).QuerySubItems(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: UserService_QuerySubItems_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).QuerySubItems(ctx, req.(*QuerySubItemsReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _UserService_AddBtVideos_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddBtVideosReq)
 	if err := dec(in); err != nil {
@@ -544,20 +541,56 @@ func _UserService_AddBtVideos_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_QueryVideoInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryVideoInfoReq)
+func _UserService_ShareItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShareItemReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).QueryVideoInfo(ctx, in)
+		return srv.(UserServiceServer).ShareItem(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserService_QueryVideoInfo_FullMethodName,
+		FullMethod: UserService_ShareItem_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).QueryVideoInfo(ctx, req.(*QueryVideoInfoReq))
+		return srv.(UserServiceServer).ShareItem(ctx, req.(*ShareItemReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_QuerySubItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QuerySubItemsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).QuerySubItems(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_QuerySubItems_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).QuerySubItems(ctx, req.(*QuerySubItemsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_QueryItemInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryItemInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).QueryItemInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_QueryItemInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).QueryItemInfo(ctx, req.(*QueryItemInfoReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -628,16 +661,20 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UserService_DelCategoryItem_Handler,
 		},
 		{
-			MethodName: "QuerySubItems",
-			Handler:    _UserService_QuerySubItems_Handler,
-		},
-		{
 			MethodName: "AddBtVideos",
 			Handler:    _UserService_AddBtVideos_Handler,
 		},
 		{
-			MethodName: "QueryVideoInfo",
-			Handler:    _UserService_QueryVideoInfo_Handler,
+			MethodName: "ShareItem",
+			Handler:    _UserService_ShareItem_Handler,
+		},
+		{
+			MethodName: "QuerySubItems",
+			Handler:    _UserService_QuerySubItems_Handler,
+		},
+		{
+			MethodName: "QueryItemInfo",
+			Handler:    _UserService_QueryItemInfo_Handler,
 		},
 		{
 			MethodName: "RefreshSubtitle",

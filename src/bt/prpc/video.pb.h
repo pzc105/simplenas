@@ -960,11 +960,39 @@ class Video final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kSubtitlePathsFieldNumber = 4,
     kNameFieldNumber = 2,
-    kIntroduceFieldNumber = 3,
-    kPosterPathFieldNumber = 4,
+    kMetaFieldNumber = 3,
     kIdFieldNumber = 1,
   };
+  // repeated string subtitle_paths = 4;
+  int subtitle_paths_size() const;
+  private:
+  int _internal_subtitle_paths_size() const;
+
+  public:
+  void clear_subtitle_paths() ;
+  const std::string& subtitle_paths(int index) const;
+  std::string* mutable_subtitle_paths(int index);
+  void set_subtitle_paths(int index, const std::string& value);
+  void set_subtitle_paths(int index, std::string&& value);
+  void set_subtitle_paths(int index, const char* value);
+  void set_subtitle_paths(int index, const char* value, std::size_t size);
+  void set_subtitle_paths(int index, absl::string_view value);
+  std::string* add_subtitle_paths();
+  void add_subtitle_paths(const std::string& value);
+  void add_subtitle_paths(std::string&& value);
+  void add_subtitle_paths(const char* value);
+  void add_subtitle_paths(const char* value, std::size_t size);
+  void add_subtitle_paths(absl::string_view value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& subtitle_paths() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_subtitle_paths();
+
+  private:
+  const std::string& _internal_subtitle_paths(int index) const;
+  std::string* _internal_add_subtitle_paths();
+
+  public:
   // string name = 2;
   void clear_name() ;
   const std::string& name() const;
@@ -985,46 +1013,24 @@ class Video final :
   std::string* _internal_mutable_name();
 
   public:
-  // string introduce = 3;
-  void clear_introduce() ;
-  const std::string& introduce() const;
-
-
-
-
-  template <typename Arg_ = const std::string&, typename... Args_>
-  void set_introduce(Arg_&& arg, Args_... args);
-  std::string* mutable_introduce();
-  PROTOBUF_NODISCARD std::string* release_introduce();
-  void set_allocated_introduce(std::string* ptr);
-
+  // .prpc.VideoMetadata meta = 3;
+  bool has_meta() const;
   private:
-  const std::string& _internal_introduce() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_introduce(
-      const std::string& value);
-  std::string* _internal_mutable_introduce();
+  bool _internal_has_meta() const;
 
   public:
-  // string poster_path = 4;
-  void clear_poster_path() ;
-  const std::string& poster_path() const;
-
-
-
-
-  template <typename Arg_ = const std::string&, typename... Args_>
-  void set_poster_path(Arg_&& arg, Args_... args);
-  std::string* mutable_poster_path();
-  PROTOBUF_NODISCARD std::string* release_poster_path();
-  void set_allocated_poster_path(std::string* ptr);
-
+  void clear_meta() ;
+  const ::prpc::VideoMetadata& meta() const;
+  PROTOBUF_NODISCARD ::prpc::VideoMetadata* release_meta();
+  ::prpc::VideoMetadata* mutable_meta();
+  void set_allocated_meta(::prpc::VideoMetadata* meta);
   private:
-  const std::string& _internal_poster_path() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_poster_path(
-      const std::string& value);
-  std::string* _internal_mutable_poster_path();
-
+  const ::prpc::VideoMetadata& _internal_meta() const;
+  ::prpc::VideoMetadata* _internal_mutable_meta();
   public:
+  void unsafe_arena_set_allocated_meta(
+      ::prpc::VideoMetadata* meta);
+  ::prpc::VideoMetadata* unsafe_arena_release_meta();
   // int64 id = 1;
   void clear_id() ;
   ::int64_t id() const;
@@ -1043,9 +1049,9 @@ class Video final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> subtitle_paths_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr introduce_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr poster_path_;
+    ::prpc::VideoMetadata* meta_;
     ::int64_t id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -1917,98 +1923,169 @@ inline void Video::set_allocated_name(std::string* value) {
   // @@protoc_insertion_point(field_set_allocated:prpc.Video.name)
 }
 
-// string introduce = 3;
-inline void Video::clear_introduce() {
-  _impl_.introduce_.ClearToEmpty();
+// .prpc.VideoMetadata meta = 3;
+inline bool Video::_internal_has_meta() const {
+  return this != internal_default_instance() && _impl_.meta_ != nullptr;
 }
-inline const std::string& Video::introduce() const {
-  // @@protoc_insertion_point(field_get:prpc.Video.introduce)
-  return _internal_introduce();
+inline bool Video::has_meta() const {
+  return _internal_has_meta();
 }
-template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void Video::set_introduce(Arg_&& arg,
-                                                     Args_... args) {
-  ;
-  _impl_.introduce_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:prpc.Video.introduce)
+inline void Video::clear_meta() {
+  if (GetArenaForAllocation() == nullptr && _impl_.meta_ != nullptr) {
+    delete _impl_.meta_;
+  }
+  _impl_.meta_ = nullptr;
 }
-inline std::string* Video::mutable_introduce() {
-  std::string* _s = _internal_mutable_introduce();
-  // @@protoc_insertion_point(field_mutable:prpc.Video.introduce)
+inline const ::prpc::VideoMetadata& Video::_internal_meta() const {
+  const ::prpc::VideoMetadata* p = _impl_.meta_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::VideoMetadata&>(
+      ::prpc::_VideoMetadata_default_instance_);
+}
+inline const ::prpc::VideoMetadata& Video::meta() const {
+  // @@protoc_insertion_point(field_get:prpc.Video.meta)
+  return _internal_meta();
+}
+inline void Video::unsafe_arena_set_allocated_meta(
+    ::prpc::VideoMetadata* meta) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.meta_);
+  }
+  _impl_.meta_ = meta;
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.Video.meta)
+}
+inline ::prpc::VideoMetadata* Video::release_meta() {
+  
+  ::prpc::VideoMetadata* temp = _impl_.meta_;
+  _impl_.meta_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::prpc::VideoMetadata* Video::unsafe_arena_release_meta() {
+  // @@protoc_insertion_point(field_release:prpc.Video.meta)
+  
+  ::prpc::VideoMetadata* temp = _impl_.meta_;
+  _impl_.meta_ = nullptr;
+  return temp;
+}
+inline ::prpc::VideoMetadata* Video::_internal_mutable_meta() {
+  
+  if (_impl_.meta_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::VideoMetadata>(GetArenaForAllocation());
+    _impl_.meta_ = p;
+  }
+  return _impl_.meta_;
+}
+inline ::prpc::VideoMetadata* Video::mutable_meta() {
+  ::prpc::VideoMetadata* _msg = _internal_mutable_meta();
+  // @@protoc_insertion_point(field_mutable:prpc.Video.meta)
+  return _msg;
+}
+inline void Video::set_allocated_meta(::prpc::VideoMetadata* meta) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.meta_;
+  }
+  if (meta) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(meta);
+    if (message_arena != submessage_arena) {
+      meta = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, meta, submessage_arena);
+    }
+
+  } else {
+
+  }
+  _impl_.meta_ = meta;
+  // @@protoc_insertion_point(field_set_allocated:prpc.Video.meta)
+}
+
+// repeated string subtitle_paths = 4;
+inline int Video::_internal_subtitle_paths_size() const {
+  return _impl_.subtitle_paths_.size();
+}
+inline int Video::subtitle_paths_size() const {
+  return _internal_subtitle_paths_size();
+}
+inline void Video::clear_subtitle_paths() {
+  _impl_.subtitle_paths_.Clear();
+}
+inline std::string* Video::add_subtitle_paths() {
+  std::string* _s = _internal_add_subtitle_paths();
+  // @@protoc_insertion_point(field_add_mutable:prpc.Video.subtitle_paths)
   return _s;
 }
-inline const std::string& Video::_internal_introduce() const {
-  return _impl_.introduce_.Get();
+inline const std::string& Video::_internal_subtitle_paths(int index) const {
+  return _impl_.subtitle_paths_.Get(index);
 }
-inline void Video::_internal_set_introduce(const std::string& value) {
-  ;
-
-
-  _impl_.introduce_.Set(value, GetArenaForAllocation());
+inline const std::string& Video::subtitle_paths(int index) const {
+  // @@protoc_insertion_point(field_get:prpc.Video.subtitle_paths)
+  return _internal_subtitle_paths(index);
 }
-inline std::string* Video::_internal_mutable_introduce() {
-  ;
-  return _impl_.introduce_.Mutable( GetArenaForAllocation());
+inline std::string* Video::mutable_subtitle_paths(int index) {
+  // @@protoc_insertion_point(field_mutable:prpc.Video.subtitle_paths)
+  return _impl_.subtitle_paths_.Mutable(index);
 }
-inline std::string* Video::release_introduce() {
-  // @@protoc_insertion_point(field_release:prpc.Video.introduce)
-  return _impl_.introduce_.Release();
+inline void Video::set_subtitle_paths(int index, const std::string& value) {
+  _impl_.subtitle_paths_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:prpc.Video.subtitle_paths)
 }
-inline void Video::set_allocated_introduce(std::string* value) {
-  _impl_.introduce_.SetAllocated(value, GetArenaForAllocation());
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        if (_impl_.introduce_.IsDefault()) {
-          _impl_.introduce_.Set("", GetArenaForAllocation());
-        }
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:prpc.Video.introduce)
+inline void Video::set_subtitle_paths(int index, std::string&& value) {
+  _impl_.subtitle_paths_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:prpc.Video.subtitle_paths)
 }
-
-// string poster_path = 4;
-inline void Video::clear_poster_path() {
-  _impl_.poster_path_.ClearToEmpty();
+inline void Video::set_subtitle_paths(int index, const char* value) {
+  ABSL_DCHECK(value != nullptr);
+  _impl_.subtitle_paths_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:prpc.Video.subtitle_paths)
 }
-inline const std::string& Video::poster_path() const {
-  // @@protoc_insertion_point(field_get:prpc.Video.poster_path)
-  return _internal_poster_path();
+inline void Video::set_subtitle_paths(int index, const char* value,
+                              std::size_t size) {
+  _impl_.subtitle_paths_.Mutable(index)->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:prpc.Video.subtitle_paths)
 }
-template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void Video::set_poster_path(Arg_&& arg,
-                                                     Args_... args) {
-  ;
-  _impl_.poster_path_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:prpc.Video.poster_path)
+inline void Video::set_subtitle_paths(int index, absl::string_view value) {
+  _impl_.subtitle_paths_.Mutable(index)->assign(value.data(), value.size());
+  // @@protoc_insertion_point(field_set_string_piece:prpc.Video.subtitle_paths)
 }
-inline std::string* Video::mutable_poster_path() {
-  std::string* _s = _internal_mutable_poster_path();
-  // @@protoc_insertion_point(field_mutable:prpc.Video.poster_path)
-  return _s;
+inline std::string* Video::_internal_add_subtitle_paths() { return _impl_.subtitle_paths_.Add(); }
+inline void Video::add_subtitle_paths(const std::string& value) {
+  _impl_.subtitle_paths_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:prpc.Video.subtitle_paths)
 }
-inline const std::string& Video::_internal_poster_path() const {
-  return _impl_.poster_path_.Get();
+inline void Video::add_subtitle_paths(std::string&& value) {
+  _impl_.subtitle_paths_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:prpc.Video.subtitle_paths)
 }
-inline void Video::_internal_set_poster_path(const std::string& value) {
-  ;
-
-
-  _impl_.poster_path_.Set(value, GetArenaForAllocation());
+inline void Video::add_subtitle_paths(const char* value) {
+  ABSL_DCHECK(value != nullptr);
+  _impl_.subtitle_paths_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:prpc.Video.subtitle_paths)
 }
-inline std::string* Video::_internal_mutable_poster_path() {
-  ;
-  return _impl_.poster_path_.Mutable( GetArenaForAllocation());
+inline void Video::add_subtitle_paths(const char* value, std::size_t size) {
+  _impl_.subtitle_paths_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:prpc.Video.subtitle_paths)
 }
-inline std::string* Video::release_poster_path() {
-  // @@protoc_insertion_point(field_release:prpc.Video.poster_path)
-  return _impl_.poster_path_.Release();
+inline void Video::add_subtitle_paths(absl::string_view value) {
+  _impl_.subtitle_paths_.Add()->assign(value.data(), value.size());
+  // @@protoc_insertion_point(field_add_string_piece:prpc.Video.subtitle_paths)
 }
-inline void Video::set_allocated_poster_path(std::string* value) {
-  _impl_.poster_path_.SetAllocated(value, GetArenaForAllocation());
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        if (_impl_.poster_path_.IsDefault()) {
-          _impl_.poster_path_.Set("", GetArenaForAllocation());
-        }
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:prpc.Video.poster_path)
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+Video::subtitle_paths() const {
+  // @@protoc_insertion_point(field_list:prpc.Video.subtitle_paths)
+  return _impl_.subtitle_paths_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* Video::mutable_subtitle_paths() {
+  // @@protoc_insertion_point(field_mutable_list:prpc.Video.subtitle_paths)
+  return &_impl_.subtitle_paths_;
 }
 
 #ifdef __GNUC__

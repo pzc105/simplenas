@@ -22,10 +22,10 @@ const (
 	BtService_Parse_FullMethodName           = "/prpc.BtService/Parse"
 	BtService_Download_FullMethodName        = "/prpc.BtService/Download"
 	BtService_RemoveTorrent_FullMethodName   = "/prpc.BtService/RemoveTorrent"
-	BtService_FileProgress_FullMethodName    = "/prpc.BtService/FileProgress"
 	BtService_OnStatus_FullMethodName        = "/prpc.BtService/OnStatus"
 	BtService_OnTorrentInfo_FullMethodName   = "/prpc.BtService/OnTorrentInfo"
 	BtService_OnFileCompleted_FullMethodName = "/prpc.BtService/OnFileCompleted"
+	BtService_FileProgress_FullMethodName    = "/prpc.BtService/FileProgress"
 )
 
 // BtServiceClient is the client API for BtService service.
@@ -35,10 +35,10 @@ type BtServiceClient interface {
 	Parse(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadRespone, error)
 	Download(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadRespone, error)
 	RemoveTorrent(ctx context.Context, in *RemoveTorrentReq, opts ...grpc.CallOption) (*RemoveTorrentRes, error)
-	FileProgress(ctx context.Context, in *FileProgressReq, opts ...grpc.CallOption) (*FileProgressRes, error)
 	OnStatus(ctx context.Context, opts ...grpc.CallOption) (BtService_OnStatusClient, error)
 	OnTorrentInfo(ctx context.Context, opts ...grpc.CallOption) (BtService_OnTorrentInfoClient, error)
 	OnFileCompleted(ctx context.Context, opts ...grpc.CallOption) (BtService_OnFileCompletedClient, error)
+	FileProgress(ctx context.Context, opts ...grpc.CallOption) (BtService_FileProgressClient, error)
 }
 
 type btServiceClient struct {
@@ -70,15 +70,6 @@ func (c *btServiceClient) Download(ctx context.Context, in *DownloadRequest, opt
 func (c *btServiceClient) RemoveTorrent(ctx context.Context, in *RemoveTorrentReq, opts ...grpc.CallOption) (*RemoveTorrentRes, error) {
 	out := new(RemoveTorrentRes)
 	err := c.cc.Invoke(ctx, BtService_RemoveTorrent_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *btServiceClient) FileProgress(ctx context.Context, in *FileProgressReq, opts ...grpc.CallOption) (*FileProgressRes, error) {
-	out := new(FileProgressRes)
-	err := c.cc.Invoke(ctx, BtService_FileProgress_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -178,6 +169,37 @@ func (x *btServiceOnFileCompletedClient) Recv() (*FileCompletedRes, error) {
 	return m, nil
 }
 
+func (c *btServiceClient) FileProgress(ctx context.Context, opts ...grpc.CallOption) (BtService_FileProgressClient, error) {
+	stream, err := c.cc.NewStream(ctx, &BtService_ServiceDesc.Streams[3], BtService_FileProgress_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &btServiceFileProgressClient{stream}
+	return x, nil
+}
+
+type BtService_FileProgressClient interface {
+	Send(*FileProgressReq) error
+	Recv() (*FileProgressRes, error)
+	grpc.ClientStream
+}
+
+type btServiceFileProgressClient struct {
+	grpc.ClientStream
+}
+
+func (x *btServiceFileProgressClient) Send(m *FileProgressReq) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *btServiceFileProgressClient) Recv() (*FileProgressRes, error) {
+	m := new(FileProgressRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // BtServiceServer is the server API for BtService service.
 // All implementations must embed UnimplementedBtServiceServer
 // for forward compatibility
@@ -185,10 +207,10 @@ type BtServiceServer interface {
 	Parse(context.Context, *DownloadRequest) (*DownloadRespone, error)
 	Download(context.Context, *DownloadRequest) (*DownloadRespone, error)
 	RemoveTorrent(context.Context, *RemoveTorrentReq) (*RemoveTorrentRes, error)
-	FileProgress(context.Context, *FileProgressReq) (*FileProgressRes, error)
 	OnStatus(BtService_OnStatusServer) error
 	OnTorrentInfo(BtService_OnTorrentInfoServer) error
 	OnFileCompleted(BtService_OnFileCompletedServer) error
+	FileProgress(BtService_FileProgressServer) error
 	mustEmbedUnimplementedBtServiceServer()
 }
 
@@ -205,9 +227,6 @@ func (UnimplementedBtServiceServer) Download(context.Context, *DownloadRequest) 
 func (UnimplementedBtServiceServer) RemoveTorrent(context.Context, *RemoveTorrentReq) (*RemoveTorrentRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveTorrent not implemented")
 }
-func (UnimplementedBtServiceServer) FileProgress(context.Context, *FileProgressReq) (*FileProgressRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FileProgress not implemented")
-}
 func (UnimplementedBtServiceServer) OnStatus(BtService_OnStatusServer) error {
 	return status.Errorf(codes.Unimplemented, "method OnStatus not implemented")
 }
@@ -216,6 +235,9 @@ func (UnimplementedBtServiceServer) OnTorrentInfo(BtService_OnTorrentInfoServer)
 }
 func (UnimplementedBtServiceServer) OnFileCompleted(BtService_OnFileCompletedServer) error {
 	return status.Errorf(codes.Unimplemented, "method OnFileCompleted not implemented")
+}
+func (UnimplementedBtServiceServer) FileProgress(BtService_FileProgressServer) error {
+	return status.Errorf(codes.Unimplemented, "method FileProgress not implemented")
 }
 func (UnimplementedBtServiceServer) mustEmbedUnimplementedBtServiceServer() {}
 
@@ -280,24 +302,6 @@ func _BtService_RemoveTorrent_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BtServiceServer).RemoveTorrent(ctx, req.(*RemoveTorrentReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BtService_FileProgress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FileProgressReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BtServiceServer).FileProgress(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BtService_FileProgress_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BtServiceServer).FileProgress(ctx, req.(*FileProgressReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -380,6 +384,32 @@ func (x *btServiceOnFileCompletedServer) Recv() (*FileCompletedReq, error) {
 	return m, nil
 }
 
+func _BtService_FileProgress_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(BtServiceServer).FileProgress(&btServiceFileProgressServer{stream})
+}
+
+type BtService_FileProgressServer interface {
+	Send(*FileProgressRes) error
+	Recv() (*FileProgressReq, error)
+	grpc.ServerStream
+}
+
+type btServiceFileProgressServer struct {
+	grpc.ServerStream
+}
+
+func (x *btServiceFileProgressServer) Send(m *FileProgressRes) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *btServiceFileProgressServer) Recv() (*FileProgressReq, error) {
+	m := new(FileProgressReq)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // BtService_ServiceDesc is the grpc.ServiceDesc for BtService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -399,10 +429,6 @@ var BtService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "RemoveTorrent",
 			Handler:    _BtService_RemoveTorrent_Handler,
 		},
-		{
-			MethodName: "FileProgress",
-			Handler:    _BtService_FileProgress_Handler,
-		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
@@ -420,6 +446,12 @@ var BtService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "OnFileCompleted",
 			Handler:       _BtService_OnFileCompleted_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "FileProgress",
+			Handler:       _BtService_FileProgress_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},

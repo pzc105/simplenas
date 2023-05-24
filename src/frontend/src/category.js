@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import {
   CssBaseline, Button, TextField, Menu, MenuItem, Container, Grid, Paper, Box,
   Typography, Tooltip, Card, CardContent, CardActions, CardMedia, InputAdornment
@@ -17,17 +17,22 @@ import userService from './rpcClient.js'
 import { serverAddress } from './rpcClient.js'
 import * as utils from './utils.js'
 
-const CategoryItems = ({ parentId }) => {
+const CategoryItems = ({ parentId, shareid }) => {
   const navigate = useNavigate()
   const items = useSelector((state) => store.selectCategorySubItems(state, parentId))
   const dispatch = useDispatch()
 
   const onClick = (item) => {
+    let path = ""
     if (item.typeId === Category.CategoryItem.Type.VIDEO) {
-      navigate("/video/" + item.id)
-      return
+      path = "/video/" + item.id
+    } else {
+      path = "/citem/" + item.id
     }
-    navigate("/citem/" + item.id)
+    if (shareid) {
+      path += "?shareid=" + shareid
+    }
+    navigate(path)
   }
 
   const refreshSubtitle = (item) => {
@@ -50,6 +55,18 @@ const CategoryItems = ({ parentId }) => {
         return
       }
       dispatch(store.categorySlice.actions.deleteItem(item.id))
+    })
+  }
+
+  const ShareCategoryItem = (item) => {
+    let req = new User.ShareItemReq()
+    req.setItemId(item.id)
+    userService.shareItem(req, {}, (err, res) => {
+      if (err != null) {
+        return
+      }
+      const shareid = res.getShareId()
+      console.log("shareid:", shareid)
     })
   }
 
@@ -77,7 +94,8 @@ const CategoryItems = ({ parentId }) => {
                 <Grid key={item.id} item xs={2} sx={{ ml: "0.5em", mt: "0.5em" }}>
                   <Card onContextMenu={(e) => handleContextMenu(e, item.id)}>
                     <Box sx={{ display: "flex", justifyContent: "center", height: "4.3em" }}>
-                      <img style={{ maxHeight: "5em" }} alt="Movie Poster" src={serverAddress + "/poster/item/" + item.id} />
+                      <img style={{ maxHeight: "5em" }} alt="Movie Poster"
+                        src={serverAddress + "/poster/item/" + item.id + (shareid ? "?shareid=" + shareid : "")} />
                     </Box>
                     <CardContent sx={{ display: "flex", justifyContent: "center" }}>
                       <Tooltip title={item.name}>
@@ -114,6 +132,7 @@ const CategoryItems = ({ parentId }) => {
                       onClose={() => handleClose(item.id)}
                     >
                       <MenuItem onClick={(e) => DelCategoryItem(item)}>删除</MenuItem>
+                      <MenuItem onClick={(e) => ShareCategoryItem(item)}>分享</MenuItem>
                     </Menu>
                   </Card>
                 </Grid>
@@ -186,6 +205,9 @@ const CategoryContainer = styled('div')({
 
 export default function CategoryItemPage() {
   const { itemId } = useParams()
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+  const shareid = searchParams.get('shareid');
 
   const dispatch = useDispatch()
 
@@ -195,6 +217,9 @@ export default function CategoryItemPage() {
     }
     var req = new User.QuerySubItemsReq()
     req.setParentId(itemId)
+    if (shareid) {
+      req.setShareId(shareid)
+    }
     userService.querySubItems(req, {}, (err, respone) => {
       if (err == null) {
         dispatch(store.categorySlice.actions.updateItem(respone.getParentItem().toObject()))
@@ -211,8 +236,8 @@ export default function CategoryItemPage() {
   return (
     <CategoryContainer>
       <CssBaseline />
-      <SideUtils name="管理" child={CategoryItemCreator({ parentId: itemId })} />
-      <CategoryItems parentId={itemId} />
+      {shareid ? null : <SideUtils name="管理" child={CategoryItemCreator({ parentId: itemId })} />}
+      <CategoryItems parentId={itemId} shareid={shareid} />
     </CategoryContainer>
   );
 }

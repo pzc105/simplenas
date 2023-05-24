@@ -101,7 +101,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.prpc.Video = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.prpc.Video.repeatedFields_, null);
 };
 goog.inherits(proto.prpc.Video, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -1003,6 +1003,13 @@ proto.prpc.VideoMetadata.prototype.hasFormat = function() {
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.prpc.Video.repeatedFields_ = [4];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -1036,8 +1043,8 @@ proto.prpc.Video.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, 0),
     name: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    introduce: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    posterPath: jspb.Message.getFieldWithDefault(msg, 4, "")
+    meta: (f = msg.getMeta()) && proto.prpc.VideoMetadata.toObject(includeInstance, f),
+    subtitlePathsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -1083,12 +1090,13 @@ proto.prpc.Video.deserializeBinaryFromReader = function(msg, reader) {
       msg.setName(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setIntroduce(value);
+      var value = new proto.prpc.VideoMetadata;
+      reader.readMessage(value,proto.prpc.VideoMetadata.deserializeBinaryFromReader);
+      msg.setMeta(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setPosterPath(value);
+      msg.addSubtitlePaths(value);
       break;
     default:
       reader.skipField();
@@ -1133,16 +1141,17 @@ proto.prpc.Video.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getIntroduce();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getMeta();
+  if (f != null) {
+    writer.writeMessage(
       3,
-      f
+      f,
+      proto.prpc.VideoMetadata.serializeBinaryToWriter
     );
   }
-  f = message.getPosterPath();
+  f = message.getSubtitlePathsList();
   if (f.length > 0) {
-    writer.writeString(
+    writer.writeRepeatedString(
       4,
       f
     );
@@ -1187,38 +1196,76 @@ proto.prpc.Video.prototype.setName = function(value) {
 
 
 /**
- * optional string introduce = 3;
- * @return {string}
+ * optional VideoMetadata meta = 3;
+ * @return {?proto.prpc.VideoMetadata}
  */
-proto.prpc.Video.prototype.getIntroduce = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+proto.prpc.Video.prototype.getMeta = function() {
+  return /** @type{?proto.prpc.VideoMetadata} */ (
+    jspb.Message.getWrapperField(this, proto.prpc.VideoMetadata, 3));
+};
+
+
+/**
+ * @param {?proto.prpc.VideoMetadata|undefined} value
+ * @return {!proto.prpc.Video} returns this
+*/
+proto.prpc.Video.prototype.setMeta = function(value) {
+  return jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.prpc.Video} returns this
+ */
+proto.prpc.Video.prototype.clearMeta = function() {
+  return this.setMeta(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.prpc.Video.prototype.hasMeta = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * repeated string subtitle_paths = 4;
+ * @return {!Array<string>}
+ */
+proto.prpc.Video.prototype.getSubtitlePathsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 4));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.prpc.Video} returns this
+ */
+proto.prpc.Video.prototype.setSubtitlePathsList = function(value) {
+  return jspb.Message.setField(this, 4, value || []);
 };
 
 
 /**
  * @param {string} value
+ * @param {number=} opt_index
  * @return {!proto.prpc.Video} returns this
  */
-proto.prpc.Video.prototype.setIntroduce = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
+proto.prpc.Video.prototype.addSubtitlePaths = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 4, value, opt_index);
 };
 
 
 /**
- * optional string poster_path = 4;
- * @return {string}
- */
-proto.prpc.Video.prototype.getPosterPath = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
-};
-
-
-/**
- * @param {string} value
+ * Clears the list making it empty but non-null.
  * @return {!proto.prpc.Video} returns this
  */
-proto.prpc.Video.prototype.setPosterPath = function(value) {
-  return jspb.Message.setProto3StringField(this, 4, value);
+proto.prpc.Video.prototype.clearSubtitlePathsList = function() {
+  return this.setSubtitlePathsList([]);
 };
 
 

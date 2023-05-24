@@ -95,18 +95,18 @@ extern QueryBtVideosReqDefaultTypeInternal _QueryBtVideosReq_default_instance_;
 class QueryBtVideosRes;
 struct QueryBtVideosResDefaultTypeInternal;
 extern QueryBtVideosResDefaultTypeInternal _QueryBtVideosRes_default_instance_;
+class QueryItemInfoReq;
+struct QueryItemInfoReqDefaultTypeInternal;
+extern QueryItemInfoReqDefaultTypeInternal _QueryItemInfoReq_default_instance_;
+class QueryItemInfoRes;
+struct QueryItemInfoResDefaultTypeInternal;
+extern QueryItemInfoResDefaultTypeInternal _QueryItemInfoRes_default_instance_;
 class QuerySubItemsReq;
 struct QuerySubItemsReqDefaultTypeInternal;
 extern QuerySubItemsReqDefaultTypeInternal _QuerySubItemsReq_default_instance_;
 class QuerySubItemsRes;
 struct QuerySubItemsResDefaultTypeInternal;
 extern QuerySubItemsResDefaultTypeInternal _QuerySubItemsRes_default_instance_;
-class QueryVideoInfoReq;
-struct QueryVideoInfoReqDefaultTypeInternal;
-extern QueryVideoInfoReqDefaultTypeInternal _QueryVideoInfoReq_default_instance_;
-class QueryVideoInfoRes;
-struct QueryVideoInfoResDefaultTypeInternal;
-extern QueryVideoInfoResDefaultTypeInternal _QueryVideoInfoRes_default_instance_;
 class RefreshSubtitleReq;
 struct RefreshSubtitleReqDefaultTypeInternal;
 extern RefreshSubtitleReqDefaultTypeInternal _RefreshSubtitleReq_default_instance_;
@@ -119,6 +119,12 @@ extern RegisterInfoDefaultTypeInternal _RegisterInfo_default_instance_;
 class RegisterRet;
 struct RegisterRetDefaultTypeInternal;
 extern RegisterRetDefaultTypeInternal _RegisterRet_default_instance_;
+class ShareItemReq;
+struct ShareItemReqDefaultTypeInternal;
+extern ShareItemReqDefaultTypeInternal _ShareItemReq_default_instance_;
+class ShareItemRes;
+struct ShareItemResDefaultTypeInternal;
+extern ShareItemResDefaultTypeInternal _ShareItemRes_default_instance_;
 class UserInfo;
 struct UserInfoDefaultTypeInternal;
 extern UserInfoDefaultTypeInternal _UserInfo_default_instance_;
@@ -151,13 +157,13 @@ template <>
 template <>
 ::prpc::QueryBtVideosRes* Arena::CreateMaybeMessage<::prpc::QueryBtVideosRes>(Arena*);
 template <>
+::prpc::QueryItemInfoReq* Arena::CreateMaybeMessage<::prpc::QueryItemInfoReq>(Arena*);
+template <>
+::prpc::QueryItemInfoRes* Arena::CreateMaybeMessage<::prpc::QueryItemInfoRes>(Arena*);
+template <>
 ::prpc::QuerySubItemsReq* Arena::CreateMaybeMessage<::prpc::QuerySubItemsReq>(Arena*);
 template <>
 ::prpc::QuerySubItemsRes* Arena::CreateMaybeMessage<::prpc::QuerySubItemsRes>(Arena*);
-template <>
-::prpc::QueryVideoInfoReq* Arena::CreateMaybeMessage<::prpc::QueryVideoInfoReq>(Arena*);
-template <>
-::prpc::QueryVideoInfoRes* Arena::CreateMaybeMessage<::prpc::QueryVideoInfoRes>(Arena*);
 template <>
 ::prpc::RefreshSubtitleReq* Arena::CreateMaybeMessage<::prpc::RefreshSubtitleReq>(Arena*);
 template <>
@@ -166,6 +172,10 @@ template <>
 ::prpc::RegisterInfo* Arena::CreateMaybeMessage<::prpc::RegisterInfo>(Arena*);
 template <>
 ::prpc::RegisterRet* Arena::CreateMaybeMessage<::prpc::RegisterRet>(Arena*);
+template <>
+::prpc::ShareItemReq* Arena::CreateMaybeMessage<::prpc::ShareItemReq>(Arena*);
+template <>
+::prpc::ShareItemRes* Arena::CreateMaybeMessage<::prpc::ShareItemRes>(Arena*);
 template <>
 ::prpc::UserInfo* Arena::CreateMaybeMessage<::prpc::UserInfo>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -2050,8 +2060,29 @@ class QuerySubItemsReq final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kShareIdFieldNumber = 2,
     kParentIdFieldNumber = 1,
   };
+  // string share_id = 2;
+  void clear_share_id() ;
+  const std::string& share_id() const;
+
+
+
+
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_share_id(Arg_&& arg, Args_... args);
+  std::string* mutable_share_id();
+  PROTOBUF_NODISCARD std::string* release_share_id();
+  void set_allocated_share_id(std::string* ptr);
+
+  private:
+  const std::string& _internal_share_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_share_id(
+      const std::string& value);
+  std::string* _internal_mutable_share_id();
+
+  public:
   // int64 parent_id = 1;
   void clear_parent_id() ;
   ::int64_t parent_id() const;
@@ -2070,6 +2101,7 @@ class QuerySubItemsReq final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr share_id_;
     ::int64_t parent_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -3035,24 +3067,24 @@ class AddBtVideosRes final :
   friend struct ::TableStruct_user_2eproto;
 };// -------------------------------------------------------------------
 
-class QueryVideoInfoReq final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.QueryVideoInfoReq) */ {
+class QueryItemInfoReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.QueryItemInfoReq) */ {
  public:
-  inline QueryVideoInfoReq() : QueryVideoInfoReq(nullptr) {}
-  ~QueryVideoInfoReq() override;
-  explicit PROTOBUF_CONSTEXPR QueryVideoInfoReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline QueryItemInfoReq() : QueryItemInfoReq(nullptr) {}
+  ~QueryItemInfoReq() override;
+  explicit PROTOBUF_CONSTEXPR QueryItemInfoReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  QueryVideoInfoReq(const QueryVideoInfoReq& from);
-  QueryVideoInfoReq(QueryVideoInfoReq&& from) noexcept
-    : QueryVideoInfoReq() {
+  QueryItemInfoReq(const QueryItemInfoReq& from);
+  QueryItemInfoReq(QueryItemInfoReq&& from) noexcept
+    : QueryItemInfoReq() {
     *this = ::std::move(from);
   }
 
-  inline QueryVideoInfoReq& operator=(const QueryVideoInfoReq& from) {
+  inline QueryItemInfoReq& operator=(const QueryItemInfoReq& from) {
     CopyFrom(from);
     return *this;
   }
-  inline QueryVideoInfoReq& operator=(QueryVideoInfoReq&& from) noexcept {
+  inline QueryItemInfoReq& operator=(QueryItemInfoReq&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -3075,20 +3107,20 @@ class QueryVideoInfoReq final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const QueryVideoInfoReq& default_instance() {
+  static const QueryItemInfoReq& default_instance() {
     return *internal_default_instance();
   }
-  static inline const QueryVideoInfoReq* internal_default_instance() {
-    return reinterpret_cast<const QueryVideoInfoReq*>(
-               &_QueryVideoInfoReq_default_instance_);
+  static inline const QueryItemInfoReq* internal_default_instance() {
+    return reinterpret_cast<const QueryItemInfoReq*>(
+               &_QueryItemInfoReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     18;
 
-  friend void swap(QueryVideoInfoReq& a, QueryVideoInfoReq& b) {
+  friend void swap(QueryItemInfoReq& a, QueryItemInfoReq& b) {
     a.Swap(&b);
   }
-  inline void Swap(QueryVideoInfoReq* other) {
+  inline void Swap(QueryItemInfoReq* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -3101,7 +3133,7 @@ class QueryVideoInfoReq final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(QueryVideoInfoReq* other) {
+  void UnsafeArenaSwap(QueryItemInfoReq* other) {
     if (other == this) return;
     ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -3109,14 +3141,14 @@ class QueryVideoInfoReq final :
 
   // implements Message ----------------------------------------------
 
-  QueryVideoInfoReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<QueryVideoInfoReq>(arena);
+  QueryItemInfoReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<QueryItemInfoReq>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const QueryVideoInfoReq& from);
+  void CopyFrom(const QueryItemInfoReq& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const QueryVideoInfoReq& from) {
-    QueryVideoInfoReq::MergeImpl(*this, from);
+  void MergeFrom( const QueryItemInfoReq& from) {
+    QueryItemInfoReq::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -3134,15 +3166,359 @@ class QueryVideoInfoReq final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(QueryVideoInfoReq* other);
+  void InternalSwap(QueryItemInfoReq* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::absl::string_view FullMessageName() {
-    return "prpc.QueryVideoInfoReq";
+    return "prpc.QueryItemInfoReq";
   }
   protected:
-  explicit QueryVideoInfoReq(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit QueryItemInfoReq(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kShareIdFieldNumber = 2,
+    kItemIdFieldNumber = 1,
+  };
+  // string share_id = 2;
+  void clear_share_id() ;
+  const std::string& share_id() const;
+
+
+
+
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_share_id(Arg_&& arg, Args_... args);
+  std::string* mutable_share_id();
+  PROTOBUF_NODISCARD std::string* release_share_id();
+  void set_allocated_share_id(std::string* ptr);
+
+  private:
+  const std::string& _internal_share_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_share_id(
+      const std::string& value);
+  std::string* _internal_mutable_share_id();
+
+  public:
+  // int64 item_id = 1;
+  void clear_item_id() ;
+  ::int64_t item_id() const;
+  void set_item_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_item_id() const;
+  void _internal_set_item_id(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.QueryItemInfoReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr share_id_;
+    ::int64_t item_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class QueryItemInfoRes final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.QueryItemInfoRes) */ {
+ public:
+  inline QueryItemInfoRes() : QueryItemInfoRes(nullptr) {}
+  ~QueryItemInfoRes() override;
+  explicit PROTOBUF_CONSTEXPR QueryItemInfoRes(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  QueryItemInfoRes(const QueryItemInfoRes& from);
+  QueryItemInfoRes(QueryItemInfoRes&& from) noexcept
+    : QueryItemInfoRes() {
+    *this = ::std::move(from);
+  }
+
+  inline QueryItemInfoRes& operator=(const QueryItemInfoRes& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline QueryItemInfoRes& operator=(QueryItemInfoRes&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const QueryItemInfoRes& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const QueryItemInfoRes* internal_default_instance() {
+    return reinterpret_cast<const QueryItemInfoRes*>(
+               &_QueryItemInfoRes_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    19;
+
+  friend void swap(QueryItemInfoRes& a, QueryItemInfoRes& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(QueryItemInfoRes* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(QueryItemInfoRes* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  QueryItemInfoRes* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<QueryItemInfoRes>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const QueryItemInfoRes& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const QueryItemInfoRes& from) {
+    QueryItemInfoRes::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(QueryItemInfoRes* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.QueryItemInfoRes";
+  }
+  protected:
+  explicit QueryItemInfoRes(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kItemInfoFieldNumber = 1,
+    kVideoInfoFieldNumber = 2,
+  };
+  // .prpc.CategoryItem item_info = 1;
+  bool has_item_info() const;
+  private:
+  bool _internal_has_item_info() const;
+
+  public:
+  void clear_item_info() ;
+  const ::prpc::CategoryItem& item_info() const;
+  PROTOBUF_NODISCARD ::prpc::CategoryItem* release_item_info();
+  ::prpc::CategoryItem* mutable_item_info();
+  void set_allocated_item_info(::prpc::CategoryItem* item_info);
+  private:
+  const ::prpc::CategoryItem& _internal_item_info() const;
+  ::prpc::CategoryItem* _internal_mutable_item_info();
+  public:
+  void unsafe_arena_set_allocated_item_info(
+      ::prpc::CategoryItem* item_info);
+  ::prpc::CategoryItem* unsafe_arena_release_item_info();
+  // .prpc.Video video_info = 2;
+  bool has_video_info() const;
+  private:
+  bool _internal_has_video_info() const;
+
+  public:
+  void clear_video_info() ;
+  const ::prpc::Video& video_info() const;
+  PROTOBUF_NODISCARD ::prpc::Video* release_video_info();
+  ::prpc::Video* mutable_video_info();
+  void set_allocated_video_info(::prpc::Video* video_info);
+  private:
+  const ::prpc::Video& _internal_video_info() const;
+  ::prpc::Video* _internal_mutable_video_info();
+  public:
+  void unsafe_arena_set_allocated_video_info(
+      ::prpc::Video* video_info);
+  ::prpc::Video* unsafe_arena_release_video_info();
+  // @@protoc_insertion_point(class_scope:prpc.QueryItemInfoRes)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::prpc::CategoryItem* item_info_;
+    ::prpc::Video* video_info_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class ShareItemReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.ShareItemReq) */ {
+ public:
+  inline ShareItemReq() : ShareItemReq(nullptr) {}
+  ~ShareItemReq() override;
+  explicit PROTOBUF_CONSTEXPR ShareItemReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  ShareItemReq(const ShareItemReq& from);
+  ShareItemReq(ShareItemReq&& from) noexcept
+    : ShareItemReq() {
+    *this = ::std::move(from);
+  }
+
+  inline ShareItemReq& operator=(const ShareItemReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ShareItemReq& operator=(ShareItemReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ShareItemReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ShareItemReq* internal_default_instance() {
+    return reinterpret_cast<const ShareItemReq*>(
+               &_ShareItemReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    20;
+
+  friend void swap(ShareItemReq& a, ShareItemReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ShareItemReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ShareItemReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ShareItemReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ShareItemReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const ShareItemReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const ShareItemReq& from) {
+    ShareItemReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ShareItemReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.ShareItemReq";
+  }
+  protected:
+  explicit ShareItemReq(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   public:
 
   static const ClassData _class_data_;
@@ -3167,7 +3543,7 @@ class QueryVideoInfoReq final :
   void _internal_set_item_id(::int64_t value);
 
   public:
-  // @@protoc_insertion_point(class_scope:prpc.QueryVideoInfoReq)
+  // @@protoc_insertion_point(class_scope:prpc.ShareItemReq)
  private:
   class _Internal;
 
@@ -3182,24 +3558,24 @@ class QueryVideoInfoReq final :
   friend struct ::TableStruct_user_2eproto;
 };// -------------------------------------------------------------------
 
-class QueryVideoInfoRes final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.QueryVideoInfoRes) */ {
+class ShareItemRes final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.ShareItemRes) */ {
  public:
-  inline QueryVideoInfoRes() : QueryVideoInfoRes(nullptr) {}
-  ~QueryVideoInfoRes() override;
-  explicit PROTOBUF_CONSTEXPR QueryVideoInfoRes(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline ShareItemRes() : ShareItemRes(nullptr) {}
+  ~ShareItemRes() override;
+  explicit PROTOBUF_CONSTEXPR ShareItemRes(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  QueryVideoInfoRes(const QueryVideoInfoRes& from);
-  QueryVideoInfoRes(QueryVideoInfoRes&& from) noexcept
-    : QueryVideoInfoRes() {
+  ShareItemRes(const ShareItemRes& from);
+  ShareItemRes(ShareItemRes&& from) noexcept
+    : ShareItemRes() {
     *this = ::std::move(from);
   }
 
-  inline QueryVideoInfoRes& operator=(const QueryVideoInfoRes& from) {
+  inline ShareItemRes& operator=(const ShareItemRes& from) {
     CopyFrom(from);
     return *this;
   }
-  inline QueryVideoInfoRes& operator=(QueryVideoInfoRes&& from) noexcept {
+  inline ShareItemRes& operator=(ShareItemRes&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -3222,20 +3598,20 @@ class QueryVideoInfoRes final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const QueryVideoInfoRes& default_instance() {
+  static const ShareItemRes& default_instance() {
     return *internal_default_instance();
   }
-  static inline const QueryVideoInfoRes* internal_default_instance() {
-    return reinterpret_cast<const QueryVideoInfoRes*>(
-               &_QueryVideoInfoRes_default_instance_);
+  static inline const ShareItemRes* internal_default_instance() {
+    return reinterpret_cast<const ShareItemRes*>(
+               &_ShareItemRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    21;
 
-  friend void swap(QueryVideoInfoRes& a, QueryVideoInfoRes& b) {
+  friend void swap(ShareItemRes& a, ShareItemRes& b) {
     a.Swap(&b);
   }
-  inline void Swap(QueryVideoInfoRes* other) {
+  inline void Swap(ShareItemRes* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -3248,7 +3624,7 @@ class QueryVideoInfoRes final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(QueryVideoInfoRes* other) {
+  void UnsafeArenaSwap(ShareItemRes* other) {
     if (other == this) return;
     ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -3256,14 +3632,14 @@ class QueryVideoInfoRes final :
 
   // implements Message ----------------------------------------------
 
-  QueryVideoInfoRes* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<QueryVideoInfoRes>(arena);
+  ShareItemRes* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ShareItemRes>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const QueryVideoInfoRes& from);
+  void CopyFrom(const ShareItemRes& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const QueryVideoInfoRes& from) {
-    QueryVideoInfoRes::MergeImpl(*this, from);
+  void MergeFrom( const ShareItemRes& from) {
+    ShareItemRes::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -3281,15 +3657,15 @@ class QueryVideoInfoRes final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(QueryVideoInfoRes* other);
+  void InternalSwap(ShareItemRes* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::absl::string_view FullMessageName() {
-    return "prpc.QueryVideoInfoRes";
+    return "prpc.ShareItemRes";
   }
   protected:
-  explicit QueryVideoInfoRes(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit ShareItemRes(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   public:
 
   static const ClassData _class_data_;
@@ -3302,48 +3678,40 @@ class QueryVideoInfoRes final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kSubtitlesFieldNumber = 2,
-    kVideoIdFieldNumber = 1,
+    kShareIdFieldNumber = 2,
+    kItemIdFieldNumber = 1,
   };
-  // repeated string subtitles = 2;
-  int subtitles_size() const;
-  private:
-  int _internal_subtitles_size() const;
+  // string share_id = 2;
+  void clear_share_id() ;
+  const std::string& share_id() const;
 
-  public:
-  void clear_subtitles() ;
-  const std::string& subtitles(int index) const;
-  std::string* mutable_subtitles(int index);
-  void set_subtitles(int index, const std::string& value);
-  void set_subtitles(int index, std::string&& value);
-  void set_subtitles(int index, const char* value);
-  void set_subtitles(int index, const char* value, std::size_t size);
-  void set_subtitles(int index, absl::string_view value);
-  std::string* add_subtitles();
-  void add_subtitles(const std::string& value);
-  void add_subtitles(std::string&& value);
-  void add_subtitles(const char* value);
-  void add_subtitles(const char* value, std::size_t size);
-  void add_subtitles(absl::string_view value);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& subtitles() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_subtitles();
+
+
+
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_share_id(Arg_&& arg, Args_... args);
+  std::string* mutable_share_id();
+  PROTOBUF_NODISCARD std::string* release_share_id();
+  void set_allocated_share_id(std::string* ptr);
 
   private:
-  const std::string& _internal_subtitles(int index) const;
-  std::string* _internal_add_subtitles();
+  const std::string& _internal_share_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_share_id(
+      const std::string& value);
+  std::string* _internal_mutable_share_id();
 
   public:
-  // int64 video_id = 1;
-  void clear_video_id() ;
-  ::int64_t video_id() const;
-  void set_video_id(::int64_t value);
+  // int64 item_id = 1;
+  void clear_item_id() ;
+  ::int64_t item_id() const;
+  void set_item_id(::int64_t value);
 
   private:
-  ::int64_t _internal_video_id() const;
-  void _internal_set_video_id(::int64_t value);
+  ::int64_t _internal_item_id() const;
+  void _internal_set_item_id(::int64_t value);
 
   public:
-  // @@protoc_insertion_point(class_scope:prpc.QueryVideoInfoRes)
+  // @@protoc_insertion_point(class_scope:prpc.ShareItemRes)
  private:
   class _Internal;
 
@@ -3351,8 +3719,8 @@ class QueryVideoInfoRes final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> subtitles_;
-    ::int64_t video_id_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr share_id_;
+    ::int64_t item_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -3407,7 +3775,7 @@ class RefreshSubtitleReq final :
                &_RefreshSubtitleReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    22;
 
   friend void swap(RefreshSubtitleReq& a, RefreshSubtitleReq& b) {
     a.Swap(&b);
@@ -3553,7 +3921,7 @@ class RefreshSubtitleRes final :
                &_RefreshSubtitleRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    23;
 
   friend void swap(RefreshSubtitleRes& a, RefreshSubtitleRes& b) {
     a.Swap(&b);
@@ -4482,6 +4850,53 @@ inline void QuerySubItemsReq::_internal_set_parent_id(::int64_t value) {
   _impl_.parent_id_ = value;
 }
 
+// string share_id = 2;
+inline void QuerySubItemsReq::clear_share_id() {
+  _impl_.share_id_.ClearToEmpty();
+}
+inline const std::string& QuerySubItemsReq::share_id() const {
+  // @@protoc_insertion_point(field_get:prpc.QuerySubItemsReq.share_id)
+  return _internal_share_id();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void QuerySubItemsReq::set_share_id(Arg_&& arg,
+                                                     Args_... args) {
+  ;
+  _impl_.share_id_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.QuerySubItemsReq.share_id)
+}
+inline std::string* QuerySubItemsReq::mutable_share_id() {
+  std::string* _s = _internal_mutable_share_id();
+  // @@protoc_insertion_point(field_mutable:prpc.QuerySubItemsReq.share_id)
+  return _s;
+}
+inline const std::string& QuerySubItemsReq::_internal_share_id() const {
+  return _impl_.share_id_.Get();
+}
+inline void QuerySubItemsReq::_internal_set_share_id(const std::string& value) {
+  ;
+
+
+  _impl_.share_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* QuerySubItemsReq::_internal_mutable_share_id() {
+  ;
+  return _impl_.share_id_.Mutable( GetArenaForAllocation());
+}
+inline std::string* QuerySubItemsReq::release_share_id() {
+  // @@protoc_insertion_point(field_release:prpc.QuerySubItemsReq.share_id)
+  return _impl_.share_id_.Release();
+}
+inline void QuerySubItemsReq::set_allocated_share_id(std::string* value) {
+  _impl_.share_id_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.share_id_.IsDefault()) {
+          _impl_.share_id_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.QuerySubItemsReq.share_id)
+}
+
 // -------------------------------------------------------------------
 
 // QuerySubItemsRes
@@ -4987,130 +5402,332 @@ inline void AddBtVideosReq::_internal_set_category_item_id(::int64_t value) {
 
 // -------------------------------------------------------------------
 
-// QueryVideoInfoReq
+// QueryItemInfoReq
 
 // int64 item_id = 1;
-inline void QueryVideoInfoReq::clear_item_id() {
+inline void QueryItemInfoReq::clear_item_id() {
   _impl_.item_id_ = ::int64_t{0};
 }
-inline ::int64_t QueryVideoInfoReq::item_id() const {
-  // @@protoc_insertion_point(field_get:prpc.QueryVideoInfoReq.item_id)
+inline ::int64_t QueryItemInfoReq::item_id() const {
+  // @@protoc_insertion_point(field_get:prpc.QueryItemInfoReq.item_id)
   return _internal_item_id();
 }
-inline void QueryVideoInfoReq::set_item_id(::int64_t value) {
+inline void QueryItemInfoReq::set_item_id(::int64_t value) {
   _internal_set_item_id(value);
-  // @@protoc_insertion_point(field_set:prpc.QueryVideoInfoReq.item_id)
+  // @@protoc_insertion_point(field_set:prpc.QueryItemInfoReq.item_id)
 }
-inline ::int64_t QueryVideoInfoReq::_internal_item_id() const {
+inline ::int64_t QueryItemInfoReq::_internal_item_id() const {
   return _impl_.item_id_;
 }
-inline void QueryVideoInfoReq::_internal_set_item_id(::int64_t value) {
+inline void QueryItemInfoReq::_internal_set_item_id(::int64_t value) {
+  ;
+  _impl_.item_id_ = value;
+}
+
+// string share_id = 2;
+inline void QueryItemInfoReq::clear_share_id() {
+  _impl_.share_id_.ClearToEmpty();
+}
+inline const std::string& QueryItemInfoReq::share_id() const {
+  // @@protoc_insertion_point(field_get:prpc.QueryItemInfoReq.share_id)
+  return _internal_share_id();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void QueryItemInfoReq::set_share_id(Arg_&& arg,
+                                                     Args_... args) {
+  ;
+  _impl_.share_id_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.QueryItemInfoReq.share_id)
+}
+inline std::string* QueryItemInfoReq::mutable_share_id() {
+  std::string* _s = _internal_mutable_share_id();
+  // @@protoc_insertion_point(field_mutable:prpc.QueryItemInfoReq.share_id)
+  return _s;
+}
+inline const std::string& QueryItemInfoReq::_internal_share_id() const {
+  return _impl_.share_id_.Get();
+}
+inline void QueryItemInfoReq::_internal_set_share_id(const std::string& value) {
+  ;
+
+
+  _impl_.share_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* QueryItemInfoReq::_internal_mutable_share_id() {
+  ;
+  return _impl_.share_id_.Mutable( GetArenaForAllocation());
+}
+inline std::string* QueryItemInfoReq::release_share_id() {
+  // @@protoc_insertion_point(field_release:prpc.QueryItemInfoReq.share_id)
+  return _impl_.share_id_.Release();
+}
+inline void QueryItemInfoReq::set_allocated_share_id(std::string* value) {
+  _impl_.share_id_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.share_id_.IsDefault()) {
+          _impl_.share_id_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.QueryItemInfoReq.share_id)
+}
+
+// -------------------------------------------------------------------
+
+// QueryItemInfoRes
+
+// .prpc.CategoryItem item_info = 1;
+inline bool QueryItemInfoRes::_internal_has_item_info() const {
+  return this != internal_default_instance() && _impl_.item_info_ != nullptr;
+}
+inline bool QueryItemInfoRes::has_item_info() const {
+  return _internal_has_item_info();
+}
+inline const ::prpc::CategoryItem& QueryItemInfoRes::_internal_item_info() const {
+  const ::prpc::CategoryItem* p = _impl_.item_info_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::CategoryItem&>(
+      ::prpc::_CategoryItem_default_instance_);
+}
+inline const ::prpc::CategoryItem& QueryItemInfoRes::item_info() const {
+  // @@protoc_insertion_point(field_get:prpc.QueryItemInfoRes.item_info)
+  return _internal_item_info();
+}
+inline void QueryItemInfoRes::unsafe_arena_set_allocated_item_info(
+    ::prpc::CategoryItem* item_info) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.item_info_);
+  }
+  _impl_.item_info_ = item_info;
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.QueryItemInfoRes.item_info)
+}
+inline ::prpc::CategoryItem* QueryItemInfoRes::release_item_info() {
+  
+  ::prpc::CategoryItem* temp = _impl_.item_info_;
+  _impl_.item_info_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::prpc::CategoryItem* QueryItemInfoRes::unsafe_arena_release_item_info() {
+  // @@protoc_insertion_point(field_release:prpc.QueryItemInfoRes.item_info)
+  
+  ::prpc::CategoryItem* temp = _impl_.item_info_;
+  _impl_.item_info_ = nullptr;
+  return temp;
+}
+inline ::prpc::CategoryItem* QueryItemInfoRes::_internal_mutable_item_info() {
+  
+  if (_impl_.item_info_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::CategoryItem>(GetArenaForAllocation());
+    _impl_.item_info_ = p;
+  }
+  return _impl_.item_info_;
+}
+inline ::prpc::CategoryItem* QueryItemInfoRes::mutable_item_info() {
+  ::prpc::CategoryItem* _msg = _internal_mutable_item_info();
+  // @@protoc_insertion_point(field_mutable:prpc.QueryItemInfoRes.item_info)
+  return _msg;
+}
+inline void QueryItemInfoRes::set_allocated_item_info(::prpc::CategoryItem* item_info) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.item_info_);
+  }
+  if (item_info) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(item_info));
+    if (message_arena != submessage_arena) {
+      item_info = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, item_info, submessage_arena);
+    }
+
+  } else {
+
+  }
+  _impl_.item_info_ = item_info;
+  // @@protoc_insertion_point(field_set_allocated:prpc.QueryItemInfoRes.item_info)
+}
+
+// .prpc.Video video_info = 2;
+inline bool QueryItemInfoRes::_internal_has_video_info() const {
+  return this != internal_default_instance() && _impl_.video_info_ != nullptr;
+}
+inline bool QueryItemInfoRes::has_video_info() const {
+  return _internal_has_video_info();
+}
+inline const ::prpc::Video& QueryItemInfoRes::_internal_video_info() const {
+  const ::prpc::Video* p = _impl_.video_info_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::Video&>(
+      ::prpc::_Video_default_instance_);
+}
+inline const ::prpc::Video& QueryItemInfoRes::video_info() const {
+  // @@protoc_insertion_point(field_get:prpc.QueryItemInfoRes.video_info)
+  return _internal_video_info();
+}
+inline void QueryItemInfoRes::unsafe_arena_set_allocated_video_info(
+    ::prpc::Video* video_info) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.video_info_);
+  }
+  _impl_.video_info_ = video_info;
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.QueryItemInfoRes.video_info)
+}
+inline ::prpc::Video* QueryItemInfoRes::release_video_info() {
+  
+  ::prpc::Video* temp = _impl_.video_info_;
+  _impl_.video_info_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::prpc::Video* QueryItemInfoRes::unsafe_arena_release_video_info() {
+  // @@protoc_insertion_point(field_release:prpc.QueryItemInfoRes.video_info)
+  
+  ::prpc::Video* temp = _impl_.video_info_;
+  _impl_.video_info_ = nullptr;
+  return temp;
+}
+inline ::prpc::Video* QueryItemInfoRes::_internal_mutable_video_info() {
+  
+  if (_impl_.video_info_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::Video>(GetArenaForAllocation());
+    _impl_.video_info_ = p;
+  }
+  return _impl_.video_info_;
+}
+inline ::prpc::Video* QueryItemInfoRes::mutable_video_info() {
+  ::prpc::Video* _msg = _internal_mutable_video_info();
+  // @@protoc_insertion_point(field_mutable:prpc.QueryItemInfoRes.video_info)
+  return _msg;
+}
+inline void QueryItemInfoRes::set_allocated_video_info(::prpc::Video* video_info) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.video_info_);
+  }
+  if (video_info) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(video_info));
+    if (message_arena != submessage_arena) {
+      video_info = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, video_info, submessage_arena);
+    }
+
+  } else {
+
+  }
+  _impl_.video_info_ = video_info;
+  // @@protoc_insertion_point(field_set_allocated:prpc.QueryItemInfoRes.video_info)
+}
+
+// -------------------------------------------------------------------
+
+// ShareItemReq
+
+// int64 item_id = 1;
+inline void ShareItemReq::clear_item_id() {
+  _impl_.item_id_ = ::int64_t{0};
+}
+inline ::int64_t ShareItemReq::item_id() const {
+  // @@protoc_insertion_point(field_get:prpc.ShareItemReq.item_id)
+  return _internal_item_id();
+}
+inline void ShareItemReq::set_item_id(::int64_t value) {
+  _internal_set_item_id(value);
+  // @@protoc_insertion_point(field_set:prpc.ShareItemReq.item_id)
+}
+inline ::int64_t ShareItemReq::_internal_item_id() const {
+  return _impl_.item_id_;
+}
+inline void ShareItemReq::_internal_set_item_id(::int64_t value) {
   ;
   _impl_.item_id_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// QueryVideoInfoRes
+// ShareItemRes
 
-// int64 video_id = 1;
-inline void QueryVideoInfoRes::clear_video_id() {
-  _impl_.video_id_ = ::int64_t{0};
+// int64 item_id = 1;
+inline void ShareItemRes::clear_item_id() {
+  _impl_.item_id_ = ::int64_t{0};
 }
-inline ::int64_t QueryVideoInfoRes::video_id() const {
-  // @@protoc_insertion_point(field_get:prpc.QueryVideoInfoRes.video_id)
-  return _internal_video_id();
+inline ::int64_t ShareItemRes::item_id() const {
+  // @@protoc_insertion_point(field_get:prpc.ShareItemRes.item_id)
+  return _internal_item_id();
 }
-inline void QueryVideoInfoRes::set_video_id(::int64_t value) {
-  _internal_set_video_id(value);
-  // @@protoc_insertion_point(field_set:prpc.QueryVideoInfoRes.video_id)
+inline void ShareItemRes::set_item_id(::int64_t value) {
+  _internal_set_item_id(value);
+  // @@protoc_insertion_point(field_set:prpc.ShareItemRes.item_id)
 }
-inline ::int64_t QueryVideoInfoRes::_internal_video_id() const {
-  return _impl_.video_id_;
+inline ::int64_t ShareItemRes::_internal_item_id() const {
+  return _impl_.item_id_;
 }
-inline void QueryVideoInfoRes::_internal_set_video_id(::int64_t value) {
+inline void ShareItemRes::_internal_set_item_id(::int64_t value) {
   ;
-  _impl_.video_id_ = value;
+  _impl_.item_id_ = value;
 }
 
-// repeated string subtitles = 2;
-inline int QueryVideoInfoRes::_internal_subtitles_size() const {
-  return _impl_.subtitles_.size();
+// string share_id = 2;
+inline void ShareItemRes::clear_share_id() {
+  _impl_.share_id_.ClearToEmpty();
 }
-inline int QueryVideoInfoRes::subtitles_size() const {
-  return _internal_subtitles_size();
+inline const std::string& ShareItemRes::share_id() const {
+  // @@protoc_insertion_point(field_get:prpc.ShareItemRes.share_id)
+  return _internal_share_id();
 }
-inline void QueryVideoInfoRes::clear_subtitles() {
-  _impl_.subtitles_.Clear();
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void ShareItemRes::set_share_id(Arg_&& arg,
+                                                     Args_... args) {
+  ;
+  _impl_.share_id_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.ShareItemRes.share_id)
 }
-inline std::string* QueryVideoInfoRes::add_subtitles() {
-  std::string* _s = _internal_add_subtitles();
-  // @@protoc_insertion_point(field_add_mutable:prpc.QueryVideoInfoRes.subtitles)
+inline std::string* ShareItemRes::mutable_share_id() {
+  std::string* _s = _internal_mutable_share_id();
+  // @@protoc_insertion_point(field_mutable:prpc.ShareItemRes.share_id)
   return _s;
 }
-inline const std::string& QueryVideoInfoRes::_internal_subtitles(int index) const {
-  return _impl_.subtitles_.Get(index);
+inline const std::string& ShareItemRes::_internal_share_id() const {
+  return _impl_.share_id_.Get();
 }
-inline const std::string& QueryVideoInfoRes::subtitles(int index) const {
-  // @@protoc_insertion_point(field_get:prpc.QueryVideoInfoRes.subtitles)
-  return _internal_subtitles(index);
+inline void ShareItemRes::_internal_set_share_id(const std::string& value) {
+  ;
+
+
+  _impl_.share_id_.Set(value, GetArenaForAllocation());
 }
-inline std::string* QueryVideoInfoRes::mutable_subtitles(int index) {
-  // @@protoc_insertion_point(field_mutable:prpc.QueryVideoInfoRes.subtitles)
-  return _impl_.subtitles_.Mutable(index);
+inline std::string* ShareItemRes::_internal_mutable_share_id() {
+  ;
+  return _impl_.share_id_.Mutable( GetArenaForAllocation());
 }
-inline void QueryVideoInfoRes::set_subtitles(int index, const std::string& value) {
-  _impl_.subtitles_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set:prpc.QueryVideoInfoRes.subtitles)
+inline std::string* ShareItemRes::release_share_id() {
+  // @@protoc_insertion_point(field_release:prpc.ShareItemRes.share_id)
+  return _impl_.share_id_.Release();
 }
-inline void QueryVideoInfoRes::set_subtitles(int index, std::string&& value) {
-  _impl_.subtitles_.Mutable(index)->assign(std::move(value));
-  // @@protoc_insertion_point(field_set:prpc.QueryVideoInfoRes.subtitles)
-}
-inline void QueryVideoInfoRes::set_subtitles(int index, const char* value) {
-  ABSL_DCHECK(value != nullptr);
-  _impl_.subtitles_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:prpc.QueryVideoInfoRes.subtitles)
-}
-inline void QueryVideoInfoRes::set_subtitles(int index, const char* value,
-                              std::size_t size) {
-  _impl_.subtitles_.Mutable(index)->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:prpc.QueryVideoInfoRes.subtitles)
-}
-inline void QueryVideoInfoRes::set_subtitles(int index, absl::string_view value) {
-  _impl_.subtitles_.Mutable(index)->assign(value.data(), value.size());
-  // @@protoc_insertion_point(field_set_string_piece:prpc.QueryVideoInfoRes.subtitles)
-}
-inline std::string* QueryVideoInfoRes::_internal_add_subtitles() { return _impl_.subtitles_.Add(); }
-inline void QueryVideoInfoRes::add_subtitles(const std::string& value) {
-  _impl_.subtitles_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:prpc.QueryVideoInfoRes.subtitles)
-}
-inline void QueryVideoInfoRes::add_subtitles(std::string&& value) {
-  _impl_.subtitles_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:prpc.QueryVideoInfoRes.subtitles)
-}
-inline void QueryVideoInfoRes::add_subtitles(const char* value) {
-  ABSL_DCHECK(value != nullptr);
-  _impl_.subtitles_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:prpc.QueryVideoInfoRes.subtitles)
-}
-inline void QueryVideoInfoRes::add_subtitles(const char* value, std::size_t size) {
-  _impl_.subtitles_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:prpc.QueryVideoInfoRes.subtitles)
-}
-inline void QueryVideoInfoRes::add_subtitles(absl::string_view value) {
-  _impl_.subtitles_.Add()->assign(value.data(), value.size());
-  // @@protoc_insertion_point(field_add_string_piece:prpc.QueryVideoInfoRes.subtitles)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
-QueryVideoInfoRes::subtitles() const {
-  // @@protoc_insertion_point(field_list:prpc.QueryVideoInfoRes.subtitles)
-  return _impl_.subtitles_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* QueryVideoInfoRes::mutable_subtitles() {
-  // @@protoc_insertion_point(field_mutable_list:prpc.QueryVideoInfoRes.subtitles)
-  return &_impl_.subtitles_;
+inline void ShareItemRes::set_allocated_share_id(std::string* value) {
+  _impl_.share_id_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.share_id_.IsDefault()) {
+          _impl_.share_id_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.ShareItemRes.share_id)
 }
 
 // -------------------------------------------------------------------

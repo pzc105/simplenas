@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"net"
 	"net/http"
-	"os"
-	"path/filepath"
 	"pnas/bt"
 	"pnas/category"
 	"pnas/log"
@@ -19,8 +17,8 @@ import (
 	"pnas/video"
 	"sort"
 	"strconv"
-	"strings"
 	"sync"
+	"time"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -36,6 +34,7 @@ import (
 type CoreServiceInterface interface {
 	GetSession(*http.Request) *session
 	GetUserManager() *user.UserManger
+	GetShareItemInfo(shareid string) (*ShareItemInfo, error)
 }
 
 type CoreService struct {
@@ -59,11 +58,13 @@ type CoreService struct {
 	httpSer   *http.Server
 	videoSer  *VideoService
 	posterSer *PosterService
+
+	shares ShareManager
 }
 
 func (ser *CoreService) Init() {
 	InitIdPool()
-	ser.notCheckTokenMethods = []string{"Register", "IsUsedEmail", "Login", "FastLogin"}
+	ser.notCheckTokenMethods = []string{"Register", "IsUsedEmail", "Login", "FastLogin", "QueryItemInfo", "QuerySubItems"}
 	sort.Strings(ser.notCheckTokenMethods)
 	ser.sessions = make(map[int64]*session)
 	ser.bt.Init(bt.WithOnStatus(ser.handleBtStatus),
@@ -71,6 +72,7 @@ func (ser *CoreService) Init() {
 		bt.WithOnConnect(ser.handleBtClientConnected),
 		bt.WithOnFileCompleted(ser.handleBtFileCompleted))
 	ser.um.Init()
+	ser.shares.Init()
 }
 
 func (ser *CoreService) Serve() {
@@ -560,16 +562,30 @@ func (ser *CoreService) DelCategoryItem(ctx context.Context, req *prpc.DelCatego
 }
 
 func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubItemsReq) (*prpc.QuerySubItemsRes, error) {
-	ses := ser.getSession(ctx)
-	if ses == nil {
-		return nil, status.Error(codes.PermissionDenied, "not found session")
+	var userId user.ID
+	if len(req.ShareId) > 0 {
+		sii, err := ser.shares.GetShareItemInfo(req.ShareId)
+		if err != nil {
+			return nil, status.Error(codes.PermissionDenied, "not found item")
+		}
+		if !ser.um.IsItemShared(sii.ItemId, category.ID(req.ParentId)) {
+			return nil, status.Error(codes.PermissionDenied, "not found item")
+		}
+		userId = sii.UserId
+	} else {
+		ses := ser.getSession(ctx)
+		if ses == nil {
+			return nil, status.Error(codes.PermissionDenied, "not found session")
+		}
+		userId = ses.UserId
 	}
-	parentItem, err := ser.um.QueryItem(ses.UserId, category.ID(req.ParentId))
+
+	parentItem, err := ser.um.QueryItem(userId, category.ID(req.ParentId))
 	if err != nil {
-		log.Warnf("[user] %d query category %d err: %v", ses.UserId, req.ParentId, err)
+		log.Warnf("[user] %d query category %d err: %v", userId, req.ParentId, err)
 		return nil, status.Error(codes.PermissionDenied, "not found")
 	}
-	items := ser.um.QueryItems(ses.UserId, category.ID(req.ParentId))
+	items := ser.um.QueryItems(userId, category.ID(req.ParentId))
 
 	var resParentItem prpc.CategoryItem
 	itemInfo := parentItem.GetItemInfo()
@@ -595,6 +611,52 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 	return res, nil
 }
 
+func (ser *CoreService) QueryItemInfo(ctx context.Context, req *prpc.QueryItemInfoReq) (*prpc.QueryItemInfoRes, error) {
+	var userId user.ID
+	if len(req.ShareId) > 0 {
+		sii, err := ser.shares.GetShareItemInfo(req.ShareId)
+		if err != nil {
+			return nil, status.Error(codes.PermissionDenied, "not found item")
+		}
+		if !ser.um.IsItemShared(sii.ItemId, category.ID(req.ItemId)) {
+			return nil, status.Error(codes.PermissionDenied, "not found item")
+		}
+		userId = sii.UserId
+	} else {
+		ses := ser.getSession(ctx)
+		if ses == nil {
+			return nil, status.Error(codes.PermissionDenied, "not found session")
+		}
+		userId = ses.UserId
+	}
+
+	item, err := ser.um.QueryItem(userId, category.ID(req.ItemId))
+	if err != nil {
+		return nil, status.Error(codes.PermissionDenied, "not found")
+	}
+	res := &prpc.QueryItemInfoRes{}
+	res.ItemInfo = &prpc.CategoryItem{}
+	itemInfo := item.GetItemInfo()
+	copier.Copy(&res.ItemInfo, &itemInfo)
+	subItemIds := item.GetSubItemIds()
+	if len(subItemIds) > 0 {
+		res.ItemInfo.SubItemIds = make([]int64, 0, len(subItemIds))
+		for _, id := range subItemIds {
+			res.ItemInfo.SubItemIds = append(res.ItemInfo.SubItemIds, int64(id))
+		}
+	}
+	itemType := item.GetType()
+	switch itemType {
+	case prpc.CategoryItem_Video:
+		res.VideoInfo = &prpc.Video{}
+		vid, _ := strconv.ParseInt(itemInfo.ResourcePath, 10, 64)
+		lookPath := setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%d", vid)
+		res.VideoInfo.Id = vid
+		res.VideoInfo.SubtitlePaths = utils.GetFilesByFileExtension(lookPath, []string{".vtt"})
+	}
+	return res, nil
+}
+
 func (ser *CoreService) AddBtVideos(ctx context.Context, req *prpc.AddBtVideosReq) (*prpc.AddBtVideosRes, error) {
 	ses := ser.getSession(ctx)
 	if ses == nil {
@@ -616,45 +678,32 @@ func (ser *CoreService) AddBtVideos(ctx context.Context, req *prpc.AddBtVideosRe
 	return &prpc.AddBtVideosRes{}, nil
 }
 
-func (ser *CoreService) QueryVideoInfo(ctx context.Context, req *prpc.QueryVideoInfoReq) (*prpc.QueryVideoInfoRes, error) {
+func (ser *CoreService) ShareItem(ctx context.Context, req *prpc.ShareItemReq) (*prpc.ShareItemRes, error) {
 	ses := ser.getSession(ctx)
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
-	item, err := ser.um.QueryItem(ses.UserId, category.ID(req.ItemId))
+	_, err := ser.um.QueryItem(ses.UserId, category.ID(req.ItemId))
 	if err != nil {
 		return nil, status.Error(codes.PermissionDenied, "not found")
 	}
-	if item.GetType() != prpc.CategoryItem_Video {
-		return nil, status.Error(codes.PermissionDenied, "error type")
-	}
-	vid, _ := strconv.ParseInt(item.GetItemInfo().ResourcePath, 10, 64)
-	lookPath := setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%d", vid)
-	var fs []string
-	//TODO can use redis cache?
-	err = filepath.Walk(lookPath, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if info.IsDir() {
-			if path != lookPath {
-				return filepath.SkipDir
-			}
-			return nil
-		}
-		if !info.IsDir() && info.Size() > 0 &&
-			(strings.HasSuffix(info.Name(), ".vtt")) {
-			fs = append(fs, info.Name())
-		}
-		return nil
+	shareid, err := ser.shares.ShareCategoryItem(&ShareCategoryItemParams{
+		UserId:    ses.UserId,
+		ItemId:    category.ID(req.ItemId),
+		MaxCount:  0,
+		ExpiresAt: time.Now().Add(time.Hour * 24 * 7),
 	})
 	if err != nil {
-		log.Warnf("[user] %d walk path err: %v", ses.UserId, err)
+		return nil, status.Error(codes.PermissionDenied, "not found")
 	}
-	return &prpc.QueryVideoInfoRes{
-		VideoId:   vid,
-		Subtitles: fs,
+	return &prpc.ShareItemRes{
+		ItemId:  req.ItemId,
+		ShareId: shareid,
 	}, nil
+}
+
+func (ser *CoreService) GetShareItemInfo(shareid string) (*ShareItemInfo, error) {
+	return ser.shares.GetShareItemInfo(shareid)
 }
 
 func (ser *CoreService) RefreshSubtitle(ctx context.Context, req *prpc.RefreshSubtitleReq) (*prpc.RefreshSubtitleRes, error) {

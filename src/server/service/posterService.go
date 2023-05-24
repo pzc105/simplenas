@@ -7,6 +7,7 @@ import (
 	"pnas/category"
 	"pnas/prpc"
 	"pnas/setting"
+	"pnas/user"
 	"strconv"
 
 	"github.com/gorilla/mux"
@@ -43,11 +44,24 @@ func (p *PosterService) handlerItemPoster(w http.ResponseWriter, r *http.Request
 		return
 	}
 	s := p.coreSer.GetSession(r)
+	var userId user.ID
 	if s == nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+		queryParams := r.URL.Query()
+		shareid := queryParams.Get("shareid")
+		sii, err := p.coreSer.GetShareItemInfo(shareid)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		if !p.coreSer.GetUserManager().IsItemShared(sii.ItemId, category.ID(itemId)) {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		userId = sii.UserId
+	} else {
+		userId = s.UserId
 	}
-	item, err := p.coreSer.GetUserManager().QueryItem(s.UserId, category.ID(itemId))
+	item, err := p.coreSer.GetUserManager().QueryItem(userId, category.ID(itemId))
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return

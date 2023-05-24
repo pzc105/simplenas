@@ -216,7 +216,11 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DelCategoryItemResDefaultTypeInternal _DelCategoryItemRes_default_instance_;
 PROTOBUF_CONSTEXPR QuerySubItemsReq::QuerySubItemsReq(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.parent_id_)*/ ::int64_t{0}
+    /*decltype(_impl_.share_id_)*/ {
+    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
+  }
+
+  , /*decltype(_impl_.parent_id_)*/ ::int64_t{0}
 
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct QuerySubItemsReqDefaultTypeInternal {
@@ -319,37 +323,74 @@ struct AddBtVideosResDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddBtVideosResDefaultTypeInternal _AddBtVideosRes_default_instance_;
-PROTOBUF_CONSTEXPR QueryVideoInfoReq::QueryVideoInfoReq(
+PROTOBUF_CONSTEXPR QueryItemInfoReq::QueryItemInfoReq(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.share_id_)*/ {
+    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
+  }
+
+  , /*decltype(_impl_.item_id_)*/ ::int64_t{0}
+
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct QueryItemInfoReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR QueryItemInfoReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~QueryItemInfoReqDefaultTypeInternal() {}
+  union {
+    QueryItemInfoReq _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 QueryItemInfoReqDefaultTypeInternal _QueryItemInfoReq_default_instance_;
+PROTOBUF_CONSTEXPR QueryItemInfoRes::QueryItemInfoRes(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.item_info_)*/nullptr
+  , /*decltype(_impl_.video_info_)*/nullptr
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct QueryItemInfoResDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR QueryItemInfoResDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~QueryItemInfoResDefaultTypeInternal() {}
+  union {
+    QueryItemInfoRes _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 QueryItemInfoResDefaultTypeInternal _QueryItemInfoRes_default_instance_;
+PROTOBUF_CONSTEXPR ShareItemReq::ShareItemReq(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.item_id_)*/ ::int64_t{0}
 
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct QueryVideoInfoReqDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR QueryVideoInfoReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~QueryVideoInfoReqDefaultTypeInternal() {}
+struct ShareItemReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ShareItemReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ShareItemReqDefaultTypeInternal() {}
   union {
-    QueryVideoInfoReq _instance;
+    ShareItemReq _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 QueryVideoInfoReqDefaultTypeInternal _QueryVideoInfoReq_default_instance_;
-PROTOBUF_CONSTEXPR QueryVideoInfoRes::QueryVideoInfoRes(
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ShareItemReqDefaultTypeInternal _ShareItemReq_default_instance_;
+PROTOBUF_CONSTEXPR ShareItemRes::ShareItemRes(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.subtitles_)*/{}
-  , /*decltype(_impl_.video_id_)*/ ::int64_t{0}
+    /*decltype(_impl_.share_id_)*/ {
+    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
+  }
+
+  , /*decltype(_impl_.item_id_)*/ ::int64_t{0}
 
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct QueryVideoInfoResDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR QueryVideoInfoResDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~QueryVideoInfoResDefaultTypeInternal() {}
+struct ShareItemResDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ShareItemResDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ShareItemResDefaultTypeInternal() {}
   union {
-    QueryVideoInfoRes _instance;
+    ShareItemRes _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 QueryVideoInfoResDefaultTypeInternal _QueryVideoInfoRes_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ShareItemResDefaultTypeInternal _ShareItemRes_default_instance_;
 PROTOBUF_CONSTEXPR RefreshSubtitleReq::RefreshSubtitleReq(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.item_id_)*/ ::int64_t{0}
@@ -378,7 +419,7 @@ struct RefreshSubtitleResDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RefreshSubtitleResDefaultTypeInternal _RefreshSubtitleRes_default_instance_;
 }  // namespace prpc
-static ::_pb::Metadata file_level_metadata_user_2eproto[22];
+static ::_pb::Metadata file_level_metadata_user_2eproto[24];
 static constexpr const ::_pb::EnumDescriptor**
     file_level_enum_descriptors_user_2eproto = nullptr;
 static constexpr const ::_pb::ServiceDescriptor**
@@ -501,6 +542,7 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsReq, _impl_.parent_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsReq, _impl_.share_id_),
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsRes, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -559,24 +601,44 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     ~0u,  // no _has_bits_
-    PROTOBUF_FIELD_OFFSET(::prpc::QueryVideoInfoReq, _internal_metadata_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryItemInfoReq, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
     ~0u,  // no _weak_field_map_
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::prpc::QueryVideoInfoReq, _impl_.item_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryItemInfoReq, _impl_.item_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryItemInfoReq, _impl_.share_id_),
     ~0u,  // no _has_bits_
-    PROTOBUF_FIELD_OFFSET(::prpc::QueryVideoInfoRes, _internal_metadata_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryItemInfoRes, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
     ~0u,  // no _weak_field_map_
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::prpc::QueryVideoInfoRes, _impl_.video_id_),
-    PROTOBUF_FIELD_OFFSET(::prpc::QueryVideoInfoRes, _impl_.subtitles_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryItemInfoRes, _impl_.item_info_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryItemInfoRes, _impl_.video_info_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::ShareItemReq, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::ShareItemReq, _impl_.item_id_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::ShareItemRes, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::ShareItemRes, _impl_.item_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::ShareItemRes, _impl_.share_id_),
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::RefreshSubtitleReq, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -610,16 +672,18 @@ static const ::_pbi::MigrationSchema
         { 90, -1, -1, sizeof(::prpc::DelCategoryItemReq)},
         { 99, -1, -1, sizeof(::prpc::DelCategoryItemRes)},
         { 107, -1, -1, sizeof(::prpc::QuerySubItemsReq)},
-        { 116, -1, -1, sizeof(::prpc::QuerySubItemsRes)},
-        { 126, -1, -1, sizeof(::prpc::QueryBtVideosReq)},
-        { 135, -1, -1, sizeof(::prpc::BtFileMetadata)},
-        { 145, -1, -1, sizeof(::prpc::QueryBtVideosRes)},
-        { 154, -1, -1, sizeof(::prpc::AddBtVideosReq)},
-        { 165, -1, -1, sizeof(::prpc::AddBtVideosRes)},
-        { 173, -1, -1, sizeof(::prpc::QueryVideoInfoReq)},
-        { 182, -1, -1, sizeof(::prpc::QueryVideoInfoRes)},
-        { 192, -1, -1, sizeof(::prpc::RefreshSubtitleReq)},
-        { 201, -1, -1, sizeof(::prpc::RefreshSubtitleRes)},
+        { 117, -1, -1, sizeof(::prpc::QuerySubItemsRes)},
+        { 127, -1, -1, sizeof(::prpc::QueryBtVideosReq)},
+        { 136, -1, -1, sizeof(::prpc::BtFileMetadata)},
+        { 146, -1, -1, sizeof(::prpc::QueryBtVideosRes)},
+        { 155, -1, -1, sizeof(::prpc::AddBtVideosReq)},
+        { 166, -1, -1, sizeof(::prpc::AddBtVideosRes)},
+        { 174, -1, -1, sizeof(::prpc::QueryItemInfoReq)},
+        { 184, -1, -1, sizeof(::prpc::QueryItemInfoRes)},
+        { 194, -1, -1, sizeof(::prpc::ShareItemReq)},
+        { 203, -1, -1, sizeof(::prpc::ShareItemRes)},
+        { 213, -1, -1, sizeof(::prpc::RefreshSubtitleReq)},
+        { 222, -1, -1, sizeof(::prpc::RefreshSubtitleRes)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -641,8 +705,10 @@ static const ::_pb::Message* const file_default_instances[] = {
     &::prpc::_QueryBtVideosRes_default_instance_._instance,
     &::prpc::_AddBtVideosReq_default_instance_._instance,
     &::prpc::_AddBtVideosRes_default_instance_._instance,
-    &::prpc::_QueryVideoInfoReq_default_instance_._instance,
-    &::prpc::_QueryVideoInfoRes_default_instance_._instance,
+    &::prpc::_QueryItemInfoReq_default_instance_._instance,
+    &::prpc::_QueryItemInfoRes_default_instance_._instance,
+    &::prpc::_ShareItemReq_default_instance_._instance,
+    &::prpc::_ShareItemRes_default_instance_._instance,
     &::prpc::_RefreshSubtitleReq_default_instance_._instance,
     &::prpc::_RefreshSubtitleRes_default_instance_._instance,
 };
@@ -663,48 +729,53 @@ const char descriptor_table_protodef_user_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
     "pe\022\025\n\rresource_path\030\003 \001(\t\022\021\n\tintroduce\030\004"
     " \001(\t\022\021\n\tparent_id\030\005 \001(\003\"\024\n\022NewCategoryIt"
     "emRes\"%\n\022DelCategoryItemReq\022\017\n\007item_id\030\001"
-    " \001(\003\"\024\n\022DelCategoryItemRes\"%\n\020QuerySubIt"
-    "emsReq\022\021\n\tparent_id\030\001 \001(\003\"^\n\020QuerySubIte"
-    "msRes\022\'\n\013parent_item\030\001 \001(\0132\022.prpc.Catego"
-    "ryItem\022!\n\005items\030\002 \003(\0132\022.prpc.CategoryIte"
-    "m\"5\n\020QueryBtVideosReq\022!\n\tinfo_hash\030\001 \001(\013"
-    "2\016.prpc.InfoHash\"G\n\016BtFileMetadata\022\022\n\nfi"
-    "le_index\030\001 \001(\005\022!\n\004meta\030\002 \001(\0132\023.prpc.Vide"
-    "oMetadata\"6\n\020QueryBtVideosRes\022\"\n\004data\030\001 "
-    "\003(\0132\024.prpc.BtFileMetadata\"c\n\016AddBtVideos"
-    "Req\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\022\024"
-    "\n\014file_indexes\030\002 \003(\005\022\030\n\020category_item_id"
-    "\030\003 \001(\003\"\020\n\016AddBtVideosRes\"$\n\021QueryVideoIn"
-    "foReq\022\017\n\007item_id\030\001 \001(\003\"8\n\021QueryVideoInfo"
-    "Res\022\020\n\010video_id\030\001 \001(\003\022\021\n\tsubtitles\030\002 \003(\t"
-    "\"%\n\022RefreshSubtitleReq\022\017\n\007item_id\030\001 \001(\003\""
-    "\024\n\022RefreshSubtitleRes2\212\010\n\013UserService\022G\n"
-    "\010Register\022\022.prpc.RegisterInfo\032\021.prpc.Reg"
-    "isterRet\"\024\202\323\344\223\002\016\"\t/register:\001*\022M\n\013IsUsed"
-    "Email\022\017.prpc.EmailInfo\032\024.prpc.IsUsedEmai"
-    "lRet\"\027\202\323\344\223\002\021\"\014/isusedemail:\001*\022;\n\005Login\022\017"
-    ".prpc.LoginInfo\032\016.prpc.LoginRet\"\021\202\323\344\223\002\013\""
-    "\006/login:\001*\022C\n\tFastLogin\022\017.prpc.LoginInfo"
-    "\032\016.prpc.LoginRet\"\025\202\323\344\223\002\017\"\n/fastlogin:\001*\022"
-    "B\n\tIsLogined\022\017.prpc.LoginInfo\032\016.prpc.Log"
-    "inRet\"\024\202\323\344\223\002\016\"\t/islogged:\001*\022N\n\010Download\022"
-    "\025.prpc.DownloadRequest\032\025.prpc.DownloadRe"
-    "spone\"\024\202\323\344\223\002\016\"\t/download:\001*\022\?\n\rRemoveTor"
-    "rent\022\026.prpc.RemoveTorrentReq\032\026.prpc.Remo"
-    "veTorrentRes\0226\n\010OnStatus\022\023.prpc.StatusRe"
-    "quest\032\023.prpc.StatusRespone0\001\022\?\n\rQueryBtV"
-    "ideos\022\026.prpc.QueryBtVideosReq\032\026.prpc.Que"
-    "ryBtVideosRes\022E\n\017NewCategoryItem\022\030.prpc."
-    "NewCategoryItemReq\032\030.prpc.NewCategoryIte"
-    "mRes\022E\n\017DelCategoryItem\022\030.prpc.DelCatego"
-    "ryItemReq\032\030.prpc.DelCategoryItemRes\022\?\n\rQ"
-    "uerySubItems\022\026.prpc.QuerySubItemsReq\032\026.p"
-    "rpc.QuerySubItemsRes\0229\n\013AddBtVideos\022\024.pr"
-    "pc.AddBtVideosReq\032\024.prpc.AddBtVideosRes\022"
-    "B\n\016QueryVideoInfo\022\027.prpc.QueryVideoInfoR"
-    "eq\032\027.prpc.QueryVideoInfoRes\022E\n\017RefreshSu"
-    "btitle\022\030.prpc.RefreshSubtitleReq\032\030.prpc."
-    "RefreshSubtitleResB\010Z\006./prpcb\006proto3"
+    " \001(\003\"\024\n\022DelCategoryItemRes\"7\n\020QuerySubIt"
+    "emsReq\022\021\n\tparent_id\030\001 \001(\003\022\020\n\010share_id\030\002 "
+    "\001(\t\"^\n\020QuerySubItemsRes\022\'\n\013parent_item\030\001"
+    " \001(\0132\022.prpc.CategoryItem\022!\n\005items\030\002 \003(\0132"
+    "\022.prpc.CategoryItem\"5\n\020QueryBtVideosReq\022"
+    "!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\"G\n\016Bt"
+    "FileMetadata\022\022\n\nfile_index\030\001 \001(\005\022!\n\004meta"
+    "\030\002 \001(\0132\023.prpc.VideoMetadata\"6\n\020QueryBtVi"
+    "deosRes\022\"\n\004data\030\001 \003(\0132\024.prpc.BtFileMetad"
+    "ata\"c\n\016AddBtVideosReq\022!\n\tinfo_hash\030\001 \001(\013"
+    "2\016.prpc.InfoHash\022\024\n\014file_indexes\030\002 \003(\005\022\030"
+    "\n\020category_item_id\030\003 \001(\003\"\020\n\016AddBtVideosR"
+    "es\"5\n\020QueryItemInfoReq\022\017\n\007item_id\030\001 \001(\003\022"
+    "\020\n\010share_id\030\002 \001(\t\"Z\n\020QueryItemInfoRes\022%\n"
+    "\titem_info\030\001 \001(\0132\022.prpc.CategoryItem\022\037\n\n"
+    "video_info\030\002 \001(\0132\013.prpc.Video\"\037\n\014ShareIt"
+    "emReq\022\017\n\007item_id\030\001 \001(\003\"1\n\014ShareItemRes\022\017"
+    "\n\007item_id\030\001 \001(\003\022\020\n\010share_id\030\002 \001(\t\"%\n\022Ref"
+    "reshSubtitleReq\022\017\n\007item_id\030\001 \001(\003\"\024\n\022Refr"
+    "eshSubtitleRes2\274\010\n\013UserService\022G\n\010Regist"
+    "er\022\022.prpc.RegisterInfo\032\021.prpc.RegisterRe"
+    "t\"\024\202\323\344\223\002\016\"\t/register:\001*\022M\n\013IsUsedEmail\022\017"
+    ".prpc.EmailInfo\032\024.prpc.IsUsedEmailRet\"\027\202"
+    "\323\344\223\002\021\"\014/isusedemail:\001*\022;\n\005Login\022\017.prpc.L"
+    "oginInfo\032\016.prpc.LoginRet\"\021\202\323\344\223\002\013\"\006/login"
+    ":\001*\022C\n\tFastLogin\022\017.prpc.LoginInfo\032\016.prpc"
+    ".LoginRet\"\025\202\323\344\223\002\017\"\n/fastlogin:\001*\022B\n\tIsLo"
+    "gined\022\017.prpc.LoginInfo\032\016.prpc.LoginRet\"\024"
+    "\202\323\344\223\002\016\"\t/islogged:\001*\022N\n\010Download\022\025.prpc."
+    "DownloadRequest\032\025.prpc.DownloadRespone\"\024"
+    "\202\323\344\223\002\016\"\t/download:\001*\022\?\n\rRemoveTorrent\022\026."
+    "prpc.RemoveTorrentReq\032\026.prpc.RemoveTorre"
+    "ntRes\0226\n\010OnStatus\022\023.prpc.StatusRequest\032\023"
+    ".prpc.StatusRespone0\001\022\?\n\rQueryBtVideos\022\026"
+    ".prpc.QueryBtVideosReq\032\026.prpc.QueryBtVid"
+    "eosRes\022E\n\017NewCategoryItem\022\030.prpc.NewCate"
+    "goryItemReq\032\030.prpc.NewCategoryItemRes\022E\n"
+    "\017DelCategoryItem\022\030.prpc.DelCategoryItemR"
+    "eq\032\030.prpc.DelCategoryItemRes\0229\n\013AddBtVid"
+    "eos\022\024.prpc.AddBtVideosReq\032\024.prpc.AddBtVi"
+    "deosRes\0223\n\tShareItem\022\022.prpc.ShareItemReq"
+    "\032\022.prpc.ShareItemRes\022\?\n\rQuerySubItems\022\026."
+    "prpc.QuerySubItemsReq\032\026.prpc.QuerySubIte"
+    "msRes\022\?\n\rQueryItemInfo\022\026.prpc.QueryItemI"
+    "nfoReq\032\026.prpc.QueryItemInfoRes\022E\n\017Refres"
+    "hSubtitle\022\030.prpc.RefreshSubtitleReq\032\030.pr"
+    "pc.RefreshSubtitleResB\010Z\006./prpcb\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_user_2eproto_deps[4] =
     {
@@ -717,13 +788,13 @@ static ::absl::once_flag descriptor_table_user_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_user_2eproto = {
     false,
     false,
-    2316,
+    2519,
     descriptor_table_protodef_user_2eproto,
     "user.proto",
     &descriptor_table_user_2eproto_once,
     descriptor_table_user_2eproto_deps,
     4,
-    22,
+    24,
     schemas,
     file_default_instances,
     TableStruct_user_2eproto::offsets,
@@ -2744,19 +2815,40 @@ QuerySubItemsReq::QuerySubItemsReq(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   // @@protoc_insertion_point(arena_constructor:prpc.QuerySubItemsReq)
 }
 QuerySubItemsReq::QuerySubItemsReq(const QuerySubItemsReq& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(), _impl_(from._impl_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(
-      from._internal_metadata_);
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  QuerySubItemsReq* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.share_id_) {}
+
+    , decltype(_impl_.parent_id_) {}
+
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.share_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.share_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_share_id().empty()) {
+    _this->_impl_.share_id_.Set(from._internal_share_id(), _this->GetArenaForAllocation());
+  }
+  _this->_impl_.parent_id_ = from._impl_.parent_id_;
   // @@protoc_insertion_point(copy_constructor:prpc.QuerySubItemsReq)
 }
 
 inline void QuerySubItemsReq::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.parent_id_) { ::int64_t{0} }
+      decltype(_impl_.share_id_) {}
+
+    , decltype(_impl_.parent_id_) { ::int64_t{0} }
 
     , /*decltype(_impl_._cached_size_)*/{}
   };
+  _impl_.share_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.share_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 QuerySubItemsReq::~QuerySubItemsReq() {
@@ -2770,6 +2862,7 @@ QuerySubItemsReq::~QuerySubItemsReq() {
 
 inline void QuerySubItemsReq::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.share_id_.Destroy();
 }
 
 void QuerySubItemsReq::SetCachedSize(int size) const {
@@ -2782,6 +2875,7 @@ void QuerySubItemsReq::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  _impl_.share_id_.ClearToEmpty();
   _impl_.parent_id_ = ::int64_t{0};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -2797,6 +2891,17 @@ const char* QuerySubItemsReq::_InternalParse(const char* ptr, ::_pbi::ParseConte
         if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 8)) {
           _impl_.parent_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      // string share_id = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_share_id();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "prpc.QuerySubItemsReq.share_id"));
         } else {
           goto handle_unusual;
         }
@@ -2837,6 +2942,14 @@ failure:
         1, this->_internal_parent_id(), target);
   }
 
+  // string share_id = 2;
+  if (!this->_internal_share_id().empty()) {
+    const std::string& _s = this->_internal_share_id();
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.QuerySubItemsReq.share_id");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -2852,6 +2965,12 @@ failure:
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // string share_id = 2;
+  if (!this->_internal_share_id().empty()) {
+    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+                                    this->_internal_share_id());
+  }
 
   // int64 parent_id = 1;
   if (this->_internal_parent_id() != 0) {
@@ -2877,6 +2996,9 @@ void QuerySubItemsReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (!from._internal_share_id().empty()) {
+    _this->_internal_set_share_id(from._internal_share_id());
+  }
   if (from._internal_parent_id() != 0) {
     _this->_internal_set_parent_id(from._internal_parent_id());
   }
@@ -2896,7 +3018,11 @@ bool QuerySubItemsReq::IsInitialized() const {
 
 void QuerySubItemsReq::InternalSwap(QuerySubItemsReq* other) {
   using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.share_id_, lhs_arena,
+                                       &other->_impl_.share_id_, rhs_arena);
 
   swap(_impl_.parent_id_, other->_impl_.parent_id_);
 }
@@ -4066,23 +4192,501 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*AddBtVideosRes::GetClassData()
 }
 // ===================================================================
 
-class QueryVideoInfoReq::_Internal {
+class QueryItemInfoReq::_Internal {
  public:
 };
 
-QueryVideoInfoReq::QueryVideoInfoReq(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+QueryItemInfoReq::QueryItemInfoReq(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.QueryVideoInfoReq)
+  // @@protoc_insertion_point(arena_constructor:prpc.QueryItemInfoReq)
 }
-QueryVideoInfoReq::QueryVideoInfoReq(const QueryVideoInfoReq& from)
+QueryItemInfoReq::QueryItemInfoReq(const QueryItemInfoReq& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  QueryItemInfoReq* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.share_id_) {}
+
+    , decltype(_impl_.item_id_) {}
+
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.share_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.share_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_share_id().empty()) {
+    _this->_impl_.share_id_.Set(from._internal_share_id(), _this->GetArenaForAllocation());
+  }
+  _this->_impl_.item_id_ = from._impl_.item_id_;
+  // @@protoc_insertion_point(copy_constructor:prpc.QueryItemInfoReq)
+}
+
+inline void QueryItemInfoReq::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.share_id_) {}
+
+    , decltype(_impl_.item_id_) { ::int64_t{0} }
+
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.share_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.share_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+QueryItemInfoReq::~QueryItemInfoReq() {
+  // @@protoc_insertion_point(destructor:prpc.QueryItemInfoReq)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void QueryItemInfoReq::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.share_id_.Destroy();
+}
+
+void QueryItemInfoReq::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void QueryItemInfoReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.QueryItemInfoReq)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.share_id_.ClearToEmpty();
+  _impl_.item_id_ = ::int64_t{0};
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* QueryItemInfoReq::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int64 item_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 8)) {
+          _impl_.item_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      // string share_id = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_share_id();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "prpc.QueryItemInfoReq.share_id"));
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+::uint8_t* QueryItemInfoReq::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.QueryItemInfoReq)
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int64 item_id = 1;
+  if (this->_internal_item_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(
+        1, this->_internal_item_id(), target);
+  }
+
+  // string share_id = 2;
+  if (!this->_internal_share_id().empty()) {
+    const std::string& _s = this->_internal_share_id();
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.QueryItemInfoReq.share_id");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.QueryItemInfoReq)
+  return target;
+}
+
+::size_t QueryItemInfoReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.QueryItemInfoReq)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string share_id = 2;
+  if (!this->_internal_share_id().empty()) {
+    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+                                    this->_internal_share_id());
+  }
+
+  // int64 item_id = 1;
+  if (this->_internal_item_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_item_id());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData QueryItemInfoReq::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    QueryItemInfoReq::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*QueryItemInfoReq::GetClassData() const { return &_class_data_; }
+
+
+void QueryItemInfoReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<QueryItemInfoReq*>(&to_msg);
+  auto& from = static_cast<const QueryItemInfoReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.QueryItemInfoReq)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_share_id().empty()) {
+    _this->_internal_set_share_id(from._internal_share_id());
+  }
+  if (from._internal_item_id() != 0) {
+    _this->_internal_set_item_id(from._internal_item_id());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void QueryItemInfoReq::CopyFrom(const QueryItemInfoReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.QueryItemInfoReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool QueryItemInfoReq::IsInitialized() const {
+  return true;
+}
+
+void QueryItemInfoReq::InternalSwap(QueryItemInfoReq* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.share_id_, lhs_arena,
+                                       &other->_impl_.share_id_, rhs_arena);
+
+  swap(_impl_.item_id_, other->_impl_.item_id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata QueryItemInfoReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[18]);
+}
+// ===================================================================
+
+class QueryItemInfoRes::_Internal {
+ public:
+  static const ::prpc::CategoryItem& item_info(const QueryItemInfoRes* msg);
+  static const ::prpc::Video& video_info(const QueryItemInfoRes* msg);
+};
+
+const ::prpc::CategoryItem&
+QueryItemInfoRes::_Internal::item_info(const QueryItemInfoRes* msg) {
+  return *msg->_impl_.item_info_;
+}
+const ::prpc::Video&
+QueryItemInfoRes::_Internal::video_info(const QueryItemInfoRes* msg) {
+  return *msg->_impl_.video_info_;
+}
+void QueryItemInfoRes::clear_item_info() {
+  if (GetArenaForAllocation() == nullptr && _impl_.item_info_ != nullptr) {
+    delete _impl_.item_info_;
+  }
+  _impl_.item_info_ = nullptr;
+}
+void QueryItemInfoRes::clear_video_info() {
+  if (GetArenaForAllocation() == nullptr && _impl_.video_info_ != nullptr) {
+    delete _impl_.video_info_;
+  }
+  _impl_.video_info_ = nullptr;
+}
+QueryItemInfoRes::QueryItemInfoRes(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.QueryItemInfoRes)
+}
+QueryItemInfoRes::QueryItemInfoRes(const QueryItemInfoRes& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  QueryItemInfoRes* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.item_info_){nullptr}
+    , decltype(_impl_.video_info_){nullptr}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_item_info()) {
+    _this->_impl_.item_info_ = new ::prpc::CategoryItem(*from._impl_.item_info_);
+  }
+  if (from._internal_has_video_info()) {
+    _this->_impl_.video_info_ = new ::prpc::Video(*from._impl_.video_info_);
+  }
+  // @@protoc_insertion_point(copy_constructor:prpc.QueryItemInfoRes)
+}
+
+inline void QueryItemInfoRes::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.item_info_){nullptr}
+    , decltype(_impl_.video_info_){nullptr}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+QueryItemInfoRes::~QueryItemInfoRes() {
+  // @@protoc_insertion_point(destructor:prpc.QueryItemInfoRes)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void QueryItemInfoRes::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.item_info_;
+  if (this != internal_default_instance()) delete _impl_.video_info_;
+}
+
+void QueryItemInfoRes::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void QueryItemInfoRes::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.QueryItemInfoRes)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && _impl_.item_info_ != nullptr) {
+    delete _impl_.item_info_;
+  }
+  _impl_.item_info_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.video_info_ != nullptr) {
+    delete _impl_.video_info_;
+  }
+  _impl_.video_info_ = nullptr;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* QueryItemInfoRes::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .prpc.CategoryItem item_info = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_item_info(), ptr);
+          CHK_(ptr);
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      // .prpc.Video video_info = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_video_info(), ptr);
+          CHK_(ptr);
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+::uint8_t* QueryItemInfoRes::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.QueryItemInfoRes)
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .prpc.CategoryItem item_info = 1;
+  if (this->_internal_has_item_info()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::item_info(this),
+        _Internal::item_info(this).GetCachedSize(), target, stream);
+  }
+
+  // .prpc.Video video_info = 2;
+  if (this->_internal_has_video_info()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::video_info(this),
+        _Internal::video_info(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.QueryItemInfoRes)
+  return target;
+}
+
+::size_t QueryItemInfoRes::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.QueryItemInfoRes)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .prpc.CategoryItem item_info = 1;
+  if (this->_internal_has_item_info()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.item_info_);
+  }
+
+  // .prpc.Video video_info = 2;
+  if (this->_internal_has_video_info()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.video_info_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData QueryItemInfoRes::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    QueryItemInfoRes::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*QueryItemInfoRes::GetClassData() const { return &_class_data_; }
+
+
+void QueryItemInfoRes::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<QueryItemInfoRes*>(&to_msg);
+  auto& from = static_cast<const QueryItemInfoRes&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.QueryItemInfoRes)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_item_info()) {
+    _this->_internal_mutable_item_info()->::prpc::CategoryItem::MergeFrom(
+        from._internal_item_info());
+  }
+  if (from._internal_has_video_info()) {
+    _this->_internal_mutable_video_info()->::prpc::Video::MergeFrom(
+        from._internal_video_info());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void QueryItemInfoRes::CopyFrom(const QueryItemInfoRes& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.QueryItemInfoRes)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool QueryItemInfoRes::IsInitialized() const {
+  return true;
+}
+
+void QueryItemInfoRes::InternalSwap(QueryItemInfoRes* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(QueryItemInfoRes, _impl_.video_info_)
+      + sizeof(QueryItemInfoRes::_impl_.video_info_)
+      - PROTOBUF_FIELD_OFFSET(QueryItemInfoRes, _impl_.item_info_)>(
+          reinterpret_cast<char*>(&_impl_.item_info_),
+          reinterpret_cast<char*>(&other->_impl_.item_info_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata QueryItemInfoRes::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[19]);
+}
+// ===================================================================
+
+class ShareItemReq::_Internal {
+ public:
+};
+
+ShareItemReq::ShareItemReq(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.ShareItemReq)
+}
+ShareItemReq::ShareItemReq(const ShareItemReq& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(), _impl_(from._impl_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(
       from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:prpc.QueryVideoInfoReq)
+  // @@protoc_insertion_point(copy_constructor:prpc.ShareItemReq)
 }
 
-inline void QueryVideoInfoReq::SharedCtor(::_pb::Arena* arena) {
+inline void ShareItemReq::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
       decltype(_impl_.item_id_) { ::int64_t{0} }
@@ -4091,8 +4695,8 @@ inline void QueryVideoInfoReq::SharedCtor(::_pb::Arena* arena) {
   };
 }
 
-QueryVideoInfoReq::~QueryVideoInfoReq() {
-  // @@protoc_insertion_point(destructor:prpc.QueryVideoInfoReq)
+ShareItemReq::~ShareItemReq() {
+  // @@protoc_insertion_point(destructor:prpc.ShareItemReq)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -4100,16 +4704,16 @@ QueryVideoInfoReq::~QueryVideoInfoReq() {
   SharedDtor();
 }
 
-inline void QueryVideoInfoReq::SharedDtor() {
+inline void ShareItemReq::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
-void QueryVideoInfoReq::SetCachedSize(int size) const {
+void ShareItemReq::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void QueryVideoInfoReq::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.QueryVideoInfoReq)
+void ShareItemReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.ShareItemReq)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -4118,7 +4722,7 @@ void QueryVideoInfoReq::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* QueryVideoInfoReq::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* ShareItemReq::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     ::uint32_t tag;
@@ -4156,9 +4760,9 @@ failure:
 #undef CHK_
 }
 
-::uint8_t* QueryVideoInfoReq::_InternalSerialize(
+::uint8_t* ShareItemReq::_InternalSerialize(
     ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.QueryVideoInfoReq)
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.ShareItemReq)
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -4173,12 +4777,12 @@ failure:
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.QueryVideoInfoReq)
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.ShareItemReq)
   return target;
 }
 
-::size_t QueryVideoInfoReq::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.QueryVideoInfoReq)
+::size_t ShareItemReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.ShareItemReq)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
@@ -4194,17 +4798,17 @@ failure:
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData QueryVideoInfoReq::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ShareItemReq::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    QueryVideoInfoReq::MergeImpl
+    ShareItemReq::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*QueryVideoInfoReq::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ShareItemReq::GetClassData() const { return &_class_data_; }
 
 
-void QueryVideoInfoReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<QueryVideoInfoReq*>(&to_msg);
-  auto& from = static_cast<const QueryVideoInfoReq&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.QueryVideoInfoReq)
+void ShareItemReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<ShareItemReq*>(&to_msg);
+  auto& from = static_cast<const ShareItemReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.ShareItemReq)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -4215,66 +4819,79 @@ void QueryVideoInfoReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, cons
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void QueryVideoInfoReq::CopyFrom(const QueryVideoInfoReq& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.QueryVideoInfoReq)
+void ShareItemReq::CopyFrom(const ShareItemReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.ShareItemReq)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool QueryVideoInfoReq::IsInitialized() const {
+bool ShareItemReq::IsInitialized() const {
   return true;
 }
 
-void QueryVideoInfoReq::InternalSwap(QueryVideoInfoReq* other) {
+void ShareItemReq::InternalSwap(ShareItemReq* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
 
   swap(_impl_.item_id_, other->_impl_.item_id_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata QueryVideoInfoReq::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata ShareItemReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[18]);
+      file_level_metadata_user_2eproto[20]);
 }
 // ===================================================================
 
-class QueryVideoInfoRes::_Internal {
+class ShareItemRes::_Internal {
  public:
 };
 
-QueryVideoInfoRes::QueryVideoInfoRes(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+ShareItemRes::ShareItemRes(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.QueryVideoInfoRes)
+  // @@protoc_insertion_point(arena_constructor:prpc.ShareItemRes)
 }
-QueryVideoInfoRes::QueryVideoInfoRes(const QueryVideoInfoRes& from)
+ShareItemRes::ShareItemRes(const ShareItemRes& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  QueryVideoInfoRes* const _this = this; (void)_this;
+  ShareItemRes* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.subtitles_){from._impl_.subtitles_}
-    , decltype(_impl_.video_id_) {}
+      decltype(_impl_.share_id_) {}
+
+    , decltype(_impl_.item_id_) {}
 
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _this->_impl_.video_id_ = from._impl_.video_id_;
-  // @@protoc_insertion_point(copy_constructor:prpc.QueryVideoInfoRes)
+  _impl_.share_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.share_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_share_id().empty()) {
+    _this->_impl_.share_id_.Set(from._internal_share_id(), _this->GetArenaForAllocation());
+  }
+  _this->_impl_.item_id_ = from._impl_.item_id_;
+  // @@protoc_insertion_point(copy_constructor:prpc.ShareItemRes)
 }
 
-inline void QueryVideoInfoRes::SharedCtor(::_pb::Arena* arena) {
+inline void ShareItemRes::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.subtitles_){arena}
-    , decltype(_impl_.video_id_) { ::int64_t{0} }
+      decltype(_impl_.share_id_) {}
+
+    , decltype(_impl_.item_id_) { ::int64_t{0} }
 
     , /*decltype(_impl_._cached_size_)*/{}
   };
+  _impl_.share_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.share_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
-QueryVideoInfoRes::~QueryVideoInfoRes() {
-  // @@protoc_insertion_point(destructor:prpc.QueryVideoInfoRes)
+ShareItemRes::~ShareItemRes() {
+  // @@protoc_insertion_point(destructor:prpc.ShareItemRes)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -4282,53 +4899,48 @@ QueryVideoInfoRes::~QueryVideoInfoRes() {
   SharedDtor();
 }
 
-inline void QueryVideoInfoRes::SharedDtor() {
+inline void ShareItemRes::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.subtitles_.~RepeatedPtrField();
+  _impl_.share_id_.Destroy();
 }
 
-void QueryVideoInfoRes::SetCachedSize(int size) const {
+void ShareItemRes::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void QueryVideoInfoRes::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.QueryVideoInfoRes)
+void ShareItemRes::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.ShareItemRes)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.subtitles_.Clear();
-  _impl_.video_id_ = ::int64_t{0};
+  _impl_.share_id_.ClearToEmpty();
+  _impl_.item_id_ = ::int64_t{0};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* QueryVideoInfoRes::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* ShareItemRes::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // int64 video_id = 1;
+      // int64 item_id = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 8)) {
-          _impl_.video_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          _impl_.item_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else {
           goto handle_unusual;
         }
         continue;
-      // repeated string subtitles = 2;
+      // string share_id = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            auto str = _internal_add_subtitles();
-            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(ptr);
-            CHK_(::_pbi::VerifyUTF8(str, "prpc.QueryVideoInfoRes.subtitles"));
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
+          auto str = _internal_mutable_share_id();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "prpc.ShareItemRes.share_id"));
         } else {
           goto handle_unusual;
         }
@@ -4356,103 +4968,108 @@ failure:
 #undef CHK_
 }
 
-::uint8_t* QueryVideoInfoRes::_InternalSerialize(
+::uint8_t* ShareItemRes::_InternalSerialize(
     ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.QueryVideoInfoRes)
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.ShareItemRes)
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int64 video_id = 1;
-  if (this->_internal_video_id() != 0) {
+  // int64 item_id = 1;
+  if (this->_internal_item_id() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteInt64ToArray(
-        1, this->_internal_video_id(), target);
+        1, this->_internal_item_id(), target);
   }
 
-  // repeated string subtitles = 2;
-  for (int i = 0, n = this->_internal_subtitles_size(); i < n; ++i) {
-    const auto& s = this->_internal_subtitles(i);
+  // string share_id = 2;
+  if (!this->_internal_share_id().empty()) {
+    const std::string& _s = this->_internal_share_id();
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-        s.data(), static_cast<int>(s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.QueryVideoInfoRes.subtitles");
-    target = stream->WriteString(2, s, target);
+        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.ShareItemRes.share_id");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.QueryVideoInfoRes)
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.ShareItemRes)
   return target;
 }
 
-::size_t QueryVideoInfoRes::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.QueryVideoInfoRes)
+::size_t ShareItemRes::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.ShareItemRes)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated string subtitles = 2;
-  total_size += 1 * ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.subtitles_.size());
-  for (int i = 0, n = _impl_.subtitles_.size(); i < n; ++i) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(_impl_.subtitles_.Get(i));
+  // string share_id = 2;
+  if (!this->_internal_share_id().empty()) {
+    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+                                    this->_internal_share_id());
   }
 
-  // int64 video_id = 1;
-  if (this->_internal_video_id() != 0) {
+  // int64 item_id = 1;
+  if (this->_internal_item_id() != 0) {
     total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
-        this->_internal_video_id());
+        this->_internal_item_id());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData QueryVideoInfoRes::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ShareItemRes::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    QueryVideoInfoRes::MergeImpl
+    ShareItemRes::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*QueryVideoInfoRes::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ShareItemRes::GetClassData() const { return &_class_data_; }
 
 
-void QueryVideoInfoRes::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<QueryVideoInfoRes*>(&to_msg);
-  auto& from = static_cast<const QueryVideoInfoRes&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.QueryVideoInfoRes)
+void ShareItemRes::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<ShareItemRes*>(&to_msg);
+  auto& from = static_cast<const ShareItemRes&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.ShareItemRes)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.subtitles_.MergeFrom(from._impl_.subtitles_);
-  if (from._internal_video_id() != 0) {
-    _this->_internal_set_video_id(from._internal_video_id());
+  if (!from._internal_share_id().empty()) {
+    _this->_internal_set_share_id(from._internal_share_id());
+  }
+  if (from._internal_item_id() != 0) {
+    _this->_internal_set_item_id(from._internal_item_id());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void QueryVideoInfoRes::CopyFrom(const QueryVideoInfoRes& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.QueryVideoInfoRes)
+void ShareItemRes::CopyFrom(const ShareItemRes& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.ShareItemRes)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool QueryVideoInfoRes::IsInitialized() const {
+bool ShareItemRes::IsInitialized() const {
   return true;
 }
 
-void QueryVideoInfoRes::InternalSwap(QueryVideoInfoRes* other) {
+void ShareItemRes::InternalSwap(ShareItemRes* other) {
   using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  _impl_.subtitles_.InternalSwap(&other->_impl_.subtitles_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.share_id_, lhs_arena,
+                                       &other->_impl_.share_id_, rhs_arena);
 
-  swap(_impl_.video_id_, other->_impl_.video_id_);
+  swap(_impl_.item_id_, other->_impl_.item_id_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata QueryVideoInfoRes::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata ShareItemRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[19]);
+      file_level_metadata_user_2eproto[21]);
 }
 // ===================================================================
 
@@ -4626,7 +5243,7 @@ void RefreshSubtitleReq::InternalSwap(RefreshSubtitleReq* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata RefreshSubtitleReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[20]);
+      file_level_metadata_user_2eproto[22]);
 }
 // ===================================================================
 
@@ -4664,7 +5281,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RefreshSubtitleRes::GetClassDa
 ::PROTOBUF_NAMESPACE_ID::Metadata RefreshSubtitleRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[21]);
+      file_level_metadata_user_2eproto[23]);
 }
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace prpc
@@ -4741,13 +5358,21 @@ template<> PROTOBUF_NOINLINE ::prpc::AddBtVideosRes*
 Arena::CreateMaybeMessage< ::prpc::AddBtVideosRes >(Arena* arena) {
   return Arena::CreateMessageInternal< ::prpc::AddBtVideosRes >(arena);
 }
-template<> PROTOBUF_NOINLINE ::prpc::QueryVideoInfoReq*
-Arena::CreateMaybeMessage< ::prpc::QueryVideoInfoReq >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::QueryVideoInfoReq >(arena);
+template<> PROTOBUF_NOINLINE ::prpc::QueryItemInfoReq*
+Arena::CreateMaybeMessage< ::prpc::QueryItemInfoReq >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::prpc::QueryItemInfoReq >(arena);
 }
-template<> PROTOBUF_NOINLINE ::prpc::QueryVideoInfoRes*
-Arena::CreateMaybeMessage< ::prpc::QueryVideoInfoRes >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::QueryVideoInfoRes >(arena);
+template<> PROTOBUF_NOINLINE ::prpc::QueryItemInfoRes*
+Arena::CreateMaybeMessage< ::prpc::QueryItemInfoRes >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::prpc::QueryItemInfoRes >(arena);
+}
+template<> PROTOBUF_NOINLINE ::prpc::ShareItemReq*
+Arena::CreateMaybeMessage< ::prpc::ShareItemReq >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::prpc::ShareItemReq >(arena);
+}
+template<> PROTOBUF_NOINLINE ::prpc::ShareItemRes*
+Arena::CreateMaybeMessage< ::prpc::ShareItemRes >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::prpc::ShareItemRes >(arena);
 }
 template<> PROTOBUF_NOINLINE ::prpc::RefreshSubtitleReq*
 Arena::CreateMaybeMessage< ::prpc::RefreshSubtitleReq >(Arena* arena) {

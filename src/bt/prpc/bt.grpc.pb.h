@@ -56,13 +56,6 @@ class BtService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RemoveTorrentRes>> PrepareAsyncRemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RemoveTorrentRes>>(PrepareAsyncRemoveTorrentRaw(context, request, cq));
     }
-    virtual ::grpc::Status FileProgress(::grpc::ClientContext* context, const ::prpc::FileProgressReq& request, ::prpc::FileProgressRes* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::FileProgressRes>> AsyncFileProgress(::grpc::ClientContext* context, const ::prpc::FileProgressReq& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::FileProgressRes>>(AsyncFileProgressRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::FileProgressRes>> PrepareAsyncFileProgress(::grpc::ClientContext* context, const ::prpc::FileProgressReq& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::FileProgressRes>>(PrepareAsyncFileProgressRaw(context, request, cq));
-    }
     std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>> OnStatus(::grpc::ClientContext* context) {
       return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>>(OnStatusRaw(context));
     }
@@ -90,6 +83,15 @@ class BtService final {
     std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>> PrepareAsyncOnFileCompleted(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>>(PrepareAsyncOnFileCompletedRaw(context, cq));
     }
+    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::FileProgressReq, ::prpc::FileProgressRes>> FileProgress(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::FileProgressReq, ::prpc::FileProgressRes>>(FileProgressRaw(context));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::FileProgressReq, ::prpc::FileProgressRes>> AsyncFileProgress(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::FileProgressReq, ::prpc::FileProgressRes>>(AsyncFileProgressRaw(context, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::FileProgressReq, ::prpc::FileProgressRes>> PrepareAsyncFileProgress(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::FileProgressReq, ::prpc::FileProgressRes>>(PrepareAsyncFileProgressRaw(context, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -99,11 +101,10 @@ class BtService final {
       virtual void Download(::grpc::ClientContext* context, const ::prpc::DownloadRequest* request, ::prpc::DownloadRespone* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void RemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response, std::function<void(::grpc::Status)>) = 0;
       virtual void RemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void FileProgress(::grpc::ClientContext* context, const ::prpc::FileProgressReq* request, ::prpc::FileProgressRes* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void FileProgress(::grpc::ClientContext* context, const ::prpc::FileProgressReq* request, ::prpc::FileProgressRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void OnStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::StatusRequest,::prpc::StatusRespone>* reactor) = 0;
       virtual void OnTorrentInfo(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::TorrentInfoReq,::prpc::TorrentInfoRes>* reactor) = 0;
       virtual void OnFileCompleted(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::FileCompletedReq,::prpc::FileCompletedRes>* reactor) = 0;
+      virtual void FileProgress(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::FileProgressReq,::prpc::FileProgressRes>* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -115,8 +116,6 @@ class BtService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::DownloadRespone>* PrepareAsyncDownloadRaw(::grpc::ClientContext* context, const ::prpc::DownloadRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RemoveTorrentRes>* AsyncRemoveTorrentRaw(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RemoveTorrentRes>* PrepareAsyncRemoveTorrentRaw(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::FileProgressRes>* AsyncFileProgressRaw(::grpc::ClientContext* context, const ::prpc::FileProgressReq& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::FileProgressRes>* PrepareAsyncFileProgressRaw(::grpc::ClientContext* context, const ::prpc::FileProgressReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>* OnStatusRaw(::grpc::ClientContext* context) = 0;
     virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>* AsyncOnStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>* PrepareAsyncOnStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
@@ -126,6 +125,9 @@ class BtService final {
     virtual ::grpc::ClientReaderWriterInterface< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* OnFileCompletedRaw(::grpc::ClientContext* context) = 0;
     virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* AsyncOnFileCompletedRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* PrepareAsyncOnFileCompletedRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderWriterInterface< ::prpc::FileProgressReq, ::prpc::FileProgressRes>* FileProgressRaw(::grpc::ClientContext* context) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::FileProgressReq, ::prpc::FileProgressRes>* AsyncFileProgressRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::FileProgressReq, ::prpc::FileProgressRes>* PrepareAsyncFileProgressRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -150,13 +152,6 @@ class BtService final {
     }
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RemoveTorrentRes>> PrepareAsyncRemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RemoveTorrentRes>>(PrepareAsyncRemoveTorrentRaw(context, request, cq));
-    }
-    ::grpc::Status FileProgress(::grpc::ClientContext* context, const ::prpc::FileProgressReq& request, ::prpc::FileProgressRes* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::FileProgressRes>> AsyncFileProgress(::grpc::ClientContext* context, const ::prpc::FileProgressReq& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::FileProgressRes>>(AsyncFileProgressRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::FileProgressRes>> PrepareAsyncFileProgress(::grpc::ClientContext* context, const ::prpc::FileProgressReq& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::FileProgressRes>>(PrepareAsyncFileProgressRaw(context, request, cq));
     }
     std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>> OnStatus(::grpc::ClientContext* context) {
       return std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>>(OnStatusRaw(context));
@@ -185,6 +180,15 @@ class BtService final {
     std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>> PrepareAsyncOnFileCompleted(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>>(PrepareAsyncOnFileCompletedRaw(context, cq));
     }
+    std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::FileProgressReq, ::prpc::FileProgressRes>> FileProgress(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::FileProgressReq, ::prpc::FileProgressRes>>(FileProgressRaw(context));
+    }
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::prpc::FileProgressReq, ::prpc::FileProgressRes>> AsyncFileProgress(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::prpc::FileProgressReq, ::prpc::FileProgressRes>>(AsyncFileProgressRaw(context, cq, tag));
+    }
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::prpc::FileProgressReq, ::prpc::FileProgressRes>> PrepareAsyncFileProgress(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::prpc::FileProgressReq, ::prpc::FileProgressRes>>(PrepareAsyncFileProgressRaw(context, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -194,11 +198,10 @@ class BtService final {
       void Download(::grpc::ClientContext* context, const ::prpc::DownloadRequest* request, ::prpc::DownloadRespone* response, ::grpc::ClientUnaryReactor* reactor) override;
       void RemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response, std::function<void(::grpc::Status)>) override;
       void RemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void FileProgress(::grpc::ClientContext* context, const ::prpc::FileProgressReq* request, ::prpc::FileProgressRes* response, std::function<void(::grpc::Status)>) override;
-      void FileProgress(::grpc::ClientContext* context, const ::prpc::FileProgressReq* request, ::prpc::FileProgressRes* response, ::grpc::ClientUnaryReactor* reactor) override;
       void OnStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::StatusRequest,::prpc::StatusRespone>* reactor) override;
       void OnTorrentInfo(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::TorrentInfoReq,::prpc::TorrentInfoRes>* reactor) override;
       void OnFileCompleted(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::FileCompletedReq,::prpc::FileCompletedRes>* reactor) override;
+      void FileProgress(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::FileProgressReq,::prpc::FileProgressRes>* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -216,8 +219,6 @@ class BtService final {
     ::grpc::ClientAsyncResponseReader< ::prpc::DownloadRespone>* PrepareAsyncDownloadRaw(::grpc::ClientContext* context, const ::prpc::DownloadRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::RemoveTorrentRes>* AsyncRemoveTorrentRaw(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::RemoveTorrentRes>* PrepareAsyncRemoveTorrentRaw(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::prpc::FileProgressRes>* AsyncFileProgressRaw(::grpc::ClientContext* context, const ::prpc::FileProgressReq& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::prpc::FileProgressRes>* PrepareAsyncFileProgressRaw(::grpc::ClientContext* context, const ::prpc::FileProgressReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* OnStatusRaw(::grpc::ClientContext* context) override;
     ::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* AsyncOnStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* PrepareAsyncOnStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
@@ -227,13 +228,16 @@ class BtService final {
     ::grpc::ClientReaderWriter< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* OnFileCompletedRaw(::grpc::ClientContext* context) override;
     ::grpc::ClientAsyncReaderWriter< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* AsyncOnFileCompletedRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReaderWriter< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* PrepareAsyncOnFileCompletedRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReaderWriter< ::prpc::FileProgressReq, ::prpc::FileProgressRes>* FileProgressRaw(::grpc::ClientContext* context) override;
+    ::grpc::ClientAsyncReaderWriter< ::prpc::FileProgressReq, ::prpc::FileProgressRes>* AsyncFileProgressRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReaderWriter< ::prpc::FileProgressReq, ::prpc::FileProgressRes>* PrepareAsyncFileProgressRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_Parse_;
     const ::grpc::internal::RpcMethod rpcmethod_Download_;
     const ::grpc::internal::RpcMethod rpcmethod_RemoveTorrent_;
-    const ::grpc::internal::RpcMethod rpcmethod_FileProgress_;
     const ::grpc::internal::RpcMethod rpcmethod_OnStatus_;
     const ::grpc::internal::RpcMethod rpcmethod_OnTorrentInfo_;
     const ::grpc::internal::RpcMethod rpcmethod_OnFileCompleted_;
+    const ::grpc::internal::RpcMethod rpcmethod_FileProgress_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -244,10 +248,10 @@ class BtService final {
     virtual ::grpc::Status Parse(::grpc::ServerContext* context, const ::prpc::DownloadRequest* request, ::prpc::DownloadRespone* response);
     virtual ::grpc::Status Download(::grpc::ServerContext* context, const ::prpc::DownloadRequest* request, ::prpc::DownloadRespone* response);
     virtual ::grpc::Status RemoveTorrent(::grpc::ServerContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response);
-    virtual ::grpc::Status FileProgress(::grpc::ServerContext* context, const ::prpc::FileProgressReq* request, ::prpc::FileProgressRes* response);
     virtual ::grpc::Status OnStatus(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* stream);
     virtual ::grpc::Status OnTorrentInfo(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::TorrentInfoRes, ::prpc::TorrentInfoReq>* stream);
     virtual ::grpc::Status OnFileCompleted(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::FileCompletedRes, ::prpc::FileCompletedReq>* stream);
+    virtual ::grpc::Status FileProgress(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::FileProgressRes, ::prpc::FileProgressReq>* stream);
   };
   template <class BaseClass>
   class WithAsyncMethod_Parse : public BaseClass {
@@ -310,32 +314,12 @@ class BtService final {
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_FileProgress : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithAsyncMethod_FileProgress() {
-      ::grpc::Service::MarkMethodAsync(3);
-    }
-    ~WithAsyncMethod_FileProgress() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status FileProgress(::grpc::ServerContext* /*context*/, const ::prpc::FileProgressReq* /*request*/, ::prpc::FileProgressRes* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestFileProgress(::grpc::ServerContext* context, ::prpc::FileProgressReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::FileProgressRes>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
   class WithAsyncMethod_OnStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_OnStatus() {
-      ::grpc::Service::MarkMethodAsync(4);
+      ::grpc::Service::MarkMethodAsync(3);
     }
     ~WithAsyncMethod_OnStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -346,7 +330,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnStatus(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(4, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(3, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -355,7 +339,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_OnTorrentInfo() {
-      ::grpc::Service::MarkMethodAsync(5);
+      ::grpc::Service::MarkMethodAsync(4);
     }
     ~WithAsyncMethod_OnTorrentInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -366,7 +350,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnTorrentInfo(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::prpc::TorrentInfoRes, ::prpc::TorrentInfoReq>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(5, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(4, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -375,7 +359,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodAsync(6);
+      ::grpc::Service::MarkMethodAsync(5);
     }
     ~WithAsyncMethod_OnFileCompleted() override {
       BaseClassMustBeDerivedFromService(this);
@@ -386,10 +370,30 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnFileCompleted(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::prpc::FileCompletedRes, ::prpc::FileCompletedReq>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncBidiStreaming(5, context, stream, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_FileProgress : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_FileProgress() {
+      ::grpc::Service::MarkMethodAsync(6);
+    }
+    ~WithAsyncMethod_FileProgress() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status FileProgress(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::FileProgressRes, ::prpc::FileProgressReq>* /*stream*/)  override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestFileProgress(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::prpc::FileProgressRes, ::prpc::FileProgressReq>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncBidiStreaming(6, context, stream, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_Parse<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_FileProgress<WithAsyncMethod_OnStatus<WithAsyncMethod_OnTorrentInfo<WithAsyncMethod_OnFileCompleted<Service > > > > > > > AsyncService;
+  typedef WithAsyncMethod_Parse<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_OnStatus<WithAsyncMethod_OnTorrentInfo<WithAsyncMethod_OnFileCompleted<WithAsyncMethod_FileProgress<Service > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_Parse : public BaseClass {
    private:
@@ -472,39 +476,12 @@ class BtService final {
       ::grpc::CallbackServerContext* /*context*/, const ::prpc::RemoveTorrentReq* /*request*/, ::prpc::RemoveTorrentRes* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_FileProgress : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithCallbackMethod_FileProgress() {
-      ::grpc::Service::MarkMethodCallback(3,
-          new ::grpc::internal::CallbackUnaryHandler< ::prpc::FileProgressReq, ::prpc::FileProgressRes>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::prpc::FileProgressReq* request, ::prpc::FileProgressRes* response) { return this->FileProgress(context, request, response); }));}
-    void SetMessageAllocatorFor_FileProgress(
-        ::grpc::MessageAllocator< ::prpc::FileProgressReq, ::prpc::FileProgressRes>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::FileProgressReq, ::prpc::FileProgressRes>*>(handler)
-              ->SetMessageAllocator(allocator);
-    }
-    ~WithCallbackMethod_FileProgress() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status FileProgress(::grpc::ServerContext* /*context*/, const ::prpc::FileProgressReq* /*request*/, ::prpc::FileProgressRes* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* FileProgress(
-      ::grpc::CallbackServerContext* /*context*/, const ::prpc::FileProgressReq* /*request*/, ::prpc::FileProgressRes* /*response*/)  { return nullptr; }
-  };
-  template <class BaseClass>
   class WithCallbackMethod_OnStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_OnStatus() {
-      ::grpc::Service::MarkMethodCallback(4,
+      ::grpc::Service::MarkMethodCallback(3,
           new ::grpc::internal::CallbackBidiHandler< ::prpc::StatusRequest, ::prpc::StatusRespone>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnStatus(context); }));
@@ -527,7 +504,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_OnTorrentInfo() {
-      ::grpc::Service::MarkMethodCallback(5,
+      ::grpc::Service::MarkMethodCallback(4,
           new ::grpc::internal::CallbackBidiHandler< ::prpc::TorrentInfoReq, ::prpc::TorrentInfoRes>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnTorrentInfo(context); }));
@@ -550,7 +527,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodCallback(6,
+      ::grpc::Service::MarkMethodCallback(5,
           new ::grpc::internal::CallbackBidiHandler< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnFileCompleted(context); }));
@@ -567,7 +544,30 @@ class BtService final {
       ::grpc::CallbackServerContext* /*context*/)
       { return nullptr; }
   };
-  typedef WithCallbackMethod_Parse<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_FileProgress<WithCallbackMethod_OnStatus<WithCallbackMethod_OnTorrentInfo<WithCallbackMethod_OnFileCompleted<Service > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_FileProgress : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_FileProgress() {
+      ::grpc::Service::MarkMethodCallback(6,
+          new ::grpc::internal::CallbackBidiHandler< ::prpc::FileProgressReq, ::prpc::FileProgressRes>(
+            [this](
+                   ::grpc::CallbackServerContext* context) { return this->FileProgress(context); }));
+    }
+    ~WithCallbackMethod_FileProgress() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status FileProgress(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::FileProgressRes, ::prpc::FileProgressReq>* /*stream*/)  override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerBidiReactor< ::prpc::FileProgressReq, ::prpc::FileProgressRes>* FileProgress(
+      ::grpc::CallbackServerContext* /*context*/)
+      { return nullptr; }
+  };
+  typedef WithCallbackMethod_Parse<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_OnStatus<WithCallbackMethod_OnTorrentInfo<WithCallbackMethod_OnFileCompleted<WithCallbackMethod_FileProgress<Service > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_Parse : public BaseClass {
@@ -621,29 +621,12 @@ class BtService final {
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_FileProgress : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithGenericMethod_FileProgress() {
-      ::grpc::Service::MarkMethodGeneric(3);
-    }
-    ~WithGenericMethod_FileProgress() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status FileProgress(::grpc::ServerContext* /*context*/, const ::prpc::FileProgressReq* /*request*/, ::prpc::FileProgressRes* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-  };
-  template <class BaseClass>
   class WithGenericMethod_OnStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_OnStatus() {
-      ::grpc::Service::MarkMethodGeneric(4);
+      ::grpc::Service::MarkMethodGeneric(3);
     }
     ~WithGenericMethod_OnStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -660,7 +643,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_OnTorrentInfo() {
-      ::grpc::Service::MarkMethodGeneric(5);
+      ::grpc::Service::MarkMethodGeneric(4);
     }
     ~WithGenericMethod_OnTorrentInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -677,13 +660,30 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodGeneric(6);
+      ::grpc::Service::MarkMethodGeneric(5);
     }
     ~WithGenericMethod_OnFileCompleted() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
     ::grpc::Status OnFileCompleted(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::FileCompletedRes, ::prpc::FileCompletedReq>* /*stream*/)  override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_FileProgress : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_FileProgress() {
+      ::grpc::Service::MarkMethodGeneric(6);
+    }
+    ~WithGenericMethod_FileProgress() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status FileProgress(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::FileProgressRes, ::prpc::FileProgressReq>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -749,32 +749,12 @@ class BtService final {
     }
   };
   template <class BaseClass>
-  class WithRawMethod_FileProgress : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawMethod_FileProgress() {
-      ::grpc::Service::MarkMethodRaw(3);
-    }
-    ~WithRawMethod_FileProgress() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status FileProgress(::grpc::ServerContext* /*context*/, const ::prpc::FileProgressReq* /*request*/, ::prpc::FileProgressRes* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestFileProgress(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
   class WithRawMethod_OnStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_OnStatus() {
-      ::grpc::Service::MarkMethodRaw(4);
+      ::grpc::Service::MarkMethodRaw(3);
     }
     ~WithRawMethod_OnStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -785,7 +765,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnStatus(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(4, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(3, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -794,7 +774,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_OnTorrentInfo() {
-      ::grpc::Service::MarkMethodRaw(5);
+      ::grpc::Service::MarkMethodRaw(4);
     }
     ~WithRawMethod_OnTorrentInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -805,7 +785,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnTorrentInfo(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(5, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(4, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -814,7 +794,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodRaw(6);
+      ::grpc::Service::MarkMethodRaw(5);
     }
     ~WithRawMethod_OnFileCompleted() override {
       BaseClassMustBeDerivedFromService(this);
@@ -825,6 +805,26 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnFileCompleted(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncBidiStreaming(5, context, stream, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_FileProgress : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_FileProgress() {
+      ::grpc::Service::MarkMethodRaw(6);
+    }
+    ~WithRawMethod_FileProgress() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status FileProgress(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::FileProgressRes, ::prpc::FileProgressReq>* /*stream*/)  override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestFileProgress(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncBidiStreaming(6, context, stream, new_call_cq, notification_cq, tag);
     }
   };
@@ -895,34 +895,12 @@ class BtService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_FileProgress : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawCallbackMethod_FileProgress() {
-      ::grpc::Service::MarkMethodRawCallback(3,
-          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->FileProgress(context, request, response); }));
-    }
-    ~WithRawCallbackMethod_FileProgress() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status FileProgress(::grpc::ServerContext* /*context*/, const ::prpc::FileProgressReq* /*request*/, ::prpc::FileProgressRes* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* FileProgress(
-      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
-  };
-  template <class BaseClass>
   class WithRawCallbackMethod_OnStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_OnStatus() {
-      ::grpc::Service::MarkMethodRawCallback(4,
+      ::grpc::Service::MarkMethodRawCallback(3,
           new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnStatus(context); }));
@@ -945,7 +923,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_OnTorrentInfo() {
-      ::grpc::Service::MarkMethodRawCallback(5,
+      ::grpc::Service::MarkMethodRawCallback(4,
           new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnTorrentInfo(context); }));
@@ -968,7 +946,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodRawCallback(6,
+      ::grpc::Service::MarkMethodRawCallback(5,
           new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnFileCompleted(context); }));
@@ -982,6 +960,29 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerBidiReactor< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* OnFileCompleted(
+      ::grpc::CallbackServerContext* /*context*/)
+      { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_FileProgress : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_FileProgress() {
+      ::grpc::Service::MarkMethodRawCallback(6,
+          new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context) { return this->FileProgress(context); }));
+    }
+    ~WithRawCallbackMethod_FileProgress() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status FileProgress(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::FileProgressRes, ::prpc::FileProgressReq>* /*stream*/)  override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerBidiReactor< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* FileProgress(
       ::grpc::CallbackServerContext* /*context*/)
       { return nullptr; }
   };
@@ -1066,36 +1067,9 @@ class BtService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedRemoveTorrent(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::RemoveTorrentReq,::prpc::RemoveTorrentRes>* server_unary_streamer) = 0;
   };
-  template <class BaseClass>
-  class WithStreamedUnaryMethod_FileProgress : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithStreamedUnaryMethod_FileProgress() {
-      ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::StreamedUnaryHandler<
-          ::prpc::FileProgressReq, ::prpc::FileProgressRes>(
-            [this](::grpc::ServerContext* context,
-                   ::grpc::ServerUnaryStreamer<
-                     ::prpc::FileProgressReq, ::prpc::FileProgressRes>* streamer) {
-                       return this->StreamedFileProgress(context,
-                         streamer);
-                  }));
-    }
-    ~WithStreamedUnaryMethod_FileProgress() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable regular version of this method
-    ::grpc::Status FileProgress(::grpc::ServerContext* /*context*/, const ::prpc::FileProgressReq* /*request*/, ::prpc::FileProgressRes* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedFileProgress(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::FileProgressReq,::prpc::FileProgressRes>* server_unary_streamer) = 0;
-  };
-  typedef WithStreamedUnaryMethod_Parse<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_FileProgress<Service > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_Parse<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<Service > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_Parse<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_FileProgress<Service > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_Parse<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<Service > > > StreamedService;
 };
 
 }  // namespace prpc

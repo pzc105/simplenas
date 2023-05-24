@@ -271,7 +271,9 @@ func (c *CategoryItem) IsDirectory() bool {
 func (c *CategoryItem) GetSubItemIds() []ID {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
-	return c.subItemIds
+	ret := make([]ID, len(c.subItemIds))
+	copy(ret, c.subItemIds)
+	return ret
 }
 
 func (c *CategoryItem) UpdatePosterPath(path string) error {

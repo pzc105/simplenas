@@ -492,49 +492,6 @@ export class UserServiceClient {
     this.methodDescriptorDelCategoryItem);
   }
 
-  methodDescriptorQuerySubItems = new grpcWeb.MethodDescriptor(
-    '/prpc.UserService/QuerySubItems',
-    grpcWeb.MethodType.UNARY,
-    user_pb.QuerySubItemsReq,
-    user_pb.QuerySubItemsRes,
-    (request: user_pb.QuerySubItemsReq) => {
-      return request.serializeBinary();
-    },
-    user_pb.QuerySubItemsRes.deserializeBinary
-  );
-
-  querySubItems(
-    request: user_pb.QuerySubItemsReq,
-    metadata: grpcWeb.Metadata | null): Promise<user_pb.QuerySubItemsRes>;
-
-  querySubItems(
-    request: user_pb.QuerySubItemsReq,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.RpcError,
-               response: user_pb.QuerySubItemsRes) => void): grpcWeb.ClientReadableStream<user_pb.QuerySubItemsRes>;
-
-  querySubItems(
-    request: user_pb.QuerySubItemsReq,
-    metadata: grpcWeb.Metadata | null,
-    callback?: (err: grpcWeb.RpcError,
-               response: user_pb.QuerySubItemsRes) => void) {
-    if (callback !== undefined) {
-      return this.client_.rpcCall(
-        this.hostname_ +
-          '/prpc.UserService/QuerySubItems',
-        request,
-        metadata || {},
-        this.methodDescriptorQuerySubItems,
-        callback);
-    }
-    return this.client_.unaryCall(
-    this.hostname_ +
-      '/prpc.UserService/QuerySubItems',
-    request,
-    metadata || {},
-    this.methodDescriptorQuerySubItems);
-  }
-
   methodDescriptorAddBtVideos = new grpcWeb.MethodDescriptor(
     '/prpc.UserService/AddBtVideos',
     grpcWeb.MethodType.UNARY,
@@ -578,47 +535,133 @@ export class UserServiceClient {
     this.methodDescriptorAddBtVideos);
   }
 
-  methodDescriptorQueryVideoInfo = new grpcWeb.MethodDescriptor(
-    '/prpc.UserService/QueryVideoInfo',
+  methodDescriptorShareItem = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/ShareItem',
     grpcWeb.MethodType.UNARY,
-    user_pb.QueryVideoInfoReq,
-    user_pb.QueryVideoInfoRes,
-    (request: user_pb.QueryVideoInfoReq) => {
+    user_pb.ShareItemReq,
+    user_pb.ShareItemRes,
+    (request: user_pb.ShareItemReq) => {
       return request.serializeBinary();
     },
-    user_pb.QueryVideoInfoRes.deserializeBinary
+    user_pb.ShareItemRes.deserializeBinary
   );
 
-  queryVideoInfo(
-    request: user_pb.QueryVideoInfoReq,
-    metadata: grpcWeb.Metadata | null): Promise<user_pb.QueryVideoInfoRes>;
+  shareItem(
+    request: user_pb.ShareItemReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.ShareItemRes>;
 
-  queryVideoInfo(
-    request: user_pb.QueryVideoInfoReq,
+  shareItem(
+    request: user_pb.ShareItemReq,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: user_pb.QueryVideoInfoRes) => void): grpcWeb.ClientReadableStream<user_pb.QueryVideoInfoRes>;
+               response: user_pb.ShareItemRes) => void): grpcWeb.ClientReadableStream<user_pb.ShareItemRes>;
 
-  queryVideoInfo(
-    request: user_pb.QueryVideoInfoReq,
+  shareItem(
+    request: user_pb.ShareItemReq,
     metadata: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: user_pb.QueryVideoInfoRes) => void) {
+               response: user_pb.ShareItemRes) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
-          '/prpc.UserService/QueryVideoInfo',
+          '/prpc.UserService/ShareItem',
         request,
         metadata || {},
-        this.methodDescriptorQueryVideoInfo,
+        this.methodDescriptorShareItem,
         callback);
     }
     return this.client_.unaryCall(
     this.hostname_ +
-      '/prpc.UserService/QueryVideoInfo',
+      '/prpc.UserService/ShareItem',
     request,
     metadata || {},
-    this.methodDescriptorQueryVideoInfo);
+    this.methodDescriptorShareItem);
+  }
+
+  methodDescriptorQuerySubItems = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/QuerySubItems',
+    grpcWeb.MethodType.UNARY,
+    user_pb.QuerySubItemsReq,
+    user_pb.QuerySubItemsRes,
+    (request: user_pb.QuerySubItemsReq) => {
+      return request.serializeBinary();
+    },
+    user_pb.QuerySubItemsRes.deserializeBinary
+  );
+
+  querySubItems(
+    request: user_pb.QuerySubItemsReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.QuerySubItemsRes>;
+
+  querySubItems(
+    request: user_pb.QuerySubItemsReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: user_pb.QuerySubItemsRes) => void): grpcWeb.ClientReadableStream<user_pb.QuerySubItemsRes>;
+
+  querySubItems(
+    request: user_pb.QuerySubItemsReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: user_pb.QuerySubItemsRes) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.UserService/QuerySubItems',
+        request,
+        metadata || {},
+        this.methodDescriptorQuerySubItems,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.UserService/QuerySubItems',
+    request,
+    metadata || {},
+    this.methodDescriptorQuerySubItems);
+  }
+
+  methodDescriptorQueryItemInfo = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/QueryItemInfo',
+    grpcWeb.MethodType.UNARY,
+    user_pb.QueryItemInfoReq,
+    user_pb.QueryItemInfoRes,
+    (request: user_pb.QueryItemInfoReq) => {
+      return request.serializeBinary();
+    },
+    user_pb.QueryItemInfoRes.deserializeBinary
+  );
+
+  queryItemInfo(
+    request: user_pb.QueryItemInfoReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.QueryItemInfoRes>;
+
+  queryItemInfo(
+    request: user_pb.QueryItemInfoReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: user_pb.QueryItemInfoRes) => void): grpcWeb.ClientReadableStream<user_pb.QueryItemInfoRes>;
+
+  queryItemInfo(
+    request: user_pb.QueryItemInfoReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: user_pb.QueryItemInfoRes) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.UserService/QueryItemInfo',
+        request,
+        metadata || {},
+        this.methodDescriptorQueryItemInfo,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.UserService/QueryItemInfo',
+    request,
+    metadata || {},
+    this.methodDescriptorQueryItemInfo);
   }
 
   methodDescriptorRefreshSubtitle = new grpcWeb.MethodDescriptor(
