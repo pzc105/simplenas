@@ -61,7 +61,7 @@ const CategoryItems = ({ parentId, shareid }) => {
         return
       }
       const shareid = res.getShareId()
-      console.log("shareid:", shareid)
+      alert("复制此共享URL: https://" + window.location.hostname + ":" + window.location.port + "/citem?itemid=" + item.id + "&shareid=" + shareid)
     })
   }
 

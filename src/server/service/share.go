@@ -133,7 +133,7 @@ func (sm *ShareManager) GetShareItemInfo(shareid string) (*ShareItemInfo, error)
 	sm.mtx.Lock()
 	defer sm.mtx.Unlock()
 	si, ok := sm.shares[shareid]
-	if ok && si.ShareItemInfo != nil {
+	if ok && si.ShareItemInfo != nil && si.ExpiresAt.Before(time.Now()) {
 		return si.ShareItemInfo, nil
 	}
 	return nil, errors.New("not found")
