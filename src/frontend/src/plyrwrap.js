@@ -14,10 +14,10 @@ import { isNumber } from './utils';
 
 
 export default function PlyrWrap() {
-  const { itemId } = useParams()
   const location = useLocation()
   const searchParams = new URLSearchParams(location.search)
-  const shareid = searchParams.get('shareid');
+  const shareid = searchParams.get('shareid')
+  const itemId = searchParams.get('itemid')
 
   const player = useRef(null)
   const hls = useRef(null)

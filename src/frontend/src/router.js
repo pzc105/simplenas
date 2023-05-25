@@ -35,8 +35,8 @@ export default function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/download" element={<Download />} />
-          <Route path="/citem/:itemId" element={<CategoryItemPage />} />
-          <Route path="/video/:itemId" element={<PlyrWrap />} />
+          <Route path="/citem" element={<CategoryItemPage />} />
+          <Route path="/video" element={<PlyrWrap />} />
         </Routes>
       </Router>
     </ThemeProvider>

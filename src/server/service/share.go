@@ -26,20 +26,18 @@ func init() {
 	ShareIdPrefix = "P"
 }
 
-type ShareInfoInterface interface{}
+type ShareItemInfo struct {
+	UserId user.ID
+	ItemId category.ID
+}
 
 type ShareInfo struct {
-	ShareInfoInterface
 	ShareId     string
 	UseCounting bool
 	MaxCount    int
 	ExpiresAt   time.Time
-}
 
-type ShareItemInfo struct {
-	ShareInfo
-	UserId user.ID
-	ItemId category.ID
+	ShareItemInfo *ShareItemInfo
 }
 
 type timeHeap []*ShareInfo
@@ -58,7 +56,7 @@ func (h *timeHeap) Pop() any {
 
 type ShareManager struct {
 	mtx     sync.Mutex
-	shares  map[string]ShareInfoInterface
+	shares  map[string]*ShareInfo
 	timeOut timeHeap
 
 	nextId atomic.Int64
@@ -74,7 +72,7 @@ func (sm *ShareManager) genShareId() string {
 }
 
 func (sm *ShareManager) Init() {
-	sm.shares = make(map[string]ShareInfoInterface)
+	sm.shares = make(map[string]*ShareInfo)
 	keys, err := db.GREDIS.Keys(context.Background(), shareObjectRedisKey("*")).Result()
 	if err == nil {
 		for _, k := range keys {
@@ -82,10 +80,10 @@ func (sm *ShareManager) Init() {
 			if err != nil {
 				continue
 			}
-			var s ShareItemInfo
+			var s ShareInfo
 			json.Unmarshal([]byte(objectStr), &s)
 			sm.shares[s.ShareId] = &s
-			heap.Push(&sm.timeOut, &s.ShareInfo)
+			heap.Push(&sm.timeOut, &s)
 		}
 	}
 	sm.nextId.Store(0)
@@ -99,14 +97,15 @@ type ShareCategoryItemParams struct {
 }
 
 func (sm *ShareManager) ShareCategoryItem(params *ShareCategoryItemParams) (shareid string, err error) {
-	si := &ShareItemInfo{
-		ShareInfo: ShareInfo{
-			ShareId:   sm.genShareId(),
-			MaxCount:  params.MaxCount,
-			ExpiresAt: params.ExpiresAt,
+	si := &ShareInfo{
+		ShareId:   sm.genShareId(),
+		MaxCount:  params.MaxCount,
+		ExpiresAt: params.ExpiresAt,
+
+		ShareItemInfo: &ShareItemInfo{
+			UserId: params.UserId,
+			ItemId: params.ItemId,
 		},
-		UserId: params.UserId,
-		ItemId: params.ItemId,
 	}
 	if params.MaxCount > 0 {
 		si.UseCounting = true
@@ -126,7 +125,7 @@ func (sm *ShareManager) ShareCategoryItem(params *ShareCategoryItemParams) (shar
 		}
 	}
 	sm.shares[si.ShareId] = si
-	heap.Push(&sm.timeOut, &si.ShareInfo)
+	heap.Push(&sm.timeOut, si)
 	return si.ShareId, nil
 }
 
@@ -134,11 +133,8 @@ func (sm *ShareManager) GetShareItemInfo(shareid string) (*ShareItemInfo, error)
 	sm.mtx.Lock()
 	defer sm.mtx.Unlock()
 	si, ok := sm.shares[shareid]
-	if ok {
-		sii, ok := si.(*ShareItemInfo)
-		if ok {
-			return sii, nil
-		}
+	if ok && si.ShareItemInfo != nil {
+		return si.ShareItemInfo, nil
 	}
 	return nil, errors.New("not found")
 }

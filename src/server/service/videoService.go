@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"pnas/category"
 	"pnas/db"
 	"pnas/log"
 	"pnas/setting"
@@ -60,16 +59,7 @@ func (v *VideoService) checkAuth(next http.Handler) http.Handler {
 
 		s := v.coreSer.GetSession(r)
 		if s == nil {
-			queryParams := r.URL.Query()
-			itemid, _ := strconv.ParseInt(queryParams.Get("itemid"), 10, 64)
-			shareid := queryParams.Get("shareid")
-			sii, err := v.coreSer.GetShareItemInfo(shareid)
-			if err != nil {
-				log.Warn("[video] %v", err)
-				w.WriteHeader(http.StatusBadRequest)
-				return
-			}
-			if !v.coreSer.GetUserManager().IsItemShared(sii.ItemId, category.ID(itemid)) {
+			if !IsShared(v.coreSer, r.URL.Query()) {
 				w.WriteHeader(http.StatusBadRequest)
 				return
 			}

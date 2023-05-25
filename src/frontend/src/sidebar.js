@@ -13,6 +13,7 @@ import * as store from './store.js'
 import * as utils from './utils.js'
 import * as User from './prpc/user_pb.js'
 import userService from './rpcClient.js'
+import { navigateToItem } from './category.js'
 
 
 
@@ -22,7 +23,7 @@ const HomeItems = ({ }) => {
   const items = useSelector((state) => store.selectCategorySubItems(state, userInfo.homeDirectoryId))
 
   const onClick = (itemId) => {
-    navigate("/citem/" + itemId)
+    navigateToItem(navigate, {}, itemId, null)
   }
 
   return (
@@ -81,10 +82,6 @@ export default function Sidebar() {
     setIsOpen(!isOpen);
   }
 
-  const handleNavigation = (path) => {
-    navigate(path)
-  }
-
   useEffect(() => {
     if (!utils.isLogined() || userInfo == null) {
       return
@@ -108,19 +105,19 @@ export default function Sidebar() {
     {
       icon: <PersonIcon />,
       title: "登录",
-      onClick: () => handleNavigation("/signin"),
+      onClick: () => navigate("/signin"),
     },
     {
       icon: <FileDownloadIcon />,
       title: "下载",
-      onClick: () => handleNavigation("/download"),
+      onClick: () => navigate("/download"),
     },
     {
       icon: <PersonalVideoIcon />,
       title: "Home",
       subComponent: HomeItems,
       subComponentParams: {},
-      onClick: () => handleNavigation("/citem/" + userInfo.homeDirectoryId),
+      onClick: () => navigateToItem(navigate, {}, userInfo.homeDirectoryId, null),
     },
 
   ];

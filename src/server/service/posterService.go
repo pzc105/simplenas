@@ -28,40 +28,26 @@ func newPosterService(core CoreServiceInterface, router *mux.Router) *PosterServ
 }
 
 func (v *PosterService) registerUrl() {
-	v.router.Handle("/item/{itemId}", http.HandlerFunc(v.handlerItemPoster))
+	v.router.Handle("/item", http.HandlerFunc(v.handlerItemPoster))
 }
 
 func (p *PosterService) handlerItemPoster(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	itemIdStr, ok := vars["itemId"]
-	if !ok {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-	itemId, err := strconv.ParseInt(itemIdStr, 10, 64)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
 	s := p.coreSer.GetSession(r)
+	queryParams := r.URL.Query()
 	var userId user.ID
+	itemIdTmp, _ := strconv.ParseInt(queryParams.Get("itemid"), 10, 64)
+	itemId := category.ID(itemIdTmp)
 	if s == nil {
-		queryParams := r.URL.Query()
-		shareid := queryParams.Get("shareid")
-		sii, err := p.coreSer.GetShareItemInfo(shareid)
+		var err error
+		userId, itemId, err = GetSharedItemInfo(p.coreSer, queryParams)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		if !p.coreSer.GetUserManager().IsItemShared(sii.ItemId, category.ID(itemId)) {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		userId = sii.UserId
 	} else {
 		userId = s.UserId
 	}
-	item, err := p.coreSer.GetUserManager().QueryItem(userId, category.ID(itemId))
+	item, err := p.coreSer.GetUserManager().QueryItem(userId, itemId)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return

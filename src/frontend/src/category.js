@@ -23,16 +23,11 @@ const CategoryItems = ({ parentId, shareid }) => {
   const dispatch = useDispatch()
 
   const onClick = (item) => {
-    let path = ""
     if (item.typeId === Category.CategoryItem.Type.VIDEO) {
-      path = "/video/" + item.id
+      navigateToVideo(navigate, {}, item.id, shareid)
     } else {
-      path = "/citem/" + item.id
+      navigateToItem(navigate, {}, item.id, shareid)
     }
-    if (shareid) {
-      path += "?shareid=" + shareid
-    }
-    navigate(path)
   }
 
   const refreshSubtitle = (item) => {
@@ -95,7 +90,7 @@ const CategoryItems = ({ parentId, shareid }) => {
                   <Card onContextMenu={(e) => handleContextMenu(e, item.id)}>
                     <Box sx={{ display: "flex", justifyContent: "center", height: "4.3em" }}>
                       <img style={{ maxHeight: "5em" }} alt="Movie Poster"
-                        src={serverAddress + "/poster/item/" + item.id + (shareid ? "?shareid=" + shareid : "")} />
+                        src={serverAddress + "/poster/item?itemid=" + item.id + (shareid ? "&shareid=" + shareid : "")} />
                     </Box>
                     <CardContent sx={{ display: "flex", justifyContent: "center" }}>
                       <Tooltip title={item.name}>
@@ -204,10 +199,11 @@ const CategoryContainer = styled('div')({
 })
 
 export default function CategoryItemPage() {
-  const { itemId } = useParams()
   const location = useLocation()
+  const navigate = useNavigate()
   const searchParams = new URLSearchParams(location.search)
-  const shareid = searchParams.get('shareid');
+  const shareid = searchParams.get('shareid')
+  const itemId = searchParams.get('itemid')
 
   const dispatch = useDispatch()
 
@@ -222,7 +218,11 @@ export default function CategoryItemPage() {
     }
     userService.querySubItems(req, {}, (err, respone) => {
       if (err == null) {
-        dispatch(store.categorySlice.actions.updateItem(respone.getParentItem().toObject()))
+        const parentItem = respone.getParentItem()
+        dispatch(store.categorySlice.actions.updateItem(parentItem.toObject()))
+        if (parentItem.getTypeId() == Category.CategoryItem.Type.VIDEO) {
+          navigateToVideo(navigate, { replace: true }, parentItem.getId(), shareid)
+        }
         respone.getItemsList().map((i) => {
           dispatch(store.categorySlice.actions.updateItem(i.toObject()))
           return null
@@ -240,4 +240,20 @@ export default function CategoryItemPage() {
       <CategoryItems parentId={itemId} shareid={shareid} />
     </CategoryContainer>
   );
+}
+
+export function navigateToItem(navigate, navigateParams, itemId, shareid) {
+  let path = "/citem?itemid=" + itemId
+  if (shareid) {
+    path += "&shareid=" + shareid
+  }
+  navigate(path, navigateParams)
+}
+
+export function navigateToVideo(navigate, navigateParams, itemId, shareid) {
+  let path = "/video?itemid=" + itemId
+  if (shareid) {
+    path += "&shareid=" + shareid
+  }
+  navigate(path, navigateParams)
 }
