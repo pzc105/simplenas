@@ -94,7 +94,7 @@ export default function Sidebar() {
       title: "Home",
       subComponent: HomeItems,
       subComponentParams: {},
-      onClick: () => navigateToItem(navigate, {}, userInfo.homeDirectoryId, null),
+      onClick: userInfo ? () => navigateToItem(navigate, {}, userInfo.homeDirectoryId, null) : null,
     },
 
   ];
@@ -159,7 +159,7 @@ const Relogin = ({ }) => {
       <ListItemButton
         key={1}
         onClick={() => onClick()} >
-      重新登录
+        重新登录
       </ListItemButton>
     </List>
   );
