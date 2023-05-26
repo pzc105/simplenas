@@ -9,6 +9,7 @@ import Sidebar from './sidebar.js'
 import CategoryItemPage from './category.js'
 import PlyrWrap from './plyrwrap.js';
 import CheckLoginHandler from './checklogin.js'
+import UserInfoPage from './user.js'
 import * as test from './test.js'
 
 const darkTheme = createTheme({
@@ -32,6 +33,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Download />} />
           <Route path="/test" element={<test.MultiSelectList />} />
+          <Route path="/user" element={<UserInfoPage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/download" element={<Download />} />

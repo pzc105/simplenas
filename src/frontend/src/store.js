@@ -8,12 +8,9 @@ import * as category from './prpc/category_pb'
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    userInfo: {}
+    userInfo: null
   },
   reducers: {
-    setSigIn: (state, action) => {
-      state.signIn = action.payload
-    },
     setUserInfo: (state, action) => {
       var userInfo = action.payload
       state.userInfo = userInfo

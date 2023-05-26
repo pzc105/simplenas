@@ -186,6 +186,61 @@ func (x *CategoryItem) GetSubItemIds() []int64 {
 	return nil
 }
 
+type SharedItem struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ItemId  int64  `protobuf:"varint,1,opt,name=item_id,json=itemId,proto3" json:"item_id,omitempty"`
+	ShareId string `protobuf:"bytes,2,opt,name=share_id,json=shareId,proto3" json:"share_id,omitempty"`
+}
+
+func (x *SharedItem) Reset() {
+	*x = SharedItem{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_category_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SharedItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SharedItem) ProtoMessage() {}
+
+func (x *SharedItem) ProtoReflect() protoreflect.Message {
+	mi := &file_category_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SharedItem.ProtoReflect.Descriptor instead.
+func (*SharedItem) Descriptor() ([]byte, []int) {
+	return file_category_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *SharedItem) GetItemId() int64 {
+	if x != nil {
+		return x.ItemId
+	}
+	return 0
+}
+
+func (x *SharedItem) GetShareId() string {
+	if x != nil {
+		return x.ShareId
+	}
+	return ""
+}
+
 var File_category_proto protoreflect.FileDescriptor
 
 var file_category_proto_rawDesc = []byte{
@@ -213,8 +268,12 @@ var file_category_proto_rawDesc = []byte{
 	0x08, 0x0a, 0x04, 0x48, 0x6f, 0x6d, 0x65, 0x10, 0x01, 0x12, 0x0d, 0x0a, 0x09, 0x44, 0x69, 0x72,
 	0x65, 0x63, 0x74, 0x6f, 0x72, 0x79, 0x10, 0x02, 0x12, 0x09, 0x0a, 0x05, 0x56, 0x69, 0x64, 0x65,
 	0x6f, 0x10, 0x03, 0x12, 0x0d, 0x0a, 0x09, 0x4f, 0x74, 0x68, 0x65, 0x72, 0x46, 0x69, 0x6c, 0x65,
-	0x10, 0x04, 0x42, 0x08, 0x5a, 0x06, 0x2e, 0x2f, 0x70, 0x72, 0x70, 0x63, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x10, 0x04, 0x22, 0x40, 0x0a, 0x0a, 0x53, 0x68, 0x61, 0x72, 0x65, 0x64, 0x49, 0x74, 0x65, 0x6d,
+	0x12, 0x17, 0x0a, 0x07, 0x69, 0x74, 0x65, 0x6d, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x06, 0x69, 0x74, 0x65, 0x6d, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x68, 0x61,
+	0x72, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x68, 0x61,
+	0x72, 0x65, 0x49, 0x64, 0x42, 0x08, 0x5a, 0x06, 0x2e, 0x2f, 0x70, 0x72, 0x70, 0x63, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -230,10 +289,11 @@ func file_category_proto_rawDescGZIP() []byte {
 }
 
 var file_category_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_category_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_category_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_category_proto_goTypes = []interface{}{
 	(CategoryItem_Type)(0), // 0: prpc.CategoryItem.Type
 	(*CategoryItem)(nil),   // 1: prpc.CategoryItem
+	(*SharedItem)(nil),     // 2: prpc.SharedItem
 }
 var file_category_proto_depIdxs = []int32{
 	0, // 0: prpc.CategoryItem.type_id:type_name -> prpc.CategoryItem.Type
@@ -262,6 +322,18 @@ func file_category_proto_init() {
 				return nil
 			}
 		}
+		file_category_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SharedItem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -269,7 +341,7 @@ func file_category_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_category_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

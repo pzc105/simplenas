@@ -62,3 +62,25 @@ export namespace CategoryItem {
   }
 }
 
+export class SharedItem extends jspb.Message {
+  getItemId(): number;
+  setItemId(value: number): SharedItem;
+
+  getShareId(): string;
+  setShareId(value: string): SharedItem;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): SharedItem.AsObject;
+  static toObject(includeInstance: boolean, msg: SharedItem): SharedItem.AsObject;
+  static serializeBinaryToWriter(message: SharedItem, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): SharedItem;
+  static deserializeBinaryFromReader(message: SharedItem, reader: jspb.BinaryReader): SharedItem;
+}
+
+export namespace SharedItem {
+  export type AsObject = {
+    itemId: number,
+    shareId: string,
+  }
+}
+

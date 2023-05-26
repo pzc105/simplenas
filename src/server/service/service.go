@@ -34,7 +34,7 @@ import (
 type CoreServiceInterface interface {
 	GetSession(*http.Request) *session
 	GetUserManager() *user.UserManger
-	GetShareItemInfo(shareid string) (*ShareItemInfo, error)
+	GetShareItemInfo(shareid string) (*ShareInfo, error)
 }
 
 type CoreService struct {
@@ -564,14 +564,14 @@ func (ser *CoreService) DelCategoryItem(ctx context.Context, req *prpc.DelCatego
 func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubItemsReq) (*prpc.QuerySubItemsRes, error) {
 	var userId user.ID
 	if len(req.ShareId) > 0 {
-		sii, err := ser.shares.GetShareItemInfo(req.ShareId)
+		si, err := ser.shares.GetShareItemInfo(req.ShareId)
 		if err != nil {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		if !ser.um.IsItemShared(sii.ItemId, category.ID(req.ParentId)) {
+		if !ser.um.IsItemShared(si.ShareItemInfo.ItemId, category.ID(req.ParentId)) {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		userId = sii.UserId
+		userId = si.UserId
 	} else {
 		ses := ser.getSession(ctx)
 		if ses == nil {
@@ -614,14 +614,14 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 func (ser *CoreService) QueryItemInfo(ctx context.Context, req *prpc.QueryItemInfoReq) (*prpc.QueryItemInfoRes, error) {
 	var userId user.ID
 	if len(req.ShareId) > 0 {
-		sii, err := ser.shares.GetShareItemInfo(req.ShareId)
+		si, err := ser.shares.GetShareItemInfo(req.ShareId)
 		if err != nil {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		if !ser.um.IsItemShared(sii.ItemId, category.ID(req.ItemId)) {
+		if !ser.um.IsItemShared(si.ShareItemInfo.ItemId, category.ID(req.ItemId)) {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		userId = sii.UserId
+		userId = si.UserId
 	} else {
 		ses := ser.getSession(ctx)
 		if ses == nil {
@@ -702,7 +702,23 @@ func (ser *CoreService) ShareItem(ctx context.Context, req *prpc.ShareItemReq) (
 	}, nil
 }
 
-func (ser *CoreService) GetShareItemInfo(shareid string) (*ShareItemInfo, error) {
+func (ser *CoreService) QuerySharedItems(ctx context.Context, req *prpc.QuerySharedItemsReq) (*prpc.QuerySharedItemsRes, error) {
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "not found session")
+	}
+	sis := ser.shares.GetUserSharedItemInfos(ses.UserId)
+	res := &prpc.QuerySharedItemsRes{}
+	for _, si := range sis {
+		res.SharedItems = append(res.SharedItems, &prpc.SharedItem{
+			ItemId:  int64(si.ShareItemInfo.ItemId),
+			ShareId: si.ShareId,
+		})
+	}
+	return res, nil
+}
+
+func (ser *CoreService) GetShareItemInfo(shareid string) (*ShareInfo, error) {
 	return ser.shares.GetShareItemInfo(shareid)
 }
 

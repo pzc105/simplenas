@@ -101,6 +101,12 @@ extern QueryItemInfoReqDefaultTypeInternal _QueryItemInfoReq_default_instance_;
 class QueryItemInfoRes;
 struct QueryItemInfoResDefaultTypeInternal;
 extern QueryItemInfoResDefaultTypeInternal _QueryItemInfoRes_default_instance_;
+class QuerySharedItemsReq;
+struct QuerySharedItemsReqDefaultTypeInternal;
+extern QuerySharedItemsReqDefaultTypeInternal _QuerySharedItemsReq_default_instance_;
+class QuerySharedItemsRes;
+struct QuerySharedItemsResDefaultTypeInternal;
+extern QuerySharedItemsResDefaultTypeInternal _QuerySharedItemsRes_default_instance_;
 class QuerySubItemsReq;
 struct QuerySubItemsReqDefaultTypeInternal;
 extern QuerySubItemsReqDefaultTypeInternal _QuerySubItemsReq_default_instance_;
@@ -160,6 +166,10 @@ template <>
 ::prpc::QueryItemInfoReq* Arena::CreateMaybeMessage<::prpc::QueryItemInfoReq>(Arena*);
 template <>
 ::prpc::QueryItemInfoRes* Arena::CreateMaybeMessage<::prpc::QueryItemInfoRes>(Arena*);
+template <>
+::prpc::QuerySharedItemsReq* Arena::CreateMaybeMessage<::prpc::QuerySharedItemsReq>(Arena*);
+template <>
+::prpc::QuerySharedItemsRes* Arena::CreateMaybeMessage<::prpc::QuerySharedItemsRes>(Arena*);
 template <>
 ::prpc::QuerySubItemsReq* Arena::CreateMaybeMessage<::prpc::QuerySubItemsReq>(Arena*);
 template <>
@@ -3727,6 +3737,308 @@ class ShareItemRes final :
   friend struct ::TableStruct_user_2eproto;
 };// -------------------------------------------------------------------
 
+class QuerySharedItemsReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.QuerySharedItemsReq) */ {
+ public:
+  inline QuerySharedItemsReq() : QuerySharedItemsReq(nullptr) {}
+  ~QuerySharedItemsReq() override;
+  explicit PROTOBUF_CONSTEXPR QuerySharedItemsReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  QuerySharedItemsReq(const QuerySharedItemsReq& from);
+  QuerySharedItemsReq(QuerySharedItemsReq&& from) noexcept
+    : QuerySharedItemsReq() {
+    *this = ::std::move(from);
+  }
+
+  inline QuerySharedItemsReq& operator=(const QuerySharedItemsReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline QuerySharedItemsReq& operator=(QuerySharedItemsReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const QuerySharedItemsReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const QuerySharedItemsReq* internal_default_instance() {
+    return reinterpret_cast<const QuerySharedItemsReq*>(
+               &_QuerySharedItemsReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    22;
+
+  friend void swap(QuerySharedItemsReq& a, QuerySharedItemsReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(QuerySharedItemsReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(QuerySharedItemsReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  QuerySharedItemsReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<QuerySharedItemsReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const QuerySharedItemsReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const QuerySharedItemsReq& from) {
+    QuerySharedItemsReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(QuerySharedItemsReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.QuerySharedItemsReq";
+  }
+  protected:
+  explicit QuerySharedItemsReq(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUserIdFieldNumber = 1,
+  };
+  // int64 user_id = 1;
+  void clear_user_id() ;
+  ::int64_t user_id() const;
+  void set_user_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_user_id() const;
+  void _internal_set_user_id(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.QuerySharedItemsReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::int64_t user_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class QuerySharedItemsRes final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.QuerySharedItemsRes) */ {
+ public:
+  inline QuerySharedItemsRes() : QuerySharedItemsRes(nullptr) {}
+  ~QuerySharedItemsRes() override;
+  explicit PROTOBUF_CONSTEXPR QuerySharedItemsRes(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  QuerySharedItemsRes(const QuerySharedItemsRes& from);
+  QuerySharedItemsRes(QuerySharedItemsRes&& from) noexcept
+    : QuerySharedItemsRes() {
+    *this = ::std::move(from);
+  }
+
+  inline QuerySharedItemsRes& operator=(const QuerySharedItemsRes& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline QuerySharedItemsRes& operator=(QuerySharedItemsRes&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const QuerySharedItemsRes& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const QuerySharedItemsRes* internal_default_instance() {
+    return reinterpret_cast<const QuerySharedItemsRes*>(
+               &_QuerySharedItemsRes_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    23;
+
+  friend void swap(QuerySharedItemsRes& a, QuerySharedItemsRes& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(QuerySharedItemsRes* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(QuerySharedItemsRes* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  QuerySharedItemsRes* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<QuerySharedItemsRes>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const QuerySharedItemsRes& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const QuerySharedItemsRes& from) {
+    QuerySharedItemsRes::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(QuerySharedItemsRes* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.QuerySharedItemsRes";
+  }
+  protected:
+  explicit QuerySharedItemsRes(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSharedItemsFieldNumber = 1,
+  };
+  // repeated .prpc.SharedItem shared_items = 1;
+  int shared_items_size() const;
+  private:
+  int _internal_shared_items_size() const;
+
+  public:
+  void clear_shared_items() ;
+  ::prpc::SharedItem* mutable_shared_items(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::SharedItem >*
+      mutable_shared_items();
+  private:
+  const ::prpc::SharedItem& _internal_shared_items(int index) const;
+  ::prpc::SharedItem* _internal_add_shared_items();
+  public:
+  const ::prpc::SharedItem& shared_items(int index) const;
+  ::prpc::SharedItem* add_shared_items();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::SharedItem >&
+      shared_items() const;
+  // @@protoc_insertion_point(class_scope:prpc.QuerySharedItemsRes)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::SharedItem > shared_items_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
 class RefreshSubtitleReq final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.RefreshSubtitleReq) */ {
  public:
@@ -3775,7 +4087,7 @@ class RefreshSubtitleReq final :
                &_RefreshSubtitleReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    24;
 
   friend void swap(RefreshSubtitleReq& a, RefreshSubtitleReq& b) {
     a.Swap(&b);
@@ -3921,7 +4233,7 @@ class RefreshSubtitleRes final :
                &_RefreshSubtitleRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    25;
 
   friend void swap(RefreshSubtitleRes& a, RefreshSubtitleRes& b) {
     a.Swap(&b);
@@ -5728,6 +6040,71 @@ inline void ShareItemRes::set_allocated_share_id(std::string* value) {
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:prpc.ShareItemRes.share_id)
+}
+
+// -------------------------------------------------------------------
+
+// QuerySharedItemsReq
+
+// int64 user_id = 1;
+inline void QuerySharedItemsReq::clear_user_id() {
+  _impl_.user_id_ = ::int64_t{0};
+}
+inline ::int64_t QuerySharedItemsReq::user_id() const {
+  // @@protoc_insertion_point(field_get:prpc.QuerySharedItemsReq.user_id)
+  return _internal_user_id();
+}
+inline void QuerySharedItemsReq::set_user_id(::int64_t value) {
+  _internal_set_user_id(value);
+  // @@protoc_insertion_point(field_set:prpc.QuerySharedItemsReq.user_id)
+}
+inline ::int64_t QuerySharedItemsReq::_internal_user_id() const {
+  return _impl_.user_id_;
+}
+inline void QuerySharedItemsReq::_internal_set_user_id(::int64_t value) {
+  ;
+  _impl_.user_id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// QuerySharedItemsRes
+
+// repeated .prpc.SharedItem shared_items = 1;
+inline int QuerySharedItemsRes::_internal_shared_items_size() const {
+  return _impl_.shared_items_.size();
+}
+inline int QuerySharedItemsRes::shared_items_size() const {
+  return _internal_shared_items_size();
+}
+inline ::prpc::SharedItem* QuerySharedItemsRes::mutable_shared_items(int index) {
+  // @@protoc_insertion_point(field_mutable:prpc.QuerySharedItemsRes.shared_items)
+  return _impl_.shared_items_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::SharedItem >*
+QuerySharedItemsRes::mutable_shared_items() {
+  // @@protoc_insertion_point(field_mutable_list:prpc.QuerySharedItemsRes.shared_items)
+  return &_impl_.shared_items_;
+}
+inline const ::prpc::SharedItem& QuerySharedItemsRes::_internal_shared_items(int index) const {
+  return _impl_.shared_items_.Get(index);
+}
+inline const ::prpc::SharedItem& QuerySharedItemsRes::shared_items(int index) const {
+  // @@protoc_insertion_point(field_get:prpc.QuerySharedItemsRes.shared_items)
+  return _internal_shared_items(index);
+}
+inline ::prpc::SharedItem* QuerySharedItemsRes::_internal_add_shared_items() {
+  return _impl_.shared_items_.Add();
+}
+inline ::prpc::SharedItem* QuerySharedItemsRes::add_shared_items() {
+  ::prpc::SharedItem* _add = _internal_add_shared_items();
+  // @@protoc_insertion_point(field_add:prpc.QuerySharedItemsRes.shared_items)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::SharedItem >&
+QuerySharedItemsRes::shared_items() const {
+  // @@protoc_insertion_point(field_list:prpc.QuerySharedItemsRes.shared_items)
+  return _impl_.shared_items_;
 }
 
 // -------------------------------------------------------------------

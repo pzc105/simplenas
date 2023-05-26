@@ -13,6 +13,8 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"golang.org/x/exp/slices"
 )
 
 const (
@@ -27,12 +29,12 @@ func init() {
 }
 
 type ShareItemInfo struct {
-	UserId user.ID
 	ItemId category.ID
 }
 
 type ShareInfo struct {
 	ShareId     string
+	UserId      user.ID
 	UseCounting bool
 	MaxCount    int
 	ExpiresAt   time.Time
@@ -55,9 +57,10 @@ func (h *timeHeap) Pop() any {
 }
 
 type ShareManager struct {
-	mtx     sync.Mutex
-	shares  map[string]*ShareInfo
-	timeOut timeHeap
+	mtx        sync.Mutex
+	shares     map[string]*ShareInfo
+	userShares map[user.ID][]string
+	timeOut    timeHeap
 
 	nextId atomic.Int64
 }
@@ -73,6 +76,7 @@ func (sm *ShareManager) genShareId() string {
 
 func (sm *ShareManager) Init() {
 	sm.shares = make(map[string]*ShareInfo)
+	sm.userShares = make(map[user.ID][]string)
 	keys, err := db.GREDIS.Keys(context.Background(), shareObjectRedisKey("*")).Result()
 	if err == nil {
 		for _, k := range keys {
@@ -83,6 +87,7 @@ func (sm *ShareManager) Init() {
 			var s ShareInfo
 			json.Unmarshal([]byte(objectStr), &s)
 			sm.shares[s.ShareId] = &s
+			sm.userShares[s.UserId] = append(sm.userShares[s.UserId], s.ShareId)
 			heap.Push(&sm.timeOut, &s)
 		}
 	}
@@ -91,19 +96,31 @@ func (sm *ShareManager) Init() {
 
 type ShareCategoryItemParams struct {
 	UserId    user.ID
+	ItemOwner user.ID
 	ItemId    category.ID
 	MaxCount  int
 	ExpiresAt time.Time
 }
 
+func (sm *ShareManager) _deleteShare(si *ShareInfo) {
+	delete(sm.shares, si.ShareId)
+	if si.ShareItemInfo != nil {
+		i := slices.Index(sm.userShares[si.UserId], si.ShareId)
+		if i != -1 {
+			sm.userShares[si.UserId] = append(sm.userShares[si.UserId][:i],
+				sm.userShares[si.UserId][i+1:]...)
+		}
+	}
+}
+
 func (sm *ShareManager) ShareCategoryItem(params *ShareCategoryItemParams) (shareid string, err error) {
 	si := &ShareInfo{
 		ShareId:   sm.genShareId(),
+		UserId:    params.UserId,
 		MaxCount:  params.MaxCount,
 		ExpiresAt: params.ExpiresAt,
 
 		ShareItemInfo: &ShareItemInfo{
-			UserId: params.UserId,
 			ItemId: params.ItemId,
 		},
 	}
@@ -117,24 +134,65 @@ func (sm *ShareManager) ShareCategoryItem(params *ShareCategoryItemParams) (shar
 	defer sm.mtx.Unlock()
 	for len(sm.timeOut) > 0 {
 		if sm.timeOut[0].ExpiresAt.Before(time.Now()) {
-			osi := sm.timeOut[0]
-			delete(sm.shares, osi.ShareId)
+			sm._deleteShare(sm.timeOut[0])
 			heap.Pop(&sm.timeOut)
 		} else {
 			break
 		}
 	}
 	sm.shares[si.ShareId] = si
+	sm.userShares[params.UserId] = append(sm.userShares[params.UserId], si.ShareId)
 	heap.Push(&sm.timeOut, si)
 	return si.ShareId, nil
 }
 
-func (sm *ShareManager) GetShareItemInfo(shareid string) (*ShareItemInfo, error) {
+func (sm *ShareManager) DelShare(shareid string) error {
 	sm.mtx.Lock()
 	defer sm.mtx.Unlock()
 	si, ok := sm.shares[shareid]
-	if ok && si.ShareItemInfo != nil && si.ExpiresAt.Before(time.Now()) {
-		return si.ShareItemInfo, nil
+	if !ok {
+		return errors.New("not found")
+	}
+	sm._deleteShare(si)
+	return nil
+}
+
+func (sm *ShareManager) GetShareItemInfo(shareid string) (*ShareInfo, error) {
+	sm.mtx.Lock()
+	defer sm.mtx.Unlock()
+	si, ok := sm.shares[shareid]
+	if ok && si.ShareItemInfo != nil && si.ExpiresAt.After(time.Now()) {
+		return si, nil
 	}
 	return nil, errors.New("not found")
+}
+
+func (sm *ShareManager) GetUserSharedIds(userId user.ID) []string {
+	sm.mtx.Lock()
+	defer sm.mtx.Unlock()
+	ss, ok := sm.userShares[userId]
+	if !ok {
+		return []string{}
+	}
+	ret := make([]string, len(ss))
+	copy(ret, ss)
+	return ret
+}
+
+func (sm *ShareManager) GetUserSharedItemInfos(userId user.ID) []*ShareInfo {
+	sm.mtx.Lock()
+	defer sm.mtx.Unlock()
+	ss, ok := sm.userShares[userId]
+	if !ok {
+		return []*ShareInfo{}
+	}
+	var ret []*ShareInfo
+	for _, shareid := range ss {
+		si, ok := sm.shares[shareid]
+		if !ok || si.ShareItemInfo == nil || si.ExpiresAt.Before(time.Now()) {
+			continue
+		}
+		ret = append(ret, si)
+	}
+	return ret
 }

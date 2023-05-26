@@ -16,36 +16,6 @@ import userService from './rpcClient.js'
 import { navigateToItem } from './category.js'
 
 
-
-const HomeItems = ({ }) => {
-  const navigate = useNavigate()
-  const userInfo = useSelector((state) => store.selectUserInfo(state))
-  const items = useSelector((state) => store.selectCategorySubItems(state, userInfo.homeDirectoryId))
-
-  const onClick = (itemId) => {
-    navigateToItem(navigate, {}, itemId, null)
-  }
-
-  return (
-    <List>
-      {
-        items ?
-          items.map((item) => {
-            return (
-              <ListItemButton
-                key={item.id}
-                onClick={() => onClick(item.id)}
-              >
-                {item.name}
-              </ListItemButton>
-            )
-          }) : null
-      }
-    </List>
-  );
-};
-
-
 const ListItemWithChildren = ({ item }) => {
   const [expanded, setExpanded] = useState(false);
   const handleExpand = () => {
@@ -101,12 +71,19 @@ export default function Sidebar() {
     })
   }, [userInfo, dispatch])
 
+  const firstItem = userInfo ? {
+    icon: <PersonIcon />,
+    title: "个人信息",
+    onClick: () => navigate("/user"),
+    subComponent: Relogin,
+    subComponentParams: {},
+  } : {
+    icon: <PersonIcon />,
+    title: "登录",
+    onClick: () => navigate("/signin"),
+  }
   const menuItems = [
-    {
-      icon: <PersonIcon />,
-      title: "登录",
-      onClick: () => navigate("/signin"),
-    },
+    firstItem,
     {
       icon: <FileDownloadIcon />,
       title: "下载",
@@ -140,5 +117,50 @@ export default function Sidebar() {
         </List>
       </Drawer>
     </Container>
+  );
+}
+
+const HomeItems = ({ }) => {
+  const navigate = useNavigate()
+  const userInfo = useSelector((state) => store.selectUserInfo(state))
+  const items = useSelector((state) => store.selectCategorySubItems(state, userInfo.homeDirectoryId))
+
+  const onClick = (itemId) => {
+    navigateToItem(navigate, {}, itemId, null)
+  }
+
+  return (
+    <List>
+      {
+        items ?
+          items.map((item) => {
+            return (
+              <ListItemButton
+                key={item.id}
+                onClick={() => onClick(item.id)}
+              >
+                {item.name}
+              </ListItemButton>
+            )
+          }) : null
+      }
+    </List>
+  );
+};
+
+
+const Relogin = ({ }) => {
+  const navigate = useNavigate()
+  const onClick = () => {
+    navigate("/signin")
+  }
+  return (
+    <List>
+      <ListItemButton
+        key={1}
+        onClick={() => onClick()} >
+      重新登录
+      </ListItemButton>
+    </List>
   );
 }

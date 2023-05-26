@@ -59,8 +59,27 @@ struct CategoryItemDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CategoryItemDefaultTypeInternal _CategoryItem_default_instance_;
+PROTOBUF_CONSTEXPR SharedItem::SharedItem(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.share_id_)*/ {
+    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
+  }
+
+  , /*decltype(_impl_.item_id_)*/ ::int64_t{0}
+
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct SharedItemDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR SharedItemDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~SharedItemDefaultTypeInternal() {}
+  union {
+    SharedItem _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SharedItemDefaultTypeInternal _SharedItem_default_instance_;
 }  // namespace prpc
-static ::_pb::Metadata file_level_metadata_category_2eproto[1];
+static ::_pb::Metadata file_level_metadata_category_2eproto[2];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_category_2eproto[1];
 static constexpr const ::_pb::ServiceDescriptor**
     file_level_service_descriptors_category_2eproto = nullptr;
@@ -83,15 +102,27 @@ const ::uint32_t TableStruct_category_2eproto::offsets[] PROTOBUF_SECTION_VARIAB
     PROTOBUF_FIELD_OFFSET(::prpc::CategoryItem, _impl_.introduce_),
     PROTOBUF_FIELD_OFFSET(::prpc::CategoryItem, _impl_.parent_id_),
     PROTOBUF_FIELD_OFFSET(::prpc::CategoryItem, _impl_.sub_item_ids_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::SharedItem, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::SharedItem, _impl_.item_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::SharedItem, _impl_.share_id_),
 };
 
 static const ::_pbi::MigrationSchema
     schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
         { 0, -1, -1, sizeof(::prpc::CategoryItem)},
+        { 17, -1, -1, sizeof(::prpc::SharedItem)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
     &::prpc::_CategoryItem_default_instance_._instance,
+    &::prpc::_SharedItem_default_instance_._instance,
 };
 const char descriptor_table_protodef_category_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
     "\n\016category.proto\022\004prpc\"\223\002\n\014CategoryItem\022"
@@ -101,19 +132,21 @@ const char descriptor_table_protodef_category_2eproto[] PROTOBUF_SECTION_VARIABL
     "th\030\006 \001(\t\022\021\n\tintroduce\030\007 \001(\t\022\021\n\tparent_id"
     "\030\010 \001(\003\022\024\n\014sub_item_ids\030\t \003(\003\"F\n\004Type\022\013\n\007"
     "Unknown\020\000\022\010\n\004Home\020\001\022\r\n\tDirectory\020\002\022\t\n\005Vi"
-    "deo\020\003\022\r\n\tOtherFile\020\004B\010Z\006./prpcb\006proto3"
+    "deo\020\003\022\r\n\tOtherFile\020\004\"/\n\nSharedItem\022\017\n\007it"
+    "em_id\030\001 \001(\003\022\020\n\010share_id\030\002 \001(\tB\010Z\006./prpcb"
+    "\006proto3"
 };
 static ::absl::once_flag descriptor_table_category_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_category_2eproto = {
     false,
     false,
-    318,
+    367,
     descriptor_table_protodef_category_2eproto,
     "category.proto",
     &descriptor_table_category_2eproto_once,
     nullptr,
     0,
-    1,
+    2,
     schemas,
     file_default_instances,
     TableStruct_category_2eproto::offsets,
@@ -680,12 +713,245 @@ void CategoryItem::InternalSwap(CategoryItem* other) {
       &descriptor_table_category_2eproto_getter, &descriptor_table_category_2eproto_once,
       file_level_metadata_category_2eproto[0]);
 }
+// ===================================================================
+
+class SharedItem::_Internal {
+ public:
+};
+
+SharedItem::SharedItem(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.SharedItem)
+}
+SharedItem::SharedItem(const SharedItem& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  SharedItem* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.share_id_) {}
+
+    , decltype(_impl_.item_id_) {}
+
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.share_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.share_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_share_id().empty()) {
+    _this->_impl_.share_id_.Set(from._internal_share_id(), _this->GetArenaForAllocation());
+  }
+  _this->_impl_.item_id_ = from._impl_.item_id_;
+  // @@protoc_insertion_point(copy_constructor:prpc.SharedItem)
+}
+
+inline void SharedItem::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.share_id_) {}
+
+    , decltype(_impl_.item_id_) { ::int64_t{0} }
+
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.share_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.share_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+SharedItem::~SharedItem() {
+  // @@protoc_insertion_point(destructor:prpc.SharedItem)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void SharedItem::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.share_id_.Destroy();
+}
+
+void SharedItem::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void SharedItem::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.SharedItem)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.share_id_.ClearToEmpty();
+  _impl_.item_id_ = ::int64_t{0};
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* SharedItem::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int64 item_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 8)) {
+          _impl_.item_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      // string share_id = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_share_id();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "prpc.SharedItem.share_id"));
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+::uint8_t* SharedItem::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.SharedItem)
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int64 item_id = 1;
+  if (this->_internal_item_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(
+        1, this->_internal_item_id(), target);
+  }
+
+  // string share_id = 2;
+  if (!this->_internal_share_id().empty()) {
+    const std::string& _s = this->_internal_share_id();
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.SharedItem.share_id");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.SharedItem)
+  return target;
+}
+
+::size_t SharedItem::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.SharedItem)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string share_id = 2;
+  if (!this->_internal_share_id().empty()) {
+    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+                                    this->_internal_share_id());
+  }
+
+  // int64 item_id = 1;
+  if (this->_internal_item_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_item_id());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData SharedItem::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    SharedItem::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*SharedItem::GetClassData() const { return &_class_data_; }
+
+
+void SharedItem::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<SharedItem*>(&to_msg);
+  auto& from = static_cast<const SharedItem&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.SharedItem)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_share_id().empty()) {
+    _this->_internal_set_share_id(from._internal_share_id());
+  }
+  if (from._internal_item_id() != 0) {
+    _this->_internal_set_item_id(from._internal_item_id());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void SharedItem::CopyFrom(const SharedItem& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.SharedItem)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SharedItem::IsInitialized() const {
+  return true;
+}
+
+void SharedItem::InternalSwap(SharedItem* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.share_id_, lhs_arena,
+                                       &other->_impl_.share_id_, rhs_arena);
+
+  swap(_impl_.item_id_, other->_impl_.item_id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata SharedItem::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_category_2eproto_getter, &descriptor_table_category_2eproto_once,
+      file_level_metadata_category_2eproto[1]);
+}
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace prpc
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::prpc::CategoryItem*
 Arena::CreateMaybeMessage< ::prpc::CategoryItem >(Arena* arena) {
   return Arena::CreateMessageInternal< ::prpc::CategoryItem >(arena);
+}
+template<> PROTOBUF_NOINLINE ::prpc::SharedItem*
+Arena::CreateMaybeMessage< ::prpc::SharedItem >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::prpc::SharedItem >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 // @@protoc_insertion_point(global_scope)

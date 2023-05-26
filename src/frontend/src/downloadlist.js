@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Menu, MenuItem, List, Paper, Button, Box } from '@mui/material';
+import { Menu, MenuItem, List, Paper, Button, Box, Typography } from '@mui/material';
 import { styled } from "@mui/material/styles";
 import LinearProgress from '@mui/material/LinearProgress';
-import Typography from '@mui/material/Typography';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { btSlice, selectTorrent, selectInfoHashs } from './store.js'

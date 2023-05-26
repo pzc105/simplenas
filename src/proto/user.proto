@@ -63,6 +63,7 @@ service UserService {
   rpc DelCategoryItem(DelCategoryItemReq) returns (DelCategoryItemRes);
   rpc AddBtVideos(AddBtVideosReq) returns (AddBtVideosRes);
   rpc ShareItem(ShareItemReq) returns (ShareItemRes);
+  rpc QuerySharedItems(QuerySharedItemsReq) returns (QuerySharedItemsRes);
   rpc QuerySubItems(QuerySubItemsReq) returns (QuerySubItemsRes);
   rpc QueryItemInfo(QueryItemInfoReq) returns (QueryItemInfoRes);
   rpc RefreshSubtitle(RefreshSubtitleReq) returns (RefreshSubtitleRes);
@@ -175,6 +176,14 @@ message ShareItemReq {
 message ShareItemRes {
   int64 item_id = 1;
   string share_id = 2;
+}
+
+message QuerySharedItemsReq {
+  int64 user_id = 1;
+}
+
+message QuerySharedItemsRes {
+  repeated SharedItem shared_items = 1;
 }
 
 message RefreshSubtitleReq {

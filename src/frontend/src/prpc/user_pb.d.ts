@@ -484,6 +484,44 @@ export namespace ShareItemRes {
   }
 }
 
+export class QuerySharedItemsReq extends jspb.Message {
+  getUserId(): number;
+  setUserId(value: number): QuerySharedItemsReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): QuerySharedItemsReq.AsObject;
+  static toObject(includeInstance: boolean, msg: QuerySharedItemsReq): QuerySharedItemsReq.AsObject;
+  static serializeBinaryToWriter(message: QuerySharedItemsReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): QuerySharedItemsReq;
+  static deserializeBinaryFromReader(message: QuerySharedItemsReq, reader: jspb.BinaryReader): QuerySharedItemsReq;
+}
+
+export namespace QuerySharedItemsReq {
+  export type AsObject = {
+    userId: number,
+  }
+}
+
+export class QuerySharedItemsRes extends jspb.Message {
+  getSharedItemsList(): Array<category_pb.SharedItem>;
+  setSharedItemsList(value: Array<category_pb.SharedItem>): QuerySharedItemsRes;
+  clearSharedItemsList(): QuerySharedItemsRes;
+  addSharedItems(value?: category_pb.SharedItem, index?: number): category_pb.SharedItem;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): QuerySharedItemsRes.AsObject;
+  static toObject(includeInstance: boolean, msg: QuerySharedItemsRes): QuerySharedItemsRes.AsObject;
+  static serializeBinaryToWriter(message: QuerySharedItemsRes, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): QuerySharedItemsRes;
+  static deserializeBinaryFromReader(message: QuerySharedItemsRes, reader: jspb.BinaryReader): QuerySharedItemsRes;
+}
+
+export namespace QuerySharedItemsRes {
+  export type AsObject = {
+    sharedItemsList: Array<category_pb.SharedItem.AsObject>,
+  }
+}
+
 export class RefreshSubtitleReq extends jspb.Message {
   getItemId(): number;
   setItemId(value: number): RefreshSubtitleReq;

@@ -23,3 +23,7 @@ message CategoryItem {
   repeated int64 sub_item_ids = 9;
 }
 
+message SharedItem {
+  int64 item_id = 1;
+  string share_id = 2;
+}

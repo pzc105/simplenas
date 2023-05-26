@@ -578,6 +578,49 @@ export class UserServiceClient {
     this.methodDescriptorShareItem);
   }
 
+  methodDescriptorQuerySharedItems = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/QuerySharedItems',
+    grpcWeb.MethodType.UNARY,
+    user_pb.QuerySharedItemsReq,
+    user_pb.QuerySharedItemsRes,
+    (request: user_pb.QuerySharedItemsReq) => {
+      return request.serializeBinary();
+    },
+    user_pb.QuerySharedItemsRes.deserializeBinary
+  );
+
+  querySharedItems(
+    request: user_pb.QuerySharedItemsReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.QuerySharedItemsRes>;
+
+  querySharedItems(
+    request: user_pb.QuerySharedItemsReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: user_pb.QuerySharedItemsRes) => void): grpcWeb.ClientReadableStream<user_pb.QuerySharedItemsRes>;
+
+  querySharedItems(
+    request: user_pb.QuerySharedItemsReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: user_pb.QuerySharedItemsRes) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.UserService/QuerySharedItems',
+        request,
+        metadata || {},
+        this.methodDescriptorQuerySharedItems,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.UserService/QuerySharedItems',
+    request,
+    metadata || {},
+    this.methodDescriptorQuerySharedItems);
+  }
+
   methodDescriptorQuerySubItems = new grpcWeb.MethodDescriptor(
     '/prpc.UserService/QuerySubItems',
     grpcWeb.MethodType.UNARY,

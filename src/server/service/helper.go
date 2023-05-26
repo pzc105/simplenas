@@ -28,11 +28,11 @@ func IsShared(coreSer CoreServiceInterface, queryParams url.Values) bool {
 	itemIdTmp, _ := strconv.ParseInt(queryParams.Get("itemid"), 10, 64)
 	itemId := category.ID(itemIdTmp)
 	shareid := queryParams.Get("shareid")
-	sii, err := coreSer.GetShareItemInfo(shareid)
+	si, err := coreSer.GetShareItemInfo(shareid)
 	if err != nil {
 		return false
 	}
-	if !coreSer.GetUserManager().IsItemShared(sii.ItemId, category.ID(itemId)) {
+	if !coreSer.GetUserManager().IsItemShared(si.ShareItemInfo.ItemId, category.ID(itemId)) {
 		return false
 	}
 	return true
@@ -42,12 +42,12 @@ func GetSharedItemInfo(coreSer CoreServiceInterface, queryParams url.Values) (us
 	itemIdTmp, _ := strconv.ParseInt(queryParams.Get("itemid"), 10, 64)
 	itemId := category.ID(itemIdTmp)
 	shareid := queryParams.Get("shareid")
-	sii, err := coreSer.GetShareItemInfo(shareid)
+	si, err := coreSer.GetShareItemInfo(shareid)
 	if err != nil {
 		return -1, -1, errors.New("not found shared item info")
 	}
-	if !coreSer.GetUserManager().IsItemShared(sii.ItemId, category.ID(itemId)) {
+	if !coreSer.GetUserManager().IsItemShared(si.ShareItemInfo.ItemId, category.ID(itemId)) {
 		return -1, -1, errors.New("item is not shared")
 	}
-	return sii.UserId, itemId, nil
+	return si.UserId, itemId, nil
 }

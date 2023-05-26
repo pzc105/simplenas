@@ -19,22 +19,23 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	UserService_Register_FullMethodName        = "/prpc.UserService/Register"
-	UserService_IsUsedEmail_FullMethodName     = "/prpc.UserService/IsUsedEmail"
-	UserService_Login_FullMethodName           = "/prpc.UserService/Login"
-	UserService_FastLogin_FullMethodName       = "/prpc.UserService/FastLogin"
-	UserService_IsLogined_FullMethodName       = "/prpc.UserService/IsLogined"
-	UserService_Download_FullMethodName        = "/prpc.UserService/Download"
-	UserService_RemoveTorrent_FullMethodName   = "/prpc.UserService/RemoveTorrent"
-	UserService_OnStatus_FullMethodName        = "/prpc.UserService/OnStatus"
-	UserService_QueryBtVideos_FullMethodName   = "/prpc.UserService/QueryBtVideos"
-	UserService_NewCategoryItem_FullMethodName = "/prpc.UserService/NewCategoryItem"
-	UserService_DelCategoryItem_FullMethodName = "/prpc.UserService/DelCategoryItem"
-	UserService_AddBtVideos_FullMethodName     = "/prpc.UserService/AddBtVideos"
-	UserService_ShareItem_FullMethodName       = "/prpc.UserService/ShareItem"
-	UserService_QuerySubItems_FullMethodName   = "/prpc.UserService/QuerySubItems"
-	UserService_QueryItemInfo_FullMethodName   = "/prpc.UserService/QueryItemInfo"
-	UserService_RefreshSubtitle_FullMethodName = "/prpc.UserService/RefreshSubtitle"
+	UserService_Register_FullMethodName         = "/prpc.UserService/Register"
+	UserService_IsUsedEmail_FullMethodName      = "/prpc.UserService/IsUsedEmail"
+	UserService_Login_FullMethodName            = "/prpc.UserService/Login"
+	UserService_FastLogin_FullMethodName        = "/prpc.UserService/FastLogin"
+	UserService_IsLogined_FullMethodName        = "/prpc.UserService/IsLogined"
+	UserService_Download_FullMethodName         = "/prpc.UserService/Download"
+	UserService_RemoveTorrent_FullMethodName    = "/prpc.UserService/RemoveTorrent"
+	UserService_OnStatus_FullMethodName         = "/prpc.UserService/OnStatus"
+	UserService_QueryBtVideos_FullMethodName    = "/prpc.UserService/QueryBtVideos"
+	UserService_NewCategoryItem_FullMethodName  = "/prpc.UserService/NewCategoryItem"
+	UserService_DelCategoryItem_FullMethodName  = "/prpc.UserService/DelCategoryItem"
+	UserService_AddBtVideos_FullMethodName      = "/prpc.UserService/AddBtVideos"
+	UserService_ShareItem_FullMethodName        = "/prpc.UserService/ShareItem"
+	UserService_QuerySharedItems_FullMethodName = "/prpc.UserService/QuerySharedItems"
+	UserService_QuerySubItems_FullMethodName    = "/prpc.UserService/QuerySubItems"
+	UserService_QueryItemInfo_FullMethodName    = "/prpc.UserService/QueryItemInfo"
+	UserService_RefreshSubtitle_FullMethodName  = "/prpc.UserService/RefreshSubtitle"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -54,6 +55,7 @@ type UserServiceClient interface {
 	DelCategoryItem(ctx context.Context, in *DelCategoryItemReq, opts ...grpc.CallOption) (*DelCategoryItemRes, error)
 	AddBtVideos(ctx context.Context, in *AddBtVideosReq, opts ...grpc.CallOption) (*AddBtVideosRes, error)
 	ShareItem(ctx context.Context, in *ShareItemReq, opts ...grpc.CallOption) (*ShareItemRes, error)
+	QuerySharedItems(ctx context.Context, in *QuerySharedItemsReq, opts ...grpc.CallOption) (*QuerySharedItemsRes, error)
 	QuerySubItems(ctx context.Context, in *QuerySubItemsReq, opts ...grpc.CallOption) (*QuerySubItemsRes, error)
 	QueryItemInfo(ctx context.Context, in *QueryItemInfoReq, opts ...grpc.CallOption) (*QueryItemInfoRes, error)
 	RefreshSubtitle(ctx context.Context, in *RefreshSubtitleReq, opts ...grpc.CallOption) (*RefreshSubtitleRes, error)
@@ -207,6 +209,15 @@ func (c *userServiceClient) ShareItem(ctx context.Context, in *ShareItemReq, opt
 	return out, nil
 }
 
+func (c *userServiceClient) QuerySharedItems(ctx context.Context, in *QuerySharedItemsReq, opts ...grpc.CallOption) (*QuerySharedItemsRes, error) {
+	out := new(QuerySharedItemsRes)
+	err := c.cc.Invoke(ctx, UserService_QuerySharedItems_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userServiceClient) QuerySubItems(ctx context.Context, in *QuerySubItemsReq, opts ...grpc.CallOption) (*QuerySubItemsRes, error) {
 	out := new(QuerySubItemsRes)
 	err := c.cc.Invoke(ctx, UserService_QuerySubItems_FullMethodName, in, out, opts...)
@@ -251,6 +262,7 @@ type UserServiceServer interface {
 	DelCategoryItem(context.Context, *DelCategoryItemReq) (*DelCategoryItemRes, error)
 	AddBtVideos(context.Context, *AddBtVideosReq) (*AddBtVideosRes, error)
 	ShareItem(context.Context, *ShareItemReq) (*ShareItemRes, error)
+	QuerySharedItems(context.Context, *QuerySharedItemsReq) (*QuerySharedItemsRes, error)
 	QuerySubItems(context.Context, *QuerySubItemsReq) (*QuerySubItemsRes, error)
 	QueryItemInfo(context.Context, *QueryItemInfoReq) (*QueryItemInfoRes, error)
 	RefreshSubtitle(context.Context, *RefreshSubtitleReq) (*RefreshSubtitleRes, error)
@@ -299,6 +311,9 @@ func (UnimplementedUserServiceServer) AddBtVideos(context.Context, *AddBtVideosR
 }
 func (UnimplementedUserServiceServer) ShareItem(context.Context, *ShareItemReq) (*ShareItemRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ShareItem not implemented")
+}
+func (UnimplementedUserServiceServer) QuerySharedItems(context.Context, *QuerySharedItemsReq) (*QuerySharedItemsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QuerySharedItems not implemented")
 }
 func (UnimplementedUserServiceServer) QuerySubItems(context.Context, *QuerySubItemsReq) (*QuerySubItemsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QuerySubItems not implemented")
@@ -559,6 +574,24 @@ func _UserService_ShareItem_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_QuerySharedItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QuerySharedItemsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).QuerySharedItems(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_QuerySharedItems_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).QuerySharedItems(ctx, req.(*QuerySharedItemsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserService_QuerySubItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(QuerySubItemsReq)
 	if err := dec(in); err != nil {
@@ -667,6 +700,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ShareItem",
 			Handler:    _UserService_ShareItem_Handler,
+		},
+		{
+			MethodName: "QuerySharedItems",
+			Handler:    _UserService_QuerySharedItems_Handler,
 		},
 		{
 			MethodName: "QuerySubItems",
