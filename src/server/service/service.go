@@ -11,6 +11,7 @@ import (
 	"pnas/log"
 	"pnas/phttp"
 	"pnas/prpc"
+	"pnas/service/session"
 	"pnas/setting"
 	"pnas/user"
 	"pnas/utils"
@@ -32,7 +33,7 @@ import (
 )
 
 type CoreServiceInterface interface {
-	GetSession(*http.Request) *session
+	GetSession(*http.Request) *session.Session
 	GetUserManager() *user.UserManger
 	GetShareItemInfo(shareid string) (*ShareInfo, error)
 }
@@ -41,8 +42,9 @@ type CoreService struct {
 	CoreServiceInterface
 	prpc.UnimplementedUserServiceServer
 
-	sessionsMtx sync.Mutex
-	sessions    map[int64]*session
+	sessions        session.SessionsInterface
+	btStatusPushMtx sync.Mutex
+	btStatusPush    map[int64]chan *prpc.StatusRespone
 
 	notCheckTokenMethods []string
 
@@ -63,10 +65,12 @@ type CoreService struct {
 }
 
 func (ser *CoreService) Init() {
-	InitIdPool()
+	ser.sessions = &session.Sessions{}
+	ser.sessions.Init()
+	ser.btStatusPush = make(map[int64]chan *prpc.StatusRespone)
+
 	ser.notCheckTokenMethods = []string{"Register", "IsUsedEmail", "Login", "FastLogin", "QueryItemInfo", "QuerySubItems"}
 	sort.Strings(ser.notCheckTokenMethods)
-	ser.sessions = make(map[int64]*session)
 	ser.bt.Init(bt.WithOnStatus(ser.handleBtStatus),
 		bt.WithOnTorrentInfo(ser.handleTorrentInfo),
 		bt.WithOnConnect(ser.handleBtClientConnected),
@@ -136,14 +140,8 @@ func (ser *CoreService) GetUserManager() *user.UserManger {
 	return &ser.um
 }
 
-func (ser *CoreService) GetSession(r *http.Request) *session {
-	_, cId := GetTokenAndIdByCookie(r.Header.Get("cookie"))
-	ser.sessionsMtx.Lock()
-	defer ser.sessionsMtx.Unlock()
-	s, ok := ser.sessions[cId]
-	if !ok {
-		return nil
-	}
+func (ser *CoreService) GetSession(r *http.Request) *session.Session {
+	s, _ := ser.sessions.GetSession(r)
 	return s
 }
 
@@ -172,11 +170,13 @@ func (ser *CoreService) handleTorrentInfo(tis *prpc.TorrentInfoRes) {
 }
 
 func (ser *CoreService) handleBtStatus(sr *prpc.StatusRespone) {
-	ser.sessionsMtx.Lock()
-	defer ser.sessionsMtx.Unlock()
+	ser.btStatusPushMtx.Lock()
+	defer ser.btStatusPushMtx.Unlock()
 
-	for _, ses := range ser.sessions {
-		if !ses.needPush.Load() {
+	for sid, ch := range ser.btStatusPush {
+		ses, err := ser.sessions.GetSession3(sid)
+		if err != nil {
+			log.Warnf("[bt] not found session %d err: %v", sid, err)
 			continue
 		}
 		var r prpc.StatusRespone
@@ -188,7 +188,7 @@ func (ser *CoreService) handleBtStatus(sr *prpc.StatusRespone) {
 			r.StatusArray = append(r.StatusArray, st)
 		}
 		if len(r.StatusArray) > 0 {
-			ses.btStatusCh <- &r
+			ch <- &r
 		}
 	}
 }
@@ -201,43 +201,9 @@ func (ser *CoreService) handleBtFileCompleted(fs *prpc.FileCompletedRes) {
 	go ser.um.BtFileStateComplete(lfc)
 }
 
-func (user *CoreService) verifySession(ctx context.Context) (ok bool) {
-	cToken, cId := GetTokenAndId(ctx)
-	user.sessionsMtx.Lock()
-	defer user.sessionsMtx.Unlock()
-	eSession, ok := user.sessions[cId]
-	if !ok || cToken != eSession.Token {
-		return false
-	}
-	return true
-}
-
-func (ser *CoreService) verifyToen(ctx context.Context) (ok bool, sess *session, cId int64) {
-	cToken, cId := GetTokenAndId(ctx)
-	ser.sessionsMtx.Lock()
-	defer ser.sessionsMtx.Unlock()
-	eSession, ok := ser.sessions[cId]
-	if !ok {
-		rSession, err := loadSession(cId)
-		if err != nil || cToken != rSession.Token {
-			return false, nil, -1
-		}
-		return true, rSession, cId
-	} else if cToken != eSession.Token {
-		return false, nil, -1
-	}
-	return true, eSession, cId
-}
-
-func (ser *CoreService) getSession(ctx context.Context) *session {
-	_, cId := GetTokenAndId(ctx)
-	ser.sessionsMtx.Lock()
-	defer ser.sessionsMtx.Unlock()
-	eSession, ok := ser.sessions[cId]
-	if ok {
-		return eSession
-	}
-	return nil
+func (ser *CoreService) getSession(ctx context.Context) *session.Session {
+	s, _ := ser.sessions.GetSession2(ctx)
+	return s
 }
 
 func (ser *CoreService) CheckToken(ctx context.Context,
@@ -250,8 +216,8 @@ func (ser *CoreService) CheckToken(ctx context.Context,
 	methodName := info.FullMethod[len(prpc.UserService_ServiceDesc.ServiceName)+2:]
 	i := sort.SearchStrings(ser.notCheckTokenMethods, methodName)
 	if i == len(ser.notCheckTokenMethods) || ser.notCheckTokenMethods[i] != methodName {
-		ok := ser.verifySession(ctx)
-		if !ok {
+		_, err := ser.sessions.GetSession2(ctx)
+		if err != nil {
 			return nil, status.Error(codes.InvalidArgument, "")
 		}
 	}
@@ -271,8 +237,8 @@ func (ser *CoreService) StreamCheckToken(
 		if m == methodName {
 			continue
 		}
-		ok := ser.verifySession(ss.Context())
-		if !ok {
+		_, err := ser.sessions.GetSession2(ss.Context())
+		if err != nil {
 			return status.Error(codes.InvalidArgument, "")
 		}
 		break
@@ -330,30 +296,32 @@ func (ser *CoreService) Login(
 	}
 	userInfo := user.GetUserInfo()
 
-	session := ser.getSession(ctx)
-	if session == nil {
-		var md metadata.MD
-		md, session = GenCookieSession(loginInfo.RememberMe, userInfo.Id)
-		grpc.SendHeader(ctx, md)
+	s := ser.getSession(ctx)
+	var expiresAt time.Time
+	if loginInfo.RememberMe {
+		expiresAt = time.Now().Add(time.Hour * 24 * 7)
+	}
+	if s == nil {
+		s = ser.sessions.NewSession(&session.NewSessionParams{
+			OldId:     -1,
+			ExpiresAt: expiresAt,
+			UserId:    userInfo.Id,
+		})
 	} else {
-		var md metadata.MD
-		md, session = GenCookieSessionById(session.Id, loginInfo.RememberMe, userInfo.Id)
-		grpc.SendHeader(ctx, md)
+		s = ser.sessions.NewSession(&session.NewSessionParams{
+			OldId:     s.Id,
+			ExpiresAt: expiresAt,
+			UserId:    userInfo.Id,
+		})
 	}
 
-	ser.sessionsMtx.Lock()
-	defer ser.sessionsMtx.Unlock()
-	ser.sessions[session.Id] = session
-
 	if loginInfo.RememberMe {
-		e := saveSession(session)
-		if e != nil {
-			log.Warnf("[user] %d failed to save session, err: %v", userInfo.Id, e)
-		}
+		grpc.SendHeader(ctx, metadata.Pairs("Set-Cookie",
+			session.GenSessionTokenCookie(s), "Set-Cookie", session.GenSessionIdCookie(s)))
 	}
 
 	return &prpc.LoginRet{
-		Token: session.Token,
+		Token: s.Token,
 		UserInfo: &prpc.UserInfo{
 			Id:              int64(userInfo.Id),
 			Name:            userInfo.Name,
@@ -368,8 +336,8 @@ func (ser *CoreService) FastLogin(
 	ctx context.Context,
 	loginInfo *prpc.LoginInfo) (*prpc.LoginRet, error) {
 
-	ok, oldSession, cId := ser.verifyToen(ctx)
-	if !ok {
+	oldSession := ser.getSession(ctx)
+	if oldSession == nil {
 		return nil, status.Error(codes.InvalidArgument, "")
 	}
 
@@ -378,20 +346,24 @@ func (ser *CoreService) FastLogin(
 		log.Warnf("[user] %d failed to fast login, err: %v", user.GetUserInfo().Id, err)
 		return nil, status.Error(codes.NotFound, "")
 	}
-
-	md, session := GenCookieSessionById(cId, loginInfo.RememberMe, oldSession.UserId)
-	grpc.SendHeader(ctx, md)
-	ser.sessionsMtx.Lock()
-	defer ser.sessionsMtx.Unlock()
-	ser.sessions[cId] = session
-
+	userInfo := user.GetUserInfo()
+	var expiresAt time.Time
 	if loginInfo.RememberMe {
-		saveSession(session)
+		expiresAt = time.Now().Add(time.Hour * 24 * 7)
 	}
 
-	userInfo := user.GetUserInfo()
+	s := ser.sessions.NewSession(&session.NewSessionParams{
+		OldId:     oldSession.Id,
+		ExpiresAt: expiresAt,
+		UserId:    userInfo.Id,
+	})
+
+	if loginInfo.RememberMe {
+		grpc.SendHeader(ctx, metadata.Pairs("Set-Cookie",
+			session.GenSessionTokenCookie(s), "Set-Cookie", session.GenSessionIdCookie(s)))
+	}
 	return &prpc.LoginRet{
-		Token: session.Token,
+		Token: s.Token,
 		UserInfo: &prpc.UserInfo{
 			Id:              int64(userInfo.Id),
 			Name:            userInfo.Name,
@@ -474,16 +446,19 @@ func (ser *CoreService) OnStatus(statusReq *prpc.StatusRequest, stream prpc.User
 		return status.Error(codes.PermissionDenied, "")
 	}
 
-	if ses.needPush.Load() {
-		return status.Error(codes.InvalidArgument, "")
+	ser.btStatusPushMtx.Lock()
+	ch, ok := ser.btStatusPush[ses.Id]
+	if ok {
+		close(ch)
 	}
-	ses.btStatusCh = make(chan *prpc.StatusRespone)
-	ses.needPush.Store(true)
-	defer ses.needPush.Store(false)
+	ch = make(chan *prpc.StatusRespone)
+	ser.btStatusPush[ses.Id] = ch
+	ser.btStatusPushMtx.Unlock()
+
 	for {
 		b := false
 		select {
-		case sr, ok := <-ses.btStatusCh:
+		case sr, ok := <-ch:
 			if !ok {
 				return nil
 			}
@@ -495,6 +470,9 @@ func (ser *CoreService) OnStatus(statusReq *prpc.StatusRequest, stream prpc.User
 			break
 		}
 	}
+	ser.btStatusPushMtx.Lock()
+	close(ch)
+	ser.btStatusPushMtx.Unlock()
 	return nil
 }
 
