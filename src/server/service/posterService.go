@@ -42,21 +42,33 @@ func (v *PosterService) registerUrl() {
 	v.router.Handle("/item", http.HandlerFunc(v.handlerItemPoster))
 }
 
+func (p *PosterService) getAccessUser(r *http.Request) (user.ID, error) {
+	queryParams := r.URL.Query()
+	shareid := queryParams.Get("shareid")
+	if len(shareid) > 0 {
+		si, err := p.shares.GetShareItemInfo(shareid)
+		if err != nil {
+			return -1, err
+		}
+		return si.UserId, nil
+	} else {
+		s, err := p.sessions.GetSession(r)
+		if err != nil {
+			return -1, err
+		}
+		return s.UserId, nil
+	}
+}
+
 func (p *PosterService) handlerItemPoster(w http.ResponseWriter, r *http.Request) {
-	s, _ := p.sessions.GetSession(r)
 	queryParams := r.URL.Query()
 	var userId user.ID
 	itemIdTmp, _ := strconv.ParseInt(queryParams.Get("itemid"), 10, 64)
 	itemId := category.ID(itemIdTmp)
-	if s == nil {
-		var err error
-		userId, itemId, err = GetSharedItemInfo(p.shares, p.um, queryParams)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-	} else {
-		userId = s.UserId
+	userId, err := p.getAccessUser(r)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
 	item, err := p.um.QueryItem(userId, itemId)
 	if err != nil {

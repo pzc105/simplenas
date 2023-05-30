@@ -55,6 +55,24 @@ func newVideoService(params *NewVideoServiceParams) *VideoService {
 	return vs
 }
 
+func (v *VideoService) getAccessUser(r *http.Request) (user.ID, error) {
+	queryParams := r.URL.Query()
+	shareid := queryParams.Get("shareid")
+	if len(shareid) > 0 {
+		si, err := v.shares.GetShareItemInfo(shareid)
+		if err != nil {
+			return -1, err
+		}
+		return si.UserId, nil
+	} else {
+		s, err := v.sessions.GetSession(r)
+		if err != nil {
+			return -1, err
+		}
+		return s.UserId, nil
+	}
+}
+
 func (v *VideoService) checkAuth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
@@ -69,18 +87,16 @@ func (v *VideoService) checkAuth(next http.Handler) http.Handler {
 			return
 		}
 
-		s, _ := v.sessions.GetSession(r)
-		if s == nil {
-			if !IsShared(v.shares, v.um, r.URL.Query()) {
-				w.WriteHeader(http.StatusBadRequest)
-				return
-			}
-		} else {
-			if !v.um.HasVideo(s.UserId, video.ID(vid)) {
-				w.WriteHeader(http.StatusBadRequest)
-				return
-			}
+		userId, err := v.getAccessUser(r)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
 		}
+		if !v.um.HasVideo(userId, video.ID(vid)) {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
 		next.ServeHTTP(w, r)
 	})
 }

@@ -32,14 +32,7 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-type CoreServiceInterface interface {
-	GetSession(*http.Request) *session.Session
-	GetUserManager() *user.UserManger
-	GetShareItemInfo(shareid string) (*ShareInfo, error)
-}
-
 type CoreService struct {
-	CoreServiceInterface
 	prpc.UnimplementedUserServiceServer
 
 	sessions        session.SessionsInterface
