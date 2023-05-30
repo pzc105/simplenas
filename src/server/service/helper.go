@@ -24,29 +24,29 @@ func GetInfoHash(infoHash *bt.InfoHash) *prpc.InfoHash {
 	}
 }
 
-func IsShared(coreSer CoreServiceInterface, queryParams url.Values) bool {
+func IsShared(shares SharesInterface, um *user.UserManger, queryParams url.Values) bool {
 	itemIdTmp, _ := strconv.ParseInt(queryParams.Get("itemid"), 10, 64)
 	itemId := category.ID(itemIdTmp)
 	shareid := queryParams.Get("shareid")
-	si, err := coreSer.GetShareItemInfo(shareid)
+	si, err := shares.GetShareItemInfo(shareid)
 	if err != nil {
 		return false
 	}
-	if !coreSer.GetUserManager().IsItemShared(si.ShareItemInfo.ItemId, category.ID(itemId)) {
+	if !um.IsItemShared(si.ShareItemInfo.ItemId, category.ID(itemId)) {
 		return false
 	}
 	return true
 }
 
-func GetSharedItemInfo(coreSer CoreServiceInterface, queryParams url.Values) (user.ID, category.ID, error) {
+func GetSharedItemInfo(shares SharesInterface, um *user.UserManger, queryParams url.Values) (user.ID, category.ID, error) {
 	itemIdTmp, _ := strconv.ParseInt(queryParams.Get("itemid"), 10, 64)
 	itemId := category.ID(itemIdTmp)
 	shareid := queryParams.Get("shareid")
-	si, err := coreSer.GetShareItemInfo(shareid)
+	si, err := shares.GetShareItemInfo(shareid)
 	if err != nil {
 		return -1, -1, errors.New("not found shared item info")
 	}
-	if !coreSer.GetUserManager().IsItemShared(si.ShareItemInfo.ItemId, category.ID(itemId)) {
+	if !um.IsItemShared(si.ShareItemInfo.ItemId, category.ID(itemId)) {
 		return -1, -1, errors.New("item is not shared")
 	}
 	return si.UserId, itemId, nil

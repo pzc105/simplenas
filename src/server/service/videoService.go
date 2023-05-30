@@ -8,6 +8,7 @@ import (
 	"os"
 	"pnas/db"
 	"pnas/log"
+	"pnas/service/session"
 	"pnas/setting"
 	"pnas/user"
 	"pnas/video"
@@ -18,8 +19,10 @@ import (
 )
 
 type VideoService struct {
-	coreSer CoreServiceInterface
-	router  *mux.Router
+	um       *user.UserManger
+	shares   SharesInterface
+	sessions session.SessionsInterface
+	router   *mux.Router
 }
 
 func saveStartTime(userId user.ID, vid video.ID, lastTime string) {
@@ -34,11 +37,20 @@ func loadStartTime(userId user.ID, vid video.ID) string {
 	return "0"
 }
 
-func newVideoService(core CoreServiceInterface, router *mux.Router) *VideoService {
+type NewVideoServiceParams struct {
+	UserManger *user.UserManger
+	Shares     SharesInterface
+	Sessions   session.SessionsInterface
+	Router     *mux.Router
+}
+
+func newVideoService(params *NewVideoServiceParams) *VideoService {
 	vs := &VideoService{
-		coreSer: core,
+		um:       params.UserManger,
+		shares:   params.Shares,
+		sessions: params.Sessions,
+		router:   params.Router,
 	}
-	vs.router = router
 	vs.registerUrl()
 	return vs
 }
@@ -57,14 +69,14 @@ func (v *VideoService) checkAuth(next http.Handler) http.Handler {
 			return
 		}
 
-		s := v.coreSer.GetSession(r)
+		s, _ := v.sessions.GetSession(r)
 		if s == nil {
-			if !IsShared(v.coreSer, r.URL.Query()) {
+			if !IsShared(v.shares, v.um, r.URL.Query()) {
 				w.WriteHeader(http.StatusBadRequest)
 				return
 			}
 		} else {
-			if !v.coreSer.GetUserManager().HasVideo(s.UserId, video.ID(vid)) {
+			if !v.um.HasVideo(s.UserId, video.ID(vid)) {
 				w.WriteHeader(http.StatusBadRequest)
 				return
 			}
@@ -237,8 +249,8 @@ func (v *VideoService) handleSetOffsetTime(w http.ResponseWriter, r *http.Reques
 	if err != nil {
 		return
 	}
-	s := v.coreSer.GetSession(r)
-	if s == nil || !v.coreSer.GetUserManager().HasVideo(s.UserId, video.ID(vid)) {
+	s, _ := v.sessions.GetSession(r)
+	if s == nil || !v.um.HasVideo(s.UserId, video.ID(vid)) {
 		return
 	}
 	timeoffset, ok2 := vars["offset"]
@@ -258,8 +270,8 @@ func (v *VideoService) handleGetOffsetTime(w http.ResponseWriter, r *http.Reques
 	if err != nil {
 		return
 	}
-	s := v.coreSer.GetSession(r)
-	if s == nil || !v.coreSer.GetUserManager().HasVideo(s.UserId, video.ID(vid)) {
+	s, _ := v.sessions.GetSession(r)
+	if s == nil || !v.um.HasVideo(s.UserId, video.ID(vid)) {
 		return
 	}
 	w.Write([]byte(loadStartTime(s.UserId, video.ID(vid))))

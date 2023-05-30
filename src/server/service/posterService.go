@@ -6,6 +6,7 @@ import (
 	"os"
 	"pnas/category"
 	"pnas/prpc"
+	"pnas/service/session"
 	"pnas/setting"
 	"pnas/user"
 	"strconv"
@@ -14,15 +15,25 @@ import (
 )
 
 type PosterService struct {
-	coreSer CoreServiceInterface
-	router  *mux.Router
+	um       *user.UserManger
+	shares   SharesInterface
+	sessions session.SessionsInterface
+	router   *mux.Router
+}
+type NewPosterServiceParams struct {
+	UserManger *user.UserManger
+	Shares     SharesInterface
+	Sessions   session.SessionsInterface
+	Router     *mux.Router
 }
 
-func newPosterService(core CoreServiceInterface, router *mux.Router) *PosterService {
+func newPosterService(params *NewPosterServiceParams) *PosterService {
 	ps := &PosterService{
-		coreSer: core,
+		um:       params.UserManger,
+		shares:   params.Shares,
+		sessions: params.Sessions,
+		router:   params.Router,
 	}
-	ps.router = router
 	ps.registerUrl()
 	return ps
 }
@@ -32,14 +43,14 @@ func (v *PosterService) registerUrl() {
 }
 
 func (p *PosterService) handlerItemPoster(w http.ResponseWriter, r *http.Request) {
-	s := p.coreSer.GetSession(r)
+	s, _ := p.sessions.GetSession(r)
 	queryParams := r.URL.Query()
 	var userId user.ID
 	itemIdTmp, _ := strconv.ParseInt(queryParams.Get("itemid"), 10, 64)
 	itemId := category.ID(itemIdTmp)
 	if s == nil {
 		var err error
-		userId, itemId, err = GetSharedItemInfo(p.coreSer, queryParams)
+		userId, itemId, err = GetSharedItemInfo(p.shares, p.um, queryParams)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			return
@@ -47,7 +58,7 @@ func (p *PosterService) handlerItemPoster(w http.ResponseWriter, r *http.Request
 	} else {
 		userId = s.UserId
 	}
-	item, err := p.coreSer.GetUserManager().QueryItem(userId, itemId)
+	item, err := p.um.QueryItem(userId, itemId)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return

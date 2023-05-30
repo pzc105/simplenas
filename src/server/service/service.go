@@ -61,12 +61,13 @@ type CoreService struct {
 	videoSer  *VideoService
 	posterSer *PosterService
 
-	shares ShareManager
+	shares SharesInterface
 }
 
 func (ser *CoreService) Init() {
-	ser.sessions = &session.Sessions{}
-	ser.sessions.Init()
+	ss := &session.Sessions{}
+	ser.sessions = ss
+	ss.Init()
 	ser.btStatusPush = make(map[int64]chan *prpc.StatusRespone)
 
 	ser.notCheckTokenMethods = []string{"Register", "IsUsedEmail", "Login", "FastLogin", "QueryItemInfo", "QuerySubItems"}
@@ -76,7 +77,10 @@ func (ser *CoreService) Init() {
 		bt.WithOnConnect(ser.handleBtClientConnected),
 		bt.WithOnFileCompleted(ser.handleBtFileCompleted))
 	ser.um.Init()
-	ser.shares.Init()
+
+	sm := &ShareManager{}
+	sm.Init()
+	ser.shares = sm
 }
 
 func (ser *CoreService) Serve() {
@@ -108,8 +112,19 @@ func (ser *CoreService) Serve() {
 	router.NotFoundHandler = http.HandlerFunc(phttp.NotFound)
 
 	router.Handle("/prpc.UserService/{method}", grpcwebServer)
-	ser.videoSer = newVideoService(ser, router.PathPrefix("/video").Subrouter())
-	ser.posterSer = newPosterService(ser, router.PathPrefix("/poster").Subrouter())
+
+	ser.videoSer = newVideoService(&NewVideoServiceParams{
+		UserManger: &ser.um,
+		Shares:     ser.shares,
+		Sessions:   ser.sessions,
+		Router:     router.PathPrefix("/video").Subrouter(),
+	})
+	ser.posterSer = newPosterService(&NewPosterServiceParams{
+		UserManger: &ser.um,
+		Shares:     ser.shares,
+		Sessions:   ser.sessions,
+		Router:     router.PathPrefix("/poster").Subrouter(),
+	})
 
 	ser.httpSer = &http.Server{
 		Addr:    fmt.Sprintf("%s:%d", setting.GS.Server.BoundIp, setting.GS.Server.WebPort),
@@ -187,7 +202,7 @@ func (ser *CoreService) handleBtStatus(sr *prpc.StatusRespone) {
 			}
 			r.StatusArray = append(r.StatusArray, st)
 		}
-		if len(r.StatusArray) > 0 {
+		if len(r.StatusArray) > 0 && len(ch) == 0 {
 			ch <- &r
 		}
 	}
@@ -451,7 +466,7 @@ func (ser *CoreService) OnStatus(statusReq *prpc.StatusRequest, stream prpc.User
 	if ok {
 		close(ch)
 	}
-	ch = make(chan *prpc.StatusRespone)
+	ch = make(chan *prpc.StatusRespone, 1)
 	ser.btStatusPush[ses.Id] = ch
 	ser.btStatusPushMtx.Unlock()
 
@@ -470,9 +485,6 @@ func (ser *CoreService) OnStatus(statusReq *prpc.StatusRequest, stream prpc.User
 			break
 		}
 	}
-	ser.btStatusPushMtx.Lock()
-	close(ch)
-	ser.btStatusPushMtx.Unlock()
 	return nil
 }
 
