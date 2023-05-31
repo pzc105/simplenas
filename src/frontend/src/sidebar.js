@@ -120,11 +120,11 @@ export default function Sidebar() {
   );
 }
 
-const HomeItems = ({ }) => {
+const HomeItems = () => {
   const navigate = useNavigate()
   const userInfo = useSelector((state) => store.selectUserInfo(state))
   const items = useSelector((state) => {
-    if (userInfo == null) {
+    if (userInfo === null) {
       return []
     }
     return store.selectCategorySubItems(state, userInfo.homeDirectoryId)
@@ -154,7 +154,7 @@ const HomeItems = ({ }) => {
 };
 
 
-const Relogin = ({ }) => {
+const Relogin = () => {
   const navigate = useNavigate()
   const onClick = () => {
     navigate("/signin")

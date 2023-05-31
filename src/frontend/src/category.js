@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   CssBaseline, Button, TextField, Menu, MenuItem, Container, Grid, Paper, Box,
-  Typography, Tooltip, Card, CardContent, CardActions, CardMedia, InputAdornment
+  Typography, Tooltip, Card, CardContent, CardActions, InputAdornment
 } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import { styled } from "@mui/material/styles";
@@ -222,7 +222,7 @@ export default function CategoryItemPage() {
       if (err == null) {
         const parentItem = respone.getParentItem()
         dispatch(store.categorySlice.actions.updateItem(parentItem.toObject()))
-        if (parentItem.getTypeId() == Category.CategoryItem.Type.VIDEO) {
+        if (parentItem.getTypeId() === Category.CategoryItem.Type.VIDEO) {
           navigateToVideo(navigate, { replace: true }, parentItem.getId(), shareid)
         }
         respone.getItemsList().map((i) => {
@@ -233,7 +233,7 @@ export default function CategoryItemPage() {
         console.log(err)
       }
     })
-  }, [itemId, dispatch, refresh])
+  }, [itemId, dispatch, refresh, navigate, shareid])
 
   return (
     <CategoryContainer>

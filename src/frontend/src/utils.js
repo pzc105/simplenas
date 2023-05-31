@@ -1,5 +1,3 @@
-import * as Bt from './prpc/bt_pb.js'
-
 
 export function isEmail(s) {
   return (/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(s))
@@ -31,7 +29,7 @@ export function enterLogining() {
 }
 
 export function enterLoginFailed() {
-  
+
   sessionStorage.setItem("login_state", "failed")
 }
 
@@ -45,7 +43,7 @@ export function enterMnaullyLogin() {
 
 export function needFastLogin() {
   const isLogined = sessionStorage.getItem("login_state")
-  if (isLogined == undefined || isLogined == null || isLogined === "need_fast") {
+  if (isLogined === undefined || isLogined === null || isLogined === "need_fast") {
     return true
   }
   return false

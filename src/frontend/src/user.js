@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Container, Typography, Paper, Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import MuiAlert from '@mui/lab/Alert';
-import { styled } from "@mui/material/styles";
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Container, Typography, Paper, Button, Grid } from '@mui/material';
 
-import * as utils from './utils.js'
 import userService from './rpcClient.js'
 import * as User from './prpc/user_pb.js'
-import * as Category from './prpc/category_pb.js'
 import * as store from './store.js'
 
-export default function UserInfoPage({ }) {
+export default function UserInfoPage() {
   const userInfo = useSelector((state) => store.selectUserInfo(state))
   const shownUsrInfo = { 名称: userInfo["name"], Email: userInfo["email"] }
   return (
@@ -73,6 +67,7 @@ const SharedItems = () => {
       let sharedItemsTmp = []
       res.getSharedItemsList().map((si) => {
         sharedItemsTmp.push(si.toObject())
+        return null
       })
       setShareItems(sharedItemsTmp)
     })
