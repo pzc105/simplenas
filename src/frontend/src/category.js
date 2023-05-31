@@ -51,6 +51,7 @@ const CategoryItems = ({ parentId, shareid }) => {
       }
       dispatch(store.categorySlice.actions.deleteItem(item.id))
     })
+    handleClose(item.id)
   }
 
   const ShareCategoryItem = (item) => {
@@ -63,6 +64,7 @@ const CategoryItems = ({ parentId, shareid }) => {
       const shareid = res.getShareId()
       alert("复制此共享URL: https://" + window.location.hostname + ":" + window.location.port + "/citem?itemid=" + item.id + "&shareid=" + shareid)
     })
+    handleClose(item.id)
   }
 
   const [anchorPosition, setAnchorPosition] = useState({ left: 0, top: 0 });
@@ -77,7 +79,6 @@ const CategoryItems = ({ parentId, shareid }) => {
   const handleClose = (itemId) => {
     setOpen({ ...open, [itemId]: false });
   };
-
 
   return (
     <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }}>
@@ -205,11 +206,13 @@ export default function CategoryItemPage() {
   const searchParams = new URLSearchParams(location.search)
   const shareid = searchParams.get('shareid')
   const itemId = searchParams.get('itemid')
-  const [refresh, setRefresh] = useState(false)
 
   const dispatch = useDispatch()
+  const refreshSubItems = () => {
+    querySubItems()
+  }
 
-  useEffect(() => {
+  const querySubItems = () => {
     if (!utils.isNumber(itemId)) {
       return
     }
@@ -233,12 +236,16 @@ export default function CategoryItemPage() {
         console.log(err)
       }
     })
-  }, [itemId, dispatch, refresh, navigate, shareid])
+  }
+
+  useEffect(() => {
+    querySubItems()
+  }, [itemId, dispatch, navigate, shareid])
 
   return (
     <CategoryContainer>
       <CssBaseline />
-      {shareid ? null : <SideUtils name="管理" child={CategoryItemCreator({ parentId: itemId, refreshParent: () => { setRefresh(true) } })} />}
+      {shareid ? null : <SideUtils name="管理" child={CategoryItemCreator({ parentId: itemId, refreshParent: () => { refreshSubItems() } })} />}
       <CategoryItems parentId={itemId} shareid={shareid} />
     </CategoryContainer>
   );

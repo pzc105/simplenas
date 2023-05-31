@@ -55,9 +55,8 @@ const UserListItem = ({ name, value }) => {
 const SharedItems = () => {
   const userInfo = useSelector((state) => store.selectUserInfo(state))
   const [sharedItems, setShareItems] = useState([])
-  const [refresh, setRefresh] = useState(false)
 
-  useEffect(() => {
+  const querySharedItems = () => {
     let req = new User.QuerySharedItemsReq()
     req.setUserId(userInfo.id)
     userService.querySharedItems(req, {}, (err, res) => {
@@ -71,7 +70,11 @@ const SharedItems = () => {
       })
       setShareItems(sharedItemsTmp)
     })
-  }, [userInfo, refresh])
+  }
+
+  useEffect(() => {
+    querySharedItems()
+  }, [userInfo])
 
   const delShareItem = (shareid) => {
     let req = new User.DelSharedItemReq()
@@ -80,7 +83,7 @@ const SharedItems = () => {
       if (err != null) {
         return
       }
-      setRefresh(true)
+      querySharedItems()
     })
   }
 
