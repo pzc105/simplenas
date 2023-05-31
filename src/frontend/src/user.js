@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Typography, Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box } from '@mui/material';
+import { Container, Typography, Paper, Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import MuiAlert from '@mui/lab/Alert';
 import { styled } from "@mui/material/styles";
@@ -16,7 +16,7 @@ export default function UserInfoPage({ }) {
   const userInfo = useSelector((state) => store.selectUserInfo(state))
   const shownUsrInfo = { 名称: userInfo["name"], Email: userInfo["email"] }
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" style={{ maxWidth: "50%" }}>
       <UserInfoList userInfo={shownUsrInfo} />
       <SharedItems />
     </Container>
@@ -25,7 +25,7 @@ export default function UserInfoPage({ }) {
 
 const UserInfoList = ({ userInfo }) => {
   return (
-    <Container>
+    <Container style={{ maxWidth: "100%" }}>
       {
         Object.keys(userInfo).map((k) => {
           return <UserListItem key={k} name={k} value={userInfo[k]} />
@@ -37,20 +37,31 @@ const UserInfoList = ({ userInfo }) => {
 
 const UserListItem = ({ name, value }) => {
   return (
-    <Container sx={{ display: 'flex' }}>
-      <Typography whiteSpace={'pre'}>
-        {name + ":  "}
-      </Typography>
-      <Typography>
-        {value}
-      </Typography>
-    </Container>
+    <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }}>
+      <Grid container sx={{ display: 'flex' }} >
+        <Grid item xs={12}>
+          <Grid container spacing={2}>
+            <Grid item xs={2}>
+              <Typography whiteSpace={'pre'}>
+                {name + ":"}
+              </Typography>
+            </Grid>
+            <Grid item xs={10}>
+              <Typography>
+                {value}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Paper>
   )
 }
 
 const SharedItems = () => {
   const userInfo = useSelector((state) => store.selectUserInfo(state))
-  const [sharedUrls, setShareUrls] = useState([])
+  const [sharedItems, setShareItems] = useState([])
+  const [refresh, setRefresh] = useState(false)
 
   useEffect(() => {
     let req = new User.QuerySharedItemsReq()
@@ -59,38 +70,59 @@ const SharedItems = () => {
       if (err != null) {
         return
       }
-      const urlPrefix = "https://" + window.location.hostname + ":" + window.location.port + "/citem?"
-      let sharedUrlsTmp = []
+      let sharedItemsTmp = []
       res.getSharedItemsList().map((si) => {
-        sharedUrlsTmp.push(urlPrefix + "itemid=" + si.getItemId() + "&shareid=" + si.getShareId())
+        sharedItemsTmp.push(si.toObject())
       })
-
-      setShareUrls(sharedUrlsTmp)
+      setShareItems(sharedItemsTmp)
     })
-  }, [userInfo])
+  }, [userInfo, refresh])
+
+  const delShareItem = (shareid) => {
+    let req = new User.DelSharedItemReq()
+    req.setShareId(shareid)
+    userService.delSharedItem(req, {}, (err, res) => {
+      if (err != null) {
+        return
+      }
+      setRefresh(true)
+    })
+  }
 
   return (
-    <Grid Container sx={{ display: 'flex' }} >
-      <Grid item xs={12}>
-        <Grid item xs={3}>
-          <Typography >
-            分享链接:
-          </Typography>
-        </Grid>
-        <Grid item xs={9}>
-          {
-            sharedUrls.map((url, i) => {
-              return (
-                <Box key={i}>
-                  <Typography>
-                    {(i + 1) + ". " + url}
-                  </Typography>
-                </Box>
-              )
-            })
-          }
+    <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }}>
+      <Grid container sx={{ display: 'flex' }} >
+        <Grid item xs={12}>
+          <Grid container spacing={2}>
+            <Grid item xs={2}>
+              <Typography >
+                分享链接:
+              </Typography>
+            </Grid>
+            <Grid item xs={10}>
+              {
+                sharedItems.map((si, i) => {
+                  const urlPrefix = "https://" + window.location.hostname + ":" + window.location.port + "/citem?"
+                  return (
+                    <Grid container spacing={2} key={i}>
+                      <Grid item xs={8}>
+                        <Typography>
+                          {(i + 1) + "、" + urlPrefix + "itemid=" + si.itemId + "&shareid=" + si.shareId}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Button onClick={() => delShareItem(si.shareId)} >
+                          删除
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  )
+                })
+              }
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </Paper>
   )
 }

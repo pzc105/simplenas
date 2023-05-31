@@ -71,6 +71,12 @@ extern DelCategoryItemReqDefaultTypeInternal _DelCategoryItemReq_default_instanc
 class DelCategoryItemRes;
 struct DelCategoryItemResDefaultTypeInternal;
 extern DelCategoryItemResDefaultTypeInternal _DelCategoryItemRes_default_instance_;
+class DelSharedItemReq;
+struct DelSharedItemReqDefaultTypeInternal;
+extern DelSharedItemReqDefaultTypeInternal _DelSharedItemReq_default_instance_;
+class DelSharedItemRes;
+struct DelSharedItemResDefaultTypeInternal;
+extern DelSharedItemResDefaultTypeInternal _DelSharedItemRes_default_instance_;
 class EmailInfo;
 struct EmailInfoDefaultTypeInternal;
 extern EmailInfoDefaultTypeInternal _EmailInfo_default_instance_;
@@ -146,6 +152,10 @@ template <>
 ::prpc::DelCategoryItemReq* Arena::CreateMaybeMessage<::prpc::DelCategoryItemReq>(Arena*);
 template <>
 ::prpc::DelCategoryItemRes* Arena::CreateMaybeMessage<::prpc::DelCategoryItemRes>(Arena*);
+template <>
+::prpc::DelSharedItemReq* Arena::CreateMaybeMessage<::prpc::DelSharedItemReq>(Arena*);
+template <>
+::prpc::DelSharedItemRes* Arena::CreateMaybeMessage<::prpc::DelSharedItemRes>(Arena*);
 template <>
 ::prpc::EmailInfo* Arena::CreateMaybeMessage<::prpc::EmailInfo>(Arena*);
 template <>
@@ -4039,6 +4049,279 @@ class QuerySharedItemsRes final :
   friend struct ::TableStruct_user_2eproto;
 };// -------------------------------------------------------------------
 
+class DelSharedItemReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.DelSharedItemReq) */ {
+ public:
+  inline DelSharedItemReq() : DelSharedItemReq(nullptr) {}
+  ~DelSharedItemReq() override;
+  explicit PROTOBUF_CONSTEXPR DelSharedItemReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  DelSharedItemReq(const DelSharedItemReq& from);
+  DelSharedItemReq(DelSharedItemReq&& from) noexcept
+    : DelSharedItemReq() {
+    *this = ::std::move(from);
+  }
+
+  inline DelSharedItemReq& operator=(const DelSharedItemReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DelSharedItemReq& operator=(DelSharedItemReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const DelSharedItemReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const DelSharedItemReq* internal_default_instance() {
+    return reinterpret_cast<const DelSharedItemReq*>(
+               &_DelSharedItemReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    24;
+
+  friend void swap(DelSharedItemReq& a, DelSharedItemReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DelSharedItemReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(DelSharedItemReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  DelSharedItemReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<DelSharedItemReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const DelSharedItemReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const DelSharedItemReq& from) {
+    DelSharedItemReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(DelSharedItemReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.DelSharedItemReq";
+  }
+  protected:
+  explicit DelSharedItemReq(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kShareIdFieldNumber = 1,
+  };
+  // string share_id = 1;
+  void clear_share_id() ;
+  const std::string& share_id() const;
+
+
+
+
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_share_id(Arg_&& arg, Args_... args);
+  std::string* mutable_share_id();
+  PROTOBUF_NODISCARD std::string* release_share_id();
+  void set_allocated_share_id(std::string* ptr);
+
+  private:
+  const std::string& _internal_share_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_share_id(
+      const std::string& value);
+  std::string* _internal_mutable_share_id();
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.DelSharedItemReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr share_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class DelSharedItemRes final :
+    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.DelSharedItemRes) */ {
+ public:
+  inline DelSharedItemRes() : DelSharedItemRes(nullptr) {}
+  explicit PROTOBUF_CONSTEXPR DelSharedItemRes(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  DelSharedItemRes(const DelSharedItemRes& from);
+  DelSharedItemRes(DelSharedItemRes&& from) noexcept
+    : DelSharedItemRes() {
+    *this = ::std::move(from);
+  }
+
+  inline DelSharedItemRes& operator=(const DelSharedItemRes& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DelSharedItemRes& operator=(DelSharedItemRes&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const DelSharedItemRes& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const DelSharedItemRes* internal_default_instance() {
+    return reinterpret_cast<const DelSharedItemRes*>(
+               &_DelSharedItemRes_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    25;
+
+  friend void swap(DelSharedItemRes& a, DelSharedItemRes& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DelSharedItemRes* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(DelSharedItemRes* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  DelSharedItemRes* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<DelSharedItemRes>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const DelSharedItemRes& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const DelSharedItemRes& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.DelSharedItemRes";
+  }
+  protected:
+  explicit DelSharedItemRes(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:prpc.DelSharedItemRes)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+  };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
 class RefreshSubtitleReq final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.RefreshSubtitleReq) */ {
  public:
@@ -4087,7 +4370,7 @@ class RefreshSubtitleReq final :
                &_RefreshSubtitleReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    26;
 
   friend void swap(RefreshSubtitleReq& a, RefreshSubtitleReq& b) {
     a.Swap(&b);
@@ -4233,7 +4516,7 @@ class RefreshSubtitleRes final :
                &_RefreshSubtitleRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    27;
 
   friend void swap(RefreshSubtitleRes& a, RefreshSubtitleRes& b) {
     a.Swap(&b);
@@ -6106,6 +6389,61 @@ QuerySharedItemsRes::shared_items() const {
   // @@protoc_insertion_point(field_list:prpc.QuerySharedItemsRes.shared_items)
   return _impl_.shared_items_;
 }
+
+// -------------------------------------------------------------------
+
+// DelSharedItemReq
+
+// string share_id = 1;
+inline void DelSharedItemReq::clear_share_id() {
+  _impl_.share_id_.ClearToEmpty();
+}
+inline const std::string& DelSharedItemReq::share_id() const {
+  // @@protoc_insertion_point(field_get:prpc.DelSharedItemReq.share_id)
+  return _internal_share_id();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void DelSharedItemReq::set_share_id(Arg_&& arg,
+                                                     Args_... args) {
+  ;
+  _impl_.share_id_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.DelSharedItemReq.share_id)
+}
+inline std::string* DelSharedItemReq::mutable_share_id() {
+  std::string* _s = _internal_mutable_share_id();
+  // @@protoc_insertion_point(field_mutable:prpc.DelSharedItemReq.share_id)
+  return _s;
+}
+inline const std::string& DelSharedItemReq::_internal_share_id() const {
+  return _impl_.share_id_.Get();
+}
+inline void DelSharedItemReq::_internal_set_share_id(const std::string& value) {
+  ;
+
+
+  _impl_.share_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* DelSharedItemReq::_internal_mutable_share_id() {
+  ;
+  return _impl_.share_id_.Mutable( GetArenaForAllocation());
+}
+inline std::string* DelSharedItemReq::release_share_id() {
+  // @@protoc_insertion_point(field_release:prpc.DelSharedItemReq.share_id)
+  return _impl_.share_id_.Release();
+}
+inline void DelSharedItemReq::set_allocated_share_id(std::string* value) {
+  _impl_.share_id_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.share_id_.IsDefault()) {
+          _impl_.share_id_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.DelSharedItemReq.share_id)
+}
+
+// -------------------------------------------------------------------
+
+// DelSharedItemRes
 
 // -------------------------------------------------------------------
 

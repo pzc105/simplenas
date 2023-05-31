@@ -420,6 +420,35 @@ struct QuerySharedItemsResDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 QuerySharedItemsResDefaultTypeInternal _QuerySharedItemsRes_default_instance_;
+PROTOBUF_CONSTEXPR DelSharedItemReq::DelSharedItemReq(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.share_id_)*/ {
+    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
+  }
+
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct DelSharedItemReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR DelSharedItemReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~DelSharedItemReqDefaultTypeInternal() {}
+  union {
+    DelSharedItemReq _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DelSharedItemReqDefaultTypeInternal _DelSharedItemReq_default_instance_;
+PROTOBUF_CONSTEXPR DelSharedItemRes::DelSharedItemRes(
+    ::_pbi::ConstantInitialized) {}
+struct DelSharedItemResDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR DelSharedItemResDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~DelSharedItemResDefaultTypeInternal() {}
+  union {
+    DelSharedItemRes _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DelSharedItemResDefaultTypeInternal _DelSharedItemRes_default_instance_;
 PROTOBUF_CONSTEXPR RefreshSubtitleReq::RefreshSubtitleReq(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.item_id_)*/ ::int64_t{0}
@@ -448,7 +477,7 @@ struct RefreshSubtitleResDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RefreshSubtitleResDefaultTypeInternal _RefreshSubtitleRes_default_instance_;
 }  // namespace prpc
-static ::_pb::Metadata file_level_metadata_user_2eproto[26];
+static ::_pb::Metadata file_level_metadata_user_2eproto[28];
 static constexpr const ::_pb::EnumDescriptor**
     file_level_enum_descriptors_user_2eproto = nullptr;
 static constexpr const ::_pb::ServiceDescriptor**
@@ -687,6 +716,23 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySharedItemsRes, _impl_.shared_items_),
     ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::DelSharedItemReq, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::DelSharedItemReq, _impl_.share_id_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::DelSharedItemRes, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::RefreshSubtitleReq, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -731,8 +777,10 @@ static const ::_pbi::MigrationSchema
         { 203, -1, -1, sizeof(::prpc::ShareItemRes)},
         { 213, -1, -1, sizeof(::prpc::QuerySharedItemsReq)},
         { 222, -1, -1, sizeof(::prpc::QuerySharedItemsRes)},
-        { 231, -1, -1, sizeof(::prpc::RefreshSubtitleReq)},
-        { 240, -1, -1, sizeof(::prpc::RefreshSubtitleRes)},
+        { 231, -1, -1, sizeof(::prpc::DelSharedItemReq)},
+        { 240, -1, -1, sizeof(::prpc::DelSharedItemRes)},
+        { 248, -1, -1, sizeof(::prpc::RefreshSubtitleReq)},
+        { 257, -1, -1, sizeof(::prpc::RefreshSubtitleRes)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -760,6 +808,8 @@ static const ::_pb::Message* const file_default_instances[] = {
     &::prpc::_ShareItemRes_default_instance_._instance,
     &::prpc::_QuerySharedItemsReq_default_instance_._instance,
     &::prpc::_QuerySharedItemsRes_default_instance_._instance,
+    &::prpc::_DelSharedItemReq_default_instance_._instance,
+    &::prpc::_DelSharedItemRes_default_instance_._instance,
     &::prpc::_RefreshSubtitleReq_default_instance_._instance,
     &::prpc::_RefreshSubtitleRes_default_instance_._instance,
 };
@@ -800,38 +850,41 @@ const char descriptor_table_protodef_user_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
     "\n\007item_id\030\001 \001(\003\022\020\n\010share_id\030\002 \001(\t\"&\n\023Que"
     "rySharedItemsReq\022\017\n\007user_id\030\001 \001(\003\"=\n\023Que"
     "rySharedItemsRes\022&\n\014shared_items\030\001 \003(\0132\020"
-    ".prpc.SharedItem\"%\n\022RefreshSubtitleReq\022\017"
-    "\n\007item_id\030\001 \001(\003\"\024\n\022RefreshSubtitleRes2\206\t"
-    "\n\013UserService\022G\n\010Register\022\022.prpc.Registe"
-    "rInfo\032\021.prpc.RegisterRet\"\024\202\323\344\223\002\016\"\t/regis"
-    "ter:\001*\022M\n\013IsUsedEmail\022\017.prpc.EmailInfo\032\024"
-    ".prpc.IsUsedEmailRet\"\027\202\323\344\223\002\021\"\014/isusedema"
-    "il:\001*\022;\n\005Login\022\017.prpc.LoginInfo\032\016.prpc.L"
-    "oginRet\"\021\202\323\344\223\002\013\"\006/login:\001*\022C\n\tFastLogin\022"
-    "\017.prpc.LoginInfo\032\016.prpc.LoginRet\"\025\202\323\344\223\002\017"
-    "\"\n/fastlogin:\001*\022B\n\tIsLogined\022\017.prpc.Logi"
-    "nInfo\032\016.prpc.LoginRet\"\024\202\323\344\223\002\016\"\t/islogged"
-    ":\001*\022N\n\010Download\022\025.prpc.DownloadRequest\032\025"
-    ".prpc.DownloadRespone\"\024\202\323\344\223\002\016\"\t/download"
-    ":\001*\022\?\n\rRemoveTorrent\022\026.prpc.RemoveTorren"
-    "tReq\032\026.prpc.RemoveTorrentRes\0226\n\010OnStatus"
-    "\022\023.prpc.StatusRequest\032\023.prpc.StatusRespo"
-    "ne0\001\022\?\n\rQueryBtVideos\022\026.prpc.QueryBtVide"
-    "osReq\032\026.prpc.QueryBtVideosRes\022E\n\017NewCate"
-    "goryItem\022\030.prpc.NewCategoryItemReq\032\030.prp"
-    "c.NewCategoryItemRes\022E\n\017DelCategoryItem\022"
-    "\030.prpc.DelCategoryItemReq\032\030.prpc.DelCate"
-    "goryItemRes\0229\n\013AddBtVideos\022\024.prpc.AddBtV"
-    "ideosReq\032\024.prpc.AddBtVideosRes\0223\n\tShareI"
-    "tem\022\022.prpc.ShareItemReq\032\022.prpc.ShareItem"
-    "Res\022H\n\020QuerySharedItems\022\031.prpc.QueryShar"
-    "edItemsReq\032\031.prpc.QuerySharedItemsRes\022\?\n"
-    "\rQuerySubItems\022\026.prpc.QuerySubItemsReq\032\026"
-    ".prpc.QuerySubItemsRes\022\?\n\rQueryItemInfo\022"
-    "\026.prpc.QueryItemInfoReq\032\026.prpc.QueryItem"
-    "InfoRes\022E\n\017RefreshSubtitle\022\030.prpc.Refres"
-    "hSubtitleReq\032\030.prpc.RefreshSubtitleResB\010"
-    "Z\006./prpcb\006proto3"
+    ".prpc.SharedItem\"$\n\020DelSharedItemReq\022\020\n\010"
+    "share_id\030\001 \001(\t\"\022\n\020DelSharedItemRes\"%\n\022Re"
+    "freshSubtitleReq\022\017\n\007item_id\030\001 \001(\003\"\024\n\022Ref"
+    "reshSubtitleRes2\307\t\n\013UserService\022G\n\010Regis"
+    "ter\022\022.prpc.RegisterInfo\032\021.prpc.RegisterR"
+    "et\"\024\202\323\344\223\002\016\"\t/register:\001*\022M\n\013IsUsedEmail\022"
+    "\017.prpc.EmailInfo\032\024.prpc.IsUsedEmailRet\"\027"
+    "\202\323\344\223\002\021\"\014/isusedemail:\001*\022;\n\005Login\022\017.prpc."
+    "LoginInfo\032\016.prpc.LoginRet\"\021\202\323\344\223\002\013\"\006/logi"
+    "n:\001*\022C\n\tFastLogin\022\017.prpc.LoginInfo\032\016.prp"
+    "c.LoginRet\"\025\202\323\344\223\002\017\"\n/fastlogin:\001*\022B\n\tIsL"
+    "ogined\022\017.prpc.LoginInfo\032\016.prpc.LoginRet\""
+    "\024\202\323\344\223\002\016\"\t/islogged:\001*\022N\n\010Download\022\025.prpc"
+    ".DownloadRequest\032\025.prpc.DownloadRespone\""
+    "\024\202\323\344\223\002\016\"\t/download:\001*\022\?\n\rRemoveTorrent\022\026"
+    ".prpc.RemoveTorrentReq\032\026.prpc.RemoveTorr"
+    "entRes\0226\n\010OnStatus\022\023.prpc.StatusRequest\032"
+    "\023.prpc.StatusRespone0\001\022\?\n\rQueryBtVideos\022"
+    "\026.prpc.QueryBtVideosReq\032\026.prpc.QueryBtVi"
+    "deosRes\022E\n\017NewCategoryItem\022\030.prpc.NewCat"
+    "egoryItemReq\032\030.prpc.NewCategoryItemRes\022E"
+    "\n\017DelCategoryItem\022\030.prpc.DelCategoryItem"
+    "Req\032\030.prpc.DelCategoryItemRes\0229\n\013AddBtVi"
+    "deos\022\024.prpc.AddBtVideosReq\032\024.prpc.AddBtV"
+    "ideosRes\0223\n\tShareItem\022\022.prpc.ShareItemRe"
+    "q\032\022.prpc.ShareItemRes\022H\n\020QuerySharedItem"
+    "s\022\031.prpc.QuerySharedItemsReq\032\031.prpc.Quer"
+    "ySharedItemsRes\022\?\n\rDelSharedItem\022\026.prpc."
+    "DelSharedItemReq\032\026.prpc.DelSharedItemRes"
+    "\022\?\n\rQuerySubItems\022\026.prpc.QuerySubItemsRe"
+    "q\032\026.prpc.QuerySubItemsRes\022\?\n\rQueryItemIn"
+    "fo\022\026.prpc.QueryItemInfoReq\032\026.prpc.QueryI"
+    "temInfoRes\022E\n\017RefreshSubtitle\022\030.prpc.Ref"
+    "reshSubtitleReq\032\030.prpc.RefreshSubtitleRe"
+    "sB\010Z\006./prpcb\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_user_2eproto_deps[4] =
     {
@@ -844,13 +897,13 @@ static ::absl::once_flag descriptor_table_user_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_user_2eproto = {
     false,
     false,
-    2696,
+    2819,
     descriptor_table_protodef_user_2eproto,
     "user.proto",
     &descriptor_table_user_2eproto_once,
     descriptor_table_user_2eproto_deps,
     4,
-    26,
+    28,
     schemas,
     file_default_instances,
     TableStruct_user_2eproto::offsets,
@@ -5488,6 +5541,240 @@ void QuerySharedItemsRes::InternalSwap(QuerySharedItemsRes* other) {
 }
 // ===================================================================
 
+class DelSharedItemReq::_Internal {
+ public:
+};
+
+DelSharedItemReq::DelSharedItemReq(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.DelSharedItemReq)
+}
+DelSharedItemReq::DelSharedItemReq(const DelSharedItemReq& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  DelSharedItemReq* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.share_id_) {}
+
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.share_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.share_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_share_id().empty()) {
+    _this->_impl_.share_id_.Set(from._internal_share_id(), _this->GetArenaForAllocation());
+  }
+  // @@protoc_insertion_point(copy_constructor:prpc.DelSharedItemReq)
+}
+
+inline void DelSharedItemReq::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.share_id_) {}
+
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.share_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.share_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+DelSharedItemReq::~DelSharedItemReq() {
+  // @@protoc_insertion_point(destructor:prpc.DelSharedItemReq)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void DelSharedItemReq::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.share_id_.Destroy();
+}
+
+void DelSharedItemReq::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void DelSharedItemReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.DelSharedItemReq)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.share_id_.ClearToEmpty();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* DelSharedItemReq::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string share_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_share_id();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "prpc.DelSharedItemReq.share_id"));
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+::uint8_t* DelSharedItemReq::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.DelSharedItemReq)
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string share_id = 1;
+  if (!this->_internal_share_id().empty()) {
+    const std::string& _s = this->_internal_share_id();
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.DelSharedItemReq.share_id");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.DelSharedItemReq)
+  return target;
+}
+
+::size_t DelSharedItemReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.DelSharedItemReq)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string share_id = 1;
+  if (!this->_internal_share_id().empty()) {
+    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+                                    this->_internal_share_id());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData DelSharedItemReq::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    DelSharedItemReq::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*DelSharedItemReq::GetClassData() const { return &_class_data_; }
+
+
+void DelSharedItemReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<DelSharedItemReq*>(&to_msg);
+  auto& from = static_cast<const DelSharedItemReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.DelSharedItemReq)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_share_id().empty()) {
+    _this->_internal_set_share_id(from._internal_share_id());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void DelSharedItemReq::CopyFrom(const DelSharedItemReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.DelSharedItemReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool DelSharedItemReq::IsInitialized() const {
+  return true;
+}
+
+void DelSharedItemReq::InternalSwap(DelSharedItemReq* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.share_id_, lhs_arena,
+                                       &other->_impl_.share_id_, rhs_arena);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata DelSharedItemReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[24]);
+}
+// ===================================================================
+
+class DelSharedItemRes::_Internal {
+ public:
+};
+
+DelSharedItemRes::DelSharedItemRes(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena) {
+  // @@protoc_insertion_point(arena_constructor:prpc.DelSharedItemRes)
+}
+DelSharedItemRes::DelSharedItemRes(const DelSharedItemRes& from)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
+  DelSharedItemRes* const _this = this; (void)_this;
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:prpc.DelSharedItemRes)
+}
+
+
+
+
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData DelSharedItemRes::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*DelSharedItemRes::GetClassData() const { return &_class_data_; }
+
+
+
+
+
+
+
+::PROTOBUF_NAMESPACE_ID::Metadata DelSharedItemRes::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[25]);
+}
+// ===================================================================
+
 class RefreshSubtitleReq::_Internal {
  public:
 };
@@ -5658,7 +5945,7 @@ void RefreshSubtitleReq::InternalSwap(RefreshSubtitleReq* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata RefreshSubtitleReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[24]);
+      file_level_metadata_user_2eproto[26]);
 }
 // ===================================================================
 
@@ -5696,7 +5983,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RefreshSubtitleRes::GetClassDa
 ::PROTOBUF_NAMESPACE_ID::Metadata RefreshSubtitleRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[25]);
+      file_level_metadata_user_2eproto[27]);
 }
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace prpc
@@ -5796,6 +6083,14 @@ Arena::CreateMaybeMessage< ::prpc::QuerySharedItemsReq >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::prpc::QuerySharedItemsRes*
 Arena::CreateMaybeMessage< ::prpc::QuerySharedItemsRes >(Arena* arena) {
   return Arena::CreateMessageInternal< ::prpc::QuerySharedItemsRes >(arena);
+}
+template<> PROTOBUF_NOINLINE ::prpc::DelSharedItemReq*
+Arena::CreateMaybeMessage< ::prpc::DelSharedItemReq >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::prpc::DelSharedItemReq >(arena);
+}
+template<> PROTOBUF_NOINLINE ::prpc::DelSharedItemRes*
+Arena::CreateMaybeMessage< ::prpc::DelSharedItemRes >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::prpc::DelSharedItemRes >(arena);
 }
 template<> PROTOBUF_NOINLINE ::prpc::RefreshSubtitleReq*
 Arena::CreateMaybeMessage< ::prpc::RefreshSubtitleReq >(Arena* arena) {

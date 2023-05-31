@@ -64,6 +64,7 @@ service UserService {
   rpc AddBtVideos(AddBtVideosReq) returns (AddBtVideosRes);
   rpc ShareItem(ShareItemReq) returns (ShareItemRes);
   rpc QuerySharedItems(QuerySharedItemsReq) returns (QuerySharedItemsRes);
+  rpc DelSharedItem(DelSharedItemReq) returns (DelSharedItemRes);
   rpc QuerySubItems(QuerySubItemsReq) returns (QuerySubItemsRes);
   rpc QueryItemInfo(QueryItemInfoReq) returns (QueryItemInfoRes);
   rpc RefreshSubtitle(RefreshSubtitleReq) returns (RefreshSubtitleRes);
@@ -184,6 +185,14 @@ message QuerySharedItemsReq {
 
 message QuerySharedItemsRes {
   repeated SharedItem shared_items = 1;
+}
+
+message DelSharedItemReq {
+  string share_id = 1;
+}
+
+message DelSharedItemRes {
+  
 }
 
 message RefreshSubtitleReq {

@@ -36,6 +36,7 @@ static const char* UserService_method_names[] = {
   "/prpc.UserService/AddBtVideos",
   "/prpc.UserService/ShareItem",
   "/prpc.UserService/QuerySharedItems",
+  "/prpc.UserService/DelSharedItem",
   "/prpc.UserService/QuerySubItems",
   "/prpc.UserService/QueryItemInfo",
   "/prpc.UserService/RefreshSubtitle",
@@ -62,9 +63,10 @@ UserService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channe
   , rpcmethod_AddBtVideos_(UserService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ShareItem_(UserService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_QuerySharedItems_(UserService_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QuerySubItems_(UserService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QueryItemInfo_(UserService_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RefreshSubtitle_(UserService_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DelSharedItem_(UserService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QuerySubItems_(UserService_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QueryItemInfo_(UserService_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RefreshSubtitle_(UserService_method_names[17], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status UserService::Stub::Register(::grpc::ClientContext* context, const ::prpc::RegisterInfo& request, ::prpc::RegisterRet* response) {
@@ -382,6 +384,29 @@ void UserService::Stub::async::QuerySharedItems(::grpc::ClientContext* context, 
   return result;
 }
 
+::grpc::Status UserService::Stub::DelSharedItem(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq& request, ::prpc::DelSharedItemRes* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::DelSharedItemReq, ::prpc::DelSharedItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_DelSharedItem_, context, request, response);
+}
+
+void UserService::Stub::async::DelSharedItem(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq* request, ::prpc::DelSharedItemRes* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::DelSharedItemReq, ::prpc::DelSharedItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DelSharedItem_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::DelSharedItem(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq* request, ::prpc::DelSharedItemRes* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DelSharedItem_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::DelSharedItemRes>* UserService::Stub::PrepareAsyncDelSharedItemRaw(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::DelSharedItemRes, ::prpc::DelSharedItemReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_DelSharedItem_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::DelSharedItemRes>* UserService::Stub::AsyncDelSharedItemRaw(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncDelSharedItemRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ::grpc::Status UserService::Stub::QuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::prpc::QuerySubItemsRes* response) {
   return ::grpc::internal::BlockingUnaryCall< ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_QuerySubItems_, context, request, response);
 }
@@ -595,6 +620,16 @@ UserService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[14],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::DelSharedItemReq, ::prpc::DelSharedItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::DelSharedItemReq* req,
+             ::prpc::DelSharedItemRes* resp) {
+               return service->DelSharedItem(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[15],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
              ::grpc::ServerContext* ctx,
@@ -603,7 +638,7 @@ UserService::Service::Service() {
                return service->QuerySubItems(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[15],
+      UserService_method_names[16],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QueryItemInfoReq, ::prpc::QueryItemInfoRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -613,7 +648,7 @@ UserService::Service::Service() {
                return service->QueryItemInfo(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[16],
+      UserService_method_names[17],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::RefreshSubtitleReq, ::prpc::RefreshSubtitleRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -719,6 +754,13 @@ UserService::Service::~Service() {
 }
 
 ::grpc::Status UserService::Service::QuerySharedItems(::grpc::ServerContext* context, const ::prpc::QuerySharedItemsReq* request, ::prpc::QuerySharedItemsRes* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::DelSharedItem(::grpc::ServerContext* context, const ::prpc::DelSharedItemReq* request, ::prpc::DelSharedItemRes* response) {
   (void) context;
   (void) request;
   (void) response;

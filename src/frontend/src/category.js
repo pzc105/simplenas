@@ -140,7 +140,7 @@ const CategoryItems = ({ parentId, shareid }) => {
   )
 }
 
-const CategoryItemCreator = ({ parentId }) => {
+const CategoryItemCreator = ({ parentId, refreshParent }) => {
   const [itemName, setItemName] = useState('')
   function handleChange(e) {
     setItemName(e.target.value)
@@ -159,6 +159,7 @@ const CategoryItemCreator = ({ parentId }) => {
         console.log(err)
         return
       }
+      refreshParent()
     })
   }
 
@@ -204,6 +205,7 @@ export default function CategoryItemPage() {
   const searchParams = new URLSearchParams(location.search)
   const shareid = searchParams.get('shareid')
   const itemId = searchParams.get('itemid')
+  const [refresh, setRefresh] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -231,12 +233,12 @@ export default function CategoryItemPage() {
         console.log(err)
       }
     })
-  }, [itemId, dispatch])
+  }, [itemId, dispatch, refresh])
 
   return (
     <CategoryContainer>
       <CssBaseline />
-      {shareid ? null : <SideUtils name="管理" child={CategoryItemCreator({ parentId: itemId })} />}
+      {shareid ? null : <SideUtils name="管理" child={CategoryItemCreator({ parentId: itemId, refreshParent: () => { setRefresh(true) } })} />}
       <CategoryItems parentId={itemId} shareid={shareid} />
     </CategoryContainer>
   );

@@ -522,6 +522,38 @@ export namespace QuerySharedItemsRes {
   }
 }
 
+export class DelSharedItemReq extends jspb.Message {
+  getShareId(): string;
+  setShareId(value: string): DelSharedItemReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DelSharedItemReq.AsObject;
+  static toObject(includeInstance: boolean, msg: DelSharedItemReq): DelSharedItemReq.AsObject;
+  static serializeBinaryToWriter(message: DelSharedItemReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DelSharedItemReq;
+  static deserializeBinaryFromReader(message: DelSharedItemReq, reader: jspb.BinaryReader): DelSharedItemReq;
+}
+
+export namespace DelSharedItemReq {
+  export type AsObject = {
+    shareId: string,
+  }
+}
+
+export class DelSharedItemRes extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DelSharedItemRes.AsObject;
+  static toObject(includeInstance: boolean, msg: DelSharedItemRes): DelSharedItemRes.AsObject;
+  static serializeBinaryToWriter(message: DelSharedItemRes, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DelSharedItemRes;
+  static deserializeBinaryFromReader(message: DelSharedItemRes, reader: jspb.BinaryReader): DelSharedItemRes;
+}
+
+export namespace DelSharedItemRes {
+  export type AsObject = {
+  }
+}
+
 export class RefreshSubtitleReq extends jspb.Message {
   getItemId(): number;
   setItemId(value: number): RefreshSubtitleReq;

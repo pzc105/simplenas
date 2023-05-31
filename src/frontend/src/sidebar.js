@@ -35,7 +35,7 @@ const ListItemWithChildren = ({ item }) => {
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        {utils.isLogined() && item.subComponent != null ? item.subComponent(item.subComponentParams) : null}
+        {item.subComponent != null ? item.subComponent(item.subComponentParams) : null}
       </AccordionDetails>
     </Accordion>
   );

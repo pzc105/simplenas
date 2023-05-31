@@ -621,6 +621,49 @@ export class UserServiceClient {
     this.methodDescriptorQuerySharedItems);
   }
 
+  methodDescriptorDelSharedItem = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/DelSharedItem',
+    grpcWeb.MethodType.UNARY,
+    user_pb.DelSharedItemReq,
+    user_pb.DelSharedItemRes,
+    (request: user_pb.DelSharedItemReq) => {
+      return request.serializeBinary();
+    },
+    user_pb.DelSharedItemRes.deserializeBinary
+  );
+
+  delSharedItem(
+    request: user_pb.DelSharedItemReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.DelSharedItemRes>;
+
+  delSharedItem(
+    request: user_pb.DelSharedItemReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: user_pb.DelSharedItemRes) => void): grpcWeb.ClientReadableStream<user_pb.DelSharedItemRes>;
+
+  delSharedItem(
+    request: user_pb.DelSharedItemReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: user_pb.DelSharedItemRes) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.UserService/DelSharedItem',
+        request,
+        metadata || {},
+        this.methodDescriptorDelSharedItem,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.UserService/DelSharedItem',
+    request,
+    metadata || {},
+    this.methodDescriptorDelSharedItem);
+  }
+
   methodDescriptorQuerySubItems = new grpcWeb.MethodDescriptor(
     '/prpc.UserService/QuerySubItems',
     grpcWeb.MethodType.UNARY,

@@ -119,6 +119,7 @@ func (sm *ShareManager) _deleteShare(si *ShareInfo) {
 				sm.userShares[si.UserId][i+1:]...)
 		}
 	}
+	db.GREDIS.Del(context.Background(), shareObjectRedisKey(si.ShareId))
 }
 
 func (sm *ShareManager) ShareCategoryItem(params *ShareCategoryItemParams) (shareid string, err error) {

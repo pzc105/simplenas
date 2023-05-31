@@ -135,6 +135,13 @@ class UserService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QuerySharedItemsRes>> PrepareAsyncQuerySharedItems(::grpc::ClientContext* context, const ::prpc::QuerySharedItemsReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QuerySharedItemsRes>>(PrepareAsyncQuerySharedItemsRaw(context, request, cq));
     }
+    virtual ::grpc::Status DelSharedItem(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq& request, ::prpc::DelSharedItemRes* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::DelSharedItemRes>> AsyncDelSharedItem(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::DelSharedItemRes>>(AsyncDelSharedItemRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::DelSharedItemRes>> PrepareAsyncDelSharedItem(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::DelSharedItemRes>>(PrepareAsyncDelSharedItemRaw(context, request, cq));
+    }
     virtual ::grpc::Status QuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::prpc::QuerySubItemsRes* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QuerySubItemsRes>> AsyncQuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QuerySubItemsRes>>(AsyncQuerySubItemsRaw(context, request, cq));
@@ -186,6 +193,8 @@ class UserService final {
       virtual void ShareItem(::grpc::ClientContext* context, const ::prpc::ShareItemReq* request, ::prpc::ShareItemRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void QuerySharedItems(::grpc::ClientContext* context, const ::prpc::QuerySharedItemsReq* request, ::prpc::QuerySharedItemsRes* response, std::function<void(::grpc::Status)>) = 0;
       virtual void QuerySharedItems(::grpc::ClientContext* context, const ::prpc::QuerySharedItemsReq* request, ::prpc::QuerySharedItemsRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void DelSharedItem(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq* request, ::prpc::DelSharedItemRes* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void DelSharedItem(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq* request, ::prpc::DelSharedItemRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void QuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response, std::function<void(::grpc::Status)>) = 0;
       virtual void QuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void QueryItemInfo(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response, std::function<void(::grpc::Status)>) = 0;
@@ -226,6 +235,8 @@ class UserService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::ShareItemRes>* PrepareAsyncShareItemRaw(::grpc::ClientContext* context, const ::prpc::ShareItemReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QuerySharedItemsRes>* AsyncQuerySharedItemsRaw(::grpc::ClientContext* context, const ::prpc::QuerySharedItemsReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QuerySharedItemsRes>* PrepareAsyncQuerySharedItemsRaw(::grpc::ClientContext* context, const ::prpc::QuerySharedItemsReq& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::DelSharedItemRes>* AsyncDelSharedItemRaw(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::DelSharedItemRes>* PrepareAsyncDelSharedItemRaw(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QuerySubItemsRes>* AsyncQuerySubItemsRaw(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QuerySubItemsRes>* PrepareAsyncQuerySubItemsRaw(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QueryItemInfoRes>* AsyncQueryItemInfoRaw(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq& request, ::grpc::CompletionQueue* cq) = 0;
@@ -336,6 +347,13 @@ class UserService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::QuerySharedItemsRes>> PrepareAsyncQuerySharedItems(::grpc::ClientContext* context, const ::prpc::QuerySharedItemsReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::QuerySharedItemsRes>>(PrepareAsyncQuerySharedItemsRaw(context, request, cq));
     }
+    ::grpc::Status DelSharedItem(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq& request, ::prpc::DelSharedItemRes* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::DelSharedItemRes>> AsyncDelSharedItem(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::DelSharedItemRes>>(AsyncDelSharedItemRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::DelSharedItemRes>> PrepareAsyncDelSharedItem(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::DelSharedItemRes>>(PrepareAsyncDelSharedItemRaw(context, request, cq));
+    }
     ::grpc::Status QuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::prpc::QuerySubItemsRes* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::QuerySubItemsRes>> AsyncQuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::QuerySubItemsRes>>(AsyncQuerySubItemsRaw(context, request, cq));
@@ -387,6 +405,8 @@ class UserService final {
       void ShareItem(::grpc::ClientContext* context, const ::prpc::ShareItemReq* request, ::prpc::ShareItemRes* response, ::grpc::ClientUnaryReactor* reactor) override;
       void QuerySharedItems(::grpc::ClientContext* context, const ::prpc::QuerySharedItemsReq* request, ::prpc::QuerySharedItemsRes* response, std::function<void(::grpc::Status)>) override;
       void QuerySharedItems(::grpc::ClientContext* context, const ::prpc::QuerySharedItemsReq* request, ::prpc::QuerySharedItemsRes* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void DelSharedItem(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq* request, ::prpc::DelSharedItemRes* response, std::function<void(::grpc::Status)>) override;
+      void DelSharedItem(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq* request, ::prpc::DelSharedItemRes* response, ::grpc::ClientUnaryReactor* reactor) override;
       void QuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response, std::function<void(::grpc::Status)>) override;
       void QuerySubItems(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response, ::grpc::ClientUnaryReactor* reactor) override;
       void QueryItemInfo(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response, std::function<void(::grpc::Status)>) override;
@@ -433,6 +453,8 @@ class UserService final {
     ::grpc::ClientAsyncResponseReader< ::prpc::ShareItemRes>* PrepareAsyncShareItemRaw(::grpc::ClientContext* context, const ::prpc::ShareItemReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::QuerySharedItemsRes>* AsyncQuerySharedItemsRaw(::grpc::ClientContext* context, const ::prpc::QuerySharedItemsReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::QuerySharedItemsRes>* PrepareAsyncQuerySharedItemsRaw(::grpc::ClientContext* context, const ::prpc::QuerySharedItemsReq& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::prpc::DelSharedItemRes>* AsyncDelSharedItemRaw(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::prpc::DelSharedItemRes>* PrepareAsyncDelSharedItemRaw(::grpc::ClientContext* context, const ::prpc::DelSharedItemReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::QuerySubItemsRes>* AsyncQuerySubItemsRaw(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::QuerySubItemsRes>* PrepareAsyncQuerySubItemsRaw(::grpc::ClientContext* context, const ::prpc::QuerySubItemsReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::QueryItemInfoRes>* AsyncQueryItemInfoRaw(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq& request, ::grpc::CompletionQueue* cq) override;
@@ -453,6 +475,7 @@ class UserService final {
     const ::grpc::internal::RpcMethod rpcmethod_AddBtVideos_;
     const ::grpc::internal::RpcMethod rpcmethod_ShareItem_;
     const ::grpc::internal::RpcMethod rpcmethod_QuerySharedItems_;
+    const ::grpc::internal::RpcMethod rpcmethod_DelSharedItem_;
     const ::grpc::internal::RpcMethod rpcmethod_QuerySubItems_;
     const ::grpc::internal::RpcMethod rpcmethod_QueryItemInfo_;
     const ::grpc::internal::RpcMethod rpcmethod_RefreshSubtitle_;
@@ -477,6 +500,7 @@ class UserService final {
     virtual ::grpc::Status AddBtVideos(::grpc::ServerContext* context, const ::prpc::AddBtVideosReq* request, ::prpc::AddBtVideosRes* response);
     virtual ::grpc::Status ShareItem(::grpc::ServerContext* context, const ::prpc::ShareItemReq* request, ::prpc::ShareItemRes* response);
     virtual ::grpc::Status QuerySharedItems(::grpc::ServerContext* context, const ::prpc::QuerySharedItemsReq* request, ::prpc::QuerySharedItemsRes* response);
+    virtual ::grpc::Status DelSharedItem(::grpc::ServerContext* context, const ::prpc::DelSharedItemReq* request, ::prpc::DelSharedItemRes* response);
     virtual ::grpc::Status QuerySubItems(::grpc::ServerContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response);
     virtual ::grpc::Status QueryItemInfo(::grpc::ServerContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response);
     virtual ::grpc::Status RefreshSubtitle(::grpc::ServerContext* context, const ::prpc::RefreshSubtitleReq* request, ::prpc::RefreshSubtitleRes* response);
@@ -762,12 +786,32 @@ class UserService final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_DelSharedItem : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_DelSharedItem() {
+      ::grpc::Service::MarkMethodAsync(14);
+    }
+    ~WithAsyncMethod_DelSharedItem() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DelSharedItem(::grpc::ServerContext* /*context*/, const ::prpc::DelSharedItemReq* /*request*/, ::prpc::DelSharedItemRes* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestDelSharedItem(::grpc::ServerContext* context, ::prpc::DelSharedItemReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::DelSharedItemRes>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(14, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_QuerySubItems : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_QuerySubItems() {
-      ::grpc::Service::MarkMethodAsync(14);
+      ::grpc::Service::MarkMethodAsync(15);
     }
     ~WithAsyncMethod_QuerySubItems() override {
       BaseClassMustBeDerivedFromService(this);
@@ -778,7 +822,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestQuerySubItems(::grpc::ServerContext* context, ::prpc::QuerySubItemsReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::QuerySubItemsRes>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(14, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(15, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -787,7 +831,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_QueryItemInfo() {
-      ::grpc::Service::MarkMethodAsync(15);
+      ::grpc::Service::MarkMethodAsync(16);
     }
     ~WithAsyncMethod_QueryItemInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -798,7 +842,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestQueryItemInfo(::grpc::ServerContext* context, ::prpc::QueryItemInfoReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::QueryItemInfoRes>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(15, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(16, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -807,7 +851,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_RefreshSubtitle() {
-      ::grpc::Service::MarkMethodAsync(16);
+      ::grpc::Service::MarkMethodAsync(17);
     }
     ~WithAsyncMethod_RefreshSubtitle() override {
       BaseClassMustBeDerivedFromService(this);
@@ -818,10 +862,10 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestRefreshSubtitle(::grpc::ServerContext* context, ::prpc::RefreshSubtitleReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::RefreshSubtitleRes>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(16, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(17, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_Register<WithAsyncMethod_IsUsedEmail<WithAsyncMethod_Login<WithAsyncMethod_FastLogin<WithAsyncMethod_IsLogined<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_OnStatus<WithAsyncMethod_QueryBtVideos<WithAsyncMethod_NewCategoryItem<WithAsyncMethod_DelCategoryItem<WithAsyncMethod_AddBtVideos<WithAsyncMethod_ShareItem<WithAsyncMethod_QuerySharedItems<WithAsyncMethod_QuerySubItems<WithAsyncMethod_QueryItemInfo<WithAsyncMethod_RefreshSubtitle<Service > > > > > > > > > > > > > > > > > AsyncService;
+  typedef WithAsyncMethod_Register<WithAsyncMethod_IsUsedEmail<WithAsyncMethod_Login<WithAsyncMethod_FastLogin<WithAsyncMethod_IsLogined<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_OnStatus<WithAsyncMethod_QueryBtVideos<WithAsyncMethod_NewCategoryItem<WithAsyncMethod_DelCategoryItem<WithAsyncMethod_AddBtVideos<WithAsyncMethod_ShareItem<WithAsyncMethod_QuerySharedItems<WithAsyncMethod_DelSharedItem<WithAsyncMethod_QuerySubItems<WithAsyncMethod_QueryItemInfo<WithAsyncMethod_RefreshSubtitle<Service > > > > > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_Register : public BaseClass {
    private:
@@ -1196,18 +1240,45 @@ class UserService final {
       ::grpc::CallbackServerContext* /*context*/, const ::prpc::QuerySharedItemsReq* /*request*/, ::prpc::QuerySharedItemsRes* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithCallbackMethod_DelSharedItem : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_DelSharedItem() {
+      ::grpc::Service::MarkMethodCallback(14,
+          new ::grpc::internal::CallbackUnaryHandler< ::prpc::DelSharedItemReq, ::prpc::DelSharedItemRes>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::prpc::DelSharedItemReq* request, ::prpc::DelSharedItemRes* response) { return this->DelSharedItem(context, request, response); }));}
+    void SetMessageAllocatorFor_DelSharedItem(
+        ::grpc::MessageAllocator< ::prpc::DelSharedItemReq, ::prpc::DelSharedItemRes>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(14);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::DelSharedItemReq, ::prpc::DelSharedItemRes>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_DelSharedItem() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DelSharedItem(::grpc::ServerContext* /*context*/, const ::prpc::DelSharedItemReq* /*request*/, ::prpc::DelSharedItemRes* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* DelSharedItem(
+      ::grpc::CallbackServerContext* /*context*/, const ::prpc::DelSharedItemReq* /*request*/, ::prpc::DelSharedItemRes* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithCallbackMethod_QuerySubItems : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_QuerySubItems() {
-      ::grpc::Service::MarkMethodCallback(14,
+      ::grpc::Service::MarkMethodCallback(15,
           new ::grpc::internal::CallbackUnaryHandler< ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response) { return this->QuerySubItems(context, request, response); }));}
     void SetMessageAllocatorFor_QuerySubItems(
         ::grpc::MessageAllocator< ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(14);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(15);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -1228,13 +1299,13 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_QueryItemInfo() {
-      ::grpc::Service::MarkMethodCallback(15,
+      ::grpc::Service::MarkMethodCallback(16,
           new ::grpc::internal::CallbackUnaryHandler< ::prpc::QueryItemInfoReq, ::prpc::QueryItemInfoRes>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response) { return this->QueryItemInfo(context, request, response); }));}
     void SetMessageAllocatorFor_QueryItemInfo(
         ::grpc::MessageAllocator< ::prpc::QueryItemInfoReq, ::prpc::QueryItemInfoRes>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(15);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(16);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::QueryItemInfoReq, ::prpc::QueryItemInfoRes>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -1255,13 +1326,13 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_RefreshSubtitle() {
-      ::grpc::Service::MarkMethodCallback(16,
+      ::grpc::Service::MarkMethodCallback(17,
           new ::grpc::internal::CallbackUnaryHandler< ::prpc::RefreshSubtitleReq, ::prpc::RefreshSubtitleRes>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::prpc::RefreshSubtitleReq* request, ::prpc::RefreshSubtitleRes* response) { return this->RefreshSubtitle(context, request, response); }));}
     void SetMessageAllocatorFor_RefreshSubtitle(
         ::grpc::MessageAllocator< ::prpc::RefreshSubtitleReq, ::prpc::RefreshSubtitleRes>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(16);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(17);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::RefreshSubtitleReq, ::prpc::RefreshSubtitleRes>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -1276,7 +1347,7 @@ class UserService final {
     virtual ::grpc::ServerUnaryReactor* RefreshSubtitle(
       ::grpc::CallbackServerContext* /*context*/, const ::prpc::RefreshSubtitleReq* /*request*/, ::prpc::RefreshSubtitleRes* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_Register<WithCallbackMethod_IsUsedEmail<WithCallbackMethod_Login<WithCallbackMethod_FastLogin<WithCallbackMethod_IsLogined<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_OnStatus<WithCallbackMethod_QueryBtVideos<WithCallbackMethod_NewCategoryItem<WithCallbackMethod_DelCategoryItem<WithCallbackMethod_AddBtVideos<WithCallbackMethod_ShareItem<WithCallbackMethod_QuerySharedItems<WithCallbackMethod_QuerySubItems<WithCallbackMethod_QueryItemInfo<WithCallbackMethod_RefreshSubtitle<Service > > > > > > > > > > > > > > > > > CallbackService;
+  typedef WithCallbackMethod_Register<WithCallbackMethod_IsUsedEmail<WithCallbackMethod_Login<WithCallbackMethod_FastLogin<WithCallbackMethod_IsLogined<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_OnStatus<WithCallbackMethod_QueryBtVideos<WithCallbackMethod_NewCategoryItem<WithCallbackMethod_DelCategoryItem<WithCallbackMethod_AddBtVideos<WithCallbackMethod_ShareItem<WithCallbackMethod_QuerySharedItems<WithCallbackMethod_DelSharedItem<WithCallbackMethod_QuerySubItems<WithCallbackMethod_QueryItemInfo<WithCallbackMethod_RefreshSubtitle<Service > > > > > > > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_Register : public BaseClass {
@@ -1517,12 +1588,29 @@ class UserService final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_DelSharedItem : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_DelSharedItem() {
+      ::grpc::Service::MarkMethodGeneric(14);
+    }
+    ~WithGenericMethod_DelSharedItem() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DelSharedItem(::grpc::ServerContext* /*context*/, const ::prpc::DelSharedItemReq* /*request*/, ::prpc::DelSharedItemRes* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_QuerySubItems : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_QuerySubItems() {
-      ::grpc::Service::MarkMethodGeneric(14);
+      ::grpc::Service::MarkMethodGeneric(15);
     }
     ~WithGenericMethod_QuerySubItems() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1539,7 +1627,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_QueryItemInfo() {
-      ::grpc::Service::MarkMethodGeneric(15);
+      ::grpc::Service::MarkMethodGeneric(16);
     }
     ~WithGenericMethod_QueryItemInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1556,7 +1644,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_RefreshSubtitle() {
-      ::grpc::Service::MarkMethodGeneric(16);
+      ::grpc::Service::MarkMethodGeneric(17);
     }
     ~WithGenericMethod_RefreshSubtitle() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1848,12 +1936,32 @@ class UserService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_DelSharedItem : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_DelSharedItem() {
+      ::grpc::Service::MarkMethodRaw(14);
+    }
+    ~WithRawMethod_DelSharedItem() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DelSharedItem(::grpc::ServerContext* /*context*/, const ::prpc::DelSharedItemReq* /*request*/, ::prpc::DelSharedItemRes* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestDelSharedItem(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(14, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_QuerySubItems : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_QuerySubItems() {
-      ::grpc::Service::MarkMethodRaw(14);
+      ::grpc::Service::MarkMethodRaw(15);
     }
     ~WithRawMethod_QuerySubItems() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1864,7 +1972,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestQuerySubItems(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(14, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(15, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1873,7 +1981,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_QueryItemInfo() {
-      ::grpc::Service::MarkMethodRaw(15);
+      ::grpc::Service::MarkMethodRaw(16);
     }
     ~WithRawMethod_QueryItemInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1884,7 +1992,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestQueryItemInfo(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(15, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(16, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1893,7 +2001,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_RefreshSubtitle() {
-      ::grpc::Service::MarkMethodRaw(16);
+      ::grpc::Service::MarkMethodRaw(17);
     }
     ~WithRawMethod_RefreshSubtitle() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1904,7 +2012,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestRefreshSubtitle(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(16, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(17, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -2216,12 +2324,34 @@ class UserService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_DelSharedItem : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_DelSharedItem() {
+      ::grpc::Service::MarkMethodRawCallback(14,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->DelSharedItem(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_DelSharedItem() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DelSharedItem(::grpc::ServerContext* /*context*/, const ::prpc::DelSharedItemReq* /*request*/, ::prpc::DelSharedItemRes* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* DelSharedItem(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_QuerySubItems : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_QuerySubItems() {
-      ::grpc::Service::MarkMethodRawCallback(14,
+      ::grpc::Service::MarkMethodRawCallback(15,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->QuerySubItems(context, request, response); }));
@@ -2243,7 +2373,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_QueryItemInfo() {
-      ::grpc::Service::MarkMethodRawCallback(15,
+      ::grpc::Service::MarkMethodRawCallback(16,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->QueryItemInfo(context, request, response); }));
@@ -2265,7 +2395,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_RefreshSubtitle() {
-      ::grpc::Service::MarkMethodRawCallback(16,
+      ::grpc::Service::MarkMethodRawCallback(17,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RefreshSubtitle(context, request, response); }));
@@ -2633,12 +2763,39 @@ class UserService final {
     virtual ::grpc::Status StreamedQuerySharedItems(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::QuerySharedItemsReq,::prpc::QuerySharedItemsRes>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
+  class WithStreamedUnaryMethod_DelSharedItem : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_DelSharedItem() {
+      ::grpc::Service::MarkMethodStreamed(14,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::prpc::DelSharedItemReq, ::prpc::DelSharedItemRes>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::prpc::DelSharedItemReq, ::prpc::DelSharedItemRes>* streamer) {
+                       return this->StreamedDelSharedItem(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_DelSharedItem() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status DelSharedItem(::grpc::ServerContext* /*context*/, const ::prpc::DelSharedItemReq* /*request*/, ::prpc::DelSharedItemRes* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedDelSharedItem(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::DelSharedItemReq,::prpc::DelSharedItemRes>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_QuerySubItems : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_QuerySubItems() {
-      ::grpc::Service::MarkMethodStreamed(14,
+      ::grpc::Service::MarkMethodStreamed(15,
         new ::grpc::internal::StreamedUnaryHandler<
           ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes>(
             [this](::grpc::ServerContext* context,
@@ -2665,7 +2822,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_QueryItemInfo() {
-      ::grpc::Service::MarkMethodStreamed(15,
+      ::grpc::Service::MarkMethodStreamed(16,
         new ::grpc::internal::StreamedUnaryHandler<
           ::prpc::QueryItemInfoReq, ::prpc::QueryItemInfoRes>(
             [this](::grpc::ServerContext* context,
@@ -2692,7 +2849,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_RefreshSubtitle() {
-      ::grpc::Service::MarkMethodStreamed(16,
+      ::grpc::Service::MarkMethodStreamed(17,
         new ::grpc::internal::StreamedUnaryHandler<
           ::prpc::RefreshSubtitleReq, ::prpc::RefreshSubtitleRes>(
             [this](::grpc::ServerContext* context,
@@ -2713,7 +2870,7 @@ class UserService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedRefreshSubtitle(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::RefreshSubtitleReq,::prpc::RefreshSubtitleRes>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_RefreshSubtitle<Service > > > > > > > > > > > > > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_RefreshSubtitle<Service > > > > > > > > > > > > > > > > > StreamedUnaryService;
   template <class BaseClass>
   class WithSplitStreamingMethod_OnStatus : public BaseClass {
    private:
@@ -2742,7 +2899,7 @@ class UserService final {
     virtual ::grpc::Status StreamedOnStatus(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::prpc::StatusRequest,::prpc::StatusRespone>* server_split_streamer) = 0;
   };
   typedef WithSplitStreamingMethod_OnStatus<Service > SplitStreamedService;
-  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithSplitStreamingMethod_OnStatus<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_RefreshSubtitle<Service > > > > > > > > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithSplitStreamingMethod_OnStatus<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_RefreshSubtitle<Service > > > > > > > > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace prpc

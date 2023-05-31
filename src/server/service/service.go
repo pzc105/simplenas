@@ -705,6 +705,25 @@ func (ser *CoreService) GetShareItemInfo(shareid string) (*ShareInfo, error) {
 	return ser.shares.GetShareItemInfo(shareid)
 }
 
+func (ser *CoreService) DelSharedItem(ctx context.Context, req *prpc.DelSharedItemReq) (*prpc.DelSharedItemRes, error) {
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "not found session")
+	}
+	sit, err := ser.shares.GetShareItemInfo(req.ShareId)
+	if err != nil {
+		return nil, status.Error(codes.InvalidArgument, "not found shared item")
+	}
+	if sit.UserId != ses.UserId {
+		return nil, status.Error(codes.PermissionDenied, "")
+	}
+	err = ser.shares.DelShare(req.ShareId)
+	if err != nil {
+		return nil, err
+	}
+	return &prpc.DelSharedItemRes{}, nil
+}
+
 func (ser *CoreService) RefreshSubtitle(ctx context.Context, req *prpc.RefreshSubtitleReq) (*prpc.RefreshSubtitleRes, error) {
 	ses := ser.getSession(ctx)
 	if ses == nil {
