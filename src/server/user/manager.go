@@ -17,16 +17,14 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/pkg/errors"
 )
 
 type UserManger struct {
+	UserTorrents
 	mtx          sync.Mutex
 	users        map[ID]*User
-	torrents     map[bt.InfoHash]*bt.Torrent
-	dlUser       map[bt.InfoHash]map[ID]bool
 	genHslRecord map[video.ID]bool
 	categoryMgr  category.Manager
 
@@ -36,12 +34,13 @@ type UserManger struct {
 }
 
 func (um *UserManger) Init() {
+	ut := &UserTorrentsImpl{}
+	ut.Init()
+	um.UserTorrents = ut
 	um.mtx.Lock()
 	defer um.mtx.Unlock()
 
 	um.users = make(map[ID]*User)
-	um.torrents = make(map[bt.InfoHash]*bt.Torrent)
-	um.dlUser = make(map[bt.InfoHash]map[ID]bool)
 	um.genHslRecord = make(map[video.ID]bool)
 
 	um.categoryMgr.Init()
@@ -55,47 +54,6 @@ func (um *UserManger) Close() {
 	um.cudaQueue.Close()
 	um.qsvQueue.Close()
 	um.soQueue.Close()
-}
-
-func (um *UserManger) LoadTorrent(infoHash bt.InfoHash) ([]byte, error) {
-	sql := `select resume_data from torrent where info_hash=? and version=?`
-	var resumeData []byte
-	err := db.QueryRow(sql, infoHash.Hash, infoHash.Version).Scan(&resumeData)
-	return resumeData, err
-}
-
-func (um *UserManger) LoadDownloadingTorrent() [][]byte {
-	sql := `select resume_data from user_torrent u 
-					left join torrent t on u.torrent_id = t.id`
-
-	rows, err := db.Query(sql)
-	if err != nil {
-		log.Warnf("[bt] failed to load downloading torrent err: %v", err)
-		return [][]byte{}
-	}
-	defer rows.Close()
-
-	var resumData [][]byte
-	for rows.Next() {
-		var resume []byte
-		err = rows.Scan(&resume)
-		if err != nil {
-			log.Warnf("[bt] failed to load downloading torrent err: %v", err)
-			continue
-		}
-		resumData = append(resumData, resume)
-	}
-	return resumData
-}
-
-func (um *UserManger) GetAllTorrents() []*bt.Torrent {
-	um.mtx.Lock()
-	defer um.mtx.Unlock()
-	var ret []*bt.Torrent
-	for _, v := range um.torrents {
-		ret = append(ret, v)
-	}
-	return ret
 }
 
 func (um *UserManger) Login(email string, passwd string) (*User, error) {
@@ -144,14 +102,8 @@ func (um *UserManger) LoadUser(userId ID) (*User, error) {
 		hashs = append(hashs, infoHash)
 	}
 
-	um.mtx.Lock()
-	defer um.mtx.Unlock()
 	for _, infoHash := range hashs {
-		_, ok := um.dlUser[infoHash]
-		if !ok {
-			um.dlUser[infoHash] = make(map[ID]bool)
-		}
-		um.dlUser[infoHash][userId] = true
+		um.AddUserTorrent(userId, infoHash)
 	}
 	return user, nil
 }
@@ -183,161 +135,6 @@ func (um *UserManger) ChangeUserName(id ID, name string) error {
 	return u.ChangeUserName(name)
 }
 
-func updateBtFileType(st *bt.Torrent, fileIndex int, absFileName string) {
-	if video.IsVideo(absFileName) {
-		st.UpdateFileType(fileIndex, bt.FileVideoType)
-		meta, _ := video.GetMetadata(absFileName)
-		st.UpdateVideoFileMeta(fileIndex, meta)
-	}
-	if video.IsSubTitle(absFileName) {
-		st.UpdateFileType(fileIndex, bt.FileSubtitleType)
-	}
-	if video.IsAudio(absFileName) {
-		st.UpdateFileType(fileIndex, bt.FileAudioType)
-	}
-}
-
-func (um *UserManger) UpdateTorrent(base *bt.TorrentBase, state prpc.BtStateEnum, fileNames []bt.File, resumeData []byte) {
-	srcState := prpc.BtStateEnum_unknown
-	um.mtx.Lock()
-	st, ok := um.torrents[base.InfoHash]
-	if !ok {
-		st = bt.NewTorrent(base)
-		um.torrents[base.InfoHash] = st
-	}
-	um.mtx.Unlock()
-	srcState = st.GetState()
-
-	lastUpdateTime := st.GetUpdateTime()
-
-	if srcState == prpc.BtStateEnum_seeding && time.Since(lastUpdateTime) < time.Hour*1 {
-		return
-	}
-
-	st.Update(base, &state, fileNames, resumeData)
-
-	baseInfo := st.GetBaseInfo()
-	sql := "update torrent set name=?, state=?, total_size=?, piece_length=?, num_pieces=?, resume_data=? where info_hash=? and version=?"
-	_, err := db.Exec(sql, baseInfo.Name, state,
-		baseInfo.TotalSize, baseInfo.PieceLength, baseInfo.NumPieces,
-		st.GetResumeData(), baseInfo.InfoHash.Hash, baseInfo.InfoHash.Version)
-	if err != nil {
-		log.Warnf("[bt] failed to update torrent %s err: %v", hex.EncodeToString([]byte(base.InfoHash.Hash)), err)
-	}
-
-	if state != prpc.BtStateEnum_seeding {
-		return
-	}
-
-	_, err = um.LoadUser(AdminId)
-	if err != nil {
-		log.Warnf("[user] %d load err: %v", AdminId, err)
-		return
-	}
-	files := st.GetFiles()
-	var fileIndexes []int32
-	for i := range files {
-		fileName := files[i].Name
-
-		if files[i].FileType == bt.FileUnknownType {
-			absFileName := setting.GS.Bt.SavePath + "/" + fileName
-			updateBtFileType(st, i, absFileName)
-		}
-
-		v, err := video.GetVideoByFileName(fileName)
-		if err == nil && v.HlsCreated {
-			continue
-		}
-
-		if ft, _ := st.GetFileType(i); (ft | bt.FileVideoType) != 0 {
-			fileIndexes = append(fileIndexes, int32(i))
-		}
-	}
-	if len(fileIndexes) == 0 {
-		return
-	}
-}
-
-type FileCompleted struct {
-	InfoHash  bt.InfoHash
-	FileIndex int32
-}
-
-func (um *UserManger) BtFileStateComplete(fs *FileCompleted) {
-	um.mtx.Lock()
-	t, ok := um.torrents[fs.InfoHash]
-	um.mtx.Unlock()
-	if !ok {
-		return
-	}
-	tfs, err := t.GetFileState(int(fs.FileIndex))
-	if err != nil {
-		log.Warnf("[bt] failed to update torrent %s fileindex %d state err: %v", hex.EncodeToString([]byte(fs.InfoHash.Hash)), fs.FileIndex, err)
-		return
-	}
-	if tfs == prpc.BtFile_completed {
-		return
-	}
-
-	t.UpdateFileState(int(fs.FileIndex), prpc.BtFile_completed)
-
-	baseInfo := t.GetBaseInfo()
-	files := t.GetFiles()
-
-	log.Infof("[bt] torrent: %s file: %s completed", baseInfo.Name, files[fs.FileIndex].Name)
-
-	fileName := files[fs.FileIndex].Name
-	absFileName := baseInfo.SavePath + "/" + fileName
-	updateBtFileType(t, int(fs.FileIndex), absFileName)
-}
-
-func (um *UserManger) AddTorrent(userId ID, t *bt.TorrentBase) error {
-	um.mtx.Lock()
-	_, ok := um.torrents[t.InfoHash]
-	if !ok {
-		um.torrents[t.InfoHash] = bt.NewTorrent(t)
-	}
-	_, ok = um.dlUser[t.InfoHash]
-	if !ok {
-		um.dlUser[t.InfoHash] = make(map[ID]bool)
-	}
-	_, ok = um.dlUser[t.InfoHash][userId]
-	if ok {
-		um.mtx.Unlock()
-		return errors.New("repeat download")
-	}
-	um.mtx.Unlock()
-
-	_, err := db.Query("call new_torrent(?, ?, ?, @torrent_id);", t.InfoHash.Version, t.InfoHash.Hash, userId)
-	if err != nil {
-		log.Warnf("[user] %d failed to add torrent %s err: %v", userId, hex.EncodeToString([]byte(t.InfoHash.Hash)), err)
-		return err
-	}
-
-	um.mtx.Lock()
-	um.dlUser[t.InfoHash][userId] = true
-	um.mtx.Unlock()
-	return nil
-}
-
-func (um *UserManger) hasTorrent(userId ID, infoHash bt.InfoHash) bool {
-	um.mtx.Lock()
-	defer um.mtx.Unlock()
-	i, ok := um.dlUser[infoHash]
-	if !ok {
-		return false
-	}
-	_, ok = i[userId]
-	return ok
-}
-
-func (um *UserManger) HasTorrent(userId ID, infoHash bt.InfoHash) bool {
-	if userId == AdminId {
-		return true
-	}
-	return um.hasTorrent(userId, infoHash)
-}
-
 func (um *UserManger) HasVideo(userId ID, vid video.ID) bool {
 	if userId == AdminId {
 		return true
@@ -352,89 +149,14 @@ func (um *UserManger) HasVideo(userId ID, vid video.ID) bool {
 	return c > 0
 }
 
-func (um *UserManger) RemoveUserTorrent(userId ID, infoHash bt.InfoHash) error {
-	if !um.hasTorrent(userId, infoHash) {
-		return errors.New("not found")
-	}
-	sql := "select id from torrent where info_hash=? and version=?"
-	rows, err := db.Query(sql, infoHash.Hash, infoHash.Version)
-	if err != nil {
-		return err
-	}
-	defer rows.Close()
-	for rows.Next() {
-		var tid int64
-		err := rows.Scan(&tid)
-		if err != nil {
-			return err
-		}
-		sql := "delete from user_torrent where user_id=? and torrent_id=?"
-		_, err = db.Exec(sql, userId, tid)
-		if err != nil {
-			return err
-		}
-	}
-	um.mtx.Lock()
-	delete(um.dlUser[infoHash], userId)
-	um.mtx.Unlock()
-	return nil
-}
-
-func (um *UserManger) RemoveTorrent(userId ID, infoHash bt.InfoHash) error {
-	if !um.HasTorrent(userId, infoHash) {
-		return errors.New("not found")
-	}
-	var uids []string
-	um.mtx.Lock()
-	us, ok := um.dlUser[infoHash]
-	if ok {
-		for u, k := range us {
-			if k {
-				uids = append(uids, fmt.Sprintf("user_id=%d", u))
-			}
-		}
-	}
-	um.mtx.Unlock()
-	if len(uids) == 0 {
-		return nil
-	}
-
-	sql := "select id from torrent where info_hash=? and version=?"
-	rows, err := db.Query(sql, infoHash.Hash, infoHash.Version)
-	if err != nil {
-		return err
-	}
-	defer rows.Close()
-	userIdsCond := strings.Join(uids, " or ")
-	sql = fmt.Sprintf("delete from user_torrent where %s and torrent_id=?", userIdsCond)
-	for rows.Next() {
-		var tid int64
-		err := rows.Scan(&tid)
-		if err != nil {
-			return err
-		}
-		_, err = db.Exec(sql, tid)
-		if err != nil {
-			return err
-		}
-	}
-	um.mtx.Lock()
-	delete(um.dlUser, infoHash)
-	um.mtx.Unlock()
-	return nil
-}
-
 func (um *UserManger) QueryBtVideoMetadata(userId ID, infoHash bt.InfoHash) (map[int]*video.Metadata, error) {
 	if !um.HasTorrent(userId, infoHash) {
 		return nil, errors.New("not found bt")
 	}
-	um.mtx.Lock()
-	t, ok := um.torrents[infoHash]
-	if !ok {
-		um.mtx.Unlock()
-		return nil, errors.New("not found bt")
+	t, err := um.GetTorrent(infoHash)
+	if err != nil {
+		return nil, err
 	}
-	um.mtx.Unlock()
 
 	files := t.GetFiles()
 	ret := make(map[int]*video.Metadata)
@@ -527,9 +249,10 @@ type AddBtVideosParams struct {
 }
 
 func (um *UserManger) findSubtitle(infoHash bt.InfoHash, videoFileIndex int32) int32 {
-	um.mtx.Lock()
-	t := um.torrents[infoHash]
-	um.mtx.Unlock()
+	t, err := um.GetTorrent(infoHash)
+	if err != nil {
+		return -1
+	}
 
 	files := t.GetFiles()
 	videoFileName := utils.GetFileName(files[videoFileIndex].Name)
@@ -548,9 +271,10 @@ func (um *UserManger) findSubtitle(infoHash bt.InfoHash, videoFileIndex int32) i
 }
 
 func (um *UserManger) findAudioTrack(infoHash bt.InfoHash, videoFileIndex int32) []string {
-	um.mtx.Lock()
-	t := um.torrents[infoHash]
-	um.mtx.Unlock()
+	t, err := um.GetTorrent(infoHash)
+	if err != nil {
+		return []string{}
+	}
 
 	baseInfo := t.GetBaseInfo()
 	files := t.GetFiles()
@@ -586,13 +310,11 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 		return errors.New("permission denied")
 	}
 
-	um.mtx.Lock()
-	t, ok := um.torrents[params.InfoHash]
-	um.mtx.Unlock()
-
-	if !ok {
-		return errors.New("internal error")
+	t, err := um.GetTorrent(params.InfoHash)
+	if err != nil {
+		return err
 	}
+
 	baseInfo := t.GetBaseInfo()
 	files := t.GetFiles()
 	for _, i := range params.FileIndexes {

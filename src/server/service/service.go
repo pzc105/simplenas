@@ -155,7 +155,7 @@ func (ser *CoreService) GetSession(r *http.Request) *session.Session {
 
 func (ser *CoreService) handleBtClientConnected() {
 	log.Info("connected to bt service")
-	resumeData := ser.um.LoadDownloadingTorrent()
+	resumeData := user.LoadDownloadingTorrent()
 	for _, resume := range resumeData {
 		var req prpc.DownloadRequest
 		req.Type = prpc.DownloadRequest_Resume
@@ -174,7 +174,12 @@ func (ser *CoreService) handleTorrentInfo(tis *prpc.TorrentInfoRes) {
 	copier.Copy(&b, ti)
 	var files []bt.File
 	copier.Copy(&files, ti.Files)
-	go ser.um.UpdateTorrent(&b, ti.GetState(), files, ti.GetResumeData())
+	go ser.um.UpdateTorrent(&user.UpdateTorrentParams{
+		Base:       &b,
+		State:      ti.GetState(),
+		FileNames:  files,
+		ResumeData: ti.GetResumeData(),
+	})
 }
 
 func (ser *CoreService) handleBtStatus(sr *prpc.StatusRespone) {
@@ -398,7 +403,7 @@ func (ser *CoreService) Download(
 	if err != nil {
 		return nil, err
 	}
-	resumeData, err := ser.um.LoadTorrent(TranInfoHash(res.InfoHash))
+	resumeData, err := user.LoadTorrent(TranInfoHash(res.InfoHash))
 	if err == nil {
 		req.Type = prpc.DownloadRequest_Resume
 		req.Content = resumeData
