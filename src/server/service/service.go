@@ -781,7 +781,7 @@ func (ser *CoreService) JoinChatRoom(req *prpc.JoinChatRoomReq, stream prpc.User
 	case <-stream.Context().Done():
 	case <-room.Context().Done():
 	}
-
+	room.Leave(ses.Id)
 	return nil
 }
 func (ser *CoreService) SendMsg2ChatRoom(ctx context.Context, req *prpc.SendMsg2ChatRoomReq) (*prpc.SendMsg2ChatRoomRes, error) {

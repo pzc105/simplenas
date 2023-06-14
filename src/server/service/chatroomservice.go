@@ -42,6 +42,20 @@ func (cs *ChatRoomService) Join(itemId category.ID, sessionId int64, sendFunc ch
 	r.Join(sessionId, sendFunc)
 }
 
+func (cs *ChatRoomService) Leave(itemId category.ID, sessionId int64) {
+	cs.mtx.Lock()
+	var r chat.ChatRoom
+	rid, ok := cs.cid2rid[itemId]
+	if ok {
+		r = cs.rs[rid]
+	} else {
+		cs.mtx.Unlock()
+		return
+	}
+	cs.mtx.Unlock()
+	r.Leave(sessionId)
+}
+
 func (cs *ChatRoomService) Broadcast(itemId category.ID, msg *chat.ChatMessage) {
 	cs.mtx.Lock()
 	var r chat.ChatRoom
