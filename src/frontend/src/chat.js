@@ -42,7 +42,6 @@ export default function ChatPanel({ itemId }) {
     setMessages([])
     stream.on('data', function (res) {
       const chatMsg = res.getChatMsg()
-      console.log(chatMsg)
       msgsRef.current.push(chatMsg)
       setMessages([...msgsRef.current])
     })
@@ -64,7 +63,7 @@ export default function ChatPanel({ itemId }) {
 
   return (
     <Container>
-      <Paper style={{ maxHeight: '50vh', overflow: 'auto' }} ref={chatAreaRef}>
+      <Paper style={{ maxHeight: '50vh', width: '30vw', overflow: 'auto' }} ref={chatAreaRef}>
         <List>
           {messages.map((message, i) => (
             <ListItem key={i}>
@@ -72,7 +71,12 @@ export default function ChatPanel({ itemId }) {
                 <Typography variant="subtitle2" color="textSecondary">
                   {message.getUserName()} - {new Date(message.getSentTime()).toLocaleString()}
                 </Typography>
-                <Typography variant="body1">{message.getMsg()}</Typography>
+                <Typography
+                  variant="body2"
+                  style={{ wordWrap: 'break-word', wordBreak: 'break-all' }}
+                >
+                  {message.getMsg()}
+                </Typography>
               </Box>
             </ListItem>
           ))}

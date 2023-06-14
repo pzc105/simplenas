@@ -234,7 +234,7 @@ export default function SignUp(props) {
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/signin" variant="body2">
-                Already have an account? Sign in
+                已经有账号? 点我登录
               </Link>
             </Grid>
           </Grid>

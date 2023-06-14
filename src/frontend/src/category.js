@@ -146,7 +146,6 @@ const CategoryItems = ({ parentId, shareid }) => {
 
 const CategoryItemCreator = ({ parentId, refreshParent }) => {
   const dispatch = useDispatch()
-  const shownChatPanel = useSelector((state) => store.selectShownChatPanel(state))
   const [itemName, setItemName] = useState('')
   function handleChange(e) {
     setItemName(e.target.value)
@@ -196,9 +195,15 @@ const CategoryItemCreator = ({ parentId, refreshParent }) => {
         </Grid>
       </Grid>
     </Container>
-    <Button onClick={() => { dispatch(store.userSlice.actions.setShowChatPanel(true)) }}>
-      open chat
-    </Button>
+    <Container sx={{ mt: '1em' }} >
+      <Button
+        fullWidth
+        color="primary"
+        variant="contained"
+        onClick={() => { dispatch(store.userSlice.actions.setShowChatPanel(true)) }}>
+        聊天室
+      </Button>
+    </Container>
   </Container>
   )
 }
@@ -261,12 +266,12 @@ export default function CategoryItemPage() {
   useEffect(() => {
     setOpenPopper(Boolean(anchorElRef.current !== null && shownChatPanel))
   }, [anchorElRef, shownChatPanel])
-  
+
   return (
     <CategoryContainer>
       <CssBaseline />
       {
-        shareid ? null : <SideUtils
+        <SideUtils
           name="管理"
           child={CategoryItemCreator({ parentId: itemId, refreshParent: () => { refreshSubItems() } })}
         />
