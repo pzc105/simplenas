@@ -32,7 +32,7 @@ export default function App() {
         <CheckLoginHandler />
         <Routes>
           <Route path="/" element={<Download />} />
-          <Route path="/test" element={<test.MultiSelectList />} />
+          <Route path="/test" element={<test.Test />} />
           <Route path="/user" element={<UserInfoPage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />

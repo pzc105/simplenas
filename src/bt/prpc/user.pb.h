@@ -65,6 +65,9 @@ extern AddBtVideosResDefaultTypeInternal _AddBtVideosRes_default_instance_;
 class BtFileMetadata;
 struct BtFileMetadataDefaultTypeInternal;
 extern BtFileMetadataDefaultTypeInternal _BtFileMetadata_default_instance_;
+class ChatMessage;
+struct ChatMessageDefaultTypeInternal;
+extern ChatMessageDefaultTypeInternal _ChatMessage_default_instance_;
 class DelCategoryItemReq;
 struct DelCategoryItemReqDefaultTypeInternal;
 extern DelCategoryItemReqDefaultTypeInternal _DelCategoryItemReq_default_instance_;
@@ -83,6 +86,12 @@ extern EmailInfoDefaultTypeInternal _EmailInfo_default_instance_;
 class IsUsedEmailRet;
 struct IsUsedEmailRetDefaultTypeInternal;
 extern IsUsedEmailRetDefaultTypeInternal _IsUsedEmailRet_default_instance_;
+class JoinChatRoomReq;
+struct JoinChatRoomReqDefaultTypeInternal;
+extern JoinChatRoomReqDefaultTypeInternal _JoinChatRoomReq_default_instance_;
+class JoinChatRoomRes;
+struct JoinChatRoomResDefaultTypeInternal;
+extern JoinChatRoomResDefaultTypeInternal _JoinChatRoomRes_default_instance_;
 class LoginInfo;
 struct LoginInfoDefaultTypeInternal;
 extern LoginInfoDefaultTypeInternal _LoginInfo_default_instance_;
@@ -131,6 +140,12 @@ extern RegisterInfoDefaultTypeInternal _RegisterInfo_default_instance_;
 class RegisterRet;
 struct RegisterRetDefaultTypeInternal;
 extern RegisterRetDefaultTypeInternal _RegisterRet_default_instance_;
+class SendMsg2ChatRoomReq;
+struct SendMsg2ChatRoomReqDefaultTypeInternal;
+extern SendMsg2ChatRoomReqDefaultTypeInternal _SendMsg2ChatRoomReq_default_instance_;
+class SendMsg2ChatRoomRes;
+struct SendMsg2ChatRoomResDefaultTypeInternal;
+extern SendMsg2ChatRoomResDefaultTypeInternal _SendMsg2ChatRoomRes_default_instance_;
 class ShareItemReq;
 struct ShareItemReqDefaultTypeInternal;
 extern ShareItemReqDefaultTypeInternal _ShareItemReq_default_instance_;
@@ -149,6 +164,8 @@ template <>
 template <>
 ::prpc::BtFileMetadata* Arena::CreateMaybeMessage<::prpc::BtFileMetadata>(Arena*);
 template <>
+::prpc::ChatMessage* Arena::CreateMaybeMessage<::prpc::ChatMessage>(Arena*);
+template <>
 ::prpc::DelCategoryItemReq* Arena::CreateMaybeMessage<::prpc::DelCategoryItemReq>(Arena*);
 template <>
 ::prpc::DelCategoryItemRes* Arena::CreateMaybeMessage<::prpc::DelCategoryItemRes>(Arena*);
@@ -160,6 +177,10 @@ template <>
 ::prpc::EmailInfo* Arena::CreateMaybeMessage<::prpc::EmailInfo>(Arena*);
 template <>
 ::prpc::IsUsedEmailRet* Arena::CreateMaybeMessage<::prpc::IsUsedEmailRet>(Arena*);
+template <>
+::prpc::JoinChatRoomReq* Arena::CreateMaybeMessage<::prpc::JoinChatRoomReq>(Arena*);
+template <>
+::prpc::JoinChatRoomRes* Arena::CreateMaybeMessage<::prpc::JoinChatRoomRes>(Arena*);
 template <>
 ::prpc::LoginInfo* Arena::CreateMaybeMessage<::prpc::LoginInfo>(Arena*);
 template <>
@@ -192,6 +213,10 @@ template <>
 ::prpc::RegisterInfo* Arena::CreateMaybeMessage<::prpc::RegisterInfo>(Arena*);
 template <>
 ::prpc::RegisterRet* Arena::CreateMaybeMessage<::prpc::RegisterRet>(Arena*);
+template <>
+::prpc::SendMsg2ChatRoomReq* Arena::CreateMaybeMessage<::prpc::SendMsg2ChatRoomReq>(Arena*);
+template <>
+::prpc::SendMsg2ChatRoomRes* Arena::CreateMaybeMessage<::prpc::SendMsg2ChatRoomRes>(Arena*);
 template <>
 ::prpc::ShareItemReq* Arena::CreateMaybeMessage<::prpc::ShareItemReq>(Arena*);
 template <>
@@ -4583,6 +4608,784 @@ class RefreshSubtitleRes final :
   struct Impl_ {
   };
   friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class JoinChatRoomReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.JoinChatRoomReq) */ {
+ public:
+  inline JoinChatRoomReq() : JoinChatRoomReq(nullptr) {}
+  ~JoinChatRoomReq() override;
+  explicit PROTOBUF_CONSTEXPR JoinChatRoomReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  JoinChatRoomReq(const JoinChatRoomReq& from);
+  JoinChatRoomReq(JoinChatRoomReq&& from) noexcept
+    : JoinChatRoomReq() {
+    *this = ::std::move(from);
+  }
+
+  inline JoinChatRoomReq& operator=(const JoinChatRoomReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline JoinChatRoomReq& operator=(JoinChatRoomReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const JoinChatRoomReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const JoinChatRoomReq* internal_default_instance() {
+    return reinterpret_cast<const JoinChatRoomReq*>(
+               &_JoinChatRoomReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    28;
+
+  friend void swap(JoinChatRoomReq& a, JoinChatRoomReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(JoinChatRoomReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(JoinChatRoomReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  JoinChatRoomReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<JoinChatRoomReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const JoinChatRoomReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const JoinChatRoomReq& from) {
+    JoinChatRoomReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(JoinChatRoomReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.JoinChatRoomReq";
+  }
+  protected:
+  explicit JoinChatRoomReq(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kItemIdFieldNumber = 1,
+  };
+  // int64 item_id = 1;
+  void clear_item_id() ;
+  ::int64_t item_id() const;
+  void set_item_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_item_id() const;
+  void _internal_set_item_id(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.JoinChatRoomReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::int64_t item_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class ChatMessage final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.ChatMessage) */ {
+ public:
+  inline ChatMessage() : ChatMessage(nullptr) {}
+  ~ChatMessage() override;
+  explicit PROTOBUF_CONSTEXPR ChatMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  ChatMessage(const ChatMessage& from);
+  ChatMessage(ChatMessage&& from) noexcept
+    : ChatMessage() {
+    *this = ::std::move(from);
+  }
+
+  inline ChatMessage& operator=(const ChatMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ChatMessage& operator=(ChatMessage&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ChatMessage& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ChatMessage* internal_default_instance() {
+    return reinterpret_cast<const ChatMessage*>(
+               &_ChatMessage_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    29;
+
+  friend void swap(ChatMessage& a, ChatMessage& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ChatMessage* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ChatMessage* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ChatMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ChatMessage>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const ChatMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const ChatMessage& from) {
+    ChatMessage::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ChatMessage* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.ChatMessage";
+  }
+  protected:
+  explicit ChatMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMsgFieldNumber = 3,
+    kUserIdFieldNumber = 1,
+    kSentTimeFieldNumber = 2,
+  };
+  // string msg = 3;
+  void clear_msg() ;
+  const std::string& msg() const;
+
+
+
+
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_msg(Arg_&& arg, Args_... args);
+  std::string* mutable_msg();
+  PROTOBUF_NODISCARD std::string* release_msg();
+  void set_allocated_msg(std::string* ptr);
+
+  private:
+  const std::string& _internal_msg() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg(
+      const std::string& value);
+  std::string* _internal_mutable_msg();
+
+  public:
+  // int64 user_id = 1;
+  void clear_user_id() ;
+  ::int64_t user_id() const;
+  void set_user_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_user_id() const;
+  void _internal_set_user_id(::int64_t value);
+
+  public:
+  // int64 sent_time = 2;
+  void clear_sent_time() ;
+  ::int64_t sent_time() const;
+  void set_sent_time(::int64_t value);
+
+  private:
+  ::int64_t _internal_sent_time() const;
+  void _internal_set_sent_time(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.ChatMessage)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_;
+    ::int64_t user_id_;
+    ::int64_t sent_time_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class JoinChatRoomRes final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.JoinChatRoomRes) */ {
+ public:
+  inline JoinChatRoomRes() : JoinChatRoomRes(nullptr) {}
+  ~JoinChatRoomRes() override;
+  explicit PROTOBUF_CONSTEXPR JoinChatRoomRes(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  JoinChatRoomRes(const JoinChatRoomRes& from);
+  JoinChatRoomRes(JoinChatRoomRes&& from) noexcept
+    : JoinChatRoomRes() {
+    *this = ::std::move(from);
+  }
+
+  inline JoinChatRoomRes& operator=(const JoinChatRoomRes& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline JoinChatRoomRes& operator=(JoinChatRoomRes&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const JoinChatRoomRes& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const JoinChatRoomRes* internal_default_instance() {
+    return reinterpret_cast<const JoinChatRoomRes*>(
+               &_JoinChatRoomRes_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    30;
+
+  friend void swap(JoinChatRoomRes& a, JoinChatRoomRes& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(JoinChatRoomRes* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(JoinChatRoomRes* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  JoinChatRoomRes* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<JoinChatRoomRes>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const JoinChatRoomRes& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const JoinChatRoomRes& from) {
+    JoinChatRoomRes::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(JoinChatRoomRes* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.JoinChatRoomRes";
+  }
+  protected:
+  explicit JoinChatRoomRes(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMsgFieldNumber = 2,
+    kItemIdFieldNumber = 1,
+  };
+  // .prpc.ChatMessage msg = 2;
+  bool has_msg() const;
+  private:
+  bool _internal_has_msg() const;
+
+  public:
+  void clear_msg() ;
+  const ::prpc::ChatMessage& msg() const;
+  PROTOBUF_NODISCARD ::prpc::ChatMessage* release_msg();
+  ::prpc::ChatMessage* mutable_msg();
+  void set_allocated_msg(::prpc::ChatMessage* msg);
+  private:
+  const ::prpc::ChatMessage& _internal_msg() const;
+  ::prpc::ChatMessage* _internal_mutable_msg();
+  public:
+  void unsafe_arena_set_allocated_msg(
+      ::prpc::ChatMessage* msg);
+  ::prpc::ChatMessage* unsafe_arena_release_msg();
+  // int64 item_id = 1;
+  void clear_item_id() ;
+  ::int64_t item_id() const;
+  void set_item_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_item_id() const;
+  void _internal_set_item_id(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.JoinChatRoomRes)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::prpc::ChatMessage* msg_;
+    ::int64_t item_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class SendMsg2ChatRoomReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.SendMsg2ChatRoomReq) */ {
+ public:
+  inline SendMsg2ChatRoomReq() : SendMsg2ChatRoomReq(nullptr) {}
+  ~SendMsg2ChatRoomReq() override;
+  explicit PROTOBUF_CONSTEXPR SendMsg2ChatRoomReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SendMsg2ChatRoomReq(const SendMsg2ChatRoomReq& from);
+  SendMsg2ChatRoomReq(SendMsg2ChatRoomReq&& from) noexcept
+    : SendMsg2ChatRoomReq() {
+    *this = ::std::move(from);
+  }
+
+  inline SendMsg2ChatRoomReq& operator=(const SendMsg2ChatRoomReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SendMsg2ChatRoomReq& operator=(SendMsg2ChatRoomReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SendMsg2ChatRoomReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SendMsg2ChatRoomReq* internal_default_instance() {
+    return reinterpret_cast<const SendMsg2ChatRoomReq*>(
+               &_SendMsg2ChatRoomReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    31;
+
+  friend void swap(SendMsg2ChatRoomReq& a, SendMsg2ChatRoomReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SendMsg2ChatRoomReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SendMsg2ChatRoomReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SendMsg2ChatRoomReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SendMsg2ChatRoomReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SendMsg2ChatRoomReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SendMsg2ChatRoomReq& from) {
+    SendMsg2ChatRoomReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SendMsg2ChatRoomReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.SendMsg2ChatRoomReq";
+  }
+  protected:
+  explicit SendMsg2ChatRoomReq(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kChatMsgFieldNumber = 2,
+    kItemIdFieldNumber = 1,
+  };
+  // .prpc.ChatMessage chat_msg = 2;
+  bool has_chat_msg() const;
+  private:
+  bool _internal_has_chat_msg() const;
+
+  public:
+  void clear_chat_msg() ;
+  const ::prpc::ChatMessage& chat_msg() const;
+  PROTOBUF_NODISCARD ::prpc::ChatMessage* release_chat_msg();
+  ::prpc::ChatMessage* mutable_chat_msg();
+  void set_allocated_chat_msg(::prpc::ChatMessage* chat_msg);
+  private:
+  const ::prpc::ChatMessage& _internal_chat_msg() const;
+  ::prpc::ChatMessage* _internal_mutable_chat_msg();
+  public:
+  void unsafe_arena_set_allocated_chat_msg(
+      ::prpc::ChatMessage* chat_msg);
+  ::prpc::ChatMessage* unsafe_arena_release_chat_msg();
+  // int64 item_id = 1;
+  void clear_item_id() ;
+  ::int64_t item_id() const;
+  void set_item_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_item_id() const;
+  void _internal_set_item_id(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.SendMsg2ChatRoomReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::prpc::ChatMessage* chat_msg_;
+    ::int64_t item_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class SendMsg2ChatRoomRes final :
+    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.SendMsg2ChatRoomRes) */ {
+ public:
+  inline SendMsg2ChatRoomRes() : SendMsg2ChatRoomRes(nullptr) {}
+  explicit PROTOBUF_CONSTEXPR SendMsg2ChatRoomRes(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SendMsg2ChatRoomRes(const SendMsg2ChatRoomRes& from);
+  SendMsg2ChatRoomRes(SendMsg2ChatRoomRes&& from) noexcept
+    : SendMsg2ChatRoomRes() {
+    *this = ::std::move(from);
+  }
+
+  inline SendMsg2ChatRoomRes& operator=(const SendMsg2ChatRoomRes& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SendMsg2ChatRoomRes& operator=(SendMsg2ChatRoomRes&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SendMsg2ChatRoomRes& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SendMsg2ChatRoomRes* internal_default_instance() {
+    return reinterpret_cast<const SendMsg2ChatRoomRes*>(
+               &_SendMsg2ChatRoomRes_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    32;
+
+  friend void swap(SendMsg2ChatRoomRes& a, SendMsg2ChatRoomRes& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SendMsg2ChatRoomRes* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SendMsg2ChatRoomRes* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SendMsg2ChatRoomRes* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SendMsg2ChatRoomRes>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const SendMsg2ChatRoomRes& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const SendMsg2ChatRoomRes& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.SendMsg2ChatRoomRes";
+  }
+  protected:
+  explicit SendMsg2ChatRoomRes(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:prpc.SendMsg2ChatRoomRes)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+  };
+  friend struct ::TableStruct_user_2eproto;
 };
 
 // ===================================================================
@@ -6472,6 +7275,343 @@ inline void RefreshSubtitleReq::_internal_set_item_id(::int64_t value) {
 // -------------------------------------------------------------------
 
 // RefreshSubtitleRes
+
+// -------------------------------------------------------------------
+
+// JoinChatRoomReq
+
+// int64 item_id = 1;
+inline void JoinChatRoomReq::clear_item_id() {
+  _impl_.item_id_ = ::int64_t{0};
+}
+inline ::int64_t JoinChatRoomReq::item_id() const {
+  // @@protoc_insertion_point(field_get:prpc.JoinChatRoomReq.item_id)
+  return _internal_item_id();
+}
+inline void JoinChatRoomReq::set_item_id(::int64_t value) {
+  _internal_set_item_id(value);
+  // @@protoc_insertion_point(field_set:prpc.JoinChatRoomReq.item_id)
+}
+inline ::int64_t JoinChatRoomReq::_internal_item_id() const {
+  return _impl_.item_id_;
+}
+inline void JoinChatRoomReq::_internal_set_item_id(::int64_t value) {
+  ;
+  _impl_.item_id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ChatMessage
+
+// int64 user_id = 1;
+inline void ChatMessage::clear_user_id() {
+  _impl_.user_id_ = ::int64_t{0};
+}
+inline ::int64_t ChatMessage::user_id() const {
+  // @@protoc_insertion_point(field_get:prpc.ChatMessage.user_id)
+  return _internal_user_id();
+}
+inline void ChatMessage::set_user_id(::int64_t value) {
+  _internal_set_user_id(value);
+  // @@protoc_insertion_point(field_set:prpc.ChatMessage.user_id)
+}
+inline ::int64_t ChatMessage::_internal_user_id() const {
+  return _impl_.user_id_;
+}
+inline void ChatMessage::_internal_set_user_id(::int64_t value) {
+  ;
+  _impl_.user_id_ = value;
+}
+
+// int64 sent_time = 2;
+inline void ChatMessage::clear_sent_time() {
+  _impl_.sent_time_ = ::int64_t{0};
+}
+inline ::int64_t ChatMessage::sent_time() const {
+  // @@protoc_insertion_point(field_get:prpc.ChatMessage.sent_time)
+  return _internal_sent_time();
+}
+inline void ChatMessage::set_sent_time(::int64_t value) {
+  _internal_set_sent_time(value);
+  // @@protoc_insertion_point(field_set:prpc.ChatMessage.sent_time)
+}
+inline ::int64_t ChatMessage::_internal_sent_time() const {
+  return _impl_.sent_time_;
+}
+inline void ChatMessage::_internal_set_sent_time(::int64_t value) {
+  ;
+  _impl_.sent_time_ = value;
+}
+
+// string msg = 3;
+inline void ChatMessage::clear_msg() {
+  _impl_.msg_.ClearToEmpty();
+}
+inline const std::string& ChatMessage::msg() const {
+  // @@protoc_insertion_point(field_get:prpc.ChatMessage.msg)
+  return _internal_msg();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void ChatMessage::set_msg(Arg_&& arg,
+                                                     Args_... args) {
+  ;
+  _impl_.msg_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.ChatMessage.msg)
+}
+inline std::string* ChatMessage::mutable_msg() {
+  std::string* _s = _internal_mutable_msg();
+  // @@protoc_insertion_point(field_mutable:prpc.ChatMessage.msg)
+  return _s;
+}
+inline const std::string& ChatMessage::_internal_msg() const {
+  return _impl_.msg_.Get();
+}
+inline void ChatMessage::_internal_set_msg(const std::string& value) {
+  ;
+
+
+  _impl_.msg_.Set(value, GetArenaForAllocation());
+}
+inline std::string* ChatMessage::_internal_mutable_msg() {
+  ;
+  return _impl_.msg_.Mutable( GetArenaForAllocation());
+}
+inline std::string* ChatMessage::release_msg() {
+  // @@protoc_insertion_point(field_release:prpc.ChatMessage.msg)
+  return _impl_.msg_.Release();
+}
+inline void ChatMessage::set_allocated_msg(std::string* value) {
+  _impl_.msg_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.msg_.IsDefault()) {
+          _impl_.msg_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.ChatMessage.msg)
+}
+
+// -------------------------------------------------------------------
+
+// JoinChatRoomRes
+
+// int64 item_id = 1;
+inline void JoinChatRoomRes::clear_item_id() {
+  _impl_.item_id_ = ::int64_t{0};
+}
+inline ::int64_t JoinChatRoomRes::item_id() const {
+  // @@protoc_insertion_point(field_get:prpc.JoinChatRoomRes.item_id)
+  return _internal_item_id();
+}
+inline void JoinChatRoomRes::set_item_id(::int64_t value) {
+  _internal_set_item_id(value);
+  // @@protoc_insertion_point(field_set:prpc.JoinChatRoomRes.item_id)
+}
+inline ::int64_t JoinChatRoomRes::_internal_item_id() const {
+  return _impl_.item_id_;
+}
+inline void JoinChatRoomRes::_internal_set_item_id(::int64_t value) {
+  ;
+  _impl_.item_id_ = value;
+}
+
+// .prpc.ChatMessage msg = 2;
+inline bool JoinChatRoomRes::_internal_has_msg() const {
+  return this != internal_default_instance() && _impl_.msg_ != nullptr;
+}
+inline bool JoinChatRoomRes::has_msg() const {
+  return _internal_has_msg();
+}
+inline void JoinChatRoomRes::clear_msg() {
+  if (GetArenaForAllocation() == nullptr && _impl_.msg_ != nullptr) {
+    delete _impl_.msg_;
+  }
+  _impl_.msg_ = nullptr;
+}
+inline const ::prpc::ChatMessage& JoinChatRoomRes::_internal_msg() const {
+  const ::prpc::ChatMessage* p = _impl_.msg_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::ChatMessage&>(
+      ::prpc::_ChatMessage_default_instance_);
+}
+inline const ::prpc::ChatMessage& JoinChatRoomRes::msg() const {
+  // @@protoc_insertion_point(field_get:prpc.JoinChatRoomRes.msg)
+  return _internal_msg();
+}
+inline void JoinChatRoomRes::unsafe_arena_set_allocated_msg(
+    ::prpc::ChatMessage* msg) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.msg_);
+  }
+  _impl_.msg_ = msg;
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.JoinChatRoomRes.msg)
+}
+inline ::prpc::ChatMessage* JoinChatRoomRes::release_msg() {
+  
+  ::prpc::ChatMessage* temp = _impl_.msg_;
+  _impl_.msg_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::prpc::ChatMessage* JoinChatRoomRes::unsafe_arena_release_msg() {
+  // @@protoc_insertion_point(field_release:prpc.JoinChatRoomRes.msg)
+  
+  ::prpc::ChatMessage* temp = _impl_.msg_;
+  _impl_.msg_ = nullptr;
+  return temp;
+}
+inline ::prpc::ChatMessage* JoinChatRoomRes::_internal_mutable_msg() {
+  
+  if (_impl_.msg_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::ChatMessage>(GetArenaForAllocation());
+    _impl_.msg_ = p;
+  }
+  return _impl_.msg_;
+}
+inline ::prpc::ChatMessage* JoinChatRoomRes::mutable_msg() {
+  ::prpc::ChatMessage* _msg = _internal_mutable_msg();
+  // @@protoc_insertion_point(field_mutable:prpc.JoinChatRoomRes.msg)
+  return _msg;
+}
+inline void JoinChatRoomRes::set_allocated_msg(::prpc::ChatMessage* msg) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.msg_;
+  }
+  if (msg) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(msg);
+    if (message_arena != submessage_arena) {
+      msg = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, msg, submessage_arena);
+    }
+
+  } else {
+
+  }
+  _impl_.msg_ = msg;
+  // @@protoc_insertion_point(field_set_allocated:prpc.JoinChatRoomRes.msg)
+}
+
+// -------------------------------------------------------------------
+
+// SendMsg2ChatRoomReq
+
+// int64 item_id = 1;
+inline void SendMsg2ChatRoomReq::clear_item_id() {
+  _impl_.item_id_ = ::int64_t{0};
+}
+inline ::int64_t SendMsg2ChatRoomReq::item_id() const {
+  // @@protoc_insertion_point(field_get:prpc.SendMsg2ChatRoomReq.item_id)
+  return _internal_item_id();
+}
+inline void SendMsg2ChatRoomReq::set_item_id(::int64_t value) {
+  _internal_set_item_id(value);
+  // @@protoc_insertion_point(field_set:prpc.SendMsg2ChatRoomReq.item_id)
+}
+inline ::int64_t SendMsg2ChatRoomReq::_internal_item_id() const {
+  return _impl_.item_id_;
+}
+inline void SendMsg2ChatRoomReq::_internal_set_item_id(::int64_t value) {
+  ;
+  _impl_.item_id_ = value;
+}
+
+// .prpc.ChatMessage chat_msg = 2;
+inline bool SendMsg2ChatRoomReq::_internal_has_chat_msg() const {
+  return this != internal_default_instance() && _impl_.chat_msg_ != nullptr;
+}
+inline bool SendMsg2ChatRoomReq::has_chat_msg() const {
+  return _internal_has_chat_msg();
+}
+inline void SendMsg2ChatRoomReq::clear_chat_msg() {
+  if (GetArenaForAllocation() == nullptr && _impl_.chat_msg_ != nullptr) {
+    delete _impl_.chat_msg_;
+  }
+  _impl_.chat_msg_ = nullptr;
+}
+inline const ::prpc::ChatMessage& SendMsg2ChatRoomReq::_internal_chat_msg() const {
+  const ::prpc::ChatMessage* p = _impl_.chat_msg_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::ChatMessage&>(
+      ::prpc::_ChatMessage_default_instance_);
+}
+inline const ::prpc::ChatMessage& SendMsg2ChatRoomReq::chat_msg() const {
+  // @@protoc_insertion_point(field_get:prpc.SendMsg2ChatRoomReq.chat_msg)
+  return _internal_chat_msg();
+}
+inline void SendMsg2ChatRoomReq::unsafe_arena_set_allocated_chat_msg(
+    ::prpc::ChatMessage* chat_msg) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.chat_msg_);
+  }
+  _impl_.chat_msg_ = chat_msg;
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.SendMsg2ChatRoomReq.chat_msg)
+}
+inline ::prpc::ChatMessage* SendMsg2ChatRoomReq::release_chat_msg() {
+  
+  ::prpc::ChatMessage* temp = _impl_.chat_msg_;
+  _impl_.chat_msg_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::prpc::ChatMessage* SendMsg2ChatRoomReq::unsafe_arena_release_chat_msg() {
+  // @@protoc_insertion_point(field_release:prpc.SendMsg2ChatRoomReq.chat_msg)
+  
+  ::prpc::ChatMessage* temp = _impl_.chat_msg_;
+  _impl_.chat_msg_ = nullptr;
+  return temp;
+}
+inline ::prpc::ChatMessage* SendMsg2ChatRoomReq::_internal_mutable_chat_msg() {
+  
+  if (_impl_.chat_msg_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::ChatMessage>(GetArenaForAllocation());
+    _impl_.chat_msg_ = p;
+  }
+  return _impl_.chat_msg_;
+}
+inline ::prpc::ChatMessage* SendMsg2ChatRoomReq::mutable_chat_msg() {
+  ::prpc::ChatMessage* _msg = _internal_mutable_chat_msg();
+  // @@protoc_insertion_point(field_mutable:prpc.SendMsg2ChatRoomReq.chat_msg)
+  return _msg;
+}
+inline void SendMsg2ChatRoomReq::set_allocated_chat_msg(::prpc::ChatMessage* chat_msg) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.chat_msg_;
+  }
+  if (chat_msg) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(chat_msg);
+    if (message_arena != submessage_arena) {
+      chat_msg = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, chat_msg, submessage_arena);
+    }
+
+  } else {
+
+  }
+  _impl_.chat_msg_ = chat_msg;
+  // @@protoc_insertion_point(field_set_allocated:prpc.SendMsg2ChatRoomReq.chat_msg)
+}
+
+// -------------------------------------------------------------------
+
+// SendMsg2ChatRoomRes
 
 #ifdef __GNUC__
 #pragma GCC diagnostic pop

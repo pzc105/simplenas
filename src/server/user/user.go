@@ -128,3 +128,9 @@ func (user *User) GetUserInfo() UserBaseInfo {
 	defer user.mtx.Unlock()
 	return user.userInfo
 }
+
+func (user *User) GetUserName() string {
+	user.mtx.Lock()
+	defer user.mtx.Unlock()
+	return user.userInfo.Name
+}

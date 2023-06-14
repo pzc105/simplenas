@@ -586,3 +586,113 @@ export namespace RefreshSubtitleRes {
   }
 }
 
+export class JoinChatRoomReq extends jspb.Message {
+  getItemId(): number;
+  setItemId(value: number): JoinChatRoomReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): JoinChatRoomReq.AsObject;
+  static toObject(includeInstance: boolean, msg: JoinChatRoomReq): JoinChatRoomReq.AsObject;
+  static serializeBinaryToWriter(message: JoinChatRoomReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): JoinChatRoomReq;
+  static deserializeBinaryFromReader(message: JoinChatRoomReq, reader: jspb.BinaryReader): JoinChatRoomReq;
+}
+
+export namespace JoinChatRoomReq {
+  export type AsObject = {
+    itemId: number,
+  }
+}
+
+export class ChatMessage extends jspb.Message {
+  getUserId(): number;
+  setUserId(value: number): ChatMessage;
+
+  getUserName(): string;
+  setUserName(value: string): ChatMessage;
+
+  getSentTime(): number;
+  setSentTime(value: number): ChatMessage;
+
+  getMsg(): string;
+  setMsg(value: string): ChatMessage;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ChatMessage.AsObject;
+  static toObject(includeInstance: boolean, msg: ChatMessage): ChatMessage.AsObject;
+  static serializeBinaryToWriter(message: ChatMessage, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ChatMessage;
+  static deserializeBinaryFromReader(message: ChatMessage, reader: jspb.BinaryReader): ChatMessage;
+}
+
+export namespace ChatMessage {
+  export type AsObject = {
+    userId: number,
+    userName: string,
+    sentTime: number,
+    msg: string,
+  }
+}
+
+export class JoinChatRoomRes extends jspb.Message {
+  getItemId(): number;
+  setItemId(value: number): JoinChatRoomRes;
+
+  getChatMsg(): ChatMessage | undefined;
+  setChatMsg(value?: ChatMessage): JoinChatRoomRes;
+  hasChatMsg(): boolean;
+  clearChatMsg(): JoinChatRoomRes;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): JoinChatRoomRes.AsObject;
+  static toObject(includeInstance: boolean, msg: JoinChatRoomRes): JoinChatRoomRes.AsObject;
+  static serializeBinaryToWriter(message: JoinChatRoomRes, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): JoinChatRoomRes;
+  static deserializeBinaryFromReader(message: JoinChatRoomRes, reader: jspb.BinaryReader): JoinChatRoomRes;
+}
+
+export namespace JoinChatRoomRes {
+  export type AsObject = {
+    itemId: number,
+    chatMsg?: ChatMessage.AsObject,
+  }
+}
+
+export class SendMsg2ChatRoomReq extends jspb.Message {
+  getItemId(): number;
+  setItemId(value: number): SendMsg2ChatRoomReq;
+
+  getChatMsg(): ChatMessage | undefined;
+  setChatMsg(value?: ChatMessage): SendMsg2ChatRoomReq;
+  hasChatMsg(): boolean;
+  clearChatMsg(): SendMsg2ChatRoomReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): SendMsg2ChatRoomReq.AsObject;
+  static toObject(includeInstance: boolean, msg: SendMsg2ChatRoomReq): SendMsg2ChatRoomReq.AsObject;
+  static serializeBinaryToWriter(message: SendMsg2ChatRoomReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): SendMsg2ChatRoomReq;
+  static deserializeBinaryFromReader(message: SendMsg2ChatRoomReq, reader: jspb.BinaryReader): SendMsg2ChatRoomReq;
+}
+
+export namespace SendMsg2ChatRoomReq {
+  export type AsObject = {
+    itemId: number,
+    chatMsg?: ChatMessage.AsObject,
+  }
+}
+
+export class SendMsg2ChatRoomRes extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): SendMsg2ChatRoomRes.AsObject;
+  static toObject(includeInstance: boolean, msg: SendMsg2ChatRoomRes): SendMsg2ChatRoomRes.AsObject;
+  static serializeBinaryToWriter(message: SendMsg2ChatRoomRes, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): SendMsg2ChatRoomRes;
+  static deserializeBinaryFromReader(message: SendMsg2ChatRoomRes, reader: jspb.BinaryReader): SendMsg2ChatRoomRes;
+}
+
+export namespace SendMsg2ChatRoomRes {
+  export type AsObject = {
+  }
+}
+

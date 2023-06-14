@@ -37,6 +37,8 @@ const (
 	UserService_QuerySubItems_FullMethodName    = "/prpc.UserService/QuerySubItems"
 	UserService_QueryItemInfo_FullMethodName    = "/prpc.UserService/QueryItemInfo"
 	UserService_RefreshSubtitle_FullMethodName  = "/prpc.UserService/RefreshSubtitle"
+	UserService_JoinChatRoom_FullMethodName     = "/prpc.UserService/JoinChatRoom"
+	UserService_SendMsg2ChatRoom_FullMethodName = "/prpc.UserService/SendMsg2ChatRoom"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -61,6 +63,8 @@ type UserServiceClient interface {
 	QuerySubItems(ctx context.Context, in *QuerySubItemsReq, opts ...grpc.CallOption) (*QuerySubItemsRes, error)
 	QueryItemInfo(ctx context.Context, in *QueryItemInfoReq, opts ...grpc.CallOption) (*QueryItemInfoRes, error)
 	RefreshSubtitle(ctx context.Context, in *RefreshSubtitleReq, opts ...grpc.CallOption) (*RefreshSubtitleRes, error)
+	JoinChatRoom(ctx context.Context, in *JoinChatRoomReq, opts ...grpc.CallOption) (UserService_JoinChatRoomClient, error)
+	SendMsg2ChatRoom(ctx context.Context, in *SendMsg2ChatRoomReq, opts ...grpc.CallOption) (*SendMsg2ChatRoomRes, error)
 }
 
 type userServiceClient struct {
@@ -256,6 +260,47 @@ func (c *userServiceClient) RefreshSubtitle(ctx context.Context, in *RefreshSubt
 	return out, nil
 }
 
+func (c *userServiceClient) JoinChatRoom(ctx context.Context, in *JoinChatRoomReq, opts ...grpc.CallOption) (UserService_JoinChatRoomClient, error) {
+	stream, err := c.cc.NewStream(ctx, &UserService_ServiceDesc.Streams[1], UserService_JoinChatRoom_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &userServiceJoinChatRoomClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type UserService_JoinChatRoomClient interface {
+	Recv() (*JoinChatRoomRes, error)
+	grpc.ClientStream
+}
+
+type userServiceJoinChatRoomClient struct {
+	grpc.ClientStream
+}
+
+func (x *userServiceJoinChatRoomClient) Recv() (*JoinChatRoomRes, error) {
+	m := new(JoinChatRoomRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *userServiceClient) SendMsg2ChatRoom(ctx context.Context, in *SendMsg2ChatRoomReq, opts ...grpc.CallOption) (*SendMsg2ChatRoomRes, error) {
+	out := new(SendMsg2ChatRoomRes)
+	err := c.cc.Invoke(ctx, UserService_SendMsg2ChatRoom_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -278,6 +323,8 @@ type UserServiceServer interface {
 	QuerySubItems(context.Context, *QuerySubItemsReq) (*QuerySubItemsRes, error)
 	QueryItemInfo(context.Context, *QueryItemInfoReq) (*QueryItemInfoRes, error)
 	RefreshSubtitle(context.Context, *RefreshSubtitleReq) (*RefreshSubtitleRes, error)
+	JoinChatRoom(*JoinChatRoomReq, UserService_JoinChatRoomServer) error
+	SendMsg2ChatRoom(context.Context, *SendMsg2ChatRoomReq) (*SendMsg2ChatRoomRes, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -338,6 +385,12 @@ func (UnimplementedUserServiceServer) QueryItemInfo(context.Context, *QueryItemI
 }
 func (UnimplementedUserServiceServer) RefreshSubtitle(context.Context, *RefreshSubtitleReq) (*RefreshSubtitleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshSubtitle not implemented")
+}
+func (UnimplementedUserServiceServer) JoinChatRoom(*JoinChatRoomReq, UserService_JoinChatRoomServer) error {
+	return status.Errorf(codes.Unimplemented, "method JoinChatRoom not implemented")
+}
+func (UnimplementedUserServiceServer) SendMsg2ChatRoom(context.Context, *SendMsg2ChatRoomReq) (*SendMsg2ChatRoomRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendMsg2ChatRoom not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -679,6 +732,45 @@ func _UserService_RefreshSubtitle_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_JoinChatRoom_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(JoinChatRoomReq)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(UserServiceServer).JoinChatRoom(m, &userServiceJoinChatRoomServer{stream})
+}
+
+type UserService_JoinChatRoomServer interface {
+	Send(*JoinChatRoomRes) error
+	grpc.ServerStream
+}
+
+type userServiceJoinChatRoomServer struct {
+	grpc.ServerStream
+}
+
+func (x *userServiceJoinChatRoomServer) Send(m *JoinChatRoomRes) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _UserService_SendMsg2ChatRoom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendMsg2ChatRoomReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).SendMsg2ChatRoom(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_SendMsg2ChatRoom_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).SendMsg2ChatRoom(ctx, req.(*SendMsg2ChatRoomReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -754,11 +846,20 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "RefreshSubtitle",
 			Handler:    _UserService_RefreshSubtitle_Handler,
 		},
+		{
+			MethodName: "SendMsg2ChatRoom",
+			Handler:    _UserService_SendMsg2ChatRoom_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "OnStatus",
 			Handler:       _UserService_OnStatus_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "JoinChatRoom",
+			Handler:       _UserService_JoinChatRoom_Handler,
 			ServerStreams: true,
 		},
 	},

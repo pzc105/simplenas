@@ -11,6 +11,7 @@ import (
 	"pnas/log"
 	"pnas/phttp"
 	"pnas/prpc"
+	"pnas/service/chat"
 	"pnas/service/session"
 	"pnas/setting"
 	"pnas/user"
@@ -49,10 +50,11 @@ type CoreService struct {
 
 	wg sync.WaitGroup
 
-	grpcSer   *grpc.Server
-	httpSer   *http.Server
-	videoSer  *VideoService
-	posterSer *PosterService
+	grpcSer         *grpc.Server
+	httpSer         *http.Server
+	videoSer        *VideoService
+	posterSer       *PosterService
+	chatRoomService ChatRoomService
 
 	shares SharesInterface
 }
@@ -70,6 +72,8 @@ func (ser *CoreService) Init() {
 		bt.WithOnConnect(ser.handleBtClientConnected),
 		bt.WithOnFileCompleted(ser.handleBtFileCompleted))
 	ser.um.Init()
+
+	ser.chatRoomService.Init()
 
 	sm := &ShareManager{}
 	sm.Init()
@@ -744,4 +748,55 @@ func (ser *CoreService) RefreshSubtitle(ctx context.Context, req *prpc.RefreshSu
 		return nil, status.Error(codes.Aborted, err.Error())
 	}
 	return &prpc.RefreshSubtitleRes{}, nil
+}
+
+func (ser *CoreService) JoinChatRoom(req *prpc.JoinChatRoomReq, stream prpc.UserService_JoinChatRoomServer) error {
+	if req == nil {
+		return status.Error(codes.InvalidArgument, "")
+	}
+	ses := ser.getSession(stream.Context())
+	if ses == nil {
+		return status.Error(codes.PermissionDenied, "")
+	}
+	itemId := category.ID(req.ItemId)
+
+	ser.chatRoomService.Join(itemId, ses.Id, func(cm *chat.ChatMessage) {
+		user, _ := ser.um.LoadUser(cm.UserId)
+		stream.Send(&prpc.JoinChatRoomRes{
+			ItemId: req.ItemId,
+			ChatMsg: &prpc.ChatMessage{
+				UserId:   int64(cm.UserId),
+				UserName: user.GetUserName(),
+				SentTime: cm.SentTime.UnixMilli(),
+				Msg:      cm.Msg,
+			},
+		})
+	})
+
+	room, err := ser.chatRoomService.GetRoom(itemId)
+	if err != nil {
+		return status.Error(codes.Internal, "")
+	}
+	select {
+	case <-stream.Context().Done():
+	case <-room.Context().Done():
+	}
+
+	return nil
+}
+func (ser *CoreService) SendMsg2ChatRoom(ctx context.Context, req *prpc.SendMsg2ChatRoomReq) (*prpc.SendMsg2ChatRoomRes, error) {
+	if req == nil || req.GetChatMsg() == nil {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "not found session")
+	}
+	ser.chatRoomService.Broadcast(category.ID(req.GetItemId()), &chat.ChatMessage{
+		UserId:   ses.UserId,
+		SentTime: time.Now(),
+		Msg:      req.GetChatMsg().Msg,
+	})
+
+	return &prpc.SendMsg2ChatRoomRes{}, nil
 }

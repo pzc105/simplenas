@@ -8,12 +8,16 @@ import * as category from './prpc/category_pb'
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    userInfo: null
+    userInfo: null,
+    shownChatPanel: false,
   },
   reducers: {
     setUserInfo: (state, action) => {
       var userInfo = action.payload
       state.userInfo = userInfo
+    },
+    setShowChatPanel: (state, action) => {
+      state.shownChatPanel = action.payload
     },
   },
 })
@@ -95,6 +99,10 @@ const selectUserInfo = (state) => {
   return state.user.userInfo
 }
 
+const selectShownChatPanel = (state) => {
+  return state.user.shownChatPanel
+}
+
 const selectTorrent = (state, infoHash) => {
   return state.bt.torrents[infoHash.hash]
 }
@@ -162,7 +170,7 @@ const isDownloadPageMouseDown = (state) => {
 
 export {
   store, userSlice, btSlice, categorySlice, eventSlice,
-  selectUserInfo,
+  selectUserInfo, selectShownChatPanel,
   selectTorrent, selectInfoHashs, selectBtVideoFiles,
   selectCategoryItem, selectCategorySubItems, selectSubDirectory,
   isDownloadPageMouseDown

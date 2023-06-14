@@ -1,6 +1,6 @@
 package utils
 
-func GetPow2(hint int) int {
+func GetPow2_32(hint int) int {
 	hint--
 	hint |= (hint >> 1)
 	hint |= (hint >> 2)

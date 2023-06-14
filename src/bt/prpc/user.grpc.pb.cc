@@ -40,6 +40,8 @@ static const char* UserService_method_names[] = {
   "/prpc.UserService/QuerySubItems",
   "/prpc.UserService/QueryItemInfo",
   "/prpc.UserService/RefreshSubtitle",
+  "/prpc.UserService/JoinChatRoom",
+  "/prpc.UserService/SendMsg2ChatRoom",
 };
 
 std::unique_ptr< UserService::Stub> UserService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -67,6 +69,8 @@ UserService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channe
   , rpcmethod_QuerySubItems_(UserService_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_QueryItemInfo_(UserService_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_RefreshSubtitle_(UserService_method_names[17], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_JoinChatRoom_(UserService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SendMsg2ChatRoom_(UserService_method_names[19], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status UserService::Stub::Register(::grpc::ClientContext* context, const ::prpc::RegisterInfo& request, ::prpc::RegisterRet* response) {
@@ -476,6 +480,45 @@ void UserService::Stub::async::RefreshSubtitle(::grpc::ClientContext* context, c
   return result;
 }
 
+::grpc::ClientReader< ::prpc::JoinChatRoomRes>* UserService::Stub::JoinChatRoomRaw(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq& request) {
+  return ::grpc::internal::ClientReaderFactory< ::prpc::JoinChatRoomRes>::Create(channel_.get(), rpcmethod_JoinChatRoom_, context, request);
+}
+
+void UserService::Stub::async::JoinChatRoom(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq* request, ::grpc::ClientReadReactor< ::prpc::JoinChatRoomRes>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::prpc::JoinChatRoomRes>::Create(stub_->channel_.get(), stub_->rpcmethod_JoinChatRoom_, context, request, reactor);
+}
+
+::grpc::ClientAsyncReader< ::prpc::JoinChatRoomRes>* UserService::Stub::AsyncJoinChatRoomRaw(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::prpc::JoinChatRoomRes>::Create(channel_.get(), cq, rpcmethod_JoinChatRoom_, context, request, true, tag);
+}
+
+::grpc::ClientAsyncReader< ::prpc::JoinChatRoomRes>* UserService::Stub::PrepareAsyncJoinChatRoomRaw(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::prpc::JoinChatRoomRes>::Create(channel_.get(), cq, rpcmethod_JoinChatRoom_, context, request, false, nullptr);
+}
+
+::grpc::Status UserService::Stub::SendMsg2ChatRoom(::grpc::ClientContext* context, const ::prpc::SendMsg2ChatRoomReq& request, ::prpc::SendMsg2ChatRoomRes* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SendMsg2ChatRoom_, context, request, response);
+}
+
+void UserService::Stub::async::SendMsg2ChatRoom(::grpc::ClientContext* context, const ::prpc::SendMsg2ChatRoomReq* request, ::prpc::SendMsg2ChatRoomRes* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SendMsg2ChatRoom_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::SendMsg2ChatRoom(::grpc::ClientContext* context, const ::prpc::SendMsg2ChatRoomReq* request, ::prpc::SendMsg2ChatRoomRes* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SendMsg2ChatRoom_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::SendMsg2ChatRoomRes>* UserService::Stub::PrepareAsyncSendMsg2ChatRoomRaw(::grpc::ClientContext* context, const ::prpc::SendMsg2ChatRoomReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::SendMsg2ChatRoomRes, ::prpc::SendMsg2ChatRoomReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SendMsg2ChatRoom_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::SendMsg2ChatRoomRes>* UserService::Stub::AsyncSendMsg2ChatRoomRaw(::grpc::ClientContext* context, const ::prpc::SendMsg2ChatRoomReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSendMsg2ChatRoomRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 UserService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[0],
@@ -657,6 +700,26 @@ UserService::Service::Service() {
              ::prpc::RefreshSubtitleRes* resp) {
                return service->RefreshSubtitle(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[18],
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< UserService::Service, ::prpc::JoinChatRoomReq, ::prpc::JoinChatRoomRes>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::JoinChatRoomReq* req,
+             ::grpc::ServerWriter<::prpc::JoinChatRoomRes>* writer) {
+               return service->JoinChatRoom(ctx, req, writer);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[19],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::SendMsg2ChatRoomReq* req,
+             ::prpc::SendMsg2ChatRoomRes* resp) {
+               return service->SendMsg2ChatRoom(ctx, req, resp);
+             }, this)));
 }
 
 UserService::Service::~Service() {
@@ -782,6 +845,20 @@ UserService::Service::~Service() {
 }
 
 ::grpc::Status UserService::Service::RefreshSubtitle(::grpc::ServerContext* context, const ::prpc::RefreshSubtitleReq* request, ::prpc::RefreshSubtitleRes* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::JoinChatRoom(::grpc::ServerContext* context, const ::prpc::JoinChatRoomReq* request, ::grpc::ServerWriter< ::prpc::JoinChatRoomRes>* writer) {
+  (void) context;
+  (void) request;
+  (void) writer;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::SendMsg2ChatRoom(::grpc::ServerContext* context, const ::prpc::SendMsg2ChatRoomReq* request, ::prpc::SendMsg2ChatRoomRes* response) {
   (void) context;
   (void) request;
   (void) response;

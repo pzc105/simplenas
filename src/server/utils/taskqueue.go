@@ -79,7 +79,6 @@ func (tq *TaskQueue) Put(f func()) {
 
 func (tq *TaskQueue) handle() {
 	defer tq.wg.Add(-1)
-
 	for {
 		f, ok := <-tq.queue
 		if !ok {

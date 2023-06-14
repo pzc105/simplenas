@@ -68,6 +68,9 @@ service UserService {
   rpc QuerySubItems(QuerySubItemsReq) returns (QuerySubItemsRes);
   rpc QueryItemInfo(QueryItemInfoReq) returns (QueryItemInfoRes);
   rpc RefreshSubtitle(RefreshSubtitleReq) returns (RefreshSubtitleRes);
+
+  rpc JoinChatRoom(JoinChatRoomReq) returns (stream JoinChatRoomRes);
+  rpc SendMsg2ChatRoom(SendMsg2ChatRoomReq) returns (SendMsg2ChatRoomRes);
 }
 
 
@@ -200,5 +203,30 @@ message RefreshSubtitleReq {
 }
 
 message RefreshSubtitleRes {
+
+}
+
+message JoinChatRoomReq {
+  int64 item_id = 1;
+}
+
+message ChatMessage {
+  int64 user_id = 1;
+  string user_name = 2;
+  int64 sent_time = 3;
+  string msg = 4;
+}
+
+message JoinChatRoomRes {
+  int64 item_id = 1;
+  ChatMessage chat_msg = 2;
+}
+
+message SendMsg2ChatRoomReq {
+  int64 item_id = 1;
+  ChatMessage chat_msg = 2;
+}
+
+message SendMsg2ChatRoomRes {
 
 }

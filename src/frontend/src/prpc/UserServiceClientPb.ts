@@ -793,5 +793,70 @@ export class UserServiceClient {
     this.methodDescriptorRefreshSubtitle);
   }
 
+  methodDescriptorJoinChatRoom = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/JoinChatRoom',
+    grpcWeb.MethodType.SERVER_STREAMING,
+    user_pb.JoinChatRoomReq,
+    user_pb.JoinChatRoomRes,
+    (request: user_pb.JoinChatRoomReq) => {
+      return request.serializeBinary();
+    },
+    user_pb.JoinChatRoomRes.deserializeBinary
+  );
+
+  joinChatRoom(
+    request: user_pb.JoinChatRoomReq,
+    metadata?: grpcWeb.Metadata): grpcWeb.ClientReadableStream<user_pb.JoinChatRoomRes> {
+    return this.client_.serverStreaming(
+      this.hostname_ +
+        '/prpc.UserService/JoinChatRoom',
+      request,
+      metadata || {},
+      this.methodDescriptorJoinChatRoom);
+  }
+
+  methodDescriptorSendMsg2ChatRoom = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/SendMsg2ChatRoom',
+    grpcWeb.MethodType.UNARY,
+    user_pb.SendMsg2ChatRoomReq,
+    user_pb.SendMsg2ChatRoomRes,
+    (request: user_pb.SendMsg2ChatRoomReq) => {
+      return request.serializeBinary();
+    },
+    user_pb.SendMsg2ChatRoomRes.deserializeBinary
+  );
+
+  sendMsg2ChatRoom(
+    request: user_pb.SendMsg2ChatRoomReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.SendMsg2ChatRoomRes>;
+
+  sendMsg2ChatRoom(
+    request: user_pb.SendMsg2ChatRoomReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: user_pb.SendMsg2ChatRoomRes) => void): grpcWeb.ClientReadableStream<user_pb.SendMsg2ChatRoomRes>;
+
+  sendMsg2ChatRoom(
+    request: user_pb.SendMsg2ChatRoomReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: user_pb.SendMsg2ChatRoomRes) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.UserService/SendMsg2ChatRoom',
+        request,
+        metadata || {},
+        this.methodDescriptorSendMsg2ChatRoom,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.UserService/SendMsg2ChatRoom',
+    request,
+    metadata || {},
+    this.methodDescriptorSendMsg2ChatRoom);
+  }
+
 }
 

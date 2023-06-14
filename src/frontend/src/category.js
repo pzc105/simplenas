@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   CssBaseline, Button, TextField, Menu, MenuItem, Container, Grid, Paper, Box,
-  Typography, Tooltip, Card, CardContent, CardActions, InputAdornment
+  Typography, Tooltip, Card, CardContent, CardActions, InputAdornment, Popover, Popper
 } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import { styled } from "@mui/material/styles";
+import Draggable from 'react-draggable';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { useSelector, useDispatch } from 'react-redux';
 import * as store from './store.js'
 import SideUtils from './sideUtils.js';
+import ChatPanel from './chat.js';
 
 import * as User from './prpc/user_pb.js'
 import * as Category from './prpc/category_pb.js'
@@ -142,6 +145,8 @@ const CategoryItems = ({ parentId, shareid }) => {
 }
 
 const CategoryItemCreator = ({ parentId, refreshParent }) => {
+  const dispatch = useDispatch()
+  const shownChatPanel = useSelector((state) => store.selectShownChatPanel(state))
   const [itemName, setItemName] = useState('')
   function handleChange(e) {
     setItemName(e.target.value)
@@ -191,6 +196,9 @@ const CategoryItemCreator = ({ parentId, refreshParent }) => {
         </Grid>
       </Grid>
     </Container>
+    <Button onClick={() => { dispatch(store.userSlice.actions.setShowChatPanel(true)) }}>
+      open chat
+    </Button>
   </Container>
   )
 }
@@ -206,6 +214,7 @@ export default function CategoryItemPage() {
   const searchParams = new URLSearchParams(location.search)
   const shareid = searchParams.get('shareid')
   const itemId = searchParams.get('itemid')
+  const shownChatPanel = useSelector((state) => store.selectShownChatPanel(state))
 
   const dispatch = useDispatch()
   const refreshSubItems = () => {
@@ -242,11 +251,52 @@ export default function CategoryItemPage() {
     querySubItems()
   }, [itemId, dispatch, navigate, shareid])
 
+  const anchorElRef = useRef(null)
+
+  const handleClose = () => {
+    dispatch(store.userSlice.actions.setShowChatPanel(false))
+  };
+
+  const [openPopper, setOpenPopper] = useState(false)
+  useEffect(() => {
+    setOpenPopper(Boolean(anchorElRef.current !== null && shownChatPanel))
+  }, [anchorElRef, shownChatPanel])
+  
   return (
     <CategoryContainer>
       <CssBaseline />
-      {shareid ? null : <SideUtils name="管理" child={CategoryItemCreator({ parentId: itemId, refreshParent: () => { refreshSubItems() } })} />}
+      {
+        shareid ? null : <SideUtils
+          name="管理"
+          child={CategoryItemCreator({ parentId: itemId, refreshParent: () => { refreshSubItems() } })}
+        />
+      }
       <CategoryItems parentId={itemId} shareid={shareid} />
+      <Button
+        ref={anchorElRef}
+        style={{
+          position: 'fixed',
+          right: '20px',
+          bottom: '20px',
+          zIndex: 9999,
+        }}>
+      </Button>
+      <Draggable >
+        <Popper
+          id={shownChatPanel ? 'floating-window' : undefined}
+          open={openPopper}
+          anchorEl={anchorElRef.current}
+          placement='bottom'
+          sx={{ backgroundColor: 'background.default' }}
+        >
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', pr: 1, backgroundColor: 'background.default' }}>
+            <Button size="small" color="secondary" onClick={handleClose}>
+              <CloseIcon />
+            </Button>
+          </Box>
+          <ChatPanel itemId={itemId} />
+        </Popper>
+      </Draggable>
     </CategoryContainer>
   );
 }
