@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Container, CssBaseline } from '@mui/material';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-import Plyr from './lib/plyr/dist/plyr';
-import './lib/plyr/dist/plyr.css';
+import Plyr from 'plyr';
+import 'plyr/dist/plyr.css';
 import Hls from 'hls.js'
 
 import { serverAddress } from './rpcClient.js'
@@ -25,29 +25,6 @@ export default function PlyrWrap() {
   const [subtitles, setSubtitles] = useState([])
   const videoRef = useRef(null);
   const vidRef = useRef(-1);
-
-  const requestStartOffset = () => {
-    if (shareid) {
-      return
-    }
-    fetch(serverAddress + "/video/" + vidRef.current + "/get_offsettime", {
-      method: 'GET',
-      mode: 'cors',
-      credentials: "include",
-      headers: {
-      },
-    }).then(response => response.text())
-      .then(data => {
-        if (hls.current && isNumber(data)) {
-          videoRef.current.currentTime = Number(data)
-        }
-      }).catch(error => {
-        console.log(error)
-        if (hls.current) {
-          videoRef.current.currentTime = 0
-        }
-      });
-  }
 
   let lastOffsetTime = useRef(0.0)
   useEffect(() => {
@@ -79,7 +56,7 @@ export default function PlyrWrap() {
     return () => {
       clearInterval(saveStartOffset);
     };
-  }, [videoRef])
+  }, [videoRef, shareid])
 
   function updateQuality(newQuality) {
     if (newQuality === 0) {
@@ -103,6 +80,30 @@ export default function PlyrWrap() {
     if (url.length === 0) {
       return
     }
+
+    const requestStartOffset = () => {
+      if (shareid) {
+        return
+      }
+      fetch(serverAddress + "/video/" + vidRef.current + "/get_offsettime", {
+        method: 'GET',
+        mode: 'cors',
+        credentials: "include",
+        headers: {
+        },
+      }).then(response => response.text())
+        .then(data => {
+          if (hls.current && isNumber(data)) {
+            videoRef.current.currentTime = Number(data)
+          }
+        }).catch(error => {
+          console.log(error)
+          if (hls.current) {
+            videoRef.current.currentTime = 0
+          }
+        });
+    }
+
     var hlsconfig = {
       debug: false,
       autoStartLoad: false,
@@ -191,7 +192,7 @@ export default function PlyrWrap() {
         player.current.destroy()
       }
     }
-  }, [url])
+  }, [url, shareid])
 
   useEffect(() => {
     var req = new User.QueryItemInfoReq()

@@ -205,7 +205,7 @@ export default function SignIn(props) {
             fullWidth
             variant="contained"
             color="primary">
-            Sign In
+            登录
           </MySubmit>
           <Grid container>
             <Grid item xs>

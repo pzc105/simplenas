@@ -229,7 +229,7 @@ export default function SignUp(props) {
             fullWidth
             variant="contained"
             color="primary">
-            Sign Up
+            注册
           </MySubmit>
           <Grid container justifyContent="flex-end">
             <Grid item>
