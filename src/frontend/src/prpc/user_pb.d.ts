@@ -638,10 +638,10 @@ export class JoinChatRoomRes extends jspb.Message {
   getItemId(): number;
   setItemId(value: number): JoinChatRoomRes;
 
-  getChatMsg(): ChatMessage | undefined;
-  setChatMsg(value?: ChatMessage): JoinChatRoomRes;
-  hasChatMsg(): boolean;
-  clearChatMsg(): JoinChatRoomRes;
+  getChatMsgsList(): Array<ChatMessage>;
+  setChatMsgsList(value: Array<ChatMessage>): JoinChatRoomRes;
+  clearChatMsgsList(): JoinChatRoomRes;
+  addChatMsgs(value?: ChatMessage, index?: number): ChatMessage;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): JoinChatRoomRes.AsObject;
@@ -654,7 +654,7 @@ export class JoinChatRoomRes extends jspb.Message {
 export namespace JoinChatRoomRes {
   export type AsObject = {
     itemId: number,
-    chatMsg?: ChatMessage.AsObject,
+    chatMsgsList: Array<ChatMessage.AsObject>,
   }
 }
 

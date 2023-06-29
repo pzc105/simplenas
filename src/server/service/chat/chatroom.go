@@ -40,7 +40,7 @@ func (cr *ChatRoomImpl) Init() {
 	cr.msgBuffers = make([]*versionChatMessage, utils.GetPow2_32(10000))
 	cr.nextWritePos.Store(0)
 	cr.shutDownCtx, cr.closeFunc = context.WithCancel(context.Background())
-	cr.taskqueue.Init(utils.WithMaxQueue(126))
+	cr.taskqueue.Init(utils.WithMaxQueue(1024))
 }
 
 func (cr *ChatRoomImpl) Close() {
@@ -54,19 +54,28 @@ func (cr *ChatRoomImpl) Context() context.Context {
 
 func (cr *ChatRoomImpl) send2Session(ud *userData) {
 	wp := cr.nextWritePos.Load()
+	var msgs []*ChatMessage
 	for ; ud.nextReadPos < wp; ud.nextReadPos++ {
 		m := cr.msgBuffers[ud.nextReadPos&uint64(len(cr.msgBuffers)-1)]
 		if m == nil || m.version != ud.nextReadPos {
 			break
 		}
-		ud.sendFunc(m.msg)
+		msgs = append(msgs, m.msg)
+	}
+	if len(msgs) > 0 {
+		ud.sendFunc(msgs)
 	}
 }
 
 func (cr *ChatRoomImpl) Join(sessionId int64, sendFunc SendFunc) {
+	wp := cr.nextWritePos.Load()
+	nr := uint64(0)
+	if wp >= 100 {
+		nr = wp - 100
+	}
 	ud := &userData{
 		sendFunc:    sendFunc,
-		nextReadPos: 0,
+		nextReadPos: nr,
 	}
 
 	cr.mtx.Lock()

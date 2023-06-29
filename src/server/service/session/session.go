@@ -187,19 +187,18 @@ func loadSession(id int64) (*Session, error) {
 
 func GenSessionTokenCookie(s *Session) string {
 	expiresPair := "Expires=" + s.ExpiresAt.Format(time.RFC1123)
-	cookieToken := fmt.Sprintf("%s=%s;SameSite=Strict;Path=/;HttpOnly;%s",
+	tokenCookie := fmt.Sprintf("%s=%s;SameSite=Strict;Path=/;HttpOnly;%s",
 		ToeknFieldName,
 		s.Token,
 		expiresPair)
-	return cookieToken
+	return tokenCookie
 }
 
 func GenSessionIdCookie(s *Session) string {
 	expiresPair := "Expires=" + s.ExpiresAt.Format(time.RFC1123)
-	cookieTokenId := fmt.Sprintf("%s=%d;SameSite=Strict;Path=/;HttpOnly;%s",
+	tokenIdCookie := fmt.Sprintf("%s=%d;SameSite=Strict;Path=/;HttpOnly;%s",
 		SessionIdFieldName,
 		s.Id,
 		expiresPair)
-	return cookieTokenId
-
+	return tokenIdCookie
 }

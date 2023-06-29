@@ -219,7 +219,7 @@ message ChatMessage {
 
 message JoinChatRoomRes {
   int64 item_id = 1;
-  ChatMessage chat_msg = 2;
+  repeated ChatMessage chat_msgs = 2;
 }
 
 message SendMsg2ChatRoomReq {

@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type SendFunc func(*ChatMessage)
+type SendFunc func([]*ChatMessage)
 
 type ChatRoom interface {
 	Context() context.Context

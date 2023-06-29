@@ -26,7 +26,8 @@ func TestChatRoom(t *testing.T) {
 	go func() {
 		sid := int64(1)
 
-		cr.Join(sid, func(cm *ChatMessage) {
+		cr.Join(sid, func(cms []*ChatMessage) {
+			cm := cms[0]
 			if i1.Load() >= int32(len(msgs)) || msgs[i1.Load()] != cm {
 				t.Errorf("i: %d, msg: %v", i1.Load(), cm)
 			}
@@ -39,7 +40,8 @@ func TestChatRoom(t *testing.T) {
 		sid := int64(2)
 
 		i2.Store(0)
-		cr.Join(sid, func(cm *ChatMessage) {
+		cr.Join(sid, func(cms []*ChatMessage) {
+			cm := cms[0]
 			if i2.Load() >= int32(len(msgs)) || msgs[i2.Load()] != cm {
 				t.Errorf("i: %d, msg: %v", i2.Load(), cm)
 			}
@@ -62,7 +64,8 @@ func TestBenchmark(t *testing.T) {
 	maxDuration := time.Duration(0)
 
 	for i := 0; i < 10000; i++ {
-		cr.Join(int64(i), func(cm *ChatMessage) {
+		cr.Join(int64(i), func(cms []*ChatMessage) {
+			cm := cms[0]
 			d := time.Since(cm.SentTime)
 			if d > maxDuration {
 				maxDuration = d

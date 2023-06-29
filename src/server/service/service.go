@@ -760,16 +760,21 @@ func (ser *CoreService) JoinChatRoom(req *prpc.JoinChatRoomReq, stream prpc.User
 	}
 	itemId := category.ID(req.ItemId)
 
-	ser.chatRoomService.Join(itemId, ses.Id, func(cm *chat.ChatMessage) {
-		user, _ := ser.um.LoadUser(cm.UserId)
-		stream.Send(&prpc.JoinChatRoomRes{
-			ItemId: req.ItemId,
-			ChatMsg: &prpc.ChatMessage{
+	ser.chatRoomService.Join(itemId, ses.Id, func(cms []*chat.ChatMessage) {
+		var scms []*prpc.ChatMessage
+		for _, cm := range cms {
+			user, _ := ser.um.LoadUser(cm.UserId)
+			smsg := &prpc.ChatMessage{
 				UserId:   int64(cm.UserId),
 				UserName: user.GetUserName(),
 				SentTime: cm.SentTime.UnixMilli(),
 				Msg:      cm.Msg,
-			},
+			}
+			scms = append(scms, smsg)
+		}
+		stream.Send(&prpc.JoinChatRoomRes{
+			ItemId:   req.ItemId,
+			ChatMsgs: scms,
 		})
 	})
 

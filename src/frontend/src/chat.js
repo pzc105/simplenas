@@ -41,8 +41,8 @@ export default function ChatPanel({ itemId }) {
     msgsRef.current = []
     setMessages([])
     stream.on('data', function (res) {
-      const chatMsg = res.getChatMsg()
-      msgsRef.current.push(chatMsg)
+      const chatMsgs = res.getChatMsgsList()
+      msgsRef.current.push(...chatMsgs)
       setMessages([...msgsRef.current])
     })
     stream.on('status', function (status) {

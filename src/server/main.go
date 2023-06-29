@@ -9,6 +9,7 @@ import (
 
 func main() {
 	setting.Init(".")
+	setting.InitDir()
 	log.Init()
 	db.Init()
 

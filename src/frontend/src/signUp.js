@@ -139,10 +139,10 @@ export default function SignUp(props) {
       return
     }
 
-    var md5 = require('md5')
+    const CryptoJS = require("crypto-js")
     const email = rawUserInfo.get('email')
     const name = rawUserInfo.get('name')
-    const password = md5(rawUserInfo.get('password'))
+    const password = CryptoJS.MD5(rawUserInfo.get('password')).toString()
 
     var registerInfo = new User.RegisterInfo()
     var userInfo = new User.UserInfo()

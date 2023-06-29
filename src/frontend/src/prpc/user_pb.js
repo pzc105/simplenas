@@ -703,7 +703,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.prpc.JoinChatRoomRes = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.prpc.JoinChatRoomRes.repeatedFields_, null);
 };
 goog.inherits(proto.prpc.JoinChatRoomRes, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -5429,6 +5429,13 @@ proto.prpc.ChatMessage.prototype.setMsg = function(value) {
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.prpc.JoinChatRoomRes.repeatedFields_ = [2];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -5461,7 +5468,8 @@ proto.prpc.JoinChatRoomRes.prototype.toObject = function(opt_includeInstance) {
 proto.prpc.JoinChatRoomRes.toObject = function(includeInstance, msg) {
   var f, obj = {
     itemId: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    chatMsg: (f = msg.getChatMsg()) && proto.prpc.ChatMessage.toObject(includeInstance, f)
+    chatMsgsList: jspb.Message.toObjectList(msg.getChatMsgsList(),
+    proto.prpc.ChatMessage.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -5505,7 +5513,7 @@ proto.prpc.JoinChatRoomRes.deserializeBinaryFromReader = function(msg, reader) {
     case 2:
       var value = new proto.prpc.ChatMessage;
       reader.readMessage(value,proto.prpc.ChatMessage.deserializeBinaryFromReader);
-      msg.setChatMsg(value);
+      msg.addChatMsgs(value);
       break;
     default:
       reader.skipField();
@@ -5543,9 +5551,9 @@ proto.prpc.JoinChatRoomRes.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getChatMsg();
-  if (f != null) {
-    writer.writeMessage(
+  f = message.getChatMsgsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
       2,
       f,
       proto.prpc.ChatMessage.serializeBinaryToWriter
@@ -5573,39 +5581,40 @@ proto.prpc.JoinChatRoomRes.prototype.setItemId = function(value) {
 
 
 /**
- * optional ChatMessage chat_msg = 2;
- * @return {?proto.prpc.ChatMessage}
+ * repeated ChatMessage chat_msgs = 2;
+ * @return {!Array<!proto.prpc.ChatMessage>}
  */
-proto.prpc.JoinChatRoomRes.prototype.getChatMsg = function() {
-  return /** @type{?proto.prpc.ChatMessage} */ (
-    jspb.Message.getWrapperField(this, proto.prpc.ChatMessage, 2));
+proto.prpc.JoinChatRoomRes.prototype.getChatMsgsList = function() {
+  return /** @type{!Array<!proto.prpc.ChatMessage>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.prpc.ChatMessage, 2));
 };
 
 
 /**
- * @param {?proto.prpc.ChatMessage|undefined} value
+ * @param {!Array<!proto.prpc.ChatMessage>} value
  * @return {!proto.prpc.JoinChatRoomRes} returns this
 */
-proto.prpc.JoinChatRoomRes.prototype.setChatMsg = function(value) {
-  return jspb.Message.setWrapperField(this, 2, value);
+proto.prpc.JoinChatRoomRes.prototype.setChatMsgsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
 
 
 /**
- * Clears the message field making it undefined.
+ * @param {!proto.prpc.ChatMessage=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.prpc.ChatMessage}
+ */
+proto.prpc.JoinChatRoomRes.prototype.addChatMsgs = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.prpc.ChatMessage, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
  * @return {!proto.prpc.JoinChatRoomRes} returns this
  */
-proto.prpc.JoinChatRoomRes.prototype.clearChatMsg = function() {
-  return this.setChatMsg(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.prpc.JoinChatRoomRes.prototype.hasChatMsg = function() {
-  return jspb.Message.getField(this, 2) != null;
+proto.prpc.JoinChatRoomRes.prototype.clearChatMsgsList = function() {
+  return this.setChatMsgsList([]);
 };
 
 

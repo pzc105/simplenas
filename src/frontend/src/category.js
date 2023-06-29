@@ -90,7 +90,7 @@ const CategoryItems = ({ parentId, shareid }) => {
           <Grid container spacing={2}>
             {items ?
               items.map((item) => (
-                <Grid key={item.id} item xs={12} lg={2} sx={{ ml: "0.5em", mt: "0.5em" }}>
+                <Grid key={item.id} item xs={10} sm={5} lg={2} sx={{ ml: "0.5em", mt: "0.5em" }}>
                   <Card onContextMenu={(e) => handleContextMenu(e, item.id)}>
                     <Box sx={{ display: "flex", justifyContent: "center", height: "4.3em" }}>
                       <img style={{ maxHeight: "5em" }} alt="Movie Poster"

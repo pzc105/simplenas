@@ -81,7 +81,9 @@ func Init(configPath string) {
 
 	GS.Server.HlsPath = GS.Server.MediaPath + "/hls"
 	GS.Server.PosterPath = GS.Server.MediaPath + "/poster"
+}
 
+func InitDir() {
 	os.MkdirAll(GS.Server.HlsPath, 0755)
 	os.MkdirAll(GS.Server.PosterPath, 0755)
 	os.MkdirAll(GS.Bt.SavePath, 0755)
