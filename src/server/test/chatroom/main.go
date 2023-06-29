@@ -74,7 +74,7 @@ func newSession() {
 			r, _ := s.Recv()
 			t, _ := time.Parse(time.RFC3339Nano, r.GetChatMsgs()[0].GetMsg())
 			d := time.Since(t)
-			if d > time.Millisecond*100 {
+			if d > time.Millisecond*100 && d%4 == 0 {
 				fmt.Printf("over %d\n", d/time.Millisecond)
 			}
 		}
@@ -98,7 +98,7 @@ func newSession() {
 func main() {
 	setting.Init(".")
 
-	sc := 350
+	sc := 1100
 
 	for i := 0; i < sc; i++ {
 		wg.Add(1)

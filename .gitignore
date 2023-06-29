@@ -19,6 +19,7 @@ zig-cache
 *.csr
 *.crt
 *.srl
+*.exe
 __debug_bin*
 pnas.log
 build
