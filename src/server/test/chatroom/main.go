@@ -10,6 +10,7 @@ import (
 	"pnas/setting"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"google.golang.org/grpc"
@@ -18,6 +19,9 @@ import (
 )
 
 var wg sync.WaitGroup
+var activeCount atomic.Int64
+var sc atomic.Int64
+var rc atomic.Int64
 
 const (
 	itemId = 5
@@ -74,13 +78,15 @@ func newSession() {
 			r, _ := s.Recv()
 			t, _ := time.Parse(time.RFC3339Nano, r.GetChatMsgs()[0].GetMsg())
 			d := time.Since(t)
-			if d > time.Millisecond*100 && d%4 == 0 {
-				fmt.Printf("overload, millisec: %d\n", d/time.Millisecond)
+			rc.Add(int64(len(r.GetChatMsgs())))
+			if d > time.Millisecond*1000 && d%4 == 0 {
+				//fmt.Printf("overload, millisec: %d\n", d/time.Millisecond)
 			}
 		}
 	}()
 	interval := time.Millisecond * 1000
 	<-time.After(time.Duration(rand.Int63() % (int64(interval))))
+	activeCount.Add(1)
 	for {
 		_, err := client.SendMsg2ChatRoom(ctx, &prpc.SendMsg2ChatRoomReq{
 			ItemId: itemId,
@@ -91,6 +97,7 @@ func newSession() {
 		if err != nil {
 			fmt.Printf("send %v\n", err)
 		}
+		sc.Add(1)
 		<-time.After(interval)
 	}
 }
@@ -98,12 +105,21 @@ func newSession() {
 func main() {
 	setting.Init(".")
 
-	sc := 3000
+	sessCount := 3000
 
-	for i := 0; i < sc; i++ {
+	for i := 0; i < sessCount; i++ {
 		wg.Add(1)
 		go newSession()
 	}
+
+	wg.Add(1)
+	go func() {
+		t := time.Now()
+		for {
+			<-time.After(time.Second)
+			fmt.Printf("sessCount: %d, sc: %d, rc: %d t: %f sec\n", activeCount.Load(), sc.Load(), rc.Load(), time.Since(t).Seconds())
+		}
+	}()
 
 	wg.Wait()
 }
