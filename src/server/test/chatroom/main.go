@@ -8,6 +8,8 @@ import (
 	"math/rand"
 	"pnas/prpc"
 	"pnas/setting"
+	"pnas/utils"
+	"strconv"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -77,13 +79,17 @@ func newSession() {
 		return
 	}
 	go func() {
+		fm := make(map[int64]bool)
 		for {
 			r, _ := s.Recv()
-			t, _ := time.Parse(time.RFC3339Nano, r.GetChatMsgs()[0].GetMsg())
-			d := time.Since(t)
 			rc.Add(int64(len(r.GetChatMsgs())))
-			if d > time.Millisecond*1000 && d%4 == 0 {
-				fmt.Printf("-- overload, millisec: %d\n", d/time.Millisecond)
+			for i := range r.GetChatMsgs() {
+				m := r.GetChatMsgs()[i]
+				c, _ := strconv.ParseInt(m.GetMsg(), 10, 64)
+				if _, b := fm[c]; b {
+					fmt.Printf("error msg: %d\n", c)
+				}
+				fm[c] = true
 			}
 		}
 	}()
@@ -100,16 +106,16 @@ func newSession() {
 	rLoopCount := 20
 	for {
 		lt := time.Now()
+		lsc := utils.FetchAndAdd(&sc, int64(1))
 		_, err := client.SendMsg2ChatRoom(ctx, &prpc.SendMsg2ChatRoomReq{
 			ItemId: itemId,
 			ChatMsg: &prpc.ChatMessage{
-				Msg: time.Now().Format(time.RFC3339Nano),
+				Msg: fmt.Sprintf("%d", lsc),
 			},
 		})
 		if err != nil {
 			fmt.Printf("send %v\n", err)
 		}
-		sc.Add(1)
 		sd := time.Since(lt) / time.Millisecond
 		if sd < interval {
 			<-time.After(interval - sd)

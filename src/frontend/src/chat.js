@@ -11,6 +11,7 @@ import { Container } from '@mui/system';
 
 export default function ChatPanel({ itemId }) {
 
+  const maxMaxCount = 1000
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
@@ -43,6 +44,9 @@ export default function ChatPanel({ itemId }) {
     stream.on('data', function (res) {
       const chatMsgs = res.getChatMsgsList()
       msgsRef.current.push(...chatMsgs)
+      if (msgsRef.current.length > maxMaxCount) {
+        msgsRef.current = msgsRef.current.slice(-maxMaxCount)
+      }
       setMessages([...msgsRef.current])
     })
     stream.on('status', function (status) {
