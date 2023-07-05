@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math/rand"
 	"pnas/user"
-	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -55,35 +54,4 @@ func TestChatRoom(t *testing.T) {
 	time.Sleep(time.Second * 2)
 	fmt.Printf("i1: %d, i2: %d\n", i1.Load(), i2.Load())
 	cr.Close()
-}
-
-func TestBenchmark(t *testing.T) {
-	cr := &ChatRoomImpl{}
-	cr.Init()
-
-	maxDuration := time.Duration(0)
-
-	for i := 0; i < 10000; i++ {
-		cr.Join(int64(i), func(cms []*ChatMessage) {
-			cm := cms[0]
-			d := time.Since(cm.SentTime)
-			if d > maxDuration {
-				maxDuration = d
-			}
-		})
-	}
-	var wg sync.WaitGroup
-	for i := 0; i < 6; i++ {
-		wg.Add(1)
-		go func() {
-			for j := 0; j < 100000; j++ {
-				cr.Broadcast(&ChatMessage{
-					SentTime: time.Now(),
-				})
-			}
-			wg.Add(-1)
-		}()
-	}
-	wg.Wait()
-	fmt.Printf("maxDuration: %d\n", maxDuration)
 }

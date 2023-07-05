@@ -12,6 +12,7 @@ const (
 )
 
 type userData struct {
+	sessionId   int64
 	sendFunc    SendFunc
 	nextReadPos uint64
 }
@@ -57,8 +58,11 @@ func (cr *ChatRoomImpl) send2Session(ud *userData) {
 	var msgs []*ChatMessage
 	for ; ud.nextReadPos < wp; ud.nextReadPos++ {
 		m := cr.msgBuffers[ud.nextReadPos&uint64(len(cr.msgBuffers)-1)]
-		if m == nil || m.version != ud.nextReadPos {
+		if m == nil || m.version < ud.nextReadPos {
 			break
+		}
+		if m.version > ud.nextReadPos {
+			continue
 		}
 		msgs = append(msgs, m.msg)
 	}
@@ -74,6 +78,7 @@ func (cr *ChatRoomImpl) Join(sessionId int64, sendFunc SendFunc) {
 		nr = wp - 100
 	}
 	ud := &userData{
+		sessionId:   sessionId,
 		sendFunc:    sendFunc,
 		nextReadPos: nr,
 	}
@@ -102,13 +107,15 @@ func (cr *ChatRoomImpl) Broadcast(m *ChatMessage) {
 		version: pos,
 		msg:     m,
 	}
-
-	cr.mtx.Lock()
-	defer cr.mtx.Unlock()
-	for _, ud := range cr.usersData {
-		ud2 := ud
-		cr.taskqueue.Put(func() {
-			cr.send2Session(ud2)
-		})
-	}
+	cr.taskqueue.Put(func() {
+		cr.mtx.Lock()
+		udtmp := make([]*userData, 0, len(cr.usersData))
+		for _, ud := range cr.usersData {
+			udtmp = append(udtmp, ud)
+		}
+		cr.mtx.Unlock()
+		for _, ud := range udtmp {
+			cr.send2Session(ud)
+		}
+	})
 }

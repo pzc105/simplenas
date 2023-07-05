@@ -73,7 +73,7 @@ func (tq *TaskQueue) TryPut(f func()) bool {
 }
 
 func (tq *TaskQueue) Put(f func()) {
-	FetchAndAdd(&tq.used, int32(1))
+	tq.used.Add(1)
 	tq.queue <- f
 }
 
@@ -84,7 +84,7 @@ func (tq *TaskQueue) handle() {
 		if !ok {
 			return
 		}
-		FetchAndAdd(&tq.used, int32(-1))
+		tq.used.Add(-1)
 		f()
 	}
 }

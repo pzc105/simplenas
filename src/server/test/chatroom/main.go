@@ -24,7 +24,10 @@ var sc atomic.Int64
 var rc atomic.Int64
 
 const (
-	itemId = 5
+	sessCount = 1500
+	itemId    = 5
+	email     = "12@12"
+	pwd       = "123"
 )
 
 func getCookie(header metadata.MD, key string) string {
@@ -50,11 +53,11 @@ func newSession() {
 	conn, _ := grpc.Dial(fmt.Sprintf("%s:%d", setting.GS.Server.Domain, setting.GS.Server.Port), grpc.WithTransportCredentials(creds))
 	client := prpc.NewUserServiceClient(conn)
 	h := md5.New()
-	h.Write([]byte("123"))
+	h.Write([]byte(pwd))
 	pwd := h.Sum(nil)
 	var header metadata.MD
 	_, err = client.Login(context.Background(), &prpc.LoginInfo{
-		Email:      "12@12",
+		Email:      email,
 		Passwd:     hex.EncodeToString(pwd),
 		RememberMe: true,
 	}, grpc.Header(&header))
@@ -80,14 +83,23 @@ func newSession() {
 			d := time.Since(t)
 			rc.Add(int64(len(r.GetChatMsgs())))
 			if d > time.Millisecond*1000 && d%4 == 0 {
-				//fmt.Printf("overload, millisec: %d\n", d/time.Millisecond)
+				fmt.Printf("-- overload, millisec: %d\n", d/time.Millisecond)
 			}
 		}
 	}()
+	activeCount.Add(1)
+	defer activeCount.Add(-1)
+
+	for activeCount.Load() != sessCount {
+		<-time.After(time.Duration(time.Millisecond * 10))
+	}
+	<-time.After(time.Duration(time.Second * 1))
 	interval := time.Millisecond * 1000
 	<-time.After(time.Duration(rand.Int63() % (int64(interval))))
-	activeCount.Add(1)
+
+	rLoopCount := 20
 	for {
+		lt := time.Now()
 		_, err := client.SendMsg2ChatRoom(ctx, &prpc.SendMsg2ChatRoomReq{
 			ItemId: itemId,
 			ChatMsg: &prpc.ChatMessage{
@@ -98,14 +110,19 @@ func newSession() {
 			fmt.Printf("send %v\n", err)
 		}
 		sc.Add(1)
-		<-time.After(interval)
+		sd := time.Since(lt) / time.Millisecond
+		if sd < interval {
+			<-time.After(interval - sd)
+		}
+		rLoopCount -= 1
+		if rLoopCount <= 0 {
+			break
+		}
 	}
 }
 
 func main() {
 	setting.Init(".")
-
-	sessCount := 3000
 
 	for i := 0; i < sessCount; i++ {
 		wg.Add(1)
@@ -114,10 +131,14 @@ func main() {
 
 	wg.Add(1)
 	go func() {
+		defer wg.Add(-1)
 		t := time.Now()
 		for {
 			<-time.After(time.Second)
 			fmt.Printf("sessCount: %d, sc: %d, rc: %d t: %f sec\n", activeCount.Load(), sc.Load(), rc.Load(), time.Since(t).Seconds())
+			if activeCount.Load() == 0 {
+				return
+			}
 		}
 	}()
 
