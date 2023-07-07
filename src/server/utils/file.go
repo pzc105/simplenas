@@ -19,14 +19,14 @@ func GetFileName(absFileName string) string {
 	return ret
 }
 
-func GetFilesByFileExtension(searchPath string, suffixes []string) []string {
+func GetNotZeroFilesByFileExtension(searchPath string, suffixes []string) []string {
 	var ret []string
-	filepath.Walk(searchPath, func(path string, info os.FileInfo, err error) error {
+	filepath.Walk(searchPath, func(pathstr string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 		if info.IsDir() {
-			if path != searchPath {
+			if pathstr != searchPath {
 				return filepath.SkipDir
 			}
 			return nil
@@ -34,6 +34,10 @@ func GetFilesByFileExtension(searchPath string, suffixes []string) []string {
 		if !info.IsDir() && info.Size() > 0 {
 			for _, s := range suffixes {
 				if strings.HasSuffix(info.Name(), s) {
+					stat, err := os.Stat(path.Join(pathstr, info.Name()))
+					if err != nil || stat.Size() == 0 {
+						return nil
+					}
 					ret = append(ret, info.Name())
 					return nil
 				}

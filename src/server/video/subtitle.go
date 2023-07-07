@@ -18,11 +18,12 @@ func GetStreams(streams []*Stream, pred func(s *Stream) bool) []*Stream {
 }
 
 type GenSubtitleOpts struct {
-	InputFileName string
-	OutDir        string
-	SubtitleName  string
-	Format        string
-	Suffix        string
+	InputFileName   string
+	SubtitleContent []byte
+	OutDir          string
+	SubtitleName    string
+	Format          string
+	Suffix          string
 }
 
 func GenSubtitle(params *GenSubtitleOpts) error {
@@ -42,7 +43,14 @@ func GenSubtitle(params *GenSubtitleOpts) error {
 	cmdParams = append(cmdParams, "-threads")
 	cmdParams = append(cmdParams, "4")
 	cmdParams = append(cmdParams, "-i")
-	cmdParams = append(cmdParams, params.InputFileName)
+	byStdin := false
+	if len(params.InputFileName) != 0 {
+		cmdParams = append(cmdParams, params.InputFileName)
+	} else if len(params.SubtitleContent) != 0 {
+		cmdParams = append(cmdParams, "-")
+		byStdin = true
+	}
+
 	cmdParams = append(cmdParams, "-threads")
 	cmdParams = append(cmdParams, "4")
 	cmdParams = append(cmdParams, "-v")
@@ -73,11 +81,17 @@ func GenSubtitle(params *GenSubtitleOpts) error {
 
 	cmd := exec.Command("ffmpeg", cmdParams...)
 	log.Info(cmd.String())
-	out, err := cmd.CombinedOutput()
+	stdin, err := cmd.StdinPipe()
 	if err != nil {
-		log.Warn(cmd.String())
-		log.Warnf("%+v, %v", string(out), err)
 		return err
 	}
-	return nil
+	defer stdin.Close()
+	if err := cmd.Start(); err != nil {
+		return err
+	}
+	if byStdin {
+		stdin.Write(params.SubtitleContent)
+	}
+	err = cmd.Wait()
+	return err
 }

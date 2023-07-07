@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os/exec"
 	"pnas/log"
+	"pnas/setting"
 	"sort"
 	"strings"
 )
@@ -191,4 +192,8 @@ func GenHls(params *GenHlsOpts) error {
 	}
 
 	return nil
+}
+
+func GetHlsPlayListPath(vid ID) string {
+	return setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%d", vid)
 }

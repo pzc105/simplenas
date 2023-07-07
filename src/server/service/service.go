@@ -641,10 +641,10 @@ func (ser *CoreService) QueryItemInfo(ctx context.Context, req *prpc.QueryItemIn
 	switch itemType {
 	case prpc.CategoryItem_Video:
 		res.VideoInfo = &prpc.Video{}
-		vid, _ := strconv.ParseInt(itemInfo.ResourcePath, 10, 64)
+		vid := item.GetVideoId()
 		lookPath := setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%d", vid)
-		res.VideoInfo.Id = vid
-		res.VideoInfo.SubtitlePaths = utils.GetFilesByFileExtension(lookPath, []string{".vtt"})
+		res.VideoInfo.Id = int64(vid)
+		res.VideoInfo.SubtitlePaths = utils.GetNotZeroFilesByFileExtension(lookPath, []string{".vtt"})
 	}
 	return res, nil
 }
@@ -748,6 +748,21 @@ func (ser *CoreService) RefreshSubtitle(ctx context.Context, req *prpc.RefreshSu
 		return nil, status.Error(codes.Aborted, err.Error())
 	}
 	return &prpc.RefreshSubtitleRes{}, nil
+}
+
+func (ser *CoreService) UploadSubtitle(ctx context.Context, req *prpc.UploadSubtitleReq) (*prpc.UploadSubtitleRes, error) {
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "not found session")
+	}
+	if req == nil || len(req.Subtitles) == 0 {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	err := ser.um.UploadSubtitle(ses.UserId, req)
+	if err != nil {
+		return nil, err
+	}
+	return &prpc.UploadSubtitleRes{}, nil
 }
 
 func (ser *CoreService) JoinChatRoom(req *prpc.JoinChatRoomReq, stream prpc.UserService_JoinChatRoomServer) error {

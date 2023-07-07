@@ -291,7 +291,9 @@ proto.prpc.CategoryItem.Type = {
   HOME: 1,
   DIRECTORY: 2,
   VIDEO: 3,
-  OTHERFILE: 4
+  OTHERFILE: 4,
+  AUDIO: 5,
+  MUSICDIRECTORY: 6
 };
 
 /**

@@ -59,6 +59,8 @@ export namespace CategoryItem {
     DIRECTORY = 2,
     VIDEO = 3,
     OTHERFILE = 4,
+    AUDIO = 5,
+    MUSICDIRECTORY = 6,
   }
 }
 

@@ -793,6 +793,49 @@ export class UserServiceClient {
     this.methodDescriptorRefreshSubtitle);
   }
 
+  methodDescriptorUploadSubtitle = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/UploadSubtitle',
+    grpcWeb.MethodType.UNARY,
+    user_pb.UploadSubtitleReq,
+    user_pb.UploadSubtitleRes,
+    (request: user_pb.UploadSubtitleReq) => {
+      return request.serializeBinary();
+    },
+    user_pb.UploadSubtitleRes.deserializeBinary
+  );
+
+  uploadSubtitle(
+    request: user_pb.UploadSubtitleReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.UploadSubtitleRes>;
+
+  uploadSubtitle(
+    request: user_pb.UploadSubtitleReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: user_pb.UploadSubtitleRes) => void): grpcWeb.ClientReadableStream<user_pb.UploadSubtitleRes>;
+
+  uploadSubtitle(
+    request: user_pb.UploadSubtitleReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: user_pb.UploadSubtitleRes) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.UserService/UploadSubtitle',
+        request,
+        metadata || {},
+        this.methodDescriptorUploadSubtitle,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.UserService/UploadSubtitle',
+    request,
+    metadata || {},
+    this.methodDescriptorUploadSubtitle);
+  }
+
   methodDescriptorJoinChatRoom = new grpcWeb.MethodDescriptor(
     '/prpc.UserService/JoinChatRoom',
     grpcWeb.MethodType.SERVER_STREAMING,

@@ -586,6 +586,68 @@ export namespace RefreshSubtitleRes {
   }
 }
 
+export class SubtitleFile extends jspb.Message {
+  getName(): string;
+  setName(value: string): SubtitleFile;
+
+  getContent(): Uint8Array | string;
+  getContent_asU8(): Uint8Array;
+  getContent_asB64(): string;
+  setContent(value: Uint8Array | string): SubtitleFile;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): SubtitleFile.AsObject;
+  static toObject(includeInstance: boolean, msg: SubtitleFile): SubtitleFile.AsObject;
+  static serializeBinaryToWriter(message: SubtitleFile, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): SubtitleFile;
+  static deserializeBinaryFromReader(message: SubtitleFile, reader: jspb.BinaryReader): SubtitleFile;
+}
+
+export namespace SubtitleFile {
+  export type AsObject = {
+    name: string,
+    content: Uint8Array | string,
+  }
+}
+
+export class UploadSubtitleReq extends jspb.Message {
+  getItemId(): number;
+  setItemId(value: number): UploadSubtitleReq;
+
+  getSubtitlesList(): Array<SubtitleFile>;
+  setSubtitlesList(value: Array<SubtitleFile>): UploadSubtitleReq;
+  clearSubtitlesList(): UploadSubtitleReq;
+  addSubtitles(value?: SubtitleFile, index?: number): SubtitleFile;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UploadSubtitleReq.AsObject;
+  static toObject(includeInstance: boolean, msg: UploadSubtitleReq): UploadSubtitleReq.AsObject;
+  static serializeBinaryToWriter(message: UploadSubtitleReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UploadSubtitleReq;
+  static deserializeBinaryFromReader(message: UploadSubtitleReq, reader: jspb.BinaryReader): UploadSubtitleReq;
+}
+
+export namespace UploadSubtitleReq {
+  export type AsObject = {
+    itemId: number,
+    subtitlesList: Array<SubtitleFile.AsObject>,
+  }
+}
+
+export class UploadSubtitleRes extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UploadSubtitleRes.AsObject;
+  static toObject(includeInstance: boolean, msg: UploadSubtitleRes): UploadSubtitleRes.AsObject;
+  static serializeBinaryToWriter(message: UploadSubtitleRes, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UploadSubtitleRes;
+  static deserializeBinaryFromReader(message: UploadSubtitleRes, reader: jspb.BinaryReader): UploadSubtitleRes;
+}
+
+export namespace UploadSubtitleRes {
+  export type AsObject = {
+  }
+}
+
 export class JoinChatRoomReq extends jspb.Message {
   getItemId(): number;
   setItemId(value: number): JoinChatRoomReq;

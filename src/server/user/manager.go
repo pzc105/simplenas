@@ -10,6 +10,7 @@ import (
 	"pnas/category"
 	"pnas/db"
 	"pnas/log"
+	"pnas/phttp"
 	"pnas/prpc"
 	"pnas/setting"
 	"pnas/utils"
@@ -552,4 +553,74 @@ func (um *UserManger) IsItemShared(sharedItemId category.ID, itemId category.ID)
 		}
 		nextParentId = ii.ParentId
 	}
+}
+
+func writeSubtitle2Item(item *category.CategoryItem, rpcSubtitle *prpc.SubtitleFile) error {
+	if item.GetType() != prpc.CategoryItem_Video {
+		return errors.New("error type")
+	}
+	dir := video.GetHlsPlayListPath(item.GetVideoId())
+	_, err := os.Stat(dir)
+	if err != nil {
+		return err
+	}
+	ext := path.Ext(rpcSubtitle.GetName())
+	if phttp.IsHtml5SupportSubtitle(ext) {
+		fullPath := path.Join(dir, rpcSubtitle.Name)
+		fd, err := os.Open(fullPath)
+		if err != nil {
+			return err
+		}
+		fd.Write(rpcSubtitle.Content)
+		fd.Close()
+	} else {
+		err := video.GenSubtitle(&video.GenSubtitleOpts{
+			SubtitleContent: rpcSubtitle.Content,
+			OutDir:          dir,
+			SubtitleName:    rpcSubtitle.Name,
+			Format:          "webvtt",
+			Suffix:          "vtt",
+		})
+		return err
+	}
+	return nil
+}
+
+func (um *UserManger) UploadSubtitle(userId ID, req *prpc.UploadSubtitleReq) error {
+	item, err := um.categoryMgr.GetItem(category.ID(req.ItemId))
+	if err != nil {
+		return err
+	}
+	if !item.HasWriteAuth(int64(userId)) {
+		return errors.New("no auth")
+	}
+	if item.GetType() == prpc.CategoryItem_Video {
+		for _, s := range req.Subtitles {
+			writeSubtitle2Item(item, s)
+		}
+	} else {
+		subItems, err := um.categoryMgr.GetItems(item.GetSubItemIds()...)
+		if err != nil {
+			return err
+		}
+		var itemNames []string
+		for _, item := range subItems {
+			itemNames = append(itemNames, item.GetItemInfo().Name)
+		}
+		itemEpisodeMap := utils.ParseEpisode(itemNames)
+		var subtitleName []string
+		for _, s := range req.Subtitles {
+			subtitleName = append(subtitleName, s.GetName())
+		}
+		subtitleEpisodeMap := utils.ParseEpisode(subtitleName)
+		for ep, i := range itemEpisodeMap {
+			j, ok := subtitleEpisodeMap[ep]
+			if !ok {
+				continue
+			}
+			item := subItems[i]
+			writeSubtitle2Item(item, req.Subtitles[j])
+		}
+	}
+	return nil
 }

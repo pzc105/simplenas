@@ -6,6 +6,8 @@ import (
 	"pnas/log"
 	"pnas/prpc"
 	"pnas/utils"
+	"pnas/video"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -293,4 +295,17 @@ func (c *CategoryItem) GetPosterPath() string {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
 	return c.base.PosterPath
+}
+
+func (c *CategoryItem) GetVideoId() video.ID {
+	c.mtx.Lock()
+	defer c.mtx.Unlock()
+	if c.base.TypeId != prpc.CategoryItem_Video {
+		return -1
+	}
+	vid, err := strconv.ParseInt(c.base.ResourcePath, 10, 64)
+	if err != nil {
+		return -1
+	}
+	return video.ID(vid)
 }

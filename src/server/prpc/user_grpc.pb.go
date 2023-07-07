@@ -37,6 +37,7 @@ const (
 	UserService_QuerySubItems_FullMethodName    = "/prpc.UserService/QuerySubItems"
 	UserService_QueryItemInfo_FullMethodName    = "/prpc.UserService/QueryItemInfo"
 	UserService_RefreshSubtitle_FullMethodName  = "/prpc.UserService/RefreshSubtitle"
+	UserService_UploadSubtitle_FullMethodName   = "/prpc.UserService/UploadSubtitle"
 	UserService_JoinChatRoom_FullMethodName     = "/prpc.UserService/JoinChatRoom"
 	UserService_SendMsg2ChatRoom_FullMethodName = "/prpc.UserService/SendMsg2ChatRoom"
 )
@@ -63,6 +64,7 @@ type UserServiceClient interface {
 	QuerySubItems(ctx context.Context, in *QuerySubItemsReq, opts ...grpc.CallOption) (*QuerySubItemsRes, error)
 	QueryItemInfo(ctx context.Context, in *QueryItemInfoReq, opts ...grpc.CallOption) (*QueryItemInfoRes, error)
 	RefreshSubtitle(ctx context.Context, in *RefreshSubtitleReq, opts ...grpc.CallOption) (*RefreshSubtitleRes, error)
+	UploadSubtitle(ctx context.Context, in *UploadSubtitleReq, opts ...grpc.CallOption) (*UploadSubtitleRes, error)
 	JoinChatRoom(ctx context.Context, in *JoinChatRoomReq, opts ...grpc.CallOption) (UserService_JoinChatRoomClient, error)
 	SendMsg2ChatRoom(ctx context.Context, in *SendMsg2ChatRoomReq, opts ...grpc.CallOption) (*SendMsg2ChatRoomRes, error)
 }
@@ -260,6 +262,15 @@ func (c *userServiceClient) RefreshSubtitle(ctx context.Context, in *RefreshSubt
 	return out, nil
 }
 
+func (c *userServiceClient) UploadSubtitle(ctx context.Context, in *UploadSubtitleReq, opts ...grpc.CallOption) (*UploadSubtitleRes, error) {
+	out := new(UploadSubtitleRes)
+	err := c.cc.Invoke(ctx, UserService_UploadSubtitle_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userServiceClient) JoinChatRoom(ctx context.Context, in *JoinChatRoomReq, opts ...grpc.CallOption) (UserService_JoinChatRoomClient, error) {
 	stream, err := c.cc.NewStream(ctx, &UserService_ServiceDesc.Streams[1], UserService_JoinChatRoom_FullMethodName, opts...)
 	if err != nil {
@@ -323,6 +334,7 @@ type UserServiceServer interface {
 	QuerySubItems(context.Context, *QuerySubItemsReq) (*QuerySubItemsRes, error)
 	QueryItemInfo(context.Context, *QueryItemInfoReq) (*QueryItemInfoRes, error)
 	RefreshSubtitle(context.Context, *RefreshSubtitleReq) (*RefreshSubtitleRes, error)
+	UploadSubtitle(context.Context, *UploadSubtitleReq) (*UploadSubtitleRes, error)
 	JoinChatRoom(*JoinChatRoomReq, UserService_JoinChatRoomServer) error
 	SendMsg2ChatRoom(context.Context, *SendMsg2ChatRoomReq) (*SendMsg2ChatRoomRes, error)
 	mustEmbedUnimplementedUserServiceServer()
@@ -385,6 +397,9 @@ func (UnimplementedUserServiceServer) QueryItemInfo(context.Context, *QueryItemI
 }
 func (UnimplementedUserServiceServer) RefreshSubtitle(context.Context, *RefreshSubtitleReq) (*RefreshSubtitleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshSubtitle not implemented")
+}
+func (UnimplementedUserServiceServer) UploadSubtitle(context.Context, *UploadSubtitleReq) (*UploadSubtitleRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadSubtitle not implemented")
 }
 func (UnimplementedUserServiceServer) JoinChatRoom(*JoinChatRoomReq, UserService_JoinChatRoomServer) error {
 	return status.Errorf(codes.Unimplemented, "method JoinChatRoom not implemented")
@@ -732,6 +747,24 @@ func _UserService_RefreshSubtitle_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_UploadSubtitle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadSubtitleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).UploadSubtitle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_UploadSubtitle_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).UploadSubtitle(ctx, req.(*UploadSubtitleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserService_JoinChatRoom_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(JoinChatRoomReq)
 	if err := stream.RecvMsg(m); err != nil {
@@ -845,6 +878,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RefreshSubtitle",
 			Handler:    _UserService_RefreshSubtitle_Handler,
+		},
+		{
+			MethodName: "UploadSubtitle",
+			Handler:    _UserService_UploadSubtitle_Handler,
 		},
 		{
 			MethodName: "SendMsg2ChatRoom",
