@@ -64,6 +64,7 @@ export default function PlyrWrap() {
     } else {
       hls.current.levels.forEach((level, levelIndex) => {
         if (level.height === newQuality) {
+          console.log("new level:", levelIndex)
           hls.current.currentLevel = levelIndex;
         }
       });
@@ -71,6 +72,7 @@ export default function PlyrWrap() {
   }
 
   function updateAudioTrack(newTrack) {
+    console.log("new audioTrack:", newTrack)
     hls.current.audioTrack = newTrack;
   }
 
@@ -114,6 +116,7 @@ export default function PlyrWrap() {
     hls.current = new Hls(hlsconfig);
     hls.current.attachMedia(videoRef.current);
     hls.current.on(Hls.Events.AUDIO_TRACKS_UPDATED, function (event, data) {
+      console.log("AUDIO_TRACKS_UPDATED", event, data)
       let audioItemLabels = {}
       const audioTracks = hls.current.audioTracks.map((a, i) => {
         audioItemLabels[i] = a.lang
@@ -153,9 +156,6 @@ export default function PlyrWrap() {
         enabled: true, fallback: true, iosNative: true, container: null
       }
 
-      if (player.current) {
-        player.current.destroy()
-      }
       player.current = new Plyr(videoRef.current, defaultOptions);
       player.current.on('enterfullscreen', event => {
         if (window.screen.orientation.lock)
@@ -169,9 +169,8 @@ export default function PlyrWrap() {
     })
     hls.current.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
       availableQualities.current = hls.current.levels.map((l) => l.height)
-      availableQualities.current.unshift(0) //prepend 0 to quality array
-
       hls.current.startLevel = availableQualities.current.length - 1
+      availableQualities.current.unshift(0) //prepend 0 to quality array
       hls.current.startLoad(0)
       requestStartOffset()
     })
