@@ -34,7 +34,7 @@ func GetNotZeroFilesByFileExtension(searchPath string, suffixes []string) []stri
 		if !info.IsDir() && info.Size() > 0 {
 			for _, s := range suffixes {
 				if strings.HasSuffix(info.Name(), s) {
-					stat, err := os.Stat(path.Join(pathstr, info.Name()))
+					stat, err := os.Stat(pathstr)
 					if err != nil || stat.Size() == 0 {
 						return nil
 					}

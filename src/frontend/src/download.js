@@ -9,7 +9,7 @@ import SideUtils from './sideUtils.js';
 import { btSlice, eventSlice } from './store.js'
 import * as Bt from './prpc/bt_pb.js'
 import userService from './rpcClient.js'
-import FileUpload from './upload.js'
+import FileUpload from './uploadTorrent.js'
 import { ProgressLists } from './downloadlist.js'
 
 const DownloadContainer = styled('div')(({ theme }) => ({

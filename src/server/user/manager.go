@@ -567,7 +567,7 @@ func writeSubtitle2Item(item *category.CategoryItem, rpcSubtitle *prpc.SubtitleF
 	ext := path.Ext(rpcSubtitle.GetName())
 	if phttp.IsHtml5SupportSubtitle(ext) {
 		fullPath := path.Join(dir, rpcSubtitle.Name)
-		fd, err := os.Open(fullPath)
+		fd, err := os.OpenFile(fullPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
 		if err != nil {
 			return err
 		}
@@ -577,7 +577,7 @@ func writeSubtitle2Item(item *category.CategoryItem, rpcSubtitle *prpc.SubtitleF
 		err := video.GenSubtitle(&video.GenSubtitleOpts{
 			SubtitleContent: rpcSubtitle.Content,
 			OutDir:          dir,
-			SubtitleName:    rpcSubtitle.Name,
+			SubtitleName:    utils.GetFileName(rpcSubtitle.Name),
 			Format:          "webvtt",
 			Suffix:          "vtt",
 		})

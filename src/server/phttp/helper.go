@@ -2,7 +2,7 @@ package phttp
 
 func IsHtml5SupportSubtitle(ext string) bool {
 	switch ext {
-	case "vtt":
+	case ".vtt":
 		return true
 	}
 	return false

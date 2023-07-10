@@ -1,6 +1,7 @@
 package video
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"os/exec"
@@ -28,10 +29,21 @@ type GenSubtitleOpts struct {
 
 func GenSubtitle(params *GenSubtitleOpts) error {
 	os.MkdirAll(params.OutDir, 0755)
-	meta, err := GetMetadata(params.InputFileName)
-	if err != nil {
-		return err
+	byStdin := len(params.InputFileName) == 0
+	var meta *Metadata
+	var err error
+	if !byStdin {
+		meta, err = GetMetadata(params.InputFileName)
+		if err != nil {
+			return err
+		}
+	} else {
+		meta, err = GetMetadataByStdin(params.SubtitleContent)
+		if err != nil {
+			return err
+		}
 	}
+
 	streams := GetStreams(meta.Streams, IsSubTitleStream)
 	if len(streams) == 0 {
 		return nil
@@ -43,8 +55,7 @@ func GenSubtitle(params *GenSubtitleOpts) error {
 	cmdParams = append(cmdParams, "-threads")
 	cmdParams = append(cmdParams, "4")
 	cmdParams = append(cmdParams, "-i")
-	byStdin := false
-	if len(params.InputFileName) != 0 {
+	if !byStdin {
 		cmdParams = append(cmdParams, params.InputFileName)
 	} else if len(params.SubtitleContent) != 0 {
 		cmdParams = append(cmdParams, "-")
@@ -81,16 +92,13 @@ func GenSubtitle(params *GenSubtitleOpts) error {
 
 	cmd := exec.Command("ffmpeg", cmdParams...)
 	log.Info(cmd.String())
-	stdin, err := cmd.StdinPipe()
-	if err != nil {
-		return err
+	if byStdin {
+		var wb bytes.Buffer
+		wb.Write(params.SubtitleContent)
+		cmd.Stdin = &wb
 	}
-	defer stdin.Close()
 	if err := cmd.Start(); err != nil {
 		return err
-	}
-	if byStdin {
-		stdin.Write(params.SubtitleContent)
 	}
 	err = cmd.Wait()
 	return err

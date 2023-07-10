@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as store from './store.js'
 import SideUtils from './sideUtils.js';
 import ChatPanel from './chat.js';
+import SubtitleUploader from './uploadSubtitle.js';
 
 import * as User from './prpc/user_pb.js'
 import * as Category from './prpc/category_pb.js'
@@ -83,8 +84,20 @@ const CategoryItems = ({ parentId, shareid }) => {
     setOpen({ ...open, [itemId]: false });
   };
 
+  const uploadSubtitleAnchorElRef = useRef(null)
+  const [popoverOpen, setPopoverOpen] = useState(false)
+  const handlePopoverClose = () => {
+    setPopoverOpen(false)
+  }
+  const [subtitleUploadItemId, setSubtitleUploadItemId] = useState(-1)
+  const UploadSubtitle = (item) => {
+    setSubtitleUploadItemId(item.id)
+    setPopoverOpen(true)
+    handleClose(item.id)
+  }
+
   return (
-    <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }}>
+    <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }} ref={uploadSubtitleAnchorElRef}>
       <Grid container spacing={2} sx={{ display: "flex" }}>
         <Grid item xs={12}>
           <Grid container spacing={2}>
@@ -132,6 +145,7 @@ const CategoryItems = ({ parentId, shareid }) => {
                     >
                       <MenuItem onClick={(e) => DelCategoryItem(item)}>删除</MenuItem>
                       <MenuItem onClick={(e) => ShareCategoryItem(item)}>分享</MenuItem>
+                      <MenuItem onClick={(e) => UploadSubtitle(item)}>上传字幕</MenuItem>
                     </Menu>
                   </Card>
                 </Grid>
@@ -140,6 +154,22 @@ const CategoryItems = ({ parentId, shareid }) => {
           </Grid>
         </Grid>
       </Grid>
+      <Popover
+        id={"id"}
+        open={popoverOpen}
+        anchorEl={uploadSubtitleAnchorElRef.current}
+        onClose={handlePopoverClose}
+        anchorOrigin={{
+          vertical: 'center',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'center',
+          horizontal: 'center',
+        }}
+      >
+        <SubtitleUploader itemId={subtitleUploadItemId} onClose={() => setPopoverOpen(false)} />
+      </Popover>
     </Paper>
   )
 }
