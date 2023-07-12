@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Container, CssBaseline } from '@mui/material';
 import { useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Plyr from 'plyr';
 import 'plyr/dist/plyr.css';
@@ -9,11 +10,13 @@ import Hls from 'hls.js'
 import { serverAddress } from './rpcClient.js'
 import * as User from './prpc/user_pb.js'
 import * as Category from './prpc/category_pb.js'
+import * as store from './store.js'
 import userService from './rpcClient.js'
 import { isNumber } from './utils';
 
 
 export default function PlyrWrap() {
+  const dispatch = useDispatch()
   const location = useLocation()
   const searchParams = new URLSearchParams(location.search)
   const shareid = searchParams.get('shareid')
@@ -25,6 +28,7 @@ export default function PlyrWrap() {
   const [subtitles, setSubtitles] = useState([])
   const videoRef = useRef(null);
   const vidRef = useRef(-1);
+  const selectedAudio = useSelector((state) => store.getSelectedAudio(state, vidRef.current))
 
   let lastOffsetTime = useRef(0.0)
   useEffect(() => {
@@ -64,7 +68,6 @@ export default function PlyrWrap() {
     } else {
       hls.current.levels.forEach((level, levelIndex) => {
         if (level.height === newQuality) {
-          console.log("new level:", levelIndex)
           hls.current.currentLevel = levelIndex;
         }
       });
@@ -72,8 +75,8 @@ export default function PlyrWrap() {
   }
 
   function updateAudioTrack(newTrack) {
-    console.log("new audioTrack:", newTrack)
-    hls.current.audioTrack = newTrack;
+    hls.current.audioTrack = newTrack
+    dispatch(store.playerSlice.actions.updateSelectedAudio({ vid: vidRef.current, aid: newTrack }))
   }
 
   var availableQualities = useRef([])
@@ -116,7 +119,6 @@ export default function PlyrWrap() {
     hls.current = new Hls(hlsconfig);
     hls.current.attachMedia(videoRef.current);
     hls.current.on(Hls.Events.AUDIO_TRACKS_UPDATED, function (event, data) {
-      console.log("AUDIO_TRACKS_UPDATED", event, data)
       let audioItemLabels = {}
       const audioTracks = hls.current.audioTracks.map((a, i) => {
         audioItemLabels[i] = a.lang
@@ -129,15 +131,18 @@ export default function PlyrWrap() {
           'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
         customSettings: ['audio'],
       }
-
       defaultOptions.quality = {
         default: availableQualities.current.length - 1,
         options: availableQualities.current,
         forced: true,
         onChange: (nv) => updateQuality(nv),
       }
+      let defaultAudioId = audioTracks[0]
+      if (selectedAudio) {
+        defaultAudioId = Number(selectedAudio)
+      }
       defaultOptions.audio = {
-        default: audioTracks[0],
+        default: defaultAudioId,
         options: audioTracks,
         onChange: (nv) => updateAudioTrack(nv),
       }
@@ -160,6 +165,9 @@ export default function PlyrWrap() {
       player.current.on('enterfullscreen', event => {
         if (window.screen.orientation.lock)
           window.screen.orientation.lock('landscape')
+      });
+      player.current.on('ready', event => {
+        updateAudioTrack(defaultAudioId)
       });
 
       player.current.on('exitfullscreen', event => {

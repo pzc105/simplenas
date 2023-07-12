@@ -29,7 +29,7 @@ const FolderSelector = ({ pathItemId, enter, select }) => {
         value={selectedValue}
         inputProps={{ "aria-label": "Without label" }}
       >
-        {pathItemId != userInfo.homeDirectoryId && (
+        {pathItemId !== userInfo.homeDirectoryId && (
           <MenuItem key="back"
             value={0}
             onClick={() => enter(pathItem.parentId)}
@@ -77,12 +77,13 @@ const FileListHandler = ({ infoHash }) => {
         dispatch(store.categorySlice.actions.updateItem(respone.getParentItem().toObject()))
         respone.getItemsList().map((i) => {
           dispatch(store.categorySlice.actions.updateItem(i.toObject()))
+          return null
         })
       } else {
         console.log(err)
       }
     })
-  }, [nowPathItemId])
+  }, [nowPathItemId, dispatch])
 
   const saveVideos = () => {
     var req = new User.AddBtVideosReq()
@@ -165,6 +166,7 @@ export default function BtVideosHandler({ infoHash }) {
         data.sort((a, b) => a.getFileIndex() - b.getFileIndex())
         data.map((d) => {
           localBtVideoMetadata.push(d.toObject())
+          return null
         })
         localBtVideoMetadata.sort((a, b) => a.index - b.index)
         var payload = {
@@ -184,12 +186,13 @@ export default function BtVideosHandler({ infoHash }) {
         dispatch(store.categorySlice.actions.updateItem(respone.getParentItem().toObject()))
         respone.getItemsList().map((i) => {
           dispatch(store.categorySlice.actions.updateItem(i.toObject()))
+          return null
         })
       } else {
         console.log(err)
       }
     })
-  }, [userInfo])
+  }, [userInfo, dispatch, infoHash])
 
   return (
     <Container>

@@ -74,7 +74,7 @@ const SharedItems = () => {
 
   useEffect(() => {
     querySharedItems()
-  }, [userInfo])
+  })
 
   const delShareItem = (shareid) => {
     let req = new User.DelSharedItemReq()

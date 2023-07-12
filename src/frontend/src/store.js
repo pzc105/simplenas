@@ -1,6 +1,6 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit'
 import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage/session'
+import storage from 'redux-persist/lib/storage'
 import { combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import * as category from './prpc/category_pb'
@@ -64,6 +64,18 @@ const categorySlice = createSlice({
   }
 })
 
+const playerSlice = createSlice({
+  name: 'player',
+  initialState: {
+    selectedAudio: {},
+  },
+  reducers: {
+    updateSelectedAudio: (state, action) => {
+      state.selectedAudio[action.payload.vid] = action.payload.aid
+    },
+  }
+})
+
 const eventSlice = createSlice({
   name: 'event',
   initialState: {
@@ -86,6 +98,7 @@ const reducers = combineReducers({
   user: userSlice.reducer,
   bt: btSlice.reducer,
   category: categorySlice.reducer,
+  player: playerSlice.reducer,
   event: eventSlice.reducer,
 })
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -168,10 +181,18 @@ const isDownloadPageMouseDown = (state) => {
   return state.event.downloadPageMouseDown
 }
 
+const getSelectedAudio = (state, vid) => {
+  if (vid in state.player.selectedAudio) {
+    return state.player.selectedAudio[vid]
+  }
+  return null
+}
+
 export {
-  store, userSlice, btSlice, categorySlice, eventSlice,
+  store, userSlice, btSlice, categorySlice, eventSlice, playerSlice,
   selectUserInfo, selectShownChatPanel,
   selectTorrent, selectInfoHashs, selectBtVideoFiles,
   selectCategoryItem, selectCategorySubItems, selectSubDirectory,
+  getSelectedAudio,
   isDownloadPageMouseDown
 }

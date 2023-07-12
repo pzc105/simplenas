@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, MenuItem, List, Paper, Button, Box, TextField, ListItem, ListItemText, Typography } from '@mui/material';
-import { styled } from "@mui/material/styles";
-import LinearProgress from '@mui/material/LinearProgress';
-import { useSelector, useDispatch } from 'react-redux';
+import { List, Paper, Button, Box, TextField, ListItem, Typography } from '@mui/material';
 
-import * as store from './store.js'
 import * as User from './prpc/user_pb.js'
 import userService from './rpcClient.js'
 import { Container } from '@mui/system';

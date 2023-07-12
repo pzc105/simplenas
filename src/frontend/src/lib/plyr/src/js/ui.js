@@ -72,6 +72,10 @@ const ui = {
     // Reset quality setting
     this.quality = null;
 
+    this.config.customSettings.forEach((type) => {
+      this.setCustomValue(type, null);
+    });
+
     // Reset speed
     this.speed = null;
 
@@ -113,7 +117,7 @@ const ui = {
 
     // Assure the poster image is set, if the property was added before the element was created
     if (this.poster) {
-      ui.setPoster.call(this, this.poster, false).catch(() => {});
+      ui.setPoster.call(this, this.poster, false).catch(() => { });
     }
 
     // Manually set the duration if user has overridden it.

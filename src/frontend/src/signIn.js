@@ -10,7 +10,6 @@ import * as utils from './utils.js'
 import userService from './rpcClient.js'
 import * as User from './prpc/user_pb.js'
 import { userSlice, btSlice } from './store.js'
-import * as test from './test.js'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;

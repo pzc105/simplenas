@@ -775,8 +775,16 @@ class Plyr {
   }
 
   setCustomValue = (settingType, input) => {
-    this.media[settingType] = input;
-  }
+    const config = this.config[settingType];
+    if (!config) {
+      return;
+    }
+    let value = input
+    if (is.empty(value)) {
+      value = { value: config.default }
+    }
+    this.media[settingType] = value;
+  };
 
   /**
    * Toggle loop

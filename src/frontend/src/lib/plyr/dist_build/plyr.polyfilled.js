@@ -4676,6 +4676,9 @@ typeof navigator === "object" && (function (global, factory) {
 
       // Reset quality setting
       this.quality = null;
+      this.config.customSettings.forEach(type => {
+        this.setCustomValue(type, null);
+      });
 
       // Reset speed
       this.speed = null;
@@ -8199,7 +8202,17 @@ typeof navigator === "object" && (function (global, factory) {
         this.increaseVolume(-step);
       });
       _defineProperty$1(this, "setCustomValue", (settingType, input) => {
-        this.media[settingType] = input;
+        const config = this.config[settingType];
+        if (!config) {
+          return;
+        }
+        let value = input;
+        if (is.empty(value)) {
+          value = {
+            value: config.default
+          };
+        }
+        this.media[settingType] = value;
       });
       /**
        * Trigger the airplay dialog
