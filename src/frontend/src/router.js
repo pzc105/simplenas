@@ -1,4 +1,4 @@
-import { React } from 'react';
+import { React, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { purple, green } from '@mui/material/colors';
@@ -12,21 +12,55 @@ import CheckLoginHandler from './checklogin.js'
 import UserInfoPage from './user.js'
 import * as test from './test.js'
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: purple[500],
-    },
-    secondary: {
-      main: green[500],
-    },
-  },
-});
 
 export default function App() {
+  const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+  const defaultTheme = createTheme({
+    palette: {
+      mode: darkThemeMq && darkThemeMq.matches ? 'dark' : 'light',
+      primary: {
+        main: purple[500],
+      },
+      secondary: {
+        main: green[500],
+      },
+    },
+  });
+
+  const [myTheme, setMyTheme] = useState(defaultTheme);
+
+  useEffect(() => {
+    darkThemeMq.onchange = e => {
+      if (e.matches) {
+        setMyTheme(createTheme({
+          palette: {
+            mode: 'dark',
+            primary: {
+              main: purple[500],
+            },
+            secondary: {
+              main: green[500],
+            },
+          },
+        }))
+      } else {
+        setMyTheme(createTheme({
+          palette: {
+            mode: 'light',
+            primary: {
+              main: purple[500],
+            },
+            secondary: {
+              main: green[500],
+            },
+          },
+        }))
+      }
+    };
+  })
+
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={myTheme}>
       <Router>
         <Sidebar />
         <CheckLoginHandler />

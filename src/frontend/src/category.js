@@ -122,20 +122,6 @@ const CategoryItems = ({ parentId, shareid }) => {
                       </Typography>
                     </CardContent>
                     <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                      {
-                        item.typeId === Category.CategoryItem.Type.VIDEO ?
-                          <div>
-                            <Button
-                              onClick={() => refreshSubtitle(item)}
-                              size="small">
-                              刷新字幕
-                            </Button>
-                            <Button>
-                              举报
-                            </Button>
-                          </div>
-                          : null
-                      }
                     </CardActions>
                     <Menu
                       anchorReference="anchorPosition"

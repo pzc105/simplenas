@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Container, Typography, Paper, Button, Grid } from '@mui/material';
+import { Container, Typography, Paper, Button, Grid, CssBaseline } from '@mui/material';
 
 import userService from './rpcClient.js'
 import * as User from './prpc/user_pb.js'
@@ -88,39 +88,42 @@ const SharedItems = () => {
   }
 
   return (
-    <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }}>
-      <Grid container sx={{ display: 'flex' }} >
-        <Grid item xs={12}>
-          <Grid container spacing={2}>
-            <Grid item xs={2}>
-              <Typography >
-                分享链接:
-              </Typography>
-            </Grid>
-            <Grid item xs={10}>
-              {
-                sharedItems.map((si, i) => {
-                  const urlPrefix = "https://" + window.location.hostname + ":" + window.location.port + "/citem?"
-                  return (
-                    <Grid container spacing={2} key={i}>
-                      <Grid item xs={8}>
-                        <Typography>
-                          {(i + 1) + "、" + urlPrefix + "itemid=" + si.itemId + "&shareid=" + si.shareId}
-                        </Typography>
+    <Container sx={{ height: '94vh' }}>
+      <CssBaseline />
+      <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }}>
+        <Grid container sx={{ display: 'flex' }} >
+          <Grid item xs={12}>
+            <Grid container spacing={2}>
+              <Grid item xs={2}>
+                <Typography >
+                  分享链接:
+                </Typography>
+              </Grid>
+              <Grid item xs={10}>
+                {
+                  sharedItems.map((si, i) => {
+                    const urlPrefix = "https://" + window.location.hostname + ":" + window.location.port + "/citem?"
+                    return (
+                      <Grid container spacing={2} key={i}>
+                        <Grid item xs={8}>
+                          <Typography>
+                            {(i + 1) + "、" + urlPrefix + "itemid=" + si.itemId + "&shareid=" + si.shareId}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Button onClick={() => delShareItem(si.shareId)} >
+                            删除
+                          </Button>
+                        </Grid>
                       </Grid>
-                      <Grid item xs={4}>
-                        <Button onClick={() => delShareItem(si.shareId)} >
-                          删除
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  )
-                })
-              }
+                    )
+                  })
+                }
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+    </Container>
   )
 }

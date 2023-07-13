@@ -96,7 +96,19 @@ const TorrentNavigation = () => {
         <Link href="https://bt.acgzero.com/" target="_blank" rel="noopener" >
           零度动漫
         </Link>
-        可以下载番剧
+        可以下载动漫
+      </Typography>
+      <Typography sx={{ marginTop: '1em' }}>
+        <Link href="https://bbs.xfsub.org/" target="_blank" rel="noopener" >
+          动漫下载
+        </Link>
+        可以下载动漫
+      </Typography>
+      <Typography sx={{ marginTop: '1em' }}>
+        <Link href="https://bbs.acgrip.com/" target="_blank" rel="noopener" >
+          字幕论坛
+        </Link>
+        可以番剧字幕
       </Typography>
       <Typography sx={{ marginTop: '1em' }}>
         <Link href="https://thepiratebay.org/index.html" target="_blank" rel="noopener" >
