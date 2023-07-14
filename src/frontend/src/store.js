@@ -59,7 +59,6 @@ const categorySlice = createSlice({
       state.videoInfos = {}
     },
     updateItem: (state, action) => {
-      console.log("updateItem")
       let item = action.payload
       state.items[item.id] = item
     },
