@@ -223,13 +223,15 @@ export default function CategoryItemPage() {
   const navigate = useNavigate()
   const searchParams = new URLSearchParams(location.search)
   const shareid = searchParams.get('shareid')
-  const itemId = searchParams.get('itemid')
+  const itemId = searchParams.get('itemid') ? Number(searchParams.get('itemid')) : -1
   const shownChatPanel = useSelector((state) => store.selectShownChatPanel(state))
   const thisItem = useSelector((state) => store.selectCategoryItem(state, itemId))
 
-  if (thisItem && thisItem.typeId === Category.CategoryItem.Type.VIDEO) {
-    navigateToVideo(navigate, { replace: true }, thisItem.id, shareid)
-  }
+  useEffect(() => {
+    if (thisItem && thisItem.typeId === Category.CategoryItem.Type.VIDEO) {
+      navigateToVideo(navigate, { replace: true }, thisItem.id, shareid)
+    }
+  }, [thisItem])
 
   const dispatch = useDispatch()
   const refreshSubItems = () => {
@@ -237,9 +239,8 @@ export default function CategoryItemPage() {
   }
 
   useEffect(() => {
-    if (utils.isNumber(itemId)) {
-      querySubItems(itemId, shareid, dispatch)
-    }
+    queryItem(itemId, shareid, dispatch)
+    querySubItems(itemId, shareid, dispatch)
   }, [itemId, dispatch, navigate, shareid])
 
   const anchorElRef = useRef(null)
@@ -316,8 +317,6 @@ export const querySubItems = (itemId, shareid, dispatch) => {
   }
   userService.querySubItems(req, {}, (err, respone) => {
     if (err == null) {
-      const parentItem = respone.getParentItem()
-      dispatch(store.categorySlice.actions.updateItem(parentItem.toObject()))
       respone.getItemsList().map((i) => {
         dispatch(store.categorySlice.actions.updateItem(i.toObject()))
         return null

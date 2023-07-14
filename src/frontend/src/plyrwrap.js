@@ -23,6 +23,7 @@ export default function PlyrWrap() {
   const itemId = Number(searchParams.get('itemid'))
   const videoInfo = useSelector((state) => store.selectItemVideoInfo(state, itemId))
   const item = useSelector((state) => store.selectCategoryItem(state, itemId))
+  const parentItemId = item ? item.parentId : null
   const items = useSelector((state) => store.selectCategorySubItems(state, item ? item.parentId : -1))
   const [videoItemList, setVideoItemList] = useState([])
 
@@ -39,10 +40,10 @@ export default function PlyrWrap() {
   }, [itemId, shareid, dispatch])
 
   useEffect(() => {
-    if (item) {
-      querySubItems(item.parentId, shareid, dispatch)
+    if (parentItemId) {
+      querySubItems(parentItemId, shareid, dispatch)
     }
-  }, [item, shareid, dispatch])
+  }, [parentItemId, shareid, dispatch])
 
   useEffect(() => {
     if (!items) {
@@ -96,15 +97,15 @@ export default function PlyrWrap() {
     if (shareid) {
       return
     }
-    const saveStartOffset = () => {
+    const saveStartOffset = (offset) => {
       if (!videoRef.current) {
         return
       }
       if (lastOffsetTime.current === videoRef.current.currentTime) {
         return
       }
-      lastOffsetTime.current = videoRef.current.currentTime
-      fetch(serverAddress + "/video/" + vidRef.current + "/set_offsettime/" + videoRef.current.currentTime, {
+      lastOffsetTime.current = offset ? offset : videoRef.current.currentTime
+      fetch(serverAddress + "/video/" + vidRef.current + "/set_offsettime/" + lastOffsetTime.current, {
         method: 'POST',
         mode: 'cors',
         credentials: "include",
@@ -293,7 +294,7 @@ export default function PlyrWrap() {
       <Grid container spacing={2}>
         <Grid item xs={12} sx={{ display: "flex" }}>
           <Grid item xs={8} >
-            <video style={{ height: '50vh' }} ref={videoRef} crossOrigin="use-credentials">
+            <video ref={videoRef} crossOrigin="use-credentials">
               {
                 subtitles.map((s, i) => (
                   <track key={i} kind={s.find} label={s.srcLang} src={s.src} srcLang={s.srcLang} />
@@ -347,7 +348,6 @@ export default function PlyrWrap() {
           </Grid>
         </Grid>
       </Grid>
-
     </Container>
   );
 }
