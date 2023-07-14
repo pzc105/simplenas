@@ -1,26 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, CssBaseline } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { Container, Grid, CssBaseline, List, ListItem, Button, Typography, Tooltip, Switch, FormControlLabel } from '@mui/material';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Plyr from 'plyr';
 import 'plyr/dist/plyr.css';
 import Hls from 'hls.js'
 
-import { serverAddress } from './rpcClient.js'
-import * as User from './prpc/user_pb.js'
+import { queryItem, querySubItems, navigateToItem } from './category.js'
 import * as Category from './prpc/category_pb.js'
+import { serverAddress } from './rpcClient.js'
 import * as store from './store.js'
-import userService from './rpcClient.js'
 import { isNumber } from './utils';
 
 
 export default function PlyrWrap() {
   const dispatch = useDispatch()
   const location = useLocation()
+  const navigate = useNavigate()
   const searchParams = new URLSearchParams(location.search)
   const shareid = searchParams.get('shareid')
-  const itemId = searchParams.get('itemid')
+  const itemId = Number(searchParams.get('itemid'))
+  const videoInfo = useSelector((state) => store.selectItemVideoInfo(state, itemId))
+  const item = useSelector((state) => store.selectCategoryItem(state, itemId))
+  const items = useSelector((state) => store.selectCategorySubItems(state, item ? item.parentId : -1))
+  const [videoItemList, setVideoItemList] = useState([])
 
   const player = useRef(null)
   const hls = useRef(null)
@@ -29,6 +33,58 @@ export default function PlyrWrap() {
   const videoRef = useRef(null);
   const vidRef = useRef(-1);
   const selectedAudio = useSelector((state) => store.getSelectedAudio(state, vidRef.current))
+
+  useEffect(() => {
+    queryItem(itemId, shareid, dispatch)
+    querySubItems(item.parentId, shareid, dispatch)
+  }, [itemId, shareid, dispatch])
+
+  useEffect(() => {
+    if (!items) {
+      return
+    }
+    let vl = []
+    items.map((item) => {
+      if (item.typeId === Category.CategoryItem.Type.VIDEO) {
+        vl.push(item)
+      }
+      return null
+    })
+    setVideoItemList(vl)
+  }, [])
+
+  useEffect(() => {
+    if (!videoInfo) {
+      return
+    }
+    const vid = videoInfo.id
+    vidRef.current = vid
+    let urlPath = serverAddress + "/video/" + vid
+    if (shareid) {
+      urlPath += "?shareid=" + shareid + "&itemid=" + itemId
+    }
+    setUrl(urlPath)
+    let cs = []
+    videoInfo.subtitlePathsList.map((c) => {
+      let suffixes = c.split(".")
+      let lang = "unknown"
+      if (suffixes.length > 2) {
+        suffixes.pop()
+        lang = suffixes.pop()
+      }
+      let urlPath = serverAddress + "/video/" + vid + "/subtitle/" + c
+      if (shareid) {
+        urlPath += "?shareid=" + shareid + "&itemid=" + itemId
+      }
+      cs.push({
+        kind: "subtitles",
+        src: urlPath,
+        srcLang: lang,
+      })
+      setSubtitles(cs)
+      return null
+    })
+  }, [itemId, shareid, videoInfo]);
 
   let lastOffsetTime = useRef(0.0)
   useEffect(() => {
@@ -51,11 +107,9 @@ export default function PlyrWrap() {
         },
       })
     }
-
     videoRef.current.onseeking = () => {
       saveStartOffset()
     }
-
     setInterval(saveStartOffset, 3000)
     return () => {
       clearInterval(saveStartOffset);
@@ -169,6 +223,15 @@ export default function PlyrWrap() {
       player.current.on('ready', event => {
         updateAudioTrack(defaultAudioId)
       });
+      player.current.on('ended', event => {
+        if (autoContinuedPlay) {
+          for (let i = 0; i < videoItemList.length; i++) {
+            if (videoItemList[i].id === itemId && i < videoItemList.length) {
+              navigateToItem(navigate, {}, videoItemList[i + 1].id, shareid)
+            }
+          }
+        }
+      });
 
       player.current.on('exitfullscreen', event => {
         if (window.screen.orientation.lock)
@@ -201,65 +264,15 @@ export default function PlyrWrap() {
     }
   }, [url, shareid])
 
-  useEffect(() => {
-    var req = new User.QueryItemInfoReq()
-    req.setItemId(itemId)
-    if (shareid) {
-      req.setShareId(shareid)
-    }
-    userService.queryItemInfo(req, {}, (err, res) => {
-      if (err != null || !res) {
-        console.log(err)
-        return
-      }
-      const itemInfo = res.getItemInfo()
-      if (itemInfo.getTypeId() !== Category.CategoryItem.Type.VIDEO) {
-        return
-      }
-
-      const videoInfo = res.getVideoInfo()
-      const vid = videoInfo.getId()
-      vidRef.current = vid
-      let urlPath = serverAddress + "/video/" + vid
-      if (shareid) {
-        urlPath += "?shareid=" + shareid + "&itemid=" + itemId
-      }
-      setUrl(urlPath)
-      let cs = []
-      videoInfo.getSubtitlePathsList().map((c) => {
-        let suffixes = c.split(".")
-        let lang = "unknown"
-        if (suffixes.length > 2) {
-          suffixes.pop()
-          lang = suffixes.pop()
-        }
-        let urlPath = serverAddress + "/video/" + vid + "/subtitle/" + c
-        if (shareid) {
-          urlPath += "?shareid=" + shareid + "&itemid=" + itemId
-        }
-        cs.push({
-          kind: "subtitles",
-          src: urlPath,
-          srcLang: lang,
-        })
-        setSubtitles(cs)
-        return null
-      })
-    })
-  }, [itemId, shareid]);
-
   var touchStartX = useRef(0);
   var touchEndX = useRef(0);
-
   const touchstart = (e) => {
     touchStartX.current = e.touches[0].clientX;
     touchEndX.current = touchStartX.current
   }
-
   const touchmove = (e) => {
     touchEndX.current = e.touches[0].clientX;
   }
-
   const touchend = (e) => {
     var diffX = touchEndX.current - touchStartX.current;
     if (Math.abs(diffX) > 30) {
@@ -267,16 +280,64 @@ export default function PlyrWrap() {
     }
   }
 
+  const [autoContinuedPlay, setAutoContinuedPlay] = useState(useSelector((state) => store.selectAutoContinuedPlayVideo(state)));
+
   return (
     <Container onTouchStart={touchstart} onTouchMove={touchmove} onTouchEnd={touchend} sx={{ backgroundColor: 'background.default' }}>
       <CssBaseline />
-      <video ref={videoRef} crossOrigin="use-credentials">
-        {
-          subtitles.map((s, i) => (
-            <track key={i} kind={s.find} label={s.srcLang} src={s.src} srcLang={s.srcLang} />
-          ))
-        }
-      </video>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sx={{ display: "flex" }}>
+          <Grid item xs={8} >
+            <video style={{ height: '50vh' }} ref={videoRef} crossOrigin="use-credentials">
+              {
+                subtitles.map((s, i) => (
+                  <track key={i} kind={s.find} label={s.srcLang} src={s.src} srcLang={s.srcLang} />
+                ))
+              }
+            </video>
+          </Grid>
+          <Grid item xs={4} >
+            <Container>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={autoContinuedPlay}
+                    onClick={
+                      (e) => {
+                        let v = !autoContinuedPlay
+                        setAutoContinuedPlay(v)
+                        dispatch(store.playerSlice.actions.setAutoContinuedPlayVideo(v))
+                      }
+                    }
+                    color="primary"
+                    inputProps={{ 'aria-label': 'controlled' }}
+                  />
+                }
+                label={'自动连播'}
+              />
+              <List>
+                {
+                  videoItemList.map((item) => {
+                    return (
+                      <ListItem
+                        key={item.id} >
+                        <Tooltip title={item.name}>
+                          <Typography variant="button" component="div" noWrap>
+                            <Button onClick={() => navigateToItem(navigate, {}, item.id, shareid)}>
+                              {item.name}
+                            </Button>
+                          </Typography>
+                        </Tooltip>
+                      </ListItem>
+                    )
+                  })
+                }
+              </List>
+            </Container>
+          </Grid>
+        </Grid>
+      </Grid>
+
     </Container>
   );
 }

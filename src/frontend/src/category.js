@@ -34,17 +34,6 @@ const CategoryItems = ({ parentId, shareid }) => {
     }
   }
 
-  const refreshSubtitle = (item) => {
-    var req = new User.RefreshSubtitleReq()
-    req.setItemId(item.id)
-    userService.refreshSubtitle(req, {}, (err, res) => {
-      if (err != null) {
-        console.log(err)
-        return
-      }
-    })
-  }
-
   const DelCategoryItem = (item) => {
     var req = new User.DelCategoryItemReq()
     req.setItemId(item.id)
@@ -236,40 +225,21 @@ export default function CategoryItemPage() {
   const shareid = searchParams.get('shareid')
   const itemId = searchParams.get('itemid')
   const shownChatPanel = useSelector((state) => store.selectShownChatPanel(state))
+  const thisItem = useSelector((state) => store.selectCategoryItem(state, itemId))
+
+  if (thisItem && thisItem.typeId === Category.CategoryItem.Type.VIDEO) {
+    navigateToVideo(navigate, { replace: true }, thisItem.id, shareid)
+  }
 
   const dispatch = useDispatch()
   const refreshSubItems = () => {
     querySubItems()
   }
 
-  const querySubItems = () => {
-    if (!utils.isNumber(itemId)) {
-      return
-    }
-    var req = new User.QuerySubItemsReq()
-    req.setParentId(itemId)
-    if (shareid) {
-      req.setShareId(shareid)
-    }
-    userService.querySubItems(req, {}, (err, respone) => {
-      if (err == null) {
-        const parentItem = respone.getParentItem()
-        dispatch(store.categorySlice.actions.updateItem(parentItem.toObject()))
-        if (parentItem.getTypeId() === Category.CategoryItem.Type.VIDEO) {
-          navigateToVideo(navigate, { replace: true }, parentItem.getId(), shareid)
-        }
-        respone.getItemsList().map((i) => {
-          dispatch(store.categorySlice.actions.updateItem(i.toObject()))
-          return null
-        })
-      } else {
-        console.log(err)
-      }
-    })
-  }
-
   useEffect(() => {
-    querySubItems()
+    if (utils.isNumber(itemId)) {
+      querySubItems(itemId, shareid, dispatch)
+    }
   }, [itemId, dispatch, navigate, shareid])
 
   const anchorElRef = useRef(null)
@@ -336,4 +306,42 @@ export function navigateToVideo(navigate, navigateParams, itemId, shareid) {
     path += "&shareid=" + shareid
   }
   navigate(path, navigateParams)
+}
+
+export const querySubItems = (itemId, shareid, dispatch) => {
+  var req = new User.QuerySubItemsReq()
+  req.setParentId(itemId)
+  if (shareid) {
+    req.setShareId(shareid)
+  }
+  userService.querySubItems(req, {}, (err, respone) => {
+    if (err == null) {
+      const parentItem = respone.getParentItem()
+      dispatch(store.categorySlice.actions.updateItem(parentItem.toObject()))
+      respone.getItemsList().map((i) => {
+        dispatch(store.categorySlice.actions.updateItem(i.toObject()))
+        return null
+      })
+    } else {
+      console.log(err)
+    }
+  })
+}
+
+export const queryItem = (itemId, shareId, dispatch) => {
+  var req = new User.QueryItemInfoReq()
+  req.setItemId(itemId)
+  if (shareId) {
+    req.setShareId(shareId)
+  }
+  userService.queryItemInfo(req, {}, (err, res) => {
+    if (err != null || !res) {
+      return
+    }
+    const itemInfo = res.getItemInfo()
+    if (itemInfo.getTypeId() === Category.CategoryItem.Type.VIDEO) {
+      dispatch(store.categorySlice.actions.updateVideoInfo({ itemId: itemInfo.getId(), videoInfo: res.getVideoInfo().toObject() }))
+    }
+    dispatch(store.categorySlice.actions.updateItem(itemInfo.toObject()))
+  })
 }

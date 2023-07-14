@@ -10,6 +10,7 @@ import { Drawer, Accordion, AccordionSummary, AccordionDetails, List, ListItemBu
 import { useSelector, useDispatch } from 'react-redux';
 import * as store from './store.js'
 
+import { querySubItems } from './category.js'
 import * as utils from './utils.js'
 import * as User from './prpc/user_pb.js'
 import userService from './rpcClient.js'
@@ -56,19 +57,8 @@ export default function Sidebar() {
     if (!utils.isLogined() || userInfo == null) {
       return
     }
-    var req = new User.QuerySubItemsReq()
-    req.setParentId(userInfo.homeDirectoryId)
-    userService.querySubItems(req, {}, (err, respone) => {
-      if (err == null) {
-        dispatch(store.categorySlice.actions.updateItem(respone.getParentItem().toObject()))
-        respone.getItemsList().map((i) => {
-          dispatch(store.categorySlice.actions.updateItem(i.toObject()))
-          return null
-        })
-      } else {
-        console.log(err)
-      }
-    })
+    dispatch(store.categorySlice.actions.clear())
+    querySubItems(userInfo.homeDirectoryId, "", dispatch)
   }, [userInfo, dispatch])
 
   const firstItem = userInfo ? {

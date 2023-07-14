@@ -51,15 +51,24 @@ const categorySlice = createSlice({
   name: 'category',
   initialState: {
     items: {},
+    videoInfos: {},
   },
   reducers: {
+    clear: (state) => {
+      state.items = {}
+      state.videoInfos = {}
+    },
     updateItem: (state, action) => {
+      console.log("updateItem")
       let item = action.payload
       state.items[item.id] = item
     },
     deleteItem: (state, action) => {
       let itemId = action.payload
       delete state.items[itemId]
+    },
+    updateVideoInfo: (state, action) => {
+      state.videoInfos[action.payload.itemId] = action.payload.videoInfo
     },
   }
 })
@@ -68,11 +77,15 @@ const playerSlice = createSlice({
   name: 'player',
   initialState: {
     selectedAudio: {},
+    autoPlayVideo: false,
   },
   reducers: {
     updateSelectedAudio: (state, action) => {
       state.selectedAudio[action.payload.vid] = action.payload.aid
     },
+    setAutoContinuedPlayVideo: (state, action) => {
+      state.autoPlayVideo = action.payload
+    }
   }
 })
 
@@ -177,6 +190,10 @@ const selectSubDirectory = (state, parentId) => {
   return ds
 }
 
+const selectItemVideoInfo = (state, itemId) => {
+  return state.category.videoInfos[itemId]
+}
+
 const isDownloadPageMouseDown = (state) => {
   return state.event.downloadPageMouseDown
 }
@@ -188,11 +205,15 @@ const getSelectedAudio = (state, vid) => {
   return null
 }
 
+const selectAutoPlayVideo = (state) => {
+  return state.player.autoPlayVideo
+}
+
 export {
   store, userSlice, btSlice, categorySlice, eventSlice, playerSlice,
   selectUserInfo, selectShownChatPanel,
   selectTorrent, selectInfoHashs, selectBtVideoFiles,
-  selectCategoryItem, selectCategorySubItems, selectSubDirectory,
-  getSelectedAudio,
+  selectCategoryItem, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo,
+  getSelectedAudio, selectAutoPlayVideo as selectAutoContinuedPlayVideo,
   isDownloadPageMouseDown
 }
