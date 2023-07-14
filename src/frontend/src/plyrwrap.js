@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, Grid, CssBaseline, List, ListItem, Button, Typography, Tooltip, Switch, FormControlLabel } from '@mui/material';
+import { Container, Grid, CssBaseline, List, ListItem, Button, Typography, Tooltip, Switch, FormControlLabel, Paper } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -226,7 +226,7 @@ export default function PlyrWrap() {
       player.current.on('ended', event => {
         if (autoContinuedPlay) {
           for (let i = 0; i < videoItemList.length; i++) {
-            if (videoItemList[i].id === itemId && i < videoItemList.length) {
+            if (videoItemList[i].id === itemId && i < videoItemList.length - 1) {
               navigateToItem(navigate, {}, videoItemList[i + 1].id, shareid)
             }
           }
@@ -298,6 +298,9 @@ export default function PlyrWrap() {
           </Grid>
           <Grid item xs={4} >
             <Container>
+              <Typography variant="button" component="div" noWrap>
+                播放列表
+              </Typography>
               <FormControlLabel
                 control={
                   <Switch
@@ -315,24 +318,26 @@ export default function PlyrWrap() {
                 }
                 label={'自动连播'}
               />
-              <List>
-                {
-                  videoItemList.map((item) => {
-                    return (
-                      <ListItem
-                        key={item.id} >
-                        <Tooltip title={item.name}>
-                          <Typography variant="button" component="div" noWrap>
-                            <Button onClick={() => navigateToItem(navigate, {}, item.id, shareid)}>
-                              {item.name}
-                            </Button>
-                          </Typography>
-                        </Tooltip>
-                      </ListItem>
-                    )
-                  })
-                }
-              </List>
+              <Paper style={{ maxHeight: '50vh', overflow: 'auto' }}>
+                <List>
+                  {
+                    videoItemList.map((item) => {
+                      return (
+                        <ListItem
+                          key={item.id} >
+                          <Tooltip title={item.name}>
+                            <Typography variant="button" component="div" noWrap>
+                              <Button onClick={() => navigateToItem(navigate, {}, item.id, shareid)}>
+                                {item.name}
+                              </Button>
+                            </Typography>
+                          </Tooltip>
+                        </ListItem>
+                      )
+                    })
+                  }
+                </List>
+              </Paper>
             </Container>
           </Grid>
         </Grid>
