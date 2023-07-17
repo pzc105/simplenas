@@ -29,7 +29,6 @@ func IsSubTitle(absFileName string) bool {
 	}
 	f := strings.Contains(meta.Format.FormatName, "srt") ||
 		strings.Contains(meta.Format.FormatName, "vtt") ||
-		strings.Contains(meta.Format.FormatName, "matroska") ||
 		strings.Contains(meta.Format.FormatName, "matroska")
 	return f && HasSubtitleStream(meta)
 }
@@ -40,7 +39,8 @@ func IsVideo(absFileName string) bool {
 		return false
 	}
 	f := strings.Contains(meta.Format.FormatName, "mp4") ||
-		strings.Contains(meta.Format.FormatName, "matroska")
+		strings.Contains(meta.Format.FormatName, "matroska") ||
+		strings.Contains(meta.Format.FormatName, "mpegts")
 	return f && HasVideoStream(meta)
 }
 

@@ -8,10 +8,9 @@ import 'plyr/dist/plyr.css';
 import Hls from 'hls.js'
 
 import { queryItem, querySubItems, navigateToItem } from './category.js'
-import * as Category from './prpc/category_pb.js'
 import { serverAddress } from './rpcClient.js'
 import * as store from './store.js'
-import { isNumber } from './utils';
+import * as utils from './utils';
 
 
 export default function PlyrWrap() {
@@ -24,8 +23,8 @@ export default function PlyrWrap() {
   const videoInfo = useSelector((state) => store.selectItemVideoInfo(state, itemId))
   const item = useSelector((state) => store.selectCategoryItem(state, itemId))
   const parentItemId = item ? item.parentId : null
-  const items = useSelector((state) => store.selectCategorySubItems(state, item ? item.parentId : -1))
-  const [videoItemList, setVideoItemList] = useState([])
+  const [items, setItems] = useState([])
+  const videoItemList = useRef([])
 
   const player = useRef(null)
   const hls = useRef(null)
@@ -41,7 +40,9 @@ export default function PlyrWrap() {
 
   useEffect(() => {
     if (parentItemId) {
-      querySubItems(parentItemId, shareid, dispatch)
+      querySubItems(parentItemId, shareid, dispatch, (subItems) => {
+        setItems(subItems)
+      })
     }
   }, [parentItemId, shareid, dispatch])
 
@@ -51,13 +52,13 @@ export default function PlyrWrap() {
     }
     let vl = []
     items.map((item) => {
-      if (item.typeId === Category.CategoryItem.Type.VIDEO) {
+      if (utils.isVideoItem(item)) {
         vl.push(item)
       }
       return null
     })
-    setVideoItemList(vl)
-  }, [])
+    videoItemList.current = vl
+  }, [items])
 
   useEffect(() => {
     if (!videoInfo) {
@@ -158,7 +159,7 @@ export default function PlyrWrap() {
         },
       }).then(response => response.text())
         .then(data => {
-          if (hls.current && isNumber(data)) {
+          if (hls.current && utils.isNumber(data)) {
             videoRef.current.currentTime = Number(data)
           }
         }).catch(error => {
@@ -220,6 +221,9 @@ export default function PlyrWrap() {
       defaultOptions.fullscreen = {
         enabled: true, fallback: true, iosNative: true, container: null
       }
+      defaultOptions.keyboard = {
+        focused: true, global: true
+      }
 
       player.current = new Plyr(videoRef.current, defaultOptions);
       player.current.on('enterfullscreen', event => {
@@ -231,9 +235,9 @@ export default function PlyrWrap() {
       });
       player.current.on('ended', event => {
         if (autoContinuedPlay) {
-          for (let i = 0; i < videoItemList.length; i++) {
-            if (videoItemList[i].id === itemId && i < videoItemList.length - 1) {
-              navigateToItem(navigate, {}, videoItemList[i + 1].id, shareid)
+          for (let i = 0; i < videoItemList.current.length; i++) {
+            if (videoItemList.current[i].id === itemId && i < videoItemList.current.length - 1) {
+              navigateToItem(navigate, {}, videoItemList.current[i + 1].id, shareid)
             }
           }
         }
@@ -294,6 +298,9 @@ export default function PlyrWrap() {
       <Grid container spacing={2}>
         <Grid item xs={12} sx={{ display: "flex" }}>
           <Grid item xs={8} >
+            <Typography variant="button" component="div" noWrap>
+              {item ? item.name : ""}
+            </Typography>
             <video ref={videoRef} crossOrigin="use-credentials">
               {
                 subtitles.map((s, i) => (
@@ -327,7 +334,10 @@ export default function PlyrWrap() {
               <Paper style={{ maxHeight: '50vh', overflow: 'auto' }}>
                 <List>
                   {
-                    videoItemList.map((item) => {
+                    items.map((item) => {
+                      if (!utils.isVideoItem(item)) {
+                        return null
+                      }
                       return (
                         <ListItem
                           key={item.id} >

@@ -1,3 +1,4 @@
+import * as Category from './prpc/category_pb.js'
 
 export function isEmail(s) {
   return (/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(s))
@@ -86,4 +87,8 @@ export function isNumber(str) {
   // const pattern = /^[0-9]+$/;
   // return pattern.test(str);
   return !isNaN(str)
+}
+
+export function isVideoItem(item) {
+  return item.typeId === Category.CategoryItem.Type.VIDEO
 }

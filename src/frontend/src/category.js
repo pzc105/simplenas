@@ -309,7 +309,7 @@ export function navigateToVideo(navigate, navigateParams, itemId, shareid) {
   navigate(path, navigateParams)
 }
 
-export const querySubItems = (itemId, shareid, dispatch) => {
+export const querySubItems = (itemId, shareid, dispatch, callback) => {
   var req = new User.QuerySubItemsReq()
   req.setParentId(itemId)
   if (shareid) {
@@ -317,10 +317,16 @@ export const querySubItems = (itemId, shareid, dispatch) => {
   }
   userService.querySubItems(req, {}, (err, respone) => {
     if (err == null) {
+      let subItems = []
       respone.getItemsList().map((i) => {
-        dispatch(store.categorySlice.actions.updateItem(i.toObject()))
+        let obj = i.toObject()
+        subItems.push(obj)
+        dispatch(store.categorySlice.actions.updateItem(obj))
         return null
       })
+      if (callback) {
+        callback(subItems)
+      }
     } else {
       console.log(err)
     }
