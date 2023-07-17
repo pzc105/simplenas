@@ -35,14 +35,13 @@ import (
 
 type CoreService struct {
 	prpc.UnimplementedUserServiceServer
-
-	sessions        session.SessionsInterface
-	btStatusPushMtx sync.Mutex
-	btStatusPush    map[int64]chan *prpc.StatusRespone
-
 	notCheckTokenMethods []string
 
-	bt bt.BtClient
+	sessions session.SessionsInterface
+
+	bt              bt.BtClient
+	btStatusPushMtx sync.Mutex
+	btStatusPush    map[int64]chan *prpc.StatusRespone
 
 	um          user.UserManger
 	shutDownCtx context.Context
@@ -189,7 +188,6 @@ func (ser *CoreService) handleTorrentInfo(tis *prpc.TorrentInfoRes) {
 func (ser *CoreService) handleBtStatus(sr *prpc.StatusRespone) {
 	ser.btStatusPushMtx.Lock()
 	defer ser.btStatusPushMtx.Unlock()
-
 	for sid, ch := range ser.btStatusPush {
 		ses, err := ser.sessions.GetSession3(sid)
 		if err != nil {
@@ -804,6 +802,7 @@ func (ser *CoreService) JoinChatRoom(req *prpc.JoinChatRoomReq, stream prpc.User
 	room.Leave(ses.Id)
 	return nil
 }
+
 func (ser *CoreService) SendMsg2ChatRoom(ctx context.Context, req *prpc.SendMsg2ChatRoomReq) (*prpc.SendMsg2ChatRoomRes, error) {
 	if req == nil || req.GetChatMsg() == nil {
 		return nil, status.Error(codes.InvalidArgument, "")
