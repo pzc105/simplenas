@@ -1,25 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Button, FormControl, InputLabel, MenuItem, Select, FormControlLabel, FormGroup, Checkbox }
   from "@mui/material";
 
 import { useSelector, useDispatch } from 'react-redux';
 import * as store from './store.js'
+import * as utils from './utils.js'
 
+import * as category from './prpc/category_pb'
 import * as User from './prpc/user_pb.js'
 import * as Bt from './prpc/bt_pb.js'
 import userService from './rpcClient.js'
 
 
-const FolderSelector = ({ pathItemId, enter, select }) => {
+const FolderSelector = ({ select }) => {
   const userInfo = useSelector((state) => store.selectUserInfo(state))
-  const subDirectories = useSelector((state) => store.selectSubDirectory(state, pathItemId))
-  const pathItem = useSelector((state) => store.selectCategoryItem(state, pathItemId))
-  const [selectedValue, setSelectedValue] = useState(-1);
+  const [nowPathItemId, setNowPathItemId] = useState(userInfo.homeDirectoryId)
+  const [subDirectories, setSubDirectories] = useState([])
+  const [pathItem, setPathItem] = useState(null)
+  const [selectedValue, setSelectedValue] = useState('');
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const selectRef = useRef(null);
+
+  useEffect(() => {
+    let req = new User.QuerySubItemsReq()
+    req.setParentId(nowPathItemId)
+    userService.querySubItems(req, {}, (err, respone) => {
+      if (err == null) {
+        setPathItem(respone.getParentItem().toObject())
+        let ds = []
+        respone.getItemsList().map((i) => {
+          let item = i.toObject()
+          if (item.typeId === category.CategoryItem.Type.DIRECTORY) {
+            ds.push(item)
+          }
+          return null
+        })
+        setSubDirectories(ds)
+      } else {
+        console.log(err)
+      }
+    })
+  }, [nowPathItemId])
 
   const boxOnClick = (id) => {
     setSelectedValue(id)
     select(id)
   }
+
+  const handleSelectOpen = () => {
+    console.log("open")
+    setIsSelectOpen(!isSelectOpen);
+  };
 
   return (
     <FormControl sx={{ m: 1, minWidth: 120 }}>
@@ -27,25 +58,43 @@ const FolderSelector = ({ pathItemId, enter, select }) => {
       <Select
         labelId="select-directory"
         value={selectedValue}
+        open={isSelectOpen}
+        onClick={handleSelectOpen}
         inputProps={{ "aria-label": "Without label" }}
+        ref={selectRef}
       >
-        {pathItemId !== userInfo.homeDirectoryId && (
+        {nowPathItemId !== userInfo.homeDirectoryId && (
           <MenuItem key="back"
             value={0}
-            onClick={() => enter(pathItem.parentId)}
+            onClick={
+              (e) => {
+                setNowPathItemId(pathItem.parentId)
+                e.stopPropagation()
+              }
+            }
           >
             返回上一级
           </MenuItem>
         )}
         {subDirectories.map((dir) => (
-          <MenuItem key={dir.id} value={dir.id}>
+          <MenuItem
+            key={dir.id}
+            value={dir.id}
+            onClick={
+              (e) => {
+                setNowPathItemId(dir.id)
+                e.stopPropagation()
+              }
+            }>
             <Checkbox
               checked={selectedValue === dir.id}
-              onClick={() => boxOnClick(dir.id)} />
-            <label onClick={() => {
-              enter(dir.id)
-            }
-            }>
+              onClick={
+                (e) => {
+                  boxOnClick(dir.id)
+                  e.stopPropagation()
+                }
+              } />
+            <label >
               {dir.name}
             </label>
           </MenuItem>
@@ -57,33 +106,13 @@ const FolderSelector = ({ pathItemId, enter, select }) => {
 
 const FileListHandler = ({ infoHash }) => {
   const btViodeFiles = useSelector((state) => store.selectBtVideoFiles(state, infoHash))
-  const userInfo = useSelector((state) => store.selectUserInfo(state))
   const [selectedVideoFiles, selectVideoFiles] = useState({})
   const [selectedDirId, selectDir] = useState(-1)
-  const [nowPathItemId, setNowPathItemId] = useState(userInfo.homeDirectoryId)
   const isMouseDown = useSelector((state) => store.isDownloadPageMouseDown(state))
-  const dispatch = useDispatch()
-
 
   const handleChange = (e, index) => {
     selectVideoFiles({ ...selectedVideoFiles, [index]: e.target.checked })
   }
-
-  useEffect(() => {
-    let req = new User.QuerySubItemsReq()
-    req.setParentId(nowPathItemId)
-    userService.querySubItems(req, {}, (err, respone) => {
-      if (err == null) {
-        dispatch(store.categorySlice.actions.updateItem(respone.getParentItem().toObject()))
-        respone.getItemsList().map((i) => {
-          dispatch(store.categorySlice.actions.updateItem(i.toObject()))
-          return null
-        })
-      } else {
-        console.log(err)
-      }
-    })
-  }, [nowPathItemId, dispatch])
 
   const saveVideos = () => {
     var req = new User.AddBtVideosReq()
@@ -119,8 +148,6 @@ const FileListHandler = ({ infoHash }) => {
   return (
     <Container>
       <FolderSelector
-        pathItemId={nowPathItemId}
-        enter={(id) => setNowPathItemId(id)}
         select={(id) => selectDir(id)} />
       <Button
         variant="contained"
@@ -139,7 +166,7 @@ const FileListHandler = ({ infoHash }) => {
                   checked={selectedIndexes[f.fileIndex] ? true : false}
                   onClick={(e) => onCheckBoxClick(e, f.fileIndex)}
                   onChange={(e) => handleChange(e, f.fileIndex)} name="gilad" />}
-                label={f.meta.format.filename} />
+                label={"[" + utils.secondsToHHMMSS(f.meta.format.duration) + "] " + f.meta.format.filename} />
             )
           }) : null
       }
