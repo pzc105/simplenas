@@ -61,6 +61,7 @@ const categorySlice = createSlice({
     updateItem: (state, action) => {
       let item = action.payload
       state.items[item.id] = item
+      console.log(item)
     },
     deleteItem: (state, action) => {
       let itemId = action.payload
@@ -167,6 +168,7 @@ const selectCategorySubItems = (state, parentId) => {
     }
     return null
   })
+  console.log(ds)
   return ds
 }
 

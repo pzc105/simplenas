@@ -149,7 +149,7 @@ const CategoryItems = ({ parentId, shareid }) => {
   )
 }
 
-const CategoryItemCreator = ({ parentId, refreshParent }) => {
+const CategoryItemCreator = ({ parentId }) => {
   const dispatch = useDispatch()
   const [itemName, setItemName] = useState('')
   function handleChange(e) {
@@ -169,7 +169,8 @@ const CategoryItemCreator = ({ parentId, refreshParent }) => {
         console.log(err)
         return
       }
-      refreshParent()
+      queryItem(parentId, "", dispatch)
+      querySubItems(parentId, "", dispatch)
     })
   }
 
@@ -234,9 +235,6 @@ export default function CategoryItemPage() {
   }, [thisItem])
 
   const dispatch = useDispatch()
-  const refreshSubItems = () => {
-    querySubItems()
-  }
 
   useEffect(() => {
     queryItem(itemId, shareid, dispatch)
@@ -260,7 +258,7 @@ export default function CategoryItemPage() {
       {
         <SideUtils
           name="管理"
-          child={CategoryItemCreator({ parentId: itemId, refreshParent: () => { refreshSubItems() } })}
+          child={CategoryItemCreator({ parentId: itemId })}
         />
       }
       <CategoryItems parentId={itemId} shareid={shareid} />
