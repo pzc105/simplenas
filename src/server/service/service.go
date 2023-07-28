@@ -191,7 +191,7 @@ func (ser *CoreService) handleBtStatus(sr *prpc.StatusRespone) {
 	for sid, ch := range ser.btStatusPush {
 		ses, err := ser.sessions.GetSession3(sid)
 		if err != nil {
-			log.Warnf("[bt] not found session %d err: %v", sid, err)
+			delete(ser.btStatusPush, sid)
 			continue
 		}
 		var r prpc.StatusRespone
