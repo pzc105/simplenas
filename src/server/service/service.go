@@ -110,16 +110,16 @@ func (ser *CoreService) Serve() {
 	router.Handle("/prpc.UserService/{method}", grpcwebServer)
 
 	ser.videoSer = newVideoService(&NewVideoServiceParams{
-		UserManger: &ser.um,
-		Shares:     ser.shares,
-		Sessions:   ser.sessions,
-		Router:     router.PathPrefix("/video").Subrouter(),
+		UserData: &ser.um,
+		Shares:   ser.shares,
+		Sessions: ser.sessions,
+		Router:   router.PathPrefix("/video").Subrouter(),
 	})
 	ser.posterSer = newPosterService(&NewPosterServiceParams{
-		UserManger: &ser.um,
-		Shares:     ser.shares,
-		Sessions:   ser.sessions,
-		Router:     router.PathPrefix("/poster").Subrouter(),
+		CategoryData: &ser.um,
+		Shares:       ser.shares,
+		Sessions:     ser.sessions,
+		Router:       router.PathPrefix("/poster").Subrouter(),
 	})
 
 	ser.httpSer = &http.Server{
@@ -139,11 +139,6 @@ func (ser *CoreService) Close() {
 	ser.bt.Close()
 	ser.httpSer.Shutdown(context.Background())
 	ser.grpcSer.GracefulStop()
-	ser.wg.Wait()
-}
-
-func (ser *CoreService) Wait() {
-	// TODO this is not right
 	ser.wg.Wait()
 }
 

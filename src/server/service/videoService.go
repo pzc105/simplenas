@@ -18,8 +18,12 @@ import (
 	"github.com/grafov/m3u8"
 )
 
+type UserVideoData interface {
+	HasVideo(userId user.ID, vid video.ID) bool
+}
+
 type VideoService struct {
-	um       *user.UserManger
+	ud       UserVideoData
 	shares   SharesInterface
 	sessions session.SessionsInterface
 	router   *mux.Router
@@ -38,15 +42,15 @@ func loadStartTime(userId user.ID, vid video.ID) string {
 }
 
 type NewVideoServiceParams struct {
-	UserManger *user.UserManger
-	Shares     SharesInterface
-	Sessions   session.SessionsInterface
-	Router     *mux.Router
+	UserData UserVideoData
+	Shares   SharesInterface
+	Sessions session.SessionsInterface
+	Router   *mux.Router
 }
 
 func newVideoService(params *NewVideoServiceParams) *VideoService {
 	vs := &VideoService{
-		um:       params.UserManger,
+		ud:       params.UserData,
 		shares:   params.Shares,
 		sessions: params.Sessions,
 		router:   params.Router,
@@ -92,7 +96,7 @@ func (v *VideoService) checkAuth(next http.Handler) http.Handler {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		if !v.um.HasVideo(userId, video.ID(vid)) {
+		if !v.ud.HasVideo(userId, video.ID(vid)) {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
@@ -266,7 +270,7 @@ func (v *VideoService) handleSetOffsetTime(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	s, _ := v.sessions.GetSession(r)
-	if s == nil || !v.um.HasVideo(s.UserId, video.ID(vid)) {
+	if s == nil || !v.ud.HasVideo(s.UserId, video.ID(vid)) {
 		return
 	}
 	timeoffset, ok2 := vars["offset"]
@@ -287,7 +291,7 @@ func (v *VideoService) handleGetOffsetTime(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	s, _ := v.sessions.GetSession(r)
-	if s == nil || !v.um.HasVideo(s.UserId, video.ID(vid)) {
+	if s == nil || !v.ud.HasVideo(s.UserId, video.ID(vid)) {
 		return
 	}
 	w.Write([]byte(loadStartTime(s.UserId, video.ID(vid))))

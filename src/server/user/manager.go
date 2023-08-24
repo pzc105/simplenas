@@ -27,7 +27,7 @@ type UserManger struct {
 	mtx          sync.Mutex
 	users        map[ID]*User
 	genHslRecord map[video.ID]bool
-	categoryMgr  category.Manager
+	categorySer  category.Service
 
 	cudaQueue utils.TaskQueue
 	qsvQueue  utils.TaskQueue
@@ -44,7 +44,8 @@ func (um *UserManger) Init() {
 	um.users = make(map[ID]*User)
 	um.genHslRecord = make(map[video.ID]bool)
 
-	um.categoryMgr.Init()
+	um.categorySer = &category.Manager{}
+	um.categorySer.Init()
 
 	um.cudaQueue.Init(utils.WithMaxQueue(1024))
 	um.qsvQueue.Init(utils.WithMaxQueue(1024))
@@ -183,26 +184,12 @@ func (um *UserManger) NewCategoryItem(userId ID, params *category.NewCategoryPar
 	if params.ParentId <= 0 {
 		params.ParentId = user.GetHomeDirectoryId()
 	}
-	pitem, err := um.categoryMgr.GetItem(params.ParentId)
-	if err != nil {
-		return errors.New("not found parent")
-	}
-	if !pitem.HasWriteAuth(int64(userId)) && userId != AdminId {
-		return errors.New("not auth")
-	}
-	_, err = um.categoryMgr.NewItem(params)
+	_, err := um.categorySer.NewItem(params)
 	return err
 }
 
 func (um *UserManger) DelCategoryItem(userId ID, itemId category.ID) error {
-	item, err := um.categoryMgr.GetItem(itemId)
-	if err != nil {
-		return err
-	}
-	if !item.HasWriteAuth(int64(userId)) && userId != AdminId {
-		return errors.New("not auth")
-	}
-	return um.categoryMgr.DelItem(itemId)
+	return um.categorySer.DelItem(int64(userId), itemId)
 }
 
 func (um *UserManger) QueryItem(userId ID, itemId category.ID) (*category.CategoryItem, error) {
@@ -210,7 +197,7 @@ func (um *UserManger) QueryItem(userId ID, itemId category.ID) (*category.Catego
 	if err != nil {
 		return nil, err
 	}
-	item, err := um.categoryMgr.GetItem(itemId)
+	item, err := um.categorySer.GetItem(int64(userId), itemId)
 	if err != nil {
 		return nil, err
 	}
@@ -227,7 +214,7 @@ func (um *UserManger) QueryItems(userId ID, parentId category.ID) []*category.Ca
 		return []*category.CategoryItem{}
 	}
 
-	item, err := um.categoryMgr.GetItem(parentId)
+	item, err := um.categorySer.GetItem(int64(userId), parentId)
 	if err != nil {
 		log.Warnf("[user] %d query items err: %v", userId, err)
 		return []*category.CategoryItem{}
@@ -235,7 +222,7 @@ func (um *UserManger) QueryItems(userId ID, parentId category.ID) []*category.Ca
 	if !item.HasReadAuth(int64(user.userInfo.Id)) && userId != AdminId {
 		return []*category.CategoryItem{}
 	}
-	items, err := um.categoryMgr.GetItems(item.GetSubItemIds()...)
+	items, err := um.categorySer.GetItems(int64(userId), item.GetSubItemIds()...)
 	if err != nil {
 		log.Warnf("[user] %d load items err: %v", userId, err)
 	}
@@ -301,7 +288,7 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	parentItem, err := um.categoryMgr.GetItem(category.ID(params.CategoryItemId))
+	parentItem, err := um.categorySer.GetItem(int64(params.UserId), category.ID(params.CategoryItemId))
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -355,7 +342,7 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 			Introduce:    "",
 			Auth:         utils.NewBitSet(category.AuthMax),
 		}
-		item, err := um.categoryMgr.NewItem(newCParams)
+		item, err := um.categorySer.NewItem(newCParams)
 		if err != nil {
 			return err
 		}
@@ -535,14 +522,14 @@ func (um *UserManger) RefreshSubtitle(vid video.ID) error {
 }
 
 func (um *UserManger) IsItemShared(sharedItemId category.ID, itemId category.ID) bool {
-	_, err := um.categoryMgr.GetItem(sharedItemId)
+	_, err := um.categorySer.GetItem(category.AdminId, sharedItemId)
 	if err != nil {
 		log.Warnf("not found shared item id %d", sharedItemId)
 		return false
 	}
 	var nextParentId = itemId
 	for {
-		item, err := um.categoryMgr.GetItem(nextParentId)
+		item, err := um.categorySer.GetItem(category.AdminId, nextParentId)
 		if err != nil {
 			log.Warnf("not found shared item id :%d, next parent: %d, share item id: %d", itemId, nextParentId, sharedItemId)
 			return false
@@ -587,19 +574,16 @@ func writeSubtitle2Item(item *category.CategoryItem, rpcSubtitle *prpc.SubtitleF
 }
 
 func (um *UserManger) UploadSubtitle(userId ID, req *prpc.UploadSubtitleReq) error {
-	item, err := um.categoryMgr.GetItem(category.ID(req.ItemId))
+	item, err := um.categorySer.GetItem(int64(userId), category.ID(req.ItemId))
 	if err != nil {
 		return err
-	}
-	if !item.HasWriteAuth(int64(userId)) {
-		return errors.New("no auth")
 	}
 	if item.GetType() == prpc.CategoryItem_Video {
 		for _, s := range req.Subtitles {
 			writeSubtitle2Item(item, s)
 		}
 	} else {
-		subItems, err := um.categoryMgr.GetItems(item.GetSubItemIds()...)
+		subItems, err := um.categorySer.GetItems(int64(userId), item.GetSubItemIds()...)
 		if err != nil {
 			return err
 		}

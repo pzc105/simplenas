@@ -4,6 +4,8 @@ import (
 	"pnas/db"
 	"pnas/log"
 	"sync"
+
+	"github.com/pkg/errors"
 )
 
 type Manager struct {
@@ -70,9 +72,12 @@ func (m *Manager) removeItem(itemId ID) {
 }
 
 func (m *Manager) NewItem(params *NewCategoryParams) (*CategoryItem, error) {
-	parentItem, err := m.GetItem(params.ParentId)
+	parentItem, err := m.GetItem(params.Creator, params.ParentId)
 	if err != nil {
 		return nil, err
+	}
+	if !parentItem.HasWriteAuth(params.Creator) {
+		return nil, errors.New("not auth")
 	}
 
 	dbmtx := m.requireDbMtx(params.ParentId)
@@ -87,9 +92,12 @@ func (m *Manager) NewItem(params *NewCategoryParams) (*CategoryItem, error) {
 	return item, err
 }
 
-func (m *Manager) GetItem(itemId ID) (*CategoryItem, error) {
+func (m *Manager) GetItem(querier int64, itemId ID) (*CategoryItem, error) {
 	item := m.queryItem(itemId)
 	if item != nil {
+		if !item.HasReadAuth(querier) {
+			return nil, errors.New("no auth")
+		}
 		return item, nil
 	}
 
@@ -111,11 +119,13 @@ func (m *Manager) GetItem(itemId ID) (*CategoryItem, error) {
 	m.itemsMtx.Lock()
 	m.items[itemId] = item
 	m.itemsMtx.Unlock()
-
+	if !item.HasReadAuth(querier) {
+		return nil, errors.New("no auth")
+	}
 	return item, err
 }
 
-func (m *Manager) GetItems(itemIds ...ID) ([]*CategoryItem, error) {
+func (m *Manager) GetItems(querier int64, itemIds ...ID) ([]*CategoryItem, error) {
 	remainIds := make([]ID, 0, len(itemIds))
 	ret := make([]*CategoryItem, 0, len(itemIds))
 	m.itemsMtx.Lock()
@@ -139,7 +149,7 @@ func (m *Manager) GetItems(itemIds ...ID) ([]*CategoryItem, error) {
 		mtxes = append(mtxes, mtx)
 		mtx.Lock()
 		item := m.queryItem(itemId)
-		if item != nil {
+		if item != nil && (item.HasReadAuth(querier)) {
 			ret = append(ret, item)
 		} else {
 			realNeedQueryIds = append(realNeedQueryIds, itemId)
@@ -154,20 +164,27 @@ func (m *Manager) GetItems(itemIds ...ID) ([]*CategoryItem, error) {
 
 	items, err := _loadItems(realNeedQueryIds...)
 	if err == nil {
-		ret = append(ret, items...)
+		for _, item := range items {
+			if item.HasReadAuth(querier) {
+				ret = append(ret, item)
+			}
+		}
 	}
 
 	return ret, err
 }
 
-func (m *Manager) DelItem(itemId ID) error {
-	item, err := m.GetItem(itemId)
+func (m *Manager) DelItem(deleter int64, itemId ID) error {
+	item, err := m.GetItem(deleter, itemId)
 	if err != nil {
 		return err
 	}
+	if !item.HasWriteAuth(deleter) {
+		return errors.New("not auth")
+	}
 
 	var toDelItems []*CategoryItem
-	parentItem, _ := m.GetItem(item.base.ParentId)
+	parentItem, _ := m.GetItem(AdminId, item.base.ParentId)
 	parentDbMtx := m.requireDbMtx(item.base.ParentId)
 	toDelItems = append(toDelItems, item)
 	toDelItemsDbMtx := []*sync.Mutex{m.requireDbMtx(itemId)}
@@ -181,7 +198,7 @@ func (m *Manager) DelItem(itemId ID) error {
 		item := toDelItems[len(toDelItems)-1]
 		if _, ok := flags[item.base.Id]; !ok {
 			flags[item.base.Id] = true
-			items, _ := m.GetItems(item.GetSubItemIds()...)
+			items, _ := m.GetItems(AdminId, item.GetSubItemIds()...)
 			toDelItems = append(toDelItems, items...)
 			for _, item := range items {
 				dbmtx := m.requireDbMtx(item.base.Id)

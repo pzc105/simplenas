@@ -23,6 +23,10 @@ const (
 	NotExisted = -2
 )
 
+const (
+	AdminId = 1
+)
+
 type BaseItem struct {
 	Id           ID
 	Creator      int64
@@ -241,6 +245,9 @@ func (c *CategoryItem) HasAndAuths(auths ...uint) bool {
 }
 
 func (c *CategoryItem) HasReadAuth(who int64) bool {
+	if who == AdminId {
+		return true
+	}
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
 	if c.base.Creator == who || c.auth.Test(AuthOtherRead) {
@@ -250,6 +257,9 @@ func (c *CategoryItem) HasReadAuth(who int64) bool {
 }
 
 func (c *CategoryItem) HasWriteAuth(who int64) bool {
+	if who == AdminId {
+		return true
+	}
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
 	if c.base.Creator == who || c.auth.Test(AuthOtherWrite) {
