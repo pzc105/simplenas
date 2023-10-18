@@ -163,6 +163,13 @@ class UserService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RefreshSubtitleRes>> PrepareAsyncRefreshSubtitle(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RefreshSubtitleRes>>(PrepareAsyncRefreshSubtitleRaw(context, request, cq));
     }
+    virtual ::grpc::Status UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::prpc::UploadSubtitleRes* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>> AsyncUploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>>(AsyncUploadSubtitleRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>> PrepareAsyncUploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>>(PrepareAsyncUploadSubtitleRaw(context, request, cq));
+    }
     std::unique_ptr< ::grpc::ClientReaderInterface< ::prpc::JoinChatRoomRes>> JoinChatRoom(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq& request) {
       return std::unique_ptr< ::grpc::ClientReaderInterface< ::prpc::JoinChatRoomRes>>(JoinChatRoomRaw(context, request));
     }
@@ -217,6 +224,8 @@ class UserService final {
       virtual void QueryItemInfo(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void RefreshSubtitle(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq* request, ::prpc::RefreshSubtitleRes* response, std::function<void(::grpc::Status)>) = 0;
       virtual void RefreshSubtitle(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq* request, ::prpc::RefreshSubtitleRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void JoinChatRoom(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq* request, ::grpc::ClientReadReactor< ::prpc::JoinChatRoomRes>* reactor) = 0;
       virtual void SendMsg2ChatRoom(::grpc::ClientContext* context, const ::prpc::SendMsg2ChatRoomReq* request, ::prpc::SendMsg2ChatRoomRes* response, std::function<void(::grpc::Status)>) = 0;
       virtual void SendMsg2ChatRoom(::grpc::ClientContext* context, const ::prpc::SendMsg2ChatRoomReq* request, ::prpc::SendMsg2ChatRoomRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
@@ -262,6 +271,8 @@ class UserService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QueryItemInfoRes>* PrepareAsyncQueryItemInfoRaw(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RefreshSubtitleRes>* AsyncRefreshSubtitleRaw(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RefreshSubtitleRes>* PrepareAsyncRefreshSubtitleRaw(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>* AsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>* PrepareAsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientReaderInterface< ::prpc::JoinChatRoomRes>* JoinChatRoomRaw(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq& request) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::prpc::JoinChatRoomRes>* AsyncJoinChatRoomRaw(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::prpc::JoinChatRoomRes>* PrepareAsyncJoinChatRoomRaw(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq& request, ::grpc::CompletionQueue* cq) = 0;
@@ -399,6 +410,13 @@ class UserService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RefreshSubtitleRes>> PrepareAsyncRefreshSubtitle(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RefreshSubtitleRes>>(PrepareAsyncRefreshSubtitleRaw(context, request, cq));
     }
+    ::grpc::Status UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::prpc::UploadSubtitleRes* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>> AsyncUploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>>(AsyncUploadSubtitleRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>> PrepareAsyncUploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>>(PrepareAsyncUploadSubtitleRaw(context, request, cq));
+    }
     std::unique_ptr< ::grpc::ClientReader< ::prpc::JoinChatRoomRes>> JoinChatRoom(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq& request) {
       return std::unique_ptr< ::grpc::ClientReader< ::prpc::JoinChatRoomRes>>(JoinChatRoomRaw(context, request));
     }
@@ -453,6 +471,8 @@ class UserService final {
       void QueryItemInfo(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response, ::grpc::ClientUnaryReactor* reactor) override;
       void RefreshSubtitle(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq* request, ::prpc::RefreshSubtitleRes* response, std::function<void(::grpc::Status)>) override;
       void RefreshSubtitle(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq* request, ::prpc::RefreshSubtitleRes* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, std::function<void(::grpc::Status)>) override;
+      void UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, ::grpc::ClientUnaryReactor* reactor) override;
       void JoinChatRoom(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq* request, ::grpc::ClientReadReactor< ::prpc::JoinChatRoomRes>* reactor) override;
       void SendMsg2ChatRoom(::grpc::ClientContext* context, const ::prpc::SendMsg2ChatRoomReq* request, ::prpc::SendMsg2ChatRoomRes* response, std::function<void(::grpc::Status)>) override;
       void SendMsg2ChatRoom(::grpc::ClientContext* context, const ::prpc::SendMsg2ChatRoomReq* request, ::prpc::SendMsg2ChatRoomRes* response, ::grpc::ClientUnaryReactor* reactor) override;
@@ -504,6 +524,8 @@ class UserService final {
     ::grpc::ClientAsyncResponseReader< ::prpc::QueryItemInfoRes>* PrepareAsyncQueryItemInfoRaw(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::RefreshSubtitleRes>* AsyncRefreshSubtitleRaw(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::RefreshSubtitleRes>* PrepareAsyncRefreshSubtitleRaw(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>* AsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>* PrepareAsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientReader< ::prpc::JoinChatRoomRes>* JoinChatRoomRaw(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq& request) override;
     ::grpc::ClientAsyncReader< ::prpc::JoinChatRoomRes>* AsyncJoinChatRoomRaw(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::prpc::JoinChatRoomRes>* PrepareAsyncJoinChatRoomRaw(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq& request, ::grpc::CompletionQueue* cq) override;
@@ -527,6 +549,7 @@ class UserService final {
     const ::grpc::internal::RpcMethod rpcmethod_QuerySubItems_;
     const ::grpc::internal::RpcMethod rpcmethod_QueryItemInfo_;
     const ::grpc::internal::RpcMethod rpcmethod_RefreshSubtitle_;
+    const ::grpc::internal::RpcMethod rpcmethod_UploadSubtitle_;
     const ::grpc::internal::RpcMethod rpcmethod_JoinChatRoom_;
     const ::grpc::internal::RpcMethod rpcmethod_SendMsg2ChatRoom_;
   };
@@ -554,6 +577,7 @@ class UserService final {
     virtual ::grpc::Status QuerySubItems(::grpc::ServerContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response);
     virtual ::grpc::Status QueryItemInfo(::grpc::ServerContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response);
     virtual ::grpc::Status RefreshSubtitle(::grpc::ServerContext* context, const ::prpc::RefreshSubtitleReq* request, ::prpc::RefreshSubtitleRes* response);
+    virtual ::grpc::Status UploadSubtitle(::grpc::ServerContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response);
     virtual ::grpc::Status JoinChatRoom(::grpc::ServerContext* context, const ::prpc::JoinChatRoomReq* request, ::grpc::ServerWriter< ::prpc::JoinChatRoomRes>* writer);
     virtual ::grpc::Status SendMsg2ChatRoom(::grpc::ServerContext* context, const ::prpc::SendMsg2ChatRoomReq* request, ::prpc::SendMsg2ChatRoomRes* response);
   };
@@ -918,12 +942,32 @@ class UserService final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_UploadSubtitle : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_UploadSubtitle() {
+      ::grpc::Service::MarkMethodAsync(18);
+    }
+    ~WithAsyncMethod_UploadSubtitle() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UploadSubtitle(::grpc::ServerContext* /*context*/, const ::prpc::UploadSubtitleReq* /*request*/, ::prpc::UploadSubtitleRes* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestUploadSubtitle(::grpc::ServerContext* context, ::prpc::UploadSubtitleReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::UploadSubtitleRes>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(18, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_JoinChatRoom : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_JoinChatRoom() {
-      ::grpc::Service::MarkMethodAsync(18);
+      ::grpc::Service::MarkMethodAsync(19);
     }
     ~WithAsyncMethod_JoinChatRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -934,7 +978,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestJoinChatRoom(::grpc::ServerContext* context, ::prpc::JoinChatRoomReq* request, ::grpc::ServerAsyncWriter< ::prpc::JoinChatRoomRes>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(18, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(19, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -943,7 +987,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_SendMsg2ChatRoom() {
-      ::grpc::Service::MarkMethodAsync(19);
+      ::grpc::Service::MarkMethodAsync(20);
     }
     ~WithAsyncMethod_SendMsg2ChatRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -954,10 +998,10 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSendMsg2ChatRoom(::grpc::ServerContext* context, ::prpc::SendMsg2ChatRoomReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::SendMsg2ChatRoomRes>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(19, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(20, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_Register<WithAsyncMethod_IsUsedEmail<WithAsyncMethod_Login<WithAsyncMethod_FastLogin<WithAsyncMethod_IsLogined<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_OnStatus<WithAsyncMethod_QueryBtVideos<WithAsyncMethod_NewCategoryItem<WithAsyncMethod_DelCategoryItem<WithAsyncMethod_AddBtVideos<WithAsyncMethod_ShareItem<WithAsyncMethod_QuerySharedItems<WithAsyncMethod_DelSharedItem<WithAsyncMethod_QuerySubItems<WithAsyncMethod_QueryItemInfo<WithAsyncMethod_RefreshSubtitle<WithAsyncMethod_JoinChatRoom<WithAsyncMethod_SendMsg2ChatRoom<Service > > > > > > > > > > > > > > > > > > > > AsyncService;
+  typedef WithAsyncMethod_Register<WithAsyncMethod_IsUsedEmail<WithAsyncMethod_Login<WithAsyncMethod_FastLogin<WithAsyncMethod_IsLogined<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_OnStatus<WithAsyncMethod_QueryBtVideos<WithAsyncMethod_NewCategoryItem<WithAsyncMethod_DelCategoryItem<WithAsyncMethod_AddBtVideos<WithAsyncMethod_ShareItem<WithAsyncMethod_QuerySharedItems<WithAsyncMethod_DelSharedItem<WithAsyncMethod_QuerySubItems<WithAsyncMethod_QueryItemInfo<WithAsyncMethod_RefreshSubtitle<WithAsyncMethod_UploadSubtitle<WithAsyncMethod_JoinChatRoom<WithAsyncMethod_SendMsg2ChatRoom<Service > > > > > > > > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_Register : public BaseClass {
    private:
@@ -1440,12 +1484,39 @@ class UserService final {
       ::grpc::CallbackServerContext* /*context*/, const ::prpc::RefreshSubtitleReq* /*request*/, ::prpc::RefreshSubtitleRes* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithCallbackMethod_UploadSubtitle : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_UploadSubtitle() {
+      ::grpc::Service::MarkMethodCallback(18,
+          new ::grpc::internal::CallbackUnaryHandler< ::prpc::UploadSubtitleReq, ::prpc::UploadSubtitleRes>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response) { return this->UploadSubtitle(context, request, response); }));}
+    void SetMessageAllocatorFor_UploadSubtitle(
+        ::grpc::MessageAllocator< ::prpc::UploadSubtitleReq, ::prpc::UploadSubtitleRes>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(18);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::UploadSubtitleReq, ::prpc::UploadSubtitleRes>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_UploadSubtitle() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UploadSubtitle(::grpc::ServerContext* /*context*/, const ::prpc::UploadSubtitleReq* /*request*/, ::prpc::UploadSubtitleRes* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* UploadSubtitle(
+      ::grpc::CallbackServerContext* /*context*/, const ::prpc::UploadSubtitleReq* /*request*/, ::prpc::UploadSubtitleRes* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithCallbackMethod_JoinChatRoom : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_JoinChatRoom() {
-      ::grpc::Service::MarkMethodCallback(18,
+      ::grpc::Service::MarkMethodCallback(19,
           new ::grpc::internal::CallbackServerStreamingHandler< ::prpc::JoinChatRoomReq, ::prpc::JoinChatRoomRes>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::prpc::JoinChatRoomReq* request) { return this->JoinChatRoom(context, request); }));
@@ -1467,13 +1538,13 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_SendMsg2ChatRoom() {
-      ::grpc::Service::MarkMethodCallback(19,
+      ::grpc::Service::MarkMethodCallback(20,
           new ::grpc::internal::CallbackUnaryHandler< ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::prpc::SendMsg2ChatRoomReq* request, ::prpc::SendMsg2ChatRoomRes* response) { return this->SendMsg2ChatRoom(context, request, response); }));}
     void SetMessageAllocatorFor_SendMsg2ChatRoom(
         ::grpc::MessageAllocator< ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(19);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(20);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -1488,7 +1559,7 @@ class UserService final {
     virtual ::grpc::ServerUnaryReactor* SendMsg2ChatRoom(
       ::grpc::CallbackServerContext* /*context*/, const ::prpc::SendMsg2ChatRoomReq* /*request*/, ::prpc::SendMsg2ChatRoomRes* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_Register<WithCallbackMethod_IsUsedEmail<WithCallbackMethod_Login<WithCallbackMethod_FastLogin<WithCallbackMethod_IsLogined<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_OnStatus<WithCallbackMethod_QueryBtVideos<WithCallbackMethod_NewCategoryItem<WithCallbackMethod_DelCategoryItem<WithCallbackMethod_AddBtVideos<WithCallbackMethod_ShareItem<WithCallbackMethod_QuerySharedItems<WithCallbackMethod_DelSharedItem<WithCallbackMethod_QuerySubItems<WithCallbackMethod_QueryItemInfo<WithCallbackMethod_RefreshSubtitle<WithCallbackMethod_JoinChatRoom<WithCallbackMethod_SendMsg2ChatRoom<Service > > > > > > > > > > > > > > > > > > > > CallbackService;
+  typedef WithCallbackMethod_Register<WithCallbackMethod_IsUsedEmail<WithCallbackMethod_Login<WithCallbackMethod_FastLogin<WithCallbackMethod_IsLogined<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_OnStatus<WithCallbackMethod_QueryBtVideos<WithCallbackMethod_NewCategoryItem<WithCallbackMethod_DelCategoryItem<WithCallbackMethod_AddBtVideos<WithCallbackMethod_ShareItem<WithCallbackMethod_QuerySharedItems<WithCallbackMethod_DelSharedItem<WithCallbackMethod_QuerySubItems<WithCallbackMethod_QueryItemInfo<WithCallbackMethod_RefreshSubtitle<WithCallbackMethod_UploadSubtitle<WithCallbackMethod_JoinChatRoom<WithCallbackMethod_SendMsg2ChatRoom<Service > > > > > > > > > > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_Register : public BaseClass {
@@ -1797,12 +1868,29 @@ class UserService final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_UploadSubtitle : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_UploadSubtitle() {
+      ::grpc::Service::MarkMethodGeneric(18);
+    }
+    ~WithGenericMethod_UploadSubtitle() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UploadSubtitle(::grpc::ServerContext* /*context*/, const ::prpc::UploadSubtitleReq* /*request*/, ::prpc::UploadSubtitleRes* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_JoinChatRoom : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_JoinChatRoom() {
-      ::grpc::Service::MarkMethodGeneric(18);
+      ::grpc::Service::MarkMethodGeneric(19);
     }
     ~WithGenericMethod_JoinChatRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1819,7 +1907,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_SendMsg2ChatRoom() {
-      ::grpc::Service::MarkMethodGeneric(19);
+      ::grpc::Service::MarkMethodGeneric(20);
     }
     ~WithGenericMethod_SendMsg2ChatRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2191,12 +2279,32 @@ class UserService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_UploadSubtitle : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_UploadSubtitle() {
+      ::grpc::Service::MarkMethodRaw(18);
+    }
+    ~WithRawMethod_UploadSubtitle() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UploadSubtitle(::grpc::ServerContext* /*context*/, const ::prpc::UploadSubtitleReq* /*request*/, ::prpc::UploadSubtitleRes* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestUploadSubtitle(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(18, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_JoinChatRoom : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_JoinChatRoom() {
-      ::grpc::Service::MarkMethodRaw(18);
+      ::grpc::Service::MarkMethodRaw(19);
     }
     ~WithRawMethod_JoinChatRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2207,7 +2315,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestJoinChatRoom(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(18, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(19, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -2216,7 +2324,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_SendMsg2ChatRoom() {
-      ::grpc::Service::MarkMethodRaw(19);
+      ::grpc::Service::MarkMethodRaw(20);
     }
     ~WithRawMethod_SendMsg2ChatRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2227,7 +2335,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSendMsg2ChatRoom(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(19, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(20, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -2627,12 +2735,34 @@ class UserService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_UploadSubtitle : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_UploadSubtitle() {
+      ::grpc::Service::MarkMethodRawCallback(18,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->UploadSubtitle(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_UploadSubtitle() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UploadSubtitle(::grpc::ServerContext* /*context*/, const ::prpc::UploadSubtitleReq* /*request*/, ::prpc::UploadSubtitleRes* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* UploadSubtitle(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_JoinChatRoom : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_JoinChatRoom() {
-      ::grpc::Service::MarkMethodRawCallback(18,
+      ::grpc::Service::MarkMethodRawCallback(19,
           new ::grpc::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->JoinChatRoom(context, request); }));
@@ -2654,7 +2784,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_SendMsg2ChatRoom() {
-      ::grpc::Service::MarkMethodRawCallback(19,
+      ::grpc::Service::MarkMethodRawCallback(20,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SendMsg2ChatRoom(context, request, response); }));
@@ -3130,12 +3260,39 @@ class UserService final {
     virtual ::grpc::Status StreamedRefreshSubtitle(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::RefreshSubtitleReq,::prpc::RefreshSubtitleRes>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
+  class WithStreamedUnaryMethod_UploadSubtitle : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_UploadSubtitle() {
+      ::grpc::Service::MarkMethodStreamed(18,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::prpc::UploadSubtitleReq, ::prpc::UploadSubtitleRes>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::prpc::UploadSubtitleReq, ::prpc::UploadSubtitleRes>* streamer) {
+                       return this->StreamedUploadSubtitle(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_UploadSubtitle() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status UploadSubtitle(::grpc::ServerContext* /*context*/, const ::prpc::UploadSubtitleReq* /*request*/, ::prpc::UploadSubtitleRes* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedUploadSubtitle(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::UploadSubtitleReq,::prpc::UploadSubtitleRes>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_SendMsg2ChatRoom : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_SendMsg2ChatRoom() {
-      ::grpc::Service::MarkMethodStreamed(19,
+      ::grpc::Service::MarkMethodStreamed(20,
         new ::grpc::internal::StreamedUnaryHandler<
           ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes>(
             [this](::grpc::ServerContext* context,
@@ -3156,7 +3313,7 @@ class UserService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedSendMsg2ChatRoom(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::SendMsg2ChatRoomReq,::prpc::SendMsg2ChatRoomRes>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_RefreshSubtitle<WithStreamedUnaryMethod_SendMsg2ChatRoom<Service > > > > > > > > > > > > > > > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_RefreshSubtitle<WithStreamedUnaryMethod_UploadSubtitle<WithStreamedUnaryMethod_SendMsg2ChatRoom<Service > > > > > > > > > > > > > > > > > > > StreamedUnaryService;
   template <class BaseClass>
   class WithSplitStreamingMethod_OnStatus : public BaseClass {
    private:
@@ -3190,7 +3347,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithSplitStreamingMethod_JoinChatRoom() {
-      ::grpc::Service::MarkMethodStreamed(18,
+      ::grpc::Service::MarkMethodStreamed(19,
         new ::grpc::internal::SplitServerStreamingHandler<
           ::prpc::JoinChatRoomReq, ::prpc::JoinChatRoomRes>(
             [this](::grpc::ServerContext* context,
@@ -3212,7 +3369,7 @@ class UserService final {
     virtual ::grpc::Status StreamedJoinChatRoom(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::prpc::JoinChatRoomReq,::prpc::JoinChatRoomRes>* server_split_streamer) = 0;
   };
   typedef WithSplitStreamingMethod_OnStatus<WithSplitStreamingMethod_JoinChatRoom<Service > > SplitStreamedService;
-  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithSplitStreamingMethod_OnStatus<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_RefreshSubtitle<WithSplitStreamingMethod_JoinChatRoom<WithStreamedUnaryMethod_SendMsg2ChatRoom<Service > > > > > > > > > > > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithSplitStreamingMethod_OnStatus<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_RefreshSubtitle<WithStreamedUnaryMethod_UploadSubtitle<WithSplitStreamingMethod_JoinChatRoom<WithStreamedUnaryMethod_SendMsg2ChatRoom<Service > > > > > > > > > > > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace prpc

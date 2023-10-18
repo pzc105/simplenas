@@ -125,22 +125,22 @@ static const ::_pb::Message* const file_default_instances[] = {
     &::prpc::_SharedItem_default_instance_._instance,
 };
 const char descriptor_table_protodef_category_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-    "\n\016category.proto\022\004prpc\"\223\002\n\014CategoryItem\022"
+    "\n\016category.proto\022\004prpc\"\262\002\n\014CategoryItem\022"
     "\n\n\002id\030\001 \001(\003\022(\n\007type_id\030\002 \001(\0162\027.prpc.Cate"
     "goryItem.Type\022\017\n\007creator\030\003 \001(\003\022\014\n\004name\030\004"
     " \001(\t\022\025\n\rresource_path\030\005 \001(\t\022\023\n\013poster_pa"
     "th\030\006 \001(\t\022\021\n\tintroduce\030\007 \001(\t\022\021\n\tparent_id"
-    "\030\010 \001(\003\022\024\n\014sub_item_ids\030\t \003(\003\"F\n\004Type\022\013\n\007"
+    "\030\010 \001(\003\022\024\n\014sub_item_ids\030\t \003(\003\"e\n\004Type\022\013\n\007"
     "Unknown\020\000\022\010\n\004Home\020\001\022\r\n\tDirectory\020\002\022\t\n\005Vi"
-    "deo\020\003\022\r\n\tOtherFile\020\004\"/\n\nSharedItem\022\017\n\007it"
-    "em_id\030\001 \001(\003\022\020\n\010share_id\030\002 \001(\tB\010Z\006./prpcb"
-    "\006proto3"
+    "deo\020\003\022\r\n\tOtherFile\020\004\022\t\n\005Audio\020\005\022\022\n\016Music"
+    "Directory\020\006\"/\n\nSharedItem\022\017\n\007item_id\030\001 \001"
+    "(\003\022\020\n\010share_id\030\002 \001(\tB\010Z\006./prpcb\006proto3"
 };
 static ::absl::once_flag descriptor_table_category_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_category_2eproto = {
     false,
     false,
-    367,
+    398,
     descriptor_table_protodef_category_2eproto,
     "category.proto",
     &descriptor_table_category_2eproto_once,
@@ -184,6 +184,8 @@ bool CategoryItem_Type_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+    case 5:
+    case 6:
       return true;
     default:
       return false;
@@ -197,6 +199,8 @@ constexpr CategoryItem_Type CategoryItem::Home;
 constexpr CategoryItem_Type CategoryItem::Directory;
 constexpr CategoryItem_Type CategoryItem::Video;
 constexpr CategoryItem_Type CategoryItem::OtherFile;
+constexpr CategoryItem_Type CategoryItem::Audio;
+constexpr CategoryItem_Type CategoryItem::MusicDirectory;
 constexpr CategoryItem_Type CategoryItem::Type_MIN;
 constexpr CategoryItem_Type CategoryItem::Type_MAX;
 constexpr int CategoryItem::Type_ARRAYSIZE;

@@ -152,6 +152,15 @@ extern ShareItemReqDefaultTypeInternal _ShareItemReq_default_instance_;
 class ShareItemRes;
 struct ShareItemResDefaultTypeInternal;
 extern ShareItemResDefaultTypeInternal _ShareItemRes_default_instance_;
+class SubtitleFile;
+struct SubtitleFileDefaultTypeInternal;
+extern SubtitleFileDefaultTypeInternal _SubtitleFile_default_instance_;
+class UploadSubtitleReq;
+struct UploadSubtitleReqDefaultTypeInternal;
+extern UploadSubtitleReqDefaultTypeInternal _UploadSubtitleReq_default_instance_;
+class UploadSubtitleRes;
+struct UploadSubtitleResDefaultTypeInternal;
+extern UploadSubtitleResDefaultTypeInternal _UploadSubtitleRes_default_instance_;
 class UserInfo;
 struct UserInfoDefaultTypeInternal;
 extern UserInfoDefaultTypeInternal _UserInfo_default_instance_;
@@ -221,6 +230,12 @@ template <>
 ::prpc::ShareItemReq* Arena::CreateMaybeMessage<::prpc::ShareItemReq>(Arena*);
 template <>
 ::prpc::ShareItemRes* Arena::CreateMaybeMessage<::prpc::ShareItemRes>(Arena*);
+template <>
+::prpc::SubtitleFile* Arena::CreateMaybeMessage<::prpc::SubtitleFile>(Arena*);
+template <>
+::prpc::UploadSubtitleReq* Arena::CreateMaybeMessage<::prpc::UploadSubtitleReq>(Arena*);
+template <>
+::prpc::UploadSubtitleRes* Arena::CreateMaybeMessage<::prpc::UploadSubtitleRes>(Arena*);
 template <>
 ::prpc::UserInfo* Arena::CreateMaybeMessage<::prpc::UserInfo>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -4610,6 +4625,468 @@ class RefreshSubtitleRes final :
   friend struct ::TableStruct_user_2eproto;
 };// -------------------------------------------------------------------
 
+class SubtitleFile final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.SubtitleFile) */ {
+ public:
+  inline SubtitleFile() : SubtitleFile(nullptr) {}
+  ~SubtitleFile() override;
+  explicit PROTOBUF_CONSTEXPR SubtitleFile(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SubtitleFile(const SubtitleFile& from);
+  SubtitleFile(SubtitleFile&& from) noexcept
+    : SubtitleFile() {
+    *this = ::std::move(from);
+  }
+
+  inline SubtitleFile& operator=(const SubtitleFile& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SubtitleFile& operator=(SubtitleFile&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SubtitleFile& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SubtitleFile* internal_default_instance() {
+    return reinterpret_cast<const SubtitleFile*>(
+               &_SubtitleFile_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    28;
+
+  friend void swap(SubtitleFile& a, SubtitleFile& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SubtitleFile* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SubtitleFile* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SubtitleFile* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SubtitleFile>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SubtitleFile& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SubtitleFile& from) {
+    SubtitleFile::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SubtitleFile* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.SubtitleFile";
+  }
+  protected:
+  explicit SubtitleFile(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNameFieldNumber = 1,
+    kContentFieldNumber = 2,
+  };
+  // string name = 1;
+  void clear_name() ;
+  const std::string& name() const;
+
+
+
+
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_name(Arg_&& arg, Args_... args);
+  std::string* mutable_name();
+  PROTOBUF_NODISCARD std::string* release_name();
+  void set_allocated_name(std::string* ptr);
+
+  private:
+  const std::string& _internal_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(
+      const std::string& value);
+  std::string* _internal_mutable_name();
+
+  public:
+  // bytes content = 2;
+  void clear_content() ;
+  const std::string& content() const;
+
+
+
+
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_content(Arg_&& arg, Args_... args);
+  std::string* mutable_content();
+  PROTOBUF_NODISCARD std::string* release_content();
+  void set_allocated_content(std::string* ptr);
+
+  private:
+  const std::string& _internal_content() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_content(
+      const std::string& value);
+  std::string* _internal_mutable_content();
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.SubtitleFile)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr content_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class UploadSubtitleReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.UploadSubtitleReq) */ {
+ public:
+  inline UploadSubtitleReq() : UploadSubtitleReq(nullptr) {}
+  ~UploadSubtitleReq() override;
+  explicit PROTOBUF_CONSTEXPR UploadSubtitleReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  UploadSubtitleReq(const UploadSubtitleReq& from);
+  UploadSubtitleReq(UploadSubtitleReq&& from) noexcept
+    : UploadSubtitleReq() {
+    *this = ::std::move(from);
+  }
+
+  inline UploadSubtitleReq& operator=(const UploadSubtitleReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UploadSubtitleReq& operator=(UploadSubtitleReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const UploadSubtitleReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const UploadSubtitleReq* internal_default_instance() {
+    return reinterpret_cast<const UploadSubtitleReq*>(
+               &_UploadSubtitleReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    29;
+
+  friend void swap(UploadSubtitleReq& a, UploadSubtitleReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UploadSubtitleReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UploadSubtitleReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  UploadSubtitleReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<UploadSubtitleReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const UploadSubtitleReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const UploadSubtitleReq& from) {
+    UploadSubtitleReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UploadSubtitleReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.UploadSubtitleReq";
+  }
+  protected:
+  explicit UploadSubtitleReq(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSubtitlesFieldNumber = 2,
+    kItemIdFieldNumber = 1,
+  };
+  // repeated .prpc.SubtitleFile subtitles = 2;
+  int subtitles_size() const;
+  private:
+  int _internal_subtitles_size() const;
+
+  public:
+  void clear_subtitles() ;
+  ::prpc::SubtitleFile* mutable_subtitles(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::SubtitleFile >*
+      mutable_subtitles();
+  private:
+  const ::prpc::SubtitleFile& _internal_subtitles(int index) const;
+  ::prpc::SubtitleFile* _internal_add_subtitles();
+  public:
+  const ::prpc::SubtitleFile& subtitles(int index) const;
+  ::prpc::SubtitleFile* add_subtitles();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::SubtitleFile >&
+      subtitles() const;
+  // int64 item_id = 1;
+  void clear_item_id() ;
+  ::int64_t item_id() const;
+  void set_item_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_item_id() const;
+  void _internal_set_item_id(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.UploadSubtitleReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::SubtitleFile > subtitles_;
+    ::int64_t item_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class UploadSubtitleRes final :
+    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.UploadSubtitleRes) */ {
+ public:
+  inline UploadSubtitleRes() : UploadSubtitleRes(nullptr) {}
+  explicit PROTOBUF_CONSTEXPR UploadSubtitleRes(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  UploadSubtitleRes(const UploadSubtitleRes& from);
+  UploadSubtitleRes(UploadSubtitleRes&& from) noexcept
+    : UploadSubtitleRes() {
+    *this = ::std::move(from);
+  }
+
+  inline UploadSubtitleRes& operator=(const UploadSubtitleRes& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UploadSubtitleRes& operator=(UploadSubtitleRes&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const UploadSubtitleRes& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const UploadSubtitleRes* internal_default_instance() {
+    return reinterpret_cast<const UploadSubtitleRes*>(
+               &_UploadSubtitleRes_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    30;
+
+  friend void swap(UploadSubtitleRes& a, UploadSubtitleRes& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UploadSubtitleRes* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UploadSubtitleRes* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  UploadSubtitleRes* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<UploadSubtitleRes>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const UploadSubtitleRes& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const UploadSubtitleRes& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.UploadSubtitleRes";
+  }
+  protected:
+  explicit UploadSubtitleRes(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:prpc.UploadSubtitleRes)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+  };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
 class JoinChatRoomReq final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:prpc.JoinChatRoomReq) */ {
  public:
@@ -4658,7 +5135,7 @@ class JoinChatRoomReq final :
                &_JoinChatRoomReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    28;
+    31;
 
   friend void swap(JoinChatRoomReq& a, JoinChatRoomReq& b) {
     a.Swap(&b);
@@ -4805,7 +5282,7 @@ class ChatMessage final :
                &_ChatMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    29;
+    32;
 
   friend void swap(ChatMessage& a, ChatMessage& b) {
     a.Swap(&b);
@@ -4877,11 +5354,32 @@ class ChatMessage final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kMsgFieldNumber = 3,
+    kUserNameFieldNumber = 2,
+    kMsgFieldNumber = 4,
     kUserIdFieldNumber = 1,
-    kSentTimeFieldNumber = 2,
+    kSentTimeFieldNumber = 3,
   };
-  // string msg = 3;
+  // string user_name = 2;
+  void clear_user_name() ;
+  const std::string& user_name() const;
+
+
+
+
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_user_name(Arg_&& arg, Args_... args);
+  std::string* mutable_user_name();
+  PROTOBUF_NODISCARD std::string* release_user_name();
+  void set_allocated_user_name(std::string* ptr);
+
+  private:
+  const std::string& _internal_user_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_user_name(
+      const std::string& value);
+  std::string* _internal_mutable_user_name();
+
+  public:
+  // string msg = 4;
   void clear_msg() ;
   const std::string& msg() const;
 
@@ -4911,7 +5409,7 @@ class ChatMessage final :
   void _internal_set_user_id(::int64_t value);
 
   public:
-  // int64 sent_time = 2;
+  // int64 sent_time = 3;
   void clear_sent_time() ;
   ::int64_t sent_time() const;
   void set_sent_time(::int64_t value);
@@ -4929,6 +5427,7 @@ class ChatMessage final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_name_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_;
     ::int64_t user_id_;
     ::int64_t sent_time_;
@@ -4986,7 +5485,7 @@ class JoinChatRoomRes final :
                &_JoinChatRoomRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    30;
+    33;
 
   friend void swap(JoinChatRoomRes& a, JoinChatRoomRes& b) {
     a.Swap(&b);
@@ -5058,27 +5557,27 @@ class JoinChatRoomRes final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kMsgFieldNumber = 2,
+    kChatMsgsFieldNumber = 2,
     kItemIdFieldNumber = 1,
   };
-  // .prpc.ChatMessage msg = 2;
-  bool has_msg() const;
+  // repeated .prpc.ChatMessage chat_msgs = 2;
+  int chat_msgs_size() const;
   private:
-  bool _internal_has_msg() const;
+  int _internal_chat_msgs_size() const;
 
   public:
-  void clear_msg() ;
-  const ::prpc::ChatMessage& msg() const;
-  PROTOBUF_NODISCARD ::prpc::ChatMessage* release_msg();
-  ::prpc::ChatMessage* mutable_msg();
-  void set_allocated_msg(::prpc::ChatMessage* msg);
+  void clear_chat_msgs() ;
+  ::prpc::ChatMessage* mutable_chat_msgs(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::ChatMessage >*
+      mutable_chat_msgs();
   private:
-  const ::prpc::ChatMessage& _internal_msg() const;
-  ::prpc::ChatMessage* _internal_mutable_msg();
+  const ::prpc::ChatMessage& _internal_chat_msgs(int index) const;
+  ::prpc::ChatMessage* _internal_add_chat_msgs();
   public:
-  void unsafe_arena_set_allocated_msg(
-      ::prpc::ChatMessage* msg);
-  ::prpc::ChatMessage* unsafe_arena_release_msg();
+  const ::prpc::ChatMessage& chat_msgs(int index) const;
+  ::prpc::ChatMessage* add_chat_msgs();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::ChatMessage >&
+      chat_msgs() const;
   // int64 item_id = 1;
   void clear_item_id() ;
   ::int64_t item_id() const;
@@ -5097,7 +5596,7 @@ class JoinChatRoomRes final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::prpc::ChatMessage* msg_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::ChatMessage > chat_msgs_;
     ::int64_t item_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -5153,7 +5652,7 @@ class SendMsg2ChatRoomReq final :
                &_SendMsg2ChatRoomReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    34;
 
   friend void swap(SendMsg2ChatRoomReq& a, SendMsg2ChatRoomReq& b) {
     a.Swap(&b);
@@ -5319,7 +5818,7 @@ class SendMsg2ChatRoomRes final :
                &_SendMsg2ChatRoomRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    35;
 
   friend void swap(SendMsg2ChatRoomRes& a, SendMsg2ChatRoomRes& b) {
     a.Swap(&b);
@@ -7278,6 +7777,172 @@ inline void RefreshSubtitleReq::_internal_set_item_id(::int64_t value) {
 
 // -------------------------------------------------------------------
 
+// SubtitleFile
+
+// string name = 1;
+inline void SubtitleFile::clear_name() {
+  _impl_.name_.ClearToEmpty();
+}
+inline const std::string& SubtitleFile::name() const {
+  // @@protoc_insertion_point(field_get:prpc.SubtitleFile.name)
+  return _internal_name();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void SubtitleFile::set_name(Arg_&& arg,
+                                                     Args_... args) {
+  ;
+  _impl_.name_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.SubtitleFile.name)
+}
+inline std::string* SubtitleFile::mutable_name() {
+  std::string* _s = _internal_mutable_name();
+  // @@protoc_insertion_point(field_mutable:prpc.SubtitleFile.name)
+  return _s;
+}
+inline const std::string& SubtitleFile::_internal_name() const {
+  return _impl_.name_.Get();
+}
+inline void SubtitleFile::_internal_set_name(const std::string& value) {
+  ;
+
+
+  _impl_.name_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SubtitleFile::_internal_mutable_name() {
+  ;
+  return _impl_.name_.Mutable( GetArenaForAllocation());
+}
+inline std::string* SubtitleFile::release_name() {
+  // @@protoc_insertion_point(field_release:prpc.SubtitleFile.name)
+  return _impl_.name_.Release();
+}
+inline void SubtitleFile::set_allocated_name(std::string* value) {
+  _impl_.name_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.name_.IsDefault()) {
+          _impl_.name_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.SubtitleFile.name)
+}
+
+// bytes content = 2;
+inline void SubtitleFile::clear_content() {
+  _impl_.content_.ClearToEmpty();
+}
+inline const std::string& SubtitleFile::content() const {
+  // @@protoc_insertion_point(field_get:prpc.SubtitleFile.content)
+  return _internal_content();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void SubtitleFile::set_content(Arg_&& arg,
+                                                     Args_... args) {
+  ;
+  _impl_.content_.SetBytes(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.SubtitleFile.content)
+}
+inline std::string* SubtitleFile::mutable_content() {
+  std::string* _s = _internal_mutable_content();
+  // @@protoc_insertion_point(field_mutable:prpc.SubtitleFile.content)
+  return _s;
+}
+inline const std::string& SubtitleFile::_internal_content() const {
+  return _impl_.content_.Get();
+}
+inline void SubtitleFile::_internal_set_content(const std::string& value) {
+  ;
+
+
+  _impl_.content_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SubtitleFile::_internal_mutable_content() {
+  ;
+  return _impl_.content_.Mutable( GetArenaForAllocation());
+}
+inline std::string* SubtitleFile::release_content() {
+  // @@protoc_insertion_point(field_release:prpc.SubtitleFile.content)
+  return _impl_.content_.Release();
+}
+inline void SubtitleFile::set_allocated_content(std::string* value) {
+  _impl_.content_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.content_.IsDefault()) {
+          _impl_.content_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.SubtitleFile.content)
+}
+
+// -------------------------------------------------------------------
+
+// UploadSubtitleReq
+
+// int64 item_id = 1;
+inline void UploadSubtitleReq::clear_item_id() {
+  _impl_.item_id_ = ::int64_t{0};
+}
+inline ::int64_t UploadSubtitleReq::item_id() const {
+  // @@protoc_insertion_point(field_get:prpc.UploadSubtitleReq.item_id)
+  return _internal_item_id();
+}
+inline void UploadSubtitleReq::set_item_id(::int64_t value) {
+  _internal_set_item_id(value);
+  // @@protoc_insertion_point(field_set:prpc.UploadSubtitleReq.item_id)
+}
+inline ::int64_t UploadSubtitleReq::_internal_item_id() const {
+  return _impl_.item_id_;
+}
+inline void UploadSubtitleReq::_internal_set_item_id(::int64_t value) {
+  ;
+  _impl_.item_id_ = value;
+}
+
+// repeated .prpc.SubtitleFile subtitles = 2;
+inline int UploadSubtitleReq::_internal_subtitles_size() const {
+  return _impl_.subtitles_.size();
+}
+inline int UploadSubtitleReq::subtitles_size() const {
+  return _internal_subtitles_size();
+}
+inline void UploadSubtitleReq::clear_subtitles() {
+  _impl_.subtitles_.Clear();
+}
+inline ::prpc::SubtitleFile* UploadSubtitleReq::mutable_subtitles(int index) {
+  // @@protoc_insertion_point(field_mutable:prpc.UploadSubtitleReq.subtitles)
+  return _impl_.subtitles_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::SubtitleFile >*
+UploadSubtitleReq::mutable_subtitles() {
+  // @@protoc_insertion_point(field_mutable_list:prpc.UploadSubtitleReq.subtitles)
+  return &_impl_.subtitles_;
+}
+inline const ::prpc::SubtitleFile& UploadSubtitleReq::_internal_subtitles(int index) const {
+  return _impl_.subtitles_.Get(index);
+}
+inline const ::prpc::SubtitleFile& UploadSubtitleReq::subtitles(int index) const {
+  // @@protoc_insertion_point(field_get:prpc.UploadSubtitleReq.subtitles)
+  return _internal_subtitles(index);
+}
+inline ::prpc::SubtitleFile* UploadSubtitleReq::_internal_add_subtitles() {
+  return _impl_.subtitles_.Add();
+}
+inline ::prpc::SubtitleFile* UploadSubtitleReq::add_subtitles() {
+  ::prpc::SubtitleFile* _add = _internal_add_subtitles();
+  // @@protoc_insertion_point(field_add:prpc.UploadSubtitleReq.subtitles)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::SubtitleFile >&
+UploadSubtitleReq::subtitles() const {
+  // @@protoc_insertion_point(field_list:prpc.UploadSubtitleReq.subtitles)
+  return _impl_.subtitles_;
+}
+
+// -------------------------------------------------------------------
+
+// UploadSubtitleRes
+
+// -------------------------------------------------------------------
+
 // JoinChatRoomReq
 
 // int64 item_id = 1;
@@ -7324,7 +7989,54 @@ inline void ChatMessage::_internal_set_user_id(::int64_t value) {
   _impl_.user_id_ = value;
 }
 
-// int64 sent_time = 2;
+// string user_name = 2;
+inline void ChatMessage::clear_user_name() {
+  _impl_.user_name_.ClearToEmpty();
+}
+inline const std::string& ChatMessage::user_name() const {
+  // @@protoc_insertion_point(field_get:prpc.ChatMessage.user_name)
+  return _internal_user_name();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void ChatMessage::set_user_name(Arg_&& arg,
+                                                     Args_... args) {
+  ;
+  _impl_.user_name_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.ChatMessage.user_name)
+}
+inline std::string* ChatMessage::mutable_user_name() {
+  std::string* _s = _internal_mutable_user_name();
+  // @@protoc_insertion_point(field_mutable:prpc.ChatMessage.user_name)
+  return _s;
+}
+inline const std::string& ChatMessage::_internal_user_name() const {
+  return _impl_.user_name_.Get();
+}
+inline void ChatMessage::_internal_set_user_name(const std::string& value) {
+  ;
+
+
+  _impl_.user_name_.Set(value, GetArenaForAllocation());
+}
+inline std::string* ChatMessage::_internal_mutable_user_name() {
+  ;
+  return _impl_.user_name_.Mutable( GetArenaForAllocation());
+}
+inline std::string* ChatMessage::release_user_name() {
+  // @@protoc_insertion_point(field_release:prpc.ChatMessage.user_name)
+  return _impl_.user_name_.Release();
+}
+inline void ChatMessage::set_allocated_user_name(std::string* value) {
+  _impl_.user_name_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.user_name_.IsDefault()) {
+          _impl_.user_name_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.ChatMessage.user_name)
+}
+
+// int64 sent_time = 3;
 inline void ChatMessage::clear_sent_time() {
   _impl_.sent_time_ = ::int64_t{0};
 }
@@ -7344,7 +8056,7 @@ inline void ChatMessage::_internal_set_sent_time(::int64_t value) {
   _impl_.sent_time_ = value;
 }
 
-// string msg = 3;
+// string msg = 4;
 inline void ChatMessage::clear_msg() {
   _impl_.msg_.ClearToEmpty();
 }
@@ -7415,89 +8127,44 @@ inline void JoinChatRoomRes::_internal_set_item_id(::int64_t value) {
   _impl_.item_id_ = value;
 }
 
-// .prpc.ChatMessage msg = 2;
-inline bool JoinChatRoomRes::_internal_has_msg() const {
-  return this != internal_default_instance() && _impl_.msg_ != nullptr;
+// repeated .prpc.ChatMessage chat_msgs = 2;
+inline int JoinChatRoomRes::_internal_chat_msgs_size() const {
+  return _impl_.chat_msgs_.size();
 }
-inline bool JoinChatRoomRes::has_msg() const {
-  return _internal_has_msg();
+inline int JoinChatRoomRes::chat_msgs_size() const {
+  return _internal_chat_msgs_size();
 }
-inline void JoinChatRoomRes::clear_msg() {
-  if (GetArenaForAllocation() == nullptr && _impl_.msg_ != nullptr) {
-    delete _impl_.msg_;
-  }
-  _impl_.msg_ = nullptr;
+inline void JoinChatRoomRes::clear_chat_msgs() {
+  _impl_.chat_msgs_.Clear();
 }
-inline const ::prpc::ChatMessage& JoinChatRoomRes::_internal_msg() const {
-  const ::prpc::ChatMessage* p = _impl_.msg_;
-  return p != nullptr ? *p : reinterpret_cast<const ::prpc::ChatMessage&>(
-      ::prpc::_ChatMessage_default_instance_);
+inline ::prpc::ChatMessage* JoinChatRoomRes::mutable_chat_msgs(int index) {
+  // @@protoc_insertion_point(field_mutable:prpc.JoinChatRoomRes.chat_msgs)
+  return _impl_.chat_msgs_.Mutable(index);
 }
-inline const ::prpc::ChatMessage& JoinChatRoomRes::msg() const {
-  // @@protoc_insertion_point(field_get:prpc.JoinChatRoomRes.msg)
-  return _internal_msg();
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::ChatMessage >*
+JoinChatRoomRes::mutable_chat_msgs() {
+  // @@protoc_insertion_point(field_mutable_list:prpc.JoinChatRoomRes.chat_msgs)
+  return &_impl_.chat_msgs_;
 }
-inline void JoinChatRoomRes::unsafe_arena_set_allocated_msg(
-    ::prpc::ChatMessage* msg) {
-  if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.msg_);
-  }
-  _impl_.msg_ = msg;
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.JoinChatRoomRes.msg)
+inline const ::prpc::ChatMessage& JoinChatRoomRes::_internal_chat_msgs(int index) const {
+  return _impl_.chat_msgs_.Get(index);
 }
-inline ::prpc::ChatMessage* JoinChatRoomRes::release_msg() {
-  
-  ::prpc::ChatMessage* temp = _impl_.msg_;
-  _impl_.msg_ = nullptr;
-#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  if (GetArenaForAllocation() == nullptr) { delete old; }
-#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
-  if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  }
-#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
-  return temp;
+inline const ::prpc::ChatMessage& JoinChatRoomRes::chat_msgs(int index) const {
+  // @@protoc_insertion_point(field_get:prpc.JoinChatRoomRes.chat_msgs)
+  return _internal_chat_msgs(index);
 }
-inline ::prpc::ChatMessage* JoinChatRoomRes::unsafe_arena_release_msg() {
-  // @@protoc_insertion_point(field_release:prpc.JoinChatRoomRes.msg)
-  
-  ::prpc::ChatMessage* temp = _impl_.msg_;
-  _impl_.msg_ = nullptr;
-  return temp;
+inline ::prpc::ChatMessage* JoinChatRoomRes::_internal_add_chat_msgs() {
+  return _impl_.chat_msgs_.Add();
 }
-inline ::prpc::ChatMessage* JoinChatRoomRes::_internal_mutable_msg() {
-  
-  if (_impl_.msg_ == nullptr) {
-    auto* p = CreateMaybeMessage<::prpc::ChatMessage>(GetArenaForAllocation());
-    _impl_.msg_ = p;
-  }
-  return _impl_.msg_;
+inline ::prpc::ChatMessage* JoinChatRoomRes::add_chat_msgs() {
+  ::prpc::ChatMessage* _add = _internal_add_chat_msgs();
+  // @@protoc_insertion_point(field_add:prpc.JoinChatRoomRes.chat_msgs)
+  return _add;
 }
-inline ::prpc::ChatMessage* JoinChatRoomRes::mutable_msg() {
-  ::prpc::ChatMessage* _msg = _internal_mutable_msg();
-  // @@protoc_insertion_point(field_mutable:prpc.JoinChatRoomRes.msg)
-  return _msg;
-}
-inline void JoinChatRoomRes::set_allocated_msg(::prpc::ChatMessage* msg) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  if (message_arena == nullptr) {
-    delete _impl_.msg_;
-  }
-  if (msg) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(msg);
-    if (message_arena != submessage_arena) {
-      msg = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, msg, submessage_arena);
-    }
-
-  } else {
-
-  }
-  _impl_.msg_ = msg;
-  // @@protoc_insertion_point(field_set_allocated:prpc.JoinChatRoomRes.msg)
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::prpc::ChatMessage >&
+JoinChatRoomRes::chat_msgs() const {
+  // @@protoc_insertion_point(field_list:prpc.JoinChatRoomRes.chat_msgs)
+  return _impl_.chat_msgs_;
 }
 
 // -------------------------------------------------------------------

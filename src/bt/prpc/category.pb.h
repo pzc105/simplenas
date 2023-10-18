@@ -73,6 +73,8 @@ enum CategoryItem_Type : int {
   CategoryItem_Type_Directory = 2,
   CategoryItem_Type_Video = 3,
   CategoryItem_Type_OtherFile = 4,
+  CategoryItem_Type_Audio = 5,
+  CategoryItem_Type_MusicDirectory = 6,
   CategoryItem_Type_CategoryItem_Type_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
   CategoryItem_Type_CategoryItem_Type_INT_MAX_SENTINEL_DO_NOT_USE_ =
@@ -81,8 +83,8 @@ enum CategoryItem_Type : int {
 
 bool CategoryItem_Type_IsValid(int value);
 constexpr CategoryItem_Type CategoryItem_Type_Type_MIN = static_cast<CategoryItem_Type>(0);
-constexpr CategoryItem_Type CategoryItem_Type_Type_MAX = static_cast<CategoryItem_Type>(4);
-constexpr int CategoryItem_Type_Type_ARRAYSIZE = 4 + 1;
+constexpr CategoryItem_Type CategoryItem_Type_Type_MAX = static_cast<CategoryItem_Type>(6);
+constexpr int CategoryItem_Type_Type_ARRAYSIZE = 6 + 1;
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
 CategoryItem_Type_descriptor();
 template <typename T>
@@ -95,7 +97,7 @@ const std::string& CategoryItem_Type_Name(T value) {
 template <>
 inline const std::string& CategoryItem_Type_Name(CategoryItem_Type value) {
   return ::PROTOBUF_NAMESPACE_ID::internal::NameOfDenseEnum<CategoryItem_Type_descriptor,
-                                                 0, 4>(
+                                                 0, 6>(
       static_cast<int>(value));
 }
 inline bool CategoryItem_Type_Parse(absl::string_view name, CategoryItem_Type* value) {
@@ -231,6 +233,8 @@ class CategoryItem final :
   static constexpr Type Directory = CategoryItem_Type_Directory;
   static constexpr Type Video = CategoryItem_Type_Video;
   static constexpr Type OtherFile = CategoryItem_Type_OtherFile;
+  static constexpr Type Audio = CategoryItem_Type_Audio;
+  static constexpr Type MusicDirectory = CategoryItem_Type_MusicDirectory;
   static inline bool Type_IsValid(int value) {
     return CategoryItem_Type_IsValid(value);
   }

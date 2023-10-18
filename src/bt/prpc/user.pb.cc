@@ -476,6 +476,55 @@ struct RefreshSubtitleResDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RefreshSubtitleResDefaultTypeInternal _RefreshSubtitleRes_default_instance_;
+PROTOBUF_CONSTEXPR SubtitleFile::SubtitleFile(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.name_)*/ {
+    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
+  }
+
+  , /*decltype(_impl_.content_)*/ {
+    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
+  }
+
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct SubtitleFileDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR SubtitleFileDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~SubtitleFileDefaultTypeInternal() {}
+  union {
+    SubtitleFile _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SubtitleFileDefaultTypeInternal _SubtitleFile_default_instance_;
+PROTOBUF_CONSTEXPR UploadSubtitleReq::UploadSubtitleReq(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.subtitles_)*/{}
+  , /*decltype(_impl_.item_id_)*/ ::int64_t{0}
+
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct UploadSubtitleReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR UploadSubtitleReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~UploadSubtitleReqDefaultTypeInternal() {}
+  union {
+    UploadSubtitleReq _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 UploadSubtitleReqDefaultTypeInternal _UploadSubtitleReq_default_instance_;
+PROTOBUF_CONSTEXPR UploadSubtitleRes::UploadSubtitleRes(
+    ::_pbi::ConstantInitialized) {}
+struct UploadSubtitleResDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR UploadSubtitleResDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~UploadSubtitleResDefaultTypeInternal() {}
+  union {
+    UploadSubtitleRes _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 UploadSubtitleResDefaultTypeInternal _UploadSubtitleRes_default_instance_;
 PROTOBUF_CONSTEXPR JoinChatRoomReq::JoinChatRoomReq(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.item_id_)*/ ::int64_t{0}
@@ -493,7 +542,11 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 JoinChatRoomReqDefaultTypeInternal _JoinChatRoomReq_default_instance_;
 PROTOBUF_CONSTEXPR ChatMessage::ChatMessage(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.msg_)*/ {
+    /*decltype(_impl_.user_name_)*/ {
+    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
+  }
+
+  , /*decltype(_impl_.msg_)*/ {
     &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
   }
 
@@ -514,7 +567,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ChatMessageDefaultTypeInternal _ChatMessage_default_instance_;
 PROTOBUF_CONSTEXPR JoinChatRoomRes::JoinChatRoomRes(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.msg_)*/nullptr
+    /*decltype(_impl_.chat_msgs_)*/{}
   , /*decltype(_impl_.item_id_)*/ ::int64_t{0}
 
   , /*decltype(_impl_._cached_size_)*/{}} {}
@@ -557,7 +610,7 @@ struct SendMsg2ChatRoomResDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SendMsg2ChatRoomResDefaultTypeInternal _SendMsg2ChatRoomRes_default_instance_;
 }  // namespace prpc
-static ::_pb::Metadata file_level_metadata_user_2eproto[33];
+static ::_pb::Metadata file_level_metadata_user_2eproto[36];
 static constexpr const ::_pb::EnumDescriptor**
     file_level_enum_descriptors_user_2eproto = nullptr;
 static constexpr const ::_pb::ServiceDescriptor**
@@ -830,6 +883,34 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::SubtitleFile, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::SubtitleFile, _impl_.name_),
+    PROTOBUF_FIELD_OFFSET(::prpc::SubtitleFile, _impl_.content_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::UploadSubtitleReq, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::UploadSubtitleReq, _impl_.item_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::UploadSubtitleReq, _impl_.subtitles_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::UploadSubtitleRes, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::JoinChatRoomReq, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -847,6 +928,7 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::ChatMessage, _impl_.user_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::ChatMessage, _impl_.user_name_),
     PROTOBUF_FIELD_OFFSET(::prpc::ChatMessage, _impl_.sent_time_),
     PROTOBUF_FIELD_OFFSET(::prpc::ChatMessage, _impl_.msg_),
     ~0u,  // no _has_bits_
@@ -858,7 +940,7 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::JoinChatRoomRes, _impl_.item_id_),
-    PROTOBUF_FIELD_OFFSET(::prpc::JoinChatRoomRes, _impl_.msg_),
+    PROTOBUF_FIELD_OFFSET(::prpc::JoinChatRoomRes, _impl_.chat_msgs_),
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::SendMsg2ChatRoomReq, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -909,11 +991,14 @@ static const ::_pbi::MigrationSchema
         { 240, -1, -1, sizeof(::prpc::DelSharedItemRes)},
         { 248, -1, -1, sizeof(::prpc::RefreshSubtitleReq)},
         { 257, -1, -1, sizeof(::prpc::RefreshSubtitleRes)},
-        { 265, -1, -1, sizeof(::prpc::JoinChatRoomReq)},
-        { 274, -1, -1, sizeof(::prpc::ChatMessage)},
-        { 285, -1, -1, sizeof(::prpc::JoinChatRoomRes)},
-        { 295, -1, -1, sizeof(::prpc::SendMsg2ChatRoomReq)},
-        { 305, -1, -1, sizeof(::prpc::SendMsg2ChatRoomRes)},
+        { 265, -1, -1, sizeof(::prpc::SubtitleFile)},
+        { 275, -1, -1, sizeof(::prpc::UploadSubtitleReq)},
+        { 285, -1, -1, sizeof(::prpc::UploadSubtitleRes)},
+        { 293, -1, -1, sizeof(::prpc::JoinChatRoomReq)},
+        { 302, -1, -1, sizeof(::prpc::ChatMessage)},
+        { 314, -1, -1, sizeof(::prpc::JoinChatRoomRes)},
+        { 324, -1, -1, sizeof(::prpc::SendMsg2ChatRoomReq)},
+        { 334, -1, -1, sizeof(::prpc::SendMsg2ChatRoomRes)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -945,6 +1030,9 @@ static const ::_pb::Message* const file_default_instances[] = {
     &::prpc::_DelSharedItemRes_default_instance_._instance,
     &::prpc::_RefreshSubtitleReq_default_instance_._instance,
     &::prpc::_RefreshSubtitleRes_default_instance_._instance,
+    &::prpc::_SubtitleFile_default_instance_._instance,
+    &::prpc::_UploadSubtitleReq_default_instance_._instance,
+    &::prpc::_UploadSubtitleRes_default_instance_._instance,
     &::prpc::_JoinChatRoomReq_default_instance_._instance,
     &::prpc::_ChatMessage_default_instance_._instance,
     &::prpc::_JoinChatRoomRes_default_instance_._instance,
@@ -991,48 +1079,54 @@ const char descriptor_table_protodef_user_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
     ".prpc.SharedItem\"$\n\020DelSharedItemReq\022\020\n\010"
     "share_id\030\001 \001(\t\"\022\n\020DelSharedItemRes\"%\n\022Re"
     "freshSubtitleReq\022\017\n\007item_id\030\001 \001(\003\"\024\n\022Ref"
-    "reshSubtitleRes\"\"\n\017JoinChatRoomReq\022\017\n\007it"
-    "em_id\030\001 \001(\003\">\n\013ChatMessage\022\017\n\007user_id\030\001 "
-    "\001(\003\022\021\n\tsent_time\030\002 \001(\003\022\013\n\003msg\030\003 \001(\t\"B\n\017J"
-    "oinChatRoomRes\022\017\n\007item_id\030\001 \001(\003\022\036\n\003msg\030\002"
-    " \001(\0132\021.prpc.ChatMessage\"K\n\023SendMsg2ChatR"
-    "oomReq\022\017\n\007item_id\030\001 \001(\003\022#\n\010chat_msg\030\002 \001("
-    "\0132\021.prpc.ChatMessage\"\025\n\023SendMsg2ChatRoom"
-    "Res2\321\n\n\013UserService\022G\n\010Register\022\022.prpc.R"
-    "egisterInfo\032\021.prpc.RegisterRet\"\024\202\323\344\223\002\016\"\t"
-    "/register:\001*\022M\n\013IsUsedEmail\022\017.prpc.Email"
-    "Info\032\024.prpc.IsUsedEmailRet\"\027\202\323\344\223\002\021\"\014/isu"
-    "sedemail:\001*\022;\n\005Login\022\017.prpc.LoginInfo\032\016."
-    "prpc.LoginRet\"\021\202\323\344\223\002\013\"\006/login:\001*\022C\n\tFast"
-    "Login\022\017.prpc.LoginInfo\032\016.prpc.LoginRet\"\025"
-    "\202\323\344\223\002\017\"\n/fastlogin:\001*\022B\n\tIsLogined\022\017.prp"
-    "c.LoginInfo\032\016.prpc.LoginRet\"\024\202\323\344\223\002\016\"\t/is"
-    "logged:\001*\022N\n\010Download\022\025.prpc.DownloadReq"
-    "uest\032\025.prpc.DownloadRespone\"\024\202\323\344\223\002\016\"\t/do"
-    "wnload:\001*\022\?\n\rRemoveTorrent\022\026.prpc.Remove"
-    "TorrentReq\032\026.prpc.RemoveTorrentRes\0226\n\010On"
-    "Status\022\023.prpc.StatusRequest\032\023.prpc.Statu"
-    "sRespone0\001\022\?\n\rQueryBtVideos\022\026.prpc.Query"
-    "BtVideosReq\032\026.prpc.QueryBtVideosRes\022E\n\017N"
-    "ewCategoryItem\022\030.prpc.NewCategoryItemReq"
-    "\032\030.prpc.NewCategoryItemRes\022E\n\017DelCategor"
-    "yItem\022\030.prpc.DelCategoryItemReq\032\030.prpc.D"
-    "elCategoryItemRes\0229\n\013AddBtVideos\022\024.prpc."
-    "AddBtVideosReq\032\024.prpc.AddBtVideosRes\0223\n\t"
-    "ShareItem\022\022.prpc.ShareItemReq\032\022.prpc.Sha"
-    "reItemRes\022H\n\020QuerySharedItems\022\031.prpc.Que"
-    "rySharedItemsReq\032\031.prpc.QuerySharedItems"
-    "Res\022\?\n\rDelSharedItem\022\026.prpc.DelSharedIte"
-    "mReq\032\026.prpc.DelSharedItemRes\022\?\n\rQuerySub"
-    "Items\022\026.prpc.QuerySubItemsReq\032\026.prpc.Que"
-    "rySubItemsRes\022\?\n\rQueryItemInfo\022\026.prpc.Qu"
-    "eryItemInfoReq\032\026.prpc.QueryItemInfoRes\022E"
-    "\n\017RefreshSubtitle\022\030.prpc.RefreshSubtitle"
-    "Req\032\030.prpc.RefreshSubtitleRes\022>\n\014JoinCha"
-    "tRoom\022\025.prpc.JoinChatRoomReq\032\025.prpc.Join"
-    "ChatRoomRes0\001\022H\n\020SendMsg2ChatRoom\022\031.prpc"
-    ".SendMsg2ChatRoomReq\032\031.prpc.SendMsg2Chat"
-    "RoomResB\010Z\006./prpcb\006proto3"
+    "reshSubtitleRes\"-\n\014SubtitleFile\022\014\n\004name\030"
+    "\001 \001(\t\022\017\n\007content\030\002 \001(\014\"K\n\021UploadSubtitle"
+    "Req\022\017\n\007item_id\030\001 \001(\003\022%\n\tsubtitles\030\002 \003(\0132"
+    "\022.prpc.SubtitleFile\"\023\n\021UploadSubtitleRes"
+    "\"\"\n\017JoinChatRoomReq\022\017\n\007item_id\030\001 \001(\003\"Q\n\013"
+    "ChatMessage\022\017\n\007user_id\030\001 \001(\003\022\021\n\tuser_nam"
+    "e\030\002 \001(\t\022\021\n\tsent_time\030\003 \001(\003\022\013\n\003msg\030\004 \001(\t\""
+    "H\n\017JoinChatRoomRes\022\017\n\007item_id\030\001 \001(\003\022$\n\tc"
+    "hat_msgs\030\002 \003(\0132\021.prpc.ChatMessage\"K\n\023Sen"
+    "dMsg2ChatRoomReq\022\017\n\007item_id\030\001 \001(\003\022#\n\010cha"
+    "t_msg\030\002 \001(\0132\021.prpc.ChatMessage\"\025\n\023SendMs"
+    "g2ChatRoomRes2\225\013\n\013UserService\022G\n\010Registe"
+    "r\022\022.prpc.RegisterInfo\032\021.prpc.RegisterRet"
+    "\"\024\202\323\344\223\002\016\"\t/register:\001*\022M\n\013IsUsedEmail\022\017."
+    "prpc.EmailInfo\032\024.prpc.IsUsedEmailRet\"\027\202\323"
+    "\344\223\002\021\"\014/isusedemail:\001*\022;\n\005Login\022\017.prpc.Lo"
+    "ginInfo\032\016.prpc.LoginRet\"\021\202\323\344\223\002\013\"\006/login:"
+    "\001*\022C\n\tFastLogin\022\017.prpc.LoginInfo\032\016.prpc."
+    "LoginRet\"\025\202\323\344\223\002\017\"\n/fastlogin:\001*\022B\n\tIsLog"
+    "ined\022\017.prpc.LoginInfo\032\016.prpc.LoginRet\"\024\202"
+    "\323\344\223\002\016\"\t/islogged:\001*\022N\n\010Download\022\025.prpc.D"
+    "ownloadRequest\032\025.prpc.DownloadRespone\"\024\202"
+    "\323\344\223\002\016\"\t/download:\001*\022\?\n\rRemoveTorrent\022\026.p"
+    "rpc.RemoveTorrentReq\032\026.prpc.RemoveTorren"
+    "tRes\0226\n\010OnStatus\022\023.prpc.StatusRequest\032\023."
+    "prpc.StatusRespone0\001\022\?\n\rQueryBtVideos\022\026."
+    "prpc.QueryBtVideosReq\032\026.prpc.QueryBtVide"
+    "osRes\022E\n\017NewCategoryItem\022\030.prpc.NewCateg"
+    "oryItemReq\032\030.prpc.NewCategoryItemRes\022E\n\017"
+    "DelCategoryItem\022\030.prpc.DelCategoryItemRe"
+    "q\032\030.prpc.DelCategoryItemRes\0229\n\013AddBtVide"
+    "os\022\024.prpc.AddBtVideosReq\032\024.prpc.AddBtVid"
+    "eosRes\0223\n\tShareItem\022\022.prpc.ShareItemReq\032"
+    "\022.prpc.ShareItemRes\022H\n\020QuerySharedItems\022"
+    "\031.prpc.QuerySharedItemsReq\032\031.prpc.QueryS"
+    "haredItemsRes\022\?\n\rDelSharedItem\022\026.prpc.De"
+    "lSharedItemReq\032\026.prpc.DelSharedItemRes\022\?"
+    "\n\rQuerySubItems\022\026.prpc.QuerySubItemsReq\032"
+    "\026.prpc.QuerySubItemsRes\022\?\n\rQueryItemInfo"
+    "\022\026.prpc.QueryItemInfoReq\032\026.prpc.QueryIte"
+    "mInfoRes\022E\n\017RefreshSubtitle\022\030.prpc.Refre"
+    "shSubtitleReq\032\030.prpc.RefreshSubtitleRes\022"
+    "B\n\016UploadSubtitle\022\027.prpc.UploadSubtitleR"
+    "eq\032\027.prpc.UploadSubtitleRes\022>\n\014JoinChatR"
+    "oom\022\025.prpc.JoinChatRoomReq\032\025.prpc.JoinCh"
+    "atRoomRes0\001\022H\n\020SendMsg2ChatRoom\022\031.prpc.S"
+    "endMsg2ChatRoomReq\032\031.prpc.SendMsg2ChatRo"
+    "omResB\010Z\006./prpcb\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_user_2eproto_deps[4] =
     {
@@ -1045,13 +1139,13 @@ static ::absl::once_flag descriptor_table_user_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_user_2eproto = {
     false,
     false,
-    3225,
+    3463,
     descriptor_table_protodef_user_2eproto,
     "user.proto",
     &descriptor_table_user_2eproto_once,
     descriptor_table_user_2eproto_deps,
     4,
-    33,
+    36,
     schemas,
     file_default_instances,
     TableStruct_user_2eproto::offsets,
@@ -6135,6 +6229,499 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RefreshSubtitleRes::GetClassDa
 }
 // ===================================================================
 
+class SubtitleFile::_Internal {
+ public:
+};
+
+SubtitleFile::SubtitleFile(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.SubtitleFile)
+}
+SubtitleFile::SubtitleFile(const SubtitleFile& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  SubtitleFile* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.name_) {}
+
+    , decltype(_impl_.content_) {}
+
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_name().empty()) {
+    _this->_impl_.name_.Set(from._internal_name(), _this->GetArenaForAllocation());
+  }
+  _impl_.content_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.content_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_content().empty()) {
+    _this->_impl_.content_.Set(from._internal_content(), _this->GetArenaForAllocation());
+  }
+  // @@protoc_insertion_point(copy_constructor:prpc.SubtitleFile)
+}
+
+inline void SubtitleFile::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.name_) {}
+
+    , decltype(_impl_.content_) {}
+
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.content_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.content_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+SubtitleFile::~SubtitleFile() {
+  // @@protoc_insertion_point(destructor:prpc.SubtitleFile)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void SubtitleFile::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.name_.Destroy();
+  _impl_.content_.Destroy();
+}
+
+void SubtitleFile::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void SubtitleFile::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.SubtitleFile)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.name_.ClearToEmpty();
+  _impl_.content_.ClearToEmpty();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* SubtitleFile::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string name = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_name();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "prpc.SubtitleFile.name"));
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      // bytes content = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_content();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+::uint8_t* SubtitleFile::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.SubtitleFile)
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string name = 1;
+  if (!this->_internal_name().empty()) {
+    const std::string& _s = this->_internal_name();
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.SubtitleFile.name");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
+  }
+
+  // bytes content = 2;
+  if (!this->_internal_content().empty()) {
+    const std::string& _s = this->_internal_content();
+    target = stream->WriteBytesMaybeAliased(2, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.SubtitleFile)
+  return target;
+}
+
+::size_t SubtitleFile::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.SubtitleFile)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string name = 1;
+  if (!this->_internal_name().empty()) {
+    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+                                    this->_internal_name());
+  }
+
+  // bytes content = 2;
+  if (!this->_internal_content().empty()) {
+    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+                                    this->_internal_content());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData SubtitleFile::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    SubtitleFile::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*SubtitleFile::GetClassData() const { return &_class_data_; }
+
+
+void SubtitleFile::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<SubtitleFile*>(&to_msg);
+  auto& from = static_cast<const SubtitleFile&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.SubtitleFile)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_name().empty()) {
+    _this->_internal_set_name(from._internal_name());
+  }
+  if (!from._internal_content().empty()) {
+    _this->_internal_set_content(from._internal_content());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void SubtitleFile::CopyFrom(const SubtitleFile& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.SubtitleFile)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SubtitleFile::IsInitialized() const {
+  return true;
+}
+
+void SubtitleFile::InternalSwap(SubtitleFile* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, lhs_arena,
+                                       &other->_impl_.name_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.content_, lhs_arena,
+                                       &other->_impl_.content_, rhs_arena);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata SubtitleFile::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[28]);
+}
+// ===================================================================
+
+class UploadSubtitleReq::_Internal {
+ public:
+};
+
+UploadSubtitleReq::UploadSubtitleReq(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.UploadSubtitleReq)
+}
+UploadSubtitleReq::UploadSubtitleReq(const UploadSubtitleReq& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  UploadSubtitleReq* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.subtitles_){from._impl_.subtitles_}
+    , decltype(_impl_.item_id_) {}
+
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.item_id_ = from._impl_.item_id_;
+  // @@protoc_insertion_point(copy_constructor:prpc.UploadSubtitleReq)
+}
+
+inline void UploadSubtitleReq::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.subtitles_){arena}
+    , decltype(_impl_.item_id_) { ::int64_t{0} }
+
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+UploadSubtitleReq::~UploadSubtitleReq() {
+  // @@protoc_insertion_point(destructor:prpc.UploadSubtitleReq)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void UploadSubtitleReq::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.subtitles_.~RepeatedPtrField();
+}
+
+void UploadSubtitleReq::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void UploadSubtitleReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.UploadSubtitleReq)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.subtitles_.Clear();
+  _impl_.item_id_ = ::int64_t{0};
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* UploadSubtitleReq::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int64 item_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 8)) {
+          _impl_.item_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      // repeated .prpc.SubtitleFile subtitles = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_subtitles(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+::uint8_t* UploadSubtitleReq::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.UploadSubtitleReq)
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int64 item_id = 1;
+  if (this->_internal_item_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(
+        1, this->_internal_item_id(), target);
+  }
+
+  // repeated .prpc.SubtitleFile subtitles = 2;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_subtitles_size()); i < n; i++) {
+    const auto& repfield = this->_internal_subtitles(i);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.UploadSubtitleReq)
+  return target;
+}
+
+::size_t UploadSubtitleReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.UploadSubtitleReq)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .prpc.SubtitleFile subtitles = 2;
+  total_size += 1UL * this->_internal_subtitles_size();
+  for (const auto& msg : this->_impl_.subtitles_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // int64 item_id = 1;
+  if (this->_internal_item_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_item_id());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData UploadSubtitleReq::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    UploadSubtitleReq::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*UploadSubtitleReq::GetClassData() const { return &_class_data_; }
+
+
+void UploadSubtitleReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<UploadSubtitleReq*>(&to_msg);
+  auto& from = static_cast<const UploadSubtitleReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.UploadSubtitleReq)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_impl_.subtitles_.MergeFrom(from._impl_.subtitles_);
+  if (from._internal_item_id() != 0) {
+    _this->_internal_set_item_id(from._internal_item_id());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void UploadSubtitleReq::CopyFrom(const UploadSubtitleReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.UploadSubtitleReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool UploadSubtitleReq::IsInitialized() const {
+  return true;
+}
+
+void UploadSubtitleReq::InternalSwap(UploadSubtitleReq* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.subtitles_.InternalSwap(&other->_impl_.subtitles_);
+
+  swap(_impl_.item_id_, other->_impl_.item_id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata UploadSubtitleReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[29]);
+}
+// ===================================================================
+
+class UploadSubtitleRes::_Internal {
+ public:
+};
+
+UploadSubtitleRes::UploadSubtitleRes(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena) {
+  // @@protoc_insertion_point(arena_constructor:prpc.UploadSubtitleRes)
+}
+UploadSubtitleRes::UploadSubtitleRes(const UploadSubtitleRes& from)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
+  UploadSubtitleRes* const _this = this; (void)_this;
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:prpc.UploadSubtitleRes)
+}
+
+
+
+
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData UploadSubtitleRes::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*UploadSubtitleRes::GetClassData() const { return &_class_data_; }
+
+
+
+
+
+
+
+::PROTOBUF_NAMESPACE_ID::Metadata UploadSubtitleRes::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[30]);
+}
+// ===================================================================
+
 class JoinChatRoomReq::_Internal {
  public:
 };
@@ -6305,7 +6892,7 @@ void JoinChatRoomReq::InternalSwap(JoinChatRoomReq* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata JoinChatRoomReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[28]);
+      file_level_metadata_user_2eproto[31]);
 }
 // ===================================================================
 
@@ -6322,7 +6909,9 @@ ChatMessage::ChatMessage(const ChatMessage& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   ChatMessage* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.msg_) {}
+      decltype(_impl_.user_name_) {}
+
+    , decltype(_impl_.msg_) {}
 
     , decltype(_impl_.user_id_) {}
 
@@ -6331,6 +6920,13 @@ ChatMessage::ChatMessage(const ChatMessage& from)
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.user_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.user_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_user_name().empty()) {
+    _this->_impl_.user_name_.Set(from._internal_user_name(), _this->GetArenaForAllocation());
+  }
   _impl_.msg_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
         _impl_.msg_.Set("", GetArenaForAllocation());
@@ -6347,7 +6943,9 @@ ChatMessage::ChatMessage(const ChatMessage& from)
 inline void ChatMessage::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.msg_) {}
+      decltype(_impl_.user_name_) {}
+
+    , decltype(_impl_.msg_) {}
 
     , decltype(_impl_.user_id_) { ::int64_t{0} }
 
@@ -6355,6 +6953,10 @@ inline void ChatMessage::SharedCtor(::_pb::Arena* arena) {
 
     , /*decltype(_impl_._cached_size_)*/{}
   };
+  _impl_.user_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.user_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   _impl_.msg_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
         _impl_.msg_.Set("", GetArenaForAllocation());
@@ -6372,6 +6974,7 @@ ChatMessage::~ChatMessage() {
 
 inline void ChatMessage::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.user_name_.Destroy();
   _impl_.msg_.Destroy();
 }
 
@@ -6385,6 +6988,7 @@ void ChatMessage::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  _impl_.user_name_.ClearToEmpty();
   _impl_.msg_.ClearToEmpty();
   ::memset(&_impl_.user_id_, 0, static_cast<::size_t>(
       reinterpret_cast<char*>(&_impl_.sent_time_) -
@@ -6407,18 +7011,29 @@ const char* ChatMessage::_InternalParse(const char* ptr, ::_pbi::ParseContext* c
           goto handle_unusual;
         }
         continue;
-      // int64 sent_time = 2;
+      // string user_name = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 16)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_user_name();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "prpc.ChatMessage.user_name"));
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      // int64 sent_time = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 24)) {
           _impl_.sent_time_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else {
           goto handle_unusual;
         }
         continue;
-      // string msg = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 26)) {
+      // string msg = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 34)) {
           auto str = _internal_mutable_msg();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
@@ -6463,19 +7078,27 @@ failure:
         1, this->_internal_user_id(), target);
   }
 
-  // int64 sent_time = 2;
+  // string user_name = 2;
+  if (!this->_internal_user_name().empty()) {
+    const std::string& _s = this->_internal_user_name();
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.ChatMessage.user_name");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
+  // int64 sent_time = 3;
   if (this->_internal_sent_time() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteInt64ToArray(
-        2, this->_internal_sent_time(), target);
+        3, this->_internal_sent_time(), target);
   }
 
-  // string msg = 3;
+  // string msg = 4;
   if (!this->_internal_msg().empty()) {
     const std::string& _s = this->_internal_msg();
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
         _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.ChatMessage.msg");
-    target = stream->WriteStringMaybeAliased(3, _s, target);
+    target = stream->WriteStringMaybeAliased(4, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -6494,7 +7117,13 @@ failure:
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string msg = 3;
+  // string user_name = 2;
+  if (!this->_internal_user_name().empty()) {
+    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+                                    this->_internal_user_name());
+  }
+
+  // string msg = 4;
   if (!this->_internal_msg().empty()) {
     total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
                                     this->_internal_msg());
@@ -6506,7 +7135,7 @@ failure:
         this->_internal_user_id());
   }
 
-  // int64 sent_time = 2;
+  // int64 sent_time = 3;
   if (this->_internal_sent_time() != 0) {
     total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
         this->_internal_sent_time());
@@ -6530,6 +7159,9 @@ void ChatMessage::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (!from._internal_user_name().empty()) {
+    _this->_internal_set_user_name(from._internal_user_name());
+  }
   if (!from._internal_msg().empty()) {
     _this->_internal_set_msg(from._internal_msg());
   }
@@ -6558,6 +7190,8 @@ void ChatMessage::InternalSwap(ChatMessage* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.user_name_, lhs_arena,
+                                       &other->_impl_.user_name_, rhs_arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.msg_, lhs_arena,
                                        &other->_impl_.msg_, rhs_arena);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
@@ -6571,19 +7205,14 @@ void ChatMessage::InternalSwap(ChatMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ChatMessage::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[29]);
+      file_level_metadata_user_2eproto[32]);
 }
 // ===================================================================
 
 class JoinChatRoomRes::_Internal {
  public:
-  static const ::prpc::ChatMessage& msg(const JoinChatRoomRes* msg);
 };
 
-const ::prpc::ChatMessage&
-JoinChatRoomRes::_Internal::msg(const JoinChatRoomRes* msg) {
-  return *msg->_impl_.msg_;
-}
 JoinChatRoomRes::JoinChatRoomRes(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor(arena);
@@ -6593,15 +7222,12 @@ JoinChatRoomRes::JoinChatRoomRes(const JoinChatRoomRes& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   JoinChatRoomRes* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.msg_){nullptr}
+      decltype(_impl_.chat_msgs_){from._impl_.chat_msgs_}
     , decltype(_impl_.item_id_) {}
 
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_msg()) {
-    _this->_impl_.msg_ = new ::prpc::ChatMessage(*from._impl_.msg_);
-  }
   _this->_impl_.item_id_ = from._impl_.item_id_;
   // @@protoc_insertion_point(copy_constructor:prpc.JoinChatRoomRes)
 }
@@ -6609,7 +7235,7 @@ JoinChatRoomRes::JoinChatRoomRes(const JoinChatRoomRes& from)
 inline void JoinChatRoomRes::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.msg_){nullptr}
+      decltype(_impl_.chat_msgs_){arena}
     , decltype(_impl_.item_id_) { ::int64_t{0} }
 
     , /*decltype(_impl_._cached_size_)*/{}
@@ -6627,7 +7253,7 @@ JoinChatRoomRes::~JoinChatRoomRes() {
 
 inline void JoinChatRoomRes::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete _impl_.msg_;
+  _impl_.chat_msgs_.~RepeatedPtrField();
 }
 
 void JoinChatRoomRes::SetCachedSize(int size) const {
@@ -6640,10 +7266,7 @@ void JoinChatRoomRes::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.msg_ != nullptr) {
-    delete _impl_.msg_;
-  }
-  _impl_.msg_ = nullptr;
+  _impl_.chat_msgs_.Clear();
   _impl_.item_id_ = ::int64_t{0};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -6663,11 +7286,16 @@ const char* JoinChatRoomRes::_InternalParse(const char* ptr, ::_pbi::ParseContex
           goto handle_unusual;
         }
         continue;
-      // .prpc.ChatMessage msg = 2;
+      // repeated .prpc.ChatMessage chat_msgs = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
-          ptr = ctx->ParseMessage(_internal_mutable_msg(), ptr);
-          CHK_(ptr);
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_chat_msgs(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
         } else {
           goto handle_unusual;
         }
@@ -6708,11 +7336,12 @@ failure:
         1, this->_internal_item_id(), target);
   }
 
-  // .prpc.ChatMessage msg = 2;
-  if (this->_internal_has_msg()) {
+  // repeated .prpc.ChatMessage chat_msgs = 2;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_chat_msgs_size()); i < n; i++) {
+    const auto& repfield = this->_internal_chat_msgs(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, _Internal::msg(this),
-        _Internal::msg(this).GetCachedSize(), target, stream);
+        InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -6731,11 +7360,11 @@ failure:
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .prpc.ChatMessage msg = 2;
-  if (this->_internal_has_msg()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.msg_);
+  // repeated .prpc.ChatMessage chat_msgs = 2;
+  total_size += 1UL * this->_internal_chat_msgs_size();
+  for (const auto& msg : this->_impl_.chat_msgs_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
   // int64 item_id = 1;
@@ -6762,10 +7391,7 @@ void JoinChatRoomRes::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const 
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_msg()) {
-    _this->_internal_mutable_msg()->::prpc::ChatMessage::MergeFrom(
-        from._internal_msg());
-  }
+  _this->_impl_.chat_msgs_.MergeFrom(from._impl_.chat_msgs_);
   if (from._internal_item_id() != 0) {
     _this->_internal_set_item_id(from._internal_item_id());
   }
@@ -6786,18 +7412,15 @@ bool JoinChatRoomRes::IsInitialized() const {
 void JoinChatRoomRes::InternalSwap(JoinChatRoomRes* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(JoinChatRoomRes, _impl_.item_id_)
-      + sizeof(JoinChatRoomRes::_impl_.item_id_)
-      - PROTOBUF_FIELD_OFFSET(JoinChatRoomRes, _impl_.msg_)>(
-          reinterpret_cast<char*>(&_impl_.msg_),
-          reinterpret_cast<char*>(&other->_impl_.msg_));
+  _impl_.chat_msgs_.InternalSwap(&other->_impl_.chat_msgs_);
+
+  swap(_impl_.item_id_, other->_impl_.item_id_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata JoinChatRoomRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[30]);
+      file_level_metadata_user_2eproto[33]);
 }
 // ===================================================================
 
@@ -7023,7 +7646,7 @@ void SendMsg2ChatRoomReq::InternalSwap(SendMsg2ChatRoomReq* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata SendMsg2ChatRoomReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[31]);
+      file_level_metadata_user_2eproto[34]);
 }
 // ===================================================================
 
@@ -7061,7 +7684,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*SendMsg2ChatRoomRes::GetClassD
 ::PROTOBUF_NAMESPACE_ID::Metadata SendMsg2ChatRoomRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[32]);
+      file_level_metadata_user_2eproto[35]);
 }
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace prpc
@@ -7177,6 +7800,18 @@ Arena::CreateMaybeMessage< ::prpc::RefreshSubtitleReq >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::prpc::RefreshSubtitleRes*
 Arena::CreateMaybeMessage< ::prpc::RefreshSubtitleRes >(Arena* arena) {
   return Arena::CreateMessageInternal< ::prpc::RefreshSubtitleRes >(arena);
+}
+template<> PROTOBUF_NOINLINE ::prpc::SubtitleFile*
+Arena::CreateMaybeMessage< ::prpc::SubtitleFile >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::prpc::SubtitleFile >(arena);
+}
+template<> PROTOBUF_NOINLINE ::prpc::UploadSubtitleReq*
+Arena::CreateMaybeMessage< ::prpc::UploadSubtitleReq >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::prpc::UploadSubtitleReq >(arena);
+}
+template<> PROTOBUF_NOINLINE ::prpc::UploadSubtitleRes*
+Arena::CreateMaybeMessage< ::prpc::UploadSubtitleRes >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::prpc::UploadSubtitleRes >(arena);
 }
 template<> PROTOBUF_NOINLINE ::prpc::JoinChatRoomReq*
 Arena::CreateMaybeMessage< ::prpc::JoinChatRoomReq >(Arena* arena) {

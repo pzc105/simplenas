@@ -40,6 +40,7 @@ static const char* UserService_method_names[] = {
   "/prpc.UserService/QuerySubItems",
   "/prpc.UserService/QueryItemInfo",
   "/prpc.UserService/RefreshSubtitle",
+  "/prpc.UserService/UploadSubtitle",
   "/prpc.UserService/JoinChatRoom",
   "/prpc.UserService/SendMsg2ChatRoom",
 };
@@ -69,8 +70,9 @@ UserService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channe
   , rpcmethod_QuerySubItems_(UserService_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_QueryItemInfo_(UserService_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_RefreshSubtitle_(UserService_method_names[17], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_JoinChatRoom_(UserService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
-  , rpcmethod_SendMsg2ChatRoom_(UserService_method_names[19], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_UploadSubtitle_(UserService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_JoinChatRoom_(UserService_method_names[19], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SendMsg2ChatRoom_(UserService_method_names[20], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status UserService::Stub::Register(::grpc::ClientContext* context, const ::prpc::RegisterInfo& request, ::prpc::RegisterRet* response) {
@@ -480,6 +482,29 @@ void UserService::Stub::async::RefreshSubtitle(::grpc::ClientContext* context, c
   return result;
 }
 
+::grpc::Status UserService::Stub::UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::prpc::UploadSubtitleRes* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::UploadSubtitleReq, ::prpc::UploadSubtitleRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_UploadSubtitle_, context, request, response);
+}
+
+void UserService::Stub::async::UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::UploadSubtitleReq, ::prpc::UploadSubtitleRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_UploadSubtitle_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_UploadSubtitle_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>* UserService::Stub::PrepareAsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::UploadSubtitleRes, ::prpc::UploadSubtitleReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_UploadSubtitle_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>* UserService::Stub::AsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncUploadSubtitleRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ::grpc::ClientReader< ::prpc::JoinChatRoomRes>* UserService::Stub::JoinChatRoomRaw(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq& request) {
   return ::grpc::internal::ClientReaderFactory< ::prpc::JoinChatRoomRes>::Create(channel_.get(), rpcmethod_JoinChatRoom_, context, request);
 }
@@ -702,6 +727,16 @@ UserService::Service::Service() {
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[18],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::UploadSubtitleReq, ::prpc::UploadSubtitleRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::UploadSubtitleReq* req,
+             ::prpc::UploadSubtitleRes* resp) {
+               return service->UploadSubtitle(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[19],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< UserService::Service, ::prpc::JoinChatRoomReq, ::prpc::JoinChatRoomRes>(
           [](UserService::Service* service,
@@ -711,7 +746,7 @@ UserService::Service::Service() {
                return service->JoinChatRoom(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[19],
+      UserService_method_names[20],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -845,6 +880,13 @@ UserService::Service::~Service() {
 }
 
 ::grpc::Status UserService::Service::RefreshSubtitle(::grpc::ServerContext* context, const ::prpc::RefreshSubtitleReq* request, ::prpc::RefreshSubtitleRes* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::UploadSubtitle(::grpc::ServerContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response) {
   (void) context;
   (void) request;
   (void) response;
