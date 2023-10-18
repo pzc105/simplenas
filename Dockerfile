@@ -1,6 +1,6 @@
 FROM myenv
 RUN mkdir -p /app
-RUN git config --global http.proxy socks5://192.168.10.241:10808
+# RUN git config --global http.proxy socks5://192.168.10.241:10808
 RUN mkdir -p /source
 RUN git clone --recursive https://github.com/pzc105/simplenas.git /source/simplenas && \
     cd /source/simplenas && \

@@ -30,7 +30,22 @@ RUN mkdir -p /tmp/src/cmake && cd /tmp/src/cmake && \
     wget https://cmake.org/files/v3.23/cmake-3.23.0.tar.gz && tar -zxvf cmake-3.23.0.tar.gz && \
     cd cmake-3.23.0 && ./configure && make -j$(nproc) && make install
 
-RUN git config --global http.proxy socks5://192.168.10.241:10808
+RUN apt install mysql-server redis-server -y && \
+    sed -i "s/^bind-address/#bind-address/" /etc/mysql/mysql.conf.d/mysqld.cnf && \
+    sed -i "/\[mysqld\]/a\bind-address            = 0.0.0.0" /etc/mysql/mysql.conf.d/mysqld.cnf && \
+    service mysql start && \
+    echo "alter user 'root'@'localhost' identified with mysql_native_password by '123'; \
+    use mysql; \
+    update user set host='%' where user ='root'; \
+    FLUSH PRIVILEGES; \
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'WITH GRANT OPTION; \
+    FLUSH PRIVILEGES;" > alter.sql && \
+    mysql < alter.sql && \
+    rm alter.sql && \
+    service mysql start && \
+    service redis-server start
+
+# RUN git config --global http.proxy socks5://192.168.10.241:10808
 RUN mkdir /thirdparty
 RUN git clone --recursive https://github.com/protocolbuffers/protobuf.git /thirdparty/protobuf && \
     cd /thirdparty/protobuf && \
