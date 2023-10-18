@@ -11,27 +11,30 @@
 #include "google/protobuf/generated_message_reflection.h"
 #include "google/protobuf/reflection_ops.h"
 #include "google/protobuf/wire_format.h"
+#include "google/protobuf/generated_message_tctable_impl.h"
 // @@protoc_insertion_point(includes)
 
 // Must be included last.
 #include "google/protobuf/port_def.inc"
 PROTOBUF_PRAGMA_INIT_SEG
-namespace _pb = ::PROTOBUF_NAMESPACE_ID;
-namespace _pbi = ::PROTOBUF_NAMESPACE_ID::internal;
+namespace _pb = ::google::protobuf;
+namespace _pbi = ::google::protobuf::internal;
+namespace _fl = ::google::protobuf::internal::field_layout;
 namespace prpc {
-PROTOBUF_CONSTEXPR DownloadRequest::DownloadRequest(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.content_)*/ {
-    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
-  }
-
-  , /*decltype(_impl_.save_path_)*/ {
-    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
-  }
-
-  , /*decltype(_impl_.type_)*/ 0
-
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR DownloadRequest::DownloadRequest(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.content_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.save_path_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.type_)*/ 0,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct DownloadRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR DownloadRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~DownloadRequestDefaultTypeInternal() {}
@@ -42,15 +45,16 @@ struct DownloadRequestDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DownloadRequestDefaultTypeInternal _DownloadRequest_default_instance_;
-PROTOBUF_CONSTEXPR InfoHash::InfoHash(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.hash_)*/ {
-    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
-  }
-
-  , /*decltype(_impl_.version_)*/ 0
-
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR InfoHash::InfoHash(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.hash_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.version_)*/ 0,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct InfoHashDefaultTypeInternal {
   PROTOBUF_CONSTEXPR InfoHashDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~InfoHashDefaultTypeInternal() {}
@@ -61,10 +65,13 @@ struct InfoHashDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 InfoHashDefaultTypeInternal _InfoHash_default_instance_;
-PROTOBUF_CONSTEXPR DownloadRespone::DownloadRespone(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.info_hash_)*/nullptr
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR DownloadRespone::DownloadRespone(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.info_hash_)*/ nullptr,
+    } {}
 struct DownloadResponeDefaultTypeInternal {
   PROTOBUF_CONSTEXPR DownloadResponeDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~DownloadResponeDefaultTypeInternal() {}
@@ -75,10 +82,12 @@ struct DownloadResponeDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DownloadResponeDefaultTypeInternal _DownloadRespone_default_instance_;
-PROTOBUF_CONSTEXPR StatusRequest::StatusRequest(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.info_hash_)*/{}
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR StatusRequest::StatusRequest(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.info_hash_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct StatusRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR StatusRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~StatusRequestDefaultTypeInternal() {}
@@ -89,26 +98,23 @@ struct StatusRequestDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StatusRequestDefaultTypeInternal _StatusRequest_default_instance_;
-PROTOBUF_CONSTEXPR TorrentStatus::TorrentStatus(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.name_)*/ {
-    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
-  }
-
-  , /*decltype(_impl_.info_hash_)*/nullptr
-  , /*decltype(_impl_.total_done_)*/ ::int64_t{0}
-
-  , /*decltype(_impl_.download_payload_rate_)*/ 0
-
-  , /*decltype(_impl_.progress_)*/ 0
-
-  , /*decltype(_impl_.total_)*/ ::int64_t{0}
-
-  , /*decltype(_impl_.num_peers_)*/ 0
-
-  , /*decltype(_impl_.state_)*/ 0
-
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR TorrentStatus::TorrentStatus(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.info_hash_)*/ nullptr,
+      /*decltype(_impl_.total_done_)*/ ::int64_t{0},
+      /*decltype(_impl_.download_payload_rate_)*/ 0,
+      /*decltype(_impl_.progress_)*/ 0,
+      /*decltype(_impl_.total_)*/ ::int64_t{0},
+      /*decltype(_impl_.num_peers_)*/ 0,
+      /*decltype(_impl_.state_)*/ 0,
+    } {}
 struct TorrentStatusDefaultTypeInternal {
   PROTOBUF_CONSTEXPR TorrentStatusDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~TorrentStatusDefaultTypeInternal() {}
@@ -119,10 +125,12 @@ struct TorrentStatusDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TorrentStatusDefaultTypeInternal _TorrentStatus_default_instance_;
-PROTOBUF_CONSTEXPR StatusRespone::StatusRespone(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.status_array_)*/{}
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR StatusRespone::StatusRespone(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.status_array_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct StatusResponeDefaultTypeInternal {
   PROTOBUF_CONSTEXPR StatusResponeDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~StatusResponeDefaultTypeInternal() {}
@@ -133,10 +141,12 @@ struct StatusResponeDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StatusResponeDefaultTypeInternal _StatusRespone_default_instance_;
-PROTOBUF_CONSTEXPR TorrentInfoReq::TorrentInfoReq(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.info_hash_)*/{}
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR TorrentInfoReq::TorrentInfoReq(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.info_hash_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct TorrentInfoReqDefaultTypeInternal {
   PROTOBUF_CONSTEXPR TorrentInfoReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~TorrentInfoReqDefaultTypeInternal() {}
@@ -147,21 +157,19 @@ struct TorrentInfoReqDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TorrentInfoReqDefaultTypeInternal _TorrentInfoReq_default_instance_;
-PROTOBUF_CONSTEXPR BtFile::BtFile(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.name_)*/ {
-    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
-  }
-
-  , /*decltype(_impl_.index_)*/ 0
-
-  , /*decltype(_impl_.st_)*/ 0
-
-  , /*decltype(_impl_.total_size_)*/ ::int64_t{0}
-
-  , /*decltype(_impl_.downloaded_)*/ ::int64_t{0}
-
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR BtFile::BtFile(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.index_)*/ 0,
+      /*decltype(_impl_.st_)*/ 0,
+      /*decltype(_impl_.total_size_)*/ ::int64_t{0},
+      /*decltype(_impl_.downloaded_)*/ ::int64_t{0},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct BtFileDefaultTypeInternal {
   PROTOBUF_CONSTEXPR BtFileDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~BtFileDefaultTypeInternal() {}
@@ -172,31 +180,30 @@ struct BtFileDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BtFileDefaultTypeInternal _BtFile_default_instance_;
-PROTOBUF_CONSTEXPR TorrentInfo::TorrentInfo(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.files_)*/{}
-  , /*decltype(_impl_.name_)*/ {
-    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
-  }
-
-  , /*decltype(_impl_.save_path_)*/ {
-    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
-  }
-
-  , /*decltype(_impl_.resume_data_)*/ {
-    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
-  }
-
-  , /*decltype(_impl_.info_hash_)*/nullptr
-  , /*decltype(_impl_.state_)*/ 0
-
-  , /*decltype(_impl_.piece_length_)*/ 0
-
-  , /*decltype(_impl_.total_size_)*/ ::int64_t{0}
-
-  , /*decltype(_impl_.num_pieces_)*/ 0
-
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR TorrentInfo::TorrentInfo(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.files_)*/ {},
+      /*decltype(_impl_.name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.save_path_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.resume_data_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.info_hash_)*/ nullptr,
+      /*decltype(_impl_.state_)*/ 0,
+      /*decltype(_impl_.piece_length_)*/ 0,
+      /*decltype(_impl_.total_size_)*/ ::int64_t{0},
+      /*decltype(_impl_.num_pieces_)*/ 0,
+    } {}
 struct TorrentInfoDefaultTypeInternal {
   PROTOBUF_CONSTEXPR TorrentInfoDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~TorrentInfoDefaultTypeInternal() {}
@@ -207,10 +214,13 @@ struct TorrentInfoDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TorrentInfoDefaultTypeInternal _TorrentInfo_default_instance_;
-PROTOBUF_CONSTEXPR TorrentInfoRes::TorrentInfoRes(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.ti_)*/nullptr
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR TorrentInfoRes::TorrentInfoRes(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.ti_)*/ nullptr,
+    } {}
 struct TorrentInfoResDefaultTypeInternal {
   PROTOBUF_CONSTEXPR TorrentInfoResDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~TorrentInfoResDefaultTypeInternal() {}
@@ -221,10 +231,13 @@ struct TorrentInfoResDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TorrentInfoResDefaultTypeInternal _TorrentInfoRes_default_instance_;
-PROTOBUF_CONSTEXPR RemoveTorrentReq::RemoveTorrentReq(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.info_hash_)*/nullptr
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR RemoveTorrentReq::RemoveTorrentReq(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.info_hash_)*/ nullptr,
+    } {}
 struct RemoveTorrentReqDefaultTypeInternal {
   PROTOBUF_CONSTEXPR RemoveTorrentReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~RemoveTorrentReqDefaultTypeInternal() {}
@@ -235,8 +248,8 @@ struct RemoveTorrentReqDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RemoveTorrentReqDefaultTypeInternal _RemoveTorrentReq_default_instance_;
-PROTOBUF_CONSTEXPR RemoveTorrentRes::RemoveTorrentRes(
-    ::_pbi::ConstantInitialized) {}
+      template <typename>
+PROTOBUF_CONSTEXPR RemoveTorrentRes::RemoveTorrentRes(::_pbi::ConstantInitialized) {}
 struct RemoveTorrentResDefaultTypeInternal {
   PROTOBUF_CONSTEXPR RemoveTorrentResDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~RemoveTorrentResDefaultTypeInternal() {}
@@ -247,10 +260,13 @@ struct RemoveTorrentResDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RemoveTorrentResDefaultTypeInternal _RemoveTorrentRes_default_instance_;
-PROTOBUF_CONSTEXPR FileProgressReq::FileProgressReq(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.info_hash_)*/nullptr
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR FileProgressReq::FileProgressReq(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.info_hash_)*/ nullptr,
+    } {}
 struct FileProgressReqDefaultTypeInternal {
   PROTOBUF_CONSTEXPR FileProgressReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~FileProgressReqDefaultTypeInternal() {}
@@ -261,11 +277,14 @@ struct FileProgressReqDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 FileProgressReqDefaultTypeInternal _FileProgressReq_default_instance_;
-PROTOBUF_CONSTEXPR FileProgressRes::FileProgressRes(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.files_)*/{}
-  , /*decltype(_impl_.info_hash_)*/nullptr
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR FileProgressRes::FileProgressRes(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.files_)*/ {},
+      /*decltype(_impl_.info_hash_)*/ nullptr,
+    } {}
 struct FileProgressResDefaultTypeInternal {
   PROTOBUF_CONSTEXPR FileProgressResDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~FileProgressResDefaultTypeInternal() {}
@@ -276,8 +295,8 @@ struct FileProgressResDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 FileProgressResDefaultTypeInternal _FileProgressRes_default_instance_;
-PROTOBUF_CONSTEXPR FileCompletedReq::FileCompletedReq(
-    ::_pbi::ConstantInitialized) {}
+      template <typename>
+PROTOBUF_CONSTEXPR FileCompletedReq::FileCompletedReq(::_pbi::ConstantInitialized) {}
 struct FileCompletedReqDefaultTypeInternal {
   PROTOBUF_CONSTEXPR FileCompletedReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~FileCompletedReqDefaultTypeInternal() {}
@@ -288,12 +307,14 @@ struct FileCompletedReqDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 FileCompletedReqDefaultTypeInternal _FileCompletedReq_default_instance_;
-PROTOBUF_CONSTEXPR FileCompletedRes::FileCompletedRes(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.info_hash_)*/nullptr
-  , /*decltype(_impl_.file_index_)*/ 0
-
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+        template <typename>
+PROTOBUF_CONSTEXPR FileCompletedRes::FileCompletedRes(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.info_hash_)*/ nullptr,
+      /*decltype(_impl_.file_index_)*/ 0,
+    } {}
 struct FileCompletedResDefaultTypeInternal {
   PROTOBUF_CONSTEXPR FileCompletedResDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~FileCompletedResDefaultTypeInternal() {}
@@ -332,7 +353,7 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::InfoHash, _impl_.version_),
     PROTOBUF_FIELD_OFFSET(::prpc::InfoHash, _impl_.hash_),
-    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::DownloadRespone, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::DownloadRespone, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -341,6 +362,7 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::DownloadRespone, _impl_.info_hash_),
+    0,
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::StatusRequest, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -350,7 +372,7 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::StatusRequest, _impl_.info_hash_),
-    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -366,6 +388,14 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.progress_),
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.num_peers_),
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.state_),
+    0,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::StatusRespone, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -397,7 +427,7 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _impl_.st_),
     PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _impl_.total_size_),
     PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _impl_.downloaded_),
-    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -414,7 +444,16 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.piece_length_),
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.num_pieces_),
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.resume_data_),
-    ~0u,  // no _has_bits_
+    0,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfoRes, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfoRes, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -423,7 +462,8 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfoRes, _impl_.ti_),
-    ~0u,  // no _has_bits_
+    0,
+    PROTOBUF_FIELD_OFFSET(::prpc::RemoveTorrentReq, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::RemoveTorrentReq, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -432,6 +472,7 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::RemoveTorrentReq, _impl_.info_hash_),
+    0,
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::RemoveTorrentRes, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -440,7 +481,7 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
-    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::FileProgressReq, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::FileProgressReq, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -449,7 +490,8 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::FileProgressReq, _impl_.info_hash_),
-    ~0u,  // no _has_bits_
+    0,
+    PROTOBUF_FIELD_OFFSET(::prpc::FileProgressRes, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::FileProgressRes, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -459,6 +501,8 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::FileProgressRes, _impl_.info_hash_),
     PROTOBUF_FIELD_OFFSET(::prpc::FileProgressRes, _impl_.files_),
+    0,
+    ~0u,
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::FileCompletedReq, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -467,7 +511,7 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
-    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::FileCompletedRes, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::FileCompletedRes, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -477,26 +521,28 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::FileCompletedRes, _impl_.info_hash_),
     PROTOBUF_FIELD_OFFSET(::prpc::FileCompletedRes, _impl_.file_index_),
+    0,
+    ~0u,
 };
 
 static const ::_pbi::MigrationSchema
     schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-        { 0, -1, -1, sizeof(::prpc::DownloadRequest)},
-        { 11, -1, -1, sizeof(::prpc::InfoHash)},
-        { 21, -1, -1, sizeof(::prpc::DownloadRespone)},
-        { 30, -1, -1, sizeof(::prpc::StatusRequest)},
-        { 39, -1, -1, sizeof(::prpc::TorrentStatus)},
-        { 55, -1, -1, sizeof(::prpc::StatusRespone)},
-        { 64, -1, -1, sizeof(::prpc::TorrentInfoReq)},
-        { 73, -1, -1, sizeof(::prpc::BtFile)},
-        { 86, -1, -1, sizeof(::prpc::TorrentInfo)},
-        { 103, -1, -1, sizeof(::prpc::TorrentInfoRes)},
-        { 112, -1, -1, sizeof(::prpc::RemoveTorrentReq)},
-        { 121, -1, -1, sizeof(::prpc::RemoveTorrentRes)},
-        { 129, -1, -1, sizeof(::prpc::FileProgressReq)},
-        { 138, -1, -1, sizeof(::prpc::FileProgressRes)},
-        { 148, -1, -1, sizeof(::prpc::FileCompletedReq)},
-        { 156, -1, -1, sizeof(::prpc::FileCompletedRes)},
+        {0, -1, -1, sizeof(::prpc::DownloadRequest)},
+        {11, -1, -1, sizeof(::prpc::InfoHash)},
+        {21, 30, -1, sizeof(::prpc::DownloadRespone)},
+        {31, -1, -1, sizeof(::prpc::StatusRequest)},
+        {40, 56, -1, sizeof(::prpc::TorrentStatus)},
+        {64, -1, -1, sizeof(::prpc::StatusRespone)},
+        {73, -1, -1, sizeof(::prpc::TorrentInfoReq)},
+        {82, -1, -1, sizeof(::prpc::BtFile)},
+        {95, 112, -1, sizeof(::prpc::TorrentInfo)},
+        {121, 130, -1, sizeof(::prpc::TorrentInfoRes)},
+        {131, 140, -1, sizeof(::prpc::RemoveTorrentReq)},
+        {141, -1, -1, sizeof(::prpc::RemoveTorrentRes)},
+        {149, 158, -1, sizeof(::prpc::FileProgressReq)},
+        {159, 169, -1, sizeof(::prpc::FileProgressRes)},
+        {171, -1, -1, sizeof(::prpc::FileCompletedReq)},
+        {179, 189, -1, sizeof(::prpc::FileCompletedRes)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -606,8 +652,8 @@ PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_bt_2epro
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY2
 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_bt_2eproto(&descriptor_table_bt_2eproto);
 namespace prpc {
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* DownloadRequest_ReqType_descriptor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_bt_2eproto);
+const ::google::protobuf::EnumDescriptor* DownloadRequest_ReqType_descriptor() {
+  ::google::protobuf::internal::AssignDescriptors(&descriptor_table_bt_2eproto);
   return file_level_enum_descriptors_bt_2eproto[0];
 }
 bool DownloadRequest_ReqType_IsValid(int value) {
@@ -632,8 +678,8 @@ constexpr int DownloadRequest::ReqType_ARRAYSIZE;
 
 #endif  // (__cplusplus < 201703) &&
         // (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* BtFile_State_descriptor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_bt_2eproto);
+const ::google::protobuf::EnumDescriptor* BtFile_State_descriptor() {
+  ::google::protobuf::internal::AssignDescriptors(&descriptor_table_bt_2eproto);
   return file_level_enum_descriptors_bt_2eproto[1];
 }
 bool BtFile_State_IsValid(int value) {
@@ -658,8 +704,8 @@ constexpr int BtFile::State_ARRAYSIZE;
 
 #endif  // (__cplusplus < 201703) &&
         // (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* BtStateEnum_descriptor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_bt_2eproto);
+const ::google::protobuf::EnumDescriptor* BtStateEnum_descriptor() {
+  ::google::protobuf::internal::AssignDescriptors(&descriptor_table_bt_2eproto);
   return file_level_enum_descriptors_bt_2eproto[2];
 }
 bool BtStateEnum_IsValid(int value) {
@@ -682,24 +728,22 @@ class DownloadRequest::_Internal {
  public:
 };
 
-DownloadRequest::DownloadRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+DownloadRequest::DownloadRequest(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.DownloadRequest)
 }
-DownloadRequest::DownloadRequest(const DownloadRequest& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  DownloadRequest* const _this = this; (void)_this;
+DownloadRequest::DownloadRequest(const DownloadRequest& from) : ::google::protobuf::Message() {
+  DownloadRequest* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.content_) {}
-
-    , decltype(_impl_.save_path_) {}
-
-    , decltype(_impl_.type_) {}
-
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+      decltype(_impl_.content_){},
+      decltype(_impl_.save_path_){},
+      decltype(_impl_.type_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
   _impl_.content_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
         _impl_.content_.Set("", GetArenaForAllocation());
@@ -715,19 +759,16 @@ DownloadRequest::DownloadRequest(const DownloadRequest& from)
     _this->_impl_.save_path_.Set(from._internal_save_path(), _this->GetArenaForAllocation());
   }
   _this->_impl_.type_ = from._impl_.type_;
+
   // @@protoc_insertion_point(copy_constructor:prpc.DownloadRequest)
 }
-
 inline void DownloadRequest::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.content_) {}
-
-    , decltype(_impl_.save_path_) {}
-
-    , decltype(_impl_.type_) { 0 }
-
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_.content_){},
+      decltype(_impl_.save_path_){},
+      decltype(_impl_.type_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
   };
   _impl_.content_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -738,27 +779,21 @@ inline void DownloadRequest::SharedCtor(::_pb::Arena* arena) {
         _impl_.save_path_.Set("", GetArenaForAllocation());
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 DownloadRequest::~DownloadRequest() {
   // @@protoc_insertion_point(destructor:prpc.DownloadRequest)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void DownloadRequest::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.content_.Destroy();
   _impl_.save_path_.Destroy();
 }
-
 void DownloadRequest::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void DownloadRequest::Clear() {
+PROTOBUF_NOINLINE void DownloadRequest::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.DownloadRequest)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -767,74 +802,68 @@ void DownloadRequest::Clear() {
   _impl_.content_.ClearToEmpty();
   _impl_.save_path_.ClearToEmpty();
   _impl_.type_ = 0;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* DownloadRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // .prpc.DownloadRequest.ReqType type = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 8)) {
-          ::uint32_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-          _internal_set_type(static_cast<::prpc::DownloadRequest_ReqType>(val));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // bytes content = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_content();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // string save_path = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_save_path();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "prpc.DownloadRequest.save_path"));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* DownloadRequest::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 0, 38, 2> DownloadRequest::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_DownloadRequest_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // .prpc.DownloadRequest.ReqType type = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DownloadRequest, _impl_.type_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.type_)}},
+    // bytes content = 2;
+    {::_pbi::TcParser::FastBS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.content_)}},
+    // string save_path = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.save_path_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.DownloadRequest.ReqType type = 1;
+    {PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.type_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
+    // bytes content = 2;
+    {PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.content_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBytes | ::_fl::kRepAString)},
+    // string save_path = 3;
+    {PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.save_path_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\24\0\0\11\0\0\0\0"
+    "prpc.DownloadRequest"
+    "save_path"
+  }},
+};
 
 ::uint8_t* DownloadRequest::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.DownloadRequest)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
   // .prpc.DownloadRequest.ReqType type = 1;
   if (this->_internal_type() != 0) {
@@ -852,14 +881,15 @@ failure:
   // string save_path = 3;
   if (!this->_internal_save_path().empty()) {
     const std::string& _s = this->_internal_save_path();
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.DownloadRequest.save_path");
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.DownloadRequest.save_path");
     target = stream->WriteStringMaybeAliased(3, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.DownloadRequest)
   return target;
@@ -875,13 +905,13 @@ failure:
 
   // bytes content = 2;
   if (!this->_internal_content().empty()) {
-    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::BytesSize(
                                     this->_internal_content());
   }
 
   // string save_path = 3;
   if (!this->_internal_save_path().empty()) {
-    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                     this->_internal_save_path());
   }
 
@@ -894,14 +924,14 @@ failure:
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData DownloadRequest::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData DownloadRequest::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     DownloadRequest::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*DownloadRequest::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*DownloadRequest::GetClassData() const { return &_class_data_; }
 
 
-void DownloadRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void DownloadRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<DownloadRequest*>(&to_msg);
   auto& from = static_cast<const DownloadRequest&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.DownloadRequest)
@@ -918,7 +948,7 @@ void DownloadRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const 
   if (from._internal_type() != 0) {
     _this->_internal_set_type(from._internal_type());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void DownloadRequest::CopyFrom(const DownloadRequest& from) {
@@ -928,7 +958,7 @@ void DownloadRequest::CopyFrom(const DownloadRequest& from) {
   MergeFrom(from);
 }
 
-bool DownloadRequest::IsInitialized() const {
+PROTOBUF_NOINLINE bool DownloadRequest::IsInitialized() const {
   return true;
 }
 
@@ -944,7 +974,7 @@ void DownloadRequest::InternalSwap(DownloadRequest* other) {
   swap(_impl_.type_, other->_impl_.type_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata DownloadRequest::GetMetadata() const {
+::google::protobuf::Metadata DownloadRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[0]);
@@ -955,22 +985,21 @@ class InfoHash::_Internal {
  public:
 };
 
-InfoHash::InfoHash(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+InfoHash::InfoHash(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.InfoHash)
 }
-InfoHash::InfoHash(const InfoHash& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  InfoHash* const _this = this; (void)_this;
+InfoHash::InfoHash(const InfoHash& from) : ::google::protobuf::Message() {
+  InfoHash* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.hash_) {}
-
-    , decltype(_impl_.version_) {}
-
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+      decltype(_impl_.hash_){},
+      decltype(_impl_.version_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
   _impl_.hash_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
         _impl_.hash_.Set("", GetArenaForAllocation());
@@ -979,43 +1008,35 @@ InfoHash::InfoHash(const InfoHash& from)
     _this->_impl_.hash_.Set(from._internal_hash(), _this->GetArenaForAllocation());
   }
   _this->_impl_.version_ = from._impl_.version_;
+
   // @@protoc_insertion_point(copy_constructor:prpc.InfoHash)
 }
-
 inline void InfoHash::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.hash_) {}
-
-    , decltype(_impl_.version_) { 0 }
-
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_.hash_){},
+      decltype(_impl_.version_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
   };
   _impl_.hash_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
         _impl_.hash_.Set("", GetArenaForAllocation());
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 InfoHash::~InfoHash() {
   // @@protoc_insertion_point(destructor:prpc.InfoHash)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void InfoHash::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.hash_.Destroy();
 }
-
 void InfoHash::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void InfoHash::Clear() {
+PROTOBUF_NOINLINE void InfoHash::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.InfoHash)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -1023,68 +1044,64 @@ void InfoHash::Clear() {
 
   _impl_.hash_.ClearToEmpty();
   _impl_.version_ = 0;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* InfoHash::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // int32 version = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 8)) {
-          _impl_.version_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // bytes hash = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_hash();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* InfoHash::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 0, 0, 2> InfoHash::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_InfoHash_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // bytes hash = 2;
+    {::_pbi::TcParser::FastBS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(InfoHash, _impl_.hash_)}},
+    // int32 version = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(InfoHash, _impl_.version_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(InfoHash, _impl_.version_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // int32 version = 1;
+    {PROTOBUF_FIELD_OFFSET(InfoHash, _impl_.version_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // bytes hash = 2;
+    {PROTOBUF_FIELD_OFFSET(InfoHash, _impl_.hash_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBytes | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
 
 ::uint8_t* InfoHash::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.InfoHash)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
   // int32 version = 1;
   if (this->_internal_version() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(
-        1, this->_internal_version(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<1>(
+            stream, this->_internal_version(), target);
   }
 
   // bytes hash = 2;
@@ -1094,8 +1111,9 @@ failure:
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.InfoHash)
   return target;
@@ -1111,7 +1129,7 @@ failure:
 
   // bytes hash = 2;
   if (!this->_internal_hash().empty()) {
-    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::BytesSize(
                                     this->_internal_hash());
   }
 
@@ -1124,14 +1142,14 @@ failure:
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData InfoHash::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData InfoHash::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     InfoHash::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*InfoHash::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*InfoHash::GetClassData() const { return &_class_data_; }
 
 
-void InfoHash::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void InfoHash::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<InfoHash*>(&to_msg);
   auto& from = static_cast<const InfoHash&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.InfoHash)
@@ -1145,7 +1163,7 @@ void InfoHash::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTO
   if (from._internal_version() != 0) {
     _this->_internal_set_version(from._internal_version());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void InfoHash::CopyFrom(const InfoHash& from) {
@@ -1155,7 +1173,7 @@ void InfoHash::CopyFrom(const InfoHash& from) {
   MergeFrom(from);
 }
 
-bool InfoHash::IsInitialized() const {
+PROTOBUF_NOINLINE bool InfoHash::IsInitialized() const {
   return true;
 }
 
@@ -1166,11 +1184,10 @@ void InfoHash::InternalSwap(InfoHash* other) {
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.hash_, lhs_arena,
                                        &other->_impl_.hash_, rhs_arena);
-
-  swap(_impl_.version_, other->_impl_.version_);
+        swap(_impl_.version_, other->_impl_.version_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata InfoHash::GetMetadata() const {
+::google::protobuf::Metadata InfoHash::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[1]);
@@ -1179,125 +1196,131 @@ void InfoHash::InternalSwap(InfoHash* other) {
 
 class DownloadRespone::_Internal {
  public:
+  using HasBits = decltype(std::declval<DownloadRespone>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(DownloadRespone, _impl_._has_bits_);
   static const ::prpc::InfoHash& info_hash(const DownloadRespone* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
-const ::prpc::InfoHash&
-DownloadRespone::_Internal::info_hash(const DownloadRespone* msg) {
+const ::prpc::InfoHash& DownloadRespone::_Internal::info_hash(const DownloadRespone* msg) {
   return *msg->_impl_.info_hash_;
 }
-DownloadRespone::DownloadRespone(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+DownloadRespone::DownloadRespone(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.DownloadRespone)
 }
-DownloadRespone::DownloadRespone(const DownloadRespone& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  DownloadRespone* const _this = this; (void)_this;
+DownloadRespone::DownloadRespone(const DownloadRespone& from) : ::google::protobuf::Message() {
+  DownloadRespone* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_info_hash()) {
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
   }
+
   // @@protoc_insertion_point(copy_constructor:prpc.DownloadRespone)
 }
-
 inline void DownloadRespone::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
   };
 }
-
 DownloadRespone::~DownloadRespone() {
   // @@protoc_insertion_point(destructor:prpc.DownloadRespone)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void DownloadRespone::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.info_hash_;
 }
-
 void DownloadRespone::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void DownloadRespone::Clear() {
+PROTOBUF_NOINLINE void DownloadRespone::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.DownloadRespone)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.info_hash_ != nullptr) {
-    delete _impl_.info_hash_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
   }
-  _impl_.info_hash_ = nullptr;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* DownloadRespone::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // .prpc.InfoHash info_hash = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_info_hash(), ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* DownloadRespone::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> DownloadRespone::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(DownloadRespone, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_DownloadRespone_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(DownloadRespone, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(DownloadRespone, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+  }},
+};
 
 ::uint8_t* DownloadRespone::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.DownloadRespone)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::info_hash(this),
         _Internal::info_hash(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.DownloadRespone)
   return target;
@@ -1312,23 +1335,24 @@ failure:
   (void) cached_has_bits;
 
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
         *_impl_.info_hash_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData DownloadRespone::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData DownloadRespone::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     DownloadRespone::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*DownloadRespone::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*DownloadRespone::GetClassData() const { return &_class_data_; }
 
 
-void DownloadRespone::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void DownloadRespone::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<DownloadRespone*>(&to_msg);
   auto& from = static_cast<const DownloadRespone&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.DownloadRespone)
@@ -1336,11 +1360,11 @@ void DownloadRespone::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const 
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_info_hash()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
         from._internal_info_hash());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void DownloadRespone::CopyFrom(const DownloadRespone& from) {
@@ -1350,17 +1374,18 @@ void DownloadRespone::CopyFrom(const DownloadRespone& from) {
   MergeFrom(from);
 }
 
-bool DownloadRespone::IsInitialized() const {
+PROTOBUF_NOINLINE bool DownloadRespone::IsInitialized() const {
   return true;
 }
 
 void DownloadRespone::InternalSwap(DownloadRespone* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   swap(_impl_.info_hash_, other->_impl_.info_hash_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata DownloadRespone::GetMetadata() const {
+::google::protobuf::Metadata DownloadRespone::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[2]);
@@ -1371,118 +1396,109 @@ class StatusRequest::_Internal {
  public:
 };
 
-StatusRequest::StatusRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+StatusRequest::StatusRequest(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.StatusRequest)
 }
-StatusRequest::StatusRequest(const StatusRequest& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  StatusRequest* const _this = this; (void)_this;
+StatusRequest::StatusRequest(const StatusRequest& from) : ::google::protobuf::Message() {
+  StatusRequest* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){from._impl_.info_hash_}
-    , /*decltype(_impl_._cached_size_)*/{}};
+      decltype(_impl_.info_hash_){from._impl_.info_hash_},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
 
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:prpc.StatusRequest)
 }
-
 inline void StatusRequest::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){arena}
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_.info_hash_){arena},
+      /*decltype(_impl_._cached_size_)*/ {},
   };
 }
-
 StatusRequest::~StatusRequest() {
   // @@protoc_insertion_point(destructor:prpc.StatusRequest)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void StatusRequest::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.info_hash_.~RepeatedPtrField();
 }
-
 void StatusRequest::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void StatusRequest::Clear() {
+PROTOBUF_NOINLINE void StatusRequest::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.StatusRequest)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.info_hash_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_mutable_info_hash()->Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* StatusRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // repeated .prpc.InfoHash info_hash = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_info_hash(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* StatusRequest::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRequest::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_StatusRequest_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // repeated .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(StatusRequest, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // repeated .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(StatusRequest, _impl_.info_hash_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+  }},
+};
 
 ::uint8_t* StatusRequest::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.StatusRequest)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
   // repeated .prpc.InfoHash info_hash = 1;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_info_hash_size()); i < n; i++) {
-    const auto& repfield = this->_internal_info_hash(i);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+    const auto& repfield = this->_internal_info_hash().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
         InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.StatusRequest)
   return target;
@@ -1498,22 +1514,21 @@ failure:
 
   // repeated .prpc.InfoHash info_hash = 1;
   total_size += 1UL * this->_internal_info_hash_size();
-  for (const auto& msg : this->_impl_.info_hash_) {
+  for (const auto& msg : this->_internal_info_hash()) {
     total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
   }
-
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData StatusRequest::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData StatusRequest::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     StatusRequest::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*StatusRequest::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*StatusRequest::GetClassData() const { return &_class_data_; }
 
 
-void StatusRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void StatusRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<StatusRequest*>(&to_msg);
   auto& from = static_cast<const StatusRequest&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.StatusRequest)
@@ -1521,8 +1536,8 @@ void StatusRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.info_hash_.MergeFrom(from._impl_.info_hash_);
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_mutable_info_hash()->MergeFrom(from._internal_info_hash());
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void StatusRequest::CopyFrom(const StatusRequest& from) {
@@ -1532,7 +1547,7 @@ void StatusRequest::CopyFrom(const StatusRequest& from) {
   MergeFrom(from);
 }
 
-bool StatusRequest::IsInitialized() const {
+PROTOBUF_NOINLINE bool StatusRequest::IsInitialized() const {
   return true;
 }
 
@@ -1542,7 +1557,7 @@ void StatusRequest::InternalSwap(StatusRequest* other) {
   _impl_.info_hash_.InternalSwap(&other->_impl_.info_hash_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata StatusRequest::GetMetadata() const {
+::google::protobuf::Metadata StatusRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[3]);
@@ -1551,40 +1566,40 @@ void StatusRequest::InternalSwap(StatusRequest* other) {
 
 class TorrentStatus::_Internal {
  public:
+  using HasBits = decltype(std::declval<TorrentStatus>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_._has_bits_);
   static const ::prpc::InfoHash& info_hash(const TorrentStatus* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
-const ::prpc::InfoHash&
-TorrentStatus::_Internal::info_hash(const TorrentStatus* msg) {
+const ::prpc::InfoHash& TorrentStatus::_Internal::info_hash(const TorrentStatus* msg) {
   return *msg->_impl_.info_hash_;
 }
-TorrentStatus::TorrentStatus(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+TorrentStatus::TorrentStatus(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.TorrentStatus)
 }
-TorrentStatus::TorrentStatus(const TorrentStatus& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  TorrentStatus* const _this = this; (void)_this;
+TorrentStatus::TorrentStatus(const TorrentStatus& from) : ::google::protobuf::Message() {
+  TorrentStatus* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.name_) {}
-
-    , decltype(_impl_.info_hash_){nullptr}
-    , decltype(_impl_.total_done_) {}
-
-    , decltype(_impl_.download_payload_rate_) {}
-
-    , decltype(_impl_.progress_) {}
-
-    , decltype(_impl_.total_) {}
-
-    , decltype(_impl_.num_peers_) {}
-
-    , decltype(_impl_.state_) {}
-
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.name_){},
+      decltype(_impl_.info_hash_){nullptr},
+      decltype(_impl_.total_done_){},
+      decltype(_impl_.download_payload_rate_){},
+      decltype(_impl_.progress_){},
+      decltype(_impl_.total_){},
+      decltype(_impl_.num_peers_){},
+      decltype(_impl_.state_){},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
   _impl_.name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
         _impl_.name_.Set("", GetArenaForAllocation());
@@ -1592,190 +1607,160 @@ TorrentStatus::TorrentStatus(const TorrentStatus& from)
   if (!from._internal_name().empty()) {
     _this->_impl_.name_.Set(from._internal_name(), _this->GetArenaForAllocation());
   }
-  if (from._internal_has_info_hash()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
   }
   ::memcpy(&_impl_.total_done_, &from._impl_.total_done_,
     static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.state_) -
     reinterpret_cast<char*>(&_impl_.total_done_)) + sizeof(_impl_.state_));
+
   // @@protoc_insertion_point(copy_constructor:prpc.TorrentStatus)
 }
-
 inline void TorrentStatus::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.name_) {}
-
-    , decltype(_impl_.info_hash_){nullptr}
-    , decltype(_impl_.total_done_) { ::int64_t{0} }
-
-    , decltype(_impl_.download_payload_rate_) { 0 }
-
-    , decltype(_impl_.progress_) { 0 }
-
-    , decltype(_impl_.total_) { ::int64_t{0} }
-
-    , decltype(_impl_.num_peers_) { 0 }
-
-    , decltype(_impl_.state_) { 0 }
-
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.name_){},
+      decltype(_impl_.info_hash_){nullptr},
+      decltype(_impl_.total_done_){::int64_t{0}},
+      decltype(_impl_.download_payload_rate_){0},
+      decltype(_impl_.progress_){0},
+      decltype(_impl_.total_){::int64_t{0}},
+      decltype(_impl_.num_peers_){0},
+      decltype(_impl_.state_){0},
   };
   _impl_.name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
         _impl_.name_.Set("", GetArenaForAllocation());
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 TorrentStatus::~TorrentStatus() {
   // @@protoc_insertion_point(destructor:prpc.TorrentStatus)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void TorrentStatus::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.name_.Destroy();
   if (this != internal_default_instance()) delete _impl_.info_hash_;
 }
-
 void TorrentStatus::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void TorrentStatus::Clear() {
+PROTOBUF_NOINLINE void TorrentStatus::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.TorrentStatus)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   _impl_.name_.ClearToEmpty();
-  if (GetArenaForAllocation() == nullptr && _impl_.info_hash_ != nullptr) {
-    delete _impl_.info_hash_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
   }
-  _impl_.info_hash_ = nullptr;
   ::memset(&_impl_.total_done_, 0, static_cast<::size_t>(
       reinterpret_cast<char*>(&_impl_.state_) -
       reinterpret_cast<char*>(&_impl_.total_done_)) + sizeof(_impl_.state_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* TorrentStatus::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // .prpc.InfoHash info_hash = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_info_hash(), ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // string name = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "prpc.TorrentStatus.name"));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // int32 download_payload_rate = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 24)) {
-          _impl_.download_payload_rate_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // int64 total_done = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 32)) {
-          _impl_.total_done_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // int64 total = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 40)) {
-          _impl_.total_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // float progress = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 53)) {
-          _impl_.progress_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // int32 num_peers = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 56)) {
-          _impl_.num_peers_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // .prpc.BtStateEnum state = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 64)) {
-          ::uint32_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-          _internal_set_state(static_cast<::prpc::BtStateEnum>(val));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* TorrentStatus::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 8, 1, 39, 2> TorrentStatus::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_._has_bits_),
+    0, // no _extensions_
+    8, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967040,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    8,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_TorrentStatus_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // .prpc.BtStateEnum state = 8;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TorrentStatus, _impl_.state_), 63>(),
+     {64, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.state_)}},
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.info_hash_)}},
+    // string name = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.name_)}},
+    // int32 download_payload_rate = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TorrentStatus, _impl_.download_payload_rate_), 63>(),
+     {24, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.download_payload_rate_)}},
+    // int64 total_done = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TorrentStatus, _impl_.total_done_), 63>(),
+     {32, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.total_done_)}},
+    // int64 total = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TorrentStatus, _impl_.total_), 63>(),
+     {40, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.total_)}},
+    // float progress = 6;
+    {::_pbi::TcParser::FastF32S1,
+     {53, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.progress_)}},
+    // int32 num_peers = 7;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TorrentStatus, _impl_.num_peers_), 63>(),
+     {56, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.num_peers_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // string name = 2;
+    {PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.name_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // int32 download_payload_rate = 3;
+    {PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.download_payload_rate_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // int64 total_done = 4;
+    {PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.total_done_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+    // int64 total = 5;
+    {PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.total_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+    // float progress = 6;
+    {PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.progress_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kFloat)},
+    // int32 num_peers = 7;
+    {PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.num_peers_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // .prpc.BtStateEnum state = 8;
+    {PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.state_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+    "\22\0\4\0\0\0\0\0\0\0\0\0\0\0\0\0"
+    "prpc.TorrentStatus"
+    "name"
+  }},
+};
 
 ::uint8_t* TorrentStatus::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.TorrentStatus)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::info_hash(this),
         _Internal::info_hash(this).GetCachedSize(), target, stream);
   }
@@ -1783,34 +1768,35 @@ failure:
   // string name = 2;
   if (!this->_internal_name().empty()) {
     const std::string& _s = this->_internal_name();
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.TorrentStatus.name");
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.TorrentStatus.name");
     target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   // int32 download_payload_rate = 3;
   if (this->_internal_download_payload_rate() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(
-        3, this->_internal_download_payload_rate(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<3>(
+            stream, this->_internal_download_payload_rate(), target);
   }
 
   // int64 total_done = 4;
   if (this->_internal_total_done() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(
-        4, this->_internal_total_done(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<4>(
+            stream, this->_internal_total_done(), target);
   }
 
   // int64 total = 5;
   if (this->_internal_total() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(
-        5, this->_internal_total(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<5>(
+            stream, this->_internal_total(), target);
   }
 
   // float progress = 6;
-  static_assert(sizeof(::uint32_t) == sizeof(float), "Code assumes ::uint32_t and float are the same size.");
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
   float tmp_progress = this->_internal_progress();
   ::uint32_t raw_progress;
   memcpy(&raw_progress, &tmp_progress, sizeof(tmp_progress));
@@ -1822,9 +1808,9 @@ failure:
 
   // int32 num_peers = 7;
   if (this->_internal_num_peers() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(
-        7, this->_internal_num_peers(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<7>(
+            stream, this->_internal_num_peers(), target);
   }
 
   // .prpc.BtStateEnum state = 8;
@@ -1835,8 +1821,9 @@ failure:
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.TorrentStatus)
   return target;
@@ -1852,14 +1839,15 @@ failure:
 
   // string name = 2;
   if (!this->_internal_name().empty()) {
-    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                     this->_internal_name());
   }
 
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
         *_impl_.info_hash_);
   }
 
@@ -1876,7 +1864,8 @@ failure:
   }
 
   // float progress = 6;
-  static_assert(sizeof(::uint32_t) == sizeof(float), "Code assumes ::uint32_t and float are the same size.");
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
   float tmp_progress = this->_internal_progress();
   ::uint32_t raw_progress;
   memcpy(&raw_progress, &tmp_progress, sizeof(tmp_progress));
@@ -1905,14 +1894,14 @@ failure:
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData TorrentStatus::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData TorrentStatus::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     TorrentStatus::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*TorrentStatus::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*TorrentStatus::GetClassData() const { return &_class_data_; }
 
 
-void TorrentStatus::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void TorrentStatus::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<TorrentStatus*>(&to_msg);
   auto& from = static_cast<const TorrentStatus&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.TorrentStatus)
@@ -1923,7 +1912,7 @@ void TorrentStatus::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::
   if (!from._internal_name().empty()) {
     _this->_internal_set_name(from._internal_name());
   }
-  if (from._internal_has_info_hash()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
         from._internal_info_hash());
   }
@@ -1933,7 +1922,8 @@ void TorrentStatus::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::
   if (from._internal_download_payload_rate() != 0) {
     _this->_internal_set_download_payload_rate(from._internal_download_payload_rate());
   }
-  static_assert(sizeof(::uint32_t) == sizeof(float), "Code assumes ::uint32_t and float are the same size.");
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
   float tmp_progress = from._internal_progress();
   ::uint32_t raw_progress;
   memcpy(&raw_progress, &tmp_progress, sizeof(tmp_progress));
@@ -1949,7 +1939,7 @@ void TorrentStatus::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::
   if (from._internal_state() != 0) {
     _this->_internal_set_state(from._internal_state());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void TorrentStatus::CopyFrom(const TorrentStatus& from) {
@@ -1959,7 +1949,7 @@ void TorrentStatus::CopyFrom(const TorrentStatus& from) {
   MergeFrom(from);
 }
 
-bool TorrentStatus::IsInitialized() const {
+PROTOBUF_NOINLINE bool TorrentStatus::IsInitialized() const {
   return true;
 }
 
@@ -1968,9 +1958,10 @@ void TorrentStatus::InternalSwap(TorrentStatus* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, lhs_arena,
                                        &other->_impl_.name_, rhs_arena);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+  ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.state_)
       + sizeof(TorrentStatus::_impl_.state_)
       - PROTOBUF_FIELD_OFFSET(TorrentStatus, _impl_.info_hash_)>(
@@ -1978,7 +1969,7 @@ void TorrentStatus::InternalSwap(TorrentStatus* other) {
           reinterpret_cast<char*>(&other->_impl_.info_hash_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata TorrentStatus::GetMetadata() const {
+::google::protobuf::Metadata TorrentStatus::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[4]);
@@ -1989,118 +1980,109 @@ class StatusRespone::_Internal {
  public:
 };
 
-StatusRespone::StatusRespone(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+StatusRespone::StatusRespone(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.StatusRespone)
 }
-StatusRespone::StatusRespone(const StatusRespone& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  StatusRespone* const _this = this; (void)_this;
+StatusRespone::StatusRespone(const StatusRespone& from) : ::google::protobuf::Message() {
+  StatusRespone* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.status_array_){from._impl_.status_array_}
-    , /*decltype(_impl_._cached_size_)*/{}};
+      decltype(_impl_.status_array_){from._impl_.status_array_},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
 
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:prpc.StatusRespone)
 }
-
 inline void StatusRespone::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.status_array_){arena}
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_.status_array_){arena},
+      /*decltype(_impl_._cached_size_)*/ {},
   };
 }
-
 StatusRespone::~StatusRespone() {
   // @@protoc_insertion_point(destructor:prpc.StatusRespone)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void StatusRespone::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.status_array_.~RepeatedPtrField();
 }
-
 void StatusRespone::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void StatusRespone::Clear() {
+PROTOBUF_NOINLINE void StatusRespone::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.StatusRespone)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.status_array_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_mutable_status_array()->Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* StatusRespone::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // repeated .prpc.TorrentStatus status_array = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_status_array(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* StatusRespone::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRespone::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_StatusRespone_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // repeated .prpc.TorrentStatus status_array = 1;
+    {::_pbi::TcParser::FastMtR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(StatusRespone, _impl_.status_array_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // repeated .prpc.TorrentStatus status_array = 1;
+    {PROTOBUF_FIELD_OFFSET(StatusRespone, _impl_.status_array_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::TorrentStatus>()},
+  }}, {{
+  }},
+};
 
 ::uint8_t* StatusRespone::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.StatusRespone)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
   // repeated .prpc.TorrentStatus status_array = 1;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_status_array_size()); i < n; i++) {
-    const auto& repfield = this->_internal_status_array(i);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+    const auto& repfield = this->_internal_status_array().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
         InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.StatusRespone)
   return target;
@@ -2116,22 +2098,21 @@ failure:
 
   // repeated .prpc.TorrentStatus status_array = 1;
   total_size += 1UL * this->_internal_status_array_size();
-  for (const auto& msg : this->_impl_.status_array_) {
+  for (const auto& msg : this->_internal_status_array()) {
     total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
   }
-
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData StatusRespone::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData StatusRespone::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     StatusRespone::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*StatusRespone::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*StatusRespone::GetClassData() const { return &_class_data_; }
 
 
-void StatusRespone::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void StatusRespone::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<StatusRespone*>(&to_msg);
   auto& from = static_cast<const StatusRespone&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.StatusRespone)
@@ -2139,8 +2120,8 @@ void StatusRespone::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.status_array_.MergeFrom(from._impl_.status_array_);
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_mutable_status_array()->MergeFrom(from._internal_status_array());
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void StatusRespone::CopyFrom(const StatusRespone& from) {
@@ -2150,7 +2131,7 @@ void StatusRespone::CopyFrom(const StatusRespone& from) {
   MergeFrom(from);
 }
 
-bool StatusRespone::IsInitialized() const {
+PROTOBUF_NOINLINE bool StatusRespone::IsInitialized() const {
   return true;
 }
 
@@ -2160,7 +2141,7 @@ void StatusRespone::InternalSwap(StatusRespone* other) {
   _impl_.status_array_.InternalSwap(&other->_impl_.status_array_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata StatusRespone::GetMetadata() const {
+::google::protobuf::Metadata StatusRespone::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[5]);
@@ -2171,118 +2152,109 @@ class TorrentInfoReq::_Internal {
  public:
 };
 
-TorrentInfoReq::TorrentInfoReq(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+TorrentInfoReq::TorrentInfoReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.TorrentInfoReq)
 }
-TorrentInfoReq::TorrentInfoReq(const TorrentInfoReq& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  TorrentInfoReq* const _this = this; (void)_this;
+TorrentInfoReq::TorrentInfoReq(const TorrentInfoReq& from) : ::google::protobuf::Message() {
+  TorrentInfoReq* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){from._impl_.info_hash_}
-    , /*decltype(_impl_._cached_size_)*/{}};
+      decltype(_impl_.info_hash_){from._impl_.info_hash_},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
 
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:prpc.TorrentInfoReq)
 }
-
 inline void TorrentInfoReq::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){arena}
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_.info_hash_){arena},
+      /*decltype(_impl_._cached_size_)*/ {},
   };
 }
-
 TorrentInfoReq::~TorrentInfoReq() {
   // @@protoc_insertion_point(destructor:prpc.TorrentInfoReq)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void TorrentInfoReq::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.info_hash_.~RepeatedPtrField();
 }
-
 void TorrentInfoReq::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void TorrentInfoReq::Clear() {
+PROTOBUF_NOINLINE void TorrentInfoReq::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.TorrentInfoReq)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.info_hash_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_mutable_info_hash()->Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* TorrentInfoReq::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // repeated .prpc.InfoHash info_hash = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_info_hash(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* TorrentInfoReq::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> TorrentInfoReq::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_TorrentInfoReq_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // repeated .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfoReq, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // repeated .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfoReq, _impl_.info_hash_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+  }},
+};
 
 ::uint8_t* TorrentInfoReq::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.TorrentInfoReq)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
   // repeated .prpc.InfoHash info_hash = 1;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_info_hash_size()); i < n; i++) {
-    const auto& repfield = this->_internal_info_hash(i);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+    const auto& repfield = this->_internal_info_hash().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
         InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.TorrentInfoReq)
   return target;
@@ -2298,22 +2270,21 @@ failure:
 
   // repeated .prpc.InfoHash info_hash = 1;
   total_size += 1UL * this->_internal_info_hash_size();
-  for (const auto& msg : this->_impl_.info_hash_) {
+  for (const auto& msg : this->_internal_info_hash()) {
     total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
   }
-
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData TorrentInfoReq::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData TorrentInfoReq::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     TorrentInfoReq::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*TorrentInfoReq::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*TorrentInfoReq::GetClassData() const { return &_class_data_; }
 
 
-void TorrentInfoReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void TorrentInfoReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<TorrentInfoReq*>(&to_msg);
   auto& from = static_cast<const TorrentInfoReq&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.TorrentInfoReq)
@@ -2321,8 +2292,8 @@ void TorrentInfoReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const :
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.info_hash_.MergeFrom(from._impl_.info_hash_);
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_mutable_info_hash()->MergeFrom(from._internal_info_hash());
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void TorrentInfoReq::CopyFrom(const TorrentInfoReq& from) {
@@ -2332,7 +2303,7 @@ void TorrentInfoReq::CopyFrom(const TorrentInfoReq& from) {
   MergeFrom(from);
 }
 
-bool TorrentInfoReq::IsInitialized() const {
+PROTOBUF_NOINLINE bool TorrentInfoReq::IsInitialized() const {
   return true;
 }
 
@@ -2342,7 +2313,7 @@ void TorrentInfoReq::InternalSwap(TorrentInfoReq* other) {
   _impl_.info_hash_.InternalSwap(&other->_impl_.info_hash_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata TorrentInfoReq::GetMetadata() const {
+::google::protobuf::Metadata TorrentInfoReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[6]);
@@ -2353,28 +2324,24 @@ class BtFile::_Internal {
  public:
 };
 
-BtFile::BtFile(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+BtFile::BtFile(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.BtFile)
 }
-BtFile::BtFile(const BtFile& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  BtFile* const _this = this; (void)_this;
+BtFile::BtFile(const BtFile& from) : ::google::protobuf::Message() {
+  BtFile* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.name_) {}
-
-    , decltype(_impl_.index_) {}
-
-    , decltype(_impl_.st_) {}
-
-    , decltype(_impl_.total_size_) {}
-
-    , decltype(_impl_.downloaded_) {}
-
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+      decltype(_impl_.name_){},
+      decltype(_impl_.index_){},
+      decltype(_impl_.st_){},
+      decltype(_impl_.total_size_){},
+      decltype(_impl_.downloaded_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
   _impl_.name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
         _impl_.name_.Set("", GetArenaForAllocation());
@@ -2385,49 +2352,38 @@ BtFile::BtFile(const BtFile& from)
   ::memcpy(&_impl_.index_, &from._impl_.index_,
     static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.downloaded_) -
     reinterpret_cast<char*>(&_impl_.index_)) + sizeof(_impl_.downloaded_));
+
   // @@protoc_insertion_point(copy_constructor:prpc.BtFile)
 }
-
 inline void BtFile::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.name_) {}
-
-    , decltype(_impl_.index_) { 0 }
-
-    , decltype(_impl_.st_) { 0 }
-
-    , decltype(_impl_.total_size_) { ::int64_t{0} }
-
-    , decltype(_impl_.downloaded_) { ::int64_t{0} }
-
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_.name_){},
+      decltype(_impl_.index_){0},
+      decltype(_impl_.st_){0},
+      decltype(_impl_.total_size_){::int64_t{0}},
+      decltype(_impl_.downloaded_){::int64_t{0}},
+      /*decltype(_impl_._cached_size_)*/ {},
   };
   _impl_.name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
         _impl_.name_.Set("", GetArenaForAllocation());
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 BtFile::~BtFile() {
   // @@protoc_insertion_point(destructor:prpc.BtFile)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void BtFile::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.name_.Destroy();
 }
-
 void BtFile::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void BtFile::Clear() {
+PROTOBUF_NOINLINE void BtFile::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.BtFile)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -2437,105 +2393,96 @@ void BtFile::Clear() {
   ::memset(&_impl_.index_, 0, static_cast<::size_t>(
       reinterpret_cast<char*>(&_impl_.downloaded_) -
       reinterpret_cast<char*>(&_impl_.index_)) + sizeof(_impl_.downloaded_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* BtFile::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string name = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "prpc.BtFile.name"));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // int32 index = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 16)) {
-          _impl_.index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // .prpc.BtFile.State st = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 24)) {
-          ::uint32_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-          _internal_set_st(static_cast<::prpc::BtFile_State>(val));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // int64 total_size = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 32)) {
-          _impl_.total_size_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // int64 downloaded = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 40)) {
-          _impl_.downloaded_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* BtFile::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 5, 0, 24, 2> BtFile::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    5, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967264,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    5,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_BtFile_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string name = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.name_)}},
+    // int32 index = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(BtFile, _impl_.index_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.index_)}},
+    // .prpc.BtFile.State st = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(BtFile, _impl_.st_), 63>(),
+     {24, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.st_)}},
+    // int64 total_size = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(BtFile, _impl_.total_size_), 63>(),
+     {32, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.total_size_)}},
+    // int64 downloaded = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(BtFile, _impl_.downloaded_), 63>(),
+     {40, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.downloaded_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string name = 1;
+    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.name_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // int32 index = 2;
+    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.index_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // .prpc.BtFile.State st = 3;
+    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.st_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
+    // int64 total_size = 4;
+    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.total_size_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+    // int64 downloaded = 5;
+    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.downloaded_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+  }},
+  // no aux_entries
+  {{
+    "\13\4\0\0\0\0\0\0"
+    "prpc.BtFile"
+    "name"
+  }},
+};
 
 ::uint8_t* BtFile::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.BtFile)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
   // string name = 1;
   if (!this->_internal_name().empty()) {
     const std::string& _s = this->_internal_name();
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.BtFile.name");
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.BtFile.name");
     target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // int32 index = 2;
   if (this->_internal_index() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(
-        2, this->_internal_index(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<2>(
+            stream, this->_internal_index(), target);
   }
 
   // .prpc.BtFile.State st = 3;
@@ -2547,21 +2494,22 @@ failure:
 
   // int64 total_size = 4;
   if (this->_internal_total_size() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(
-        4, this->_internal_total_size(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<4>(
+            stream, this->_internal_total_size(), target);
   }
 
   // int64 downloaded = 5;
   if (this->_internal_downloaded() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(
-        5, this->_internal_downloaded(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<5>(
+            stream, this->_internal_downloaded(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.BtFile)
   return target;
@@ -2577,7 +2525,7 @@ failure:
 
   // string name = 1;
   if (!this->_internal_name().empty()) {
-    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                     this->_internal_name());
   }
 
@@ -2608,14 +2556,14 @@ failure:
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData BtFile::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData BtFile::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     BtFile::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*BtFile::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*BtFile::GetClassData() const { return &_class_data_; }
 
 
-void BtFile::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void BtFile::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<BtFile*>(&to_msg);
   auto& from = static_cast<const BtFile&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.BtFile)
@@ -2638,7 +2586,7 @@ void BtFile::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBU
   if (from._internal_downloaded() != 0) {
     _this->_internal_set_downloaded(from._internal_downloaded());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void BtFile::CopyFrom(const BtFile& from) {
@@ -2648,7 +2596,7 @@ void BtFile::CopyFrom(const BtFile& from) {
   MergeFrom(from);
 }
 
-bool BtFile::IsInitialized() const {
+PROTOBUF_NOINLINE bool BtFile::IsInitialized() const {
   return true;
 }
 
@@ -2659,7 +2607,7 @@ void BtFile::InternalSwap(BtFile* other) {
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, lhs_arena,
                                        &other->_impl_.name_, rhs_arena);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+  ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(BtFile, _impl_.downloaded_)
       + sizeof(BtFile::_impl_.downloaded_)
       - PROTOBUF_FIELD_OFFSET(BtFile, _impl_.index_)>(
@@ -2667,7 +2615,7 @@ void BtFile::InternalSwap(BtFile* other) {
           reinterpret_cast<char*>(&other->_impl_.index_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata BtFile::GetMetadata() const {
+::google::protobuf::Metadata BtFile::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[7]);
@@ -2676,41 +2624,41 @@ void BtFile::InternalSwap(BtFile* other) {
 
 class TorrentInfo::_Internal {
  public:
+  using HasBits = decltype(std::declval<TorrentInfo>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_._has_bits_);
   static const ::prpc::InfoHash& info_hash(const TorrentInfo* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
-const ::prpc::InfoHash&
-TorrentInfo::_Internal::info_hash(const TorrentInfo* msg) {
+const ::prpc::InfoHash& TorrentInfo::_Internal::info_hash(const TorrentInfo* msg) {
   return *msg->_impl_.info_hash_;
 }
-TorrentInfo::TorrentInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+TorrentInfo::TorrentInfo(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.TorrentInfo)
 }
-TorrentInfo::TorrentInfo(const TorrentInfo& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  TorrentInfo* const _this = this; (void)_this;
+TorrentInfo::TorrentInfo(const TorrentInfo& from) : ::google::protobuf::Message() {
+  TorrentInfo* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.files_){from._impl_.files_}
-    , decltype(_impl_.name_) {}
-
-    , decltype(_impl_.save_path_) {}
-
-    , decltype(_impl_.resume_data_) {}
-
-    , decltype(_impl_.info_hash_){nullptr}
-    , decltype(_impl_.state_) {}
-
-    , decltype(_impl_.piece_length_) {}
-
-    , decltype(_impl_.total_size_) {}
-
-    , decltype(_impl_.num_pieces_) {}
-
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.files_){from._impl_.files_},
+      decltype(_impl_.name_){},
+      decltype(_impl_.save_path_){},
+      decltype(_impl_.resume_data_){},
+      decltype(_impl_.info_hash_){nullptr},
+      decltype(_impl_.state_){},
+      decltype(_impl_.piece_length_){},
+      decltype(_impl_.total_size_){},
+      decltype(_impl_.num_pieces_){},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
   _impl_.name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
         _impl_.name_.Set("", GetArenaForAllocation());
@@ -2732,35 +2680,29 @@ TorrentInfo::TorrentInfo(const TorrentInfo& from)
   if (!from._internal_resume_data().empty()) {
     _this->_impl_.resume_data_.Set(from._internal_resume_data(), _this->GetArenaForAllocation());
   }
-  if (from._internal_has_info_hash()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
   }
   ::memcpy(&_impl_.state_, &from._impl_.state_,
     static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.num_pieces_) -
     reinterpret_cast<char*>(&_impl_.state_)) + sizeof(_impl_.num_pieces_));
+
   // @@protoc_insertion_point(copy_constructor:prpc.TorrentInfo)
 }
-
 inline void TorrentInfo::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.files_){arena}
-    , decltype(_impl_.name_) {}
-
-    , decltype(_impl_.save_path_) {}
-
-    , decltype(_impl_.resume_data_) {}
-
-    , decltype(_impl_.info_hash_){nullptr}
-    , decltype(_impl_.state_) { 0 }
-
-    , decltype(_impl_.piece_length_) { 0 }
-
-    , decltype(_impl_.total_size_) { ::int64_t{0} }
-
-    , decltype(_impl_.num_pieces_) { 0 }
-
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.files_){arena},
+      decltype(_impl_.name_){},
+      decltype(_impl_.save_path_){},
+      decltype(_impl_.resume_data_){},
+      decltype(_impl_.info_hash_){nullptr},
+      decltype(_impl_.state_){0},
+      decltype(_impl_.piece_length_){0},
+      decltype(_impl_.total_size_){::int64_t{0}},
+      decltype(_impl_.num_pieces_){0},
   };
   _impl_.name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -2775,16 +2717,11 @@ inline void TorrentInfo::SharedCtor(::_pb::Arena* arena) {
         _impl_.resume_data_.Set("", GetArenaForAllocation());
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 TorrentInfo::~TorrentInfo() {
   // @@protoc_insertion_point(destructor:prpc.TorrentInfo)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void TorrentInfo::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.files_.~RepeatedPtrField();
@@ -2793,161 +2730,140 @@ inline void TorrentInfo::SharedDtor() {
   _impl_.resume_data_.Destroy();
   if (this != internal_default_instance()) delete _impl_.info_hash_;
 }
-
 void TorrentInfo::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void TorrentInfo::Clear() {
+PROTOBUF_NOINLINE void TorrentInfo::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.TorrentInfo)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.files_.Clear();
+  _internal_mutable_files()->Clear();
   _impl_.name_.ClearToEmpty();
   _impl_.save_path_.ClearToEmpty();
   _impl_.resume_data_.ClearToEmpty();
-  if (GetArenaForAllocation() == nullptr && _impl_.info_hash_ != nullptr) {
-    delete _impl_.info_hash_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
   }
-  _impl_.info_hash_ = nullptr;
   ::memset(&_impl_.state_, 0, static_cast<::size_t>(
       reinterpret_cast<char*>(&_impl_.num_pieces_) -
       reinterpret_cast<char*>(&_impl_.state_)) + sizeof(_impl_.num_pieces_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* TorrentInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // .prpc.InfoHash info_hash = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_info_hash(), ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // string name = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "prpc.TorrentInfo.name"));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // .prpc.BtStateEnum state = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 24)) {
-          ::uint32_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-          _internal_set_state(static_cast<::prpc::BtStateEnum>(val));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // string save_path = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 34)) {
-          auto str = _internal_mutable_save_path();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "prpc.TorrentInfo.save_path"));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // repeated .prpc.BtFile files = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 42)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_files(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<42>(ptr));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // int64 total_size = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 48)) {
-          _impl_.total_size_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // int32 piece_length = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 56)) {
-          _impl_.piece_length_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // int32 num_pieces = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 64)) {
-          _impl_.num_pieces_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // bytes resume_data = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 74)) {
-          auto str = _internal_mutable_resume_data();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* TorrentInfo::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<4, 9, 2, 46, 2> TorrentInfo::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_._has_bits_),
+    0, // no _extensions_
+    9, 120,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294966784,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    9,  // num_field_entries
+    2,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_TorrentInfo_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.info_hash_)}},
+    // string name = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.name_)}},
+    // .prpc.BtStateEnum state = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TorrentInfo, _impl_.state_), 63>(),
+     {24, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.state_)}},
+    // string save_path = 4;
+    {::_pbi::TcParser::FastUS1,
+     {34, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.save_path_)}},
+    // repeated .prpc.BtFile files = 5;
+    {::_pbi::TcParser::FastMtR1,
+     {42, 63, 1, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.files_)}},
+    // int64 total_size = 6;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TorrentInfo, _impl_.total_size_), 63>(),
+     {48, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.total_size_)}},
+    // int32 piece_length = 7;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TorrentInfo, _impl_.piece_length_), 63>(),
+     {56, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.piece_length_)}},
+    // int32 num_pieces = 8;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TorrentInfo, _impl_.num_pieces_), 63>(),
+     {64, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.num_pieces_)}},
+    // bytes resume_data = 9;
+    {::_pbi::TcParser::FastBS1,
+     {74, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.resume_data_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // string name = 2;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.name_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // .prpc.BtStateEnum state = 3;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.state_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
+    // string save_path = 4;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.save_path_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // repeated .prpc.BtFile files = 5;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.files_), -1, 1,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    // int64 total_size = 6;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.total_size_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+    // int32 piece_length = 7;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.piece_length_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // int32 num_pieces = 8;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.num_pieces_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // bytes resume_data = 9;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.resume_data_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBytes | ::_fl::kRepAString)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+    {::_pbi::TcParser::GetTable<::prpc::BtFile>()},
+  }}, {{
+    "\20\0\4\0\11\0\0\0\0\0\0\0\0\0\0\0"
+    "prpc.TorrentInfo"
+    "name"
+    "save_path"
+  }},
+};
 
 ::uint8_t* TorrentInfo::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.TorrentInfo)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::info_hash(this),
         _Internal::info_hash(this).GetCachedSize(), target, stream);
   }
@@ -2955,8 +2871,8 @@ failure:
   // string name = 2;
   if (!this->_internal_name().empty()) {
     const std::string& _s = this->_internal_name();
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.TorrentInfo.name");
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.TorrentInfo.name");
     target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
@@ -2970,38 +2886,38 @@ failure:
   // string save_path = 4;
   if (!this->_internal_save_path().empty()) {
     const std::string& _s = this->_internal_save_path();
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "prpc.TorrentInfo.save_path");
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.TorrentInfo.save_path");
     target = stream->WriteStringMaybeAliased(4, _s, target);
   }
 
   // repeated .prpc.BtFile files = 5;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_files_size()); i < n; i++) {
-    const auto& repfield = this->_internal_files(i);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+    const auto& repfield = this->_internal_files().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
         InternalWriteMessage(5, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   // int64 total_size = 6;
   if (this->_internal_total_size() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(
-        6, this->_internal_total_size(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<6>(
+            stream, this->_internal_total_size(), target);
   }
 
   // int32 piece_length = 7;
   if (this->_internal_piece_length() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(
-        7, this->_internal_piece_length(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<7>(
+            stream, this->_internal_piece_length(), target);
   }
 
   // int32 num_pieces = 8;
   if (this->_internal_num_pieces() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(
-        8, this->_internal_num_pieces(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<8>(
+            stream, this->_internal_num_pieces(), target);
   }
 
   // bytes resume_data = 9;
@@ -3011,8 +2927,9 @@ failure:
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.TorrentInfo)
   return target;
@@ -3028,33 +2945,33 @@ failure:
 
   // repeated .prpc.BtFile files = 5;
   total_size += 1UL * this->_internal_files_size();
-  for (const auto& msg : this->_impl_.files_) {
+  for (const auto& msg : this->_internal_files()) {
     total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
   }
-
   // string name = 2;
   if (!this->_internal_name().empty()) {
-    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                     this->_internal_name());
   }
 
   // string save_path = 4;
   if (!this->_internal_save_path().empty()) {
-    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                     this->_internal_save_path());
   }
 
   // bytes resume_data = 9;
   if (!this->_internal_resume_data().empty()) {
-    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::BytesSize(
                                     this->_internal_resume_data());
   }
 
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
         *_impl_.info_hash_);
   }
 
@@ -3085,14 +3002,14 @@ failure:
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData TorrentInfo::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData TorrentInfo::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     TorrentInfo::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*TorrentInfo::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*TorrentInfo::GetClassData() const { return &_class_data_; }
 
 
-void TorrentInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void TorrentInfo::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<TorrentInfo*>(&to_msg);
   auto& from = static_cast<const TorrentInfo&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.TorrentInfo)
@@ -3100,7 +3017,7 @@ void TorrentInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.files_.MergeFrom(from._impl_.files_);
+  _this->_internal_mutable_files()->MergeFrom(from._internal_files());
   if (!from._internal_name().empty()) {
     _this->_internal_set_name(from._internal_name());
   }
@@ -3110,7 +3027,7 @@ void TorrentInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
   if (!from._internal_resume_data().empty()) {
     _this->_internal_set_resume_data(from._internal_resume_data());
   }
-  if (from._internal_has_info_hash()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
         from._internal_info_hash());
   }
@@ -3126,7 +3043,7 @@ void TorrentInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
   if (from._internal_num_pieces() != 0) {
     _this->_internal_set_num_pieces(from._internal_num_pieces());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void TorrentInfo::CopyFrom(const TorrentInfo& from) {
@@ -3136,7 +3053,7 @@ void TorrentInfo::CopyFrom(const TorrentInfo& from) {
   MergeFrom(from);
 }
 
-bool TorrentInfo::IsInitialized() const {
+PROTOBUF_NOINLINE bool TorrentInfo::IsInitialized() const {
   return true;
 }
 
@@ -3145,6 +3062,7 @@ void TorrentInfo::InternalSwap(TorrentInfo* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   _impl_.files_.InternalSwap(&other->_impl_.files_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, lhs_arena,
                                        &other->_impl_.name_, rhs_arena);
@@ -3152,7 +3070,7 @@ void TorrentInfo::InternalSwap(TorrentInfo* other) {
                                        &other->_impl_.save_path_, rhs_arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.resume_data_, lhs_arena,
                                        &other->_impl_.resume_data_, rhs_arena);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+  ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.num_pieces_)
       + sizeof(TorrentInfo::_impl_.num_pieces_)
       - PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.info_hash_)>(
@@ -3160,7 +3078,7 @@ void TorrentInfo::InternalSwap(TorrentInfo* other) {
           reinterpret_cast<char*>(&other->_impl_.info_hash_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata TorrentInfo::GetMetadata() const {
+::google::protobuf::Metadata TorrentInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[8]);
@@ -3169,125 +3087,131 @@ void TorrentInfo::InternalSwap(TorrentInfo* other) {
 
 class TorrentInfoRes::_Internal {
  public:
+  using HasBits = decltype(std::declval<TorrentInfoRes>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(TorrentInfoRes, _impl_._has_bits_);
   static const ::prpc::TorrentInfo& ti(const TorrentInfoRes* msg);
+  static void set_has_ti(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
-const ::prpc::TorrentInfo&
-TorrentInfoRes::_Internal::ti(const TorrentInfoRes* msg) {
+const ::prpc::TorrentInfo& TorrentInfoRes::_Internal::ti(const TorrentInfoRes* msg) {
   return *msg->_impl_.ti_;
 }
-TorrentInfoRes::TorrentInfoRes(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+TorrentInfoRes::TorrentInfoRes(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.TorrentInfoRes)
 }
-TorrentInfoRes::TorrentInfoRes(const TorrentInfoRes& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  TorrentInfoRes* const _this = this; (void)_this;
+TorrentInfoRes::TorrentInfoRes(const TorrentInfoRes& from) : ::google::protobuf::Message() {
+  TorrentInfoRes* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.ti_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_ti()) {
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.ti_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.ti_ = new ::prpc::TorrentInfo(*from._impl_.ti_);
   }
+
   // @@protoc_insertion_point(copy_constructor:prpc.TorrentInfoRes)
 }
-
 inline void TorrentInfoRes::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.ti_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.ti_){nullptr},
   };
 }
-
 TorrentInfoRes::~TorrentInfoRes() {
   // @@protoc_insertion_point(destructor:prpc.TorrentInfoRes)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void TorrentInfoRes::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.ti_;
 }
-
 void TorrentInfoRes::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void TorrentInfoRes::Clear() {
+PROTOBUF_NOINLINE void TorrentInfoRes::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.TorrentInfoRes)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.ti_ != nullptr) {
-    delete _impl_.ti_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.ti_ != nullptr);
+    _impl_.ti_->Clear();
   }
-  _impl_.ti_ = nullptr;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* TorrentInfoRes::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // .prpc.TorrentInfo ti = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_ti(), ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* TorrentInfoRes::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> TorrentInfoRes::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(TorrentInfoRes, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_TorrentInfoRes_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // .prpc.TorrentInfo ti = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(TorrentInfoRes, _impl_.ti_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.TorrentInfo ti = 1;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfoRes, _impl_.ti_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::TorrentInfo>()},
+  }}, {{
+  }},
+};
 
 ::uint8_t* TorrentInfoRes::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.TorrentInfoRes)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .prpc.TorrentInfo ti = 1;
-  if (this->_internal_has_ti()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::ti(this),
         _Internal::ti(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.TorrentInfoRes)
   return target;
@@ -3302,23 +3226,24 @@ failure:
   (void) cached_has_bits;
 
   // .prpc.TorrentInfo ti = 1;
-  if (this->_internal_has_ti()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
         *_impl_.ti_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData TorrentInfoRes::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData TorrentInfoRes::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     TorrentInfoRes::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*TorrentInfoRes::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*TorrentInfoRes::GetClassData() const { return &_class_data_; }
 
 
-void TorrentInfoRes::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void TorrentInfoRes::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<TorrentInfoRes*>(&to_msg);
   auto& from = static_cast<const TorrentInfoRes&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.TorrentInfoRes)
@@ -3326,11 +3251,11 @@ void TorrentInfoRes::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const :
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_ti()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_ti()->::prpc::TorrentInfo::MergeFrom(
         from._internal_ti());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void TorrentInfoRes::CopyFrom(const TorrentInfoRes& from) {
@@ -3340,17 +3265,18 @@ void TorrentInfoRes::CopyFrom(const TorrentInfoRes& from) {
   MergeFrom(from);
 }
 
-bool TorrentInfoRes::IsInitialized() const {
+PROTOBUF_NOINLINE bool TorrentInfoRes::IsInitialized() const {
   return true;
 }
 
 void TorrentInfoRes::InternalSwap(TorrentInfoRes* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   swap(_impl_.ti_, other->_impl_.ti_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata TorrentInfoRes::GetMetadata() const {
+::google::protobuf::Metadata TorrentInfoRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[9]);
@@ -3359,125 +3285,131 @@ void TorrentInfoRes::InternalSwap(TorrentInfoRes* other) {
 
 class RemoveTorrentReq::_Internal {
  public:
+  using HasBits = decltype(std::declval<RemoveTorrentReq>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(RemoveTorrentReq, _impl_._has_bits_);
   static const ::prpc::InfoHash& info_hash(const RemoveTorrentReq* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
-const ::prpc::InfoHash&
-RemoveTorrentReq::_Internal::info_hash(const RemoveTorrentReq* msg) {
+const ::prpc::InfoHash& RemoveTorrentReq::_Internal::info_hash(const RemoveTorrentReq* msg) {
   return *msg->_impl_.info_hash_;
 }
-RemoveTorrentReq::RemoveTorrentReq(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+RemoveTorrentReq::RemoveTorrentReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.RemoveTorrentReq)
 }
-RemoveTorrentReq::RemoveTorrentReq(const RemoveTorrentReq& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  RemoveTorrentReq* const _this = this; (void)_this;
+RemoveTorrentReq::RemoveTorrentReq(const RemoveTorrentReq& from) : ::google::protobuf::Message() {
+  RemoveTorrentReq* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_info_hash()) {
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
   }
+
   // @@protoc_insertion_point(copy_constructor:prpc.RemoveTorrentReq)
 }
-
 inline void RemoveTorrentReq::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
   };
 }
-
 RemoveTorrentReq::~RemoveTorrentReq() {
   // @@protoc_insertion_point(destructor:prpc.RemoveTorrentReq)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void RemoveTorrentReq::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.info_hash_;
 }
-
 void RemoveTorrentReq::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void RemoveTorrentReq::Clear() {
+PROTOBUF_NOINLINE void RemoveTorrentReq::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.RemoveTorrentReq)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.info_hash_ != nullptr) {
-    delete _impl_.info_hash_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
   }
-  _impl_.info_hash_ = nullptr;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* RemoveTorrentReq::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // .prpc.InfoHash info_hash = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_info_hash(), ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* RemoveTorrentReq::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> RemoveTorrentReq::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(RemoveTorrentReq, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_RemoveTorrentReq_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(RemoveTorrentReq, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(RemoveTorrentReq, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+  }},
+};
 
 ::uint8_t* RemoveTorrentReq::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.RemoveTorrentReq)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::info_hash(this),
         _Internal::info_hash(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.RemoveTorrentReq)
   return target;
@@ -3492,23 +3424,24 @@ failure:
   (void) cached_has_bits;
 
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
         *_impl_.info_hash_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData RemoveTorrentReq::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData RemoveTorrentReq::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     RemoveTorrentReq::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RemoveTorrentReq::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*RemoveTorrentReq::GetClassData() const { return &_class_data_; }
 
 
-void RemoveTorrentReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void RemoveTorrentReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<RemoveTorrentReq*>(&to_msg);
   auto& from = static_cast<const RemoveTorrentReq&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.RemoveTorrentReq)
@@ -3516,11 +3449,11 @@ void RemoveTorrentReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_info_hash()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
         from._internal_info_hash());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void RemoveTorrentReq::CopyFrom(const RemoveTorrentReq& from) {
@@ -3530,17 +3463,18 @@ void RemoveTorrentReq::CopyFrom(const RemoveTorrentReq& from) {
   MergeFrom(from);
 }
 
-bool RemoveTorrentReq::IsInitialized() const {
+PROTOBUF_NOINLINE bool RemoveTorrentReq::IsInitialized() const {
   return true;
 }
 
 void RemoveTorrentReq::InternalSwap(RemoveTorrentReq* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   swap(_impl_.info_hash_, other->_impl_.info_hash_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata RemoveTorrentReq::GetMetadata() const {
+::google::protobuf::Metadata RemoveTorrentReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[10]);
@@ -3551,26 +3485,27 @@ class RemoveTorrentRes::_Internal {
  public:
 };
 
-RemoveTorrentRes::RemoveTorrentRes(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena) {
+RemoveTorrentRes::RemoveTorrentRes(::google::protobuf::Arena* arena)
+    : ::google::protobuf::internal::ZeroFieldsBase(arena) {
   // @@protoc_insertion_point(arena_constructor:prpc.RemoveTorrentRes)
 }
-RemoveTorrentRes::RemoveTorrentRes(const RemoveTorrentRes& from)
-  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
-  RemoveTorrentRes* const _this = this; (void)_this;
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+RemoveTorrentRes::RemoveTorrentRes(const RemoveTorrentRes& from) : ::google::protobuf::internal::ZeroFieldsBase() {
+  RemoveTorrentRes* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
   // @@protoc_insertion_point(copy_constructor:prpc.RemoveTorrentRes)
 }
 
 
 
 
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData RemoveTorrentRes::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
+const ::google::protobuf::Message::ClassData RemoveTorrentRes::_class_data_ = {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl,
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl,
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RemoveTorrentRes::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*RemoveTorrentRes::GetClassData() const { return &_class_data_; }
 
 
 
@@ -3578,7 +3513,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RemoveTorrentRes::GetClassData
 
 
 
-::PROTOBUF_NAMESPACE_ID::Metadata RemoveTorrentRes::GetMetadata() const {
+::google::protobuf::Metadata RemoveTorrentRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[11]);
@@ -3587,125 +3522,131 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RemoveTorrentRes::GetClassData
 
 class FileProgressReq::_Internal {
  public:
+  using HasBits = decltype(std::declval<FileProgressReq>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(FileProgressReq, _impl_._has_bits_);
   static const ::prpc::InfoHash& info_hash(const FileProgressReq* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
-const ::prpc::InfoHash&
-FileProgressReq::_Internal::info_hash(const FileProgressReq* msg) {
+const ::prpc::InfoHash& FileProgressReq::_Internal::info_hash(const FileProgressReq* msg) {
   return *msg->_impl_.info_hash_;
 }
-FileProgressReq::FileProgressReq(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+FileProgressReq::FileProgressReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.FileProgressReq)
 }
-FileProgressReq::FileProgressReq(const FileProgressReq& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  FileProgressReq* const _this = this; (void)_this;
+FileProgressReq::FileProgressReq(const FileProgressReq& from) : ::google::protobuf::Message() {
+  FileProgressReq* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_info_hash()) {
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
   }
+
   // @@protoc_insertion_point(copy_constructor:prpc.FileProgressReq)
 }
-
 inline void FileProgressReq::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
   };
 }
-
 FileProgressReq::~FileProgressReq() {
   // @@protoc_insertion_point(destructor:prpc.FileProgressReq)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void FileProgressReq::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.info_hash_;
 }
-
 void FileProgressReq::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void FileProgressReq::Clear() {
+PROTOBUF_NOINLINE void FileProgressReq::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.FileProgressReq)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.info_hash_ != nullptr) {
-    delete _impl_.info_hash_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
   }
-  _impl_.info_hash_ = nullptr;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* FileProgressReq::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // .prpc.InfoHash info_hash = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_info_hash(), ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* FileProgressReq::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> FileProgressReq::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(FileProgressReq, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_FileProgressReq_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(FileProgressReq, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(FileProgressReq, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+  }},
+};
 
 ::uint8_t* FileProgressReq::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.FileProgressReq)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::info_hash(this),
         _Internal::info_hash(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.FileProgressReq)
   return target;
@@ -3720,23 +3661,24 @@ failure:
   (void) cached_has_bits;
 
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
         *_impl_.info_hash_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData FileProgressReq::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData FileProgressReq::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     FileProgressReq::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*FileProgressReq::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*FileProgressReq::GetClassData() const { return &_class_data_; }
 
 
-void FileProgressReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void FileProgressReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<FileProgressReq*>(&to_msg);
   auto& from = static_cast<const FileProgressReq&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.FileProgressReq)
@@ -3744,11 +3686,11 @@ void FileProgressReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const 
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_info_hash()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
         from._internal_info_hash());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void FileProgressReq::CopyFrom(const FileProgressReq& from) {
@@ -3758,17 +3700,18 @@ void FileProgressReq::CopyFrom(const FileProgressReq& from) {
   MergeFrom(from);
 }
 
-bool FileProgressReq::IsInitialized() const {
+PROTOBUF_NOINLINE bool FileProgressReq::IsInitialized() const {
   return true;
 }
 
 void FileProgressReq::InternalSwap(FileProgressReq* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   swap(_impl_.info_hash_, other->_impl_.info_hash_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata FileProgressReq::GetMetadata() const {
+::google::protobuf::Metadata FileProgressReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[12]);
@@ -3777,136 +3720,134 @@ void FileProgressReq::InternalSwap(FileProgressReq* other) {
 
 class FileProgressRes::_Internal {
  public:
+  using HasBits = decltype(std::declval<FileProgressRes>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(FileProgressRes, _impl_._has_bits_);
   static const ::prpc::InfoHash& info_hash(const FileProgressRes* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
-const ::prpc::InfoHash&
-FileProgressRes::_Internal::info_hash(const FileProgressRes* msg) {
+const ::prpc::InfoHash& FileProgressRes::_Internal::info_hash(const FileProgressRes* msg) {
   return *msg->_impl_.info_hash_;
 }
-FileProgressRes::FileProgressRes(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+FileProgressRes::FileProgressRes(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.FileProgressRes)
 }
-FileProgressRes::FileProgressRes(const FileProgressRes& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  FileProgressRes* const _this = this; (void)_this;
+FileProgressRes::FileProgressRes(const FileProgressRes& from) : ::google::protobuf::Message() {
+  FileProgressRes* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.files_){from._impl_.files_}
-    , decltype(_impl_.info_hash_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_info_hash()) {
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.files_){from._impl_.files_},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
   }
+
   // @@protoc_insertion_point(copy_constructor:prpc.FileProgressRes)
 }
-
 inline void FileProgressRes::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.files_){arena}
-    , decltype(_impl_.info_hash_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.files_){arena},
+      decltype(_impl_.info_hash_){nullptr},
   };
 }
-
 FileProgressRes::~FileProgressRes() {
   // @@protoc_insertion_point(destructor:prpc.FileProgressRes)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void FileProgressRes::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.files_.~RepeatedPtrField();
   if (this != internal_default_instance()) delete _impl_.info_hash_;
 }
-
 void FileProgressRes::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void FileProgressRes::Clear() {
+PROTOBUF_NOINLINE void FileProgressRes::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.FileProgressRes)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.files_.Clear();
-  if (GetArenaForAllocation() == nullptr && _impl_.info_hash_ != nullptr) {
-    delete _impl_.info_hash_;
+  _internal_mutable_files()->Clear();
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
   }
-  _impl_.info_hash_ = nullptr;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* FileProgressRes::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // .prpc.InfoHash info_hash = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_info_hash(), ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // repeated .prpc.BtFile files = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_files(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* FileProgressRes::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 2, 0, 2> FileProgressRes::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(FileProgressRes, _impl_._has_bits_),
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    2,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_FileProgressRes_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // repeated .prpc.BtFile files = 2;
+    {::_pbi::TcParser::FastMtR1,
+     {18, 63, 1, PROTOBUF_FIELD_OFFSET(FileProgressRes, _impl_.files_)}},
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(FileProgressRes, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(FileProgressRes, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // repeated .prpc.BtFile files = 2;
+    {PROTOBUF_FIELD_OFFSET(FileProgressRes, _impl_.files_), -1, 1,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+    {::_pbi::TcParser::GetTable<::prpc::BtFile>()},
+  }}, {{
+  }},
+};
 
 ::uint8_t* FileProgressRes::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.FileProgressRes)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::info_hash(this),
         _Internal::info_hash(this).GetCachedSize(), target, stream);
   }
@@ -3914,14 +3855,15 @@ failure:
   // repeated .prpc.BtFile files = 2;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_files_size()); i < n; i++) {
-    const auto& repfield = this->_internal_files(i);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+    const auto& repfield = this->_internal_files().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
         InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.FileProgressRes)
   return target;
@@ -3937,29 +3879,29 @@ failure:
 
   // repeated .prpc.BtFile files = 2;
   total_size += 1UL * this->_internal_files_size();
-  for (const auto& msg : this->_impl_.files_) {
+  for (const auto& msg : this->_internal_files()) {
     total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
   }
-
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
         *_impl_.info_hash_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData FileProgressRes::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData FileProgressRes::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     FileProgressRes::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*FileProgressRes::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*FileProgressRes::GetClassData() const { return &_class_data_; }
 
 
-void FileProgressRes::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void FileProgressRes::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<FileProgressRes*>(&to_msg);
   auto& from = static_cast<const FileProgressRes&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.FileProgressRes)
@@ -3967,12 +3909,12 @@ void FileProgressRes::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const 
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.files_.MergeFrom(from._impl_.files_);
-  if (from._internal_has_info_hash()) {
+  _this->_internal_mutable_files()->MergeFrom(from._internal_files());
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
         from._internal_info_hash());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void FileProgressRes::CopyFrom(const FileProgressRes& from) {
@@ -3982,18 +3924,19 @@ void FileProgressRes::CopyFrom(const FileProgressRes& from) {
   MergeFrom(from);
 }
 
-bool FileProgressRes::IsInitialized() const {
+PROTOBUF_NOINLINE bool FileProgressRes::IsInitialized() const {
   return true;
 }
 
 void FileProgressRes::InternalSwap(FileProgressRes* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   _impl_.files_.InternalSwap(&other->_impl_.files_);
   swap(_impl_.info_hash_, other->_impl_.info_hash_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata FileProgressRes::GetMetadata() const {
+::google::protobuf::Metadata FileProgressRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[13]);
@@ -4004,26 +3947,27 @@ class FileCompletedReq::_Internal {
  public:
 };
 
-FileCompletedReq::FileCompletedReq(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena) {
+FileCompletedReq::FileCompletedReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::internal::ZeroFieldsBase(arena) {
   // @@protoc_insertion_point(arena_constructor:prpc.FileCompletedReq)
 }
-FileCompletedReq::FileCompletedReq(const FileCompletedReq& from)
-  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
-  FileCompletedReq* const _this = this; (void)_this;
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+FileCompletedReq::FileCompletedReq(const FileCompletedReq& from) : ::google::protobuf::internal::ZeroFieldsBase() {
+  FileCompletedReq* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
   // @@protoc_insertion_point(copy_constructor:prpc.FileCompletedReq)
 }
 
 
 
 
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData FileCompletedReq::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
+const ::google::protobuf::Message::ClassData FileCompletedReq::_class_data_ = {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl,
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl,
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*FileCompletedReq::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*FileCompletedReq::GetClassData() const { return &_class_data_; }
 
 
 
@@ -4031,7 +3975,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*FileCompletedReq::GetClassData
 
 
 
-::PROTOBUF_NAMESPACE_ID::Metadata FileCompletedReq::GetMetadata() const {
+::google::protobuf::Metadata FileCompletedReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[14]);
@@ -4040,147 +3984,148 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*FileCompletedReq::GetClassData
 
 class FileCompletedRes::_Internal {
  public:
+  using HasBits = decltype(std::declval<FileCompletedRes>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(FileCompletedRes, _impl_._has_bits_);
   static const ::prpc::InfoHash& info_hash(const FileCompletedRes* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
-const ::prpc::InfoHash&
-FileCompletedRes::_Internal::info_hash(const FileCompletedRes* msg) {
+const ::prpc::InfoHash& FileCompletedRes::_Internal::info_hash(const FileCompletedRes* msg) {
   return *msg->_impl_.info_hash_;
 }
-FileCompletedRes::FileCompletedRes(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+FileCompletedRes::FileCompletedRes(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.FileCompletedRes)
 }
-FileCompletedRes::FileCompletedRes(const FileCompletedRes& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  FileCompletedRes* const _this = this; (void)_this;
+FileCompletedRes::FileCompletedRes(const FileCompletedRes& from) : ::google::protobuf::Message() {
+  FileCompletedRes* const _this = this;
+  (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){nullptr}
-    , decltype(_impl_.file_index_) {}
-
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_info_hash()) {
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
+      decltype(_impl_.file_index_){},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
   }
   _this->_impl_.file_index_ = from._impl_.file_index_;
+
   // @@protoc_insertion_point(copy_constructor:prpc.FileCompletedRes)
 }
-
 inline void FileCompletedRes::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){nullptr}
-    , decltype(_impl_.file_index_) { 0 }
-
-    , /*decltype(_impl_._cached_size_)*/{}
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
+      decltype(_impl_.file_index_){0},
   };
 }
-
 FileCompletedRes::~FileCompletedRes() {
   // @@protoc_insertion_point(destructor:prpc.FileCompletedRes)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void FileCompletedRes::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.info_hash_;
 }
-
 void FileCompletedRes::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void FileCompletedRes::Clear() {
+PROTOBUF_NOINLINE void FileCompletedRes::Clear() {
 // @@protoc_insertion_point(message_clear_start:prpc.FileCompletedRes)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.info_hash_ != nullptr) {
-    delete _impl_.info_hash_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
   }
-  _impl_.info_hash_ = nullptr;
   _impl_.file_index_ = 0;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* FileCompletedRes::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // .prpc.InfoHash info_hash = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_info_hash(), ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      // int32 file_index = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 16)) {
-          _impl_.file_index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else {
-          goto handle_unusual;
-        }
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* FileCompletedRes::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 1, 0, 2> FileCompletedRes::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(FileCompletedRes, _impl_._has_bits_),
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_FileCompletedRes_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // int32 file_index = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(FileCompletedRes, _impl_.file_index_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(FileCompletedRes, _impl_.file_index_)}},
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(FileCompletedRes, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(FileCompletedRes, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // int32 file_index = 2;
+    {PROTOBUF_FIELD_OFFSET(FileCompletedRes, _impl_.file_index_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+  }},
+};
 
 ::uint8_t* FileCompletedRes::_InternalSerialize(
-    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:prpc.FileCompletedRes)
   ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  (void)cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::info_hash(this),
         _Internal::info_hash(this).GetCachedSize(), target, stream);
   }
 
   // int32 file_index = 2;
   if (this->_internal_file_index() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(
-        2, this->_internal_file_index(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<2>(
+            stream, this->_internal_file_index(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:prpc.FileCompletedRes)
   return target;
@@ -4195,9 +4140,10 @@ failure:
   (void) cached_has_bits;
 
   // .prpc.InfoHash info_hash = 1;
-  if (this->_internal_has_info_hash()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
         *_impl_.info_hash_);
   }
 
@@ -4210,14 +4156,14 @@ failure:
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData FileCompletedRes::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+const ::google::protobuf::Message::ClassData FileCompletedRes::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     FileCompletedRes::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*FileCompletedRes::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*FileCompletedRes::GetClassData() const { return &_class_data_; }
 
 
-void FileCompletedRes::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void FileCompletedRes::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<FileCompletedRes*>(&to_msg);
   auto& from = static_cast<const FileCompletedRes&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:prpc.FileCompletedRes)
@@ -4225,14 +4171,14 @@ void FileCompletedRes::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_info_hash()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
         from._internal_info_hash());
   }
   if (from._internal_file_index() != 0) {
     _this->_internal_set_file_index(from._internal_file_index());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void FileCompletedRes::CopyFrom(const FileCompletedRes& from) {
@@ -4242,14 +4188,15 @@ void FileCompletedRes::CopyFrom(const FileCompletedRes& from) {
   MergeFrom(from);
 }
 
-bool FileCompletedRes::IsInitialized() const {
+PROTOBUF_NOINLINE bool FileCompletedRes::IsInitialized() const {
   return true;
 }
 
 void FileCompletedRes::InternalSwap(FileCompletedRes* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(FileCompletedRes, _impl_.file_index_)
       + sizeof(FileCompletedRes::_impl_.file_index_)
       - PROTOBUF_FIELD_OFFSET(FileCompletedRes, _impl_.info_hash_)>(
@@ -4257,78 +4204,16 @@ void FileCompletedRes::InternalSwap(FileCompletedRes* other) {
           reinterpret_cast<char*>(&other->_impl_.info_hash_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata FileCompletedRes::GetMetadata() const {
+::google::protobuf::Metadata FileCompletedRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[15]);
 }
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace prpc
-PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::prpc::DownloadRequest*
-Arena::CreateMaybeMessage< ::prpc::DownloadRequest >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::DownloadRequest >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::InfoHash*
-Arena::CreateMaybeMessage< ::prpc::InfoHash >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::InfoHash >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::DownloadRespone*
-Arena::CreateMaybeMessage< ::prpc::DownloadRespone >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::DownloadRespone >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::StatusRequest*
-Arena::CreateMaybeMessage< ::prpc::StatusRequest >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::StatusRequest >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::TorrentStatus*
-Arena::CreateMaybeMessage< ::prpc::TorrentStatus >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::TorrentStatus >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::StatusRespone*
-Arena::CreateMaybeMessage< ::prpc::StatusRespone >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::StatusRespone >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::TorrentInfoReq*
-Arena::CreateMaybeMessage< ::prpc::TorrentInfoReq >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::TorrentInfoReq >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::BtFile*
-Arena::CreateMaybeMessage< ::prpc::BtFile >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::BtFile >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::TorrentInfo*
-Arena::CreateMaybeMessage< ::prpc::TorrentInfo >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::TorrentInfo >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::TorrentInfoRes*
-Arena::CreateMaybeMessage< ::prpc::TorrentInfoRes >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::TorrentInfoRes >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::RemoveTorrentReq*
-Arena::CreateMaybeMessage< ::prpc::RemoveTorrentReq >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::RemoveTorrentReq >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::RemoveTorrentRes*
-Arena::CreateMaybeMessage< ::prpc::RemoveTorrentRes >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::RemoveTorrentRes >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::FileProgressReq*
-Arena::CreateMaybeMessage< ::prpc::FileProgressReq >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::FileProgressReq >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::FileProgressRes*
-Arena::CreateMaybeMessage< ::prpc::FileProgressRes >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::FileProgressRes >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::FileCompletedReq*
-Arena::CreateMaybeMessage< ::prpc::FileCompletedReq >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::FileCompletedReq >(arena);
-}
-template<> PROTOBUF_NOINLINE ::prpc::FileCompletedRes*
-Arena::CreateMaybeMessage< ::prpc::FileCompletedRes >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::prpc::FileCompletedRes >(arena);
-}
-PROTOBUF_NAMESPACE_CLOSE
+namespace google {
+namespace protobuf {
+}  // namespace protobuf
+}  // namespace google
 // @@protoc_insertion_point(global_scope)
 #include "google/protobuf/port_undef.inc"

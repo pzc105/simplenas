@@ -11,13 +11,15 @@
 #include "google/protobuf/generated_message_reflection.h"
 #include "google/protobuf/reflection_ops.h"
 #include "google/protobuf/wire_format.h"
+#include "google/protobuf/generated_message_tctable_impl.h"
 // @@protoc_insertion_point(includes)
 
 // Must be included last.
 #include "google/protobuf/port_def.inc"
 PROTOBUF_PRAGMA_INIT_SEG
-namespace _pb = ::PROTOBUF_NAMESPACE_ID;
-namespace _pbi = ::PROTOBUF_NAMESPACE_ID::internal;
+namespace _pb = ::google::protobuf;
+namespace _pbi = ::google::protobuf::internal;
+namespace _fl = ::google::protobuf::internal::field_layout;
 namespace google {
 namespace api {
 }  // namespace api
@@ -82,13 +84,15 @@ PROTOBUF_ATTRIBUTE_INIT_PRIORITY2
 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_google_2fapi_2fannotations_2eproto(&descriptor_table_google_2fapi_2fannotations_2eproto);
 namespace google {
 namespace api {
-PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 ::PROTOBUF_NAMESPACE_ID::internal::ExtensionIdentifier< ::PROTOBUF_NAMESPACE_ID::MethodOptions,
-    ::PROTOBUF_NAMESPACE_ID::internal::MessageTypeTraits< ::google::api::HttpRule >, 11, false>
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 ::google::protobuf::internal::ExtensionIdentifier< ::google::protobuf::MethodOptions,
+    ::google::protobuf::internal::MessageTypeTraits< ::google::api::HttpRule >, 11, false>
   http(kHttpFieldNumber, ::google::api::HttpRule::default_instance(), nullptr);
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace api
 }  // namespace google
-PROTOBUF_NAMESPACE_OPEN
-PROTOBUF_NAMESPACE_CLOSE
+namespace google {
+namespace protobuf {
+}  // namespace protobuf
+}  // namespace google
 // @@protoc_insertion_point(global_scope)
 #include "google/protobuf/port_undef.inc"
