@@ -37,7 +37,7 @@ def main():
   global bt_config
   global tls_config
   try:
-    opts, args = getopt.getopt(sys.argv[1:], "", ["git_proxy=", "server_config=", "bt_config=", "tls_config="])
+    opts, args = getopt.getopt(sys.argv[1:], " ", ["git_proxy=", "server_config=", "bt_config=", "tls_config=", "build_myenv="])
   except getopt.GetoptError:
     sys.exit(2)
   for opt, arg in opts:
@@ -49,8 +49,10 @@ def main():
       bt_config = arg
     elif opt == '--tls_config':
       tls_config = arg
-  
-  gen_myenv()
+    elif opt == '--build_myenv' and arg.lower() != "false":
+      build_myenv = True
+  if build_myenv:
+    gen_myenv()
   gen_sn()
 
   os.system("sudo docker run --name sn -p 3000-60000:3000-60000 -it sn")
