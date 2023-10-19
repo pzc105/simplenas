@@ -1,6 +1,5 @@
 FROM ubuntu:22.04
-RUN add-apt-repository ppa:longsleep/golang-backports && \
-    apt update -y && apt install -y
+RUN apt update -y && apt install -y
 RUN apt-get update && apt-get install -y \
     autoconf \
     automake \
@@ -18,6 +17,10 @@ RUN apt-get update && apt-get install -y \
     libboost-all-dev \
     software-properties-common \
     && apt-get clean
+
+RUN add-apt-repository ppa:longsleep/golang-backports && \
+    apt update -y && \
+    apt install golang-go -y
 
 RUN apt-get update && \
     apt-get install -y ca-certificates curl gnupg && \
