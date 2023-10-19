@@ -40,6 +40,7 @@ def main():
     opts, args = getopt.getopt(sys.argv[1:], " ", ["git_proxy=", "server_config=", "bt_config=", "tls_config=", "build_myenv="])
   except getopt.GetoptError:
     sys.exit(2)
+  build_myenv = False
   for opt, arg in opts:
     if opt == '--git_proxy':
       git_proxy = arg
