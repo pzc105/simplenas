@@ -1,22 +1,23 @@
 FROM ubuntu:22.04
-RUN apt update && apt install -y
+RUN add-apt-repository ppa:longsleep/golang-backports && \
+    apt update -y && apt install -y
 RUN apt-get update && apt-get install -y \
-  autoconf \
-  automake \
-  build-essential \
-  curl \
-  g++ \
-  git \
-  libtool \
-  make \
-  pkg-config \
-  unzip \
-  zlib1g-dev \
-  libssl-dev \
-  wget \
-  libboost-all-dev \
-  golang \
-  && apt-get clean
+    autoconf \
+    automake \
+    build-essential \
+    curl \
+    g++ \
+    git \
+    libtool \
+    make \
+    pkg-config \
+    unzip \
+    zlib1g-dev \
+    libssl-dev \
+    wget \
+    libboost-all-dev \
+    software-properties-common \
+    && apt-get clean
 
 RUN apt-get update && \
     apt-get install -y ca-certificates curl gnupg && \
