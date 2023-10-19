@@ -29,12 +29,6 @@ def gen_sn():
   f.close()
   if len(git_proxy) != 0:
     dc.replace("#git_proxy", "RUN git config --global http.proxy {0}".format(git_proxy))
-  dc += "\nCOPY {0} /app".format(server_config)
-  dc += "\nCOPY {0} /app".format(bt_config)
-  dc += "\nCOPY {0}/http.crt /app/tls/".format(tls_config)
-  dc += "\nCOPY {0}/http.key /app/tls/".format(tls_config)
-  dc += "\nCOPY {0}/rpc.crt /app/tls/".format(tls_config)
-  dc += "\nCOPY {0}/rpc.key /app/tls/".format(tls_config)
   gen_docker_image(dc, "sn")
 
 def main():
@@ -58,6 +52,15 @@ def main():
   
   gen_myenv()
   gen_sn()
+
+  os.system("sudo docker run --name sn -p 3000-60000:3000-60000 -it sn")
+  os.system("sudo docker cp {0} sn:/app".format(server_config))
+  os.system("sudo docker cp {0} sn:/app".format(bt_config))
+  os.system("sudo docker cp {0}/http.crt sn:/app/tls".format(tls_config))
+  os.system("sudo docker cp {0}/http.key sn:/app/tls".format(tls_config))
+  os.system("sudo docker cp {0}/rpc.crt sn:/app/tls".format(tls_config))
+  os.system("sudo docker cp {0}/rpc.key sn:/app/tls".format(tls_config))
+
 
 if __name__ == "__main__":
   main()
