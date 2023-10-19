@@ -12,7 +12,7 @@ def gen_docker_image(content, image_name):
   f = open(tmp_dir + "/Dockerfile", "w")
   f.write(content)
   f.close()
-  os.system("sudo docker image built -t {0} {1}".format(image_name, tmp_dir))
+  os.system("sudo docker image build -t {0} {1}".format(image_name, tmp_dir))
 
 
 def gen_myenv():
