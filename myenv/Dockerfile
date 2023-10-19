@@ -11,7 +11,6 @@ RUN apt-fast update && apt-fast install -y \
     autoconf \
     automake \
     build-essential \
-    curl \
     g++ \
     git \
     libtool \
