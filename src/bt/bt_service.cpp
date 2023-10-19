@@ -11,7 +11,7 @@ namespace prpc
 {
   bt_service::bt_service() : _pusher_manager(this)
   {
-    YAML::Node config = pset::setting::read();
+    YAML::Node config = bt::setting::read();
     YAML::Node bt_config = config["bt"];
 
     static unordered_map<string, lt::settings_pack::proxy_type_t> type_map = {
