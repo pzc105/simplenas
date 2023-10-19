@@ -6,7 +6,8 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-  YAML::Node config = bt::setting::read(argc, argv);
+  bt::setting::init(argc, argv);
+  YAML::Node config = bt::setting::read();
   std::string server_address(config["server"]["boundAddress"].as<std::string>());
 
   prpc::BtService::WithAsyncMethod_OnStatus<prpc::bt_service> service;

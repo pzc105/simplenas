@@ -11,7 +11,7 @@ namespace bt
   class setting
   {
   public:
-    static YAML::Node read(int argc, char *argv[])
+    static void init(int argc, char *argv[])
     {
       boost::program_options::options_description opts("all options");
       boost::program_options::variables_map vm;
@@ -26,12 +26,18 @@ namespace bt
         exit(-1);
       }
 
-      std::string file_name = "./bt.yml";
+      m_file_name = "./bt.yml";
       if(vm.count("c"))
       {
-        file_name = vm["c"].as<std::string>();
+        m_file_name = vm["c"].as<std::string>();
       }
-      return YAML::LoadFile(file_name);
     }
+
+    static YAML::Node read()
+    {
+      return YAML::LoadFile(m_file_name);
+    }
+  private:
+    static std::string m_file_name;
   };
 }

@@ -17,6 +17,7 @@ include_directories(./prpc)
 include_directories(./prpc/google/api)
 
 add_executable(bt
+    setting.cpp
     translate.cpp
     bt_service.cpp
     main.cpp)
@@ -56,8 +57,3 @@ target_compile_features(bt
     cxx_relaxed_constexpr
     cxx_variable_templates
 )
-
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/setting.yml ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/setting.yml COPYONLY)
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/local_setting.yml")
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/local_setting.yml ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/local_setting.yml COPYONLY)
-endif()
