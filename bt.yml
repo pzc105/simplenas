@@ -1,0 +1,10 @@
+server:
+  boundAddress: 0.0.0.0:22345
+
+bt:
+  proxy_hostname: 
+  proxy_port: 
+  proxy_type: 
+  upload_rate_limit: 10000000
+  download_rate_limit: 0
+  hashing_threads: 8

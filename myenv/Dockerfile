@@ -45,7 +45,7 @@ RUN apt install mysql-server redis-server -y && \
     service mysql start && \
     service redis-server start
 
-# RUN git config --global http.proxy socks5://192.168.10.241:10808
+#git_proxy
 RUN mkdir /thirdparty
 RUN git clone --recursive https://github.com/protocolbuffers/protobuf.git /thirdparty/protobuf && \
     cd /thirdparty/protobuf && \
