@@ -20,7 +20,7 @@ def gen_myenv():
   dc = f.read()
   f.close()
   if len(git_proxy) != 0:
-    dc.replace("#git_proxy", "RUN git config --global http.proxy={0}".format(git_proxy))
+    dc = dc.replace("#git_proxy", "RUN git config --global http.proxy={0}".format(git_proxy))
   gen_docker_image(dc, "myenv")
 
 def gen_sn():
