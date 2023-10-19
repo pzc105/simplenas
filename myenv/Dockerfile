@@ -37,7 +37,8 @@ RUN apt-fast install -y ca-certificates curl gnupg && \
 
 RUN mkdir -p /tmp/src/cmake && cd /tmp/src/cmake && \
     wget https://cmake.org/files/v3.23/cmake-3.23.0.tar.gz && tar -zxvf cmake-3.23.0.tar.gz && \
-    cd cmake-3.23.0 && ./configure && make -j$(nproc) && make install
+    cd cmake-3.23.0 && ./configure && make -j$(nproc) && make install && \
+    cd .. && rm -rf cmake-3.23.0
 
 RUN apt-fast install mysql-server redis-server -y && \
     sed -i "s/^bind-address/#bind-address/" /etc/mysql/mysql.conf.d/mysqld.cnf && \
