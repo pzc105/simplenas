@@ -2,7 +2,6 @@
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
 
@@ -60,13 +59,11 @@ type MysqlSetting struct {
 
 var GS *Setting = new(Setting)
 
-func Init(configPath string) {
-	file_name := "local_setting.yml"
-	_, err := os.Stat(configPath + "/" + file_name)
-	if err != nil {
-		file_name = "setting.yml"
+func Init(config_file_full_path string) {
+	if len(config_file_full_path) == 0 {
+		config_file_full_path = "./server.yml"
 	}
-	yamlFile, err := ioutil.ReadFile(configPath + "/" + file_name)
+	yamlFile, err := os.ReadFile(config_file_full_path)
 	if err != nil {
 		fmt.Println(err.Error())
 	}

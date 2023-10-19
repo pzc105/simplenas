@@ -4,9 +4,9 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
-  YAML::Node config = pset::setting::read();
+  YAML::Node config = bt::setting::read(argc, argv);
   std::string server_address(config["server"]["boundAddress"].as<std::string>());
 
   prpc::BtService::WithAsyncMethod_OnStatus<prpc::bt_service> service;

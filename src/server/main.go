@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"pnas/db"
 	"pnas/log"
 	"pnas/service"
@@ -8,7 +9,8 @@ import (
 )
 
 func main() {
-	setting.Init(".")
+	var configPath = flag.String("c", "", "path of config file")
+	setting.Init(*configPath)
 	setting.InitDir()
 	log.Init()
 	db.Init()
