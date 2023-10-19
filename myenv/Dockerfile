@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 RUN apt update -y && \
     apt install -y && \
-    apt install software-properties-common aria2 -y && \
+    apt install curl software-properties-common aria2 -y && \
     /bin/bash -c "$(curl -sL https://git.io/vokNn)" && \
     add-apt-repository ppa:apt-fast/stable -y && \
     apt update && \
