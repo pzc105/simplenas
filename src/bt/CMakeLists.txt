@@ -10,7 +10,7 @@ if(Boost_DEBUG)
     endif()
   endforeach()
 endif()
-find_package(Boost REQUIRED)
+find_package(Boost COMPONENTS program_options REQUIRED)
 
 include_directories(./)
 include_directories(./prpc)
@@ -40,7 +40,7 @@ endif()
 find_package(protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
 
-target_link_libraries(bt PRIVATE torrent-rasterbar yaml-cpp)
+target_link_libraries(bt PRIVATE torrent-rasterbar yaml-cpp ${Boost_LIBRARIES})
 
 target_link_libraries(bt PRIVATE gRPC::grpc++_reflection protobuf::libprotobuf)
 
