@@ -9,7 +9,8 @@ RUN git clone --recursive https://github.com/pzc105/simplenas.git /source/simple
     cmake ../.. -Dstatic_runtime=true && \
     make -j$(nproc) && \
     cp ./bin/bt /app/bt
-RUN cd /source/simplenas/src/server && \
+RUN go env -w GOPROXY=https://goproxy.cn,direct && \
+    cd /source/simplenas/src/server && \
     go build && \
     cp ./pnas /app/pnas
 RUN npm install -g pnpm && \
