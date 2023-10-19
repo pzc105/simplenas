@@ -1,6 +1,12 @@
 FROM ubuntu:22.04
 RUN apt update -y && apt install -y
-RUN apt-get update && apt-get install -y \
+    apt install software-properties-common aria2 -y && \
+    /bin/bash -c "$(curl -sL https://git.io/vokNn)" && \
+    add-apt-repository ppa:apt-fast/stable -y && \
+    apt update && \
+    apt install apt-fast
+
+RUN apt-fast update && apt-fast install -y \
     autoconf \
     automake \
     build-essential \
@@ -15,15 +21,14 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     wget \
     libboost-all-dev \
-    software-properties-common \
-    && apt-get clean
+    apt check && \
+    apt clean
 
-RUN add-apt-repository ppa:longsleep/golang-backports && \
-    apt update -y && \
-    apt install golang-go -y
+RUN add-apt-repository -y ppa:longsleep/golang-backports && \
+    apt-fast update -y && \
+    apt-fast install golang-go -y
 
-RUN apt-get update && \
-    apt-get install -y ca-certificates curl gnupg && \
+RUN apt-fast install -y ca-certificates curl gnupg && \
     mkdir -p /etc/apt/keyrings && \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
@@ -34,7 +39,7 @@ RUN mkdir -p /tmp/src/cmake && cd /tmp/src/cmake && \
     wget https://cmake.org/files/v3.23/cmake-3.23.0.tar.gz && tar -zxvf cmake-3.23.0.tar.gz && \
     cd cmake-3.23.0 && ./configure && make -j$(nproc) && make install
 
-RUN apt install mysql-server redis-server -y && \
+RUN apt-fast install mysql-server redis-server -y && \
     sed -i "s/^bind-address/#bind-address/" /etc/mysql/mysql.conf.d/mysqld.cnf && \
     sed -i "/\[mysqld\]/a\bind-address            = 0.0.0.0" /etc/mysql/mysql.conf.d/mysqld.cnf && \
     service mysql start && \

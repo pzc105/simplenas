@@ -40,7 +40,7 @@ def main():
     opts, args = getopt.getopt(sys.argv[1:], " ", ["git_proxy=", "server_config=", "bt_config=", "tls_config=", "build_myenv="])
   except getopt.GetoptError:
     sys.exit(2)
-  build_myenv = False
+  build_myenv = True
   for opt, arg in opts:
     if opt == '--git_proxy':
       git_proxy = arg
@@ -50,8 +50,8 @@ def main():
       bt_config = arg
     elif opt == '--tls_config':
       tls_config = arg
-    elif opt == '--build_myenv' and arg.lower() != "false":
-      build_myenv = True
+    elif opt == '--build_myenv' and (arg.lower() == "false" or arg.lower() == "0"):
+      build_myenv = False
   if build_myenv:
     gen_myenv()
   gen_sn()
