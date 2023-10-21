@@ -5,6 +5,6 @@ bt:
   proxy_hostname: 
   proxy_port: 
   proxy_type: 
-  upload_rate_limit: 0
+  upload_rate_limit: 3145728
   download_rate_limit: 0
   hashing_threads: 8

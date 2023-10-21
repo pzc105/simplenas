@@ -325,10 +325,8 @@ func (ser *CoreService) Login(
 		})
 	}
 
-	if loginInfo.RememberMe {
-		grpc.SendHeader(ctx, metadata.Pairs("Set-Cookie",
-			session.GenSessionTokenCookie(s), "Set-Cookie", session.GenSessionIdCookie(s)))
-	}
+	grpc.SendHeader(ctx, metadata.Pairs("Set-Cookie",
+		session.GenSessionTokenCookie(s), "Set-Cookie", session.GenSessionIdCookie(s)))
 
 	return &prpc.LoginRet{
 		Token: s.Token,
@@ -368,10 +366,9 @@ func (ser *CoreService) FastLogin(
 		UserId:    userInfo.Id,
 	})
 
-	if loginInfo.RememberMe {
-		grpc.SendHeader(ctx, metadata.Pairs("Set-Cookie",
-			session.GenSessionTokenCookie(s), "Set-Cookie", session.GenSessionIdCookie(s)))
-	}
+	grpc.SendHeader(ctx, metadata.Pairs("Set-Cookie",
+		session.GenSessionTokenCookie(s), "Set-Cookie", session.GenSessionIdCookie(s)))
+	
 	return &prpc.LoginRet{
 		Token: s.Token,
 		UserInfo: &prpc.UserInfo{

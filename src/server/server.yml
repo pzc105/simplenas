@@ -1,4 +1,4 @@
-﻿server:
+server:
   domain: pnas.top
   boundIp: 0.0.0.0
   port: 11234
@@ -6,24 +6,24 @@
   webPort: 11236
   crtFile: ../../tls/rpc.crt
   keyFile: ../../tls/rpc.key
-  mediaPath: ./media
+  mediaPath: E:/media
 
 bt:
-  ip: 192.168.2.241
+  ip: 127.0.0.1
   port: 12345
-  savePath: .
+  savePath: D:/bt
 
 log:
   fileName: ./pnas.log
   level: info
 
 redis:
-  ip        : 172.21.249.2
+  ip        : 127.0.0.1
   port      : 6379
   password  : 
 
 mysql:
-  ip        : 172.21.249.2
+  ip        : 127.0.0.1
   port      : 3306
   user      : root
   password  : 123
