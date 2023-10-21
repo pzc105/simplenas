@@ -21,6 +21,7 @@ RUN apt-fast update && apt-fast install -y \
     libssl-dev \
     wget \
     libboost-all-dev \
+    iproute2 \
     apt check && \
     apt clean
 

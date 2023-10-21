@@ -4,14 +4,14 @@ server:
   port: 11234
   restPort: 11235
   webPort: 11236
-  crtFile: ../../tls/rpc.crt
-  keyFile: ../../tls/rpc.key
-  mediaPath: E:/other/media
+  crtFile: ./tls/rpc.crt
+  keyFile: ./tls/rpc.key
+  mediaPath: /app/media
 
 bt:
   ip: 127.0.0.1
   port: 22345
-  savePath: E:/other/bt
+  savePath: /app/bt
 
 log:
   fileName: ./pnas.log
