@@ -81,7 +81,7 @@ def main():
                 cp /source/simplenas/default_folder.png /app/media/poster/ && \
                 cp /source/simplenas/house.png /app/media/poster/'")
     os.system("sudo docker exec {0} /bin/bash -c '\
-  while ! mysqladmin ping -h\"$DB_HOST\" --silent; do \
+  while ! mysqladmin ping -h\"127.0.0.1\" --silent; do \
       sleep 1\
   done'")
     os.system("sudo docker exec {0} /bin/bash -c 'mysql -uroot -p123 < /source/simplenas/src/server/tables.sql'".format(container_name))
