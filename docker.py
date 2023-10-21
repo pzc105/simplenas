@@ -77,7 +77,6 @@ def main():
     os.system("sudo docker cp {0}/rpc.key {1}:/app/tls".format(tls_config, container_name))
     
     os.system("sudo docker exec {0} /bin/bash -c 'service mysql start && service redis-server start'".format(container_name))
-    os.system("sleep 3")
     os.system("sudo docker exec {0} /bin/bash -c \"cd /app && (nohup ./bt && nohup ./pnas &)\"".format(container_name))
     os.system("sudo docker exec {0} /bin/bash -c \"echo 'REACT_APP_RPC_SERVER=https://rpc.pnas105.top:11236' > /source/simplenas/src/frontend/.env.local\"".format(container_name))
     os.system("sudo docker cp ./nginx.conf {0}:/etc/nginx/".format(container_name))
