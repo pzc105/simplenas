@@ -75,10 +75,10 @@ def main():
     os.system("sudo docker cp {0}/http.key {1}:/app/tls".format(tls_config, container_name))
     os.system("sudo docker cp {0}/rpc.crt {1}:/app/tls".format(tls_config, container_name))
     os.system("sudo docker cp {0}/rpc.key {1}:/app/tls".format(tls_config, container_name))
-    os.system("sudo docker exec -it {0} sh -c 'service mysql start && service redis-server start'".format(container_name))
-    os.system("sudo docker exec -it {0} sh -c 'cd /app && ./bt &'".format(container_name))
-    os.system("sudo docker exec -it {0} sh -c 'cd /app && ./pnas &'".format(container_name))
-    os.system("sudo docker exec -it {0} sh -c 'cd /source/simplenas/src/frontend && chmod +x start_unix.sh && ./start_unix.sh -c /app/tls/http.crt -k /app/tls/http.key &'".format(container_name))
+    os.system("sudo docker exec {0} /bin/bash -c 'service mysql start && service redis-server start'".format(container_name))
+    os.system("sudo docker exec {0} /bin/bash -c 'cd /app && ./bt &'".format(container_name))
+    os.system("sudo docker exec {0} /bin/bash -c 'cd /app && ./pnas &'".format(container_name))
+    os.system("sudo docker exec {0} /bin/bash -c 'cd /source/simplenas/src/frontend && chmod +x start_unix.sh && ./start_unix.sh -c /app/tls/http.crt -k /app/tls/http.key &'".format(container_name))
 
 
 if __name__ == "__main__":
