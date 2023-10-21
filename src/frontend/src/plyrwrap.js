@@ -3,8 +3,8 @@ import { Container, Grid, CssBaseline, List, ListItem, Button, Typography, Toolt
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Plyr from 'plyr';
-import 'plyr/dist/plyr.css';
+import Plyr from 'plyr_p';
+import 'plyr_p/dist/plyr.css';
 import Hls from 'hls.js'
 
 import { queryItem, querySubItems, navigateToItem } from './category.js'
