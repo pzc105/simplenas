@@ -16,4 +16,7 @@ RUN go env -w GOPROXY=https://goproxy.cn,direct && \
 RUN npm install -g pnpm && \
     cd /source/simplenas/src/frontend && \
     npm i
-
+RUN mysql -uroot -p123 < /source/simplenas/src/server/tables.sql
+RUN mkdir -p /app/media/poster && \
+    cp /source/simplenas/default_folder.png /app/media/poster/ && \
+    cp /source/simplenas/house.png /app/media/poster/
