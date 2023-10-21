@@ -23,6 +23,8 @@ RUN apt-fast update && apt-fast install -y \
     libboost-all-dev \
     iproute2 \
     net-tools \
+    vim \
+    nginx \
     apt check && \
     apt clean
 

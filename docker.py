@@ -80,7 +80,8 @@ def main():
     os.system("sleep 3")
     os.system("sudo docker exec {0} /bin/bash -c \"cd /app && (nohup ./bt && nohup ./pnas &)\"".format(container_name))
     os.system("sudo docker exec {0} /bin/bash -c \"echo 'REACT_APP_RPC_SERVER=https://rpc.pnas105.top:11236' > /source/simplenas/src/frontend/.env.local\"".format(container_name))
-    os.system("sudo docker exec {0} /bin/bash -c 'cd /source/simplenas/src/frontend && chmod +x start_unix.sh && (nohup ./start_unix.sh -c /app/tls/http.crt -k /app/tls/http.key &)'".format(container_name))
+    os.system("sudo docker cp ./nginx.conf {1}:/etc/nginx/".format(container_name))
+    os.system("sudo docker exec {0} /bin/bash -c 'service nginx restart'".format(container_name))
 
 
 if __name__ == "__main__":
