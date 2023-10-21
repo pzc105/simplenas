@@ -56,13 +56,17 @@ def main():
     gen_myenv()
   gen_sn()
 
-  os.system("sudo docker run --name sn -dti sn")
+  os.system("sudo docker run -p 3000:3000 6881:6881 22345:22345 --name sn -dti sn")
   os.system("sudo docker cp {0} sn:/app".format(server_config))
   os.system("sudo docker cp {0} sn:/app".format(bt_config))
   os.system("sudo docker cp {0}/http.crt sn:/app/tls".format(tls_config))
   os.system("sudo docker cp {0}/http.key sn:/app/tls".format(tls_config))
   os.system("sudo docker cp {0}/rpc.crt sn:/app/tls".format(tls_config))
   os.system("sudo docker cp {0}/rpc.key sn:/app/tls".format(tls_config))
+  os.system("sudo docker exec -it sn sh -c 'service mysql start && service redis-server start'")
+  os.system("sudo docker exec -it sn sh -c 'cd /app && ./bt &'")
+  os.system("sudo docker exec -it sn sh -c 'cd /app && ./pnas &'")
+  os.system("sudo docker exec -it sn sh -c 'cd /source/simplenas/src/frontend && chmod +x start_unix.sh && ./start_unix.sh -c /app/tls/http.crt -k /app/tls/http.key &'")
 
 
 if __name__ == "__main__":
