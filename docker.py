@@ -78,9 +78,9 @@ def main():
     
     os.system("sudo docker exec {0} /bin/bash -c 'service mysql start && service redis-server start'".format(container_name))
     os.system("sleep 3")
-    os.system("sudo docker exec {0} /bin/bash -c \"cd /app && (./bt && ./pnas &)\"".format(container_name))
+    os.system("sudo docker exec {0} /bin/bash -c \"cd /app && (nohup ./bt && ./pnas &)\"".format(container_name))
     os.system("sudo docker exec {0} /bin/bash -c \"echo 'REACT_APP_RPC_SERVER=https://rpc.pnas105.top:11236' > /source/simplenas/src/frontend/.env.local\"".format(container_name))
-    os.system("sudo docker exec {0} /bin/bash -c 'cd /source/simplenas/src/frontend && chmod +x start_unix.sh && ./start_unix.sh -c /app/tls/http.crt -k /app/tls/http.key &'".format(container_name))
+    os.system("sudo docker exec {0} /bin/bash -c 'cd /source/simplenas/src/frontend && chmod +x start_unix.sh && nohup ./start_unix.sh -c /app/tls/http.crt -k /app/tls/http.key &'".format(container_name))
 
 
 if __name__ == "__main__":
