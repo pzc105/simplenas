@@ -15,7 +15,5 @@ RUN go env -w GOPROXY=https://goproxy.cn,direct && \
     cp ./pnas /app/pnas
 RUN npm install -g pnpm && \
     cd /source/simplenas/src/frontend && \
-    npm i && npm run build && \
-    mkdir -p /app/frontend && \
-    cp -rf build/* /app/frontend
+    npm i
 
