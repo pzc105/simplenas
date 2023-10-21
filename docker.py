@@ -56,7 +56,7 @@ def main():
     gen_myenv()
   gen_sn()
 
-  os.system("sudo docker run -p 3000:3000 6881:6881 22345:22345 --name sn -dti sn")
+  os.system("sudo docker run -p 3000:3000 6881:6881 22345:22345 11236:11236 --name sn -dti sn")
   os.system("sudo docker cp {0} sn:/app".format(server_config))
   os.system("sudo docker cp {0} sn:/app".format(bt_config))
   os.system("sudo docker cp {0}/http.crt sn:/app/tls".format(tls_config))
