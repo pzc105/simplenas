@@ -80,6 +80,10 @@ def main():
     os.system("sudo docker exec {0} /bin/bash -c 'mkdir -p /app/media/poster && \
                 cp /source/simplenas/default_folder.png /app/media/poster/ && \
                 cp /source/simplenas/house.png /app/media/poster/'")
+    os.system("sudo docker exec {0} /bin/bash -c '\
+  while ! mysqladmin ping -h\"$DB_HOST\" --silent; do \
+      sleep 1\
+  done'")
     os.system("sudo docker exec {0} /bin/bash -c 'mysql -uroot -p123 < /source/simplenas/src/server/tables.sql'".format(container_name))
     os.system("sudo docker exec {0} /bin/bash -c \"cd /app && (nohup ./bt &) && (nohup ./pnas &)\"".format(container_name))
     os.system("sudo docker exec {0} /bin/bash -c \"echo 'REACT_APP_RPC_SERVER=https://rpc.pnas105.top:11236' > /source/simplenas/src/frontend/.env.local\"".format(container_name))
