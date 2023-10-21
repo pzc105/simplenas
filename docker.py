@@ -65,7 +65,7 @@ def main():
     gen_myenv()
   gen_sn()
 
-  if len(run_container) > 0:
+  if run_container:
     os.system("sudo docker run -p 3000:3000 -p 6881:6881 -p 22345:22345 -p 11236:11236 --name {0} -dti sn".format(container_name))
   
   if init_container:
