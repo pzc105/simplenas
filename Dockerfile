@@ -18,7 +18,7 @@ RUN npm install -g pnpm && \
     npm i
 
 RUN apt-fast install -y && \
-    nvidia-cuda-toolkit && \
+    nvidia-cuda-toolkit \
     libvpl-dev \
     libgsm1-dev \
     libgme-dev \
