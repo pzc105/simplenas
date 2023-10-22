@@ -22,6 +22,7 @@ RUN apt-fast update && apt-fast install -y \
     wget \
     libboost-all-dev \
     iproute2 \
+    netcat \
     net-tools \
     vim \
     nginx \
