@@ -1,4 +1,8 @@
 FROM myenv
+
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN mkdir -p /app && mkdir -p /app/tls
 #git_proxy
 RUN mkdir -p /source
@@ -16,7 +20,6 @@ RUN go env -w GOPROXY=https://goproxy.cn,direct && \
 RUN npm install -g pnpm && \
     cd /source/simplenas/src/frontend && \
     npm i
-
 RUN apt-fast install -y \
     nvidia-cuda-toolkit \
     libvpl-dev \
