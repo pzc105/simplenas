@@ -17,7 +17,7 @@ RUN npm install -g pnpm && \
     cd /source/simplenas/src/frontend && \
     npm i
 
-RUN apt-fast install -y && \
+RUN apt-fast install -y \
     nvidia-cuda-toolkit \
     libvpl-dev \
     libgsm1-dev \
