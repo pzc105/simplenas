@@ -11,7 +11,7 @@ server:
 bt:
   ip: 127.0.0.1
   port: 22345
-  savePath: /app/bt
+  savePath: /app/bt_download
 
 log:
   fileName: ./pnas.log
