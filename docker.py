@@ -92,6 +92,5 @@ def main():
     os.system("sudo docker cp ./nginx.conf {0}:/etc/nginx/".format(container_name))
     os.system("sudo docker exec {0} /bin/bash -c 'service nginx restart'".format(container_name))
 
-# python3 docker.py --git_proxy socks5://192.168.2.77:10808 --tls_config /home/pzc/tls --build_myenv 1 -r -n sn -i
 if __name__ == "__main__":
   main()

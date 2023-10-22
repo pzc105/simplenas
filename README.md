@@ -8,8 +8,6 @@
   * 支持在线聊天室，通过分享的URL，其他用户可以加入到自定义文件夹对应的聊天室中。
   * 支持字幕上传，智能匹配
   * 支持自动适配系统主题
-## Benchmark
-  * 在线聊天室支持1500人同时在线，每人每秒发一次消息。
-    * 测试硬件：
-      * 处理器名称：OctalCore AMD Ryzen 7 5800H, 4228 MHz
-      * 内存：Kingbank	64 GB DDR4-3200 DDR4 SDRAM 
+## Docker
+  * 创建一个目录A, 接着在这个目录下创建2个证书（http.crt http.key和rpc.http rpc.key）
+  * python3 docker.py --tls_config <path to A> --build_myenv 1 -r -n sn -i
