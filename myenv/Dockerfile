@@ -61,15 +61,15 @@ RUN apt-fast install mysql-server redis-server -y && \
     service redis-server start
 
 #git_proxy
-RUN mkdir /thirdparty
-RUN git clone --recursive https://github.com/protocolbuffers/protobuf.git /thirdparty/protobuf && \
-    cd /thirdparty/protobuf && \
-    git switch 25.x && \
-    mkdir cmake/build && \
-    cd cmake/build && \
-    cmake ../.. && \
-    make -j$(nproc) && \
-    make install
+# RUN mkdir /thirdparty
+# RUN git clone --recursive https://github.com/protocolbuffers/protobuf.git /thirdparty/protobuf && \
+#     cd /thirdparty/protobuf && \
+#     git switch 25.x && \
+#     mkdir cmake/build && \
+#     cd cmake/build && \
+#     cmake ../.. && \
+#     make -j$(nproc) && \
+#     make install
 RUN git clone --recursive https://github.com/grpc/grpc.git /thirdparty/grpc && \
     cd /thirdparty/grpc && \
     git switch v1.59.x && \
