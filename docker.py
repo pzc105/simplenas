@@ -66,6 +66,11 @@ def main():
   gen_sn()
 
   if run_container:
+    os.system("distribution=$(. /etc/os-release;echo $ID$VERSION_ID) && \
+              curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - && \
+              curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list && \
+              sudo apt update && sudo apt install -y nvidia-container-toolkit && \
+              sudo service docker restart")
     os.system("sudo docker run --gpus all -p 3000:3000 -p 6881:6881 -p 6881:6881/udp -p 6771:6771 -p 6771:6771/udp -p 22345:22345 -p 11236:11236 --name {0} -dti sn".format(container_name))
   
   if init_container:

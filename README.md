@@ -10,4 +10,4 @@
   * 支持自动适配系统主题
 ## Docker
   * 创建一个目录A, 接着在这个目录下创建2个证书（http.crt http.key和rpc.http rpc.key）
-  * python3 docker.py --tls_config <path to A> --build_myenv 1 -r -n sn -i
+  * python3 docker.py --tls_config <<path to A>> --build_myenv 1 -r -n sn -i
