@@ -56,6 +56,7 @@ RUN apt-fast install -y \
     libass-dev \
     libsdl2-dev \
     libopenmpt-dev \
+    libcodec2-dev \
     nasm \
     doxygen \
     python3 \
