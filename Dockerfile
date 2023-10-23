@@ -64,9 +64,8 @@ RUN apt-fast install -y \
     python3-pip \
     python3-setuptools \
     python3-wheel \
-    python3-tk \
-    && \
-    apt-get clean && \
+    python3-tk 
+RUN apt clean && \
     rm -rf /var/lib/apt/lists
 # RUN pip install pysocks -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
 RUN pip3 install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
