@@ -119,7 +119,8 @@ func Init(config_file_full_path string) {
 						return
 					}
 					fmt.Printf("%s %s\n", event.Name, event.Op)
-					if event.Name == configFileName && (event.Has(fsnotify.Write) || event.Has(fsnotify.Create)) {
+					if (event.Name == configFileName || len(event.Name) > 2 && event.Name[2:] == configFileName) && 
+						(event.Has(fsnotify.Write) || event.Has(fsnotify.Create)) {
 						var s Setting
 						err = yaml.Unmarshal(yamlFile, &s)
 						if err != nil {
