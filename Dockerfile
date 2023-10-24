@@ -94,6 +94,7 @@ RUN cd /thirdparty && \
     apt-fast update && \
     apt-fast -y install cuda-toolkit-12-3 && \
     rm -r cuda-keyring_1.1-1_all.deb
+RUN export PATH="/usr/local/cuda-12.3/bin:$PATH"
 
 RUN apt clean && \
     rm -rf /var/lib/apt/lists
@@ -101,7 +102,7 @@ RUN apt clean && \
 RUN cd /thirdparty && \
     git clone --recursive https://github.com/FFmpeg/FFmpeg.git && \
     cd FFmpeg && \
-    ./configure --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-zlib --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-sdl2 --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxvid --enable-libaom --enable-libopenjpeg --enable-libvpx --enable-libass --enable-libfreetype --enable-libfribidi --enable-libvidstab --enable-libvmaf --enable-libzimg  --enable-cuda-llvm --enable-cuvid --enable-ffnvcodec --enable-nvdec --enable-nvenc --enable-libvpl --enable-libgme --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libtheora --enable-libvo-amrwbenc --enable-libgsm --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-librubberband --enable-gpl --enable-libnpp --enable-cuda-nvcc --enable-nonfree --extra-cflags=-I/usr/include/cuda --extra-ldflags=-L/usr/lib/cuda && \
+    ./configure --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-zlib --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-sdl2 --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxvid --enable-libaom --enable-libopenjpeg --enable-libvpx --enable-libass --enable-libfreetype --enable-libfribidi --enable-libvidstab --enable-libvmaf --enable-libzimg  --enable-cuda-llvm --enable-cuvid --enable-ffnvcodec --enable-nvdec --enable-nvenc --enable-libvpl --enable-libgme --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libtheora --enable-libvo-amrwbenc --enable-libgsm --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-librubberband --enable-gpl --enable-libnpp --enable-cuda-nvcc --enable-nonfree --extra-cflags=-I/usr/local/cuda-12.3/targets/x86_64-linux/include --extra-ldflags=-L/usr/local/cuda-12.3/targets/x86_64-linux/lib --nvccflags="-gencode arch=compute_52,code=sm_52 -O2" && \
     make -j$(nproc) && make install
 
 RUN export LANG=C.UTF-8 && echo "export LANG=C.UTF-8" >> /etc/profile
