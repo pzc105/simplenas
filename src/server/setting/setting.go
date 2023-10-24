@@ -117,11 +117,14 @@ func Init(config_file_full_path string) {
 						return
 					}
 					if event.Has(fsnotify.Write) {
+						var s Setting
+						err = yaml.Unmarshal(yamlFile, &s)
+						if err != nil {
+							continue
+						}
+						setting.Store(&s)
 						onFunsMtx.Lock()
 						for _, f := range onCfgChangeFuns {
-							var s Setting
-							err = yaml.Unmarshal(yamlFile, &s)
-							setting.Store(&s)
 							f()
 						}
 						onFunsMtx.Unlock()
