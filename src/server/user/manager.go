@@ -312,7 +312,7 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 	}
 	for _, i := range params.FileIndexes {
 
-		absVideoFN := setting.GS.Bt.SavePath + "/" + files[i].Name
+		absVideoFN := setting.GS().Bt.SavePath + "/" + files[i].Name
 
 		if (files[i].FileType & bt.FileVideoType) == 0 {
 			continue
@@ -364,7 +364,7 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 				um.genHslRecord[v.Id] = false
 				um.mtx.Unlock()
 			}
-			outDir := setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%d", v.Id)
+			outDir := setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%d", v.Id)
 			audioTracksFN := um.findAudioTrack(params.InfoHash, i)
 
 			um.cudaQueue.TryPut(func() {
@@ -451,7 +451,7 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 
 			go func() {
 				rfileName := fmt.Sprintf("vid_%d.jpg", v.Id)
-				posterFileName := setting.GS.Server.PosterPath + "/" + rfileName
+				posterFileName := setting.GS().Server.PosterPath + "/" + rfileName
 				err := video.GenPoster(&video.GenPosterParams{
 					InputFileName:  absVideoFN,
 					OutputFileName: posterFileName,
@@ -462,7 +462,7 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 			}()
 		} else {
 			rfileName := fmt.Sprintf("vid_%d.jpg", v.Id)
-			posterFileName := setting.GS.Server.PosterPath + "/" + rfileName
+			posterFileName := setting.GS().Server.PosterPath + "/" + rfileName
 			fstate, err := os.Stat(posterFileName)
 			if err == nil && !fstate.IsDir() {
 				item.UpdatePosterPath(rfileName)
@@ -480,7 +480,7 @@ func (um *UserManger) RefreshSubtitle(vid video.ID) error {
 	var fs []string
 	fn := utils.GetFileName(videoFileName)
 	baseName := path.Base(videoFileName)
-	walkPath := path.Dir(setting.GS.Bt.SavePath + "/" + utils.FileNameFormat(videoFileName))
+	walkPath := path.Dir(setting.GS().Bt.SavePath + "/" + utils.FileNameFormat(videoFileName))
 	filepath.Walk(walkPath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			log.Warnf("refresh subtitle err: %v", err)
@@ -503,7 +503,7 @@ func (um *UserManger) RefreshSubtitle(vid video.ID) error {
 	for _, f := range fs {
 		video.GenSubtitle(&video.GenSubtitleOpts{
 			InputFileName: f,
-			OutDir:        setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%d", vid),
+			OutDir:        setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%d", vid),
 			SubtitleName:  utils.GetFileName(f),
 			Format:        "webvtt",
 			Suffix:        "vtt",
@@ -512,7 +512,7 @@ func (um *UserManger) RefreshSubtitle(vid video.ID) error {
 	um.soQueue.TryPut(func() {
 		video.GenSubtitle(&video.GenSubtitleOpts{
 			InputFileName: videoFileName,
-			OutDir:        setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%d", vid),
+			OutDir:        setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%d", vid),
 			SubtitleName:  utils.GetFileName(videoFileName),
 			Format:        "webvtt",
 			Suffix:        "vtt",

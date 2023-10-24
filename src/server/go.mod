@@ -27,6 +27,7 @@ require (
 
 require (
 	github.com/bits-and-blooms/bitset v1.6.0
+	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/gorilla/mux v1.8.0
 	github.com/grafov/m3u8 v0.12.0

@@ -11,8 +11,8 @@ var GREDIS *redis.Client
 
 func initRedis() {
 	GREDIS = redis.NewClient(&redis.Options{
-		Addr:     fmt.Sprintf("%s:%d", setting.GS.Redis.Ip, setting.GS.Redis.Port),
-		Password: setting.GS.Redis.Password,
+		Addr:     fmt.Sprintf("%s:%d", setting.GS().Redis.Ip, setting.GS().Redis.Port),
+		Password: setting.GS().Redis.Password,
 		DB:       0,
 	})
 }

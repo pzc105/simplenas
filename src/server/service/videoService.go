@@ -123,7 +123,7 @@ func (v *VideoService) handlerHlsMasterList(w http.ResponseWriter, r *http.Reque
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	playlistPath := setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%s/master.m3u8", vid)
+	playlistPath := setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%s/master.m3u8", vid)
 	f, err := os.Open(playlistPath)
 	if err != nil {
 		log.Warn(err)
@@ -168,7 +168,7 @@ func (v *VideoService) handlerHlsPlayList(w http.ResponseWriter, r *http.Request
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	playlistPath := setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%s/stream_%s/%s", vid, sid, pn)
+	playlistPath := setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%s/stream_%s/%s", vid, sid, pn)
 	f, err := os.Open(playlistPath)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -214,7 +214,7 @@ func (v *VideoService) handlerHlsSegment(w http.ResponseWriter, r *http.Request)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	segmentPath := setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%s/stream_%s/%s", vid, sid, sg)
+	segmentPath := setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%s/stream_%s/%s", vid, sid, sg)
 	f, err := os.Open(segmentPath)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -232,7 +232,7 @@ func (v *VideoService) handlerSubtitle(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	captionPath := setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%s/%s", vid, cid)
+	captionPath := setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%s/%s", vid, cid)
 	f, err := os.Open(captionPath)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -249,7 +249,7 @@ func (v *VideoService) handlePoster(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	posterPath := setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%s/poster.png", vid)
+	posterPath := setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%s/poster.png", vid)
 	f, err := os.Open(posterPath)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)

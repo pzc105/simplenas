@@ -26,10 +26,10 @@ type BtClient struct {
 }
 
 type btClientOpts struct {
-	onStatus      func(*prpc.StatusRespone)
-	onTorrentInfo func(*prpc.TorrentInfoRes)
-	onFileCompleted   func(*prpc.FileCompletedRes)
-	onConnect     func()
+	onStatus        func(*prpc.StatusRespone)
+	onTorrentInfo   func(*prpc.TorrentInfoRes)
+	onFileCompleted func(*prpc.FileCompletedRes)
+	onConnect       func()
 }
 
 type BtClientOpt interface {
@@ -77,7 +77,7 @@ func WithOnFileCompleted(onFileCompleted func(*prpc.FileCompletedRes)) *funcBtCl
 }
 
 func (bt *BtClient) Init(opts ...BtClientOpt) {
-	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", setting.GS.Bt.Ip, setting.GS.Bt.Port),
+	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", setting.GS().Bt.Ip, setting.GS().Bt.Port),
 		grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Error("failed to connect bt")

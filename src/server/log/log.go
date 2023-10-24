@@ -12,32 +12,30 @@ import (
 var logger *zap.Logger
 var sugarLog *zap.SugaredLogger
 
+func getLogLevel() zapcore.Level {
+	switch setting.GS().Log.Level {
+	case "debug":
+		return zap.DebugLevel
+	case "info":
+		return zap.InfoLevel
+	case "error":
+		return zap.ErrorLevel
+	default:
+		return zap.InfoLevel
+	}
+}
+
 func Init() {
 	// 日志分割
 	hook := lumberjack.Logger{
-		Filename:   setting.GS.Log.FileName, // 日志文件路径，默认 os.TempDir()
-		MaxSize:    10,                      // 每个日志文件保存10M，默认 100M
-		MaxBackups: 100,                     // 保留100个备份，默认不限
-		MaxAge:     7,                       // 保留7天，默认不限
-		Compress:   true,                    // 是否压缩，默认不压缩
+		Filename:   setting.GS().Log.FileName, // 日志文件路径，默认 os.TempDir()
+		MaxSize:    10,                        // 每个日志文件保存10M，默认 100M
+		MaxBackups: 100,                       // 保留100个备份，默认不限
+		MaxAge:     7,                         // 保留7天，默认不限
+		Compress:   true,                      // 是否压缩，默认不压缩
 	}
 	write := zapcore.AddSync(&hook)
-	// 设置日志级别
-	// debug 可以打印出 info debug warn
-	// info  级别可以打印 warn info
-	// warn  只能打印 warn
-	// debug->info->warn->error
-	var level zapcore.Level
-	switch setting.GS.Log.Level {
-	case "debug":
-		level = zap.DebugLevel
-	case "info":
-		level = zap.InfoLevel
-	case "error":
-		level = zap.ErrorLevel
-	default:
-		level = zap.InfoLevel
-	}
+	level := getLogLevel()
 	encoderConfig := zapcore.EncoderConfig{
 		TimeKey:          "time",
 		LevelKey:         "level",
@@ -61,7 +59,7 @@ func Init() {
 		zapcore.NewConsoleEncoder(encoderConfig),
 		// zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(&write)), // 打印到控制台和文件
 		write,
-		level,
+		atomicLevel,
 	)
 	// 开启开发模式，堆栈跟踪
 	caller := zap.AddCaller()
@@ -80,6 +78,11 @@ func Init() {
 	sugarLog = logger.Sugar().Desugar().WithOptions(opts...).Sugar()
 
 	sugarLog.Info("DefaultLogger init success")
+
+	setting.AddOnCfgChangeFun("log", func() {
+		level := getLogLevel()
+		atomicLevel.SetLevel(level)
+	})
 }
 
 func zapEncodeLevel(level zapcore.Level, enc zapcore.PrimitiveArrayEncoder) {

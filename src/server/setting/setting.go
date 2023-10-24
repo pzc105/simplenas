@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"sync"
+	"sync/atomic"
 
+	"github.com/fsnotify/fsnotify"
 	"gopkg.in/yaml.v2"
 )
 
@@ -57,9 +60,38 @@ type MysqlSetting struct {
 	MaxIdleConns int `yaml:"maxIdleConns"`
 }
 
-var GS *Setting = new(Setting)
+var setting atomic.Pointer[Setting]
+
+type OnConfigChange func()
+
+var onFunsMtx sync.Mutex
+var onCfgChangeFuns map[string]OnConfigChange
+
+func AddOnCfgChangeFun(name string, f OnConfigChange) {
+	if f == nil {
+		return
+	}
+	onFunsMtx.Lock()
+	onCfgChangeFuns[name] = f
+	onFunsMtx.Unlock()
+}
+
+func DelOnCfgChangeFun(name string) {
+	onFunsMtx.Lock()
+	delete(onCfgChangeFuns, name)
+	onFunsMtx.Unlock()
+}
+
+func GS() *Setting {
+	return setting.Load()
+}
 
 func Init(config_file_full_path string) {
+
+	onFunsMtx.Lock()
+	onCfgChangeFuns = make(map[string]OnConfigChange)
+	onFunsMtx.Unlock()
+
 	if len(config_file_full_path) == 0 {
 		config_file_full_path = "./server.yml"
 	}
@@ -68,29 +100,59 @@ func Init(config_file_full_path string) {
 		fmt.Println(err.Error())
 	}
 
-	err = yaml.Unmarshal(yamlFile, GS)
+	var s Setting
+	err = yaml.Unmarshal(yamlFile, &s)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+	setting.Store(&s)
+	watcher, err := fsnotify.NewWatcher()
+	if err == nil {
+		watcher.Add(config_file_full_path)
+		go func() {
+			for {
+				select {
+				case event, ok := <-watcher.Events:
+					if !ok {
+						return
+					}
+					if event.Has(fsnotify.Write) {
+						onFunsMtx.Lock()
+						for _, f := range onCfgChangeFuns {
+							var s Setting
+							err = yaml.Unmarshal(yamlFile, &s)
+							setting.Store(&s)
+							f()
+						}
+						onFunsMtx.Unlock()
+					}
+				case _, ok := <-watcher.Errors:
+					if !ok {
+						return
+					}
+				}
+			}
+		}()
+	}
 
-	GS.Server.MediaPath = path.Clean(GS.Server.MediaPath)
-	GS.Bt.SavePath = path.Clean(GS.Bt.SavePath)
+	s.Server.MediaPath = path.Clean(s.Server.MediaPath)
+	s.Bt.SavePath = path.Clean(s.Bt.SavePath)
 
-	GS.Server.HlsPath = GS.Server.MediaPath + "/hls"
-	GS.Server.PosterPath = GS.Server.MediaPath + "/poster"
+	s.Server.HlsPath = s.Server.MediaPath + "/hls"
+	s.Server.PosterPath = s.Server.MediaPath + "/poster"
 }
 
 func InitDir() {
-	os.MkdirAll(GS.Server.HlsPath, 0755)
-	os.MkdirAll(GS.Server.PosterPath, 0755)
-	os.MkdirAll(GS.Bt.SavePath, 0755)
+	os.MkdirAll(GS().Server.HlsPath, 0755)
+	os.MkdirAll(GS().Server.PosterPath, 0755)
+	os.MkdirAll(GS().Bt.SavePath, 0755)
 }
 
 func GetMysqlConnectStr() string {
 	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true",
-		GS.Mysql.User,
-		GS.Mysql.Password,
-		GS.Mysql.Ip,
-		GS.Mysql.Port,
-		GS.Mysql.Dbname)
+		GS().Mysql.User,
+		GS().Mysql.Password,
+		GS().Mysql.Ip,
+		GS().Mysql.Port,
+		GS().Mysql.Dbname)
 }

@@ -195,5 +195,5 @@ func GenHls(params *GenHlsOpts) error {
 }
 
 func GetHlsPlayListPath(vid ID) string {
-	return setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%d", vid)
+	return setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%d", vid)
 }

@@ -82,11 +82,11 @@ func (p *PosterService) handlerItemPoster(w http.ResponseWriter, r *http.Request
 	pp := item.GetPosterPath()
 	itype := item.GetType()
 	if itype == prpc.CategoryItem_Directory {
-		pp = setting.GS.Server.PosterPath + "/default_folder.png"
+		pp = setting.GS().Server.PosterPath + "/default_folder.png"
 	} else if itype == prpc.CategoryItem_Home {
-		pp = setting.GS.Server.PosterPath + "/house.png"
+		pp = setting.GS().Server.PosterPath + "/house.png"
 	} else {
-		pp = setting.GS.Server.PosterPath + "/" + pp
+		pp = setting.GS().Server.PosterPath + "/" + pp
 	}
 
 	if len(pp) > 0 {

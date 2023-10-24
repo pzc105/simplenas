@@ -135,8 +135,10 @@ func (ut *UserTorrentsImpl) UpdateTorrent(params *UpdateTorrentParams) {
 		fileName := files[i].Name
 
 		if files[i].FileType == bt.FileUnknownType {
-			absFileName := setting.GS.Bt.SavePath + "/" + fileName
+			absFileName := setting.GS().Bt.SavePath + "/" + fileName
 			updateBtFileType(st, i, absFileName)
+			ft, _ := st.GetFileType(i)
+			log.Debugf("[bt] torrent:%s file: %s type: %d", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, ft)
 		}
 
 		v, err := video.GetVideoByFileName(fileName)
@@ -162,7 +164,7 @@ func (ut *UserTorrentsImpl) BtFileStateComplete(fs *FileCompleted) {
 	}
 	tfs, err := t.GetFileState(int(fs.FileIndex))
 	if err != nil {
-		log.Warnf("[bt] failed to update torrent %s fileindex %d state err: %v", hex.EncodeToString([]byte(fs.InfoHash.Hash)), fs.FileIndex, err)
+		log.Warnf("[bt] failed to update torrent: %s fileindex: %d state err: %v", hex.EncodeToString([]byte(fs.InfoHash.Hash)), fs.FileIndex, err)
 		return
 	}
 	if tfs == prpc.BtFile_completed {
@@ -174,11 +176,13 @@ func (ut *UserTorrentsImpl) BtFileStateComplete(fs *FileCompleted) {
 	baseInfo := t.GetBaseInfo()
 	files := t.GetFiles()
 
-	log.Infof("[bt] torrent: %s file: %s completed", baseInfo.Name, files[fs.FileIndex].Name)
+	log.Infof("[bt] torrent: %s file: %s completed", hex.EncodeToString([]byte(fs.InfoHash.Hash)), files[fs.FileIndex].Name)
 
 	fileName := files[fs.FileIndex].Name
 	absFileName := baseInfo.SavePath + "/" + fileName
 	updateBtFileType(t, int(fs.FileIndex), absFileName)
+	ft, _ := t.GetFileType(int(fs.FileIndex))
+	log.Debugf("[bt] torrent:%s file: %s type: %d", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, ft)
 }
 
 func (ut *UserTorrentsImpl) AddTorrent(userId ID, t *bt.TorrentBase) error {
@@ -200,7 +204,7 @@ func (ut *UserTorrentsImpl) AddTorrent(userId ID, t *bt.TorrentBase) error {
 
 	_, err := db.Query("call new_torrent(?, ?, ?, @torrent_id);", t.InfoHash.Version, t.InfoHash.Hash, userId)
 	if err != nil {
-		log.Warnf("[user] %d failed to add torrent %s err: %v", userId, hex.EncodeToString([]byte(t.InfoHash.Hash)), err)
+		log.Warnf("[user] %d failed to add torrent: %s err: %v", userId, hex.EncodeToString([]byte(t.InfoHash.Hash)), err)
 		return err
 	}
 

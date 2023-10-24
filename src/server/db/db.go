@@ -19,8 +19,8 @@ func Init() {
 	}
 	// See "Important settings" section.
 	db.SetConnMaxLifetime(time.Minute * 3)
-	db.SetMaxOpenConns(setting.GS.Mysql.MaxOpenConns)
-	db.SetMaxIdleConns(setting.GS.Mysql.MaxIdleConns)
+	db.SetMaxOpenConns(setting.GS().Mysql.MaxOpenConns)
+	db.SetMaxIdleConns(setting.GS().Mysql.MaxIdleConns)
 
 	err = db.Ping()
 	if err != nil {

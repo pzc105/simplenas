@@ -80,7 +80,7 @@ func (ser *CoreService) Init() {
 }
 
 func (ser *CoreService) Serve() {
-	creds, err := credentials.NewServerTLSFromFile(setting.GS.Server.CrtFile, setting.GS.Server.KeyFile)
+	creds, err := credentials.NewServerTLSFromFile(setting.GS().Server.CrtFile, setting.GS().Server.KeyFile)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -91,8 +91,8 @@ func (ser *CoreService) Serve() {
 	prpc.RegisterUserServiceServer(ser.grpcSer, ser)
 
 	lis, err := net.Listen("tcp", fmt.Sprintf("%s:%d",
-		setting.GS.Server.BoundIp,
-		setting.GS.Server.Port))
+		setting.GS().Server.BoundIp,
+		setting.GS().Server.Port))
 	if err != nil {
 		log.Panic(err)
 	}
@@ -123,13 +123,13 @@ func (ser *CoreService) Serve() {
 	})
 
 	ser.httpSer = &http.Server{
-		Addr:    fmt.Sprintf("%s:%d", setting.GS.Server.BoundIp, setting.GS.Server.WebPort),
+		Addr:    fmt.Sprintf("%s:%d", setting.GS().Server.BoundIp, setting.GS().Server.WebPort),
 		Handler: router,
 	}
 
 	ser.shutDownCtx, ser.closeFunc = context.WithCancel(context.Background())
 
-	if err := ser.httpSer.ListenAndServeTLS(setting.GS.Server.CrtFile, setting.GS.Server.KeyFile); err != nil {
+	if err := ser.httpSer.ListenAndServeTLS(setting.GS().Server.CrtFile, setting.GS().Server.KeyFile); err != nil {
 		log.Panic(err)
 	}
 }
@@ -158,7 +158,7 @@ func (ser *CoreService) handleBtClientConnected() {
 		var req prpc.DownloadRequest
 		req.Type = prpc.DownloadRequest_Resume
 		req.Content = resume
-		req.SavePath = setting.GS.Bt.SavePath
+		req.SavePath = setting.GS().Bt.SavePath
 		_, err := ser.bt.Download(context.Background(), &req)
 		if err != nil {
 			log.Warnf("[bt] failed to download, err: %v", err)
@@ -368,7 +368,7 @@ func (ser *CoreService) FastLogin(
 
 	grpc.SendHeader(ctx, metadata.Pairs("Set-Cookie",
 		session.GenSessionTokenCookie(s), "Set-Cookie", session.GenSessionIdCookie(s)))
-	
+
 	return &prpc.LoginRet{
 		Token: s.Token,
 		UserInfo: &prpc.UserInfo{
@@ -403,7 +403,7 @@ func (ser *CoreService) Download(
 		req.Content = resumeData
 	}
 
-	req.SavePath = setting.GS.Bt.SavePath
+	req.SavePath = setting.GS().Bt.SavePath
 	res, err = ser.bt.Download(context.Background(), req)
 	if err == nil {
 		log.Infof("[bt] user %d token:%s add torrent: %s",
@@ -632,7 +632,7 @@ func (ser *CoreService) QueryItemInfo(ctx context.Context, req *prpc.QueryItemIn
 	case prpc.CategoryItem_Video:
 		res.VideoInfo = &prpc.Video{}
 		vid := item.GetVideoId()
-		lookPath := setting.GS.Server.HlsPath + fmt.Sprintf("/vid_%d", vid)
+		lookPath := setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%d", vid)
 		res.VideoInfo.Id = int64(vid)
 		res.VideoInfo.SubtitlePaths = utils.GetNotZeroFilesByFileExtension(lookPath, []string{".vtt"})
 	}

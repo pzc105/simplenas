@@ -47,12 +47,12 @@ func getCookie(header metadata.MD, key string) string {
 func newSession() {
 	defer wg.Add(-1)
 
-	creds, err := credentials.NewClientTLSFromFile(setting.GS.Server.CrtFile, "")
+	creds, err := credentials.NewClientTLSFromFile(setting.GS().Server.CrtFile, "")
 	if err != nil {
 		fmt.Printf("load cred %v\n", err)
 		return
 	}
-	conn, _ := grpc.Dial(fmt.Sprintf("%s:%d", setting.GS.Server.Domain, setting.GS.Server.Port), grpc.WithTransportCredentials(creds))
+	conn, _ := grpc.Dial(fmt.Sprintf("%s:%d", setting.GS().Server.Domain, setting.GS().Server.Port), grpc.WithTransportCredentials(creds))
 	client := prpc.NewUserServiceClient(conn)
 	h := md5.New()
 	h.Write([]byte(pwd))
