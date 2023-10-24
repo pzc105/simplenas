@@ -108,7 +108,8 @@ func Init(config_file_full_path string) {
 	setting.Store(&s)
 	watcher, err := fsnotify.NewWatcher()
 	if err == nil {
-		watcher.Add(config_file_full_path)
+		watcher.Add(path.Dir(config_file_full_path))
+		configFileName := path.Base(config_file_full_path)
 		go func() {
 			defer watcher.Close()
 			for {
@@ -117,7 +118,8 @@ func Init(config_file_full_path string) {
 					if !ok {
 						return
 					}
-					if event.Has(fsnotify.Write) {
+					fmt.Printf("%s %s\n", event.Name, event.Op)
+					if event.Name == configFileName && (event.Has(fsnotify.Write) || event.Has(fsnotify.Create)) {
 						var s Setting
 						err = yaml.Unmarshal(yamlFile, &s)
 						if err != nil {
