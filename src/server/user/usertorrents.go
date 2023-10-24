@@ -3,6 +3,7 @@ package user
 import (
 	"encoding/hex"
 	"fmt"
+	"os"
 	"pnas/bt"
 	"pnas/db"
 	"pnas/log"
@@ -140,11 +141,15 @@ func (ut *UserTorrentsImpl) UpdateTorrent(params *UpdateTorrentParams) {
 			ft, _ := st.GetFileType(i)
 			log.Debugf("[bt] torrent:%s file: %s type: %d", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, ft)
 			if log.EnabledDebug() {
+				_, err := os.Stat(absFileName)
+				if err != nil {
+					log.Debugf("[bt] torrent: %s file: %s error: %v", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, err)
+				}
 				meta, _ := video.GetMetadata(absFileName)
 				if meta != nil {
-					log.Debugf("[bt] torrent:%s file: %s format: %s", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, meta.Format.FormatName)
+					log.Debugf("[bt] torrent: %s file: %s format: %s", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, meta.Format.FormatName)
 					for _, s := range meta.Streams {
-						log.Debugf("[bt] torrent:%s file: %s s: %d codeType: %s", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, s.Index, s.CodecType)
+						log.Debugf("[bt] torrent: %s file: %s s: %d codeType: %s", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, s.Index, s.CodecType)
 					}
 				}
 			}
@@ -194,11 +199,15 @@ func (ut *UserTorrentsImpl) BtFileStateComplete(fs *FileCompleted) {
 	log.Debugf("[bt] torrent:%s file: %s type: %d", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, ft)
 
 	if log.EnabledDebug() {
+		_, err := os.Stat(absFileName)
+		if err != nil {
+			log.Debugf("[bt] torrent: %s file: %s error: %v", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, err)
+		}
 		meta, _ := video.GetMetadata(absFileName)
 		if meta != nil {
-			log.Debugf("[bt] torrent:%s file: %s format: %s", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, meta.Format.FormatName)
+			log.Debugf("[bt] torrent: %s file: %s format: %s", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, meta.Format.FormatName)
 			for _, s := range meta.Streams {
-				log.Debugf("[bt] torrent:%s file: %s s: %d codeType: %s", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, s.Index, s.CodecType)
+				log.Debugf("[bt] torrent: %s file: %s s: %d codeType: %s", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, s.Index, s.CodecType)
 			}
 		}
 	}
