@@ -78,6 +78,11 @@ def main():
               curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list && \
               sudo apt update && sudo apt install -y nvidia-container-toolkit && \
               sudo service docker restart")
+    # os.system("cd ~ && wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-keyring_1.1-1_all.deb && \
+    #           sudo dpkg -i cuda-keyring_1.1-1_all.deb && \
+    #           sudo apt-get update && \
+    #           sudo apt-get -y install cuda-toolkit-12-3 && \
+    #           rm -r cuda-keyring_1.1-1_all.deb")
   if run_container:
     os.system("sudo docker run --gpus all -p 3000:3000 -p 6881:6881 -p 6881:6881/udp -p 6771:6771 -p 6771:6771/udp -p 22345:22345 -p 11236:11236 --name {0} -dti sn".format(container_name))
   
