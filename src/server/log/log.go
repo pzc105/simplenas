@@ -82,6 +82,7 @@ func Init() {
 	setting.AddOnCfgChangeFun("log", func() {
 		level := getLogLevel()
 		atomicLevel.SetLevel(level)
+		Infof("change log level: %s", setting.GS().Log.Level)
 	})
 }
 
