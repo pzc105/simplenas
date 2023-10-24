@@ -94,7 +94,7 @@ RUN cd /thirdparty && \
     apt-fast update && \
     apt-fast -y install cuda-toolkit-12-3 && \
     rm -r cuda-keyring_1.1-1_all.deb
-RUN export PATH="/usr/local/cuda-12.3/bin:$PATH"
+RUN export PATH="/usr/local/cuda-12.3/bin:$PATH" && echo 'PATH="/usr/local/cuda-12.3/bin:$PATH"' >> /etc/profile
 
 RUN apt clean && \
     rm -rf /var/lib/apt/lists
