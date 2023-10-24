@@ -88,7 +88,12 @@ RUN apt-fast install -y \
     libopenmpt-dev \
     libcodec2-dev
 
-RUN apt-fast install -y nvidia-cuda-toolkit
+RUN cd /thirdparty && \
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb && \
+    dpkg -i cuda-keyring_1.1-1_all.deb && \
+    apt-fast update && \
+    apt-fast -y install cuda-toolkit-12-3 && \
+    rm -r cuda-keyring_1.1-1_all.deb
 
 RUN apt clean && \
     rm -rf /var/lib/apt/lists
