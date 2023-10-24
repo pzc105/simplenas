@@ -110,6 +110,7 @@ func Init(config_file_full_path string) {
 	if err == nil {
 		watcher.Add(config_file_full_path)
 		go func() {
+			defer watcher.Close()
 			for {
 				select {
 				case event, ok := <-watcher.Events:
