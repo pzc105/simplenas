@@ -37,40 +37,48 @@ def main():
   global bt_config
   global tls_config
   try:
-    opts, args = getopt.getopt(sys.argv[1:], "rn:i", ["git_proxy=", "server_config=", "bt_config=", "tls_config=", "build_myenv="])
+    opts, args = getopt.getopt(sys.argv[1:], "rn:i", ["git-proxy=", "server-config=", "bt-config=", "crt-path=", "build-myenv", "build-sn", "nvidia-init"])
   except getopt.GetoptError:
     sys.exit(2)
-  build_myenv = True
+  build_myenv = False
+  build_sn = False
   run_container = False
   container_name = ""
   init_container = False
+  nvidia_init = False
   for opt, arg in opts:
-    if opt == '--git_proxy':
+    if opt == '--git-proxy':
       git_proxy = arg
-    elif opt == '--server_config':
+    elif opt == '--server-config':
       server_config = arg
-    elif opt == '--bt_config':
+    elif opt == '--bt-config':
       bt_config = arg
-    elif opt == '--tls_config':
+    elif opt == '--crt-path':
       tls_config = arg
-    elif opt == '--build_myenv' and (arg.lower() == "false" or arg.lower() == "0"):
-      build_myenv = False
-    elif opt == '-r' and (arg.lower() == "true" or arg.lower() != "0"):
+    elif opt == 'nvidia-init':
+      nvidia_init = True
+    elif opt == '--build-myenv':
+      build_myenv = True
+    elif opt == '--build-sn':
+      build_sn = True
+    elif opt == '-r':
       run_container = True
     elif opt == '-n':
       container_name = arg
-    elif opt == '-i' and (arg.lower() == "true" or arg.lower() != "0"):
+    elif opt == '-i':
       init_container = True
   if build_myenv:
     gen_myenv()
-  gen_sn()
+  if build_sn:
+    gen_sn()
 
-  if run_container:
+  if nvidia_init:
     os.system("distribution=$(. /etc/os-release;echo $ID$VERSION_ID) && \
               curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - && \
               curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list && \
               sudo apt update && sudo apt install -y nvidia-container-toolkit && \
               sudo service docker restart")
+  if run_container:
     os.system("sudo docker run --gpus all -p 3000:3000 -p 6881:6881 -p 6881:6881/udp -p 6771:6771 -p 6771:6771/udp -p 22345:22345 -p 11236:11236 --name {0} -dti sn".format(container_name))
   
   if init_container:

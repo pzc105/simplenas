@@ -9,5 +9,5 @@
   * 支持字幕上传，智能匹配
   * 支持自动适配系统主题
 ## Docker
-  * 创建一个目录A, 接着在这个目录下创建2个证书（http.crt http.key和rpc.http rpc.key）
-  * python3 docker.py --tls_config <<path to A>> --build_myenv 1 -r -n sn -i
+  * 创建一个目录A, 接着在这个目录下创建2个证书私钥（http.crt http.key和rpc.http rpc.key）
+  * sudo python3 docker.py --crt-path \<path to A\> --build-myenv --nvidia-init -r -n sn -i
