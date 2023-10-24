@@ -11,6 +11,7 @@ import (
 
 var logger *zap.Logger
 var sugarLog *zap.SugaredLogger
+var atomicLevel zap.AtomicLevel
 
 func getLogLevel() zapcore.Level {
 	switch setting.GS().Log.Level {
@@ -52,7 +53,7 @@ func Init() {
 		ConsoleSeparator: " ",
 	}
 	// 设置日志级别
-	atomicLevel := zap.NewAtomicLevel()
+	atomicLevel = zap.NewAtomicLevel()
 	atomicLevel.SetLevel(level)
 	core := zapcore.NewCore(
 		// zapcore.NewConsoleEncoder(encoderConfig),
@@ -84,6 +85,10 @@ func Init() {
 		atomicLevel.SetLevel(level)
 		Infof("change log level: %s", setting.GS().Log.Level)
 	})
+}
+
+func EnabledDebug() bool {
+	return atomicLevel.Enabled(zap.DebugLevel)
 }
 
 func zapEncodeLevel(level zapcore.Level, enc zapcore.PrimitiveArrayEncoder) {

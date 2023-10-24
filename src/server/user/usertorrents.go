@@ -139,6 +139,15 @@ func (ut *UserTorrentsImpl) UpdateTorrent(params *UpdateTorrentParams) {
 			updateBtFileType(st, i, absFileName)
 			ft, _ := st.GetFileType(i)
 			log.Debugf("[bt] torrent:%s file: %s type: %d", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, ft)
+			if log.EnabledDebug() {
+				meta, _ := video.GetMetadata(absFileName)
+				log.Debugf("[bt] torrent:%s file: %s format: %s", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, meta.Format.FormatName)
+				if meta != nil {
+					for _, s := range meta.Streams {
+						log.Debugf("[bt] torrent:%s file: %s s: %d codeType: %s", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, s.Index, s.CodecType)
+					}
+				}
+			}
 		}
 
 		v, err := video.GetVideoByFileName(fileName)
@@ -183,6 +192,16 @@ func (ut *UserTorrentsImpl) BtFileStateComplete(fs *FileCompleted) {
 	updateBtFileType(t, int(fs.FileIndex), absFileName)
 	ft, _ := t.GetFileType(int(fs.FileIndex))
 	log.Debugf("[bt] torrent:%s file: %s type: %d", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, ft)
+
+	if log.EnabledDebug() {
+		meta, _ := video.GetMetadata(absFileName)
+		if meta != nil {
+			log.Debugf("[bt] torrent:%s file: %s format: %s", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, meta.Format.FormatName)
+			for _, s := range meta.Streams {
+				log.Debugf("[bt] torrent:%s file: %s s: %d codeType: %s", hex.EncodeToString([]byte(baseInfo.InfoHash.Hash)), absFileName, s.Index, s.CodecType)
+			}
+		}
+	}
 }
 
 func (ut *UserTorrentsImpl) AddTorrent(userId ID, t *bt.TorrentBase) error {
