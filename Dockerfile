@@ -2,6 +2,7 @@ FROM myenv
 
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN echo "export LANG=C.UTF-8" >> /etc/profile && source /etc/profile
 
 RUN mkdir -p /app && mkdir -p /app/tls
 #git_proxy
