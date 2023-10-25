@@ -1,8 +1,5 @@
 FROM myenv
 
-ENV TZ=Asia/Shanghai
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
 RUN mkdir -p /app && mkdir -p /app/tls
 #git_proxy
 RUN mkdir -p /source
@@ -33,7 +30,7 @@ RUN apt-fast install -y \
     ninja-build \
     checkinstall
 
-# RUN pip install pysocks -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
+RUN pip install pysocks -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
 RUN pip3 install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
 RUN pip3 install --no-cache-dir meson cython numpy -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
 RUN cd /thirdparty && \
@@ -52,6 +49,13 @@ RUN cd /thirdparty && \
     git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
     cd nv-codec-headers && \
     make && make install
+RUN cd /thirdparty && \
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb && \
+    dpkg -i cuda-keyring_1.1-1_all.deb && \
+    apt-fast update && \
+    apt-fast -y install cuda-toolkit-12-3 && \
+    rm -r cuda-keyring_1.1-1_all.deb
+RUN export PATH="/usr/local/cuda-12.3/bin:$PATH" && echo 'export PATH="/usr/local/cuda-12.3/bin:$PATH"' >> /etc/profile
 
 RUN apt-fast install -y \
     libvpl-dev \
@@ -88,14 +92,6 @@ RUN apt-fast install -y \
     libopenmpt-dev \
     libcodec2-dev
 
-RUN cd /thirdparty && \
-    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb && \
-    dpkg -i cuda-keyring_1.1-1_all.deb && \
-    apt-fast update && \
-    apt-fast -y install cuda-toolkit-12-3 && \
-    rm -r cuda-keyring_1.1-1_all.deb
-RUN export PATH="/usr/local/cuda-12.3/bin:$PATH" && echo 'PATH="/usr/local/cuda-12.3/bin:$PATH"' >> /etc/profile
-
 RUN apt clean && \
     rm -rf /var/lib/apt/lists
 
@@ -104,5 +100,3 @@ RUN cd /thirdparty && \
     cd FFmpeg && \
     ./configure --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-zlib --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-sdl2 --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxvid --enable-libaom --enable-libopenjpeg --enable-libvpx --enable-libass --enable-libfreetype --enable-libfribidi --enable-libvidstab --enable-libvmaf --enable-libzimg  --enable-cuda-llvm --enable-cuvid --enable-ffnvcodec --enable-nvdec --enable-nvenc --enable-libvpl --enable-libgme --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libtheora --enable-libvo-amrwbenc --enable-libgsm --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-librubberband --enable-gpl --enable-libnpp --enable-cuda-nvcc --enable-nonfree --extra-cflags=-I/usr/local/cuda-12.3/targets/x86_64-linux/include --extra-ldflags=-L/usr/local/cuda-12.3/targets/x86_64-linux/lib --nvccflags="-gencode arch=compute_52,code=sm_52 -O2" && \
     make -j$(nproc) && make install
-
-RUN export LANG=C.UTF-8 && echo "export LANG=C.UTF-8" >> /etc/profile

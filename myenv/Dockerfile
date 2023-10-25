@@ -1,4 +1,9 @@
 FROM ubuntu:22.04
+
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN export LANG=C.UTF-8 && echo "export LANG=C.UTF-8" >> /etc/profile
+
 RUN apt update -y && \
     apt install -y
 RUN apt install curl software-properties-common aria2 -y && \
@@ -61,15 +66,6 @@ RUN apt-fast install mysql-server redis-server -y && \
     service redis-server start
 
 #git_proxy
-# RUN mkdir /thirdparty
-# RUN git clone --recursive https://github.com/protocolbuffers/protobuf.git /thirdparty/protobuf && \
-#     cd /thirdparty/protobuf && \
-#     git switch 25.x && \
-#     mkdir cmake/build && \
-#     cd cmake/build && \
-#     cmake ../.. && \
-#     make -j$(nproc) && \
-#     make install
 RUN git clone --recursive https://github.com/grpc/grpc.git /thirdparty/grpc && \
     cd /thirdparty/grpc && \
     git switch v1.59.x && \
