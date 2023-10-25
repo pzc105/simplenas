@@ -16,20 +16,25 @@ namespace bt
       boost::program_options::options_description opts("all options");
       boost::program_options::variables_map vm;
       opts.add_options()("c", boost::program_options::value<std::string>(), "config path");
-      try
-      {
+      try {
         boost::program_options::store(boost::program_options::parse_command_line(argc, argv, opts), vm);
       }
-      catch (...)
-      {
+      catch (...) {
         std::cout << "输入参数有问题" << std::endl;
         exit(-1);
       }
 
       m_file_name = "./bt.yml";
-      if(vm.count("c"))
-      {
+      if(vm.count("c")) {
         m_file_name = vm["c"].as<std::string>();
+        std::ifstream f(m_file_name);
+        if(!f.good()) {
+          m_file_name = "./bt.yml";
+        }
+      }
+      std::ifstream f(m_file_name);
+      if(!f.good()) {
+        m_file_name = "/etc/pnas/bt.yml";
       }
     }
 

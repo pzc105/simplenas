@@ -92,9 +92,13 @@ func Init(config_file_full_path string) {
 	onCfgChangeFuns = make(map[string]OnConfigChange)
 	onFunsMtx.Unlock()
 
-	if len(config_file_full_path) == 0 {
+	if _, err := os.Stat(config_file_full_path); err != nil {
 		config_file_full_path = "./server.yml"
+		if _, err := os.Stat(config_file_full_path); err != nil {
+			config_file_full_path = "/etc/pnas/server.yml"
+		}
 	}
+
 	yamlFile, err := os.ReadFile(config_file_full_path)
 	if err != nil {
 		fmt.Println(err.Error())
