@@ -1,5 +1,7 @@
 FROM myenv
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN mkdir -p /app && mkdir -p /app/tls
 #git_proxy
 #all_proxy

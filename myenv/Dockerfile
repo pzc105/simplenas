@@ -1,11 +1,11 @@
 FROM ubuntu:22.04
 
-ENV TZ=Asia/Shanghai
+ARG TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN export LANG=C.UTF-8 && echo "export LANG=C.UTF-8" >> /etc/profile
 
 #all_proxy
-
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update -y && \
     apt install -y
 RUN apt install curl software-properties-common aria2 -y && \
