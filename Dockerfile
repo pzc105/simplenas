@@ -2,6 +2,7 @@ FROM myenv
 
 RUN mkdir -p /app && mkdir -p /app/tls
 #git_proxy
+#all_proxy
 RUN mkdir -p /source
 RUN git clone --recursive https://github.com/pzc105/simplenas.git /source/simplenas && \
     cd /source/simplenas && \

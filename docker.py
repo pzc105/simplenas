@@ -1,6 +1,7 @@
 import os, sys, getopt
 
 git_proxy = ""
+all_proxy = ""
 server_config = "./server.yml"
 bt_config = "./bt.yml"
 tls_config = "./tls"
@@ -21,6 +22,8 @@ def gen_myenv():
   f.close()
   if len(git_proxy) != 0:
     dc = dc.replace("#git_proxy", "RUN git config --global http.proxy {0}".format(git_proxy))
+  if len(all_proxy) != 0:
+    dc = dc.replace("#all_proxy", "ENV all_proxy {0}".format(all_proxy))
   gen_docker_image(dc, "myenv")
 
 def gen_sn():
@@ -29,6 +32,8 @@ def gen_sn():
   f.close()
   if len(git_proxy) != 0:
     dc = dc.replace("#git_proxy", "RUN git config --global http.proxy {0}".format(git_proxy))
+  if len(all_proxy) != 0:
+    dc = dc.replace("#all_proxy", "ENV all_proxy {0}".format(all_proxy))
   gen_docker_image(dc, "sn")
 
 def main():
@@ -36,8 +41,9 @@ def main():
   global server_config
   global bt_config
   global tls_config
+  global all_proxy
   try:
-    opts, args = getopt.getopt(sys.argv[1:], "rn:i", ["git-proxy=", "server-config=", "bt-config=", "crt-path=", "build-myenv", "build-sn", "nvidia-init"])
+    opts, args = getopt.getopt(sys.argv[1:], "rn:i", ["git-proxy=", "all-proxy=", "server-config=", "bt-config=", "crt-path=", "build-myenv", "build-sn", "nvidia-init"])
   except getopt.GetoptError:
     sys.exit(2)
   build_myenv = False
@@ -49,6 +55,8 @@ def main():
   for opt, arg in opts:
     if opt == '--git-proxy':
       git_proxy = arg
+    elif opt == '--all-proxy':
+      all_proxy = arg
     elif opt == '--server-config':
       server_config = arg
     elif opt == '--bt-config':
@@ -78,11 +86,6 @@ def main():
               curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list && \
               sudo apt update && sudo apt install -y nvidia-container-toolkit && \
               sudo service docker restart")
-    # os.system("cd ~ && wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-keyring_1.1-1_all.deb && \
-    #           sudo dpkg -i cuda-keyring_1.1-1_all.deb && \
-    #           sudo apt-get update && \
-    #           sudo apt-get -y install cuda-toolkit-12-3 && \
-    #           rm -r cuda-keyring_1.1-1_all.deb")
   if run_container:
     os.system("sudo docker run --gpus all -p 3000:3000 -p 6881:6881 -p 6881:6881/udp -p 6771:6771 -p 6771:6771/udp -p 22345:22345 -p 11236:11236 --name {0} -dti sn".format(container_name))
   

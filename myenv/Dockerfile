@@ -4,6 +4,8 @@ ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN export LANG=C.UTF-8 && echo "export LANG=C.UTF-8" >> /etc/profile
 
+#all_proxy
+
 RUN apt update -y && \
     apt install -y
 RUN apt install curl software-properties-common aria2 -y && \
