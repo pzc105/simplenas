@@ -87,7 +87,7 @@ def main():
               sudo apt update && sudo apt install -y nvidia-container-toolkit && \
               sudo service docker restart")
   if run_container:
-    os.system("sudo docker run --gpus,capabilities=video all -p 3000:3000 -p 6881:6881 -p 6881:6881/udp -p 6771:6771 -p 6771:6771/udp -p 22345:22345 -p 11236:11236 --name {0} -dti sn".format(container_name))
+    os.system("sudo docker run --gpus all,capabilities=video -p 3000:3000 -p 6881:6881 -p 6881:6881/udp -p 6771:6771 -p 6771:6771/udp -p 22345:22345 -p 11236:11236 --name {0} -dti sn".format(container_name))
   
   if init_container:
     os.system("sudo docker cp {0} {1}:/app".format(server_config, container_name))
