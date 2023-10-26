@@ -58,7 +58,7 @@ RUN cd /thirdparty && \
     apt-fast update && \
     apt-fast -y install cuda-toolkit-12-3 && \
     rm -r cuda-keyring_1.1-1_all.deb
-ENV export PATH="/usr/local/cuda-12.3/bin:$PATH"
+ENV PATH="/usr/local/cuda-12.3/bin:$PATH"
 
 RUN apt-fast install -y \
     libvpl-dev \
