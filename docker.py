@@ -43,7 +43,7 @@ def main():
   global tls_config
   global all_proxy
   try:
-    opts, args = getopt.getopt(sys.argv[1:], "rn:i", ["git-proxy=", "all-proxy=", "server-config=", "bt-config=", "crt-path=", "build-myenv", "build-sn", "nvidia-init"])
+    opts, args = getopt.getopt(sys.argv[1:], "rn:i", ["rpc-server=", "git-proxy=", "all-proxy=", "server-config=", "bt-config=", "crt-path=", "build-myenv", "build-sn", "nvidia-init"])
   except getopt.GetoptError:
     sys.exit(2)
   build_myenv = False
@@ -52,6 +52,7 @@ def main():
   container_name = ""
   init_container = False
   nvidia_init = False
+  rpc_server_address = "https://rpc.pnas105.top:11236"
   for opt, arg in opts:
     if opt == '--git-proxy':
       git_proxy = arg
@@ -75,6 +76,13 @@ def main():
       container_name = arg
     elif opt == '-i':
       init_container = True
+    elif opt == '--rpc-address':
+      if not arg.startswith("https://") and arg.startswith("http://"):
+        print("must be https rpc-address")
+        exit(-1)
+      rpc_server_address = arg
+      if not rpc_server_address.startswith("https://"):
+        rpc_server_address = "https://" + rpc_server_address
   if build_myenv:
     gen_myenv()
   if build_sn:
@@ -107,7 +115,7 @@ def main():
                 cp /source/simplenas/house.png /app/media/poster/'".format(container_name))
 
     os.system("sudo docker exec {0} /bin/bash -c \"cd /app && (nohup ./bt &) && (nohup ./pnas &)\"".format(container_name))
-    os.system("sudo docker exec {0} /bin/bash -c \"echo 'REACT_APP_RPC_SERVER=https://rpc.pnas105.top:11236' > /source/simplenas/src/frontend/.env.local\"".format(container_name))
+    os.system("sudo docker exec {0} /bin/bash -c \"echo 'REACT_APP_RPC_SERVER={1}' > /source/simplenas/src/frontend/.env.local\"".format(container_name, rpc_server_address))
     os.system("sudo docker exec {0} /bin/bash -c 'cd /source/simplenas/src/frontend && \
       npm run build && mkdir -p /app/frontend && cp -rf build/* /app/frontend'".format(container_name))
     os.system("sudo docker cp ./nginx.conf {0}:/etc/nginx/".format(container_name))
