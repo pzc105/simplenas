@@ -6,12 +6,9 @@ import (
 	"pnas/log"
 	"pnas/service"
 	"pnas/setting"
-	"pnas/video"
 )
 
 func main() {
-	f := video.IsVideo("E:/s.mp4")
-	print(f)
 	var configPath = flag.String("c", "", "path of config file")
 	setting.Init(*configPath)
 	setting.InitDir()
