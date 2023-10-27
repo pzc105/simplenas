@@ -10,4 +10,4 @@
   * 支持自动适配系统主题
 ## Docker
   * 创建一个目录A, 接着在这个目录下创建2个证书私钥（http.crt http.key和rpc.http rpc.key）
-  * sudo python3 docker.py --crt-path \<path to A\> --build-myenv --build-sn --nvidia-init -r -n sn -i
+  * sudo python3 docker.py --crt-path \<path to A\> --rpc-server \<rpc server address\> --build-myenv --build-sn --nvidia-init -r -n sn -i

@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 
 ARG TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN export LANG=C.UTF-8 && echo "export LANG=C.UTF-8" >> /etc/profile
+ENV LANG="C.UTF-8"
 
 #all_proxy
 ARG DEBIAN_FRONTEND=noninteractive
