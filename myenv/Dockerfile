@@ -8,7 +8,7 @@ RUN export LANG=C.UTF-8 && echo "export LANG=C.UTF-8" >> /etc/profile
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update -y && \
     apt install -y
-RUN apt install curl software-properties-common aria2 -y && \
+RUN apt install curl wget software-properties-common aria2 -y && \
     /bin/bash -c "$(curl -sL https://git.io/vokNn)" && \
     add-apt-repository ppa:apt-fast/stable -y && \
     apt update && \
@@ -26,7 +26,6 @@ RUN apt-fast update && apt-fast install -y \
     unzip \
     zlib1g-dev \
     libssl-dev \
-    wget \
     libboost-all-dev \
     iproute2 \
     netcat \
