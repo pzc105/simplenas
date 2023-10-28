@@ -103,6 +103,7 @@ def main():
     os.system("sudo docker run {0} -p 3000:3000 -p 6881:6881 -p 6881:6881/udp -p 6771:6771 -p 6771:6771/udp -p 22345:22345 -p 11236:11236 --name {1} -dti sn".format(docker_gpus, container_name))
   
   if init_container:
+    os.system("sudo docker container start {0}".format(container_name))
     os.system("sudo docker cp {0} {1}:/app".format(server_config, container_name))
     os.system("sudo docker cp {0} {1}:/app".format(bt_config, container_name))
     os.system("sudo docker cp {0}/http.crt {1}:/app/tls".format(tls_config, container_name))
@@ -127,6 +128,7 @@ def main():
     os.system("sudo docker exec {0} /bin/bash -c 'service nginx restart'".format(container_name))
 
   if start_container:
+    os.system("sudo docker container start {0}".format(container_name))
     os.system("sudo docker exec {0} /bin/bash -c 'service mysql restart && service redis-server restart'".format(container_name))
     os.system("sudo docker exec {0} /bin/bash -c '/bin/bash /app/wait_db.sh'".format(container_name))
     os.system("sudo docker exec {0} /bin/bash -c \"cd /app && (nohup ./bt &) && (nohup ./pnas &)\"".format(container_name))
