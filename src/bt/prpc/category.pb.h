@@ -73,9 +73,9 @@ enum CategoryItem_Type : int {
   CategoryItem_Type_Home = 1,
   CategoryItem_Type_Directory = 2,
   CategoryItem_Type_Video = 3,
-  CategoryItem_Type_OtherFile = 4,
+  CategoryItem_Type_Other = 4,
   CategoryItem_Type_Audio = 5,
-  CategoryItem_Type_MusicDirectory = 6,
+  CategoryItem_Type_MagnetUri = 6,
   CategoryItem_Type_CategoryItem_Type_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
   CategoryItem_Type_CategoryItem_Type_INT_MAX_SENTINEL_DO_NOT_USE_ =
@@ -241,9 +241,9 @@ class CategoryItem final :
   static constexpr Type Home = CategoryItem_Type_Home;
   static constexpr Type Directory = CategoryItem_Type_Directory;
   static constexpr Type Video = CategoryItem_Type_Video;
-  static constexpr Type OtherFile = CategoryItem_Type_OtherFile;
+  static constexpr Type Other = CategoryItem_Type_Other;
   static constexpr Type Audio = CategoryItem_Type_Audio;
-  static constexpr Type MusicDirectory = CategoryItem_Type_MusicDirectory;
+  static constexpr Type MagnetUri = CategoryItem_Type_MagnetUri;
   static inline bool Type_IsValid(int value) {
     return CategoryItem_Type_IsValid(value);
   }

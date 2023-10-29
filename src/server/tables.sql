@@ -17,8 +17,6 @@ create table user (
 drop table video;
 drop table category_item;
 drop table category_type;
-drop table sub_items;
-
 */
 
 create table video (
@@ -50,11 +48,12 @@ insert into category_type(id, type_name) values
 (1, "home"),
 (2, "directory"),
 (3, "video"),
-(4, "other_file")
+(4, "other")
 ;
 
-create table category_item (
+create table category_items (
   id bigint not null auto_increment,
+  parent_id bigint not null,
   type_id int not null,
   name varchar(256) not null,
   creator bigint not null,
@@ -67,24 +66,16 @@ create table category_item (
   primary key(id),
   key name (name),
   key resource(creator, type_id, resource_path),
+  key parent(parent_id, name),
   fulltext(name, introduce)
 );
 
-create table sub_items (
-  parent_id bigint not null,
-  item_id bigint not null,
-  created_at datetime default current_timestamp not null,
-  primary key(parent_id, item_id)
-);
-
-insert into category_item (id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
-  (1, 1, "root", 1, "", "", "", "");
-insert into category_item (id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
-  (2, 2, "tmp", 1, "", "", "", "");
-insert into sub_items(parent_id, item_id) values(1, 2);
-insert into category_item (id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
-  (3, 1, "users", 1, "", "", "", "");
-insert into sub_items(parent_id, item_id) values(1, 3);
+insert into category_item (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+  (1, 0, 1, "root", 1, "", "", "", "");
+insert into category_item (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+  (2, 1, 2, "tmp", 1, "", "", "", "");
+insert into category_item (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+  (3, 1, 1, "users", 1, "", "", "", "");
 
 insert into user(id, name, email, passwd, auth, directory_id) values
   (1, "admin", "admin@admin.cn", "202cb962ac59075b964b07152d234b70", "", 1);
@@ -105,10 +96,9 @@ begin
   start transaction;
   select count(*) into parent_count from pnas.category_item where id = parent_id for update;
   if parent_count = 1 then
-    insert into pnas.category_item (type_id, name, creator, auth, resource_path, poster_path, introduce) values 
-      (type_id, name, creator, auth, resource_path, poster_path, introduce);
+    insert into pnas.category_item (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+      (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce);
     select last_insert_id() into new_item_id;
-    insert pnas.sub_items (parent_id, item_id) values(parent_id, new_item_id);
   else
     set new_item_id = -2;
   end if;
@@ -122,7 +112,6 @@ delimiter //
 create procedure del_category(in del_item_id bigint)
 begin
   start transaction;
-  delete from pnas.sub_items where item_id = del_item_id;
   delete from pnas.category_item where id = del_item_id;
   commit;
 end//
@@ -141,10 +130,9 @@ begin
   start transaction;
   insert into pnas.user (name, email, passwd, auth, directory_id) values(name, email, passwd, auth, 0);
   select last_insert_id() into new_user_id;
-  insert into pnas.category_item (type_id, name, creator, auth, resource_path, poster_path, introduce) values 
-      (1, name, new_user_id, homeAuth, "", "", "");
+  insert into pnas.category_item (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+      (3, 1, name, new_user_id, homeAuth, "", "", "");
   select last_insert_id() into new_home_id;
-  insert pnas.sub_items (parent_id, item_id) values(3, new_home_id);
   update pnas.user set directory_id=new_home_id where id=new_user_id;
   select new_user_id, new_home_id;
   commit;
@@ -204,3 +192,16 @@ begin
   commit;
 end//
 delimiter ;
+
+
+create table magnet (
+  id bigint not null auto_increment,
+  version int not null,
+  info_hash varbinary(64) not null,
+  magnet_uri text not null,
+  created_at datetime default current_timestamp not null,
+  updated_at timestamp default current_timestamp on update current_timestamp not null,
+
+  primary key(id),
+  key info_hash (info_hash, version)
+);

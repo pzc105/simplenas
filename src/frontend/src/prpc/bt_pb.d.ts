@@ -80,6 +80,48 @@ export namespace DownloadRespone {
   }
 }
 
+export class GenMagnetUriReq extends jspb.Message {
+  getTorrentData(): string;
+  setTorrentData(value: string): GenMagnetUriReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GenMagnetUriReq.AsObject;
+  static toObject(includeInstance: boolean, msg: GenMagnetUriReq): GenMagnetUriReq.AsObject;
+  static serializeBinaryToWriter(message: GenMagnetUriReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GenMagnetUriReq;
+  static deserializeBinaryFromReader(message: GenMagnetUriReq, reader: jspb.BinaryReader): GenMagnetUriReq;
+}
+
+export namespace GenMagnetUriReq {
+  export type AsObject = {
+    torrentData: string,
+  }
+}
+
+export class GenMagnetUriRsp extends jspb.Message {
+  getInfoHash(): InfoHash | undefined;
+  setInfoHash(value?: InfoHash): GenMagnetUriRsp;
+  hasInfoHash(): boolean;
+  clearInfoHash(): GenMagnetUriRsp;
+
+  getMagnetUri(): string;
+  setMagnetUri(value: string): GenMagnetUriRsp;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GenMagnetUriRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: GenMagnetUriRsp): GenMagnetUriRsp.AsObject;
+  static serializeBinaryToWriter(message: GenMagnetUriRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GenMagnetUriRsp;
+  static deserializeBinaryFromReader(message: GenMagnetUriRsp, reader: jspb.BinaryReader): GenMagnetUriRsp;
+}
+
+export namespace GenMagnetUriRsp {
+  export type AsObject = {
+    infoHash?: InfoHash.AsObject,
+    magnetUri: string,
+  }
+}
+
 export class StatusRequest extends jspb.Message {
   getInfoHashList(): Array<InfoHash>;
   setInfoHashList(value: Array<InfoHash>): StatusRequest;

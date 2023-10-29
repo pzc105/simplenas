@@ -83,6 +83,46 @@ struct DownloadResponeDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DownloadResponeDefaultTypeInternal _DownloadRespone_default_instance_;
         template <typename>
+PROTOBUF_CONSTEXPR GenMagnetUriReq::GenMagnetUriReq(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.torrent_data_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
+struct GenMagnetUriReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GenMagnetUriReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GenMagnetUriReqDefaultTypeInternal() {}
+  union {
+    GenMagnetUriReq _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GenMagnetUriReqDefaultTypeInternal _GenMagnetUriReq_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR GenMagnetUriRsp::GenMagnetUriRsp(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.magnet_uri_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.info_hash_)*/ nullptr,
+    } {}
+struct GenMagnetUriRspDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GenMagnetUriRspDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GenMagnetUriRspDefaultTypeInternal() {}
+  union {
+    GenMagnetUriRsp _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GenMagnetUriRspDefaultTypeInternal _GenMagnetUriRsp_default_instance_;
+        template <typename>
 PROTOBUF_CONSTEXPR StatusRequest::StatusRequest(::_pbi::ConstantInitialized)
     : _impl_{
       /*decltype(_impl_.info_hash_)*/ {},
@@ -326,7 +366,7 @@ struct FileCompletedResDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 FileCompletedResDefaultTypeInternal _FileCompletedRes_default_instance_;
 }  // namespace prpc
-static ::_pb::Metadata file_level_metadata_bt_2eproto[16];
+static ::_pb::Metadata file_level_metadata_bt_2eproto[18];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_bt_2eproto[3];
 static constexpr const ::_pb::ServiceDescriptor**
     file_level_service_descriptors_bt_2eproto = nullptr;
@@ -363,6 +403,27 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::DownloadRespone, _impl_.info_hash_),
     0,
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::GenMagnetUriReq, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::GenMagnetUriReq, _impl_.torrent_data_),
+    PROTOBUF_FIELD_OFFSET(::prpc::GenMagnetUriRsp, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::prpc::GenMagnetUriRsp, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::GenMagnetUriRsp, _impl_.info_hash_),
+    PROTOBUF_FIELD_OFFSET(::prpc::GenMagnetUriRsp, _impl_.magnet_uri_),
+    0,
+    ~0u,
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::StatusRequest, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -530,25 +591,29 @@ static const ::_pbi::MigrationSchema
         {0, -1, -1, sizeof(::prpc::DownloadRequest)},
         {11, -1, -1, sizeof(::prpc::InfoHash)},
         {21, 30, -1, sizeof(::prpc::DownloadRespone)},
-        {31, -1, -1, sizeof(::prpc::StatusRequest)},
-        {40, 56, -1, sizeof(::prpc::TorrentStatus)},
-        {64, -1, -1, sizeof(::prpc::StatusRespone)},
-        {73, -1, -1, sizeof(::prpc::TorrentInfoReq)},
-        {82, -1, -1, sizeof(::prpc::BtFile)},
-        {95, 112, -1, sizeof(::prpc::TorrentInfo)},
-        {121, 130, -1, sizeof(::prpc::TorrentInfoRes)},
-        {131, 140, -1, sizeof(::prpc::RemoveTorrentReq)},
-        {141, -1, -1, sizeof(::prpc::RemoveTorrentRes)},
-        {149, 158, -1, sizeof(::prpc::FileProgressReq)},
-        {159, 169, -1, sizeof(::prpc::FileProgressRes)},
-        {171, -1, -1, sizeof(::prpc::FileCompletedReq)},
-        {179, 189, -1, sizeof(::prpc::FileCompletedRes)},
+        {31, -1, -1, sizeof(::prpc::GenMagnetUriReq)},
+        {40, 50, -1, sizeof(::prpc::GenMagnetUriRsp)},
+        {52, -1, -1, sizeof(::prpc::StatusRequest)},
+        {61, 77, -1, sizeof(::prpc::TorrentStatus)},
+        {85, -1, -1, sizeof(::prpc::StatusRespone)},
+        {94, -1, -1, sizeof(::prpc::TorrentInfoReq)},
+        {103, -1, -1, sizeof(::prpc::BtFile)},
+        {116, 133, -1, sizeof(::prpc::TorrentInfo)},
+        {142, 151, -1, sizeof(::prpc::TorrentInfoRes)},
+        {152, 161, -1, sizeof(::prpc::RemoveTorrentReq)},
+        {162, -1, -1, sizeof(::prpc::RemoveTorrentRes)},
+        {170, 179, -1, sizeof(::prpc::FileProgressReq)},
+        {180, 190, -1, sizeof(::prpc::FileProgressRes)},
+        {192, -1, -1, sizeof(::prpc::FileCompletedReq)},
+        {200, 210, -1, sizeof(::prpc::FileCompletedRes)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
     &::prpc::_DownloadRequest_default_instance_._instance,
     &::prpc::_InfoHash_default_instance_._instance,
     &::prpc::_DownloadRespone_default_instance_._instance,
+    &::prpc::_GenMagnetUriReq_default_instance_._instance,
+    &::prpc::_GenMagnetUriRsp_default_instance_._instance,
     &::prpc::_StatusRequest_default_instance_._instance,
     &::prpc::_TorrentStatus_default_instance_._instance,
     &::prpc::_StatusRespone_default_instance_._instance,
@@ -570,62 +635,67 @@ const char descriptor_table_protodef_bt_2eproto[] PROTOBUF_SECTION_VARIABLE(prot
     "\007ReqType\022\r\n\tMagnetUri\020\000\022\013\n\007Torrent\020\001\022\n\n\006"
     "Resume\020\002\")\n\010InfoHash\022\017\n\007version\030\001 \001(\005\022\014\n"
     "\004hash\030\002 \001(\014\"4\n\017DownloadRespone\022!\n\tinfo_h"
-    "ash\030\001 \001(\0132\016.prpc.InfoHash\"2\n\rStatusReque"
-    "st\022!\n\tinfo_hash\030\001 \003(\0132\016.prpc.InfoHash\"\311\001"
-    "\n\rTorrentStatus\022!\n\tinfo_hash\030\001 \001(\0132\016.prp"
-    "c.InfoHash\022\014\n\004name\030\002 \001(\t\022\035\n\025download_pay"
-    "load_rate\030\003 \001(\005\022\022\n\ntotal_done\030\004 \001(\003\022\r\n\005t"
-    "otal\030\005 \001(\003\022\020\n\010progress\030\006 \001(\002\022\021\n\tnum_peer"
-    "s\030\007 \001(\005\022 \n\005state\030\010 \001(\0162\021.prpc.BtStateEnu"
-    "m\":\n\rStatusRespone\022)\n\014status_array\030\001 \003(\013"
-    "2\023.prpc.TorrentStatus\"3\n\016TorrentInfoReq\022"
-    "!\n\tinfo_hash\030\001 \003(\0132\016.prpc.InfoHash\"\240\001\n\006B"
-    "tFile\022\014\n\004name\030\001 \001(\t\022\r\n\005index\030\002 \001(\005\022\036\n\002st"
-    "\030\003 \001(\0162\022.prpc.BtFile.State\022\022\n\ntotal_size"
-    "\030\004 \001(\003\022\022\n\ndownloaded\030\005 \001(\003\"1\n\005State\022\010\n\004s"
-    "top\020\000\022\017\n\013downloading\020\001\022\r\n\tcompleted\020\002\"\343\001"
-    "\n\013TorrentInfo\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc."
-    "InfoHash\022\014\n\004name\030\002 \001(\t\022 \n\005state\030\003 \001(\0162\021."
-    "prpc.BtStateEnum\022\021\n\tsave_path\030\004 \001(\t\022\033\n\005f"
-    "iles\030\005 \003(\0132\014.prpc.BtFile\022\022\n\ntotal_size\030\006"
-    " \001(\003\022\024\n\014piece_length\030\007 \001(\005\022\022\n\nnum_pieces"
-    "\030\010 \001(\005\022\023\n\013resume_data\030\t \001(\014\"/\n\016TorrentIn"
-    "foRes\022\035\n\002ti\030\001 \001(\0132\021.prpc.TorrentInfo\"5\n\020"
-    "RemoveTorrentReq\022!\n\tinfo_hash\030\001 \001(\0132\016.pr"
-    "pc.InfoHash\"\022\n\020RemoveTorrentRes\"4\n\017FileP"
-    "rogressReq\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.Inf"
-    "oHash\"Q\n\017FileProgressRes\022!\n\tinfo_hash\030\001 "
-    "\001(\0132\016.prpc.InfoHash\022\033\n\005files\030\002 \003(\0132\014.prp"
-    "c.BtFile\"\022\n\020FileCompletedReq\"I\n\020FileComp"
-    "letedRes\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoH"
-    "ash\022\022\n\nfile_index\030\002 \001(\005*\216\001\n\013BtStateEnum\022"
-    "\013\n\007unknown\020\000\022\022\n\016checking_files\020\001\022\030\n\024down"
-    "loading_metadata\020\002\022\017\n\013downloading\020\003\022\014\n\010f"
-    "inished\020\004\022\013\n\007seeding\020\005\022\030\n\024checking_resum"
-    "e_data\020\0072\301\003\n\tBtService\0225\n\005Parse\022\025.prpc.D"
-    "ownloadRequest\032\025.prpc.DownloadRespone\0228\n"
-    "\010Download\022\025.prpc.DownloadRequest\032\025.prpc."
-    "DownloadRespone\022\?\n\rRemoveTorrent\022\026.prpc."
-    "RemoveTorrentReq\032\026.prpc.RemoveTorrentRes"
-    "\0228\n\010OnStatus\022\023.prpc.StatusRequest\032\023.prpc"
-    ".StatusRespone(\0010\001\022\?\n\rOnTorrentInfo\022\024.pr"
-    "pc.TorrentInfoReq\032\024.prpc.TorrentInfoRes("
-    "\0010\001\022E\n\017OnFileCompleted\022\026.prpc.FileComple"
-    "tedReq\032\026.prpc.FileCompletedRes(\0010\001\022@\n\014Fi"
-    "leProgress\022\025.prpc.FileProgressReq\032\025.prpc"
-    ".FileProgressRes(\0010\001B\010Z\006./prpcb\006proto3"
+    "ash\030\001 \001(\0132\016.prpc.InfoHash\"\'\n\017GenMagnetUr"
+    "iReq\022\024\n\014torrent_data\030\001 \001(\t\"H\n\017GenMagnetU"
+    "riRsp\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash"
+    "\022\022\n\nmagnet_uri\030\002 \001(\t\"2\n\rStatusRequest\022!\n"
+    "\tinfo_hash\030\001 \003(\0132\016.prpc.InfoHash\"\311\001\n\rTor"
+    "rentStatus\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.Inf"
+    "oHash\022\014\n\004name\030\002 \001(\t\022\035\n\025download_payload_"
+    "rate\030\003 \001(\005\022\022\n\ntotal_done\030\004 \001(\003\022\r\n\005total\030"
+    "\005 \001(\003\022\020\n\010progress\030\006 \001(\002\022\021\n\tnum_peers\030\007 \001"
+    "(\005\022 \n\005state\030\010 \001(\0162\021.prpc.BtStateEnum\":\n\r"
+    "StatusRespone\022)\n\014status_array\030\001 \003(\0132\023.pr"
+    "pc.TorrentStatus\"3\n\016TorrentInfoReq\022!\n\tin"
+    "fo_hash\030\001 \003(\0132\016.prpc.InfoHash\"\240\001\n\006BtFile"
+    "\022\014\n\004name\030\001 \001(\t\022\r\n\005index\030\002 \001(\005\022\036\n\002st\030\003 \001("
+    "\0162\022.prpc.BtFile.State\022\022\n\ntotal_size\030\004 \001("
+    "\003\022\022\n\ndownloaded\030\005 \001(\003\"1\n\005State\022\010\n\004stop\020\000"
+    "\022\017\n\013downloading\020\001\022\r\n\tcompleted\020\002\"\343\001\n\013Tor"
+    "rentInfo\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoH"
+    "ash\022\014\n\004name\030\002 \001(\t\022 \n\005state\030\003 \001(\0162\021.prpc."
+    "BtStateEnum\022\021\n\tsave_path\030\004 \001(\t\022\033\n\005files\030"
+    "\005 \003(\0132\014.prpc.BtFile\022\022\n\ntotal_size\030\006 \001(\003\022"
+    "\024\n\014piece_length\030\007 \001(\005\022\022\n\nnum_pieces\030\010 \001("
+    "\005\022\023\n\013resume_data\030\t \001(\014\"/\n\016TorrentInfoRes"
+    "\022\035\n\002ti\030\001 \001(\0132\021.prpc.TorrentInfo\"5\n\020Remov"
+    "eTorrentReq\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.In"
+    "foHash\"\022\n\020RemoveTorrentRes\"4\n\017FileProgre"
+    "ssReq\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash"
+    "\"Q\n\017FileProgressRes\022!\n\tinfo_hash\030\001 \001(\0132\016"
+    ".prpc.InfoHash\022\033\n\005files\030\002 \003(\0132\014.prpc.BtF"
+    "ile\"\022\n\020FileCompletedReq\"I\n\020FileCompleted"
+    "Res\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\022\022"
+    "\n\nfile_index\030\002 \001(\005*\216\001\n\013BtStateEnum\022\013\n\007un"
+    "known\020\000\022\022\n\016checking_files\020\001\022\030\n\024downloadi"
+    "ng_metadata\020\002\022\017\n\013downloading\020\003\022\014\n\010finish"
+    "ed\020\004\022\013\n\007seeding\020\005\022\030\n\024checking_resume_dat"
+    "a\020\0072\377\003\n\tBtService\0225\n\005Parse\022\025.prpc.Downlo"
+    "adRequest\032\025.prpc.DownloadRespone\0228\n\010Down"
+    "load\022\025.prpc.DownloadRequest\032\025.prpc.Downl"
+    "oadRespone\022\?\n\rRemoveTorrent\022\026.prpc.Remov"
+    "eTorrentReq\032\026.prpc.RemoveTorrentRes\022<\n\014G"
+    "enMagnetUri\022\025.prpc.GenMagnetUriReq\032\025.prp"
+    "c.GenMagnetUriRsp\0228\n\010OnStatus\022\023.prpc.Sta"
+    "tusRequest\032\023.prpc.StatusRespone(\0010\001\022\?\n\rO"
+    "nTorrentInfo\022\024.prpc.TorrentInfoReq\032\024.prp"
+    "c.TorrentInfoRes(\0010\001\022E\n\017OnFileCompleted\022"
+    "\026.prpc.FileCompletedReq\032\026.prpc.FileCompl"
+    "etedRes(\0010\001\022@\n\014FileProgress\022\025.prpc.FileP"
+    "rogressReq\032\025.prpc.FileProgressRes(\0010\001B\010Z"
+    "\006./prpcb\006proto3"
 };
 static ::absl::once_flag descriptor_table_bt_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_bt_2eproto = {
     false,
     false,
-    1998,
+    2175,
     descriptor_table_protodef_bt_2eproto,
     "bt.proto",
     &descriptor_table_bt_2eproto_once,
     nullptr,
     0,
-    16,
+    18,
     schemas,
     file_default_instances,
     TableStruct_bt_2eproto::offsets,
@@ -1392,6 +1462,440 @@ void DownloadRespone::InternalSwap(DownloadRespone* other) {
 }
 // ===================================================================
 
+class GenMagnetUriReq::_Internal {
+ public:
+};
+
+GenMagnetUriReq::GenMagnetUriReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.GenMagnetUriReq)
+}
+GenMagnetUriReq::GenMagnetUriReq(const GenMagnetUriReq& from) : ::google::protobuf::Message() {
+  GenMagnetUriReq* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.torrent_data_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.torrent_data_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.torrent_data_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_torrent_data().empty()) {
+    _this->_impl_.torrent_data_.Set(from._internal_torrent_data(), _this->GetArenaForAllocation());
+  }
+
+  // @@protoc_insertion_point(copy_constructor:prpc.GenMagnetUriReq)
+}
+inline void GenMagnetUriReq::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.torrent_data_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.torrent_data_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.torrent_data_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+GenMagnetUriReq::~GenMagnetUriReq() {
+  // @@protoc_insertion_point(destructor:prpc.GenMagnetUriReq)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void GenMagnetUriReq::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.torrent_data_.Destroy();
+}
+void GenMagnetUriReq::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void GenMagnetUriReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.GenMagnetUriReq)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.torrent_data_.ClearToEmpty();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* GenMagnetUriReq::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 41, 2> GenMagnetUriReq::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_GenMagnetUriReq_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // string torrent_data = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(GenMagnetUriReq, _impl_.torrent_data_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string torrent_data = 1;
+    {PROTOBUF_FIELD_OFFSET(GenMagnetUriReq, _impl_.torrent_data_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\24\14\0\0\0\0\0\0"
+    "prpc.GenMagnetUriReq"
+    "torrent_data"
+  }},
+};
+
+::uint8_t* GenMagnetUriReq::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.GenMagnetUriReq)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // string torrent_data = 1;
+  if (!this->_internal_torrent_data().empty()) {
+    const std::string& _s = this->_internal_torrent_data();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.GenMagnetUriReq.torrent_data");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.GenMagnetUriReq)
+  return target;
+}
+
+::size_t GenMagnetUriReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.GenMagnetUriReq)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string torrent_data = 1;
+  if (!this->_internal_torrent_data().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_torrent_data());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData GenMagnetUriReq::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    GenMagnetUriReq::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*GenMagnetUriReq::GetClassData() const { return &_class_data_; }
+
+
+void GenMagnetUriReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GenMagnetUriReq*>(&to_msg);
+  auto& from = static_cast<const GenMagnetUriReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.GenMagnetUriReq)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_torrent_data().empty()) {
+    _this->_internal_set_torrent_data(from._internal_torrent_data());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GenMagnetUriReq::CopyFrom(const GenMagnetUriReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.GenMagnetUriReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool GenMagnetUriReq::IsInitialized() const {
+  return true;
+}
+
+void GenMagnetUriReq::InternalSwap(GenMagnetUriReq* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.torrent_data_, lhs_arena,
+                                       &other->_impl_.torrent_data_, rhs_arena);
+}
+
+::google::protobuf::Metadata GenMagnetUriReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[3]);
+}
+// ===================================================================
+
+class GenMagnetUriRsp::_Internal {
+ public:
+  using HasBits = decltype(std::declval<GenMagnetUriRsp>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(GenMagnetUriRsp, _impl_._has_bits_);
+  static const ::prpc::InfoHash& info_hash(const GenMagnetUriRsp* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+const ::prpc::InfoHash& GenMagnetUriRsp::_Internal::info_hash(const GenMagnetUriRsp* msg) {
+  return *msg->_impl_.info_hash_;
+}
+GenMagnetUriRsp::GenMagnetUriRsp(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.GenMagnetUriRsp)
+}
+GenMagnetUriRsp::GenMagnetUriRsp(const GenMagnetUriRsp& from) : ::google::protobuf::Message() {
+  GenMagnetUriRsp* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.magnet_uri_){},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.magnet_uri_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.magnet_uri_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_magnet_uri().empty()) {
+    _this->_impl_.magnet_uri_.Set(from._internal_magnet_uri(), _this->GetArenaForAllocation());
+  }
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
+  }
+
+  // @@protoc_insertion_point(copy_constructor:prpc.GenMagnetUriRsp)
+}
+inline void GenMagnetUriRsp::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.magnet_uri_){},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+  _impl_.magnet_uri_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.magnet_uri_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+GenMagnetUriRsp::~GenMagnetUriRsp() {
+  // @@protoc_insertion_point(destructor:prpc.GenMagnetUriRsp)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void GenMagnetUriRsp::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.magnet_uri_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.info_hash_;
+}
+void GenMagnetUriRsp::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void GenMagnetUriRsp::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.GenMagnetUriRsp)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.magnet_uri_.ClearToEmpty();
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* GenMagnetUriRsp::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 1, 39, 2> GenMagnetUriRsp::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(GenMagnetUriRsp, _impl_._has_bits_),
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_GenMagnetUriRsp_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // string magnet_uri = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(GenMagnetUriRsp, _impl_.magnet_uri_)}},
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(GenMagnetUriRsp, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(GenMagnetUriRsp, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // string magnet_uri = 2;
+    {PROTOBUF_FIELD_OFFSET(GenMagnetUriRsp, _impl_.magnet_uri_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+    "\24\0\12\0\0\0\0\0"
+    "prpc.GenMagnetUriRsp"
+    "magnet_uri"
+  }},
+};
+
+::uint8_t* GenMagnetUriRsp::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.GenMagnetUriRsp)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  // .prpc.InfoHash info_hash = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::info_hash(this),
+        _Internal::info_hash(this).GetCachedSize(), target, stream);
+  }
+
+  // string magnet_uri = 2;
+  if (!this->_internal_magnet_uri().empty()) {
+    const std::string& _s = this->_internal_magnet_uri();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.GenMagnetUriRsp.magnet_uri");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.GenMagnetUriRsp)
+  return target;
+}
+
+::size_t GenMagnetUriRsp::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.GenMagnetUriRsp)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string magnet_uri = 2;
+  if (!this->_internal_magnet_uri().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_magnet_uri());
+  }
+
+  // .prpc.InfoHash info_hash = 1;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *_impl_.info_hash_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData GenMagnetUriRsp::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    GenMagnetUriRsp::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*GenMagnetUriRsp::GetClassData() const { return &_class_data_; }
+
+
+void GenMagnetUriRsp::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GenMagnetUriRsp*>(&to_msg);
+  auto& from = static_cast<const GenMagnetUriRsp&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.GenMagnetUriRsp)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_magnet_uri().empty()) {
+    _this->_internal_set_magnet_uri(from._internal_magnet_uri());
+  }
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
+        from._internal_info_hash());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GenMagnetUriRsp::CopyFrom(const GenMagnetUriRsp& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.GenMagnetUriRsp)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool GenMagnetUriRsp::IsInitialized() const {
+  return true;
+}
+
+void GenMagnetUriRsp::InternalSwap(GenMagnetUriRsp* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.magnet_uri_, lhs_arena,
+                                       &other->_impl_.magnet_uri_, rhs_arena);
+  swap(_impl_.info_hash_, other->_impl_.info_hash_);
+}
+
+::google::protobuf::Metadata GenMagnetUriRsp::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[4]);
+}
+// ===================================================================
+
 class StatusRequest::_Internal {
  public:
 };
@@ -1560,7 +2064,7 @@ void StatusRequest::InternalSwap(StatusRequest* other) {
 ::google::protobuf::Metadata StatusRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[3]);
+      file_level_metadata_bt_2eproto[5]);
 }
 // ===================================================================
 
@@ -1972,7 +2476,7 @@ void TorrentStatus::InternalSwap(TorrentStatus* other) {
 ::google::protobuf::Metadata TorrentStatus::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[4]);
+      file_level_metadata_bt_2eproto[6]);
 }
 // ===================================================================
 
@@ -2144,7 +2648,7 @@ void StatusRespone::InternalSwap(StatusRespone* other) {
 ::google::protobuf::Metadata StatusRespone::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[5]);
+      file_level_metadata_bt_2eproto[7]);
 }
 // ===================================================================
 
@@ -2316,7 +2820,7 @@ void TorrentInfoReq::InternalSwap(TorrentInfoReq* other) {
 ::google::protobuf::Metadata TorrentInfoReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[6]);
+      file_level_metadata_bt_2eproto[8]);
 }
 // ===================================================================
 
@@ -2618,7 +3122,7 @@ void BtFile::InternalSwap(BtFile* other) {
 ::google::protobuf::Metadata BtFile::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[7]);
+      file_level_metadata_bt_2eproto[9]);
 }
 // ===================================================================
 
@@ -3081,7 +3585,7 @@ void TorrentInfo::InternalSwap(TorrentInfo* other) {
 ::google::protobuf::Metadata TorrentInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[8]);
+      file_level_metadata_bt_2eproto[10]);
 }
 // ===================================================================
 
@@ -3279,7 +3783,7 @@ void TorrentInfoRes::InternalSwap(TorrentInfoRes* other) {
 ::google::protobuf::Metadata TorrentInfoRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[9]);
+      file_level_metadata_bt_2eproto[11]);
 }
 // ===================================================================
 
@@ -3477,7 +3981,7 @@ void RemoveTorrentReq::InternalSwap(RemoveTorrentReq* other) {
 ::google::protobuf::Metadata RemoveTorrentReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[10]);
+      file_level_metadata_bt_2eproto[12]);
 }
 // ===================================================================
 
@@ -3516,7 +4020,7 @@ const ::google::protobuf::Message::ClassData*RemoveTorrentRes::GetClassData() co
 ::google::protobuf::Metadata RemoveTorrentRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[11]);
+      file_level_metadata_bt_2eproto[13]);
 }
 // ===================================================================
 
@@ -3714,7 +4218,7 @@ void FileProgressReq::InternalSwap(FileProgressReq* other) {
 ::google::protobuf::Metadata FileProgressReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[12]);
+      file_level_metadata_bt_2eproto[14]);
 }
 // ===================================================================
 
@@ -3939,7 +4443,7 @@ void FileProgressRes::InternalSwap(FileProgressRes* other) {
 ::google::protobuf::Metadata FileProgressRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[13]);
+      file_level_metadata_bt_2eproto[15]);
 }
 // ===================================================================
 
@@ -3978,7 +4482,7 @@ const ::google::protobuf::Message::ClassData*FileCompletedReq::GetClassData() co
 ::google::protobuf::Metadata FileCompletedReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[14]);
+      file_level_metadata_bt_2eproto[16]);
 }
 // ===================================================================
 
@@ -4207,7 +4711,7 @@ void FileCompletedRes::InternalSwap(FileCompletedRes* other) {
 ::google::protobuf::Metadata FileCompletedRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[15]);
+      file_level_metadata_bt_2eproto[17]);
 }
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace prpc

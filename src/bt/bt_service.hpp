@@ -148,6 +148,10 @@ namespace prpc
     ::grpc::Status RemoveTorrent(::grpc::ServerContext* context
                             , const ::prpc::RemoveTorrentReq* request
                             , ::prpc::RemoveTorrentRes* response) override;
+    ::grpc::Status GenMagnetUri(::grpc::ServerContext* context
+                            , const ::prpc::GenMagnetUriReq* request
+                            , ::prpc::GenMagnetUriRsp* response) override;
+    
 
   private:
     YAML::Node _bt_config;

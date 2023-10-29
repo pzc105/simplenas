@@ -2,6 +2,7 @@
 #include <string_view>
 #include "bt_service.hpp"
 #include "libtorrent/read_resume_data.hpp"
+#include "libtorrent/magnet_uri.hpp"
 #include "translate.hpp"
 
 using namespace std;
@@ -118,7 +119,10 @@ namespace prpc
     }
   }
 
-  ::grpc::Status bt_service::Parse(::grpc::ServerContext* context, const::prpc::DownloadRequest* request, ::prpc::DownloadRespone* response)
+  ::grpc::Status bt_service::Parse(
+    ::grpc::ServerContext* context
+    , const::prpc::DownloadRequest* request
+    , ::prpc::DownloadRespone* response)
   {
     (void)(context);
     lt::add_torrent_params params;
@@ -159,7 +163,10 @@ namespace prpc
     return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
   }
 
-  ::grpc::Status bt_service::Download(::grpc::ServerContext* context, const ::prpc::DownloadRequest* request, ::prpc::DownloadRespone* response)
+  ::grpc::Status bt_service::Download(
+    ::grpc::ServerContext* context
+    , const ::prpc::DownloadRequest* request
+    , ::prpc::DownloadRespone* response)
   {
     (void)(context);
     lt::add_torrent_params params;
@@ -183,7 +190,7 @@ namespace prpc
     }
     case DownloadRequest_ReqType::DownloadRequest_ReqType_Torrent: {
       try {
-        string data = request->content();
+        string const& data = request->content();
         lt::load_torrent_limits cfg;
         lt::error_code ec;
         int err_pos;
@@ -229,6 +236,35 @@ namespace prpc
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
     }
     _ses->remove_torrent(t);
+    return ::grpc::Status::OK;
+  }
+
+  ::grpc::Status bt_service::GenMagnetUri(
+    ::grpc::ServerContext* context
+    , const ::prpc::GenMagnetUriReq* request
+    , ::prpc::GenMagnetUriRsp* response)
+  {
+    (void)(context);
+    if (request == nullptr) {
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+    }
+    lt::add_torrent_params params;
+    try {
+      string const& data = request->torrent_data();
+      lt::load_torrent_limits cfg;
+      lt::error_code ec;
+      int err_pos;
+      auto e = lt::bdecode(lt::span<const char>(data), ec, &err_pos
+        , cfg.max_decode_depth, cfg.max_decode_tokens);
+      params.ti = std::make_shared<lt::torrent_info>(e);
+    }
+    catch (std::exception const& e) {
+      std::cout << e.what() << endl;
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+    }
+    std::string uri = lt::make_magnet_uri(params);
+    *response->mutable_info_hash() = get_respone_info_hash(params.info_hashes);
+    response->set_magnet_uri(uri);
     return ::grpc::Status::OK;
   }
 

@@ -51,16 +51,9 @@ func _loadItem(itemId ID) (*CategoryItem, error) {
 	var item CategoryItem
 	item.base.Id = itemId
 	var byteAuth []byte
-	var sql string
-	if RootId == itemId {
-		sql = `select type_id, name, creator, auth, resource_path, poster_path, introduce, created_at, updated_at, 0
-				  from pnas.category_item where id=?`
-	} else {
-		sql = `select type_id, name, creator, auth, resource_path, poster_path, introduce, c.created_at, c.updated_at, s.parent_id
-					from pnas.category_item c
-					left join pnas.sub_items s on s.item_id = c.id
-					where id=?`
-	}
+	sql := `select type_id, name, creator, auth, resource_path, poster_path, introduce, created_at, updated_at, parent_id
+				from pnas.category_items
+				where id=?`
 	err := db.QueryRow(sql, itemId).Scan(
 		&item.base.TypeId, &item.base.Name, &item.base.Creator, &byteAuth, &item.base.ResourcePath, &item.base.PosterPath,
 		&item.base.Introduce, &item.base.CreatedAt, &item.base.UpdatedAt, &item.base.ParentId,
@@ -71,9 +64,7 @@ func _loadItem(itemId ID) (*CategoryItem, error) {
 	item.auth = utils.NewBitSet(AuthMax)
 	item.auth.UnmarshalBinary(byteAuth)
 
-	sql = `select item_id from pnas.sub_items s
-				 left join pnas.category_item c on s.parent_id = c.id
-				 where s.parent_id=?`
+	sql = `select id from pnas.category_items where parent_id=?`
 	rows, err := db.Query(sql, itemId)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -103,10 +94,8 @@ func _loadItems(itemIds ...ID) ([]*CategoryItem, error) {
 		conds = append(conds, fmt.Sprintf("id=%d", id))
 	}
 	cond := strings.Join(conds, " or ")
-	sql := `select id, type_id, name, creator, auth, resource_path, poster_path, introduce, c.created_at, c.updated_at, s.parent_id
-					from pnas.category_item c
-					left join pnas.sub_items s on s.item_id = c.id
-					where ` + cond
+	sql := `select id, type_id, name, creator, auth, resource_path, poster_path, introduce, created_at, updated_at, parent_id
+					from pnas.category_items where ` + cond
 	rows, err := db.Query(sql)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -125,9 +114,7 @@ func _loadItems(itemIds ...ID) ([]*CategoryItem, error) {
 			return items, errors.WithStack(err)
 		}
 
-		sql = `select item_id from pnas.sub_items s
-				 left join pnas.category_item c on s.parent_id = c.id
-				 where s.parent_id=?`
+		sql = `select id from pnas.category_items where parent_id=?`
 		rows, err := db.Query(sql, item.base.Id)
 		if err != nil {
 			return nil, errors.WithStack(err)
@@ -164,6 +151,9 @@ type NewCategoryParams struct {
 
 func newItem(params *NewCategoryParams) (*CategoryItem, error) {
 	var newId ID
+	if params.Auth.BitSet == nil{
+		params.Auth = utils.NewBitSet(AuthMax)
+	}
 	byteAuth, err := params.Auth.MarshalBinary()
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -215,7 +205,7 @@ func (c *CategoryItem) GetItemInfo() BaseItem {
 }
 
 func (c *CategoryItem) Rename(newName string) error {
-	sql := "update pnas.category set name=? where id=?"
+	sql := "update pnas.category_items set name=? where id=?"
 	_, err := db.Exec(sql, newName, c.base.Id)
 	if err != nil {
 		return errors.WithStack(err)
@@ -289,7 +279,7 @@ func (c *CategoryItem) GetSubItemIds() []ID {
 }
 
 func (c *CategoryItem) UpdatePosterPath(path string) error {
-	sql := "update pnas.category_item set poster_path=? where id=?"
+	sql := "update pnas.category_items set poster_path=? where id=?"
 	_, err := db.Exec(sql, path, c.base.Id)
 	if err == nil {
 		c.mtx.Lock()

@@ -10,9 +10,9 @@ message CategoryItem {
     Home = 1;
     Directory = 2;
     Video = 3;
-    OtherFile = 4;
+    Other = 4;
     Audio = 5;
-    MusicDirectory = 6;
+    MagnetUri = 6;
   }
   int64 id = 1;
   Type type_id = 2;

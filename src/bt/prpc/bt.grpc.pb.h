@@ -56,6 +56,13 @@ class BtService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RemoveTorrentRes>> PrepareAsyncRemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RemoveTorrentRes>>(PrepareAsyncRemoveTorrentRaw(context, request, cq));
     }
+    virtual ::grpc::Status GenMagnetUri(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq& request, ::prpc::GenMagnetUriRsp* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GenMagnetUriRsp>> AsyncGenMagnetUri(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GenMagnetUriRsp>>(AsyncGenMagnetUriRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GenMagnetUriRsp>> PrepareAsyncGenMagnetUri(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GenMagnetUriRsp>>(PrepareAsyncGenMagnetUriRaw(context, request, cq));
+    }
     std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>> OnStatus(::grpc::ClientContext* context) {
       return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>>(OnStatusRaw(context));
     }
@@ -101,6 +108,8 @@ class BtService final {
       virtual void Download(::grpc::ClientContext* context, const ::prpc::DownloadRequest* request, ::prpc::DownloadRespone* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void RemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response, std::function<void(::grpc::Status)>) = 0;
       virtual void RemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GenMagnetUri(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq* request, ::prpc::GenMagnetUriRsp* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GenMagnetUri(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq* request, ::prpc::GenMagnetUriRsp* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void OnStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::StatusRequest,::prpc::StatusRespone>* reactor) = 0;
       virtual void OnTorrentInfo(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::TorrentInfoReq,::prpc::TorrentInfoRes>* reactor) = 0;
       virtual void OnFileCompleted(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::FileCompletedReq,::prpc::FileCompletedRes>* reactor) = 0;
@@ -116,6 +125,8 @@ class BtService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::DownloadRespone>* PrepareAsyncDownloadRaw(::grpc::ClientContext* context, const ::prpc::DownloadRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RemoveTorrentRes>* AsyncRemoveTorrentRaw(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RemoveTorrentRes>* PrepareAsyncRemoveTorrentRaw(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GenMagnetUriRsp>* AsyncGenMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GenMagnetUriRsp>* PrepareAsyncGenMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>* OnStatusRaw(::grpc::ClientContext* context) = 0;
     virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>* AsyncOnStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>* PrepareAsyncOnStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
@@ -152,6 +163,13 @@ class BtService final {
     }
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RemoveTorrentRes>> PrepareAsyncRemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RemoveTorrentRes>>(PrepareAsyncRemoveTorrentRaw(context, request, cq));
+    }
+    ::grpc::Status GenMagnetUri(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq& request, ::prpc::GenMagnetUriRsp* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GenMagnetUriRsp>> AsyncGenMagnetUri(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GenMagnetUriRsp>>(AsyncGenMagnetUriRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GenMagnetUriRsp>> PrepareAsyncGenMagnetUri(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GenMagnetUriRsp>>(PrepareAsyncGenMagnetUriRaw(context, request, cq));
     }
     std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>> OnStatus(::grpc::ClientContext* context) {
       return std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>>(OnStatusRaw(context));
@@ -198,6 +216,8 @@ class BtService final {
       void Download(::grpc::ClientContext* context, const ::prpc::DownloadRequest* request, ::prpc::DownloadRespone* response, ::grpc::ClientUnaryReactor* reactor) override;
       void RemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response, std::function<void(::grpc::Status)>) override;
       void RemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GenMagnetUri(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq* request, ::prpc::GenMagnetUriRsp* response, std::function<void(::grpc::Status)>) override;
+      void GenMagnetUri(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq* request, ::prpc::GenMagnetUriRsp* response, ::grpc::ClientUnaryReactor* reactor) override;
       void OnStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::StatusRequest,::prpc::StatusRespone>* reactor) override;
       void OnTorrentInfo(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::TorrentInfoReq,::prpc::TorrentInfoRes>* reactor) override;
       void OnFileCompleted(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::FileCompletedReq,::prpc::FileCompletedRes>* reactor) override;
@@ -219,6 +239,8 @@ class BtService final {
     ::grpc::ClientAsyncResponseReader< ::prpc::DownloadRespone>* PrepareAsyncDownloadRaw(::grpc::ClientContext* context, const ::prpc::DownloadRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::RemoveTorrentRes>* AsyncRemoveTorrentRaw(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::RemoveTorrentRes>* PrepareAsyncRemoveTorrentRaw(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::prpc::GenMagnetUriRsp>* AsyncGenMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::prpc::GenMagnetUriRsp>* PrepareAsyncGenMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* OnStatusRaw(::grpc::ClientContext* context) override;
     ::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* AsyncOnStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* PrepareAsyncOnStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
@@ -234,6 +256,7 @@ class BtService final {
     const ::grpc::internal::RpcMethod rpcmethod_Parse_;
     const ::grpc::internal::RpcMethod rpcmethod_Download_;
     const ::grpc::internal::RpcMethod rpcmethod_RemoveTorrent_;
+    const ::grpc::internal::RpcMethod rpcmethod_GenMagnetUri_;
     const ::grpc::internal::RpcMethod rpcmethod_OnStatus_;
     const ::grpc::internal::RpcMethod rpcmethod_OnTorrentInfo_;
     const ::grpc::internal::RpcMethod rpcmethod_OnFileCompleted_;
@@ -248,6 +271,7 @@ class BtService final {
     virtual ::grpc::Status Parse(::grpc::ServerContext* context, const ::prpc::DownloadRequest* request, ::prpc::DownloadRespone* response);
     virtual ::grpc::Status Download(::grpc::ServerContext* context, const ::prpc::DownloadRequest* request, ::prpc::DownloadRespone* response);
     virtual ::grpc::Status RemoveTorrent(::grpc::ServerContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response);
+    virtual ::grpc::Status GenMagnetUri(::grpc::ServerContext* context, const ::prpc::GenMagnetUriReq* request, ::prpc::GenMagnetUriRsp* response);
     virtual ::grpc::Status OnStatus(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* stream);
     virtual ::grpc::Status OnTorrentInfo(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::TorrentInfoRes, ::prpc::TorrentInfoReq>* stream);
     virtual ::grpc::Status OnFileCompleted(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::FileCompletedRes, ::prpc::FileCompletedReq>* stream);
@@ -314,12 +338,32 @@ class BtService final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_GenMagnetUri : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GenMagnetUri() {
+      ::grpc::Service::MarkMethodAsync(3);
+    }
+    ~WithAsyncMethod_GenMagnetUri() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GenMagnetUri(::grpc::ServerContext* /*context*/, const ::prpc::GenMagnetUriReq* /*request*/, ::prpc::GenMagnetUriRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGenMagnetUri(::grpc::ServerContext* context, ::prpc::GenMagnetUriReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::GenMagnetUriRsp>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_OnStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_OnStatus() {
-      ::grpc::Service::MarkMethodAsync(3);
+      ::grpc::Service::MarkMethodAsync(4);
     }
     ~WithAsyncMethod_OnStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -330,7 +374,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnStatus(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(3, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(4, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -339,7 +383,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_OnTorrentInfo() {
-      ::grpc::Service::MarkMethodAsync(4);
+      ::grpc::Service::MarkMethodAsync(5);
     }
     ~WithAsyncMethod_OnTorrentInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -350,7 +394,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnTorrentInfo(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::prpc::TorrentInfoRes, ::prpc::TorrentInfoReq>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(4, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(5, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -359,7 +403,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodAsync(5);
+      ::grpc::Service::MarkMethodAsync(6);
     }
     ~WithAsyncMethod_OnFileCompleted() override {
       BaseClassMustBeDerivedFromService(this);
@@ -370,7 +414,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnFileCompleted(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::prpc::FileCompletedRes, ::prpc::FileCompletedReq>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(5, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(6, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -379,7 +423,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_FileProgress() {
-      ::grpc::Service::MarkMethodAsync(6);
+      ::grpc::Service::MarkMethodAsync(7);
     }
     ~WithAsyncMethod_FileProgress() override {
       BaseClassMustBeDerivedFromService(this);
@@ -390,10 +434,10 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestFileProgress(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::prpc::FileProgressRes, ::prpc::FileProgressReq>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(6, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(7, context, stream, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_Parse<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_OnStatus<WithAsyncMethod_OnTorrentInfo<WithAsyncMethod_OnFileCompleted<WithAsyncMethod_FileProgress<Service > > > > > > > AsyncService;
+  typedef WithAsyncMethod_Parse<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_GenMagnetUri<WithAsyncMethod_OnStatus<WithAsyncMethod_OnTorrentInfo<WithAsyncMethod_OnFileCompleted<WithAsyncMethod_FileProgress<Service > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_Parse : public BaseClass {
    private:
@@ -476,12 +520,39 @@ class BtService final {
       ::grpc::CallbackServerContext* /*context*/, const ::prpc::RemoveTorrentReq* /*request*/, ::prpc::RemoveTorrentRes* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithCallbackMethod_GenMagnetUri : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GenMagnetUri() {
+      ::grpc::Service::MarkMethodCallback(3,
+          new ::grpc::internal::CallbackUnaryHandler< ::prpc::GenMagnetUriReq, ::prpc::GenMagnetUriRsp>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::prpc::GenMagnetUriReq* request, ::prpc::GenMagnetUriRsp* response) { return this->GenMagnetUri(context, request, response); }));}
+    void SetMessageAllocatorFor_GenMagnetUri(
+        ::grpc::MessageAllocator< ::prpc::GenMagnetUriReq, ::prpc::GenMagnetUriRsp>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::GenMagnetUriReq, ::prpc::GenMagnetUriRsp>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GenMagnetUri() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GenMagnetUri(::grpc::ServerContext* /*context*/, const ::prpc::GenMagnetUriReq* /*request*/, ::prpc::GenMagnetUriRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GenMagnetUri(
+      ::grpc::CallbackServerContext* /*context*/, const ::prpc::GenMagnetUriReq* /*request*/, ::prpc::GenMagnetUriRsp* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithCallbackMethod_OnStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_OnStatus() {
-      ::grpc::Service::MarkMethodCallback(3,
+      ::grpc::Service::MarkMethodCallback(4,
           new ::grpc::internal::CallbackBidiHandler< ::prpc::StatusRequest, ::prpc::StatusRespone>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnStatus(context); }));
@@ -504,7 +575,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_OnTorrentInfo() {
-      ::grpc::Service::MarkMethodCallback(4,
+      ::grpc::Service::MarkMethodCallback(5,
           new ::grpc::internal::CallbackBidiHandler< ::prpc::TorrentInfoReq, ::prpc::TorrentInfoRes>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnTorrentInfo(context); }));
@@ -527,7 +598,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodCallback(5,
+      ::grpc::Service::MarkMethodCallback(6,
           new ::grpc::internal::CallbackBidiHandler< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnFileCompleted(context); }));
@@ -550,7 +621,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_FileProgress() {
-      ::grpc::Service::MarkMethodCallback(6,
+      ::grpc::Service::MarkMethodCallback(7,
           new ::grpc::internal::CallbackBidiHandler< ::prpc::FileProgressReq, ::prpc::FileProgressRes>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->FileProgress(context); }));
@@ -567,7 +638,7 @@ class BtService final {
       ::grpc::CallbackServerContext* /*context*/)
       { return nullptr; }
   };
-  typedef WithCallbackMethod_Parse<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_OnStatus<WithCallbackMethod_OnTorrentInfo<WithCallbackMethod_OnFileCompleted<WithCallbackMethod_FileProgress<Service > > > > > > > CallbackService;
+  typedef WithCallbackMethod_Parse<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_GenMagnetUri<WithCallbackMethod_OnStatus<WithCallbackMethod_OnTorrentInfo<WithCallbackMethod_OnFileCompleted<WithCallbackMethod_FileProgress<Service > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_Parse : public BaseClass {
@@ -621,12 +692,29 @@ class BtService final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_GenMagnetUri : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GenMagnetUri() {
+      ::grpc::Service::MarkMethodGeneric(3);
+    }
+    ~WithGenericMethod_GenMagnetUri() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GenMagnetUri(::grpc::ServerContext* /*context*/, const ::prpc::GenMagnetUriReq* /*request*/, ::prpc::GenMagnetUriRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_OnStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_OnStatus() {
-      ::grpc::Service::MarkMethodGeneric(3);
+      ::grpc::Service::MarkMethodGeneric(4);
     }
     ~WithGenericMethod_OnStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -643,7 +731,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_OnTorrentInfo() {
-      ::grpc::Service::MarkMethodGeneric(4);
+      ::grpc::Service::MarkMethodGeneric(5);
     }
     ~WithGenericMethod_OnTorrentInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -660,7 +748,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodGeneric(5);
+      ::grpc::Service::MarkMethodGeneric(6);
     }
     ~WithGenericMethod_OnFileCompleted() override {
       BaseClassMustBeDerivedFromService(this);
@@ -677,7 +765,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_FileProgress() {
-      ::grpc::Service::MarkMethodGeneric(6);
+      ::grpc::Service::MarkMethodGeneric(7);
     }
     ~WithGenericMethod_FileProgress() override {
       BaseClassMustBeDerivedFromService(this);
@@ -749,12 +837,32 @@ class BtService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_GenMagnetUri : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GenMagnetUri() {
+      ::grpc::Service::MarkMethodRaw(3);
+    }
+    ~WithRawMethod_GenMagnetUri() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GenMagnetUri(::grpc::ServerContext* /*context*/, const ::prpc::GenMagnetUriReq* /*request*/, ::prpc::GenMagnetUriRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGenMagnetUri(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_OnStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_OnStatus() {
-      ::grpc::Service::MarkMethodRaw(3);
+      ::grpc::Service::MarkMethodRaw(4);
     }
     ~WithRawMethod_OnStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -765,7 +873,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnStatus(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(3, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(4, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -774,7 +882,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_OnTorrentInfo() {
-      ::grpc::Service::MarkMethodRaw(4);
+      ::grpc::Service::MarkMethodRaw(5);
     }
     ~WithRawMethod_OnTorrentInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -785,7 +893,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnTorrentInfo(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(4, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(5, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -794,7 +902,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodRaw(5);
+      ::grpc::Service::MarkMethodRaw(6);
     }
     ~WithRawMethod_OnFileCompleted() override {
       BaseClassMustBeDerivedFromService(this);
@@ -805,7 +913,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnFileCompleted(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(5, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(6, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -814,7 +922,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_FileProgress() {
-      ::grpc::Service::MarkMethodRaw(6);
+      ::grpc::Service::MarkMethodRaw(7);
     }
     ~WithRawMethod_FileProgress() override {
       BaseClassMustBeDerivedFromService(this);
@@ -825,7 +933,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestFileProgress(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(6, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(7, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -895,12 +1003,34 @@ class BtService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_GenMagnetUri : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GenMagnetUri() {
+      ::grpc::Service::MarkMethodRawCallback(3,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GenMagnetUri(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GenMagnetUri() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GenMagnetUri(::grpc::ServerContext* /*context*/, const ::prpc::GenMagnetUriReq* /*request*/, ::prpc::GenMagnetUriRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GenMagnetUri(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_OnStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_OnStatus() {
-      ::grpc::Service::MarkMethodRawCallback(3,
+      ::grpc::Service::MarkMethodRawCallback(4,
           new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnStatus(context); }));
@@ -923,7 +1053,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_OnTorrentInfo() {
-      ::grpc::Service::MarkMethodRawCallback(4,
+      ::grpc::Service::MarkMethodRawCallback(5,
           new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnTorrentInfo(context); }));
@@ -946,7 +1076,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodRawCallback(5,
+      ::grpc::Service::MarkMethodRawCallback(6,
           new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnFileCompleted(context); }));
@@ -969,7 +1099,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_FileProgress() {
-      ::grpc::Service::MarkMethodRawCallback(6,
+      ::grpc::Service::MarkMethodRawCallback(7,
           new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->FileProgress(context); }));
@@ -1067,9 +1197,36 @@ class BtService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedRemoveTorrent(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::RemoveTorrentReq,::prpc::RemoveTorrentRes>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_Parse<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<Service > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GenMagnetUri : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GenMagnetUri() {
+      ::grpc::Service::MarkMethodStreamed(3,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::prpc::GenMagnetUriReq, ::prpc::GenMagnetUriRsp>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::prpc::GenMagnetUriReq, ::prpc::GenMagnetUriRsp>* streamer) {
+                       return this->StreamedGenMagnetUri(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GenMagnetUri() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GenMagnetUri(::grpc::ServerContext* /*context*/, const ::prpc::GenMagnetUriReq* /*request*/, ::prpc::GenMagnetUriRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGenMagnetUri(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::GenMagnetUriReq,::prpc::GenMagnetUriRsp>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_Parse<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GenMagnetUri<Service > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_Parse<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<Service > > > StreamedService;
+  typedef WithStreamedUnaryMethod_Parse<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GenMagnetUri<Service > > > > StreamedService;
 };
 
 }  // namespace prpc

@@ -76,6 +76,9 @@ func (m *Manager) NewItem(params *NewCategoryParams) (*CategoryItem, error) {
 	if err != nil {
 		return nil, err
 	}
+	if !parentItem.IsDirectory(){
+		return nil, errors.New("isn't a directory")
+	}
 	if !parentItem.HasWriteAuth(params.Creator) {
 		return nil, errors.New("not auth")
 	}

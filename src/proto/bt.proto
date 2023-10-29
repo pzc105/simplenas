@@ -8,6 +8,7 @@ service BtService {
   rpc Parse(DownloadRequest) returns (DownloadRespone);
   rpc Download(DownloadRequest) returns (DownloadRespone);
   rpc RemoveTorrent(RemoveTorrentReq) returns (RemoveTorrentRes);
+  rpc GenMagnetUri(GenMagnetUriReq) returns (GenMagnetUriRsp);
 
   rpc OnStatus(stream StatusRequest) returns (stream StatusRespone);
   rpc OnTorrentInfo(stream TorrentInfoReq) returns (stream TorrentInfoRes);
@@ -33,6 +34,15 @@ message InfoHash {
 
 message DownloadRespone {
   InfoHash info_hash = 1;
+}
+
+message GenMagnetUriReq {
+  string torrent_data = 1;
+}
+
+message GenMagnetUriRsp {
+  InfoHash info_hash = 1;
+  string magnet_uri = 2;
 }
 
 message StatusRequest {
