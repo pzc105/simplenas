@@ -30,7 +30,7 @@ func TestNewItem(t *testing.T) {
 		Introduce:    "introduce",
 		Auth:         auth,
 	}
-	item1, err := m.NewItem(params)
+	item1, err := m.AddItem(params)
 	if err != nil {
 		t.Errorf("failed to create: %v", err)
 		return

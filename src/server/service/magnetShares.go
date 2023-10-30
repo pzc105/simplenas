@@ -36,7 +36,7 @@ func (m *MagnetSharesService) Init(ser category.Service) {
 		}
 	}
 	if !found {
-		_, err := ser.NewItem(&category.NewCategoryParams{
+		_, err := ser.AddItem(&category.NewCategoryParams{
 			ParentId: category.RootId,
 			Creator:  category.AdminId,
 			TypeId:   prpc.CategoryItem_Directory,
@@ -48,22 +48,24 @@ func (m *MagnetSharesService) Init(ser category.Service) {
 	}
 }
 
-func (m *MagnetSharesService) NewRootCategory(name string) error {
-	_, err := m.categoryService.NewItem(&category.NewCategoryParams{
-		ParentId: m.rootId,
-		Creator:  category.AdminId,
-		TypeId:   prpc.CategoryItem_Directory,
-		Name:     name,
+func (m *MagnetSharesService) AddRootCategory(name string) error {
+	_, err := m.categoryService.AddItem(&category.NewCategoryParams{
+		ParentId:    m.rootId,
+		Creator:     category.AdminId,
+		TypeId:      prpc.CategoryItem_Directory,
+		Name:        name,
+		CompareName: true,
 	})
 	return err
 }
 
-func (m *MagnetSharesService) NewCategory(name string, parentId category.ID) error {
-	_, err := m.categoryService.NewItem(&category.NewCategoryParams{
-		ParentId: parentId,
-		Creator:  category.AdminId,
-		TypeId:   prpc.CategoryItem_Directory,
-		Name:     name,
+func (m *MagnetSharesService) AddCategory(name string, parentId category.ID) error {
+	_, err := m.categoryService.AddItem(&category.NewCategoryParams{
+		ParentId:    parentId,
+		Creator:     category.AdminId,
+		TypeId:      prpc.CategoryItem_Directory,
+		Name:        name,
+		CompareName: true,
 	})
 	return err
 }
@@ -76,7 +78,7 @@ type AddMagnetUriParams struct {
 }
 
 func (m *MagnetSharesService) AddMagnetUri(params *AddMagnetUriParams) error {
-	_, err := m.categoryService.NewItem(&category.NewCategoryParams{
+	_, err := m.categoryService.AddItem(&category.NewCategoryParams{
 		ParentId:     params.ParentId,
 		Creator:      category.AdminId,
 		TypeId:       prpc.CategoryItem_Other,
@@ -84,4 +86,24 @@ func (m *MagnetSharesService) AddMagnetUri(params *AddMagnetUriParams) error {
 		ResourcePath: params.ResourcePath,
 	})
 	return err
+}
+
+type QueryCategoryParams struct {
+	ParentId category.ID
+}
+
+func (m *MagnetSharesService) queryCategory(params *QueryCategoryParams) ([]*category.CategoryItem, error) {
+	pitem, err := m.categoryService.GetItem(category.AdminId, params.ParentId)
+	if err != nil {
+		return nil, err
+	}
+	ret, err := m.categoryService.GetItems(category.AdminId, pitem.GetSubItemIds()...)
+	return ret, err
+}
+
+func (m *MagnetSharesService) QueryCategory(params *QueryCategoryParams) ([]*category.CategoryItem, error) {
+	if params.ParentId <= 0 {
+		params.ParentId = category.AdminId
+	}
+	return m.queryCategory(params)
 }

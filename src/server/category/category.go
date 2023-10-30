@@ -147,11 +147,24 @@ type NewCategoryParams struct {
 	PosterPath   string
 	Introduce    string
 	Auth         utils.AuthBitSet
+	CompareName  bool
 }
 
-func newItem(params *NewCategoryParams) (*CategoryItem, error) {
+func addItem(params *NewCategoryParams) (*CategoryItem, error) {
 	var newId ID
-	if params.Auth.BitSet == nil{
+
+	if params.CompareName {
+		var c int
+		err := db.QueryRow("select count(*) from pnas.category_items where parent_id=? and name=?", params.ParentId, params.Name).Scan(&c)
+		if err != nil {
+			return nil, err
+		}
+		if c > 0 {
+			return nil, errors.New(fmt.Sprintf("existed name: %s", params.Name))
+		}
+	}
+
+	if params.Auth.BitSet == nil {
 		params.Auth = utils.NewBitSet(AuthMax)
 	}
 	byteAuth, err := params.Auth.MarshalBinary()

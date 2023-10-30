@@ -184,7 +184,7 @@ func (um *UserManger) NewCategoryItem(userId ID, params *category.NewCategoryPar
 	if params.ParentId <= 0 {
 		params.ParentId = user.GetHomeDirectoryId()
 	}
-	_, err := um.categorySer.NewItem(params)
+	_, err := um.categorySer.AddItem(params)
 	return err
 }
 
@@ -342,7 +342,7 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 			Introduce:    "",
 			Auth:         utils.NewBitSet(category.AuthMax),
 		}
-		item, err := um.categorySer.NewItem(newCParams)
+		item, err := um.categorySer.AddItem(newCParams)
 		if err != nil {
 			return err
 		}

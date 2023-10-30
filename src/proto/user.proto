@@ -72,6 +72,8 @@ service UserService {
 
   rpc JoinChatRoom(JoinChatRoomReq) returns (stream JoinChatRoomRes);
   rpc SendMsg2ChatRoom(SendMsg2ChatRoomReq) returns (SendMsg2ChatRoomRes);
+
+  rpc AddMagnetUri(AddMagnetUriReq) returns (AddMagnetUriRsp);
 }
 
 
@@ -243,5 +245,16 @@ message SendMsg2ChatRoomReq {
 }
 
 message SendMsg2ChatRoomRes {
+
+}
+
+message AddMagnetUriReq {
+  int64 parent_id = 1;
+  string categoryName = 2;
+  string magnet_uri = 3;
+  string introduce = 4;
+}
+
+message AddMagnetUriRsp {
 
 }

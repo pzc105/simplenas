@@ -71,12 +71,12 @@ func (m *Manager) removeItem(itemId ID) {
 	}
 }
 
-func (m *Manager) NewItem(params *NewCategoryParams) (*CategoryItem, error) {
+func (m *Manager) AddItem(params *NewCategoryParams) (*CategoryItem, error) {
 	parentItem, err := m.GetItem(params.Creator, params.ParentId)
 	if err != nil {
 		return nil, err
 	}
-	if !parentItem.IsDirectory(){
+	if !parentItem.IsDirectory() {
 		return nil, errors.New("isn't a directory")
 	}
 	if !parentItem.HasWriteAuth(params.Creator) {
@@ -87,7 +87,7 @@ func (m *Manager) NewItem(params *NewCategoryParams) (*CategoryItem, error) {
 	dbmtx.Lock()
 	defer dbmtx.Unlock()
 
-	item, err := newItem(params)
+	item, err := addItem(params)
 	if err == nil {
 		parentItem.addedSubItem(item.base.Id)
 	}
