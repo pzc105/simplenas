@@ -19,6 +19,7 @@
     "hls.js": "^1.4.0",
     "md5": "^2.3.0",
     "plyr_p": "^3.7.9",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.5",
     "react-player": "^2.12.0",

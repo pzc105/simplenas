@@ -552,7 +552,7 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 		if err != nil {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		if !ser.um.IsParentOf(si.ShareItemInfo.ItemId, category.ID(req.ParentId)) {
+		if !ser.um.IsRelationOf(si.ShareItemInfo.ItemId, category.ID(req.ParentId)) {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
 		userId = si.UserId
@@ -602,7 +602,7 @@ func (ser *CoreService) QueryItemInfo(ctx context.Context, req *prpc.QueryItemIn
 		if err != nil {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		if !ser.um.IsParentOf(si.ShareItemInfo.ItemId, category.ID(req.ItemId)) {
+		if !ser.um.IsRelationOf(si.ShareItemInfo.ItemId, category.ID(req.ItemId)) {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
 		userId = si.UserId
@@ -830,22 +830,17 @@ func (ser *CoreService) AddMagnetCategory(ctx context.Context, req *prpc.AddMagn
 }
 
 func (ser *CoreService) AddMagnetUri(ctx context.Context, req *prpc.AddMagnetUriReq) (*prpc.AddMagnetUriRsp, error) {
-	if req == nil || req.CategoryName == "" {
+	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "")
 	}
 	ses := ser.getSession(ctx)
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
-	ser.um.AddMagnetUri(&user.AddMagnetUriParams{
-		ParentId:     category.ID(req.ParentId),
-		CategoryName: req.CategoryName,
-	})
+
 	err := ser.um.AddMagnetUri(&user.AddMagnetUriParams{
-		Uri:          req.MagnetUri,
-		ParentId:     0,
-		CategoryName: req.CategoryName,
-		Name:         "",
+		CategoryId: category.ID(req.CategoryId),
+		Uri:        req.MagnetUri,
 	})
 	if err != nil {
 		return nil, err
@@ -860,10 +855,6 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 	ses := ser.getSession(ctx)
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "not found session")
-	}
-
-	if !ser.um.IsParentOf(ser.um.GetRootId(), category.ID(req.ParentId)) {
-		return nil, status.Error(codes.PermissionDenied, "isn't share directory")
 	}
 
 	item, err := ser.um.QueryItem(category.AdminId, category.ID(req.ParentId))
@@ -899,4 +890,20 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 		res.Items = append(res.Items, &resItem)
 	}
 	return res, nil
+}
+
+func (ser *CoreService) DelMagnetCategory(ctx context.Context, req *prpc.DelMagnetCategoryReq) (*prpc.DelMagnetCategoryRsp, error) {
+	if req == nil {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "not found session")
+	}
+
+	err := ser.um.DelMagnetCategory(category.ID(req.Id))
+	if err != nil {
+		return nil, err
+	}
+	return &prpc.DelMagnetCategoryRsp{}, nil
 }

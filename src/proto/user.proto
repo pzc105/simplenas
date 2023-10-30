@@ -47,6 +47,7 @@ service UserService {
   rpc AddMagnetCategory(AddMagnetCategoryReq) returns (AddMagnetCategoryRsp);
   rpc AddMagnetUri(AddMagnetUriReq) returns (AddMagnetUriRsp);
   rpc QueryMagnet(QueryMagnetReq) returns (QueryMagnetRsp);
+  rpc DelMagnetCategory(DelMagnetCategoryReq) returns (DelMagnetCategoryRsp);
 }
 
 
@@ -225,7 +226,7 @@ message SendMsg2ChatRoomRes {
 message AddMagnetCategoryReq {
   int64 parent_id = 1;
   string categoryName = 2;
-  string introduce = 4;
+  string introduce = 3;
 }
 
 message AddMagnetCategoryRsp {
@@ -233,10 +234,9 @@ message AddMagnetCategoryRsp {
 }
 
 message AddMagnetUriReq {
-  int64 parent_id = 1;
-  string categoryName = 2;
-  string magnet_uri = 3;
-  string introduce = 4;
+  int64 category_id = 1;
+  string magnet_uri = 2;
+  string introduce = 3;
 }
 
 message AddMagnetUriRsp {
@@ -249,4 +249,12 @@ message QueryMagnetReq {
 
 message QueryMagnetRsp {
   repeated CategoryItem items = 1;
+}
+
+message DelMagnetCategoryReq {
+  int64 id = 1;
+}
+
+message DelMagnetCategoryRsp {
+
 }

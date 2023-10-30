@@ -241,3 +241,24 @@ func (m *Manager) DelItem(deleter int64, itemId ID) error {
 	}
 	return nil
 }
+
+func (m *Manager) IsRelationOf(parentId ID, itemId ID) bool {
+	_, err := m.GetItem(AdminId, parentId)
+	if err != nil {
+		log.Warnf("not found shared item id %d", parentId)
+		return false
+	}
+	var nextParentId = itemId
+	for {
+		item, err := m.GetItem(AdminId, nextParentId)
+		if err != nil {
+			log.Warnf("not found shared item id :%d, next parent: %d, share item id: %d", itemId, nextParentId, parentId)
+			return false
+		}
+		ii := item.GetItemInfo()
+		if ii.Id == parentId {
+			return true
+		}
+		nextParentId = ii.ParentId
+	}
+}

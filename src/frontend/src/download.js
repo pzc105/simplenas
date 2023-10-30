@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SideUtils from './sideUtils.js';
 import * as store from './store.js'
 import * as Bt from './prpc/bt_pb.js'
+import * as router from './router.js'
 import userService from './rpcClient.js'
 import FileUpload from './uploadTorrent.js'
 import { ProgressLists } from './downloadlist.js'
@@ -87,17 +88,13 @@ const TorrentNavigation = () => {
   const userInfo = useSelector((state) => store.selectUserInfo(state))
   const navigate = useNavigate()
   const navigateToMagnetPage = () => {
-    let path = "/mgnetshares"
-    if (userInfo != null) {
-      path += "?itemid=" + userInfo.magnetRootId
-    }
-    navigate(path)
+    router.navigate2mgnetshares(navigate, userInfo.magnetRootId)
   }
 
   return (
     <Container >
       <Typography sx={{ marginTop: '1em' }}>
-        <Link onClick={navigateToMagnetPage} target="_blank" rel="noopener" >
+        <Link onClick={navigateToMagnetPage} target="_blank" rel="noopener" sx={{ cursor: 'pointer' }}>
           magnet uri
         </Link>
         分享中心

@@ -43,6 +43,7 @@ const (
 	UserService_AddMagnetCategory_FullMethodName = "/prpc.UserService/AddMagnetCategory"
 	UserService_AddMagnetUri_FullMethodName      = "/prpc.UserService/AddMagnetUri"
 	UserService_QueryMagnet_FullMethodName       = "/prpc.UserService/QueryMagnet"
+	UserService_DelMagnetCategory_FullMethodName = "/prpc.UserService/DelMagnetCategory"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -73,6 +74,7 @@ type UserServiceClient interface {
 	AddMagnetCategory(ctx context.Context, in *AddMagnetCategoryReq, opts ...grpc.CallOption) (*AddMagnetCategoryRsp, error)
 	AddMagnetUri(ctx context.Context, in *AddMagnetUriReq, opts ...grpc.CallOption) (*AddMagnetUriRsp, error)
 	QueryMagnet(ctx context.Context, in *QueryMagnetReq, opts ...grpc.CallOption) (*QueryMagnetRsp, error)
+	DelMagnetCategory(ctx context.Context, in *DelMagnetCategoryReq, opts ...grpc.CallOption) (*DelMagnetCategoryRsp, error)
 }
 
 type userServiceClient struct {
@@ -345,6 +347,15 @@ func (c *userServiceClient) QueryMagnet(ctx context.Context, in *QueryMagnetReq,
 	return out, nil
 }
 
+func (c *userServiceClient) DelMagnetCategory(ctx context.Context, in *DelMagnetCategoryReq, opts ...grpc.CallOption) (*DelMagnetCategoryRsp, error) {
+	out := new(DelMagnetCategoryRsp)
+	err := c.cc.Invoke(ctx, UserService_DelMagnetCategory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -373,6 +384,7 @@ type UserServiceServer interface {
 	AddMagnetCategory(context.Context, *AddMagnetCategoryReq) (*AddMagnetCategoryRsp, error)
 	AddMagnetUri(context.Context, *AddMagnetUriReq) (*AddMagnetUriRsp, error)
 	QueryMagnet(context.Context, *QueryMagnetReq) (*QueryMagnetRsp, error)
+	DelMagnetCategory(context.Context, *DelMagnetCategoryReq) (*DelMagnetCategoryRsp, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -451,6 +463,9 @@ func (UnimplementedUserServiceServer) AddMagnetUri(context.Context, *AddMagnetUr
 }
 func (UnimplementedUserServiceServer) QueryMagnet(context.Context, *QueryMagnetReq) (*QueryMagnetRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryMagnet not implemented")
+}
+func (UnimplementedUserServiceServer) DelMagnetCategory(context.Context, *DelMagnetCategoryReq) (*DelMagnetCategoryRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelMagnetCategory not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -903,6 +918,24 @@ func _UserService_QueryMagnet_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_DelMagnetCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelMagnetCategoryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).DelMagnetCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_DelMagnetCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).DelMagnetCategory(ctx, req.(*DelMagnetCategoryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -997,6 +1030,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryMagnet",
 			Handler:    _UserService_QueryMagnet_Handler,
+		},
+		{
+			MethodName: "DelMagnetCategory",
+			Handler:    _UserService_DelMagnetCategory_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

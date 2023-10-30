@@ -80,3 +80,11 @@ export default function App() {
     </ThemeProvider>
   );
 }
+
+export function navigate2mgnetshares(navigate, itemId) {
+  let path = "/mgnetshares"
+  if (itemId != null) {
+    path += "?itemid=" + itemId
+  }
+  navigate(path)
+}

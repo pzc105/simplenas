@@ -347,3 +347,10 @@ export const queryItem = (itemId, shareId, dispatch) => {
     dispatch(store.categorySlice.actions.updateItem(itemInfo.toObject()))
   })
 }
+
+export const isDirectory = (item) => {
+  if (item == null) {
+    return false
+  }
+  return item.typeId === Category.CategoryItem.Type.DIRECTORY || item.typeId === Category.CategoryItem.Type.HOME
+}

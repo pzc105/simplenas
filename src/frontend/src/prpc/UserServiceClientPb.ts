@@ -1030,5 +1030,48 @@ export class UserServiceClient {
     this.methodDescriptorQueryMagnet);
   }
 
+  methodDescriptorDelMagnetCategory = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/DelMagnetCategory',
+    grpcWeb.MethodType.UNARY,
+    user_pb.DelMagnetCategoryReq,
+    user_pb.DelMagnetCategoryRsp,
+    (request: user_pb.DelMagnetCategoryReq) => {
+      return request.serializeBinary();
+    },
+    user_pb.DelMagnetCategoryRsp.deserializeBinary
+  );
+
+  delMagnetCategory(
+    request: user_pb.DelMagnetCategoryReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.DelMagnetCategoryRsp>;
+
+  delMagnetCategory(
+    request: user_pb.DelMagnetCategoryReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: user_pb.DelMagnetCategoryRsp) => void): grpcWeb.ClientReadableStream<user_pb.DelMagnetCategoryRsp>;
+
+  delMagnetCategory(
+    request: user_pb.DelMagnetCategoryReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: user_pb.DelMagnetCategoryRsp) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.UserService/DelMagnetCategory',
+        request,
+        metadata || {},
+        this.methodDescriptorDelMagnetCategory,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.UserService/DelMagnetCategory',
+    request,
+    metadata || {},
+    this.methodDescriptorDelMagnetCategory);
+  }
+
 }
 

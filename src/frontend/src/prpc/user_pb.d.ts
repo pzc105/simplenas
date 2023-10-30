@@ -803,11 +803,8 @@ export namespace AddMagnetCategoryRsp {
 }
 
 export class AddMagnetUriReq extends jspb.Message {
-  getParentId(): number;
-  setParentId(value: number): AddMagnetUriReq;
-
-  getCategoryname(): string;
-  setCategoryname(value: string): AddMagnetUriReq;
+  getCategoryId(): number;
+  setCategoryId(value: number): AddMagnetUriReq;
 
   getMagnetUri(): string;
   setMagnetUri(value: string): AddMagnetUriReq;
@@ -825,8 +822,7 @@ export class AddMagnetUriReq extends jspb.Message {
 
 export namespace AddMagnetUriReq {
   export type AsObject = {
-    parentId: number,
-    categoryname: string,
+    categoryId: number,
     magnetUri: string,
     introduce: string,
   }
@@ -881,6 +877,38 @@ export class QueryMagnetRsp extends jspb.Message {
 export namespace QueryMagnetRsp {
   export type AsObject = {
     itemsList: Array<category_pb.CategoryItem.AsObject>,
+  }
+}
+
+export class DelMagnetCategoryReq extends jspb.Message {
+  getId(): number;
+  setId(value: number): DelMagnetCategoryReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DelMagnetCategoryReq.AsObject;
+  static toObject(includeInstance: boolean, msg: DelMagnetCategoryReq): DelMagnetCategoryReq.AsObject;
+  static serializeBinaryToWriter(message: DelMagnetCategoryReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DelMagnetCategoryReq;
+  static deserializeBinaryFromReader(message: DelMagnetCategoryReq, reader: jspb.BinaryReader): DelMagnetCategoryReq;
+}
+
+export namespace DelMagnetCategoryReq {
+  export type AsObject = {
+    id: number,
+  }
+}
+
+export class DelMagnetCategoryRsp extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DelMagnetCategoryRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: DelMagnetCategoryRsp): DelMagnetCategoryRsp.AsObject;
+  static serializeBinaryToWriter(message: DelMagnetCategoryRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DelMagnetCategoryRsp;
+  static deserializeBinaryFromReader(message: DelMagnetCategoryRsp, reader: jspb.BinaryReader): DelMagnetCategoryRsp;
+}
+
+export namespace DelMagnetCategoryRsp {
+  export type AsObject = {
   }
 }
 

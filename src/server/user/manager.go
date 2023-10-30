@@ -526,25 +526,8 @@ func (um *UserManger) RefreshSubtitle(vid video.ID) error {
 	return nil
 }
 
-func (um *UserManger) IsParentOf(parentId category.ID, itemId category.ID) bool {
-	_, err := um.categorySer.GetItem(category.AdminId, parentId)
-	if err != nil {
-		log.Warnf("not found shared item id %d", parentId)
-		return false
-	}
-	var nextParentId = itemId
-	for {
-		item, err := um.categorySer.GetItem(category.AdminId, nextParentId)
-		if err != nil {
-			log.Warnf("not found shared item id :%d, next parent: %d, share item id: %d", itemId, nextParentId, parentId)
-			return false
-		}
-		ii := item.GetItemInfo()
-		if ii.Id == parentId {
-			return true
-		}
-		nextParentId = ii.ParentId
-	}
+func (um *UserManger) IsRelationOf(parentId category.ID, itemId category.ID) bool {
+	return um.categorySer.IsRelationOf(parentId, itemId)
 }
 
 func writeSubtitle2Item(item *category.CategoryItem, rpcSubtitle *prpc.SubtitleFile) error {

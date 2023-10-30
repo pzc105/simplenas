@@ -4,6 +4,8 @@ import (
 	"pnas/category"
 	"pnas/log"
 	"pnas/prpc"
+
+	"github.com/pkg/errors"
 )
 
 const (
@@ -12,14 +14,13 @@ const (
 
 type IMagnetSharesService interface {
 	GetRootId() category.ID
-	AddMagnetRootCategory(name string) error
 	AddMagnetCategory(name string, parentId category.ID) error
 	AddMagnetUri(params *AddMagnetUriParams) error
 	QueryMagnetCategorys(params *QueryCategoryParams) ([]*category.CategoryItem, error)
+	DelMagnetCategory(category.ID) error
 }
 
 type MagnetSharesService struct {
-	IMagnetSharesService
 	rootId          category.ID
 	categoryService category.Service
 }
@@ -47,18 +48,10 @@ func (m *MagnetSharesService) GetRootId() category.ID {
 	return m.rootId
 }
 
-func (m *MagnetSharesService) AddRootCategory(name string) error {
-	_, err := m.categoryService.AddItem(&category.NewCategoryParams{
-		ParentId:    m.rootId,
-		Creator:     category.AdminId,
-		TypeId:      prpc.CategoryItem_Directory,
-		Name:        name,
-		CompareName: true,
-	})
-	return err
-}
-
-func (m *MagnetSharesService) AddCategory(name string, parentId category.ID) error {
+func (m *MagnetSharesService) AddMagnetCategory(name string, parentId category.ID) error {
+	if !m.categoryService.IsRelationOf(m.GetRootId(), parentId) {
+		return errors.New("isn't share directory")
+	}
 	_, err := m.categoryService.AddItem(&category.NewCategoryParams{
 		ParentId:    parentId,
 		Creator:     category.AdminId,
@@ -70,26 +63,14 @@ func (m *MagnetSharesService) AddCategory(name string, parentId category.ID) err
 }
 
 type AddMagnetUriParams struct {
-	Uri          string
-	ParentId     category.ID
-	CategoryName string
-	Name         string
+	Uri        string
+	CategoryId category.ID
+	Name       string
 }
 
 func (m *MagnetSharesService) AddMagnetUri(params *AddMagnetUriParams) error {
-	parentId := params.ParentId
-	if parentId <= 0 {
-		params.ParentId = category.AdminId
-	}
-	_, err := m.categoryService.GetItemByName(category.AdminId, parentId, params.CategoryName)
-	if err != nil {
-		err = m.AddCategory(params.CategoryName, parentId)
-		if err != nil {
-			return err
-		}
-	}
-	_, err = m.categoryService.AddItem(&category.NewCategoryParams{
-		ParentId:     params.ParentId,
+	_, err := m.categoryService.AddItem(&category.NewCategoryParams{
+		ParentId:     params.CategoryId,
 		Creator:      category.AdminId,
 		TypeId:       prpc.CategoryItem_Other,
 		Name:         params.Name,
@@ -104,6 +85,9 @@ type QueryCategoryParams struct {
 }
 
 func (m *MagnetSharesService) queryMagnetCategorys(params *QueryCategoryParams) ([]*category.CategoryItem, error) {
+	if !m.categoryService.IsRelationOf(m.GetRootId(), params.ParentId) {
+		return nil, errors.New("isn't share directory")
+	}
 	if len(params.CategoryName) != 0 {
 		item, err := m.categoryService.GetItemByName(category.AdminId, params.ParentId, params.CategoryName)
 		if err != nil {
@@ -120,8 +104,12 @@ func (m *MagnetSharesService) queryMagnetCategorys(params *QueryCategoryParams) 
 }
 
 func (m *MagnetSharesService) QueryMagnetCategorys(params *QueryCategoryParams) ([]*category.CategoryItem, error) {
-	if params.ParentId <= 0 {
-		params.ParentId = category.AdminId
-	}
 	return m.queryMagnetCategorys(params)
+}
+
+func (m *MagnetSharesService) DelMagnetCategory(id category.ID) error {
+	if !m.categoryService.IsRelationOf(m.GetRootId(), id) {
+		return errors.New("isn't share directory")
+	}
+	return m.categoryService.DelItem(category.AdminId, id)
 }
