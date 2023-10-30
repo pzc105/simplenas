@@ -19,27 +19,30 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	UserService_Register_FullMethodName         = "/prpc.UserService/Register"
-	UserService_IsUsedEmail_FullMethodName      = "/prpc.UserService/IsUsedEmail"
-	UserService_Login_FullMethodName            = "/prpc.UserService/Login"
-	UserService_FastLogin_FullMethodName        = "/prpc.UserService/FastLogin"
-	UserService_IsLogined_FullMethodName        = "/prpc.UserService/IsLogined"
-	UserService_Download_FullMethodName         = "/prpc.UserService/Download"
-	UserService_RemoveTorrent_FullMethodName    = "/prpc.UserService/RemoveTorrent"
-	UserService_OnStatus_FullMethodName         = "/prpc.UserService/OnStatus"
-	UserService_QueryBtVideos_FullMethodName    = "/prpc.UserService/QueryBtVideos"
-	UserService_NewCategoryItem_FullMethodName  = "/prpc.UserService/NewCategoryItem"
-	UserService_DelCategoryItem_FullMethodName  = "/prpc.UserService/DelCategoryItem"
-	UserService_AddBtVideos_FullMethodName      = "/prpc.UserService/AddBtVideos"
-	UserService_ShareItem_FullMethodName        = "/prpc.UserService/ShareItem"
-	UserService_QuerySharedItems_FullMethodName = "/prpc.UserService/QuerySharedItems"
-	UserService_DelSharedItem_FullMethodName    = "/prpc.UserService/DelSharedItem"
-	UserService_QuerySubItems_FullMethodName    = "/prpc.UserService/QuerySubItems"
-	UserService_QueryItemInfo_FullMethodName    = "/prpc.UserService/QueryItemInfo"
-	UserService_RefreshSubtitle_FullMethodName  = "/prpc.UserService/RefreshSubtitle"
-	UserService_UploadSubtitle_FullMethodName   = "/prpc.UserService/UploadSubtitle"
-	UserService_JoinChatRoom_FullMethodName     = "/prpc.UserService/JoinChatRoom"
-	UserService_SendMsg2ChatRoom_FullMethodName = "/prpc.UserService/SendMsg2ChatRoom"
+	UserService_Register_FullMethodName          = "/prpc.UserService/Register"
+	UserService_IsUsedEmail_FullMethodName       = "/prpc.UserService/IsUsedEmail"
+	UserService_Login_FullMethodName             = "/prpc.UserService/Login"
+	UserService_FastLogin_FullMethodName         = "/prpc.UserService/FastLogin"
+	UserService_IsLogined_FullMethodName         = "/prpc.UserService/IsLogined"
+	UserService_Download_FullMethodName          = "/prpc.UserService/Download"
+	UserService_RemoveTorrent_FullMethodName     = "/prpc.UserService/RemoveTorrent"
+	UserService_OnStatus_FullMethodName          = "/prpc.UserService/OnStatus"
+	UserService_QueryBtVideos_FullMethodName     = "/prpc.UserService/QueryBtVideos"
+	UserService_NewCategoryItem_FullMethodName   = "/prpc.UserService/NewCategoryItem"
+	UserService_DelCategoryItem_FullMethodName   = "/prpc.UserService/DelCategoryItem"
+	UserService_AddBtVideos_FullMethodName       = "/prpc.UserService/AddBtVideos"
+	UserService_ShareItem_FullMethodName         = "/prpc.UserService/ShareItem"
+	UserService_QuerySharedItems_FullMethodName  = "/prpc.UserService/QuerySharedItems"
+	UserService_DelSharedItem_FullMethodName     = "/prpc.UserService/DelSharedItem"
+	UserService_QuerySubItems_FullMethodName     = "/prpc.UserService/QuerySubItems"
+	UserService_QueryItemInfo_FullMethodName     = "/prpc.UserService/QueryItemInfo"
+	UserService_RefreshSubtitle_FullMethodName   = "/prpc.UserService/RefreshSubtitle"
+	UserService_UploadSubtitle_FullMethodName    = "/prpc.UserService/UploadSubtitle"
+	UserService_JoinChatRoom_FullMethodName      = "/prpc.UserService/JoinChatRoom"
+	UserService_SendMsg2ChatRoom_FullMethodName  = "/prpc.UserService/SendMsg2ChatRoom"
+	UserService_AddMagnetCategory_FullMethodName = "/prpc.UserService/AddMagnetCategory"
+	UserService_AddMagnetUri_FullMethodName      = "/prpc.UserService/AddMagnetUri"
+	UserService_QueryMagnet_FullMethodName       = "/prpc.UserService/QueryMagnet"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -67,6 +70,9 @@ type UserServiceClient interface {
 	UploadSubtitle(ctx context.Context, in *UploadSubtitleReq, opts ...grpc.CallOption) (*UploadSubtitleRes, error)
 	JoinChatRoom(ctx context.Context, in *JoinChatRoomReq, opts ...grpc.CallOption) (UserService_JoinChatRoomClient, error)
 	SendMsg2ChatRoom(ctx context.Context, in *SendMsg2ChatRoomReq, opts ...grpc.CallOption) (*SendMsg2ChatRoomRes, error)
+	AddMagnetCategory(ctx context.Context, in *AddMagnetCategoryReq, opts ...grpc.CallOption) (*AddMagnetCategoryRsp, error)
+	AddMagnetUri(ctx context.Context, in *AddMagnetUriReq, opts ...grpc.CallOption) (*AddMagnetUriRsp, error)
+	QueryMagnet(ctx context.Context, in *QueryMagnetReq, opts ...grpc.CallOption) (*QueryMagnetRsp, error)
 }
 
 type userServiceClient struct {
@@ -312,6 +318,33 @@ func (c *userServiceClient) SendMsg2ChatRoom(ctx context.Context, in *SendMsg2Ch
 	return out, nil
 }
 
+func (c *userServiceClient) AddMagnetCategory(ctx context.Context, in *AddMagnetCategoryReq, opts ...grpc.CallOption) (*AddMagnetCategoryRsp, error) {
+	out := new(AddMagnetCategoryRsp)
+	err := c.cc.Invoke(ctx, UserService_AddMagnetCategory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) AddMagnetUri(ctx context.Context, in *AddMagnetUriReq, opts ...grpc.CallOption) (*AddMagnetUriRsp, error) {
+	out := new(AddMagnetUriRsp)
+	err := c.cc.Invoke(ctx, UserService_AddMagnetUri_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) QueryMagnet(ctx context.Context, in *QueryMagnetReq, opts ...grpc.CallOption) (*QueryMagnetRsp, error) {
+	out := new(QueryMagnetRsp)
+	err := c.cc.Invoke(ctx, UserService_QueryMagnet_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -337,6 +370,9 @@ type UserServiceServer interface {
 	UploadSubtitle(context.Context, *UploadSubtitleReq) (*UploadSubtitleRes, error)
 	JoinChatRoom(*JoinChatRoomReq, UserService_JoinChatRoomServer) error
 	SendMsg2ChatRoom(context.Context, *SendMsg2ChatRoomReq) (*SendMsg2ChatRoomRes, error)
+	AddMagnetCategory(context.Context, *AddMagnetCategoryReq) (*AddMagnetCategoryRsp, error)
+	AddMagnetUri(context.Context, *AddMagnetUriReq) (*AddMagnetUriRsp, error)
+	QueryMagnet(context.Context, *QueryMagnetReq) (*QueryMagnetRsp, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -406,6 +442,15 @@ func (UnimplementedUserServiceServer) JoinChatRoom(*JoinChatRoomReq, UserService
 }
 func (UnimplementedUserServiceServer) SendMsg2ChatRoom(context.Context, *SendMsg2ChatRoomReq) (*SendMsg2ChatRoomRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMsg2ChatRoom not implemented")
+}
+func (UnimplementedUserServiceServer) AddMagnetCategory(context.Context, *AddMagnetCategoryReq) (*AddMagnetCategoryRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddMagnetCategory not implemented")
+}
+func (UnimplementedUserServiceServer) AddMagnetUri(context.Context, *AddMagnetUriReq) (*AddMagnetUriRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddMagnetUri not implemented")
+}
+func (UnimplementedUserServiceServer) QueryMagnet(context.Context, *QueryMagnetReq) (*QueryMagnetRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryMagnet not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -804,6 +849,60 @@ func _UserService_SendMsg2ChatRoom_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_AddMagnetCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddMagnetCategoryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).AddMagnetCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_AddMagnetCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).AddMagnetCategory(ctx, req.(*AddMagnetCategoryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_AddMagnetUri_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddMagnetUriReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).AddMagnetUri(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_AddMagnetUri_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).AddMagnetUri(ctx, req.(*AddMagnetUriReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_QueryMagnet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryMagnetReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).QueryMagnet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_QueryMagnet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).QueryMagnet(ctx, req.(*QueryMagnetReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -886,6 +985,18 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendMsg2ChatRoom",
 			Handler:    _UserService_SendMsg2ChatRoom_Handler,
+		},
+		{
+			MethodName: "AddMagnetCategory",
+			Handler:    _UserService_AddMagnetCategory_Handler,
+		},
+		{
+			MethodName: "AddMagnetUri",
+			Handler:    _UserService_AddMagnetUri_Handler,
+		},
+		{
+			MethodName: "QueryMagnet",
+			Handler:    _UserService_QueryMagnet_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

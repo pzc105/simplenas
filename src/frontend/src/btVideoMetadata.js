@@ -201,8 +201,6 @@ export default function BtVideosHandler({ infoHash }) {
           btVideoMetadat: localBtVideoMetadata
         }
         dispatch(store.btSlice.actions.updateVideoFiles(payload))
-      } else if (respone != null) {
-        console.log(respone)
       }
     })
 

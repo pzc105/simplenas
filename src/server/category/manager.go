@@ -128,6 +128,17 @@ func (m *Manager) GetItem(querier int64, itemId ID) (*CategoryItem, error) {
 	return item, err
 }
 
+func (m *Manager) GetItemByName(querier int64, parentId ID, name string) (*CategoryItem, error) {
+	if parentId <= 0 {
+		return nil, errors.New("wrong parent id")
+	}
+	id, err := _loadItemIdByName(parentId, name)
+	if err != nil {
+		return nil, err
+	}
+	return m.GetItem(querier, id)
+}
+
 func (m *Manager) GetItems(querier int64, itemIds ...ID) ([]*CategoryItem, error) {
 	remainIds := make([]ID, 0, len(itemIds))
 	ret := make([]*CategoryItem, 0, len(itemIds))

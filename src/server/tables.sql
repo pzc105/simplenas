@@ -15,7 +15,7 @@ create table user (
 
 /*
 drop table video;
-drop table category_item;
+drop table category_items;
 drop table category_type;
 */
 
@@ -70,12 +70,14 @@ create table category_items (
   fulltext(name, introduce)
 );
 
-insert into category_item (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
   (1, 0, 1, "root", 1, "", "", "", "");
-insert into category_item (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
   (2, 1, 2, "tmp", 1, "", "", "", "");
-insert into category_item (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
   (3, 1, 1, "users", 1, "", "", "", "");
+insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+  (4, 1, 2, "magnet-shares", 1, "", "", "", "");
 
 insert into user(id, name, email, passwd, auth, directory_id) values
   (1, "admin", "admin@admin.cn", "202cb962ac59075b964b07152d234b70", "", 1);
@@ -94,9 +96,9 @@ create procedure new_category(in type_id int,
 begin
   declare parent_count int default 0;
   start transaction;
-  select count(*) into parent_count from pnas.category_item where id = parent_id for update;
+  select count(*) into parent_count from pnas.category_items where id = parent_id for update;
   if parent_count = 1 then
-    insert into pnas.category_item (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+    insert into pnas.category_items (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
       (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce);
     select last_insert_id() into new_item_id;
   else
@@ -112,7 +114,7 @@ delimiter //
 create procedure del_category(in del_item_id bigint)
 begin
   start transaction;
-  delete from pnas.category_item where id = del_item_id;
+  delete from pnas.category_items where id = del_item_id;
   commit;
 end//
 delimiter ;
@@ -130,7 +132,7 @@ begin
   start transaction;
   insert into pnas.user (name, email, passwd, auth, directory_id) values(name, email, passwd, auth, 0);
   select last_insert_id() into new_user_id;
-  insert into pnas.category_item (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+  insert into pnas.category_items (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
       (3, 1, name, new_user_id, homeAuth, "", "", "");
   select last_insert_id() into new_home_id;
   update pnas.user set directory_id=new_home_id where id=new_user_id;

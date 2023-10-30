@@ -19,7 +19,6 @@ import * as User from './prpc/user_pb.js'
 import * as Category from './prpc/category_pb.js'
 import userService from './rpcClient.js'
 import { serverAddress } from './rpcClient.js'
-import * as utils from './utils.js'
 
 const CategoryItems = ({ parentId, shareid }) => {
   const navigate = useNavigate()

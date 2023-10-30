@@ -47,6 +47,27 @@ type CategoryItem struct {
 	subItemIds []ID
 }
 
+func _initSubItemIds(item *CategoryItem) error {
+	sql := `select id from pnas.category_items where parent_id=?`
+	rows, err := db.Query(sql, item.base.Id)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	defer rows.Close()
+	var subIds []ID
+	for rows.Next() {
+		var itemId ID
+		err := rows.Scan(&itemId)
+		if err != nil {
+			log.Warn(err)
+			continue
+		}
+		subIds = append(subIds, itemId)
+	}
+	item.subItemIds = subIds
+	return nil
+}
+
 func _loadItem(itemId ID) (*CategoryItem, error) {
 	var item CategoryItem
 	item.base.Id = itemId
@@ -64,25 +85,18 @@ func _loadItem(itemId ID) (*CategoryItem, error) {
 	item.auth = utils.NewBitSet(AuthMax)
 	item.auth.UnmarshalBinary(byteAuth)
 
-	sql = `select id from pnas.category_items where parent_id=?`
-	rows, err := db.Query(sql, itemId)
+	err = _initSubItemIds(&item)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, err
 	}
-	defer rows.Close()
-
-	var subIds []ID
-	for rows.Next() {
-		var itemId ID
-		err := rows.Scan(&itemId)
-		if err != nil {
-			log.Warn(err)
-			continue
-		}
-		subIds = append(subIds, itemId)
-	}
-	item.subItemIds = subIds
 	return &item, nil
+}
+
+func _loadItemIdByName(parentId ID, name string) (ID, error) {
+	var ret ID
+	sql := `select id from pnas.category_items where parent_id=? and name=?`
+	err := db.QueryRow(sql, parentId, name).Scan(&ret)
+	return ret, err
 }
 
 func _loadItems(itemIds ...ID) ([]*CategoryItem, error) {
@@ -111,27 +125,13 @@ func _loadItems(itemIds ...ID) ([]*CategoryItem, error) {
 			&item.base.Introduce, &item.base.CreatedAt, &item.base.UpdatedAt, &item.base.ParentId,
 		)
 		if err != nil {
-			return items, errors.WithStack(err)
+			return nil, errors.WithStack(err)
 		}
 
-		sql = `select id from pnas.category_items where parent_id=?`
-		rows, err := db.Query(sql, item.base.Id)
+		err = _initSubItemIds(&item)
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
-		defer rows.Close()
-
-		var subIds []ID
-		for rows.Next() {
-			var itemId ID
-			err := rows.Scan(&itemId)
-			if err != nil {
-				log.Warn(err)
-				continue
-			}
-			subIds = append(subIds, itemId)
-		}
-		item.subItemIds = subIds
 
 		items = append(items, &item)
 	}
@@ -280,7 +280,7 @@ func (c *CategoryItem) GetType() prpc.CategoryItem_Type {
 func (c *CategoryItem) IsDirectory() bool {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
-	return c.base.TypeId == prpc.CategoryItem_Directory
+	return c.base.TypeId == prpc.CategoryItem_Directory || c.base.TypeId == prpc.CategoryItem_Home
 }
 
 func (c *CategoryItem) GetSubItemIds() []ID {

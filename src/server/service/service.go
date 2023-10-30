@@ -335,6 +335,7 @@ func (ser *CoreService) Login(
 			Name:            userInfo.Name,
 			Email:           userInfo.Email,
 			HomeDirectoryId: int64(userInfo.HomeDirectoryId),
+			MagnetRootId:    int64(ser.um.GetRootId()),
 		},
 		RememberMe: loginInfo.RememberMe,
 	}, nil
@@ -376,6 +377,7 @@ func (ser *CoreService) FastLogin(
 			Name:            userInfo.Name,
 			Email:           userInfo.Email,
 			HomeDirectoryId: int64(userInfo.HomeDirectoryId),
+			MagnetRootId:    int64(ser.um.GetRootId()),
 		},
 		RememberMe: loginInfo.RememberMe,
 	}, nil
@@ -550,7 +552,7 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 		if err != nil {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		if !ser.um.IsItemShared(si.ShareItemInfo.ItemId, category.ID(req.ParentId)) {
+		if !ser.um.IsParentOf(si.ShareItemInfo.ItemId, category.ID(req.ParentId)) {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
 		userId = si.UserId
@@ -600,7 +602,7 @@ func (ser *CoreService) QueryItemInfo(ctx context.Context, req *prpc.QueryItemIn
 		if err != nil {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		if !ser.um.IsItemShared(si.ShareItemInfo.ItemId, category.ID(req.ItemId)) {
+		if !ser.um.IsParentOf(si.ShareItemInfo.ItemId, category.ID(req.ItemId)) {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
 		userId = si.UserId
@@ -810,4 +812,91 @@ func (ser *CoreService) SendMsg2ChatRoom(ctx context.Context, req *prpc.SendMsg2
 	})
 
 	return &prpc.SendMsg2ChatRoomRes{}, nil
+}
+
+func (ser *CoreService) AddMagnetCategory(ctx context.Context, req *prpc.AddMagnetCategoryReq) (*prpc.AddMagnetCategoryRsp, error) {
+	if req == nil || req.CategoryName == "" {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "not found session")
+	}
+	err := ser.um.AddMagnetCategory(req.CategoryName, category.ID(req.ParentId))
+	if err != nil {
+		return nil, err
+	}
+	return &prpc.AddMagnetCategoryRsp{}, nil
+}
+
+func (ser *CoreService) AddMagnetUri(ctx context.Context, req *prpc.AddMagnetUriReq) (*prpc.AddMagnetUriRsp, error) {
+	if req == nil || req.CategoryName == "" {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "not found session")
+	}
+	ser.um.AddMagnetUri(&user.AddMagnetUriParams{
+		ParentId:     category.ID(req.ParentId),
+		CategoryName: req.CategoryName,
+	})
+	err := ser.um.AddMagnetUri(&user.AddMagnetUriParams{
+		Uri:          req.MagnetUri,
+		ParentId:     0,
+		CategoryName: req.CategoryName,
+		Name:         "",
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &prpc.AddMagnetUriRsp{}, nil
+}
+
+func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetReq) (*prpc.QueryMagnetRsp, error) {
+	if req == nil {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "not found session")
+	}
+
+	if !ser.um.IsParentOf(ser.um.GetRootId(), category.ID(req.ParentId)) {
+		return nil, status.Error(codes.PermissionDenied, "isn't share directory")
+	}
+
+	item, err := ser.um.QueryItem(category.AdminId, category.ID(req.ParentId))
+	if err != nil {
+		return nil, err
+	}
+
+	items, err := ser.um.QueryMagnetCategorys(&user.QueryCategoryParams{
+		ParentId: category.ID(req.ParentId),
+	})
+	if err != nil {
+		return nil, err
+	}
+	res := &prpc.QueryMagnetRsp{}
+
+	var resItem prpc.CategoryItem
+	itemInfo := item.GetItemInfo()
+	copier.Copy(&resItem, &itemInfo)
+	sudItemIds := item.GetSubItemIds()
+	for _, id := range sudItemIds {
+		resItem.SubItemIds = append(resItem.SubItemIds, int64(id))
+	}
+	res.Items = append(res.Items, &resItem)
+
+	for _, item := range items {
+		var resItem prpc.CategoryItem
+		itemInfo := item.GetItemInfo()
+		copier.Copy(&resItem, &itemInfo)
+		sudItemIds := item.GetSubItemIds()
+		for _, id := range sudItemIds {
+			resItem.SubItemIds = append(resItem.SubItemIds, int64(id))
+		}
+		res.Items = append(res.Items, &resItem)
+	}
+	return res, nil
 }

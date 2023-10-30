@@ -18,4 +18,4 @@ do
 done
 echo crt_path: ${crt_path}
 echo key_path: ${key_path}
-PORT=3000 HTTPS=true SSL_CRT_FILE=${crt_path} SSL_KEY_FILE=${key_path} (nohup npm start &)
+PORT=3000 HTTPS=true SSL_CRT_FILE=${crt_path} SSL_KEY_FILE=${key_path} npm start

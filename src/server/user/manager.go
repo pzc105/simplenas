@@ -23,6 +23,7 @@ import (
 )
 
 type UserManger struct {
+	IMagnetSharesService
 	UserTorrents
 	mtx          sync.Mutex
 	users        map[ID]*User
@@ -46,6 +47,10 @@ func (um *UserManger) Init() {
 
 	um.categorySer = &category.Manager{}
 	um.categorySer.Init()
+
+	var magnetShares MagnetSharesService
+	magnetShares.Init(um.categorySer)
+	um.IMagnetSharesService = &magnetShares
 
 	um.cudaQueue.Init(utils.WithMaxQueue(1024))
 	um.qsvQueue.Init(utils.WithMaxQueue(1024))
@@ -521,21 +526,21 @@ func (um *UserManger) RefreshSubtitle(vid video.ID) error {
 	return nil
 }
 
-func (um *UserManger) IsItemShared(sharedItemId category.ID, itemId category.ID) bool {
-	_, err := um.categorySer.GetItem(category.AdminId, sharedItemId)
+func (um *UserManger) IsParentOf(parentId category.ID, itemId category.ID) bool {
+	_, err := um.categorySer.GetItem(category.AdminId, parentId)
 	if err != nil {
-		log.Warnf("not found shared item id %d", sharedItemId)
+		log.Warnf("not found shared item id %d", parentId)
 		return false
 	}
 	var nextParentId = itemId
 	for {
 		item, err := um.categorySer.GetItem(category.AdminId, nextParentId)
 		if err != nil {
-			log.Warnf("not found shared item id :%d, next parent: %d, share item id: %d", itemId, nextParentId, sharedItemId)
+			log.Warnf("not found shared item id :%d, next parent: %d, share item id: %d", itemId, nextParentId, parentId)
 			return false
 		}
 		ii := item.GetItemInfo()
-		if ii.Id == sharedItemId {
+		if ii.Id == parentId {
 			return true
 		}
 		nextParentId = ii.ParentId

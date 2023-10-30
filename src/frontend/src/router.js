@@ -7,6 +7,7 @@ import SignUp from './signUp';
 import Download from './download';
 import Sidebar from './sidebar.js'
 import CategoryItemPage from './category.js'
+import MagnetSharesPage from './magnetShares';
 import PlyrWrap from './plyrwrap.js';
 import CheckLoginHandler from './checklogin.js'
 import UserInfoPage from './user.js'
@@ -73,6 +74,7 @@ export default function App() {
           <Route path="/download" element={<Download />} />
           <Route path="/citem" element={<CategoryItemPage />} />
           <Route path="/video" element={<PlyrWrap />} />
+          <Route path="/mgnetshares" element={<MagnetSharesPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

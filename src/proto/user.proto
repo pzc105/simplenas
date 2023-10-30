@@ -12,47 +12,18 @@ import "google/api/annotations.proto";
 
 service UserService {
 
-  rpc Register (RegisterInfo) returns (RegisterRet) {
-    option (google.api.http) = {
-    post: "/register"
-    body: "*"
-    };
-  };
+  rpc Register (RegisterInfo) returns (RegisterRet);
 
-  rpc IsUsedEmail (EmailInfo) returns (IsUsedEmailRet) {
-    option (google.api.http) = {
-    post: "/isusedemail"
-    body: "*"
-    };
-  };
+  rpc IsUsedEmail (EmailInfo) returns (IsUsedEmailRet);
 
-  rpc Login (LoginInfo) returns (LoginRet) {
-    option (google.api.http) = {
-    post: "/login"
-    body: "*"
-    };
-  };
+  rpc Login (LoginInfo) returns (LoginRet);
 
-  rpc FastLogin (LoginInfo) returns (LoginRet) {
-    option (google.api.http) = {
-    post: "/fastlogin"
-    body: "*"
-    };
-  }
+  rpc FastLogin (LoginInfo) returns (LoginRet);
 
-   rpc IsLogined (LoginInfo) returns (LoginRet) {
-    option (google.api.http) = {
-    post: "/islogged"
-    body: "*"
-    };
-  }
+  rpc IsLogined (LoginInfo) returns (LoginRet);
 
-  rpc Download(DownloadRequest) returns (DownloadRespone) {
-    option (google.api.http) = {
-    post: "/download"
-    body: "*"
-    };
-  }
+  rpc Download(DownloadRequest) returns (DownloadRespone);
+
   rpc RemoveTorrent(RemoveTorrentReq) returns (RemoveTorrentRes);
   
   rpc OnStatus(StatusRequest) returns (stream StatusRespone);
@@ -73,7 +44,9 @@ service UserService {
   rpc JoinChatRoom(JoinChatRoomReq) returns (stream JoinChatRoomRes);
   rpc SendMsg2ChatRoom(SendMsg2ChatRoomReq) returns (SendMsg2ChatRoomRes);
 
+  rpc AddMagnetCategory(AddMagnetCategoryReq) returns (AddMagnetCategoryRsp);
   rpc AddMagnetUri(AddMagnetUriReq) returns (AddMagnetUriRsp);
+  rpc QueryMagnet(QueryMagnetReq) returns (QueryMagnetRsp);
 }
 
 
@@ -83,6 +56,7 @@ message UserInfo {
   string email = 3;
   string passwd = 4;
   int64 home_directory_id = 5;
+  int64 magnet_root_id = 6;
 }
 
 message RegisterInfo {
@@ -248,6 +222,16 @@ message SendMsg2ChatRoomRes {
 
 }
 
+message AddMagnetCategoryReq {
+  int64 parent_id = 1;
+  string categoryName = 2;
+  string introduce = 4;
+}
+
+message AddMagnetCategoryRsp {
+
+}
+
 message AddMagnetUriReq {
   int64 parent_id = 1;
   string categoryName = 2;
@@ -257,4 +241,12 @@ message AddMagnetUriReq {
 
 message AddMagnetUriRsp {
 
+}
+
+message QueryMagnetReq {
+  int64 parent_id = 1;
+}
+
+message QueryMagnetRsp {
+  repeated CategoryItem items = 1;
 }

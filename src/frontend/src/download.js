@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Container, Grid, Link, TextField, Button, InputAdornment, CssBaseline } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import { styled } from "@mui/material/styles";
 import Typography from '@mui/material/Typography';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import SideUtils from './sideUtils.js';
-import { btSlice, eventSlice } from './store.js'
+import * as store from './store.js'
 import * as Bt from './prpc/bt_pb.js'
 import userService from './rpcClient.js'
 import FileUpload from './uploadTorrent.js'
@@ -42,7 +43,7 @@ export default function Download() {
     stream.on('data', function (sResponse) {
       const trs = sResponse.getStatusArrayList()
       trs.map((t) => {
-        dispatch(btSlice.actions.updateTorrent(t.toObject()))
+        dispatch(store.btSlice.actions.updateTorrent(t.toObject()))
         return null
       })
     })
@@ -58,10 +59,10 @@ export default function Download() {
   }, [dispatch])
 
   const handleListItemMouseDown = () => {
-    dispatch(eventSlice.actions.setDownloadPageMouse(true))
+    dispatch(store.eventSlice.actions.setDownloadPageMouse(true))
   }
   const handleListItemMouseUp = () => {
-    dispatch(eventSlice.actions.setDownloadPageMouse(false))
+    dispatch(store.eventSlice.actions.setDownloadPageMouse(false))
   }
 
   return (
@@ -83,9 +84,24 @@ export default function Download() {
 }
 
 const TorrentNavigation = () => {
+  const userInfo = useSelector((state) => store.selectUserInfo(state))
+  const navigate = useNavigate()
+  const navigateToMagnetPage = () => {
+    let path = "/mgnetshares"
+    if (userInfo != null) {
+      path += "?itemid=" + userInfo.magnetRootId
+    }
+    navigate(path)
+  }
 
   return (
     <Container >
+      <Typography sx={{ marginTop: '1em' }}>
+        <Link onClick={navigateToMagnetPage} target="_blank" rel="noopener" >
+          magnet uri
+        </Link>
+        分享中心
+      </Typography>
       <Typography sx={{ marginTop: '1em' }}>
         <Link href="https://yts.mx/" target="_blank" rel="noopener" >
           YTS

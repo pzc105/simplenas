@@ -59,7 +59,6 @@ function ProgressBar(props) {
   const handleContextMenu = (event) => {
     event.preventDefault();
     setAnchorPosition({ left: event.clientX, top: event.clientY });
-    console.log(anchorPosition)
     setOpen(true);
   };
 

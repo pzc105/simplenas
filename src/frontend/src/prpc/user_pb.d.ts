@@ -22,6 +22,9 @@ export class UserInfo extends jspb.Message {
   getHomeDirectoryId(): number;
   setHomeDirectoryId(value: number): UserInfo;
 
+  getMagnetRootId(): number;
+  setMagnetRootId(value: number): UserInfo;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UserInfo.AsObject;
   static toObject(includeInstance: boolean, msg: UserInfo): UserInfo.AsObject;
@@ -37,6 +40,7 @@ export namespace UserInfo {
     email: string,
     passwd: string,
     homeDirectoryId: number,
+    magnetRootId: number,
   }
 }
 
@@ -755,6 +759,128 @@ export class SendMsg2ChatRoomRes extends jspb.Message {
 
 export namespace SendMsg2ChatRoomRes {
   export type AsObject = {
+  }
+}
+
+export class AddMagnetCategoryReq extends jspb.Message {
+  getParentId(): number;
+  setParentId(value: number): AddMagnetCategoryReq;
+
+  getCategoryname(): string;
+  setCategoryname(value: string): AddMagnetCategoryReq;
+
+  getIntroduce(): string;
+  setIntroduce(value: string): AddMagnetCategoryReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AddMagnetCategoryReq.AsObject;
+  static toObject(includeInstance: boolean, msg: AddMagnetCategoryReq): AddMagnetCategoryReq.AsObject;
+  static serializeBinaryToWriter(message: AddMagnetCategoryReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AddMagnetCategoryReq;
+  static deserializeBinaryFromReader(message: AddMagnetCategoryReq, reader: jspb.BinaryReader): AddMagnetCategoryReq;
+}
+
+export namespace AddMagnetCategoryReq {
+  export type AsObject = {
+    parentId: number,
+    categoryname: string,
+    introduce: string,
+  }
+}
+
+export class AddMagnetCategoryRsp extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AddMagnetCategoryRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: AddMagnetCategoryRsp): AddMagnetCategoryRsp.AsObject;
+  static serializeBinaryToWriter(message: AddMagnetCategoryRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AddMagnetCategoryRsp;
+  static deserializeBinaryFromReader(message: AddMagnetCategoryRsp, reader: jspb.BinaryReader): AddMagnetCategoryRsp;
+}
+
+export namespace AddMagnetCategoryRsp {
+  export type AsObject = {
+  }
+}
+
+export class AddMagnetUriReq extends jspb.Message {
+  getParentId(): number;
+  setParentId(value: number): AddMagnetUriReq;
+
+  getCategoryname(): string;
+  setCategoryname(value: string): AddMagnetUriReq;
+
+  getMagnetUri(): string;
+  setMagnetUri(value: string): AddMagnetUriReq;
+
+  getIntroduce(): string;
+  setIntroduce(value: string): AddMagnetUriReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AddMagnetUriReq.AsObject;
+  static toObject(includeInstance: boolean, msg: AddMagnetUriReq): AddMagnetUriReq.AsObject;
+  static serializeBinaryToWriter(message: AddMagnetUriReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AddMagnetUriReq;
+  static deserializeBinaryFromReader(message: AddMagnetUriReq, reader: jspb.BinaryReader): AddMagnetUriReq;
+}
+
+export namespace AddMagnetUriReq {
+  export type AsObject = {
+    parentId: number,
+    categoryname: string,
+    magnetUri: string,
+    introduce: string,
+  }
+}
+
+export class AddMagnetUriRsp extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AddMagnetUriRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: AddMagnetUriRsp): AddMagnetUriRsp.AsObject;
+  static serializeBinaryToWriter(message: AddMagnetUriRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AddMagnetUriRsp;
+  static deserializeBinaryFromReader(message: AddMagnetUriRsp, reader: jspb.BinaryReader): AddMagnetUriRsp;
+}
+
+export namespace AddMagnetUriRsp {
+  export type AsObject = {
+  }
+}
+
+export class QueryMagnetReq extends jspb.Message {
+  getParentId(): number;
+  setParentId(value: number): QueryMagnetReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): QueryMagnetReq.AsObject;
+  static toObject(includeInstance: boolean, msg: QueryMagnetReq): QueryMagnetReq.AsObject;
+  static serializeBinaryToWriter(message: QueryMagnetReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): QueryMagnetReq;
+  static deserializeBinaryFromReader(message: QueryMagnetReq, reader: jspb.BinaryReader): QueryMagnetReq;
+}
+
+export namespace QueryMagnetReq {
+  export type AsObject = {
+    parentId: number,
+  }
+}
+
+export class QueryMagnetRsp extends jspb.Message {
+  getItemsList(): Array<category_pb.CategoryItem>;
+  setItemsList(value: Array<category_pb.CategoryItem>): QueryMagnetRsp;
+  clearItemsList(): QueryMagnetRsp;
+  addItems(value?: category_pb.CategoryItem, index?: number): category_pb.CategoryItem;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): QueryMagnetRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: QueryMagnetRsp): QueryMagnetRsp.AsObject;
+  static serializeBinaryToWriter(message: QueryMagnetRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): QueryMagnetRsp;
+  static deserializeBinaryFromReader(message: QueryMagnetRsp, reader: jspb.BinaryReader): QueryMagnetRsp;
+}
+
+export namespace QueryMagnetRsp {
+  export type AsObject = {
+    itemsList: Array<category_pb.CategoryItem.AsObject>,
   }
 }
 
