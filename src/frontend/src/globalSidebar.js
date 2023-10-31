@@ -90,7 +90,7 @@ export default function GlobalSidebar() {
     },
     userInfo ? {
       icon: <PersonalVideoIcon />,
-      title: "MagnetShares",
+      title: "磁链中心",
       onClick: () => navigate2mgnetshares(navigate, userInfo.magnetRootId),
     } : null,
   ];
