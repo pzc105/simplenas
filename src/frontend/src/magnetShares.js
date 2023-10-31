@@ -89,9 +89,11 @@ const MagnetItems = ({ parentId }) => {
                             </Typography>
                           </Grid>
                           <Grid item xs={8}>
-                            <Link onClick={() => router.navigate2mgnetshares(navigate, item.id)} sx={{ cursor: 'pointer' }}>
-                              {item.name}
-                            </Link>
+                            <Tooltip title={item.introduce}>
+                              <Link onClick={() => router.navigate2mgnetshares(navigate, item.id)} sx={{ cursor: 'pointer' }}>
+                                {item.name}
+                              </Link>
+                            </Tooltip>
                           </Grid>
                           <Grid item xs={2}>
                             <Button onClick={() => delItem(item.id)}>删除</Button>
@@ -111,15 +113,17 @@ const MagnetItems = ({ parentId }) => {
                           </Grid>
                           <Grid item xs={8}>
                             <CopyToClipboard text={item.other}>
-                              <Typography variant="button" component="div" noWrap>
-                                <Button onClick={() => setCopyDialogOpen(true)}>{item.other}</Button>
-                                <Dialog open={copyDialogOpen} onClose={() => setCopyDialogOpen(false)}>
-                                  <div style={{ padding: '16px' }}>
-                                    已复制到剪贴板
-                                  </div>
-                                </Dialog>
-                              </Typography>
+                              <Tooltip title={item.introduce}>
+                                <Typography variant="button" component="div" noWrap>
+                                  <Button onClick={() => setCopyDialogOpen(true)}>{item.other}</Button>
+                                </Typography>
+                              </Tooltip>
                             </CopyToClipboard>
+                            <Dialog open={copyDialogOpen} onClose={() => setCopyDialogOpen(false)}>
+                              <div style={{ padding: '16px' }}>
+                                已复制到剪贴板
+                              </div>
+                            </Dialog>
                           </Grid>
                           <Grid item xs={2}>
                             <Button onClick={() => delItem(item.id)}>删除</Button>

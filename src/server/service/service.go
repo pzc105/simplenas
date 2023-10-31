@@ -845,6 +845,7 @@ func (ser *CoreService) AddMagnetUri(ctx context.Context, req *prpc.AddMagnetUri
 	err := ser.um.AddMagnetUri(&user.AddMagnetUriParams{
 		CategoryId: category.ID(req.CategoryId),
 		Uri:        req.MagnetUri,
+		Introduce:  req.Introduce,
 	})
 	if err != nil {
 		return nil, err
