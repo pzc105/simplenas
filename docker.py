@@ -2,8 +2,8 @@ import os, sys, getopt
 
 git_proxy = ""
 all_proxy = ""
-server_config = "./server.yml"
-bt_config = "./bt.yml"
+server_config = "./asset/server.yml"
+bt_config = "./asset/bt.yml"
 tls_config = "./tls"
 
 def gen_docker_image(content, image_name):
@@ -117,14 +117,14 @@ def main():
     os.system("sudo docker exec {0} /bin/bash -c 'mysql -uroot -p123 < /source/simplenas/src/server/tables.sql'".format(container_name))
 
     os.system("sudo docker exec {0} /bin/bash -c 'mkdir -p /app/media/poster && \
-                cp /source/simplenas/default_folder.png /app/media/poster/ && \
-                cp /source/simplenas/house.png /app/media/poster/'".format(container_name))
+                cp /source/simplenas/asset/default_folder.png /app/media/poster/ && \
+                cp /source/simplenas/asset/house.png /app/media/poster/'".format(container_name))
 
     os.system("sudo docker exec {0} /bin/bash -c \"cd /app && (nohup ./bt &) && (nohup ./pnas &)\"".format(container_name))
     os.system("sudo docker exec {0} /bin/bash -c \"echo 'REACT_APP_RPC_SERVER={1}' > /source/simplenas/src/frontend/.env.local\"".format(container_name, rpc_server_address))
     os.system("sudo docker exec {0} /bin/bash -c 'cd /source/simplenas/src/frontend && \
       npm run build && mkdir -p /app/frontend && cp -rf build/* /app/frontend'".format(container_name))
-    os.system("sudo docker cp ./nginx.conf {0}:/etc/nginx/".format(container_name))
+    os.system("sudo docker cp ./asset/nginx.conf {0}:/etc/nginx/".format(container_name))
     os.system("sudo docker exec {0} /bin/bash -c 'service nginx restart'".format(container_name))
 
   if start_container:
