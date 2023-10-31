@@ -24,9 +24,9 @@ export default function CheckLoginHandler() {
       }
     }
 
-    setInterval(check, 30000)
+    let myInterval = setInterval(check, 30000)
     return () => {
-      clearInterval(check);
+      clearInterval(myInterval);
     };
   }, [dispatch, navigate])
 
