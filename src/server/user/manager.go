@@ -193,6 +193,10 @@ func (um *UserManger) NewCategoryItem(userId ID, params *category.NewCategoryPar
 	return err
 }
 
+func (um *UserManger) CategoryService() category.Service {
+	return um.categorySer
+}
+
 func (um *UserManger) DelCategoryItem(userId ID, itemId category.ID) error {
 	return um.categorySer.DelItem(int64(userId), itemId)
 }

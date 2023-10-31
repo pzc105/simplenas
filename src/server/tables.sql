@@ -68,7 +68,7 @@ create table category_items (
   key name (name),
   key resource(creator, type_id, resource_path),
   key parent(parent_id, name),
-  fulltext(name, introduce)
+  fulltext fulltext_ni(name, introduce) with parser ngram
 );
 
 insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
@@ -166,7 +166,7 @@ create table torrent (
 
   primary key(id),
   key info_hash (info_hash, version),
-  fulltext(introduce)
+  fulltext fulltext_i(introduce) with parser ngram
 );
 
 create table user_torrent (

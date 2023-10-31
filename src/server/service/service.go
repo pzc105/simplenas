@@ -335,7 +335,7 @@ func (ser *CoreService) Login(
 			Name:            userInfo.Name,
 			Email:           userInfo.Email,
 			HomeDirectoryId: int64(userInfo.HomeDirectoryId),
-			MagnetRootId:    int64(ser.um.GetRootId()),
+			MagnetRootId:    int64(ser.um.GetMagnetRootId()),
 		},
 		RememberMe: loginInfo.RememberMe,
 	}, nil
@@ -377,7 +377,7 @@ func (ser *CoreService) FastLogin(
 			Name:            userInfo.Name,
 			Email:           userInfo.Email,
 			HomeDirectoryId: int64(userInfo.HomeDirectoryId),
-			MagnetRootId:    int64(ser.um.GetRootId()),
+			MagnetRootId:    int64(ser.um.GetMagnetRootId()),
 		},
 		RememberMe: loginInfo.RememberMe,
 	}, nil
@@ -866,14 +866,29 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 		return nil, err
 	}
 
-	items, err := ser.um.QueryMagnetCategorys(&user.QueryCategoryParams{
-		ParentId: category.ID(req.ParentId),
-	})
-	if err != nil {
-		return nil, err
+	var items []*category.CategoryItem
+	if len(req.SearchCond) > 0 {
+		if !ser.um.CategoryService().IsRelationOf(ser.um.GetMagnetRootId(), category.ID(req.ParentId)) {
+			return nil, status.Error(codes.PermissionDenied, "not found parent id")
+		}
+		items, err = ser.um.CategoryService().Search(&category.SearchParams{
+			Querier:      category.AdminId,
+			RootId:       category.ID(req.ParentId),
+			ExistedWords: req.SearchCond,
+		})
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		items, err = ser.um.QueryMagnetCategorys(&user.QueryCategoryParams{
+			ParentId: category.ID(req.ParentId),
+		})
+		if err != nil {
+			return nil, err
+		}
 	}
-	res := &prpc.QueryMagnetRsp{}
 
+	res := &prpc.QueryMagnetRsp{}
 	var resItem prpc.CategoryItem
 	itemInfo := item.GetItemInfo()
 	copier.Copy(&resItem, &itemInfo)
@@ -882,7 +897,6 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 		resItem.SubItemIds = append(resItem.SubItemIds, int64(id))
 	}
 	res.Items = append(res.Items, &resItem)
-
 	for _, item := range items {
 		var resItem prpc.CategoryItem
 		itemInfo := item.GetItemInfo()

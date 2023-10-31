@@ -26,7 +26,8 @@ import { serverAddress } from './rpcClient.js'
 const MagnetItems = ({ parentId }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const items = useSelector((state) => store.selectCategorySubItems(state, parentId))
+  const items = useSelector((state) => store.selectMagnetSharesItems(state))
+  const [searchWords, setSearchWords] = useState('')
 
   const [copyDialogOpen, setCopyDialogOpen] = useState(false)
 
@@ -38,12 +39,40 @@ const MagnetItems = ({ parentId }) => {
         console.log(err)
         return
       }
-      queryMagnet(parentId, dispatch)
+      queryMagnet(dispatch, parentId, searchWords)
     })
+  }
+
+  const onSearchText = (e) => {
+    setSearchWords(e.target.value)
+  }
+  const search = (e) => {
+    queryMagnet(dispatch, parentId, searchWords)
   }
 
   return (
     <Container>
+      <Grid container sx={{ display: 'flex' }} >
+        <TextField
+          label="搜索关键字"
+          variant="outlined"
+          margin="normal"
+          required
+          onChange={onSearchText}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <CloudDownloadIcon />
+              </InputAdornment>
+            ),
+          }} />
+        <Button
+          color="primary"
+          onClick={search}
+          variant="contained">
+          搜索
+        </Button>
+      </Grid>
       <List>
         {items ?
           items.map((item) => (
@@ -116,7 +145,7 @@ export default function MagnetSharesPage() {
   const itemId = searchParams.get('itemid') ? Number(searchParams.get('itemid')) : -1
 
   useEffect(() => {
-    queryMagnet(itemId, dispatch)
+    queryMagnet(dispatch, itemId)
   }, [itemId])
 
   return (
@@ -168,7 +197,7 @@ const Manager = ({ parentId }) => {
         console.log(err)
         return
       }
-      queryMagnet(parentId, dispatch)
+      queryMagnet(dispatch, parentId)
     })
   }
 
@@ -186,7 +215,7 @@ const Manager = ({ parentId }) => {
         console.log(err)
         return
       }
-      queryMagnet(parentId, dispatch)
+      queryMagnet(dispatch, parentId)
     })
   }
 
@@ -279,18 +308,24 @@ const MagnetContainer = styled('div')({
   height: '94vh', /* 页面铺满整个视窗 */
 })
 
-const queryMagnet = (id, dispatch) => {
+const queryMagnet = (dispatch, id, searchWords) => {
   var req = new User.QueryMagnetReq()
   req.setParentId(id)
+  req.setSearchCond(searchWords)
   userService.queryMagnet(req, {}, (err, respone) => {
     if (err != null) {
       console.log(err)
       return
     }
+    let objs = []
     respone.getItemsList().map((i) => {
       let obj = i.toObject()
+      if (obj.id != id) {
+        objs.push(obj)
+      }
       dispatch(store.categorySlice.actions.updateItem(obj))
       return null
     })
+    dispatch(store.categorySlice.actions.updateMagnetSharesItems(objs))
   })
 }

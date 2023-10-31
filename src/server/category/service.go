@@ -8,4 +8,5 @@ type Service interface {
 	GetItemByName(querier int64, parentId ID, name string) (*CategoryItem, error)
 	DelItem(deleter int64, itemId ID) error
 	IsRelationOf(parentId ID, itemId ID) bool
+	Search(params *SearchParams) ([]*CategoryItem, error)
 }

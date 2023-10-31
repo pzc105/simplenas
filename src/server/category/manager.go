@@ -1,6 +1,7 @@
 package category
 
 import (
+	"fmt"
 	"pnas/db"
 	"pnas/log"
 	"sync"
@@ -261,4 +262,35 @@ func (m *Manager) IsRelationOf(parentId ID, itemId ID) bool {
 		}
 		nextParentId = ii.ParentId
 	}
+}
+
+type SearchParams struct {
+	Querier      int64
+	RootId       ID
+	ExistedWords string
+}
+
+func (m *Manager) Search(params *SearchParams) ([]*CategoryItem, error) {
+	sql := fmt.Sprintf("select id from category_items where match (name, introduce) against ('%s')", params.ExistedWords)
+	rows, err := db.Query(sql)
+	if err != nil {
+		return nil, err
+	}
+	var ret []*CategoryItem
+	for rows.Next() {
+		var id ID
+		err := rows.Scan(&id)
+		if err != nil {
+			return nil, err
+		}
+		if params.RootId <= 0 || m.IsRelationOf(params.RootId, id) {
+			item, err := m.GetItem(params.Querier, id)
+			if err != nil {
+				log.Warnf("[category] %v", err)
+				continue
+			}
+			ret = append(ret, item)
+		}
+	}
+	return ret, nil
 }
