@@ -5,7 +5,7 @@ import { purple, green } from '@mui/material/colors';
 import SignIn from './signIn';
 import SignUp from './signUp';
 import Download from './download';
-import Sidebar from './sidebar.js'
+import GlobalSidebar from './globalSidebar.js'
 import CategoryItemPage from './category.js'
 import MagnetSharesPage from './magnetShares';
 import PlyrWrap from './plyrwrap.js';
@@ -63,7 +63,7 @@ export default function App() {
   return (
     <ThemeProvider theme={myTheme}>
       <Router>
-        <Sidebar />
+        <GlobalSidebar />
         <CheckLoginHandler />
         <Routes>
           <Route path="/" element={<Download />} />

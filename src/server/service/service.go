@@ -822,7 +822,11 @@ func (ser *CoreService) AddMagnetCategory(ctx context.Context, req *prpc.AddMagn
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
-	err := ser.um.AddMagnetCategory(req.CategoryName, category.ID(req.ParentId))
+	err := ser.um.AddMagnetCategory(&user.AddMagnetCategoryParams{
+		ParentId:  category.ID(req.ParentId),
+		Name:      req.CategoryName,
+		Introduce: req.Introduce,
+	})
 	if err != nil {
 		return nil, err
 	}

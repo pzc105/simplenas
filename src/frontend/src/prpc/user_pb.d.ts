@@ -766,8 +766,8 @@ export class AddMagnetCategoryReq extends jspb.Message {
   getParentId(): number;
   setParentId(value: number): AddMagnetCategoryReq;
 
-  getCategoryname(): string;
-  setCategoryname(value: string): AddMagnetCategoryReq;
+  getCategoryName(): string;
+  setCategoryName(value: string): AddMagnetCategoryReq;
 
   getIntroduce(): string;
   setIntroduce(value: string): AddMagnetCategoryReq;
@@ -783,7 +783,7 @@ export class AddMagnetCategoryReq extends jspb.Message {
 export namespace AddMagnetCategoryReq {
   export type AsObject = {
     parentId: number,
-    categoryname: string,
+    categoryName: string,
     introduce: string,
   }
 }
@@ -846,6 +846,9 @@ export class QueryMagnetReq extends jspb.Message {
   getParentId(): number;
   setParentId(value: number): QueryMagnetReq;
 
+  getSearchCond(): string;
+  setSearchCond(value: string): QueryMagnetReq;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): QueryMagnetReq.AsObject;
   static toObject(includeInstance: boolean, msg: QueryMagnetReq): QueryMagnetReq.AsObject;
@@ -857,6 +860,7 @@ export class QueryMagnetReq extends jspb.Message {
 export namespace QueryMagnetReq {
   export type AsObject = {
     parentId: number,
+    searchCond: string,
   }
 }
 

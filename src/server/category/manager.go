@@ -90,8 +90,8 @@ func (m *Manager) AddItem(params *NewCategoryParams) (*CategoryItem, error) {
 	item, err := addItem(params)
 	if err == nil {
 		parentItem.addedSubItem(item.base.Id)
+		m.addItem(item)
 	}
-	m.addItem(item)
 	return item, err
 }
 

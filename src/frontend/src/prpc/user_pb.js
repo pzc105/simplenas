@@ -6680,7 +6680,7 @@ proto.prpc.AddMagnetCategoryReq.prototype.toObject = function(opt_includeInstanc
 proto.prpc.AddMagnetCategoryReq.toObject = function(includeInstance, msg) {
   var f, obj = {
     parentId: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    categoryname: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    categoryName: jspb.Message.getFieldWithDefault(msg, 2, ""),
     introduce: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
@@ -6724,7 +6724,7 @@ proto.prpc.AddMagnetCategoryReq.deserializeBinaryFromReader = function(msg, read
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCategoryname(value);
+      msg.setCategoryName(value);
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
@@ -6766,7 +6766,7 @@ proto.prpc.AddMagnetCategoryReq.serializeBinaryToWriter = function(message, writ
       f
     );
   }
-  f = message.getCategoryname();
+  f = message.getCategoryName();
   if (f.length > 0) {
     writer.writeString(
       2,
@@ -6802,10 +6802,10 @@ proto.prpc.AddMagnetCategoryReq.prototype.setParentId = function(value) {
 
 
 /**
- * optional string categoryName = 2;
+ * optional string category_name = 2;
  * @return {string}
  */
-proto.prpc.AddMagnetCategoryReq.prototype.getCategoryname = function() {
+proto.prpc.AddMagnetCategoryReq.prototype.getCategoryName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -6814,7 +6814,7 @@ proto.prpc.AddMagnetCategoryReq.prototype.getCategoryname = function() {
  * @param {string} value
  * @return {!proto.prpc.AddMagnetCategoryReq} returns this
  */
-proto.prpc.AddMagnetCategoryReq.prototype.setCategoryname = function(value) {
+proto.prpc.AddMagnetCategoryReq.prototype.setCategoryName = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -7261,7 +7261,8 @@ proto.prpc.QueryMagnetReq.prototype.toObject = function(opt_includeInstance) {
  */
 proto.prpc.QueryMagnetReq.toObject = function(includeInstance, msg) {
   var f, obj = {
-    parentId: jspb.Message.getFieldWithDefault(msg, 1, 0)
+    parentId: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    searchCond: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -7302,6 +7303,10 @@ proto.prpc.QueryMagnetReq.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {number} */ (reader.readInt64());
       msg.setParentId(value);
       break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSearchCond(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -7338,6 +7343,13 @@ proto.prpc.QueryMagnetReq.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getSearchCond();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
 };
 
 
@@ -7356,6 +7368,24 @@ proto.prpc.QueryMagnetReq.prototype.getParentId = function() {
  */
 proto.prpc.QueryMagnetReq.prototype.setParentId = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+/**
+ * optional string search_cond = 2;
+ * @return {string}
+ */
+proto.prpc.QueryMagnetReq.prototype.getSearchCond = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.prpc.QueryMagnetReq} returns this
+ */
+proto.prpc.QueryMagnetReq.prototype.setSearchCond = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 

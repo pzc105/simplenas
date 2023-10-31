@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   CssBaseline, Button, TextField, Menu, MenuItem, Container, Grid, Paper, Box,
-  Typography, Tooltip, Card, CardContent, CardActions, InputAdornment, Popover, Popper, List, ListItem, Link
+  Typography, Tooltip, Card, CardContent, CardActions, InputAdornment, Popover, Popper, List, ListItem, Link, Dialog
 } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import { styled } from "@mui/material/styles";
@@ -12,7 +12,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { useSelector, useDispatch } from 'react-redux';
 import * as store from './store.js'
-import SideUtils from './sideUtils.js';
+import SideUtils from './sideManager.js';
 import ChatPanel from './chat.js';
 import SubtitleUploader from './uploadSubtitle.js';
 import * as category from './category.js'
@@ -27,7 +27,8 @@ const MagnetItems = ({ parentId }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const items = useSelector((state) => store.selectCategorySubItems(state, parentId))
-  console.log(parentId, items)
+
+  const [copyDialogOpen, setCopyDialogOpen] = useState(false)
 
   const delItem = (id) => {
     var req = new User.DelMagnetCategoryReq()
@@ -80,8 +81,15 @@ const MagnetItems = ({ parentId }) => {
                             </Typography>
                           </Grid>
                           <Grid item xs={8}>
-                            <CopyToClipboard text={item.resourcePath}>
-                              <Button>{item.resourcePath}</Button>
+                            <CopyToClipboard text={item.other}>
+                              <Typography variant="button" component="div" noWrap>
+                                <Button onClick={() => setCopyDialogOpen(true)}>{item.other}</Button>
+                                <Dialog open={copyDialogOpen} onClose={() => setCopyDialogOpen(false)}>
+                                  <div style={{ padding: '16px' }}>
+                                    已复制到剪贴板
+                                  </div>
+                                </Dialog>
+                              </Typography>
                             </CopyToClipboard>
                           </Grid>
                           <Grid item xs={2}>
@@ -96,7 +104,7 @@ const MagnetItems = ({ parentId }) => {
           )) : null
         }
       </List>
-    </Container>
+    </Container >
   )
 }
 
@@ -128,10 +136,25 @@ export default function MagnetSharesPage() {
 const Manager = ({ parentId }) => {
   const dispatch = useDispatch()
   const [magnetUri, setMagnetUri] = useState('')
-  function handleChange(e) {
+  const [magnetUriIntroduce, setMagnetUriIntroduce] = useState('')
+  const [newCategory, setNewCategory] = useState('')
+  const [newCategoryIntroduce, setNewCategoryIntroduce] = useState('')
+
+  const handleMagnetUriChange = (e) => {
     setMagnetUri(e.target.value)
   }
-  function saveMagnetUri(e) {
+  const handleMagnetUriIntroduceChangle = (e) => {
+    setMagnetUriIntroduce(e.target.value)
+  }
+
+  const handleNewCategory = (e) => {
+    setNewCategory(e.target.value)
+  }
+  const handleNewCategoryIntroduce = (e) => {
+    setNewCategoryIntroduce(e.target.value)
+  }
+
+  const saveMagnetUri = (e) => {
     e.stopPropagation()
     if (magnetUri.length === 0) {
       return
@@ -139,7 +162,26 @@ const Manager = ({ parentId }) => {
     var req = new User.AddMagnetUriReq()
     req.setCategoryId(parentId)
     req.setMagnetUri(magnetUri)
+    req.setIntroduce(magnetUriIntroduce)
     userService.addMagnetUri(req, {}, (err, respone) => {
+      if (err != null) {
+        console.log(err)
+        return
+      }
+      queryMagnet(parentId, dispatch)
+    })
+  }
+
+  const addMagnetCategory = (e) => {
+    e.stopPropagation()
+    if (newCategory.length === 0) {
+      return
+    }
+    var req = new User.AddMagnetCategoryReq()
+    req.setParentId(parentId)
+    req.setCategoryName(newCategory)
+    req.setIntroduce(newCategoryIntroduce)
+    userService.addMagnetCategory(req, {}, (err, respone) => {
       if (err != null) {
         console.log(err)
         return
@@ -154,7 +196,11 @@ const Manager = ({ parentId }) => {
         <Grid item xs={12}>
           <TextField
             fullWidth
-            onChange={handleChange}
+            label="magnet uri"
+            variant="outlined"
+            margin="normal"
+            required
+            onChange={handleMagnetUriChange}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -163,15 +209,64 @@ const Manager = ({ parentId }) => {
               ),
             }}
             autoFocus />
-          <Grid item xs={12}>
-            <Button
-              fullWidth
-              color="primary"
-              onClick={saveMagnetUri}
-              variant="contained">
-              保存Magnet Uri
-            </Button>
-          </Grid>
+          <TextField
+            fullWidth
+            label="introduce"
+            variant="outlined"
+            margin="normal"
+            required
+            onChange={handleMagnetUriIntroduceChangle}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CloudDownloadIcon />
+                </InputAdornment>
+              ),
+            }} />
+          <Button
+            fullWidth
+            color="primary"
+            onClick={saveMagnetUri}
+            variant="contained">
+            保存Magnet Uri
+          </Button>
+        </Grid>
+        <Grid item xs={12} sx={{ mt: '2em' }}>
+          <TextField
+            fullWidth
+            label="category name"
+            variant="outlined"
+            margin="normal"
+            required
+            onChange={handleNewCategory}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CloudDownloadIcon />
+                </InputAdornment>
+              ),
+            }} />
+          <TextField
+            fullWidth
+            label="introduce"
+            variant="outlined"
+            margin="normal"
+            required
+            onChange={handleNewCategoryIntroduce}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CloudDownloadIcon />
+                </InputAdornment>
+              ),
+            }} />
+          <Button
+            fullWidth
+            color="primary"
+            onClick={addMagnetCategory}
+            variant="contained">
+            新增分类
+          </Button>
         </Grid>
       </Grid>
     </Container>

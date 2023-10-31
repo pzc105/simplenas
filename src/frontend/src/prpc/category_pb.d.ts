@@ -24,6 +24,9 @@ export class CategoryItem extends jspb.Message {
   getIntroduce(): string;
   setIntroduce(value: string): CategoryItem;
 
+  getOther(): string;
+  setOther(value: string): CategoryItem;
+
   getParentId(): number;
   setParentId(value: number): CategoryItem;
 
@@ -49,6 +52,7 @@ export namespace CategoryItem {
     resourcePath: string,
     posterPath: string,
     introduce: string,
+    other: string,
     parentId: number,
     subItemIdsList: Array<number>,
   }

@@ -21,8 +21,9 @@ message CategoryItem {
   string resource_path = 5;
   string poster_path = 6;
   string introduce = 7;
-  int64 parent_id = 8;
-  repeated int64 sub_item_ids = 9;
+  string other = 8;
+  int64 parent_id = 9;
+  repeated int64 sub_item_ids = 10;
 }
 
 message SharedItem {

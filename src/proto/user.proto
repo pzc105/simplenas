@@ -225,7 +225,7 @@ message SendMsg2ChatRoomRes {
 
 message AddMagnetCategoryReq {
   int64 parent_id = 1;
-  string categoryName = 2;
+  string category_name = 2;
   string introduce = 3;
 }
 
@@ -245,6 +245,7 @@ message AddMagnetUriRsp {
 
 message QueryMagnetReq {
   int64 parent_id = 1;
+  string search_cond = 2;
 }
 
 message QueryMagnetRsp {

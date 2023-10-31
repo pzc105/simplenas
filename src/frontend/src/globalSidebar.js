@@ -15,6 +15,7 @@ import * as utils from './utils.js'
 import * as User from './prpc/user_pb.js'
 import userService from './rpcClient.js'
 import { navigateToItem } from './category.js'
+import { navigate2mgnetshares } from './router.js';
 
 
 const ListItemWithChildren = ({ item }) => {
@@ -42,7 +43,7 @@ const ListItemWithChildren = ({ item }) => {
   );
 };
 
-export default function Sidebar() {
+export default function GlobalSidebar() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const userInfo = useSelector((state) => store.selectUserInfo(state))
@@ -87,7 +88,11 @@ export default function Sidebar() {
       subComponentParams: {},
       onClick: userInfo ? () => navigateToItem(navigate, {}, userInfo.homeDirectoryId, null) : null,
     },
-
+    userInfo ? {
+      icon: <PersonalVideoIcon />,
+      title: "MagnetShares",
+      onClick: () => navigate2mgnetshares(navigate, userInfo.magnetRootId),
+    } : null,
   ];
 
   return (

@@ -11,7 +11,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import { useSelector, useDispatch } from 'react-redux';
 import * as store from './store.js'
-import SideUtils from './sideUtils.js';
+import SideUtils from './sideManager.js';
 import ChatPanel from './chat.js';
 import SubtitleUploader from './uploadSubtitle.js';
 

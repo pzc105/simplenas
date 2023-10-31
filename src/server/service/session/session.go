@@ -145,12 +145,12 @@ func (ss *Sessions) GetSession(r *http.Request) (*Session, error) {
 func (ss *Sessions) GetSession2(ctx context.Context) (*Session, error) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
-		return nil, errors.New("not found session")
+		return nil, errors.New("not found context")
 	}
 
 	raw := md.Get("cookie")
 	if len(raw) == 0 {
-		return nil, errors.New("not found session")
+		return nil, errors.New("not found cookie")
 	}
 	return ss.getSession(raw[0])
 }

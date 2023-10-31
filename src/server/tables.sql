@@ -61,6 +61,7 @@ create table category_items (
   resource_path varchar(256) not null,
   poster_path varchar(256) not null,
   introduce text not null,
+  other text not null,
   created_at datetime default current_timestamp not null,
   updated_at timestamp default current_timestamp on update current_timestamp not null,
   primary key(id),
@@ -91,6 +92,7 @@ create procedure new_category(in type_id int,
                               in resource_path varchar(256),
                               in poster_path varchar(256),
                               in introduce text,
+                              in other text,
                               in parent_id bigint,
                               out new_item_id bigint)
 begin
@@ -98,8 +100,8 @@ begin
   start transaction;
   select count(*) into parent_count from pnas.category_items where id = parent_id for update;
   if parent_count = 1 then
-    insert into pnas.category_items (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
-      (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce);
+    insert into pnas.category_items (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other) values 
+      (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other);
     select last_insert_id() into new_item_id;
   else
     set new_item_id = -2;

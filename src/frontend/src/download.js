@@ -6,7 +6,7 @@ import { styled } from "@mui/material/styles";
 import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 
-import SideUtils from './sideUtils.js';
+import SideUtils from './sideManager.js';
 import * as store from './store.js'
 import * as Bt from './prpc/bt_pb.js'
 import * as router from './router.js'
@@ -103,25 +103,22 @@ const TorrentNavigation = () => {
         <Link href="https://yts.mx/" target="_blank" rel="noopener" >
           YTS
         </Link>
-        可下载国外的电影与连续剧，需要科学上网
+        电影与连续剧
       </Typography>
       <Typography sx={{ marginTop: '1em' }}>
         <Link href="https://bt.acgzero.com/" target="_blank" rel="noopener" >
           零度动漫
         </Link>
-        可以下载动漫
       </Typography>
       <Typography sx={{ marginTop: '1em' }}>
         <Link href="https://bbs.xfsub.org/" target="_blank" rel="noopener" >
           动漫下载
         </Link>
-        可以下载动漫
       </Typography>
       <Typography sx={{ marginTop: '1em' }}>
         <Link href="https://bbs.acgrip.com/" target="_blank" rel="noopener" >
           字幕论坛
         </Link>
-        可以番剧字幕
       </Typography>
       <Typography sx={{ marginTop: '1em' }}>
         <Link href="https://thepiratebay.org/index.html" target="_blank" rel="noopener" >

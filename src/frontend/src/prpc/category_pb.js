@@ -72,7 +72,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.prpc.CategoryItem.repeatedFields_ = [9];
+proto.prpc.CategoryItem.repeatedFields_ = [10];
 
 
 
@@ -112,8 +112,9 @@ proto.prpc.CategoryItem.toObject = function(includeInstance, msg) {
     resourcePath: jspb.Message.getFieldWithDefault(msg, 5, ""),
     posterPath: jspb.Message.getFieldWithDefault(msg, 6, ""),
     introduce: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    parentId: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    subItemIdsList: (f = jspb.Message.getRepeatedField(msg, 9)) == null ? undefined : f
+    other: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    parentId: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    subItemIdsList: (f = jspb.Message.getRepeatedField(msg, 10)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -179,10 +180,14 @@ proto.prpc.CategoryItem.deserializeBinaryFromReader = function(msg, reader) {
       msg.setIntroduce(value);
       break;
     case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOther(value);
+      break;
+    case 9:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setParentId(value);
       break;
-    case 9:
+    case 10:
       var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedInt64() : [reader.readInt64()]);
       for (var i = 0; i < values.length; i++) {
         msg.addSubItemIds(values[i]);
@@ -266,17 +271,24 @@ proto.prpc.CategoryItem.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getOther();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
   f = message.getParentId();
   if (f !== 0) {
     writer.writeInt64(
-      8,
+      9,
       f
     );
   }
   f = message.getSubItemIdsList();
   if (f.length > 0) {
     writer.writePackedInt64(
-      9,
+      10,
       f
     );
   }
@@ -423,11 +435,29 @@ proto.prpc.CategoryItem.prototype.setIntroduce = function(value) {
 
 
 /**
- * optional int64 parent_id = 8;
+ * optional string other = 8;
+ * @return {string}
+ */
+proto.prpc.CategoryItem.prototype.getOther = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.prpc.CategoryItem} returns this
+ */
+proto.prpc.CategoryItem.prototype.setOther = function(value) {
+  return jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * optional int64 parent_id = 9;
  * @return {number}
  */
 proto.prpc.CategoryItem.prototype.getParentId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
 };
 
 
@@ -436,16 +466,16 @@ proto.prpc.CategoryItem.prototype.getParentId = function() {
  * @return {!proto.prpc.CategoryItem} returns this
  */
 proto.prpc.CategoryItem.prototype.setParentId = function(value) {
-  return jspb.Message.setProto3IntField(this, 8, value);
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
 /**
- * repeated int64 sub_item_ids = 9;
+ * repeated int64 sub_item_ids = 10;
  * @return {!Array<number>}
  */
 proto.prpc.CategoryItem.prototype.getSubItemIdsList = function() {
-  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 9));
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 10));
 };
 
 
@@ -454,7 +484,7 @@ proto.prpc.CategoryItem.prototype.getSubItemIdsList = function() {
  * @return {!proto.prpc.CategoryItem} returns this
  */
 proto.prpc.CategoryItem.prototype.setSubItemIdsList = function(value) {
-  return jspb.Message.setField(this, 9, value || []);
+  return jspb.Message.setField(this, 10, value || []);
 };
 
 
@@ -464,7 +494,7 @@ proto.prpc.CategoryItem.prototype.setSubItemIdsList = function(value) {
  * @return {!proto.prpc.CategoryItem} returns this
  */
 proto.prpc.CategoryItem.prototype.addSubItemIds = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 9, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 10, value, opt_index);
 };
 
 

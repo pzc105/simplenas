@@ -36,6 +36,7 @@ type BaseItem struct {
 	ResourcePath string
 	PosterPath   string
 	Introduce    string
+	Other        string
 	UpdatedAt    time.Time
 	ParentId     ID
 }
@@ -72,12 +73,12 @@ func _loadItem(itemId ID) (*CategoryItem, error) {
 	var item CategoryItem
 	item.base.Id = itemId
 	var byteAuth []byte
-	sql := `select type_id, name, creator, auth, resource_path, poster_path, introduce, created_at, updated_at, parent_id
+	sql := `select type_id, name, creator, auth, resource_path, poster_path, introduce, other, created_at, updated_at, parent_id
 				from pnas.category_items
 				where id=?`
 	err := db.QueryRow(sql, itemId).Scan(
 		&item.base.TypeId, &item.base.Name, &item.base.Creator, &byteAuth, &item.base.ResourcePath, &item.base.PosterPath,
-		&item.base.Introduce, &item.base.CreatedAt, &item.base.UpdatedAt, &item.base.ParentId,
+		&item.base.Introduce, &item.base.Other, &item.base.CreatedAt, &item.base.UpdatedAt, &item.base.ParentId,
 	)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -108,7 +109,7 @@ func _loadItems(itemIds ...ID) ([]*CategoryItem, error) {
 		conds = append(conds, fmt.Sprintf("id=%d", id))
 	}
 	cond := strings.Join(conds, " or ")
-	sql := `select id, type_id, name, creator, auth, resource_path, poster_path, introduce, created_at, updated_at, parent_id
+	sql := `select id, type_id, name, creator, auth, resource_path, poster_path, introduce, other, created_at, updated_at, parent_id
 					from pnas.category_items where ` + cond
 	rows, err := db.Query(sql)
 	if err != nil {
@@ -122,7 +123,7 @@ func _loadItems(itemIds ...ID) ([]*CategoryItem, error) {
 		err = rows.Scan(
 			&item.base.Id, &item.base.TypeId, &item.base.Name, &item.base.Creator, &byteAuth,
 			&item.base.ResourcePath, &item.base.PosterPath,
-			&item.base.Introduce, &item.base.CreatedAt, &item.base.UpdatedAt, &item.base.ParentId,
+			&item.base.Introduce, &item.base.Other, &item.base.CreatedAt, &item.base.UpdatedAt, &item.base.ParentId,
 		)
 		if err != nil {
 			return nil, errors.WithStack(err)
@@ -146,6 +147,7 @@ type NewCategoryParams struct {
 	ResourcePath string
 	PosterPath   string
 	Introduce    string
+	Other        string
 	Auth         utils.AuthBitSet
 	CompareName  bool
 }
@@ -171,7 +173,7 @@ func addItem(params *NewCategoryParams) (*CategoryItem, error) {
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	err = db.QueryRow("call new_category(?, ?, ?, ?, ?, ?, ?, ?, @new_item_id)",
+	err = db.QueryRow("call new_category(?, ?, ?, ?, ?, ?, ?, ?, ?, @new_item_id)",
 		params.TypeId,
 		params.Name,
 		params.Creator,
@@ -179,6 +181,7 @@ func addItem(params *NewCategoryParams) (*CategoryItem, error) {
 		params.ResourcePath,
 		params.PosterPath,
 		params.Introduce,
+		params.Other,
 		params.ParentId).Scan(&newId)
 	if err != nil {
 		log.Warn(err)
@@ -321,4 +324,10 @@ func (c *CategoryItem) GetVideoId() video.ID {
 		return -1
 	}
 	return video.ID(vid)
+}
+
+func (c *CategoryItem) GetOther() string {
+	c.mtx.Lock()
+	defer c.mtx.Unlock()
+	return c.base.Other
 }
