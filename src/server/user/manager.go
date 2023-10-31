@@ -147,7 +147,7 @@ func (um *UserManger) HasVideo(userId ID, vid video.ID) bool {
 		return true
 	}
 	// TODO cache
-	sql := "select id from category_item where creator=? and type_id=? and resource_path=?"
+	sql := "select id from category_items where creator=? and type_id=? and resource_path=?"
 	var c int
 	err := db.QueryRow(sql, userId, prpc.CategoryItem_Video, vid).Scan(&c)
 	if err != nil {
