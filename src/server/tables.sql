@@ -9,6 +9,8 @@ create table user (
   passwd varchar(256) not null,
   auth varbinary(64) not null,
   directory_id bigint not null,
+  created_at datetime default current_timestamp not null,
+  updated_at timestamp default current_timestamp on update current_timestamp not null,
   primary key(id),
   unique key email (email)
 );
