@@ -74,7 +74,8 @@ export default function GlobalSidebar() {
     title: "登录",
     onClick: () => navigate("/signin"),
   }
-  const menuItems = [
+  const [menuItems, setMenuItems] = useState([])
+  const defaultMenuItems = [
     firstItem,
     {
       icon: <FileDownloadIcon />,
@@ -88,12 +89,23 @@ export default function GlobalSidebar() {
       subComponentParams: {},
       onClick: userInfo ? () => navigateToItem(navigate, {}, userInfo.homeDirectoryId, null) : null,
     },
-    userInfo ? {
-      icon: <PersonalVideoIcon />,
-      title: "磁链中心",
-      onClick: () => navigate2mgnetshares(navigate, userInfo.magnetRootId),
-    } : null,
-  ];
+  ]
+
+  useEffect(() => {
+    setMenuItems(defaultMenuItems)
+  }, [])
+
+  useEffect(() => {
+    if (userInfo != null) {
+      let tmp = defaultMenuItems
+      tmp.push({
+        icon: <PersonalVideoIcon />,
+        title: "磁链中心",
+        onClick: () => navigate2mgnetshares(navigate, userInfo.magnetRootId),
+      })
+      setMenuItems(tmp)
+    }
+  }, [userInfo])
 
   return (
     <Container sx={{ backgroundColor: 'background.default', ml: "0", width: "100%" }}>
