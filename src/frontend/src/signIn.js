@@ -213,7 +213,7 @@ export default function SignIn(props) {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/signup" variant="body2">
+              <Link onClick={() => navigate("/signup")} variant="body2">
                 {"没有账号? 注册吧"}
               </Link>
             </Grid>
