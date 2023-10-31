@@ -134,8 +134,8 @@ begin
   start transaction;
   insert into pnas.user (name, email, passwd, auth, directory_id) values(name, email, passwd, auth, 0);
   select last_insert_id() into new_user_id;
-  insert into pnas.category_items (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
-      (3, 1, name, new_user_id, homeAuth, "", "", "");
+  insert into pnas.category_items (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other) values 
+      (3, 1, name, new_user_id, homeAuth, "", "", "", "");
   select last_insert_id() into new_home_id;
   update pnas.user set directory_id=new_home_id where id=new_user_id;
   select new_user_id, new_home_id;
