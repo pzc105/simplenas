@@ -92,36 +92,34 @@ const CategoryItems = ({ parentId, shareid }) => {
             {items ?
               items.map((item) => (
                 <Grid key={item.id} item xs={10} sm={5} lg={2} sx={{ ml: "0.5em", mt: "0.5em" }}>
-                  <Card onContextMenu={(e) => handleContextMenu(e, item.id)}>
-                    <Box sx={{ display: "flex", justifyContent: "center", height: "4.3em" }}>
-                      <img style={{ maxHeight: "5em" }} alt="Movie Poster"
-                        src={serverAddress + "/poster/item?itemid=" + item.id + (shareid ? "&shareid=" + shareid : "")} />
-                    </Box>
-                    <CardContent sx={{ display: "flex", justifyContent: "center" }}>
-                      <Tooltip title={item.name}>
+                  <Tooltip title={<div>{"Name:" + item.name}<br />{"介绍:" + item.introduce}</div>} >
+                    <Card onContextMenu={(e) => handleContextMenu(e, item.id)}>
+                      <Box sx={{ display: "flex", justifyContent: "center", height: "4.3em" }}>
+                        <img style={{ maxHeight: "5em" }} alt="Movie Poster"
+                          src={serverAddress + "/poster/item?itemid=" + item.id + (shareid ? "&shareid=" + shareid : "")} />
+                      </Box>
+                      <CardContent sx={{ display: "flex", justifyContent: "center" }}>
                         <Typography variant="button" component="div" noWrap>
                           <Button onClick={() => onClick(item)}>
                             {item.name}
                           </Button>
                         </Typography>
-                      </Tooltip>
-                      <Typography variant="body2" color="text.secondary">
-                        {item.introduce}
-                      </Typography>
-                    </CardContent>
-                    <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                    </CardActions>
-                    <Menu
-                      anchorReference="anchorPosition"
-                      anchorPosition={anchorPosition}
-                      open={open[item.id] ? open[item.id] : false}
-                      onClose={() => handleClose(item.id)}
-                    >
-                      <MenuItem onClick={(e) => DelCategoryItem(item)}>删除</MenuItem>
-                      <MenuItem onClick={(e) => ShareCategoryItem(item)}>分享</MenuItem>
-                      <MenuItem onClick={(e) => UploadSubtitle(item)}>上传字幕</MenuItem>
-                    </Menu>
-                  </Card>
+                        <Typography variant="body2" color="text.secondary">
+                        </Typography>
+                      </CardContent>
+                      <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+                      </CardActions>
+                      <Menu
+                        anchorReference="anchorPosition"
+                        anchorPosition={anchorPosition}
+                        open={open[item.id] ? open[item.id] : false}
+                        onClose={() => handleClose(item.id)} >
+                        <MenuItem onClick={(e) => DelCategoryItem(item)}>删除</MenuItem>
+                        <MenuItem onClick={(e) => ShareCategoryItem(item)}>分享</MenuItem>
+                        <MenuItem onClick={(e) => UploadSubtitle(item)}>上传字幕</MenuItem>
+                      </Menu>
+                    </Card>
+                  </Tooltip>
                 </Grid>
               )) : null
             }
@@ -144,7 +142,7 @@ const CategoryItems = ({ parentId, shareid }) => {
       >
         <SubtitleUploader itemId={subtitleUploadItemId} onClose={() => setPopoverOpen(false)} />
       </Popover>
-    </Paper>
+    </Paper >
   )
 }
 
