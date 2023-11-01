@@ -27,7 +27,7 @@ export default function SideUtils({ name, child }) {
   };
 
   return (
-    <SideUtilsRoot>
+    <SideUtilsRoot >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
         <SideIcon onClick={handleDrawerToggle}>
           <Typography gutterBottom variant="body1" component="div" noWrap>

@@ -155,12 +155,10 @@ export default function MagnetSharesPage() {
   return (
     <MagnetContainer>
       <CssBaseline />
-      {
-        <SideUtils
-          name="管理"
-          child={Manager({ parentId: itemId })}
-        />
-      }
+      <SideUtils
+        name="管理"
+        child={Manager({ parentId: itemId })}
+      />
       <MagnetItems parentId={itemId} />
     </MagnetContainer>
   )
@@ -223,87 +221,94 @@ const Manager = ({ parentId }) => {
     })
   }
 
-  return (<Container maxWidth="xs">
-    <Container>
-      <Grid container>
+  return (
+    <Container maxWidth="xs">
+      <Container>
+        <Grid container>
+          <Grid item xs={12}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="magnet uri"
+                margin="normal"
+                onChange={handleMagnetUriChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <CloudDownloadIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                autoFocus />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="introduce"
+                margin="normal"
+                onChange={handleMagnetUriIntroduceChangle}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <CloudDownloadIcon />
+                    </InputAdornment>
+                  ),
+                }} />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                fullWidth
+                color="primary"
+                onClick={saveMagnetUri}
+                variant="contained">
+                保存Magnet Uri
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Container>
+      <Container sx={{ mt: '1em' }}>
         <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="magnet uri"
-            variant="outlined"
-            margin="normal"
-            required
-            onChange={handleMagnetUriChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <CloudDownloadIcon />
-                </InputAdornment>
-              ),
-            }}
-            autoFocus />
-          <TextField
-            fullWidth
-            label="introduce"
-            variant="outlined"
-            margin="normal"
-            required
-            onChange={handleMagnetUriIntroduceChangle}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <CloudDownloadIcon />
-                </InputAdornment>
-              ),
-            }} />
-          <Button
-            fullWidth
-            color="primary"
-            onClick={saveMagnetUri}
-            variant="contained">
-            保存Magnet Uri
-          </Button>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="category name"
+              margin="normal"
+              onChange={handleNewCategory}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <CloudDownloadIcon />
+                  </InputAdornment>
+                ),
+              }} />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="introduce"
+              margin="normal"
+              onChange={handleNewCategoryIntroduce}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <CloudDownloadIcon />
+                  </InputAdornment>
+                ),
+              }} />
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              fullWidth
+              color="primary"
+              onClick={addMagnetCategory}
+              variant="contained">
+              新增分类
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sx={{ mt: '2em' }}>
-          <TextField
-            fullWidth
-            label="category name"
-            variant="outlined"
-            margin="normal"
-            required
-            onChange={handleNewCategory}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <CloudDownloadIcon />
-                </InputAdornment>
-              ),
-            }} />
-          <TextField
-            fullWidth
-            label="introduce"
-            variant="outlined"
-            margin="normal"
-            required
-            onChange={handleNewCategoryIntroduce}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <CloudDownloadIcon />
-                </InputAdornment>
-              ),
-            }} />
-          <Button
-            fullWidth
-            color="primary"
-            onClick={addMagnetCategory}
-            variant="contained">
-            新增分类
-          </Button>
-        </Grid>
-      </Grid>
-    </Container>
-  </Container>
+      </Container >
+    </Container >
   )
 }
 

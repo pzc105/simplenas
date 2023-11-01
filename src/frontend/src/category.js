@@ -173,43 +173,44 @@ const CategoryItemCreator = ({ parentId }) => {
     })
   }
 
-  return (<Container maxWidth="xs">
-    <Container>
-      <Grid container>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            onChange={handleChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <CloudDownloadIcon />
-                </InputAdornment>
-              ),
-            }}
-            autoFocus />
+  return (
+    <Container maxWidth="xs">
+      <Container>
+        <Grid container>
           <Grid item xs={12}>
-            <Button
+            <TextField
               fullWidth
-              color="primary"
-              onClick={NewCategoryItem}
-              variant="contained">
-              新建分类
-            </Button>
+              onChange={handleChange}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <CloudDownloadIcon />
+                  </InputAdornment>
+                ),
+              }}
+              autoFocus />
+            <Grid item xs={12}>
+              <Button
+                fullWidth
+                color="primary"
+                onClick={NewCategoryItem}
+                variant="contained">
+                新建分类
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Container>
+      <Container sx={{ mt: '1em' }} >
+        <Button
+          fullWidth
+          color="primary"
+          variant="contained"
+          onClick={() => { dispatch(store.userSlice.actions.setShowChatPanel(true)) }}>
+          聊天室
+        </Button>
+      </Container>
     </Container>
-    <Container sx={{ mt: '1em' }} >
-      <Button
-        fullWidth
-        color="primary"
-        variant="contained"
-        onClick={() => { dispatch(store.userSlice.actions.setShowChatPanel(true)) }}>
-        聊天室
-      </Button>
-    </Container>
-  </Container>
   )
 }
 
@@ -254,12 +255,11 @@ export default function CategoryItemPage() {
   return (
     <CategoryContainer>
       <CssBaseline />
-      {
-        <SideUtils
-          name="管理"
-          child={CategoryItemCreator({ parentId: itemId })}
-        />
-      }
+      <SideUtils
+        name="管理"
+        child={CategoryItemCreator({ parentId: itemId })}
+      />
+
       <CategoryItems parentId={itemId} shareid={shareid} />
       <Button
         ref={anchorElRef}
