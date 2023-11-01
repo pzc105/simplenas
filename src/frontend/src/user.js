@@ -10,7 +10,8 @@ export default function UserInfoPage() {
   const userInfo = useSelector((state) => store.selectUserInfo(state))
   const shownUsrInfo = { 名称: userInfo["name"], Email: userInfo["email"] }
   return (
-    <Container component="main" style={{ maxWidth: "50%" }}>
+    <Container component="main" style={{ maxWidth: "90%" }} sx={{ backgroundColor: 'background.default' }}>
+      <CssBaseline />
       <UserInfoList userInfo={shownUsrInfo} />
       <SharedItems />
     </Container>
@@ -31,21 +32,17 @@ const UserInfoList = ({ userInfo }) => {
 
 const UserListItem = ({ name, value }) => {
   return (
-    <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }}>
+    <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }} sx={{ mt: "1em" }}>
       <Grid container sx={{ display: 'flex' }} >
-        <Grid item xs={12}>
-          <Grid container spacing={2}>
-            <Grid item xs={2}>
-              <Typography whiteSpace={'pre'}>
-                {name + ":"}
-              </Typography>
-            </Grid>
-            <Grid item xs={10}>
-              <Typography>
-                {value}
-              </Typography>
-            </Grid>
-          </Grid>
+        <Grid item xs={4}>
+          <Typography variant="h6" whiteSpace={'pre'}>
+            {name + ":"}
+          </Typography>
+        </Grid>
+        <Grid item xs={8}>
+          <Typography noWrap>
+            {value}
+          </Typography>
         </Grid>
       </Grid>
     </Paper>
@@ -88,42 +85,39 @@ const SharedItems = () => {
   }
 
   return (
-    <Container sx={{ height: '94vh' }}>
-      <CssBaseline />
-      <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }}>
-        <Grid container sx={{ display: 'flex' }} >
-          <Grid item xs={12}>
-            <Grid container spacing={2}>
-              <Grid item xs={2}>
-                <Typography >
-                  分享链接:
-                </Typography>
-              </Grid>
-              <Grid item xs={10}>
-                {
-                  sharedItems.map((si, i) => {
-                    const urlPrefix = "https://" + window.location.hostname + ":" + window.location.port + "/citem?"
-                    return (
-                      <Grid container spacing={2} key={i}>
-                        <Grid item xs={8}>
-                          <Typography>
-                            {(i + 1) + "、" + urlPrefix + "itemid=" + si.itemId + "&shareid=" + si.shareId}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={4}>
-                          <Button onClick={() => delShareItem(si.shareId)} >
-                            删除
-                          </Button>
-                        </Grid>
+    <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }} sx={{ mt: "1em" }}>
+      <Grid container sx={{ display: 'flex' }} >
+        <Grid item xs={12}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="h6" whiteSpace={'pre'}>
+                分享链接:
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              {
+                sharedItems.map((si, i) => {
+                  const urlPrefix = "https://" + window.location.hostname + ":" + window.location.port + "/citem?"
+                  return (
+                    <Grid container spacing={2} key={i}>
+                      <Grid item xs={8}>
+                        <Typography>
+                          {(i + 1) + "、" + urlPrefix + "itemid=" + si.itemId + "&shareid=" + si.shareId}
+                        </Typography>
                       </Grid>
-                    )
-                  })
-                }
-              </Grid>
+                      <Grid item xs={4}>
+                        <Button onClick={() => delShareItem(si.shareId)} >
+                          删除
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  )
+                })
+              }
             </Grid>
           </Grid>
         </Grid>
-      </Paper>
-    </Container>
+      </Grid>
+    </Paper>
   )
 }
