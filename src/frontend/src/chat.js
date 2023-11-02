@@ -102,13 +102,7 @@ const ChatPanel = ({ itemId }) => {
   )
 }
 
-export const FloatingChat = ({ itemId, onClose, defaultPosition }) => {
-  console.log(defaultPosition)
-  const handleClose = () => {
-    if (onClose) {
-      onClose()
-    }
-  }
+export const FloatingChat = ({ itemId, onClose }) => {
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -117,13 +111,19 @@ export const FloatingChat = ({ itemId, onClose, defaultPosition }) => {
     }
   }, [])
 
+  const handleClose = () => {
+    if (onClose) {
+      onClose()
+    }
+  }
+
   return (
     ReactDOM.createPortal(
       <Draggable handle='.draggableWindow' positionOffset={{ x: '-50%', y: '-50%' }}>
         <div className='myElement'>
           <Paper >
-            <Grid container className='draggableWindow'>
-              <Grid item xs={6}>
+            <Grid container>
+              <Grid item xs={6} className='draggableWindow'>
                 <Typography>
                   聊天室
                 </Typography>

@@ -86,7 +86,7 @@ export default function Download() {
       <RightColumn sx={{ backgroundColor: 'background.default' }}>
         <ProgressLists />
       </RightColumn>
-      {showGlobalChat ? <FloatingChat itemId={1} onClose={closeGlobalChat} /> : null}
+      {showGlobalChat ? <FloatingChat itemId={1} onClose={() => closeGlobalChat()} /> : null}
     </DownloadContainer>
   )
 }
