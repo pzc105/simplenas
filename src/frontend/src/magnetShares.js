@@ -83,12 +83,12 @@ const MagnetItems = ({ parentId }) => {
                     <Grid container sx={{ display: 'flex' }} >
                       <Grid item xs={12}>
                         <Grid container spacing={2}>
-                          <Grid item xs={2}>
+                          <Grid item xs={4}>
                             <Typography whiteSpace={'pre'}>
                               {"分类: "}
                             </Typography>
                           </Grid>
-                          <Grid item xs={8}>
+                          <Grid item xs={6}>
                             <Tooltip title={item.introduce}>
                               <Link onClick={() => router.navigate2mgnetshares(navigate, item.id)} sx={{ cursor: 'pointer' }}>
                                 {item.name}
@@ -106,12 +106,12 @@ const MagnetItems = ({ parentId }) => {
                     <Grid container sx={{ display: 'flex' }} >
                       <Grid item xs={12}>
                         <Grid container spacing={2}>
-                          <Grid item xs={2}>
+                          <Grid item xs={4}>
                             <Typography whiteSpace={'pre'}>
                               {"magnet uri: "}
                             </Typography>
                           </Grid>
-                          <Grid item xs={8}>
+                          <Grid item xs={6}>
                             <CopyToClipboard text={item.other}>
                               <Tooltip title={item.introduce}>
                                 <Typography variant="button" component="div" noWrap>
