@@ -11,6 +11,7 @@ const userSlice = createSlice({
     userInfo: null,
     shownChatPanel: false,
     openGlobalChat: false,
+    globalChatPosition: { 0: { x: null, y: null } },
   },
   reducers: {
     setUserInfo: (state, action) => {
@@ -22,6 +23,9 @@ const userSlice = createSlice({
     },
     setOpenGlobalChat: (state, action) => {
       state.openGlobalChat = action.payload
+    },
+    setGlobalChatPosition: (state, action) => {
+      state.globalChatPosition[action.payload["itemId"]] = action.payload
     },
   },
 })
@@ -141,6 +145,10 @@ const selectOpenGlobalChat = (state) => {
   return state.user.openGlobalChat
 }
 
+const selectGlobalChatPosition = (state, itemId) => {
+  return state.user.globalChatPosition[itemId]
+}
+
 const selectTorrent = (state, infoHash) => {
   return state.bt.torrents[infoHash.hash]
 }
@@ -237,7 +245,7 @@ const selectAutoPlayVideo = (state) => {
 
 export {
   store, userSlice, btSlice, categorySlice, eventSlice, playerSlice,
-  selectUserInfo, selectShownChatPanel, selectOpenGlobalChat,
+  selectUserInfo, selectShownChatPanel, selectOpenGlobalChat, selectGlobalChatPosition,
   selectTorrent, selectInfoHashs, selectBtVideoFiles,
   selectCategoryItem, selectCategoryItems, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo, selectMagnetSharesItems,
   getSelectedAudio, selectAutoPlayVideo,

@@ -18,6 +18,11 @@ import { navigateToItem } from './category.js';
 
 
 export const FloatingChat = ({ name, itemId, onClose }) => {
+  const dispatch = useDispatch()
+  const restorePosition = useSelector((state) => store.selectGlobalChatPosition(state, itemId))
+  const defaultPosition = (restorePosition && restorePosition.x) ? { x: restorePosition.x, y: restorePosition.y } : undefined
+  const positionOffset = (!defaultPosition) ? { x: '-50%', y: '-50%' } : undefined
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -31,9 +36,18 @@ export const FloatingChat = ({ name, itemId, onClose }) => {
     }
   }
 
+  const handleStop = (e, ui) => {
+    dispatch(store.userSlice.actions.setGlobalChatPosition({ x: ui.x, y: ui.y, itemId: itemId }))
+  };
+
   return (
     ReactDOM.createPortal(
-      <Draggable handle='.draggableWindow' positionOffset={{ x: '-50%', y: '-50%' }}>
+      <Draggable
+        onStop={handleStop}
+        handle='.draggableWindow'
+        defaultPosition={defaultPosition}
+        positionOffset={positionOffset}
+      >
         <div className='floatingchat'>
           <Paper style={{ width: "20em", borderRadius: "20px", border: '2px solid #e178ce' }}>
             <Grid container>
