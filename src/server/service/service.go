@@ -826,6 +826,7 @@ func (ser *CoreService) AddMagnetCategory(ctx context.Context, req *prpc.AddMagn
 		ParentId:  category.ID(req.ParentId),
 		Name:      req.CategoryName,
 		Introduce: req.Introduce,
+		Creator:   ses.UserId,
 	})
 	if err != nil {
 		return nil, err
@@ -846,6 +847,7 @@ func (ser *CoreService) AddMagnetUri(ctx context.Context, req *prpc.AddMagnetUri
 		CategoryId: category.ID(req.CategoryId),
 		Uri:        req.MagnetUri,
 		Introduce:  req.Introduce,
+		Creator:    ses.UserId,
 	})
 	if err != nil {
 		return nil, err
@@ -920,7 +922,7 @@ func (ser *CoreService) DelMagnetCategory(ctx context.Context, req *prpc.DelMagn
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
 
-	err := ser.um.DelMagnetCategory(category.ID(req.Id))
+	err := ser.um.DelMagnetCategory(ses.UserId, category.ID(req.Id))
 	if err != nil {
 		return nil, err
 	}

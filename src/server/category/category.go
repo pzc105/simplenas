@@ -150,6 +150,7 @@ type NewCategoryParams struct {
 	Other        string
 	Auth         utils.AuthBitSet
 	CompareName  bool
+	Sudo         bool
 }
 
 func addItem(params *NewCategoryParams) (*CategoryItem, error) {

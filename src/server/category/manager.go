@@ -73,14 +73,18 @@ func (m *Manager) removeItem(itemId ID) {
 }
 
 func (m *Manager) AddItem(params *NewCategoryParams) (*CategoryItem, error) {
-	parentItem, err := m.GetItem(params.Creator, params.ParentId)
+	querier := params.Creator
+	if params.Sudo {
+		querier = AdminId
+	}
+	parentItem, err := m.GetItem(querier, params.ParentId)
 	if err != nil {
 		return nil, err
 	}
 	if !parentItem.IsDirectory() {
 		return nil, errors.New("isn't a directory")
 	}
-	if !parentItem.HasWriteAuth(params.Creator) {
+	if !parentItem.HasWriteAuth(params.Creator) && !params.Sudo {
 		return nil, errors.New("not auth")
 	}
 
