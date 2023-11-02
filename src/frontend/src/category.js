@@ -238,6 +238,12 @@ export default function CategoryItemPage() {
     }
   }, [thisItem])
 
+  useEffect(() => {
+    if (showGlobalChat) {
+      closeChatPanel()
+    }
+  }, [showGlobalChat])
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -252,16 +258,9 @@ export default function CategoryItemPage() {
         name="管理"
         child={CategoryItemCreator({ parentId: itemId })}
       />
-      <Grid container>
-        <Grid item xs={12}>
-          <CategoryItems parentId={itemId} shareid={shareid} />
-        </Grid>
-        <Grid item xs={12}>
-          {shownChatPanel ? <FloatingChat itemId={itemId} onClose={closeChatPanel} /> : null}
-          {showGlobalChat ? <FloatingChat itemId={1} onClose={closeGlobalChat} /> : null}
-        </Grid>
-      </Grid>
-
+      <CategoryItems parentId={itemId} shareid={shareid} />
+      {shownChatPanel && !showGlobalChat ? <FloatingChat itemId={itemId} onClose={closeChatPanel} /> : null}
+      {showGlobalChat ? <FloatingChat itemId={1} onClose={closeGlobalChat} /> : null}
     </CategoryContainer>
   );
 }

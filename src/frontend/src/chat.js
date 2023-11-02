@@ -2,30 +2,90 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import {
   Container, CssBaseline, Grid, List, Paper, Button, Box, TextField, ListItem,
-  Typography, Popper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle
+  Typography, Popper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Popover
 } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import Draggable from 'react-draggable';
 import CloseIcon from '@mui/icons-material/Close';
+import MoodIcon from '@mui/icons-material/Mood';
 
 import * as User from './prpc/user_pb.js'
 import * as store from './store.js'
+import { emojiList } from './emojiList.js';
 import userService from './rpcClient.js'
 import './chat.css'
+import { navigateToItem } from './category.js';
+
+
+export const FloatingChat = ({ name, itemId, onClose }) => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    }
+  }, [])
+
+  const handleClose = () => {
+    if (onClose) {
+      onClose()
+    }
+  }
+
+  return (
+    ReactDOM.createPortal(
+      <Draggable handle='.draggableWindow' positionOffset={{ x: '-50%', y: '-50%' }}>
+        <div className='myElement'>
+          <Paper >
+            <Grid container>
+              <Grid item xs={8} className='draggableWindow'>
+                <Typography sx={{ userSelect: 'none', ml: "2em" }}>
+                  {name ? name : "聊天室-" + itemId}
+                </Typography>
+              </Grid>
+              <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'flex-end', pr: 1 }}>
+                <Box >
+                  <Button size="small" color="secondary" onClick={handleClose}>
+                    <CloseIcon />
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
+            <ChatPanel itemId={itemId} />
+          </Paper>
+        </div>
+      </Draggable>,
+      document.getElementById('portal-root') // 这是一个在public/index.html中定义的元素
+    )
+  )
+}
 
 const ChatPanel = ({ itemId }) => {
   const maxMaxCount = 1000
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
+  var EmojiConvertor = require('emoji-js');
+  var emoji = new EmojiConvertor();
+
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
+  const onEmoji = (em) => {
+    setInputValue(inputValue + em)
+  }
+  const translate2Emoji = (msg) => {
+    emoji.replace_mode = 'unified';
+    emoji.allow_native = true;
+    return emoji.replace_colons(msg);
+  }
+
   const handleSendMessage = () => {
     if (inputValue !== '') {
       const chatMsg = new User.ChatMessage()
-      chatMsg.setMsg(inputValue)
+      emoji.colons_mode = true
+      let msg = emoji.replace_unified(inputValue)
+      chatMsg.setMsg(msg)
       const req = new User.SendMsg2ChatRoomReq()
       req.setItemId(itemId)
       req.setChatMsg(chatMsg)
@@ -55,6 +115,7 @@ const ChatPanel = ({ itemId }) => {
     });
     stream.on('end', function (end) {
       stream.cancel()
+      console.log("chat stream end")
     });
 
     return () => {
@@ -68,9 +129,9 @@ const ChatPanel = ({ itemId }) => {
   }, [messages]);
 
   return (
-    <Container>
+    <Container className='chatContainer'>
       <Paper style={{ maxHeight: '50vh', overflow: 'auto' }} ref={chatAreaRef}>
-        <List>
+        <List >
           {messages.map((message, i) => (
             <ListItem key={i}>
               <Box mb={1}>
@@ -81,7 +142,7 @@ const ChatPanel = ({ itemId }) => {
                   variant="body2"
                   style={{ wordWrap: 'break-word', wordBreak: 'break-all' }}
                 >
-                  {message.getMsg()}
+                  {translate2Emoji(message.getMsg())}
                 </Typography>
               </Box>
             </ListItem>
@@ -89,6 +150,7 @@ const ChatPanel = ({ itemId }) => {
         </List>
       </Paper>
       <div>
+        <EmojiPicker emojiList={emojiList} onEmoji={onEmoji} />
         <TextField
           label="输入"
           value={inputValue}
@@ -98,49 +160,62 @@ const ChatPanel = ({ itemId }) => {
           发送
         </Button>
       </div>
-    </Container>
+    </Container >
   )
 }
 
-export const FloatingChat = ({ itemId, onClose }) => {
-
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'auto';
-    }
-  }, [])
+const EmojiPicker = ({ emojiList, onEmoji }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   const handleClose = () => {
-    if (onClose) {
-      onClose()
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open.current ? 'emoji-popover' : undefined;
+
+  const onEmojiClick = (ce) => {
+    if (onEmoji) {
+      onEmoji(ce)
     }
   }
 
   return (
-    ReactDOM.createPortal(
-      <Draggable handle='.draggableWindow' positionOffset={{ x: '-50%', y: '-50%' }}>
-        <div className='myElement'>
-          <Paper >
-            <Grid container>
-              <Grid item xs={8} className='draggableWindow'>
-                <Typography sx={{ userSelect: 'none' }}>
-                  聊天室
-                </Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end', pr: 1 }}>
-                  <Button size="small" color="secondary" onClick={handleClose}>
-                    <CloseIcon />
-                  </Button>
-                </Box>
-              </Grid>
-            </Grid>
-            <ChatPanel itemId={itemId} />
-          </Paper>
+    <div>
+      <IconButton
+        color="primary"
+        aria-describedby={id}
+        onClick={handleClick}
+      >
+        <MoodIcon />
+      </IconButton>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <div style={{ maxWidth: "10em" }}>
+          {emojiList.map((e, i) => {
+            return (
+              <span key={i} className='pointer' onClick={() => { setAnchorEl(null); onEmojiClick(e); }}>
+                {e}
+              </span>
+            )
+          })}
         </div>
-      </Draggable>,
-      document.getElementById('portal-root') // 这是一个在public/index.html中定义的元素
-    )
-  )
-}
+      </Popover>
+    </div>
+  );
+};

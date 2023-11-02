@@ -4,3 +4,32 @@
   top: 50%;
   left: 50%;
 }
+
+.pointer {
+  cursor: pointer;
+}
+
+.chatContainer {
+
+  /* WebKit 浏览器（Chrome 和 Safari）滚动条样式 */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #423d1b;
+    /* 滚动条拖动块颜色 */
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+    /* 鼠标悬停时的颜色 */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #85c785;
+    /* 滚动条轨道背景色 */
+    border-radius: 3px;
+  }
+}
