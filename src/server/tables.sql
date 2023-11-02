@@ -71,7 +71,7 @@ create table category_items (
   key resource(creator, type_id, resource_path),
   key parent(parent_id, name),
   fulltext fulltext_ni(name, introduce) with parser ngram
-);
+) auto_increment=2;
 
 insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other) values 
   (1, 0, 1, "root", 1, "", "", "", "", "");
