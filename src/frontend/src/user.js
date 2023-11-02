@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Container, Typography, Paper, Button, Grid, CssBaseline } from '@mui/material';
 
 import userService from './rpcClient.js'
 import * as User from './prpc/user_pb.js'
 import * as store from './store.js'
+import * as category from './category.js'
 
 export default function UserInfoPage() {
   const userInfo = useSelector((state) => store.selectUserInfo(state))
@@ -52,6 +53,9 @@ const UserListItem = ({ name, value }) => {
 const SharedItems = () => {
   const userInfo = useSelector((state) => store.selectUserInfo(state))
   const [sharedItems, setShareItems] = useState([])
+  const [sharedIds, setSharedIds] = useState([])
+  const items = useSelector((state) => store.selectCategoryItems(state, ...sharedIds))
+  const dispatch = useDispatch()
 
   const querySharedItems = () => {
     let req = new User.QuerySharedItemsReq()
@@ -63,6 +67,10 @@ const SharedItems = () => {
       let sharedItemsTmp = []
       res.getSharedItemsList().map((si) => {
         sharedItemsTmp.push(si.toObject())
+        category.queryItem(si.getItemId(), "", dispatch)
+        let tmp = sharedIds
+        tmp.push(si.getItemId())
+        setSharedIds(tmp)
         return null
       })
       setShareItems(sharedItemsTmp)
@@ -71,7 +79,7 @@ const SharedItems = () => {
 
   useEffect(() => {
     querySharedItems()
-  })
+  }, [])
 
   const delShareItem = (shareid) => {
     let req = new User.DelSharedItemReq()
@@ -98,11 +106,12 @@ const SharedItems = () => {
               {
                 sharedItems.map((si, i) => {
                   const urlPrefix = "https://" + window.location.hostname + ":" + window.location.port + "/citem?"
+                  const item = items[si.itemId]
                   return (
                     <Grid container spacing={2} key={i}>
                       <Grid item xs={8}>
                         <Typography>
-                          {(i + 1) + "、" + urlPrefix + "itemid=" + si.itemId + "&shareid=" + si.shareId}
+                          {(i + 1) + "、" + (item ? item.name + ": " : "") + urlPrefix + "itemid=" + si.itemId + "&shareid=" + si.shareId}
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>

@@ -291,7 +291,7 @@ export default function PlyrWrap() {
     }
   }
 
-  const [autoContinuedPlay, setAutoContinuedPlay] = useState(useSelector((state) => store.selectAutoContinuedPlayVideo(state)));
+  const [autoContinuedPlay, setAutoContinuedPlay] = useState(useSelector((state) => store.selectAutoPlayVideo(state)));
 
   const showGlobalChat = useSelector((state) => store.selectOpenGlobalChat(state))
   const closeGlobalChat = () => {

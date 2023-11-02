@@ -165,6 +165,16 @@ const selectCategoryItem = (state, itemId) => {
   return state.category.items[itemId]
 }
 
+const selectCategoryItems = (state, ...itemIds) => {
+  let ret = {}
+  for (let itemId of itemIds) {
+    if (state.category.items[itemId]) {
+      ret[itemId] = state.category.items[itemId]
+    }
+  }
+  return ret
+}
+
 const selectCategorySubItems = (state, parentId) => {
   const ds = []
   if (!state.category.items[parentId]) {
@@ -229,7 +239,7 @@ export {
   store, userSlice, btSlice, categorySlice, eventSlice, playerSlice,
   selectUserInfo, selectShownChatPanel, selectOpenGlobalChat,
   selectTorrent, selectInfoHashs, selectBtVideoFiles,
-  selectCategoryItem, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo, selectMagnetSharesItems,
-  getSelectedAudio, selectAutoPlayVideo as selectAutoContinuedPlayVideo,
+  selectCategoryItem, selectCategoryItems, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo, selectMagnetSharesItems,
+  getSelectedAudio, selectAutoPlayVideo,
   isDownloadPageMouseDown
 }

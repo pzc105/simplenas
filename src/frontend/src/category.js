@@ -305,7 +305,7 @@ export const querySubItems = (itemId, shareid, dispatch, callback) => {
   })
 }
 
-export const queryItem = (itemId, shareId, dispatch) => {
+export const queryItem = (itemId, shareId, dispatch, callback) => {
   var req = new User.QueryItemInfoReq()
   req.setItemId(itemId)
   if (shareId) {
@@ -320,6 +320,9 @@ export const queryItem = (itemId, shareId, dispatch) => {
       dispatch(store.categorySlice.actions.updateVideoInfo({ itemId: itemInfo.getId(), videoInfo: res.getVideoInfo().toObject() }))
     }
     dispatch(store.categorySlice.actions.updateItem(itemInfo.toObject()))
+    if (callback) {
+      callback(itemInfo.toObject())
+    }
   })
 }
 
