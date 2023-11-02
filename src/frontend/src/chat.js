@@ -37,12 +37,12 @@ export const FloatingChat = ({ name, itemId, onClose }) => {
         <div className='myElement'>
           <Paper >
             <Grid container>
-              <Grid item xs={8} className='draggableWindow'>
+              <Grid item xs={10} className='draggableWindow'>
                 <Typography sx={{ userSelect: 'none', ml: "2em" }}>
                   {name ? name : "聊天室-" + itemId}
                 </Typography>
               </Grid>
-              <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'flex-end', pr: 1 }}>
+              <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'flex-end', pr: 1 }}>
                 <Box >
                   <Button size="small" color="secondary" onClick={handleClose}>
                     <CloseIcon />
