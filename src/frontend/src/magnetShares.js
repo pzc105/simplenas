@@ -5,6 +5,7 @@ import {
   Typography, Tooltip, Card, CardContent, CardActions, InputAdornment, Popover, Popper, List, ListItem, Link, Dialog
 } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import SearchIcon from '@mui/icons-material/Search';
 import { styled } from "@mui/material/styles";
 import Draggable from 'react-draggable';
 import CloseIcon from '@mui/icons-material/Close';
@@ -58,12 +59,11 @@ const MagnetItems = ({ parentId }) => {
             label="搜索关键字"
             variant="outlined"
             margin="normal"
-            required
             onChange={onSearchText}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <CloudDownloadIcon />
+                  <SearchIcon />
                 </InputAdornment>
               ),
             }} />

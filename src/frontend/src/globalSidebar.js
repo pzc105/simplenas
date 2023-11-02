@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import PersonalVideoIcon from '@mui/icons-material/PersonalVideo';
+import LinkIcon from '@mui/icons-material/Link';
+import ChatIcon from '@mui/icons-material/Chat';
 import PersonIcon from "@mui/icons-material/Person"
 import { Container } from '@mui/system';
 import { Drawer, Accordion, AccordionSummary, AccordionDetails, List, ListItemButton, Typography, IconButton } from "@mui/material";
@@ -100,12 +102,12 @@ export default function GlobalSidebar() {
     if (userInfo != null) {
       let tmp = defaultMenuItems
       tmp.push({
-        icon: <PersonalVideoIcon />,
+        icon: <LinkIcon />,
         title: "磁链中心",
         onClick: () => navigate2mgnetshares(navigate, userInfo.magnetRootId),
       })
       tmp.push({
-        icon: <PersonalVideoIcon />,
+        icon: <ChatIcon />,
         title: "聊天室",
         onClick: () => dispatch(store.userSlice.actions.setOpenGlobalChat(!openGlobalChat)),
       })
