@@ -52,26 +52,30 @@ const MagnetItems = ({ parentId }) => {
 
   return (
     <Container>
-      <Grid container sx={{ display: 'flex' }} >
-        <TextField
-          label="搜索关键字"
-          variant="outlined"
-          margin="normal"
-          required
-          onChange={onSearchText}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <CloudDownloadIcon />
-              </InputAdornment>
-            ),
-          }} />
-        <Button
-          color="primary"
-          onClick={search}
-          variant="contained">
-          搜索
-        </Button>
+      <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
+        <Grid item>
+          <TextField
+            label="搜索关键字"
+            variant="outlined"
+            margin="normal"
+            required
+            onChange={onSearchText}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CloudDownloadIcon />
+                </InputAdornment>
+              ),
+            }} />
+        </Grid>
+        <Grid item>
+          <Button
+            color="primary"
+            onClick={search}
+            variant="contained">
+            搜索
+          </Button>
+        </Grid>
       </Grid>
       <List>
         {items ?
