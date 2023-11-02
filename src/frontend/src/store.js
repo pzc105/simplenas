@@ -10,6 +10,7 @@ const userSlice = createSlice({
   initialState: {
     userInfo: null,
     shownChatPanel: false,
+    openGlobalChat: false,
   },
   reducers: {
     setUserInfo: (state, action) => {
@@ -18,6 +19,9 @@ const userSlice = createSlice({
     },
     setShowChatPanel: (state, action) => {
       state.shownChatPanel = action.payload
+    },
+    setOpenGlobalChat: (state, action) => {
+      state.openGlobalChat = action.payload
     },
   },
 })
@@ -133,6 +137,10 @@ const selectShownChatPanel = (state) => {
   return state.user.shownChatPanel
 }
 
+const selectOpenGlobalChat = (state) => {
+  return state.user.openGlobalChat
+}
+
 const selectTorrent = (state, infoHash) => {
   return state.bt.torrents[infoHash.hash]
 }
@@ -219,7 +227,7 @@ const selectAutoPlayVideo = (state) => {
 
 export {
   store, userSlice, btSlice, categorySlice, eventSlice, playerSlice,
-  selectUserInfo, selectShownChatPanel,
+  selectUserInfo, selectShownChatPanel, selectOpenGlobalChat,
   selectTorrent, selectInfoHashs, selectBtVideoFiles,
   selectCategoryItem, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo, selectMagnetSharesItems,
   getSelectedAudio, selectAutoPlayVideo as selectAutoContinuedPlayVideo,

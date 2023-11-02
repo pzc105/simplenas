@@ -2,6 +2,8 @@ import { React, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { purple, green } from '@mui/material/colors';
+import { CssBaseline, Container, Grid, Typography, Box, Button, Paper } from '@mui/material';
+
 import SignIn from './signIn';
 import SignUp from './signUp';
 import Download from './download';
@@ -12,7 +14,9 @@ import PlyrWrap from './plyrwrap.js';
 import CheckLoginHandler from './checklogin.js'
 import UserInfoPage from './user.js'
 import * as test from './test.js'
-
+import { useSelector, useDispatch } from 'react-redux';
+import * as store from './store.js'
+import ChatPanel from './chat.js'
 
 export default function App() {
   const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
@@ -29,6 +33,8 @@ export default function App() {
   });
 
   const [myTheme, setMyTheme] = useState(defaultTheme);
+
+  const openGlobalChat = useSelector((state) => store.selectOpenGlobalChat(state))
 
   useEffect(() => {
     darkThemeMq.onchange = e => {

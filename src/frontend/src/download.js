@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Container, Grid, Link, TextField, Button, InputAdornment, CssBaseline } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
@@ -13,6 +13,7 @@ import * as router from './router.js'
 import userService from './rpcClient.js'
 import FileUpload from './uploadTorrent.js'
 import { ProgressLists } from './downloadlist.js'
+import { FloatingChat, DraggableDialog } from './chat.js';
 
 const DownloadContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -37,6 +38,7 @@ const RightColumn = styled('div')(({ theme }) => ({
 
 export default function Download() {
   const dispatch = useDispatch()
+  const showGlobalChat = useSelector((state) => store.selectOpenGlobalChat(state))
 
   useEffect(() => {
     const statusRequest = new Bt.StatusRequest()
@@ -66,6 +68,10 @@ export default function Download() {
     dispatch(store.eventSlice.actions.setDownloadPageMouse(false))
   }
 
+  const closeGlobalChat = () => {
+    dispatch(store.userSlice.actions.setOpenGlobalChat(false))
+  }
+
   return (
     <DownloadContainer
       onMouseDown={handleListItemMouseDown}
@@ -80,6 +86,7 @@ export default function Download() {
       <RightColumn sx={{ backgroundColor: 'background.default' }}>
         <ProgressLists />
       </RightColumn>
+      {showGlobalChat ? <FloatingChat itemId={1} onClose={closeGlobalChat} /> : null}
     </DownloadContainer>
   )
 }

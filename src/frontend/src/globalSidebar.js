@@ -47,6 +47,7 @@ export default function GlobalSidebar() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const userInfo = useSelector((state) => store.selectUserInfo(state))
+  const openGlobalChat = useSelector((state) => store.selectOpenGlobalChat(state))
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -103,9 +104,14 @@ export default function GlobalSidebar() {
         title: "磁链中心",
         onClick: () => navigate2mgnetshares(navigate, userInfo.magnetRootId),
       })
+      tmp.push({
+        icon: <PersonalVideoIcon />,
+        title: "聊天室",
+        onClick: () => dispatch(store.userSlice.actions.setOpenGlobalChat(!openGlobalChat)),
+      })
       setMenuItems(tmp)
     }
-  }, [userInfo])
+  }, [userInfo, openGlobalChat])
 
   return (
     <Container sx={{ backgroundColor: 'background.default', ml: "0", width: "100%" }}>

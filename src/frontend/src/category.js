@@ -6,13 +6,11 @@ import {
 } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import { styled } from "@mui/material/styles";
-import Draggable from 'react-draggable';
-import CloseIcon from '@mui/icons-material/Close';
 
 import { useSelector, useDispatch } from 'react-redux';
 import * as store from './store.js'
 import SideUtils from './sideManager.js';
-import ChatPanel from './chat.js';
+import { FloatingChat } from './chat.js';
 import SubtitleUploader from './uploadSubtitle.js';
 
 import * as User from './prpc/user_pb.js'
@@ -224,7 +222,15 @@ export default function CategoryItemPage() {
   const shareid = searchParams.get('shareid')
   const itemId = searchParams.get('itemid') ? Number(searchParams.get('itemid')) : -1
   const shownChatPanel = useSelector((state) => store.selectShownChatPanel(state))
+  const showGlobalChat = useSelector((state) => store.selectOpenGlobalChat(state))
   const thisItem = useSelector((state) => store.selectCategoryItem(state, itemId))
+
+  const closeChatPanel = () => {
+    dispatch(store.userSlice.actions.setShowChatPanel(false))
+  }
+  const closeGlobalChat = () => {
+    dispatch(store.userSlice.actions.setOpenGlobalChat(false))
+  }
 
   useEffect(() => {
     if (thisItem && thisItem.typeId === Category.CategoryItem.Type.VIDEO) {
@@ -239,17 +245,6 @@ export default function CategoryItemPage() {
     querySubItems(itemId, shareid, dispatch)
   }, [itemId, dispatch, navigate, shareid])
 
-  const anchorElRef = useRef(null)
-
-  const handleClose = () => {
-    dispatch(store.userSlice.actions.setShowChatPanel(false))
-  };
-
-  const [openPopper, setOpenPopper] = useState(false)
-  useEffect(() => {
-    setOpenPopper(Boolean(anchorElRef.current !== null && shownChatPanel))
-  }, [anchorElRef, shownChatPanel])
-
   return (
     <CategoryContainer>
       <CssBaseline />
@@ -257,33 +252,16 @@ export default function CategoryItemPage() {
         name="管理"
         child={CategoryItemCreator({ parentId: itemId })}
       />
+      <Grid container>
+        <Grid item xs={12}>
+          <CategoryItems parentId={itemId} shareid={shareid} />
+        </Grid>
+        <Grid item xs={12}>
+          {shownChatPanel ? <FloatingChat itemId={itemId} onClose={closeChatPanel} /> : null}
+          {showGlobalChat ? <FloatingChat itemId={1} onClose={closeGlobalChat} /> : null}
+        </Grid>
+      </Grid>
 
-      <CategoryItems parentId={itemId} shareid={shareid} />
-      <Button
-        ref={anchorElRef}
-        style={{
-          position: 'fixed',
-          right: '20px',
-          bottom: '20px',
-          zIndex: 9999,
-        }}>
-      </Button>
-      <Draggable >
-        <Popper
-          id={shownChatPanel ? 'floating-window' : undefined}
-          open={openPopper}
-          anchorEl={anchorElRef.current}
-          placement='bottom'
-          sx={{ backgroundColor: 'background.default' }}
-        >
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', pr: 1, backgroundColor: 'background.default' }}>
-            <Button size="small" color="secondary" onClick={handleClose}>
-              <CloseIcon />
-            </Button>
-          </Box>
-          <ChatPanel itemId={itemId} />
-        </Popper>
-      </Draggable>
     </CategoryContainer>
   );
 }

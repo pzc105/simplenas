@@ -1,12 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { List, Paper, Button, Box, TextField, ListItem, Typography } from '@mui/material';
+import ReactDOM from 'react-dom';
+import {
+  Container, CssBaseline, Grid, List, Paper, Button, Box, TextField, ListItem,
+  Typography, Popper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle
+} from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import Draggable from 'react-draggable';
+import CloseIcon from '@mui/icons-material/Close';
 
 import * as User from './prpc/user_pb.js'
+import * as store from './store.js'
 import userService from './rpcClient.js'
-import { Container } from '@mui/system';
+import './chat.css'
 
-export default function ChatPanel({ itemId }) {
-
+const ChatPanel = ({ itemId }) => {
   const maxMaxCount = 1000
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -23,7 +30,6 @@ export default function ChatPanel({ itemId }) {
       req.setItemId(itemId)
       req.setChatMsg(chatMsg)
       userService.sendMsg2ChatRoom(req, {}, (err, res) => {
-
       })
       setInputValue('');
     }
@@ -63,7 +69,7 @@ export default function ChatPanel({ itemId }) {
 
   return (
     <Container>
-      <Paper style={{ maxHeight: '50vh', width: '30vw', overflow: 'auto' }} ref={chatAreaRef}>
+      <Paper style={{ maxHeight: '50vh', overflow: 'auto' }} ref={chatAreaRef}>
         <List>
           {messages.map((message, i) => (
             <ListItem key={i}>
@@ -93,5 +99,48 @@ export default function ChatPanel({ itemId }) {
         </Button>
       </div>
     </Container>
+  )
+}
+
+export const FloatingChat = ({ itemId, onClose, defaultPosition }) => {
+  console.log(defaultPosition)
+  const handleClose = () => {
+    if (onClose) {
+      onClose()
+    }
+  }
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    }
+  }, [])
+
+  return (
+    ReactDOM.createPortal(
+      <Draggable handle='.draggableWindow' positionOffset={{ x: '-50%', y: '-50%' }}>
+        <div className='myElement'>
+          <Paper >
+            <Grid container className='draggableWindow'>
+              <Grid item xs={6}>
+                <Typography>
+                  聊天室
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', pr: 1 }}>
+                  <Button size="small" color="secondary" onClick={handleClose}>
+                    <CloseIcon />
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
+            <ChatPanel itemId={itemId} />
+          </Paper>
+        </div>
+      </Draggable>,
+      document.getElementById('portal-root') // 这是一个在public/index.html中定义的元素
+    )
   )
 }
