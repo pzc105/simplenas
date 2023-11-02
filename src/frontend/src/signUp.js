@@ -233,7 +233,7 @@ export default function SignUp(props) {
           </MySubmit>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/signin" variant="body2">
+              <Link onClick={() => navigate("/signin")} variant="body2">
                 已经有账号? 点我登录
               </Link>
             </Grid>
