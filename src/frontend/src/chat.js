@@ -123,12 +123,12 @@ export const FloatingChat = ({ itemId, onClose }) => {
         <div className='myElement'>
           <Paper >
             <Grid container>
-              <Grid item xs={6} className='draggableWindow'>
-                <Typography>
+              <Grid item xs={8} className='draggableWindow'>
+                <Typography sx={{ userSelect: 'none' }}>
                   聊天室
                 </Typography>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', pr: 1 }}>
                   <Button size="small" color="secondary" onClick={handleClose}>
                     <CloseIcon />
