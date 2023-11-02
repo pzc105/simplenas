@@ -35,7 +35,7 @@ export const FloatingChat = ({ name, itemId, onClose }) => {
     ReactDOM.createPortal(
       <Draggable handle='.draggableWindow' positionOffset={{ x: '-50%', y: '-50%' }}>
         <div className='floatingchat'>
-          <Paper style={{ borderRadius: "20px", border: '2px solid #e178ce' }}>
+          <Paper style={{ width: "20em", borderRadius: "20px", border: '2px solid #e178ce' }}>
             <Grid container>
               <Grid item xs={10} className='draggableWindow'>
                 <Typography sx={{ userSelect: 'none', ml: "1em" }}>
