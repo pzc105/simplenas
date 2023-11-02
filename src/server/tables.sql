@@ -73,14 +73,14 @@ create table category_items (
   fulltext fulltext_ni(name, introduce) with parser ngram
 );
 
-insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
-  (1, 0, 1, "root", 1, "", "", "", "");
-insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
-  (2, 1, 2, "tmp", 1, "", "", "", "");
-insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
-  (3, 1, 1, "users", 1, "", "", "", "");
-insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
-  (4, 1, 2, "magnet-shares", 1, "", "", "", "");
+insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other) values 
+  (1, 0, 1, "root", 1, "", "", "", "", "");
+insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other) values 
+  (2, 1, 2, "tmp", 1, "", "", "", "", "");
+insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other) values 
+  (3, 1, 1, "users", 1, "", "", "", "", "");
+insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other) values 
+  (4, 1, 2, "magnet-shares", 1, "", "", "", "", "");
 
 insert into user(id, name, email, passwd, auth, directory_id) values
   (1, "admin", "admin@admin.cn", "202cb962ac59075b964b07152d234b70", "", 1);
