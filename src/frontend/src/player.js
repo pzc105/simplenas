@@ -10,7 +10,8 @@ import Hls from 'hls.js'
 import { queryItem, querySubItems, navigateToItem } from './category.js'
 import { serverAddress } from './rpcClient.js'
 import * as store from './store.js'
-import * as utils from './utils';
+import * as utils from './utils.js';
+import { FloatingChat } from './chat.js';
 
 
 export default function PlyrWrap() {
@@ -292,6 +293,11 @@ export default function PlyrWrap() {
 
   const [autoContinuedPlay, setAutoContinuedPlay] = useState(useSelector((state) => store.selectAutoContinuedPlayVideo(state)));
 
+  const showGlobalChat = useSelector((state) => store.selectOpenGlobalChat(state))
+  const closeGlobalChat = () => {
+    dispatch(store.userSlice.actions.setOpenGlobalChat(false))
+  }
+
   return (
     <Container onTouchStart={touchstart} onTouchMove={touchmove} onTouchEnd={touchend} sx={{ backgroundColor: 'background.default' }}>
       <CssBaseline />
@@ -358,6 +364,7 @@ export default function PlyrWrap() {
           </Grid>
         </Grid>
       </Grid>
+      {showGlobalChat ? <FloatingChat itemId={1} onClose={closeGlobalChat} /> : null}
     </Container>
   );
 }

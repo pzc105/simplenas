@@ -34,11 +34,11 @@ export const FloatingChat = ({ name, itemId, onClose }) => {
   return (
     ReactDOM.createPortal(
       <Draggable handle='.draggableWindow' positionOffset={{ x: '-50%', y: '-50%' }}>
-        <div className='myElement'>
-          <Paper >
+        <div className='floatingchat'>
+          <Paper style={{ borderRadius: "20px", border: '2px solid #e178ce' }}>
             <Grid container>
               <Grid item xs={10} className='draggableWindow'>
-                <Typography sx={{ userSelect: 'none', ml: "2em" }}>
+                <Typography sx={{ userSelect: 'none', ml: "1em" }}>
                   {name ? name : "聊天室-" + itemId}
                 </Typography>
               </Grid>
@@ -115,7 +115,6 @@ const ChatPanel = ({ itemId }) => {
     });
     stream.on('end', function (end) {
       stream.cancel()
-      console.log("chat stream end")
     });
 
     return () => {
@@ -151,14 +150,21 @@ const ChatPanel = ({ itemId }) => {
       </Paper>
       <div>
         <EmojiPicker emojiList={emojiList} onEmoji={onEmoji} />
-        <TextField
-          label="输入"
-          value={inputValue}
-          onChange={handleInputChange}
-        />
-        <Button variant="contained" color="primary" onClick={handleSendMessage}>
-          发送
-        </Button>
+        <Grid container alignItems="center" justify="center">
+          <Grid item xs={10}>
+            <TextField
+              label="输入"
+              value={inputValue}
+              onChange={handleInputChange}
+              autoFocus
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <Button variant="contained" color="primary" onClick={handleSendMessage}>
+              发送
+            </Button>
+          </Grid>
+        </Grid>
       </div>
     </Container >
   )
@@ -206,7 +212,7 @@ const EmojiPicker = ({ emojiList, onEmoji }) => {
           horizontal: 'center',
         }}
       >
-        <div style={{ maxWidth: "10em" }}>
+        <div style={{ maxWidth: "6em" }}>
           {emojiList.map((e, i) => {
             return (
               <span key={i} className='pointer' onClick={() => { setAnchorEl(null); onEmojiClick(e); }}>

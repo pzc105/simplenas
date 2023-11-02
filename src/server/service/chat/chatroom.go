@@ -2,6 +2,7 @@ package chat
 
 import (
 	"context"
+	"pnas/log"
 	"pnas/utils"
 	"sync"
 	"sync/atomic"
@@ -15,6 +16,7 @@ type userData struct {
 	sessionId   int64
 	sendFunc    SendFunc
 	nextReadPos uint64
+	joinCount   uint32
 }
 
 type versionChatMessage struct {
@@ -81,10 +83,19 @@ func (cr *ChatRoomImpl) Join(sessionId int64, sendFunc SendFunc) {
 		sessionId:   sessionId,
 		sendFunc:    sendFunc,
 		nextReadPos: nr,
+		joinCount:   1,
 	}
 
 	cr.mtx.Lock()
-	cr.usersData[sessionId] = ud
+	oud, ok := cr.usersData[sessionId]
+	if !ok {
+		cr.usersData[sessionId] = ud
+		log.Debugf("[chatroom] sid:%d join count:%d", sessionId, ud.joinCount)
+	} else {
+		oud.sendFunc = sendFunc
+		oud.joinCount += 1
+		log.Debugf("[chatroom] sid:%d join count:%d", sessionId, oud.joinCount)
+	}
 	cr.mtx.Unlock()
 
 	cr.taskqueue.Put(func() {
@@ -95,9 +106,13 @@ func (cr *ChatRoomImpl) Join(sessionId int64, sendFunc SendFunc) {
 func (cr *ChatRoomImpl) Leave(sessionId int64) {
 	cr.mtx.Lock()
 	defer cr.mtx.Unlock()
-	_, ok := cr.usersData[sessionId]
+	ud, ok := cr.usersData[sessionId]
 	if ok {
-		delete(cr.usersData, sessionId)
+		ud.joinCount -= 1
+		log.Debugf("[chatroom] sid:%d leave count:%d", sessionId, ud.joinCount)
+		if ud.joinCount == 0 {
+			delete(cr.usersData, sessionId)
+		}
 	}
 }
 

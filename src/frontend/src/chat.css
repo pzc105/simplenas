@@ -1,4 +1,4 @@
-.myElement {
+.floatingchat {
   z-index: 999;
   position: absolute;
   top: 50%;
@@ -17,18 +17,18 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #423d1b;
+    background: #3f392e;
     /* 滚动条拖动块颜色 */
     border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #2980b9;
+    background: #e178ce;
     /* 鼠标悬停时的颜色 */
   }
 
   ::-webkit-scrollbar-track {
-    background: #85c785;
+    background: #0d0707;
     /* 滚动条轨道背景色 */
     border-radius: 3px;
   }

@@ -10,13 +10,12 @@ import Download from './download';
 import GlobalSidebar from './globalSidebar.js'
 import CategoryItemPage from './category.js'
 import MagnetSharesPage from './magnetShares';
-import PlyrWrap from './plyrwrap.js';
+import PlyrWrap from './player.js';
 import CheckLoginHandler from './checklogin.js'
 import UserInfoPage from './user.js'
 import * as test from './test.js'
 import { useSelector, useDispatch } from 'react-redux';
 import * as store from './store.js'
-import ChatPanel from './chat.js'
 
 export default function App() {
   const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
