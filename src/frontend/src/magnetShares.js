@@ -17,7 +17,7 @@ import ChatPanel from './chat.js';
 import SubtitleUploader from './uploadSubtitle.js';
 import * as category from './category.js'
 import * as router from './router.js'
-
+import { FloatingChat } from './chat.js';
 import * as User from './prpc/user_pb.js'
 import * as Category from './prpc/category_pb.js'
 import userService from './rpcClient.js'
@@ -143,7 +143,7 @@ const MagnetItems = ({ parentId }) => {
 
 export default function MagnetSharesPage() {
   const dispatch = useDispatch()
-
+  const showGlobalChat = useSelector((state) => store.selectOpenGlobalChat(state))
   const location = useLocation()
   const searchParams = new URLSearchParams(location.search)
   const itemId = searchParams.get('itemid') ? Number(searchParams.get('itemid')) : -1
@@ -151,6 +151,10 @@ export default function MagnetSharesPage() {
   useEffect(() => {
     queryMagnet(dispatch, itemId)
   }, [itemId])
+
+  const closeGlobalChat = () => {
+    dispatch(store.userSlice.actions.setOpenGlobalChat(false))
+  }
 
   return (
     <MagnetContainer>
@@ -160,6 +164,7 @@ export default function MagnetSharesPage() {
         child={Manager({ parentId: itemId })}
       />
       <MagnetItems parentId={itemId} />
+      {showGlobalChat ? <FloatingChat itemId={1} onClose={closeGlobalChat} /> : null}
     </MagnetContainer>
   )
 }
