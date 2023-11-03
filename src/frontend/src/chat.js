@@ -162,7 +162,7 @@ const ChatPanel = ({ itemId }) => {
           ))}
         </List>
       </Paper>
-      <div>
+      <div className='draggableWindow'>
         <EmojiPicker emojiList={emojiList} onEmoji={onEmoji} />
         <Grid container alignItems="center" justify="center">
           <Grid item xs={10}>
