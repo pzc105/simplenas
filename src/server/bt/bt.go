@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/backoff"
 	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -77,8 +78,14 @@ func WithOnFileCompleted(onFileCompleted func(*prpc.FileCompletedRes)) *funcBtCl
 }
 
 func (bt *BtClient) Init(opts ...BtClientOpt) {
+	bc := backoff.DefaultConfig
+	bc.MaxDelay = time.Second * 3
 	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", setting.GS().Bt.Ip, setting.GS().Bt.Port),
-		grpc.WithTransportCredentials(insecure.NewCredentials()))
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithConnectParams(grpc.ConnectParams{
+			Backoff:           bc,
+			MinConnectTimeout: time.Second * 5,
+		}))
 	if err != nil {
 		log.Error("failed to connect bt")
 		return
