@@ -27,7 +27,7 @@ export default function PlyrWrap() {
   const [items, setItems] = useState([])
   const videoItemList = useRef([])
 
-  const player = useRef(null)
+  const plyr = useRef(null)
   const hls = useRef(null)
   const [url, setUrl] = useState('')
   const [subtitles, setSubtitles] = useState([])
@@ -172,11 +172,18 @@ export default function PlyrWrap() {
     }
 
     var hlsconfig = {
-      debug: false,
+      debug: true,
       autoStartLoad: false,
       xhrSetup: function (xhr) {
         xhr.withCredentials = true; // do send cookies
       },
+    }
+    if (hls.current) {
+      let t = new Hls(hlsconfig);
+      hls.current.detachMedia()
+      hls.current.attachMedia(videoRef.current);
+      hls.current.loadSource(url)
+      return
     }
     hls.current = new Hls(hlsconfig);
     hls.current.attachMedia(videoRef.current);
@@ -226,15 +233,15 @@ export default function PlyrWrap() {
         focused: true, global: true
       }
 
-      player.current = new Plyr(videoRef.current, defaultOptions);
-      player.current.on('enterfullscreen', event => {
+      plyr.current = new Plyr(videoRef.current, defaultOptions);
+      plyr.current.on('enterfullscreen', event => {
         if (window.screen.orientation.lock)
           window.screen.orientation.lock('landscape')
       });
-      player.current.on('ready', event => {
+      plyr.current.on('ready', event => {
         updateAudioTrack(defaultAudioId)
       });
-      player.current.on('ended', event => {
+      plyr.current.on('ended', event => {
         if (autoContinuedPlay) {
           for (let i = 0; i < videoItemList.current.length; i++) {
             if (videoItemList.current[i].id === itemId && i < videoItemList.current.length - 1) {
@@ -244,7 +251,7 @@ export default function PlyrWrap() {
         }
       });
 
-      player.current.on('exitfullscreen', event => {
+      plyr.current.on('exitfullscreen', event => {
         if (window.screen.orientation.lock)
           window.screen.orientation.lock('portrait');
       });
@@ -268,12 +275,8 @@ export default function PlyrWrap() {
     hls.current.loadSource(url)
 
     return () => {
-      hls.current.destroy()
-      if (player.current) {
-        player.current.destroy()
-      }
     }
-  }, [url, shareid])
+  }, [url, shareid, videoRef])
 
   var touchStartX = useRef(0);
   var touchEndX = useRef(0);
