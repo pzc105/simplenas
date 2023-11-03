@@ -18,17 +18,26 @@ import { navigateToItem } from './category.js';
 
 
 export const FloatingChat = ({ name, itemId, onClose }) => {
-  const dispatch = useDispatch()
-  const restorePosition = useSelector((state) => store.selectGlobalChatPosition(state, itemId))
-  const defaultPosition = (restorePosition && restorePosition.x) ? { x: restorePosition.x, y: restorePosition.y } : undefined
-  const positionOffset = (!defaultPosition) ? { x: '-50%', y: '-50%' } : undefined
+  const storedPosition = JSON.parse(localStorage.getItem('dragPosition'))
+  const positionOffset = storedPosition ? undefined : { x: "-50%", y: "-50%" }
+  const [position, setPosition] = useState(storedPosition ? storedPosition : { x: 0, y: 0 });
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+
     return () => {
       document.body.style.overflow = 'auto';
     }
   }, [])
+
+  const handleDrag = (e, data) => {
+    const newPosition = { x: data.x, y: data.y };
+    setPosition(newPosition);
+  };
+
+  const handleStop = (e, data) => {
+    localStorage.setItem('dragPosition', JSON.stringify(position));
+  }
 
   const handleClose = () => {
     if (onClose) {
@@ -36,16 +45,13 @@ export const FloatingChat = ({ name, itemId, onClose }) => {
     }
   }
 
-  const handleStop = (e, ui) => {
-    dispatch(store.userSlice.actions.setGlobalChatPosition({ x: ui.x, y: ui.y, itemId: itemId }))
-  };
-
   return (
     ReactDOM.createPortal(
       <Draggable
+        onDrag={handleDrag}
         onStop={handleStop}
         handle='.draggableWindow'
-        defaultPosition={defaultPosition}
+        position={position}
         positionOffset={positionOffset}
       >
         <div className='floatingchat' >
@@ -180,7 +186,6 @@ const ChatPanel = ({ itemId }) => {
           </Grid>
         </Grid>
       </div>
-      <div style={{ height: "1vh" }} className='draggableWindow'></div>
     </Container >
   )
 }
