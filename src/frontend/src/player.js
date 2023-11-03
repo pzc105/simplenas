@@ -172,7 +172,7 @@ export default function PlyrWrap() {
     }
 
     var hlsconfig = {
-      debug: true,
+      debug: false,
       autoStartLoad: false,
       xhrSetup: function (xhr) {
         xhr.withCredentials = true; // do send cookies
