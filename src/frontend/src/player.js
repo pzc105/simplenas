@@ -25,7 +25,8 @@ export default function PlyrWrap() {
   const item = useSelector((state) => store.selectCategoryItem(state, itemId))
   const parentItemId = item ? item.parentId : null
   const [items, setItems] = useState([])
-  const videoItemList = useRef([])
+  const [videoItemList, setVideoItemList] = useState([])
+  const videoItemListRef = useRef([])
 
   const plyr = useRef(null)
   const hls = useRef(null)
@@ -58,7 +59,17 @@ export default function PlyrWrap() {
       }
       return null
     })
-    videoItemList.current = vl
+    vl.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    })
+    setVideoItemList(vl)
+    videoItemListRef.current = vl;
   }, [items])
 
   useEffect(() => {
@@ -232,7 +243,6 @@ export default function PlyrWrap() {
       defaultOptions.keyboard = {
         focused: true, global: true
       }
-
       plyr.current = new Plyr(videoRef.current, defaultOptions);
       plyr.current.on('enterfullscreen', event => {
         if (window.screen.orientation.lock)
@@ -240,12 +250,15 @@ export default function PlyrWrap() {
       });
       plyr.current.on('ready', event => {
         updateAudioTrack(defaultAudioId)
+        if (autoContinuedPlay) {
+          plyr.current.play()
+        }
       });
       plyr.current.on('ended', event => {
         if (autoContinuedPlay) {
-          for (let i = 0; i < videoItemList.current.length; i++) {
-            if (videoItemList.current[i].id === itemId && i < videoItemList.current.length - 1) {
-              navigateToItem(navigate, {}, videoItemList.current[i + 1].id, shareid)
+          for (let i = 0; i < videoItemListRef.current.length; i++) {
+            if (videoItemListRef.current[i].id === itemId && i < videoItemListRef.current.length - 1) {
+              navigateToItem(navigate, {}, videoItemListRef.current[i + 1].id, shareid)
             }
           }
         }
@@ -294,8 +307,7 @@ export default function PlyrWrap() {
     }
   }
 
-  const [autoContinuedPlay, setAutoContinuedPlay] = useState(useSelector((state) => store.selectAutoPlayVideo(state)));
-
+  const autoContinuedPlay = useSelector((state) => store.selectAutoPlayVideo(state))
   const showGlobalChat = useSelector((state) => store.selectOpenGlobalChat(state))
   const closeGlobalChat = () => {
     dispatch(store.userSlice.actions.setOpenGlobalChat(false))
@@ -304,7 +316,7 @@ export default function PlyrWrap() {
   return (
     <Container onTouchStart={touchstart} onTouchMove={touchmove} onTouchEnd={touchend} sx={{ backgroundColor: 'background.default' }}>
       <CssBaseline />
-      <Grid container spacing={2}>
+      <Grid container alignItems="center" justify="center" spacing={2}>
         <Grid item xs={12} sx={{ display: "flex" }}>
           <Grid item xs={8} >
             <Typography variant="button" component="div" noWrap>
@@ -319,55 +331,66 @@ export default function PlyrWrap() {
             </video>
           </Grid>
           <Grid item xs={4} >
-            <Container>
-              <Typography variant="button" component="div" noWrap>
-                播放列表
-              </Typography>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={autoContinuedPlay}
-                    onClick={
-                      (e) => {
-                        let v = !autoContinuedPlay
-                        setAutoContinuedPlay(v)
-                        dispatch(store.playerSlice.actions.setAutoContinuedPlayVideo(v))
-                      }
-                    }
-                    color="primary"
-                    inputProps={{ 'aria-label': 'controlled' }}
-                  />
-                }
-                label={'自动连播'}
-              />
-              <Paper style={{ maxHeight: '50vh', overflow: 'auto' }}>
-                <List>
-                  {
-                    items.map((item) => {
-                      if (!utils.isVideoItem(item)) {
-                        return null
-                      }
-                      return (
-                        <ListItem
-                          key={item.id} >
-                          <Tooltip title={item.name}>
-                            <Typography variant="button" component="div" noWrap>
-                              <Button onClick={() => navigateToItem(navigate, {}, item.id, shareid)}>
-                                {item.name}
-                              </Button>
-                            </Typography>
-                          </Tooltip>
-                        </ListItem>
-                      )
-                    })
-                  }
-                </List>
-              </Paper>
-            </Container>
+            <PlayList videoItemList={videoItemList} shareid={shareid} />
           </Grid>
         </Grid>
       </Grid>
       {showGlobalChat ? <FloatingChat itemId={1} onClose={closeGlobalChat} /> : null}
     </Container>
   );
+}
+
+
+const PlayList = ({ videoItemList, shareid }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [autoContinuedPlay, setAutoContinuedPlay] = useState(useSelector((state) => store.selectAutoPlayVideo(state)));
+
+  return (
+    <Container>
+      <Typography variant="button" component="div" noWrap>
+        播放列表
+      </Typography>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={autoContinuedPlay}
+            onClick={
+              (e) => {
+                let v = !autoContinuedPlay
+                setAutoContinuedPlay(v)
+                dispatch(store.playerSlice.actions.setAutoContinuedPlayVideo(v))
+              }
+            }
+            color="primary"
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
+        }
+        label={'自动连播'}
+      />
+      <Paper style={{ maxHeight: '50vh', overflow: 'auto' }}>
+        <List>
+          {
+            videoItemList.map((item) => {
+              if (!utils.isVideoItem(item)) {
+                return null
+              }
+              return (
+                <ListItem
+                  key={item.id} >
+                  <Tooltip title={item.name}>
+                    <Typography variant="button" component="div" noWrap>
+                      <Button onClick={() => navigateToItem(navigate, {}, item.id, shareid)}>
+                        {item.name}
+                      </Button>
+                    </Typography>
+                  </Tooltip>
+                </ListItem>
+              )
+            })
+          }
+        </List>
+      </Paper>
+    </Container>
+  )
 }
