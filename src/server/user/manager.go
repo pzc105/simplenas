@@ -142,6 +142,33 @@ func (um *UserManger) ChangeUserName(id ID, name string) error {
 	return u.ChangeUserName(name)
 }
 
+type ChangePasswordParams struct {
+	UserId      ID
+	Email       string
+	OldPassword string
+	NewPassword string
+}
+
+func (um *UserManger) ChangePassword(params *ChangePasswordParams) bool {
+	if len(params.Email) == 0 {
+		sql := "update pnas.user set passwd=? where id=? and passwd=?"
+		r, err := db.Exec(sql, params.NewPassword, params.UserId, params.OldPassword)
+		if err != nil {
+			return false
+		}
+		ra, _ := r.RowsAffected()
+		return ra > 0
+	} else {
+		sql := "update pnas.user set passwd=? where email=? and passwd=?"
+		r, err := db.Exec(sql, params.NewPassword, params.Email, params.OldPassword)
+		if err != nil {
+			return false
+		}
+		ra, _ := r.RowsAffected()
+		return ra > 0
+	}
+}
+
 func (um *UserManger) HasVideo(userId ID, vid video.ID) bool {
 	if userId == AdminId {
 		return true

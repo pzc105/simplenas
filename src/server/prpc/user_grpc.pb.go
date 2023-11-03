@@ -24,6 +24,7 @@ const (
 	UserService_Login_FullMethodName             = "/prpc.UserService/Login"
 	UserService_FastLogin_FullMethodName         = "/prpc.UserService/FastLogin"
 	UserService_IsLogined_FullMethodName         = "/prpc.UserService/IsLogined"
+	UserService_ChangePassword_FullMethodName    = "/prpc.UserService/ChangePassword"
 	UserService_Download_FullMethodName          = "/prpc.UserService/Download"
 	UserService_RemoveTorrent_FullMethodName     = "/prpc.UserService/RemoveTorrent"
 	UserService_OnStatus_FullMethodName          = "/prpc.UserService/OnStatus"
@@ -55,6 +56,7 @@ type UserServiceClient interface {
 	Login(ctx context.Context, in *LoginInfo, opts ...grpc.CallOption) (*LoginRet, error)
 	FastLogin(ctx context.Context, in *LoginInfo, opts ...grpc.CallOption) (*LoginRet, error)
 	IsLogined(ctx context.Context, in *LoginInfo, opts ...grpc.CallOption) (*LoginRet, error)
+	ChangePassword(ctx context.Context, in *ChangePasswordReq, opts ...grpc.CallOption) (*ChangePasswordRsp, error)
 	Download(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadRespone, error)
 	RemoveTorrent(ctx context.Context, in *RemoveTorrentReq, opts ...grpc.CallOption) (*RemoveTorrentRes, error)
 	OnStatus(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (UserService_OnStatusClient, error)
@@ -124,6 +126,15 @@ func (c *userServiceClient) FastLogin(ctx context.Context, in *LoginInfo, opts .
 func (c *userServiceClient) IsLogined(ctx context.Context, in *LoginInfo, opts ...grpc.CallOption) (*LoginRet, error) {
 	out := new(LoginRet)
 	err := c.cc.Invoke(ctx, UserService_IsLogined_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) ChangePassword(ctx context.Context, in *ChangePasswordReq, opts ...grpc.CallOption) (*ChangePasswordRsp, error) {
+	out := new(ChangePasswordRsp)
+	err := c.cc.Invoke(ctx, UserService_ChangePassword_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -365,6 +376,7 @@ type UserServiceServer interface {
 	Login(context.Context, *LoginInfo) (*LoginRet, error)
 	FastLogin(context.Context, *LoginInfo) (*LoginRet, error)
 	IsLogined(context.Context, *LoginInfo) (*LoginRet, error)
+	ChangePassword(context.Context, *ChangePasswordReq) (*ChangePasswordRsp, error)
 	Download(context.Context, *DownloadRequest) (*DownloadRespone, error)
 	RemoveTorrent(context.Context, *RemoveTorrentReq) (*RemoveTorrentRes, error)
 	OnStatus(*StatusRequest, UserService_OnStatusServer) error
@@ -406,6 +418,9 @@ func (UnimplementedUserServiceServer) FastLogin(context.Context, *LoginInfo) (*L
 }
 func (UnimplementedUserServiceServer) IsLogined(context.Context, *LoginInfo) (*LoginRet, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsLogined not implemented")
+}
+func (UnimplementedUserServiceServer) ChangePassword(context.Context, *ChangePasswordReq) (*ChangePasswordRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangePassword not implemented")
 }
 func (UnimplementedUserServiceServer) Download(context.Context, *DownloadRequest) (*DownloadRespone, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Download not implemented")
@@ -566,6 +581,24 @@ func _UserService_IsLogined_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).IsLogined(ctx, req.(*LoginInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_ChangePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangePasswordReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).ChangePassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_ChangePassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).ChangePassword(ctx, req.(*ChangePasswordReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -962,6 +995,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IsLogined",
 			Handler:    _UserService_IsLogined_Handler,
+		},
+		{
+			MethodName: "ChangePassword",
+			Handler:    _UserService_ChangePassword_Handler,
 		},
 		{
 			MethodName: "Download",

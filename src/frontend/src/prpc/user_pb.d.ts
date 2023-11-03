@@ -164,6 +164,46 @@ export namespace LoginRet {
   }
 }
 
+export class ChangePasswordReq extends jspb.Message {
+  getEmail(): string;
+  setEmail(value: string): ChangePasswordReq;
+
+  getOldPasswd(): string;
+  setOldPasswd(value: string): ChangePasswordReq;
+
+  getNewPasswd(): string;
+  setNewPasswd(value: string): ChangePasswordReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ChangePasswordReq.AsObject;
+  static toObject(includeInstance: boolean, msg: ChangePasswordReq): ChangePasswordReq.AsObject;
+  static serializeBinaryToWriter(message: ChangePasswordReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ChangePasswordReq;
+  static deserializeBinaryFromReader(message: ChangePasswordReq, reader: jspb.BinaryReader): ChangePasswordReq;
+}
+
+export namespace ChangePasswordReq {
+  export type AsObject = {
+    email: string,
+    oldPasswd: string,
+    newPasswd: string,
+  }
+}
+
+export class ChangePasswordRsp extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ChangePasswordRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: ChangePasswordRsp): ChangePasswordRsp.AsObject;
+  static serializeBinaryToWriter(message: ChangePasswordRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ChangePasswordRsp;
+  static deserializeBinaryFromReader(message: ChangePasswordRsp, reader: jspb.BinaryReader): ChangePasswordRsp;
+}
+
+export namespace ChangePasswordRsp {
+  export type AsObject = {
+  }
+}
+
 export class NewCategoryItemReq extends jspb.Message {
   getName(): string;
   setName(value: string): NewCategoryItemReq;

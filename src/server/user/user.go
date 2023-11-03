@@ -105,7 +105,7 @@ func loadUser(userId ID) (*User, error) {
 }
 
 func (user *User) ChangeUserName(name string) error {
-	sql := "update name=? from pnas.user where id=?"
+	sql := "update pnas.user set name=? where id=?"
 	_, err := db.Exec(sql, name, user.userInfo.Id)
 	if err != nil {
 		return err

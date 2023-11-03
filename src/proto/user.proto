@@ -22,6 +22,8 @@ service UserService {
 
   rpc IsLogined (LoginInfo) returns (LoginRet);
 
+  rpc ChangePassword(ChangePasswordReq) returns (ChangePasswordRsp);
+
   rpc Download(DownloadRequest) returns (DownloadRespone);
 
   rpc RemoveTorrent(RemoveTorrentReq) returns (RemoveTorrentRes);
@@ -86,6 +88,16 @@ message LoginRet {
   string token = 1;
   UserInfo user_info = 2;
   bool remember_me = 3;
+}
+
+message ChangePasswordReq {
+  string email = 1;
+  string old_passwd = 2;
+  string new_passwd = 3;
+}
+
+message ChangePasswordRsp {
+
 }
 
 message NewCategoryItemReq {

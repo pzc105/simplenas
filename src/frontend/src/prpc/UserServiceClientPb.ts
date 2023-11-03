@@ -255,6 +255,49 @@ export class UserServiceClient {
     this.methodDescriptorIsLogined);
   }
 
+  methodDescriptorChangePassword = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/ChangePassword',
+    grpcWeb.MethodType.UNARY,
+    user_pb.ChangePasswordReq,
+    user_pb.ChangePasswordRsp,
+    (request: user_pb.ChangePasswordReq) => {
+      return request.serializeBinary();
+    },
+    user_pb.ChangePasswordRsp.deserializeBinary
+  );
+
+  changePassword(
+    request: user_pb.ChangePasswordReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.ChangePasswordRsp>;
+
+  changePassword(
+    request: user_pb.ChangePasswordReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: user_pb.ChangePasswordRsp) => void): grpcWeb.ClientReadableStream<user_pb.ChangePasswordRsp>;
+
+  changePassword(
+    request: user_pb.ChangePasswordReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: user_pb.ChangePasswordRsp) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.UserService/ChangePassword',
+        request,
+        metadata || {},
+        this.methodDescriptorChangePassword,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.UserService/ChangePassword',
+    request,
+    metadata || {},
+    this.methodDescriptorChangePassword);
+  }
+
   methodDescriptorDownload = new grpcWeb.MethodDescriptor(
     '/prpc.UserService/Download',
     grpcWeb.MethodType.UNARY,

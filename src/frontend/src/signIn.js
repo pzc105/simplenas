@@ -98,6 +98,7 @@ export default function SignIn(props) {
   const [pwdWarnMsg, setPwdWarnMsg] = useState('')
   const [rememberMe, setRememberMe] = useState(false)
   const [rawUserInfo, setRawUserInfo] = useState(new Map())
+  const [showChangePwd, setShowChangePwd] = useState(false)
 
   function handleChange(e) {
     setRawUserInfo(rawUserInfo.set(e.target.name, e.target.value))
@@ -160,69 +161,162 @@ export default function SignIn(props) {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <PaperDiv>
-        <MyAvatar>
-          <LockOutlinedIcon />
-        </MyAvatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <MyForm
-          onSubmit={handleSubmit}
-          method="post"
-          noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            onChange={handleChange}
-            autoFocus />
-          {showEmailWarn ? <Alert severity="warning">{emailWarnMsg}</Alert> : null}
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={handleChange} />
-          {showPwdWarn ? <Alert severity="warning">{pwdWarnMsg}</Alert> : null}
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-            onChange={handleCheck} />
-          <MySubmit
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary">
-            登录
-          </MySubmit>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+      {
+        !showChangePwd ? <PaperDiv>
+          <MyAvatar>
+            <LockOutlinedIcon />
+          </MyAvatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <MyForm
+            onSubmit={handleSubmit}
+            method="post"
+            noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              onChange={handleChange}
+              autoFocus />
+            {showEmailWarn ? <Alert severity="warning">{emailWarnMsg}</Alert> : null}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={handleChange} />
+            {showPwdWarn ? <Alert severity="warning">{pwdWarnMsg}</Alert> : null}
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+              onChange={handleCheck} />
+            <MySubmit
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary">
+              登录
+            </MySubmit>
+            <Grid container>
+              <Grid item xs>
+                <Link onClick={() => setShowChangePwd(true)} href="#" variant="body2">
+                  忘记密码?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link onClick={() => navigate("/signup")} variant="body2">
+                  {"没有账号? 注册吧"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link onClick={() => navigate("/signup")} variant="body2">
-                {"没有账号? 注册吧"}
-              </Link>
-            </Grid>
-          </Grid>
-        </MyForm>
-      </PaperDiv>
+          </MyForm>
+        </PaperDiv>
+          : <ChangePassword back2Login={() => { setShowChangePwd(false) }} />
+      }
       <Box mt={8}>
         <Copyright />
       </Box>
     </Container>
   );
+}
+
+const ChangePassword = ({ back2Login }) => {
+  const navigate = useNavigate()
+  const [oldPwd, setOldPwd] = useState("")
+  const [newPwd, setNewPwd] = useState("")
+  const [email, setEmail] = useState("")
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value)
+  }
+
+  const handleOldChange = (e) => {
+    setOldPwd(e.target.value)
+  }
+
+  const handleNewChange = (e) => {
+    setNewPwd(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    var req = new User.ChangePasswordReq()
+    req.setEmail(email)
+    const CryptoJS = require("crypto-js")
+    req.setOldPasswd(CryptoJS.MD5(oldPwd).toString())
+    req.setNewPasswd(CryptoJS.MD5(newPwd).toString())
+    userService.changePassword(req, {}, (err, rsp) => {
+      if (err === null) {
+        alert("成功")
+      } else {
+        alert("失败")
+      }
+    })
+  }
+
+  return (
+    <PaperDiv>
+      <MyForm
+        onSubmit={handleSubmit}
+        method="post"
+        noValidate>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
+          onChange={handleEmailChange}
+          autoFocus />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="oldpwd"
+          label="旧密码"
+          name="oldpwd"
+          onChange={handleOldChange} />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="newpwd"
+          label="新密码"
+          type="password"
+          id="newpwd"
+          onChange={handleNewChange} />
+        <MySubmit
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary">
+          更改
+        </MySubmit>
+        <Grid container>
+          <Grid item xs>
+            <Link onClick={() => { back2Login() }} href="#" variant="body2">
+              登录
+            </Link>
+          </Grid>
+        </Grid>
+      </MyForm>
+    </PaperDiv>
+  )
 }

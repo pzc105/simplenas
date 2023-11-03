@@ -387,6 +387,24 @@ func (ser *CoreService) IsLogined(context.Context, *prpc.LoginInfo) (*prpc.Login
 	return &prpc.LoginRet{}, nil
 }
 
+func (ser *CoreService) ChangePassword(ctx context.Context, req *prpc.ChangePasswordReq) (*prpc.ChangePasswordRsp, error) {
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "")
+	}
+
+	b := ser.um.ChangePassword(&user.ChangePasswordParams{
+		UserId:      ses.UserId,
+		Email:       req.Email,
+		OldPassword: req.OldPasswd,
+		NewPassword: req.NewPasswd,
+	})
+	if !b {
+		return nil, status.Error(codes.InvalidArgument, "更改失败")
+	}
+	return &prpc.ChangePasswordRsp{}, nil
+}
+
 func (ser *CoreService) Download(
 	ctx context.Context,
 	req *prpc.DownloadRequest) (*prpc.DownloadRespone, error) {
