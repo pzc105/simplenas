@@ -146,7 +146,9 @@ const selectOpenGlobalChat = (state) => {
 }
 
 const selectGlobalChatPosition = (state, itemId) => {
-  return state.user.globalChatPosition[itemId]
+  if (state.user.globalChatPosition) {
+    return state.user.globalChatPosition[itemId]
+  }
 }
 
 const selectTorrent = (state, infoHash) => {

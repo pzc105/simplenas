@@ -48,7 +48,7 @@ export const FloatingChat = ({ name, itemId, onClose }) => {
         defaultPosition={defaultPosition}
         positionOffset={positionOffset}
       >
-        <div className='floatingchat'>
+        <div className='floatingchat' >
           <Paper style={{ width: "20em", borderRadius: "20px", border: '2px solid #e178ce' }}>
             <Grid container>
               <Grid item xs={10} className='draggableWindow'>
@@ -162,7 +162,7 @@ const ChatPanel = ({ itemId }) => {
           ))}
         </List>
       </Paper>
-      <div className='draggableWindow'>
+      <div style={{ width: "100%" }}>
         <EmojiPicker emojiList={emojiList} onEmoji={onEmoji} />
         <Grid container alignItems="center" justify="center">
           <Grid item xs={10}>
@@ -180,6 +180,7 @@ const ChatPanel = ({ itemId }) => {
           </Grid>
         </Grid>
       </div>
+      <div style={{ height: "1vh" }} className='draggableWindow'></div>
     </Container >
   )
 }

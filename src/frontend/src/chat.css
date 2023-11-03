@@ -5,6 +5,10 @@
   left: 50%;
 }
 
+.draggableWindow {
+  cursor: grab;
+}
+
 .pointer {
   cursor: pointer;
 }
