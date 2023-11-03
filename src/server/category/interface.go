@@ -1,6 +1,6 @@
 package category
 
-type Service interface {
+type IService interface {
 	Init()
 	AddItem(params *NewCategoryParams) (*CategoryItem, error)
 	GetItem(querier int64, itemId ID) (*CategoryItem, error)

@@ -37,7 +37,7 @@ type CoreService struct {
 	prpc.UnimplementedUserServiceServer
 	notCheckTokenMethods []string
 
-	sessions session.SessionsInterface
+	sessions session.ISessions
 
 	bt              bt.BtClient
 	btStatusPushMtx sync.Mutex
@@ -49,13 +49,13 @@ type CoreService struct {
 
 	wg sync.WaitGroup
 
-	grpcSer         *grpc.Server
-	httpSer         *http.Server
-	videoSer        *VideoService
-	posterSer       *PosterService
-	chatRoomService ChatRoomService
+	grpcSer   *grpc.Server
+	httpSer   *http.Server
+	videoSer  *VideoService
+	posterSer *PosterService
+	rooms     chat.IRooms
 
-	shares SharesInterface
+	shares IItemShares
 }
 
 func (ser *CoreService) Init() {
@@ -72,7 +72,9 @@ func (ser *CoreService) Init() {
 		bt.WithOnFileCompleted(ser.handleBtFileCompleted))
 	ser.um.Init()
 
-	ser.chatRoomService.Init()
+	var rooms chat.Rooms
+	rooms.Init()
+	ser.rooms = &rooms
 
 	sm := &ShareManager{}
 	sm.Init()
@@ -785,7 +787,7 @@ func (ser *CoreService) JoinChatRoom(req *prpc.JoinChatRoomReq, stream prpc.User
 	}
 	itemId := category.ID(req.ItemId)
 
-	ser.chatRoomService.Join(itemId, ses.Id, func(cms []*chat.ChatMessage) {
+	ser.rooms.Join(itemId, ses.Id, func(cms []*chat.ChatMessage) {
 		var scms []*prpc.ChatMessage
 		for _, cm := range cms {
 			user, _ := ser.um.LoadUser(cm.UserId)
@@ -803,7 +805,7 @@ func (ser *CoreService) JoinChatRoom(req *prpc.JoinChatRoomReq, stream prpc.User
 		})
 	})
 
-	room, err := ser.chatRoomService.GetRoom(itemId)
+	room, err := ser.rooms.GetRoom(itemId)
 	if err != nil {
 		return status.Error(codes.Internal, "")
 	}
@@ -823,7 +825,7 @@ func (ser *CoreService) SendMsg2ChatRoom(ctx context.Context, req *prpc.SendMsg2
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
-	ser.chatRoomService.Broadcast(category.ID(req.GetItemId()), &chat.ChatMessage{
+	ser.rooms.Broadcast(category.ID(req.GetItemId()), &chat.ChatMessage{
 		UserId:   ses.UserId,
 		SentTime: time.Now(),
 		Msg:      req.GetChatMsg().Msg,

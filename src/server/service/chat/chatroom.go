@@ -3,9 +3,11 @@ package chat
 import (
 	"context"
 	"pnas/log"
+	"pnas/user"
 	"pnas/utils"
 	"sync"
 	"sync/atomic"
+	"time"
 )
 
 const (
@@ -19,13 +21,19 @@ type userData struct {
 	joinCount   uint32
 }
 
+type ChatMessage struct {
+	UserId   user.ID
+	SentTime time.Time
+	Msg      string
+}
+
 type versionChatMessage struct {
 	version uint64
 	msg     *ChatMessage
 }
 
 type ChatRoomImpl struct {
-	ChatRoom
+	IRoom
 	mtx       sync.Mutex
 	usersData map[int64]*userData
 

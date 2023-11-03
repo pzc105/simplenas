@@ -28,7 +28,7 @@ type UserManger struct {
 	mtx          sync.Mutex
 	users        map[ID]*User
 	genHslRecord map[video.ID]bool
-	categorySer  category.Service
+	categorySer  category.IService
 
 	cudaQueue utils.TaskQueue
 	qsvQueue  utils.TaskQueue
@@ -220,7 +220,7 @@ func (um *UserManger) NewCategoryItem(userId ID, params *category.NewCategoryPar
 	return err
 }
 
-func (um *UserManger) CategoryService() category.Service {
+func (um *UserManger) CategoryService() category.IService {
 	return um.categorySer
 }
 

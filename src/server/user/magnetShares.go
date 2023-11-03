@@ -23,10 +23,10 @@ type IMagnetSharesService interface {
 
 type MagnetSharesService struct {
 	rootId          category.ID
-	categoryService category.Service
+	categoryService category.IService
 }
 
-func (m *MagnetSharesService) Init(ser category.Service) {
+func (m *MagnetSharesService) Init(ser category.IService) {
 	m.categoryService = ser
 	item, err := ser.GetItemByName(category.AdminId, category.RootId, rootDirectoryName)
 	if err != nil {

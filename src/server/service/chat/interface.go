@@ -2,21 +2,21 @@ package chat
 
 import (
 	"context"
-	"pnas/user"
-	"time"
+	"pnas/category"
 )
 
 type SendFunc func([]*ChatMessage)
 
-type ChatRoom interface {
+type IRoom interface {
 	Context() context.Context
 	Join(sessionId int64, sendFunc SendFunc)
 	Leave(sessionId int64)
 	Broadcast(*ChatMessage)
 }
 
-type ChatMessage struct {
-	UserId   user.ID
-	SentTime time.Time
-	Msg      string
+type IRooms interface {
+	Join(itemId category.ID, sessionId int64, sendFunc SendFunc)
+	Leave(itemId category.ID, sessionId int64)
+	Broadcast(itemId category.ID, msg *ChatMessage)
+	GetRoom(itemId category.ID) (IRoom, error)
 }

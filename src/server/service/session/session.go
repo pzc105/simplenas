@@ -51,7 +51,7 @@ func NewToken() string {
 }
 
 type Sessions struct {
-	SessionsInterface
+	ISessions
 	idPool utils.IdPool
 }
 

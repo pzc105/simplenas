@@ -56,7 +56,7 @@ func (h *timeHeap) Pop() any {
 	return x
 }
 
-type SharesInterface interface {
+type IItemShares interface {
 	ShareCategoryItem(params *ShareCategoryItemParams) (shareid string, err error)
 	DelShare(shareid string) error
 	GetShareItemInfo(shareid string) (*ShareInfo, error)
@@ -64,7 +64,7 @@ type SharesInterface interface {
 }
 
 type ShareManager struct {
-	SharesInterface
+	IItemShares
 	mtx        sync.Mutex
 	shares     map[string]*ShareInfo
 	userShares map[user.ID][]string

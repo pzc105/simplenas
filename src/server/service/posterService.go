@@ -20,14 +20,14 @@ type CategoryData interface {
 
 type PosterService struct {
 	cd       CategoryData
-	shares   SharesInterface
-	sessions session.SessionsInterface
+	shares   IItemShares
+	sessions session.ISessions
 	router   *mux.Router
 }
 type NewPosterServiceParams struct {
 	CategoryData CategoryData
-	Shares       SharesInterface
-	Sessions     session.SessionsInterface
+	Shares       IItemShares
+	Sessions     session.ISessions
 	Router       *mux.Router
 }
 

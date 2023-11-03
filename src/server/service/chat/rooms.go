@@ -1,36 +1,36 @@
-package service
+package chat
 
 import (
 	"errors"
 	"pnas/category"
-	"pnas/service/chat"
 	"pnas/utils"
 	"sync"
 )
 
 type ChatRoomID int64
 
-type ChatRoomService struct {
+type Rooms struct {
+	IRooms
 	mtx     sync.Mutex
-	rs      map[ChatRoomID]chat.ChatRoom
+	rs      map[ChatRoomID]IRoom
 	cid2rid map[category.ID]ChatRoomID
 
 	roomIdPool utils.IdPool
 }
 
-func (cs *ChatRoomService) Init() {
-	cs.rs = make(map[ChatRoomID]chat.ChatRoom)
+func (cs *Rooms) Init() {
+	cs.rs = make(map[ChatRoomID]IRoom)
 	cs.cid2rid = make(map[category.ID]ChatRoomID)
 	cs.roomIdPool.Init()
 }
 
-func (cs *ChatRoomService) Join(itemId category.ID, sessionId int64, sendFunc chat.SendFunc) {
+func (cs *Rooms) Join(itemId category.ID, sessionId int64, sendFunc SendFunc) {
 	cs.mtx.Lock()
 	rid, ok := cs.cid2rid[itemId]
-	var r chat.ChatRoom
+	var r IRoom
 	if !ok {
 		rid = ChatRoomID(cs.roomIdPool.NewId())
-		ri := &chat.ChatRoomImpl{}
+		ri := &ChatRoomImpl{}
 		ri.Init()
 		cs.rs[rid] = ri
 		cs.cid2rid[itemId] = rid
@@ -42,9 +42,9 @@ func (cs *ChatRoomService) Join(itemId category.ID, sessionId int64, sendFunc ch
 	r.Join(sessionId, sendFunc)
 }
 
-func (cs *ChatRoomService) Leave(itemId category.ID, sessionId int64) {
+func (cs *Rooms) Leave(itemId category.ID, sessionId int64) {
 	cs.mtx.Lock()
-	var r chat.ChatRoom
+	var r IRoom
 	rid, ok := cs.cid2rid[itemId]
 	if ok {
 		r = cs.rs[rid]
@@ -56,9 +56,9 @@ func (cs *ChatRoomService) Leave(itemId category.ID, sessionId int64) {
 	r.Leave(sessionId)
 }
 
-func (cs *ChatRoomService) Broadcast(itemId category.ID, msg *chat.ChatMessage) {
+func (cs *Rooms) Broadcast(itemId category.ID, msg *ChatMessage) {
 	cs.mtx.Lock()
-	var r chat.ChatRoom
+	var r IRoom
 	rid, ok := cs.cid2rid[itemId]
 	if ok {
 		r = cs.rs[rid]
@@ -70,7 +70,7 @@ func (cs *ChatRoomService) Broadcast(itemId category.ID, msg *chat.ChatMessage) 
 	r.Broadcast(msg)
 }
 
-func (cs *ChatRoomService) GetRoom(itemId category.ID) (chat.ChatRoom, error) {
+func (cs *Rooms) GetRoom(itemId category.ID) (IRoom, error) {
 	cs.mtx.Lock()
 	defer cs.mtx.Unlock()
 	rid, ok := cs.cid2rid[itemId]

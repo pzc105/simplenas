@@ -24,8 +24,8 @@ type UserVideoData interface {
 
 type VideoService struct {
 	ud       UserVideoData
-	shares   SharesInterface
-	sessions session.SessionsInterface
+	shares   IItemShares
+	sessions session.ISessions
 	router   *mux.Router
 }
 
@@ -43,8 +43,8 @@ func loadStartTime(userId user.ID, vid video.ID) string {
 
 type NewVideoServiceParams struct {
 	UserData UserVideoData
-	Shares   SharesInterface
-	Sessions session.SessionsInterface
+	Shares   IItemShares
+	Sessions session.ISessions
 	Router   *mux.Router
 }
 
