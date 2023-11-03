@@ -71,6 +71,7 @@ export const FloatingChat = ({ name, itemId, onClose }) => {
               </Grid>
             </Grid>
             <ChatPanel itemId={itemId} />
+            <div className='draggableWindow' style={{ height: "1em" }}></div>
           </Paper>
         </div>
       </Draggable>,
