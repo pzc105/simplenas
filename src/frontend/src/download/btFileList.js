@@ -3,13 +3,13 @@ import { Container, Button, FormControl, InputLabel, MenuItem, Select, FormContr
   from "@mui/material";
 
 import { useSelector, useDispatch } from 'react-redux';
-import * as store from './store.js'
-import * as utils from './utils.js'
+import * as store from '../store.js'
+import * as utils from '../utils.js'
 
-import * as category from './prpc/category_pb'
-import * as User from './prpc/user_pb.js'
-import * as Bt from './prpc/bt_pb.js'
-import userService from './rpcClient.js'
+import * as category from '../prpc/category_pb.js'
+import * as User from '../prpc/user_pb.js'
+import * as Bt from '../prpc/bt_pb.js'
+import userService from '../rpcClient.js'
 
 
 const FolderSelector = ({ select }) => {

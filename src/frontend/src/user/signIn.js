@@ -6,10 +6,10 @@ import MuiAlert from '@mui/lab/Alert';
 import { styled } from "@mui/material/styles";
 import { useNavigate } from 'react-router-dom';
 
-import * as utils from './utils.js'
-import userService from './rpcClient.js'
-import * as User from './prpc/user_pb.js'
-import { userSlice, btSlice } from './store.js'
+import * as utils from '../utils.js'
+import userService from '../rpcClient.js'
+import * as User from '../prpc/user_pb.js'
+import { userSlice, btSlice } from '../store.js'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;

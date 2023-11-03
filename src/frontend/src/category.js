@@ -10,7 +10,7 @@ import { styled } from "@mui/material/styles";
 import { useSelector, useDispatch } from 'react-redux';
 import * as store from './store.js'
 import SideUtils from './sideManager.js';
-import { FloatingChat } from './chat.js';
+import { FloatingChat } from './chat/chat.js';
 import SubtitleUploader from './uploadSubtitle.js';
 
 import * as User from './prpc/user_pb.js'

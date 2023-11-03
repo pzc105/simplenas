@@ -6,14 +6,14 @@ import { styled } from "@mui/material/styles";
 import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 
-import SideUtils from './sideManager.js';
-import * as store from './store.js'
-import * as Bt from './prpc/bt_pb.js'
-import * as router from './router.js'
-import userService from './rpcClient.js'
-import FileUpload from './uploadTorrent.js'
+import SideUtils from '../sideManager.js';
+import * as store from '../store.js'
+import * as Bt from '../prpc/bt_pb.js'
+import * as router from '../router.js'
+import userService from '../rpcClient.js'
+import FileUpload from '../uploadTorrent.js'
 import { ProgressLists } from './downloadlist.js'
-import { FloatingChat, DraggableDialog } from './chat.js';
+import { FloatingChat, DraggableDialog } from '../chat/chat.js';
 
 const DownloadContainer = styled('div')(({ theme }) => ({
   display: 'flex',

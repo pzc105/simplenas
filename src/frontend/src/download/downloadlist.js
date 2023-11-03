@@ -4,10 +4,10 @@ import { styled } from "@mui/material/styles";
 import LinearProgress from '@mui/material/LinearProgress';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { btSlice, selectTorrent, selectInfoHashs } from './store.js'
-import * as Bt from './prpc/bt_pb.js'
-import userService from './rpcClient.js'
-import BtVideosHandler from './btVideoMetadata.js'
+import { btSlice, selectTorrent, selectInfoHashs } from '../store.js'
+import * as Bt from '../prpc/bt_pb.js'
+import userService from '../rpcClient.js'
+import BtVideosHandler from './btFileList.js'
 
 
 const Name = styled(Button)({

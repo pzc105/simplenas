@@ -11,7 +11,7 @@ import { queryItem, querySubItems, navigateToItem } from './category.js'
 import { serverAddress } from './rpcClient.js'
 import * as store from './store.js'
 import * as utils from './utils.js';
-import { FloatingChat } from './chat.js';
+import { FloatingChat } from './chat/chat.js';
 
 
 export default function PlyrWrap() {

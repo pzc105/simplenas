@@ -14,11 +14,11 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useSelector, useDispatch } from 'react-redux';
 import * as store from './store.js'
 import SideUtils from './sideManager.js';
-import ChatPanel from './chat.js';
+import ChatPanel from './chat/chat.js';
 import SubtitleUploader from './uploadSubtitle.js';
 import * as category from './category.js'
 import * as router from './router.js'
-import { FloatingChat } from './chat.js';
+import { FloatingChat } from './chat/chat.js';
 import * as User from './prpc/user_pb.js'
 import * as Category from './prpc/category_pb.js'
 import userService from './rpcClient.js'

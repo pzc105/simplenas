@@ -4,15 +4,15 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { purple, green } from '@mui/material/colors';
 import { CssBaseline, Container, Grid, Typography, Box, Button, Paper } from '@mui/material';
 
-import SignIn from './signIn';
-import SignUp from './signUp';
-import Download from './download';
+import SignIn from './user/signIn';
+import SignUp from './user/signUp';
+import Download from './download/download';
 import GlobalSidebar from './globalSidebar.js'
 import CategoryItemPage from './category.js'
 import MagnetSharesPage from './magnetShares';
 import PlyrWrap from './player.js';
-import CheckLoginHandler from './checklogin.js'
-import UserInfoPage from './user.js'
+import CheckLoginHandler from './user/checklogin.js'
+import UserInfoPage from './user/user.js'
 import * as test from './test.js'
 import { useSelector, useDispatch } from 'react-redux';
 import * as store from './store.js'

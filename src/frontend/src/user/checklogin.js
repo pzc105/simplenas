@@ -2,8 +2,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import * as utils from './utils.js'
-import { FastLogin, checkLogined } from './signIn';
+import * as utils from '../utils.js'
+import { FastLogin, checkLogined } from './signIn.js';
 
 export default function CheckLoginHandler() {
   const navigate = useNavigate()

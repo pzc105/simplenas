@@ -9,12 +9,12 @@ import Draggable from 'react-draggable';
 import CloseIcon from '@mui/icons-material/Close';
 import MoodIcon from '@mui/icons-material/Mood';
 
-import * as User from './prpc/user_pb.js'
-import * as store from './store.js'
+import * as User from '../prpc/user_pb.js'
+import * as store from '../store.js'
 import { emojiList } from './emojiList.js';
-import userService from './rpcClient.js'
+import userService from '../rpcClient.js'
 import './chat.css'
-import { navigateToItem } from './category.js';
+import { navigateToItem } from '../category.js';
 
 
 export const FloatingChat = ({ name, itemId, onClose }) => {

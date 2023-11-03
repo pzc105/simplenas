@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Typography, Paper, Button, Grid, CssBaseline } from '@mui/material';
 
-import userService from './rpcClient.js'
-import * as User from './prpc/user_pb.js'
-import * as store from './store.js'
-import * as category from './category.js'
+import userService from '../rpcClient.js'
+import * as User from '../prpc/user_pb.js'
+import * as store from '../store.js'
+import * as category from '../category.js'
 
 export default function UserInfoPage() {
   const userInfo = useSelector((state) => store.selectUserInfo(state))
