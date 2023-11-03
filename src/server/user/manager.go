@@ -225,6 +225,13 @@ func (um *UserManger) CategoryService() category.Service {
 }
 
 func (um *UserManger) DelCategoryItem(userId ID, itemId category.ID) error {
+	item, err := um.categorySer.GetItem(int64(userId), itemId)
+	if err != nil {
+		return err
+	}
+	if item.GetType() == prpc.CategoryItem_Home {
+		return errors.New("can't delete home")
+	}
 	return um.categorySer.DelItem(int64(userId), itemId)
 }
 
