@@ -31,7 +31,7 @@ export default function Player() {
   const plyr = useRef(null)
   const hls = useRef(null)
   const [url, setUrl] = useState('')
-  const [subtitles, setSubtitles] = useState([])
+  const subtitlesRef = useRef([])
   const dplayerRef = useRef(null);
   const vidRef = useRef(-1);
 
@@ -132,7 +132,6 @@ export default function Player() {
     if (shareid) {
       urlPath += "?shareid=" + shareid + "&itemid=" + itemId
     }
-    setUrl(urlPath)
     let cs = []
     videoInfo.subtitlePathsList.map((c) => {
       let suffixes = c.split(".")
@@ -147,12 +146,14 @@ export default function Player() {
       }
       cs.push({
         kind: "subtitles",
-        src: urlPath,
-        srcLang: lang,
+        url: urlPath,
+        lang: lang,
+        name: "zh-cn"
       })
-      setSubtitles(cs)
+      subtitlesRef.current = cs
       return null
     })
+    setUrl(urlPath)
   }, [itemId, shareid, videoInfo]);
 
   useEffect(() => {
@@ -185,7 +186,11 @@ export default function Player() {
         id: 0,
         maximum: 10000,
         withCredentials: true,
-      }
+      },
+      subtitle: {
+        url: subtitlesRef.current,
+        index: 0,
+      },
     }
 
     const dp = new DPlayer({
