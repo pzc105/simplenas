@@ -572,7 +572,7 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 		if err != nil {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		if !ser.um.IsRelationOf(si.ShareItemInfo.ItemId, category.ID(req.ParentId)) {
+		if !ser.um.IsRelationOf(category.ID(req.ParentId), si.ShareItemInfo.ItemId) {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
 		userId = si.UserId
@@ -622,7 +622,7 @@ func (ser *CoreService) QueryItemInfo(ctx context.Context, req *prpc.QueryItemIn
 		if err != nil {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		if !ser.um.IsRelationOf(si.ShareItemInfo.ItemId, category.ID(req.ItemId)) {
+		if !ser.um.IsRelationOf(category.ID(req.ItemId), si.ShareItemInfo.ItemId) {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
 		userId = si.UserId
@@ -891,7 +891,7 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 
 	var items []*category.CategoryItem
 	if len(req.SearchCond) > 0 {
-		if !ser.um.CategoryService().IsRelationOf(ser.um.GetMagnetRootId(), category.ID(req.ParentId)) {
+		if !ser.um.CategoryService().IsRelationOf(category.ID(req.ParentId), ser.um.GetMagnetRootId()) {
 			return nil, status.Error(codes.PermissionDenied, "not found parent id")
 		}
 		items, err = ser.um.CategoryService().Search(&category.SearchParams{

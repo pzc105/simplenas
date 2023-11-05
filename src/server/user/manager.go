@@ -564,8 +564,8 @@ func (um *UserManger) RefreshSubtitle(vid video.ID) error {
 	return nil
 }
 
-func (um *UserManger) IsRelationOf(parentId category.ID, itemId category.ID) bool {
-	return um.categorySer.IsRelationOf(parentId, itemId)
+func (um *UserManger) IsRelationOf(itemId category.ID, parentId category.ID) bool {
+	return um.categorySer.IsRelationOf(itemId, parentId)
 }
 
 func writeSubtitle2Item(item *category.CategoryItem, rpcSubtitle *prpc.SubtitleFile) error {

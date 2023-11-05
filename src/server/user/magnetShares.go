@@ -57,7 +57,7 @@ type AddMagnetCategoryParams struct {
 }
 
 func (m *MagnetSharesService) AddMagnetCategory(params *AddMagnetCategoryParams) error {
-	if !m.categoryService.IsRelationOf(m.GetMagnetRootId(), params.ParentId) {
+	if !m.categoryService.IsRelationOf(params.ParentId, m.GetMagnetRootId()) {
 		return errors.New("isn't share directory")
 	}
 	sudo := false
@@ -104,7 +104,7 @@ type QueryCategoryParams struct {
 }
 
 func (m *MagnetSharesService) queryMagnetCategorys(params *QueryCategoryParams) ([]*category.CategoryItem, error) {
-	if !m.categoryService.IsRelationOf(m.GetMagnetRootId(), params.ParentId) {
+	if !m.categoryService.IsRelationOf(params.ParentId, m.GetMagnetRootId()) {
 		return nil, errors.New("isn't share directory")
 	}
 	if len(params.CategoryName) != 0 {
@@ -127,7 +127,7 @@ func (m *MagnetSharesService) QueryMagnetCategorys(params *QueryCategoryParams) 
 }
 
 func (m *MagnetSharesService) DelMagnetCategory(deletor ID, id category.ID) error {
-	if !m.categoryService.IsRelationOf(m.GetMagnetRootId(), id) {
+	if !m.categoryService.IsRelationOf(id, m.GetMagnetRootId()) {
 		return errors.New("isn't share directory")
 	}
 	return m.categoryService.DelItem(int64(deletor), id)

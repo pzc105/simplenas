@@ -10,7 +10,8 @@ import Download from './download/download';
 import GlobalSidebar from './globalSidebar.js'
 import CategoryItemPage from './category.js'
 import MagnetSharesPage from './magnetShares';
-import PlyrWrap from './player.js';
+import PlyrWrap from './player/player.js';
+import Player from './player/player2.js';
 import CheckLoginHandler from './user/checklogin.js'
 import UserInfoPage from './user/user.js'
 import * as test from './test.js'
@@ -78,7 +79,7 @@ export default function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/download" element={<Download />} />
           <Route path="/citem" element={<CategoryItemPage />} />
-          <Route path="/video" element={<PlyrWrap />} />
+          <Route path="/video" element={<Player />} />
           <Route path="/mgnetshares" element={<MagnetSharesPage />} />
         </Routes>
       </Router>

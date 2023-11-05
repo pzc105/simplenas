@@ -3,7 +3,9 @@ package service
 import (
 	"bufio"
 	"context"
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"pnas/db"
@@ -13,6 +15,7 @@ import (
 	"pnas/user"
 	"pnas/video"
 	"strconv"
+	"strings"
 
 	"github.com/gorilla/mux"
 	"github.com/grafov/m3u8"
@@ -114,6 +117,8 @@ func (v *VideoService) registerUrl() {
 	v.router.Handle("/{vid}/get_offsettime", http.HandlerFunc(v.handleGetOffsetTime))
 	v.router.Handle("/{vid}/stream_{sid}/segment/{segment}", http.HandlerFunc(v.handlerHlsSegment))
 	v.router.Handle("/{vid}/stream_{sid}/{playlist}", http.HandlerFunc(v.handlerHlsPlayList))
+	v.router.Handle("/{vid}/danmaku/{version}", http.HandlerFunc(v.handleDanmaku))
+	v.router.Handle("/{vid}/danmaku/{version}/", http.HandlerFunc(v.handleDanmaku))
 }
 
 func (v *VideoService) handlerHlsMasterList(w http.ResponseWriter, r *http.Request) {
@@ -295,4 +300,66 @@ func (v *VideoService) handleGetOffsetTime(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	w.Write([]byte(loadStartTime(s.UserId, video.ID(vid))))
+}
+
+func (v *VideoService) handleDanmaku(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	vidstr, ok1 := vars["vid"]
+	if !ok1 {
+		return
+	}
+
+	redisKey := fmt.Sprintf("video_danmaku_%s", vidstr)
+
+	if r.Method == http.MethodPost {
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		m := make(map[string]interface{})
+		json.Unmarshal(body, &m)
+		var item []interface{}
+		if _, ok := m["time"]; !ok {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		if _, ok := m["type"]; !ok {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		if _, ok := m["color"]; !ok {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		if _, ok := m["author"]; !ok {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		if _, ok := m["text"]; !ok {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		item = append(item, m["time"])
+		item = append(item, m["type"])
+		item = append(item, m["color"])
+		item = append(item, m["author"])
+		item = append(item, m["text"])
+		wd, err := json.Marshal(item)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		err = db.GREDIS.LPush(context.Background(), redisKey, wd).Err()
+		if err == nil {
+			w.Write([]byte("{\"code\":0}"))
+		}
+	} else if r.Method == http.MethodGet {
+		vals, err := db.GREDIS.LRange(context.Background(), redisKey, 0, -1).Result()
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		w.Write([]byte(fmt.Sprintf("{\"code\":0, \"data\": [%s]}", strings.Join(vals, ","))))
+	}
 }

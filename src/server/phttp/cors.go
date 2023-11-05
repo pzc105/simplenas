@@ -11,7 +11,7 @@ func CorsMiddleware(next http.Handler) http.Handler {
 		headers.Set("Access-Control-Expose-Headers", "Access-Control-Allow-Credentials, Set-Cookie, Date, Content-Type, Vary, Access-Control-Allow-Origin, grpc-status, grpc-message")
 		headers.Set("Access-Control-Allow-Credentials", "true")
 
-		if r.Method == "OPTIONS" && headers.Get("Access-Control-Request-Method") != "" {
+		if r.Method == "OPTIONS" {
 			headers.Add("Vary", "Origin")
 			headers.Add("Vary", "Access-Control-Request-Method")
 			headers.Add("Vary", "Access-Control-Request-Headers")

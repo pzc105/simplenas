@@ -247,7 +247,7 @@ func (m *Manager) DelItem(deleter int64, itemId ID) error {
 	return nil
 }
 
-func (m *Manager) IsRelationOf(parentId ID, itemId ID) bool {
+func (m *Manager) IsRelationOf(itemId ID, parentId ID) bool {
 	_, err := m.GetItem(AdminId, parentId)
 	if err != nil {
 		log.Warnf("not found shared item id %d", parentId)
@@ -287,7 +287,7 @@ func (m *Manager) Search(params *SearchParams) ([]*CategoryItem, error) {
 		if err != nil {
 			return nil, err
 		}
-		if params.RootId <= 0 || m.IsRelationOf(params.RootId, id) {
+		if params.RootId <= 0 || m.IsRelationOf(id, params.RootId) {
 			item, err := m.GetItem(params.Querier, id)
 			if err != nil {
 				log.Warnf("[category] %v", err)
