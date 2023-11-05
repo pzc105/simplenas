@@ -117,7 +117,6 @@ func (v *VideoService) registerUrl() {
 	v.router.Handle("/{vid}/get_offsettime", http.HandlerFunc(v.handleGetOffsetTime))
 	v.router.Handle("/{vid}/stream_{sid}/segment/{segment}", http.HandlerFunc(v.handlerHlsSegment))
 	v.router.Handle("/{vid}/stream_{sid}/{playlist}", http.HandlerFunc(v.handlerHlsPlayList))
-	v.router.Handle("/{vid}/danmaku/{version}", http.HandlerFunc(v.handleDanmaku))
 	v.router.Handle("/{vid}/danmaku/{version}/", http.HandlerFunc(v.handleDanmaku))
 }
 
