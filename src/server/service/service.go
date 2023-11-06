@@ -818,6 +818,7 @@ func (ser *CoreService) JoinChatRoom(req *prpc.JoinChatRoomReq, stream prpc.User
 		SessionId:        ses.Id,
 		MaxCacheNum:      30,
 		MaxCacheDuration: time.Second * 2,
+		NeedRecent:       true,
 		SendFunc: func(cms []*chat.ChatMessage) {
 			var scms []*prpc.ChatMessage
 			for _, cm := range cms {
