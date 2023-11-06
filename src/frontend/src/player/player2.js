@@ -230,7 +230,8 @@ export default function Player() {
       options.subtitle = {
         url: subtitlesRef.current,
         defaultSubtitle: 0,
-        color: "#e178ce",
+        color: "orange",
+        fontSize: "27px",
       }
     }
 
