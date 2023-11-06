@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, Grid, CssBaseline, List, ListItem, Button, Typography, Tooltip, Switch, FormControlLabel, Paper } from '@mui/material';
+import { Container, Grid, CssBaseline, List, ListItem, Button, Typography, Tooltip, Switch, FormControlLabel, Paper, Hidden } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -217,6 +217,12 @@ export default function Player() {
       saveVideoTimeOffset(event.target.currentTime)
     })
 
+    dp.on('fullscreen', () => {
+      if (window.screen.orientation.lock) {
+        window.screen.orientation.lock('landscape')
+      }
+    })
+
     dplayerRef.current = dp
 
     return (() => {
@@ -232,18 +238,18 @@ export default function Player() {
   return (
     <Container >
       <CssBaseline />
-      <Grid container alignItems="center" justify="center" spacing={2}>
-        <Grid item xs={12} sx={{ display: "flex" }}>
-          <Grid item xs={8} >
-            <Typography variant="button" component="div" noWrap>
-              {item ? item.name : ""}
-            </Typography>
-            <div id="dplayer" />
-          </Grid>
-          <Grid item xs={4} >
+      <Grid container spacing={2} sx={{ display: "flex" }}>
+        <Grid item sm={12} md={8} >
+          <Typography variant="button" component="div" noWrap>
+            {item ? item.name : ""}
+          </Typography>
+          <div id="dplayer" />
+        </Grid>
+        <Hidden smDown>
+          <Grid item sm={0} md={4} >
             <PlayList videoItemList={videoItemList} shareid={shareid} />
           </Grid>
-        </Grid>
+        </Hidden>
       </Grid>
       {showGlobalChat ? <FloatingChat itemId={1} onClose={closeGlobalChat} /> : null}
     </Container>
