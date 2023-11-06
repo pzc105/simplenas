@@ -150,9 +150,9 @@ export default function Player() {
         lang: lang,
         name: "zh-cn"
       })
-      subtitlesRef.current = cs
       return null
     })
+    subtitlesRef.current = cs
     setUrl(urlPath)
   }, [itemId, shareid, videoInfo]);
 
@@ -187,10 +187,14 @@ export default function Player() {
         maximum: 10000,
         withCredentials: true,
       },
-      subtitle: {
+    }
+
+    if (subtitlesRef.current.length > 0) {
+      options.subtitle = {
         url: subtitlesRef.current,
-        index: 0,
-      },
+        defaultSubtitle: 0,
+        color: "#e178ce",
+      }
     }
 
     const dp = new DPlayer({
