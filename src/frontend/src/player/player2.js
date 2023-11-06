@@ -29,11 +29,11 @@ export default function Player() {
   const videoItemListRef = useRef([])
   const autoContinuedPlay = useSelector((state) => store.selectAutoPlayVideo(state));
 
-  const hlsRef = useRef(null)
   const [urlRef, setUrl] = useState('')
   const subtitlesRef = useRef([])
   const dplayerRef = useRef(null);
   const vidRef = useRef(-1);
+  const videoRef = useRef(null)
 
   const serverOffsetTime = useRef(undefined)
   const lastOffsetTime = useRef(0.0)
@@ -56,8 +56,7 @@ export default function Player() {
           dplayerRef.current.seek(serverOffsetTime.current)
         }
       }).catch(error => {
-        console.log(error)
-        if (hlsRef.current) {
+        if (dplayerRef.current) {
           dplayerRef.current.seek(0)
         }
       });
@@ -247,7 +246,8 @@ export default function Player() {
       }, options)
     });
 
-    dp.on('canplay', () => {
+    dp.on('canplay', (event) => {
+      videoRef.current = event.target
       requestVideoTimeOffset()
       if (autoContinuedPlay) {
         dplayerRef.current.play()
