@@ -28,6 +28,7 @@ type JoinParams struct {
 	SendFunc         SendFunc
 	MaxCacheNum      uint64
 	MaxCacheDuration time.Duration
+	NeedRecent       bool
 }
 
 type CreateRoomParams struct {

@@ -7,7 +7,8 @@ import Hls from 'hls.js'
 import DPlayer from 'dplayer';
 
 import { queryItem, querySubItems, navigateToItem } from '../category.js'
-import { serverAddress } from '../rpcClient.js'
+import userService, { serverAddress } from '../rpcClient.js'
+import * as User from '../prpc/user_pb.js'
 import * as store from '../store.js'
 import * as utils from '../utils.js';
 import { FloatingChat } from '../chat/chat.js';
@@ -28,9 +29,8 @@ export default function Player() {
   const videoItemListRef = useRef([])
   const autoContinuedPlay = useSelector((state) => store.selectAutoPlayVideo(state));
 
-  const plyr = useRef(null)
-  const hls = useRef(null)
-  const [url, setUrl] = useState('')
+  const hlsRef = useRef(null)
+  const [urlRef, setUrl] = useState('')
   const subtitlesRef = useRef([])
   const dplayerRef = useRef(null);
   const vidRef = useRef(-1);
@@ -57,19 +57,19 @@ export default function Player() {
         }
       }).catch(error => {
         console.log(error)
-        if (hls.current) {
+        if (hlsRef.current) {
           dplayerRef.current.seek(0)
         }
       });
   }
 
-  const saveVideoTimeOffset = (offset) => {
+  const saveVideoTimeOffset = (offset, force) => {
     if (lastOffsetTime.current === offset) {
       return
     }
     lastOffsetTime.current = offset
     let now = Date.now()
-    if (now - lastSaveTime.current < 2000) {
+    if (now - lastSaveTime.current < 2000 && !force) {
       return
     }
     lastSaveTime.current = now
@@ -157,7 +157,45 @@ export default function Player() {
   }, [itemId, shareid, videoInfo]);
 
   useEffect(() => {
-    if (url.length === 0) {
+    if (urlRef.length === 0) {
+      return
+    }
+
+    const req = new User.JoinChatRoomReq()
+    const room = new User.Room()
+    room.setType(User.Room.Type.DANMAKU)
+    room.setId(vidRef.current)
+    req.setRoom(room)
+    var stream = userService.joinChatRoom(req)
+    stream.on('data', function (res) {
+      const chatMsgs = res.getChatMsgsList()
+      let dans = chatMsgs.map((msg) => {
+        let item = JSON.parse(msg.getMsg())
+        return {
+          time: item[0],
+          type: item[1],
+          color: item[2],
+          author: item[3],
+          text: item[4],
+        }
+      })
+      if (dplayerRef.current) {
+        dplayerRef.current.onPushDanmaku(dans)
+      }
+    })
+    stream.on('status', function (status) {
+    });
+    stream.on('end', function (end) {
+      stream.cancel()
+    });
+
+    return () => {
+      stream.cancel()
+    };
+  }, [urlRef])
+
+  useEffect(() => {
+    if (urlRef.length === 0) {
       return
     }
 
@@ -175,7 +213,7 @@ export default function Player() {
       airplay: false,
       container: document.getElementById('dplayer'),
       video: {
-        url: url,
+        url: urlRef,
         type: 'hls',
       },
       pluginOptions: {
@@ -211,6 +249,9 @@ export default function Player() {
 
     dp.on('canplay', () => {
       requestVideoTimeOffset()
+      if (autoContinuedPlay) {
+        dplayerRef.current.play()
+      }
     })
 
     dp.on('timeupdate', (event) => {
@@ -223,12 +264,23 @@ export default function Player() {
       }
     })
 
+    dp.on("ended", () => {
+      saveVideoTimeOffset(0, true)
+      if (autoContinuedPlay) {
+        for (let i = 0; i < videoItemListRef.current.length; i++) {
+          if (videoItemListRef.current[i].id === itemId && i < videoItemListRef.current.length - 1) {
+            navigateToItem(navigate, {}, videoItemListRef.current[i + 1].id, shareid)
+          }
+        }
+      }
+    })
+
     dplayerRef.current = dp
 
     return (() => {
       dp.destroy()
     })
-  }, [url])
+  }, [urlRef])
 
   const showGlobalChat = useSelector((state) => store.selectOpenGlobalChat(state))
   const closeGlobalChat = () => {

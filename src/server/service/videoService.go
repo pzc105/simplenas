@@ -26,10 +26,11 @@ type UserVideoData interface {
 }
 
 type VideoService struct {
-	ud       UserVideoData
-	shares   IItemShares
-	sessions session.ISessions
-	router   *mux.Router
+	ud          UserVideoData
+	shares      IItemShares
+	sessions    session.ISessions
+	router      *mux.Router
+	recvDanmaku func(vid video.ID, danmakuJson string)
 }
 
 func saveStartTime(userId user.ID, vid video.ID, lastTime string) {
@@ -45,18 +46,20 @@ func loadStartTime(userId user.ID, vid video.ID) string {
 }
 
 type NewVideoServiceParams struct {
-	UserData UserVideoData
-	Shares   IItemShares
-	Sessions session.ISessions
-	Router   *mux.Router
+	UserData    UserVideoData
+	Shares      IItemShares
+	Sessions    session.ISessions
+	Router      *mux.Router
+	RecvDanmaku func(vid video.ID, danmakuJson string)
 }
 
 func newVideoService(params *NewVideoServiceParams) *VideoService {
 	vs := &VideoService{
-		ud:       params.UserData,
-		shares:   params.Shares,
-		sessions: params.Sessions,
-		router:   params.Router,
+		ud:          params.UserData,
+		shares:      params.Shares,
+		sessions:    params.Sessions,
+		router:      params.Router,
+		recvDanmaku: params.RecvDanmaku,
 	}
 	vs.registerUrl()
 	return vs
@@ -307,6 +310,10 @@ func (v *VideoService) handleDanmaku(w http.ResponseWriter, r *http.Request) {
 	if !ok1 {
 		return
 	}
+	vid, err := strconv.ParseInt(vidstr, 10, 64)
+	if err != nil {
+		return
+	}
 
 	redisKey := fmt.Sprintf("video_danmaku_%s", vidstr)
 
@@ -352,6 +359,9 @@ func (v *VideoService) handleDanmaku(w http.ResponseWriter, r *http.Request) {
 		err = db.GREDIS.LPush(context.Background(), redisKey, wd).Err()
 		if err == nil {
 			w.Write([]byte("{\"code\":0}"))
+			if v.recvDanmaku != nil {
+				v.recvDanmaku(video.ID(vid), string(wd))
+			}
 		}
 	} else if r.Method == http.MethodGet {
 		vals, err := db.GREDIS.LRange(context.Background(), redisKey, 0, -1).Result()

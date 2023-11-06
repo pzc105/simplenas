@@ -123,7 +123,9 @@ func (cr *ChatRoomImpl) send2Session(ud *userData) {
 func (cr *ChatRoomImpl) Join(params *JoinParams) int64 {
 	wp := cr.nextWritePos.Load()
 	nr := uint64(0)
-	if wp >= 100 {
+	if !params.NeedRecent {
+		nr = wp
+	} else if wp >= 100 {
 		nr = wp - 100
 	}
 	ud := &userData{
@@ -143,9 +145,11 @@ func (cr *ChatRoomImpl) Join(params *JoinParams) int64 {
 	cr.usersData[ud.id] = ud
 	cr.mtx.Unlock()
 
-	cr.taskqueue.Put(func() {
-		cr.send2Session(ud)
-	})
+	if params.NeedRecent {
+		cr.taskqueue.Put(func() {
+			cr.send2Session(ud)
+		})
+	}
 
 	return ud.id
 }

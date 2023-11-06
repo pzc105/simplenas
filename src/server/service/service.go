@@ -112,10 +112,11 @@ func (ser *CoreService) Serve() {
 	router.Handle("/prpc.UserService/{method}", grpcwebServer)
 
 	ser.videoSer = newVideoService(&NewVideoServiceParams{
-		UserData: &ser.um,
-		Shares:   ser.shares,
-		Sessions: ser.sessions,
-		Router:   router.PathPrefix("/video").Subrouter(),
+		UserData:    &ser.um,
+		Shares:      ser.shares,
+		Sessions:    ser.sessions,
+		Router:      router.PathPrefix("/video").Subrouter(),
+		RecvDanmaku: ser.recvDanmaku,
 	})
 	ser.posterSer = newPosterService(&NewPosterServiceParams{
 		CategoryData: &ser.um,
@@ -134,6 +135,31 @@ func (ser *CoreService) Serve() {
 	if err := ser.httpSer.ListenAndServeTLS(setting.GS().Server.CrtFile, setting.GS().Server.KeyFile); err != nil {
 		log.Panic(err)
 	}
+}
+
+func (ser *CoreService) recvDanmaku(vid video.ID, danmaku string) {
+	roomKey := getItemRoomKey(&prpc.Room{
+		Type: prpc.Room_Danmaku,
+		Id:   int64(vid),
+	})
+
+	r := ser.rooms.GetRoom(roomKey)
+	if r == nil {
+		ser.rooms.CreateRoom(&chat.CreateRoomParams{
+			RoomKey:       roomKey,
+			ImmediatePush: false,
+			Interval:      time.Second * 3,
+		})
+		r = ser.rooms.GetRoom(roomKey)
+		if r == nil {
+			return
+		}
+	}
+	ser.rooms.Broadcast(roomKey, &chat.ChatMessage{
+		UserId:   user.AdminId,
+		SentTime: time.Now(),
+		Msg:      danmaku,
+	})
 }
 
 func (ser *CoreService) Close() {
