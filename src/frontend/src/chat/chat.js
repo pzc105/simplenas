@@ -104,11 +104,14 @@ const ChatPanel = ({ itemId }) => {
   const handleSendMessage = () => {
     if (inputValue !== '') {
       const chatMsg = new User.ChatMessage()
+      const room = new User.Room()
+      room.setType(User.Room.Type.CATEGORY)
+      room.setId(itemId)
       emoji.colons_mode = true
       let msg = emoji.replace_unified(inputValue)
       chatMsg.setMsg(msg)
       const req = new User.SendMsg2ChatRoomReq()
-      req.setItemId(itemId)
+      req.setRoom(room)
       req.setChatMsg(chatMsg)
       userService.sendMsg2ChatRoom(req, {}, (err, res) => {
       })
@@ -120,7 +123,10 @@ const ChatPanel = ({ itemId }) => {
 
   useEffect(() => {
     const req = new User.JoinChatRoomReq()
-    req.setItemId(itemId)
+    const room = new User.Room()
+    room.setType(User.Room.Type.CATEGORY)
+    room.setId(itemId)
+    req.setRoom(room)
     var stream = userService.joinChatRoom(req)
     msgsRef.current = []
     setMessages([])

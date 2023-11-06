@@ -692,9 +692,39 @@ export namespace UploadSubtitleRes {
   }
 }
 
+export class Room extends jspb.Message {
+  getType(): Room.Type;
+  setType(value: Room.Type): Room;
+
+  getId(): number;
+  setId(value: number): Room;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): Room.AsObject;
+  static toObject(includeInstance: boolean, msg: Room): Room.AsObject;
+  static serializeBinaryToWriter(message: Room, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Room;
+  static deserializeBinaryFromReader(message: Room, reader: jspb.BinaryReader): Room;
+}
+
+export namespace Room {
+  export type AsObject = {
+    type: Room.Type,
+    id: number,
+  }
+
+  export enum Type { 
+    UNKNOWN = 0,
+    CATEGORY = 1,
+    DANMAKU = 2,
+  }
+}
+
 export class JoinChatRoomReq extends jspb.Message {
-  getItemId(): number;
-  setItemId(value: number): JoinChatRoomReq;
+  getRoom(): Room | undefined;
+  setRoom(value?: Room): JoinChatRoomReq;
+  hasRoom(): boolean;
+  clearRoom(): JoinChatRoomReq;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): JoinChatRoomReq.AsObject;
@@ -706,7 +736,7 @@ export class JoinChatRoomReq extends jspb.Message {
 
 export namespace JoinChatRoomReq {
   export type AsObject = {
-    itemId: number,
+    room?: Room.AsObject,
   }
 }
 
@@ -741,8 +771,10 @@ export namespace ChatMessage {
 }
 
 export class JoinChatRoomRes extends jspb.Message {
-  getItemId(): number;
-  setItemId(value: number): JoinChatRoomRes;
+  getRoom(): Room | undefined;
+  setRoom(value?: Room): JoinChatRoomRes;
+  hasRoom(): boolean;
+  clearRoom(): JoinChatRoomRes;
 
   getChatMsgsList(): Array<ChatMessage>;
   setChatMsgsList(value: Array<ChatMessage>): JoinChatRoomRes;
@@ -759,14 +791,16 @@ export class JoinChatRoomRes extends jspb.Message {
 
 export namespace JoinChatRoomRes {
   export type AsObject = {
-    itemId: number,
+    room?: Room.AsObject,
     chatMsgsList: Array<ChatMessage.AsObject>,
   }
 }
 
 export class SendMsg2ChatRoomReq extends jspb.Message {
-  getItemId(): number;
-  setItemId(value: number): SendMsg2ChatRoomReq;
+  getRoom(): Room | undefined;
+  setRoom(value?: Room): SendMsg2ChatRoomReq;
+  hasRoom(): boolean;
+  clearRoom(): SendMsg2ChatRoomReq;
 
   getChatMsg(): ChatMessage | undefined;
   setChatMsg(value?: ChatMessage): SendMsg2ChatRoomReq;
@@ -783,7 +817,7 @@ export class SendMsg2ChatRoomReq extends jspb.Message {
 
 export namespace SendMsg2ChatRoomReq {
   export type AsObject = {
-    itemId: number,
+    room?: Room.AsObject,
     chatMsg?: ChatMessage.AsObject,
   }
 }

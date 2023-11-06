@@ -72,7 +72,10 @@ func newSession() {
 	ctx := metadata.NewOutgoingContext(context.Background(), md)
 
 	s, err := client.JoinChatRoom(ctx, &prpc.JoinChatRoomReq{
-		ItemId: itemId,
+		Room: &prpc.Room{
+			Type: prpc.Room_Category,
+			Id:   itemId,
+		},
 	})
 	if err != nil {
 		fmt.Printf("join %v\n", err)
@@ -108,7 +111,10 @@ func newSession() {
 		lt := time.Now()
 		lsc := utils.FetchAndAdd(&sc, int64(1))
 		_, err := client.SendMsg2ChatRoom(ctx, &prpc.SendMsg2ChatRoomReq{
-			ItemId: itemId,
+			Room: &prpc.Room{
+				Type: prpc.Room_Category,
+				Id:   itemId,
+			},
 			ChatMsg: &prpc.ChatMessage{
 				Msg: fmt.Sprintf("%d", lsc),
 			},

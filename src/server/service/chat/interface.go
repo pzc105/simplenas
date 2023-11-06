@@ -2,21 +2,36 @@ package chat
 
 import (
 	"context"
-	"pnas/category"
+	"time"
 )
 
 type SendFunc func([]*ChatMessage)
 
 type IRoom interface {
 	Context() context.Context
-	Join(sessionId int64, sendFunc SendFunc)
-	Leave(sessionId int64)
+	Join(*JoinParams) int64
+	Leave(id int64)
 	Broadcast(*ChatMessage)
 }
 
 type IRooms interface {
-	Join(itemId category.ID, sessionId int64, sendFunc SendFunc)
-	Leave(itemId category.ID, sessionId int64)
-	Broadcast(itemId category.ID, msg *ChatMessage)
-	GetRoom(itemId category.ID) (IRoom, error)
+	CreateRoom(*CreateRoomParams) error
+	Join(*JoinParams) (int64, error)
+	Leave(roomKey string, id int64)
+	Broadcast(roomKey string, msg *ChatMessage)
+	GetRoom(roomKey string) IRoom
+}
+
+type JoinParams struct {
+	RoomKey          string
+	SessionId        int64
+	SendFunc         SendFunc
+	MaxCacheNum      uint64
+	MaxCacheDuration time.Duration
+}
+
+type CreateRoomParams struct {
+	RoomKey       string
+	ImmediatePush bool
+	Interval      time.Duration
 }

@@ -10,8 +10,9 @@ import (
 )
 
 func TestChatRoom(t *testing.T) {
+	cp := CreateRoomParams{}
 	cr := &ChatRoomImpl{}
-	cr.Init()
+	cr.Init(&cp)
 
 	msgs := []*ChatMessage{}
 	for i := 0; i < 300000; i++ {
@@ -25,13 +26,17 @@ func TestChatRoom(t *testing.T) {
 	go func() {
 		sid := int64(1)
 
-		cr.Join(sid, func(cms []*ChatMessage) {
-			cm := cms[0]
-			if i1.Load() >= int32(len(msgs)) || msgs[i1.Load()] != cm {
-				t.Errorf("i: %d, msg: %v", i1.Load(), cm)
-			}
-			i1.Add(1)
-		})
+		params := &JoinParams{
+			SessionId: sid,
+			SendFunc: func(cms []*ChatMessage) {
+				cm := cms[0]
+				if i1.Load() >= int32(len(msgs)) || msgs[i1.Load()] != cm {
+					t.Errorf("i: %d, msg: %v", i1.Load(), cm)
+				}
+				i1.Add(1)
+			},
+		}
+		cr.Join(params)
 		<-cr.Context().Done()
 	}()
 	var i2 atomic.Int32
@@ -39,13 +44,17 @@ func TestChatRoom(t *testing.T) {
 		sid := int64(2)
 
 		i2.Store(0)
-		cr.Join(sid, func(cms []*ChatMessage) {
-			cm := cms[0]
-			if i2.Load() >= int32(len(msgs)) || msgs[i2.Load()] != cm {
-				t.Errorf("i: %d, msg: %v", i2.Load(), cm)
-			}
-			i2.Add(1)
-		})
+		params := &JoinParams{
+			SessionId: sid,
+			SendFunc: func(cms []*ChatMessage) {
+				cm := cms[0]
+				if i2.Load() >= int32(len(msgs)) || msgs[i2.Load()] != cm {
+					t.Errorf("i: %d, msg: %v", i2.Load(), cm)
+				}
+				i2.Add(1)
+			},
+		}
+		cr.Join(params)
 		<-cr.Context().Done()
 	}()
 	for _, cm := range msgs {

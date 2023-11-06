@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"pnas/bt"
 	"pnas/prpc"
 )
@@ -17,4 +18,14 @@ func GetInfoHash(infoHash *bt.InfoHash) *prpc.InfoHash {
 		Version: infoHash.Version,
 		Hash:    []byte(infoHash.Hash),
 	}
+}
+
+func getItemRoomKey(room *prpc.Room) string {
+	if room.GetType() == prpc.Room_Category {
+		return "item_" + fmt.Sprint(room.GetId())
+	}
+	if room.GetType() == prpc.Room_Danmaku {
+		return "item_" + fmt.Sprint(room.GetId())
+	}
+	return ""
 }

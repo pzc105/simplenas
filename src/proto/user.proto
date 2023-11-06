@@ -210,8 +210,18 @@ message UploadSubtitleRes {
 
 }
 
+message Room {
+  enum Type {
+    Unknown = 0;
+    Category = 1;
+    Danmaku = 2;
+  }
+  Type type = 1;
+  int64 id = 2;
+}
+
 message JoinChatRoomReq {
-  int64 item_id = 1;
+  Room room = 1;
 }
 
 message ChatMessage {
@@ -222,12 +232,12 @@ message ChatMessage {
 }
 
 message JoinChatRoomRes {
-  int64 item_id = 1;
+  Room room = 1;
   repeated ChatMessage chat_msgs = 2;
 }
 
 message SendMsg2ChatRoomReq {
-  int64 item_id = 1;
+  Room room = 1;
   ChatMessage chat_msg = 2;
 }
 

@@ -785,35 +785,51 @@ func (ser *CoreService) JoinChatRoom(req *prpc.JoinChatRoomReq, stream prpc.User
 	if ses == nil {
 		return status.Error(codes.PermissionDenied, "")
 	}
-	itemId := category.ID(req.ItemId)
 
-	ser.rooms.Join(itemId, ses.Id, func(cms []*chat.ChatMessage) {
-		var scms []*prpc.ChatMessage
-		for _, cm := range cms {
-			user, _ := ser.um.LoadUser(cm.UserId)
-			smsg := &prpc.ChatMessage{
-				UserId:   int64(cm.UserId),
-				UserName: user.GetUserName(),
-				SentTime: cm.SentTime.UnixMilli(),
-				Msg:      cm.Msg,
+	roomKey := getItemRoomKey(req.Room)
+	joinParams := chat.JoinParams{
+		RoomKey:          roomKey,
+		SessionId:        ses.Id,
+		MaxCacheNum:      30,
+		MaxCacheDuration: time.Second * 2,
+		SendFunc: func(cms []*chat.ChatMessage) {
+			var scms []*prpc.ChatMessage
+			for _, cm := range cms {
+				user, _ := ser.um.LoadUser(cm.UserId)
+				smsg := &prpc.ChatMessage{
+					UserId:   int64(cm.UserId),
+					UserName: user.GetUserName(),
+					SentTime: cm.SentTime.UnixMilli(),
+					Msg:      cm.Msg,
+				}
+				scms = append(scms, smsg)
 			}
-			scms = append(scms, smsg)
-		}
-		stream.Send(&prpc.JoinChatRoomRes{
-			ItemId:   req.ItemId,
-			ChatMsgs: scms,
-		})
-	})
+			stream.Send(&prpc.JoinChatRoomRes{
+				Room:     req.Room,
+				ChatMsgs: scms,
+			})
+		},
+	}
 
-	room, err := ser.rooms.GetRoom(itemId)
+	id, err := ser.rooms.Join(&joinParams)
 	if err != nil {
+		ser.rooms.CreateRoom(&chat.CreateRoomParams{
+			RoomKey:       roomKey,
+			ImmediatePush: false,
+			Interval:      time.Second * 1,
+		})
+		id, _ = ser.rooms.Join(&joinParams)
+	}
+
+	room := ser.rooms.GetRoom(roomKey)
+	if room == nil {
 		return status.Error(codes.Internal, "")
 	}
 	select {
 	case <-stream.Context().Done():
 	case <-room.Context().Done():
 	}
-	room.Leave(ses.Id)
+	room.Leave(id)
 	return nil
 }
 
@@ -825,7 +841,9 @@ func (ser *CoreService) SendMsg2ChatRoom(ctx context.Context, req *prpc.SendMsg2
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
-	ser.rooms.Broadcast(category.ID(req.GetItemId()), &chat.ChatMessage{
+
+	roomKey := getItemRoomKey(req.GetRoom())
+	ser.rooms.Broadcast(roomKey, &chat.ChatMessage{
 		UserId:   ses.UserId,
 		SentTime: time.Now(),
 		Msg:      req.GetChatMsg().Msg,
