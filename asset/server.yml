@@ -1,0 +1,32 @@
+server:
+  domain: rpc.pnas105.top
+  boundIp: 0.0.0.0
+  port: 11234
+  restPort: 11235
+  webPort: 11236
+  crtFile: ./tls/rpc.crt
+  keyFile: ./tls/rpc.key
+  mediaPath: /app/media
+
+bt:
+  ip: 127.0.0.1
+  port: 22345
+  savePath: /app/bt_download
+
+log:
+  fileName: ./pnas.log
+  level: info
+
+redis:
+  ip        : 127.0.0.1
+  port      : 6379
+  password  : 
+
+mysql:
+  ip        : 127.0.0.1
+  port      : 3306
+  user      : root
+  password  : 123
+  dbname    : pnas
+  maxOpenConns : 10
+  maxIdleConns : 10
