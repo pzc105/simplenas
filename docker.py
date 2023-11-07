@@ -112,7 +112,7 @@ def main():
     os.system("sudo docker cp {0}/rpc.key {1}:/app/tls".format(tls_config, container_name))
     
     os.system("sudo docker exec {0} /bin/bash -c 'service mysql start && service redis-server start'".format(container_name))
-    os.system("sudo docker cp ./wait_db.sh {0}:/app".format(container_name))
+    os.system("sudo docker cp ./asset/wait_db.sh {0}:/app".format(container_name))
     os.system("sudo docker exec {0} /bin/bash -c '/bin/bash /app/wait_db.sh'".format(container_name))
     os.system("sudo docker exec {0} /bin/bash -c 'mysql -uroot -p123 < /source/simplenas/src/server/tables.sql'".format(container_name))
 
