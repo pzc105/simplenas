@@ -66,7 +66,7 @@ export default function GlobalSidebar() {
     querySubItems(userInfo.homeDirectoryId, "", dispatch)
   }, [userInfo, dispatch])
 
-  const firstItem = userInfo ? {
+  const UserItem = userInfo ? {
     icon: <PersonIcon />,
     title: "个人信息",
     onClick: () => navigate("/user"),
@@ -79,28 +79,19 @@ export default function GlobalSidebar() {
   }
   const [menuItems, setMenuItems] = useState([])
   const defaultMenuItems = [
-    firstItem,
-    {
-      icon: <FileDownloadIcon />,
-      title: "下载",
-      onClick: () => navigate("/download"),
-    },
-    {
-      icon: <PersonalVideoIcon />,
-      title: "Home",
-      subComponent: HomeItems,
-      subComponentParams: {},
-      onClick: userInfo ? () => navigateToItem(navigate, {}, userInfo.homeDirectoryId, null) : null,
-    },
+    ,
+    ,
   ]
 
-  useEffect(() => {
-    setMenuItems(defaultMenuItems)
-  }, [])
 
   useEffect(() => {
+    let tmp = []
     if (userInfo != null) {
-      let tmp = defaultMenuItems
+      tmp.push({
+        icon: <FileDownloadIcon />,
+        title: "下载",
+        onClick: () => navigate("/download"),
+      })
       tmp.push({
         icon: <LinkIcon />,
         title: "磁链中心",
@@ -111,8 +102,16 @@ export default function GlobalSidebar() {
         title: "聊天室",
         onClick: () => dispatch(store.userSlice.actions.setOpenGlobalChat(!openGlobalChat)),
       })
-      setMenuItems(tmp)
+      tmp.push({
+        icon: <PersonalVideoIcon />,
+        title: "Home",
+        subComponent: HomeItems,
+        subComponentParams: {},
+        onClick: userInfo ? () => navigateToItem(navigate, {}, userInfo.homeDirectoryId, null) : null,
+      })
     }
+    tmp.push(UserItem)
+    setMenuItems(tmp)
   }, [userInfo, openGlobalChat])
 
   return (
