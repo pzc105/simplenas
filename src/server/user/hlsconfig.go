@@ -30,7 +30,7 @@ var CudaH264GlobalVideoParams = []video.KV{
 
 var CudaSplitEncoderParams = []video.EncoderParams{
 	{
-		W:       -2,
+		W:       3840,
 		H:       2160,
 		Filters: "scale_cuda=%d:%d:format=yuv420p",
 		VCodecParams: []video.KV{
@@ -43,7 +43,7 @@ var CudaSplitEncoderParams = []video.EncoderParams{
 		},
 	},
 	{
-		W:       -2,
+		W:       1920,
 		H:       1080,
 		Filters: "scale_cuda=%d:%d:format=yuv420p",
 		VCodecParams: []video.KV{
@@ -56,7 +56,7 @@ var CudaSplitEncoderParams = []video.EncoderParams{
 		},
 	},
 	{
-		W:       -2,
+		W:       1280,
 		H:       720,
 		Filters: "scale_cuda=%d:%d:format=yuv420p",
 		VCodecParams: []video.KV{
@@ -75,7 +75,7 @@ var CudaGlobalDecode2 = []video.KV{
 
 var CudaEncoderParams2 = []video.EncoderParams{
 	{
-		W:       -2,
+		W:       3840,
 		H:       2160,
 		Filters: "scale=%d:%d,format=yuv420p",
 		VCodecParams: []video.KV{
@@ -88,7 +88,7 @@ var CudaEncoderParams2 = []video.EncoderParams{
 		},
 	},
 	{
-		W:       -2,
+		W:       1920,
 		H:       1080,
 		Filters: "scale=%d:%d,format=yuv420p",
 		VCodecParams: []video.KV{
@@ -101,7 +101,7 @@ var CudaEncoderParams2 = []video.EncoderParams{
 		},
 	},
 	{
-		W:       -2,
+		W:       1280,
 		H:       720,
 		Filters: "scale=%d:%d,format=yuv420p",
 		VCodecParams: []video.KV{
@@ -129,7 +129,7 @@ var QsvH264GlobalVideoParams = []video.KV{
 
 var QsvSplitEncoderParams = []video.EncoderParams{
 	{
-		W:       -1,
+		W:       3840,
 		H:       2160,
 		Filters: "scale_qsv=w=%d:h=%d:format=nv12",
 		VCodecParams: []video.KV{
@@ -140,7 +140,7 @@ var QsvSplitEncoderParams = []video.EncoderParams{
 		},
 	},
 	{
-		W:       -1,
+		W:       1920,
 		H:       1080,
 		Filters: "scale_qsv=w=%d:h=%d:format=nv12",
 		VCodecParams: []video.KV{
@@ -151,7 +151,7 @@ var QsvSplitEncoderParams = []video.EncoderParams{
 		},
 	},
 	{
-		W:       -1,
+		W:       1280,
 		H:       720,
 		Filters: "scale_qsv=w=%d:h=%d:format=nv12",
 		VCodecParams: []video.KV{
@@ -176,7 +176,7 @@ var SoH264GlobalVideoParams = []video.KV{
 
 var SoSplitEncoderParams = []video.EncoderParams{
 	{
-		W:       -2,
+		W:       3840,
 		H:       2160,
 		Filters: "scale=%d:%d,format=yuv420p",
 		VCodecParams: []video.KV{
@@ -189,7 +189,7 @@ var SoSplitEncoderParams = []video.EncoderParams{
 		},
 	},
 	{
-		W:       -2,
+		W:       1920,
 		H:       1080,
 		Filters: "scale=%d:%d,format=yuv420p",
 		VCodecParams: []video.KV{
@@ -202,7 +202,7 @@ var SoSplitEncoderParams = []video.EncoderParams{
 		},
 	},
 	{
-		W:       -2,
+		W:       1280,
 		H:       720,
 		Filters: "scale=%d:%d,format=yuv420p",
 		VCodecParams: []video.KV{

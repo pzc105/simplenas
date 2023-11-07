@@ -41,10 +41,13 @@ func mapStreams(params *GenHlsOpts, cmdParams *[]string) (
 	vStream := vStreams[0]
 	var subRes []EncoderParams
 	for _, ws := range wantResolutions {
-		if ws.W > vStream.Width || ws.H > vStream.Height {
-			continue
+		if ws.W <= vStream.Width {
+			ws.H = -2
+			subRes = append(subRes, ws)
+		} else if ws.H <= vStream.Height {
+			ws.W = -2
+			subRes = append(subRes, ws)
 		}
-		subRes = append(subRes, ws)
 	}
 	var buf bytes.Buffer
 	for i, r := range subRes {
