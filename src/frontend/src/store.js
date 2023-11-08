@@ -60,7 +60,13 @@ const categorySlice = createSlice({
   initialState: {
     items: {},
     videoInfos: {},
-    magnetSharesItems: [],
+
+    magnetShares: {
+      parentId: 0,
+      magnetSharesItems: [],
+      magnetSharesPageNum: 0,
+      magnetSharesTotalRows: 0,
+    }
   },
   reducers: {
     clear: (state) => {
@@ -72,8 +78,22 @@ const categorySlice = createSlice({
       state.items[item.id] = item
     },
     updateMagnetSharesItems: (state, action) => {
-      let items = action.payload
-      state.magnetSharesItems = items
+      let items = action.payload.items
+      let parentId = action.payload.parentId
+      state.magnetShares.parentId = parentId
+      state.magnetShares.magnetSharesItems = items
+    },
+    updateMagnetSharesPageNum: (state, action) => {
+      let num = action.payload.num
+      let parentId = action.payload.parentId
+      state.magnetShares.parentId = parentId
+      state.magnetShares.magnetSharesPageNum = num
+    },
+    updateMagnetSharesTotalRows: (state, action) => {
+      let totalRows = action.payload.totalRows
+      let parentId = action.payload.parentId
+      state.magnetShares.parentId = parentId
+      state.magnetShares.magnetSharesTotalRows = totalRows
     },
     deleteItem: (state, action) => {
       let itemId = action.payload
@@ -204,7 +224,22 @@ const selectCategorySubItems = (state, parentId) => {
 }
 
 const selectMagnetSharesItems = (state) => {
-  return state.category.magnetSharesItems
+  return state.category.magnetShares.magnetSharesItems
+}
+
+const selectMagnetSharesPageNum = (state, parentId) => {
+  if (state.category.magnetShares.magnetSharesPageNum && parentId === state.category.magnetShares.parentId) {
+    return state.category.magnetShares.magnetSharesPageNum
+  }
+  return 0
+}
+
+const selectMagnetSharesTotalRows = (state, parentId) => {
+  if (state.category.magnetShares.magnetSharesTotalRows && parentId === state.category.magnetShares.parentId) {
+    return state.category.magnetShares.magnetSharesTotalRows
+  }
+  return 0
+
 }
 
 const selectSubDirectory = (state, parentId) => {
@@ -249,7 +284,8 @@ export {
   store, userSlice, btSlice, categorySlice, eventSlice, playerSlice,
   selectUserInfo, selectShownChatPanel, selectOpenGlobalChat, selectGlobalChatPosition,
   selectTorrent, selectInfoHashs, selectBtVideoFiles,
-  selectCategoryItem, selectCategoryItems, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo, selectMagnetSharesItems,
+  selectCategoryItem, selectCategoryItems, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo,
+  selectMagnetSharesItems, selectMagnetSharesPageNum, selectMagnetSharesTotalRows,
   getSelectedAudio, selectAutoPlayVideo,
   isDownloadPageMouseDown
 }

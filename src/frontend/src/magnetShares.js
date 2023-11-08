@@ -23,127 +23,8 @@ import * as User from './prpc/user_pb.js'
 import * as Category from './prpc/category_pb.js'
 import userService from './rpcClient.js'
 import { serverAddress } from './rpcClient.js'
+import UnifiedPage from './page.js'
 
-const MagnetItems = ({ parentId }) => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const items = useSelector((state) => store.selectMagnetSharesItems(state))
-  const [searchWords, setSearchWords] = useState('')
-
-  const [copyDialogOpen, setCopyDialogOpen] = useState(false)
-
-  const delItem = (id) => {
-    var req = new User.DelMagnetCategoryReq()
-    req.setId(id)
-    userService.delMagnetCategory(req, {}, (err, respone) => {
-      if (err != null) {
-        console.log(err)
-        return
-      }
-      queryMagnet(dispatch, parentId, searchWords)
-    })
-  }
-
-  const onSearchText = (e) => {
-    setSearchWords(e.target.value)
-  }
-  const search = (e) => {
-    queryMagnet(dispatch, parentId, searchWords)
-  }
-
-  return (
-    <Container>
-      <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
-        <Grid item>
-          <TextField
-            label="搜索关键字"
-            variant="outlined"
-            margin="normal"
-            onChange={onSearchText}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }} />
-        </Grid>
-        <Grid item>
-          <Button
-            color="primary"
-            onClick={search}
-            variant="contained">
-            搜索
-          </Button>
-        </Grid>
-      </Grid>
-      <List>
-        {items ?
-          items.map((item) => (
-            <ListItem key={item.id}>
-              {
-                category.isDirectory(item) ?
-                  <Container>
-                    <Grid container sx={{ display: 'flex' }} >
-                      <Grid item xs={12}>
-                        <Grid container spacing={2}>
-                          <Grid item xs={4}>
-                            <Typography whiteSpace={'pre'}>
-                              {"分类: "}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={6}>
-                            <Tooltip title={item.introduce}>
-                              <Link onClick={() => router.navigate2mgnetshares(navigate, item.id)} sx={{ cursor: 'pointer' }}>
-                                {item.name}
-                              </Link>
-                            </Tooltip>
-                          </Grid>
-                          <Grid item xs={2}>
-                            <Button onClick={() => delItem(item.id)}>删除</Button>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Container> :
-                  <Container>
-                    <Grid container sx={{ display: 'flex' }} >
-                      <Grid item xs={12}>
-                        <Grid container spacing={2}>
-                          <Grid item xs={4}>
-                            <Typography whiteSpace={'pre'}>
-                              {"magnet uri: "}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={6}>
-                            <CopyToClipboard text={item.other}>
-                              <Tooltip title={item.introduce}>
-                                <Typography variant="button" component="div" noWrap>
-                                  <Button onClick={() => setCopyDialogOpen(true)}>{item.other}</Button>
-                                </Typography>
-                              </Tooltip>
-                            </CopyToClipboard>
-                            <Dialog open={copyDialogOpen} onClose={() => setCopyDialogOpen(false)}>
-                              <div style={{ padding: '16px' }}>
-                                已复制到剪贴板
-                              </div>
-                            </Dialog>
-                          </Grid>
-                          <Grid item xs={2}>
-                            <Button onClick={() => delItem(item.id)}>删除</Button>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Container>
-              }
-            </ListItem>
-          )) : null
-        }
-      </List>
-    </Container >
-  )
-}
 
 export default function MagnetSharesPage() {
   const dispatch = useDispatch()
@@ -151,10 +32,17 @@ export default function MagnetSharesPage() {
   const location = useLocation()
   const searchParams = new URLSearchParams(location.search)
   const itemId = searchParams.get('itemid') ? Number(searchParams.get('itemid')) : -1
+  const pageRows = 10
+  const pageNum = useSelector((state) => store.selectMagnetSharesPageNum(state, itemId))
+  const totalRows = useSelector((state) => store.selectMagnetSharesTotalRows(state, itemId))
+  console.log("pageNum", totalRows, pageNum)
 
   useEffect(() => {
-    queryMagnet(dispatch, itemId)
-  }, [itemId])
+    if (!pageNum && pageNum !== 0) {
+      return
+    }
+    queryMagnet(dispatch, itemId, "", pageNum, pageRows)
+  }, [itemId, pageNum, pageRows])
 
   const closeGlobalChat = () => {
     dispatch(store.userSlice.actions.setOpenGlobalChat(false))
@@ -167,13 +55,22 @@ export default function MagnetSharesPage() {
         name="管理"
         child={Manager({ parentId: itemId })}
       />
-      <MagnetItems parentId={itemId} />
+      <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
+        <Grid item xs={12}>
+          <MagnetItems parentId={itemId} pageNum={pageNum - 1} rows={pageRows} />
+        </Grid>
+        <Grid item xs={12}>
+          <Container>
+            <UnifiedPage PageTotalCount={parseInt(totalRows / pageRows + 0.5)} PageNum={parseInt(pageNum + 1)} onPage={(n) => dispatch(store.categorySlice.actions.updateMagnetSharesPageNum({ num: n - 1, parentId: itemId }))} />
+          </Container>
+        </Grid>
+      </Grid>
       {showGlobalChat ? <FloatingChat itemId={1} onClose={closeGlobalChat} /> : null}
     </MagnetContainer>
   )
 }
 
-const Manager = ({ parentId }) => {
+const Manager = ({ parentId, pageNum, rows }) => {
   const dispatch = useDispatch()
   const [magnetUri, setMagnetUri] = useState('')
   const [magnetUriIntroduce, setMagnetUriIntroduce] = useState('')
@@ -208,7 +105,7 @@ const Manager = ({ parentId }) => {
         console.log(err)
         return
       }
-      queryMagnet(dispatch, parentId)
+      queryMagnet(dispatch, parentId, "", pageNum, rows)
     })
   }
 
@@ -226,7 +123,7 @@ const Manager = ({ parentId }) => {
         console.log(err)
         return
       }
-      queryMagnet(dispatch, parentId)
+      queryMagnet(dispatch, parentId, "", pageNum, rows)
     })
   }
 
@@ -326,10 +223,13 @@ const MagnetContainer = styled('div')({
   height: '94vh', /* 页面铺满整个视窗 */
 })
 
-const queryMagnet = (dispatch, id, searchWords) => {
+const queryMagnet = (dispatch, id, searchWords, pageNum, rows) => {
+  console.log("q", pageNum, rows)
   var req = new User.QueryMagnetReq()
   req.setParentId(id)
   req.setSearchCond(searchWords)
+  req.setPageNum(pageNum)
+  req.setRows(rows)
   userService.queryMagnet(req, {}, (err, respone) => {
     if (err != null) {
       console.log(err)
@@ -344,6 +244,128 @@ const queryMagnet = (dispatch, id, searchWords) => {
       dispatch(store.categorySlice.actions.updateItem(obj))
       return null
     })
-    dispatch(store.categorySlice.actions.updateMagnetSharesItems(objs))
+    dispatch(store.categorySlice.actions.updateMagnetSharesTotalRows({ totalRows: respone.getTotalRowCount(), parentId: id }))
+    dispatch(store.categorySlice.actions.updateMagnetSharesItems({ items: objs, parentId: id }))
   })
+}
+
+const MagnetItems = ({ parentId, pageNum, rows }) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const items = useSelector((state) => store.selectMagnetSharesItems(state))
+  const [searchWords, setSearchWords] = useState('')
+
+  const [copyDialogOpen, setCopyDialogOpen] = useState(false)
+
+  const delItem = (id) => {
+    var req = new User.DelMagnetCategoryReq()
+    req.setId(id)
+    userService.delMagnetCategory(req, {}, (err, respone) => {
+      if (err != null) {
+        console.log(err)
+        return
+      }
+      queryMagnet(dispatch, parentId, searchWords, pageNum, rows)
+    })
+  }
+
+  const onSearchText = (e) => {
+    setSearchWords(e.target.value)
+  }
+  const search = (e) => {
+    queryMagnet(dispatch, parentId, searchWords, pageNum, rows)
+  }
+
+  return (
+    <Container>
+      <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
+        <Grid item>
+          <TextField
+            label="搜索关键字"
+            variant="outlined"
+            margin="normal"
+            onChange={onSearchText}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }} />
+        </Grid>
+        <Grid item>
+          <Button
+            color="primary"
+            onClick={search}
+            variant="contained">
+            搜索
+          </Button>
+        </Grid>
+      </Grid>
+      <List>
+        {items ?
+          items.map((item) => (
+            <ListItem key={item.id}>
+              {
+                category.isDirectory(item) ?
+                  <Container>
+                    <Grid container sx={{ display: 'flex' }} >
+                      <Grid item xs={12}>
+                        <Grid container spacing={2}>
+                          <Grid item xs={4}>
+                            <Typography whiteSpace={'pre'}>
+                              {"分类: "}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Tooltip title={item.introduce}>
+                              <Link onClick={() => router.navigate2mgnetshares(navigate, item.id)} sx={{ cursor: 'pointer' }}>
+                                {item.name}
+                              </Link>
+                            </Tooltip>
+                          </Grid>
+                          <Grid item xs={2}>
+                            <Button onClick={() => delItem(item.id)}>删除</Button>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Container> :
+                  <Container>
+                    <Grid container sx={{ display: 'flex' }} >
+                      <Grid item xs={12}>
+                        <Grid container spacing={2}>
+                          <Grid item xs={4}>
+                            <Typography whiteSpace={'pre'}>
+                              {"magnet uri: "}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <CopyToClipboard text={item.other}>
+                              <Tooltip title={item.introduce}>
+                                <Typography variant="button" component="div" noWrap>
+                                  <Button onClick={() => setCopyDialogOpen(true)}>{item.other}</Button>
+                                </Typography>
+                              </Tooltip>
+                            </CopyToClipboard>
+                            <Dialog open={copyDialogOpen} onClose={() => setCopyDialogOpen(false)}>
+                              <div style={{ padding: '16px' }}>
+                                已复制到剪贴板
+                              </div>
+                            </Dialog>
+                          </Grid>
+                          <Grid item xs={2}>
+                            <Button onClick={() => delItem(item.id)}>删除</Button>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Container>
+              }
+            </ListItem>
+          )) : null
+        }
+      </List>
+    </Container >
+  )
 }

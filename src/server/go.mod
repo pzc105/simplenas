@@ -3,6 +3,7 @@ module pnas
 go 1.18
 
 require (
+	github.com/gocolly/colly v1.2.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2
 	github.com/pkg/errors v0.9.1
 	google.golang.org/grpc v1.53.0
@@ -10,16 +11,27 @@ require (
 )
 
 require (
+	github.com/PuerkitoBio/goquery v1.5.1 // indirect
+	github.com/andybalholm/cascadia v1.2.0 // indirect
+	github.com/antchfx/htmlquery v1.2.3 // indirect
+	github.com/antchfx/xmlquery v1.2.4 // indirect
+	github.com/antchfx/xpath v1.1.8 // indirect
 	github.com/cenkalti/backoff/v4 v4.1.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/desertbit/timer v0.0.0-20180107155436-c41aec40b27f // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
+	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang/glog v1.1.0 // indirect
+	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/klauspost/compress v1.11.7 // indirect
 	github.com/rs/cors v1.7.0 // indirect
+	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
+	github.com/temoto/robotstxt v1.1.1 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
+	google.golang.org/appengine v1.6.7 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	nhooyr.io/websocket v1.8.6 // indirect

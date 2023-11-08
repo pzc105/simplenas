@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"pnas/bt"
 	"pnas/category"
+	"pnas/crawler"
 	"pnas/log"
 	"pnas/phttp"
 	"pnas/prpc"
@@ -72,6 +73,8 @@ func (ser *CoreService) Init() {
 		bt.WithOnFileCompleted(ser.handleBtFileCompleted))
 	ser.um.Init()
 
+	go crawler.Go36dmBackgroup(&ser.um)
+
 	var rooms chat.Rooms
 	rooms.Init()
 	ser.rooms = &rooms
@@ -119,7 +122,7 @@ func (ser *CoreService) Serve() {
 		RecvDanmaku: ser.recvDanmaku,
 	})
 	ser.posterSer = newPosterService(&NewPosterServiceParams{
-		CategoryData: &ser.um,
+		CategoryData: ser.um.CategoryService(),
 		Shares:       ser.shares,
 		Sessions:     ser.sessions,
 		Router:       router.PathPrefix("/poster").Subrouter(),
@@ -610,12 +613,21 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 		userId = ses.UserId
 	}
 
-	parentItem, err := ser.um.QueryItem(userId, category.ID(req.ParentId))
+	parentItem, err := ser.um.CategoryService().GetItem(int64(userId), category.ID(req.ParentId))
 	if err != nil {
 		log.Warnf("[user] %d query category %d err: %v", userId, req.ParentId, err)
 		return nil, status.Error(codes.PermissionDenied, "not found")
 	}
-	items := ser.um.QueryItems(userId, category.ID(req.ParentId))
+	items, err := ser.um.CategoryService().GetItemsByParent(
+		&category.GetItemsByParentParams{
+			Querier:  int64(userId),
+			ParentId: category.ID(req.ParentId),
+			PageNum:  req.PageNum,
+			Rows:     req.Rows,
+		})
+	if err != nil {
+		return nil, err
+	}
 
 	var resParentItem prpc.CategoryItem
 	itemInfo := parentItem.GetItemInfo()
@@ -625,7 +637,8 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 		resParentItem.SubItemIds = append(resParentItem.SubItemIds, int64(id))
 	}
 	res := &prpc.QuerySubItemsRes{
-		ParentItem: &resParentItem,
+		ParentItem:    &resParentItem,
+		TotalRowCount: int32(len(sudItemIds)),
 	}
 
 	for _, item := range items {
@@ -660,7 +673,7 @@ func (ser *CoreService) QueryItemInfo(ctx context.Context, req *prpc.QueryItemIn
 		userId = ses.UserId
 	}
 
-	item, err := ser.um.QueryItem(userId, category.ID(req.ItemId))
+	item, err := ser.um.CategoryService().GetItem(int64(userId), category.ID(req.ItemId))
 	if err != nil {
 		return nil, status.Error(codes.PermissionDenied, "not found")
 	}
@@ -713,7 +726,7 @@ func (ser *CoreService) ShareItem(ctx context.Context, req *prpc.ShareItemReq) (
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
-	_, err := ser.um.QueryItem(ses.UserId, category.ID(req.ItemId))
+	_, err := ser.um.CategoryService().GetItem(int64(ses.UserId), category.ID(req.ItemId))
 	if err != nil {
 		return nil, status.Error(codes.PermissionDenied, "not found")
 	}
@@ -776,7 +789,7 @@ func (ser *CoreService) RefreshSubtitle(ctx context.Context, req *prpc.RefreshSu
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
-	item, err := ser.um.QueryItem(ses.UserId, category.ID(req.ItemId))
+	item, err := ser.um.CategoryService().GetItem(int64(ses.UserId), category.ID(req.ItemId))
 	if err != nil {
 		return nil, status.Error(codes.PermissionDenied, "not found")
 	}
@@ -887,7 +900,7 @@ func (ser *CoreService) AddMagnetCategory(ctx context.Context, req *prpc.AddMagn
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
-	err := ser.um.AddMagnetCategory(&user.AddMagnetCategoryParams{
+	_, err := ser.um.AddMagnetCategory(&user.AddMagnetCategoryParams{
 		ParentId:  category.ID(req.ParentId),
 		Name:      req.CategoryName,
 		Introduce: req.Introduce,
@@ -929,7 +942,7 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
 
-	item, err := ser.um.QueryItem(category.AdminId, category.ID(req.ParentId))
+	item, err := ser.um.CategoryService().GetItem(category.AdminId, category.ID(req.ParentId))
 	if err != nil {
 		return nil, err
 	}
@@ -943,24 +956,32 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 			Querier:      category.AdminId,
 			RootId:       category.ID(req.ParentId),
 			ExistedWords: req.SearchCond,
+			PageNum:      req.PageNum,
+			Rows:         req.Rows,
 		})
 		if err != nil {
 			return nil, err
 		}
 	} else {
+
 		items, err = ser.um.QueryMagnetCategorys(&user.QueryCategoryParams{
 			ParentId: category.ID(req.ParentId),
+			PageNum:  req.PageNum,
+			Rows:     req.Rows,
 		})
 		if err != nil {
 			return nil, err
 		}
 	}
+	sudItemIds := item.GetSubItemIds()
 
-	res := &prpc.QueryMagnetRsp{}
+	res := &prpc.QueryMagnetRsp{
+		TotalRowCount: int32(len(sudItemIds)),
+	}
 	var resItem prpc.CategoryItem
 	itemInfo := item.GetItemInfo()
 	copier.Copy(&resItem, &itemInfo)
-	sudItemIds := item.GetSubItemIds()
+
 	for _, id := range sudItemIds {
 		resItem.SubItemIds = append(resItem.SubItemIds, int64(id))
 	}

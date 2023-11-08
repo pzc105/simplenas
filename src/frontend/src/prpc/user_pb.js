@@ -3134,7 +3134,9 @@ proto.prpc.QuerySubItemsReq.prototype.toObject = function(opt_includeInstance) {
 proto.prpc.QuerySubItemsReq.toObject = function(includeInstance, msg) {
   var f, obj = {
     parentId: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    shareId: jspb.Message.getFieldWithDefault(msg, 2, "")
+    shareId: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    pageNum: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    rows: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -3179,6 +3181,14 @@ proto.prpc.QuerySubItemsReq.deserializeBinaryFromReader = function(msg, reader) 
       var value = /** @type {string} */ (reader.readString());
       msg.setShareId(value);
       break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setPageNum(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setRows(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -3222,6 +3232,20 @@ proto.prpc.QuerySubItemsReq.serializeBinaryToWriter = function(message, writer) 
       f
     );
   }
+  f = message.getPageNum();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+  f = message.getRows();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
 };
 
 
@@ -3258,6 +3282,42 @@ proto.prpc.QuerySubItemsReq.prototype.getShareId = function() {
  */
 proto.prpc.QuerySubItemsReq.prototype.setShareId = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional int32 page_num = 3;
+ * @return {number}
+ */
+proto.prpc.QuerySubItemsReq.prototype.getPageNum = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.prpc.QuerySubItemsReq} returns this
+ */
+proto.prpc.QuerySubItemsReq.prototype.setPageNum = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional int32 rows = 4;
+ * @return {number}
+ */
+proto.prpc.QuerySubItemsReq.prototype.getRows = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.prpc.QuerySubItemsReq} returns this
+ */
+proto.prpc.QuerySubItemsReq.prototype.setRows = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -3302,7 +3362,8 @@ proto.prpc.QuerySubItemsRes.toObject = function(includeInstance, msg) {
   var f, obj = {
     parentItem: (f = msg.getParentItem()) && category_pb.CategoryItem.toObject(includeInstance, f),
     itemsList: jspb.Message.toObjectList(msg.getItemsList(),
-    category_pb.CategoryItem.toObject, includeInstance)
+    category_pb.CategoryItem.toObject, includeInstance),
+    totalRowCount: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -3349,6 +3410,10 @@ proto.prpc.QuerySubItemsRes.deserializeBinaryFromReader = function(msg, reader) 
       reader.readMessage(value,category_pb.CategoryItem.deserializeBinaryFromReader);
       msg.addItems(value);
       break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setTotalRowCount(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -3392,6 +3457,13 @@ proto.prpc.QuerySubItemsRes.serializeBinaryToWriter = function(message, writer) 
       2,
       f,
       category_pb.CategoryItem.serializeBinaryToWriter
+    );
+  }
+  f = message.getTotalRowCount();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
     );
   }
 };
@@ -3469,6 +3541,24 @@ proto.prpc.QuerySubItemsRes.prototype.addItems = function(opt_value, opt_index) 
  */
 proto.prpc.QuerySubItemsRes.prototype.clearItemsList = function() {
   return this.setItemsList([]);
+};
+
+
+/**
+ * optional int32 total_row_count = 3;
+ * @return {number}
+ */
+proto.prpc.QuerySubItemsRes.prototype.getTotalRowCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.prpc.QuerySubItemsRes} returns this
+ */
+proto.prpc.QuerySubItemsRes.prototype.setTotalRowCount = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -7852,7 +7942,9 @@ proto.prpc.QueryMagnetReq.prototype.toObject = function(opt_includeInstance) {
 proto.prpc.QueryMagnetReq.toObject = function(includeInstance, msg) {
   var f, obj = {
     parentId: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    searchCond: jspb.Message.getFieldWithDefault(msg, 2, "")
+    searchCond: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    pageNum: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    rows: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -7897,6 +7989,14 @@ proto.prpc.QueryMagnetReq.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setSearchCond(value);
       break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setPageNum(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setRows(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -7940,6 +8040,20 @@ proto.prpc.QueryMagnetReq.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getPageNum();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+  f = message.getRows();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
 };
 
 
@@ -7976,6 +8090,42 @@ proto.prpc.QueryMagnetReq.prototype.getSearchCond = function() {
  */
 proto.prpc.QueryMagnetReq.prototype.setSearchCond = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional int32 page_num = 3;
+ * @return {number}
+ */
+proto.prpc.QueryMagnetReq.prototype.getPageNum = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.prpc.QueryMagnetReq} returns this
+ */
+proto.prpc.QueryMagnetReq.prototype.setPageNum = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional int32 rows = 4;
+ * @return {number}
+ */
+proto.prpc.QueryMagnetReq.prototype.getRows = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.prpc.QueryMagnetReq} returns this
+ */
+proto.prpc.QueryMagnetReq.prototype.setRows = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -8019,7 +8169,8 @@ proto.prpc.QueryMagnetRsp.prototype.toObject = function(opt_includeInstance) {
 proto.prpc.QueryMagnetRsp.toObject = function(includeInstance, msg) {
   var f, obj = {
     itemsList: jspb.Message.toObjectList(msg.getItemsList(),
-    category_pb.CategoryItem.toObject, includeInstance)
+    category_pb.CategoryItem.toObject, includeInstance),
+    totalRowCount: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -8061,6 +8212,10 @@ proto.prpc.QueryMagnetRsp.deserializeBinaryFromReader = function(msg, reader) {
       reader.readMessage(value,category_pb.CategoryItem.deserializeBinaryFromReader);
       msg.addItems(value);
       break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setTotalRowCount(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -8096,6 +8251,13 @@ proto.prpc.QueryMagnetRsp.serializeBinaryToWriter = function(message, writer) {
       1,
       f,
       category_pb.CategoryItem.serializeBinaryToWriter
+    );
+  }
+  f = message.getTotalRowCount();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
     );
   }
 };
@@ -8136,6 +8298,24 @@ proto.prpc.QueryMagnetRsp.prototype.addItems = function(opt_value, opt_index) {
  */
 proto.prpc.QueryMagnetRsp.prototype.clearItemsList = function() {
   return this.setItemsList([]);
+};
+
+
+/**
+ * optional int32 total_row_count = 2;
+ * @return {number}
+ */
+proto.prpc.QueryMagnetRsp.prototype.getTotalRowCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.prpc.QueryMagnetRsp} returns this
+ */
+proto.prpc.QueryMagnetRsp.prototype.setTotalRowCount = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 

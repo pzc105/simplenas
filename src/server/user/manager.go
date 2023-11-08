@@ -235,43 +235,6 @@ func (um *UserManger) DelCategoryItem(userId ID, itemId category.ID) error {
 	return um.categorySer.DelItem(int64(userId), itemId)
 }
 
-func (um *UserManger) QueryItem(userId ID, itemId category.ID) (*category.CategoryItem, error) {
-	user, err := um.LoadUser(userId)
-	if err != nil {
-		return nil, err
-	}
-	item, err := um.categorySer.GetItem(int64(userId), itemId)
-	if err != nil {
-		return nil, err
-	}
-	if !item.HasReadAuth(int64(user.userInfo.Id)) && userId != AdminId {
-		return nil, errors.New("no auth")
-	}
-	return item, nil
-}
-
-func (um *UserManger) QueryItems(userId ID, parentId category.ID) []*category.CategoryItem {
-	user, err := um.LoadUser(userId)
-	if err != nil {
-		log.Warnf("[user] %d query items err: %v", userId, err)
-		return []*category.CategoryItem{}
-	}
-
-	item, err := um.categorySer.GetItem(int64(userId), parentId)
-	if err != nil {
-		log.Warnf("[user] %d query items err: %v", userId, err)
-		return []*category.CategoryItem{}
-	}
-	if !item.HasReadAuth(int64(user.userInfo.Id)) && userId != AdminId {
-		return []*category.CategoryItem{}
-	}
-	items, err := um.categorySer.GetItems(int64(userId), item.GetSubItemIds()...)
-	if err != nil {
-		log.Warnf("[user] %d load items err: %v", userId, err)
-	}
-	return items
-}
-
 type AddBtVideosParams struct {
 	UserId         ID
 	CategoryItemId category.ID

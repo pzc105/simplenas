@@ -14,18 +14,14 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type CategoryData interface {
-	QueryItem(userId user.ID, itemId category.ID) (*category.CategoryItem, error)
-}
-
 type PosterService struct {
-	cd       CategoryData
+	cd       category.IService
 	shares   IItemShares
 	sessions session.ISessions
 	router   *mux.Router
 }
 type NewPosterServiceParams struct {
-	CategoryData CategoryData
+	CategoryData category.IService
 	Shares       IItemShares
 	Sessions     session.ISessions
 	Router       *mux.Router
@@ -74,7 +70,7 @@ func (p *PosterService) handlerItemPoster(w http.ResponseWriter, r *http.Request
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	item, err := p.cd.QueryItem(userId, itemId)
+	item, err := p.cd.GetItem(int64(userId), itemId)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return

@@ -15,7 +15,7 @@ const (
 
 type IMagnetSharesService interface {
 	GetMagnetRootId() category.ID
-	AddMagnetCategory(params *AddMagnetCategoryParams) error
+	AddMagnetCategory(params *AddMagnetCategoryParams) (category.ID, error)
 	AddMagnetUri(params *AddMagnetUriParams) error
 	QueryMagnetCategorys(params *QueryCategoryParams) ([]*category.CategoryItem, error)
 	DelMagnetCategory(ID, category.ID) error
@@ -56,15 +56,15 @@ type AddMagnetCategoryParams struct {
 	Creator   ID
 }
 
-func (m *MagnetSharesService) AddMagnetCategory(params *AddMagnetCategoryParams) error {
+func (m *MagnetSharesService) AddMagnetCategory(params *AddMagnetCategoryParams) (category.ID, error) {
 	if !m.categoryService.IsRelationOf(params.ParentId, m.GetMagnetRootId()) {
-		return errors.New("isn't share directory")
+		return -1, errors.New("isn't share directory")
 	}
 	sudo := false
 	if params.ParentId == m.rootId {
 		sudo = true
 	}
-	_, err := m.categoryService.AddItem(&category.NewCategoryParams{
+	item, err := m.categoryService.AddItem(&category.NewCategoryParams{
 		ParentId:    params.ParentId,
 		Creator:     int64(params.Creator),
 		TypeId:      prpc.CategoryItem_Directory,
@@ -74,7 +74,10 @@ func (m *MagnetSharesService) AddMagnetCategory(params *AddMagnetCategoryParams)
 		CompareName: true,
 		Sudo:        sudo,
 	})
-	return err
+	if err != nil {
+		return -1, nil
+	}
+	return item.GetItemInfo().Id, err
 }
 
 type AddMagnetUriParams struct {
@@ -101,6 +104,8 @@ func (m *MagnetSharesService) AddMagnetUri(params *AddMagnetUriParams) error {
 type QueryCategoryParams struct {
 	ParentId     category.ID
 	CategoryName string
+	PageNum      int32
+	Rows         int32
 }
 
 func (m *MagnetSharesService) queryMagnetCategorys(params *QueryCategoryParams) ([]*category.CategoryItem, error) {
@@ -114,11 +119,12 @@ func (m *MagnetSharesService) queryMagnetCategorys(params *QueryCategoryParams) 
 		}
 		return []*category.CategoryItem{item}, nil
 	}
-	pitem, err := m.categoryService.GetItem(category.AdminId, params.ParentId)
-	if err != nil {
-		return nil, err
-	}
-	ret, err := m.categoryService.GetItems(category.AdminId, pitem.GetSubItemIds()...)
+	ret, err := m.categoryService.GetItemsByParent(&category.GetItemsByParentParams{
+		Querier:  category.AdminId,
+		ParentId: params.ParentId,
+		PageNum:  params.PageNum,
+		Rows:     params.Rows,
+	})
 	return ret, err
 }
 

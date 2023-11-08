@@ -144,6 +144,27 @@ func (m *Manager) GetItemByName(querier int64, parentId ID, name string) (*Categ
 	return m.GetItem(querier, id)
 }
 
+func (m *Manager) GetItemsByParent(params *GetItemsByParentParams) ([]*CategoryItem, error) {
+	item, err := m.GetItem(params.Querier, params.ParentId)
+	if err != nil {
+		return nil, err
+	}
+	if params.PageNum >= 0 && params.Rows > 0 {
+		subIds := item.GetSubItemIds()
+		offset := params.PageNum * params.Rows
+		if int(offset) >= len(subIds) {
+			return nil, errors.New("out of range")
+		}
+		rows := params.Rows
+		if rows > int32(len(subIds))-offset {
+			rows = int32(len(subIds)) - offset
+		}
+		ids := subIds[offset:offset+rows]
+		return m.GetItems(params.Querier, ids...)
+	}
+	return m.GetItems(params.Querier, item.subItemIds...)
+}
+
 func (m *Manager) GetItems(querier int64, itemIds ...ID) ([]*CategoryItem, error) {
 	remainIds := make([]ID, 0, len(itemIds))
 	ret := make([]*CategoryItem, 0, len(itemIds))
@@ -272,11 +293,16 @@ type SearchParams struct {
 	Querier      int64
 	RootId       ID
 	ExistedWords string
+	PageNum      int32
+	Rows         int32
 }
 
 func (m *Manager) Search(params *SearchParams) ([]*CategoryItem, error) {
-	sql := fmt.Sprintf("select id from category_items where match (name, introduce) against ('%s')", params.ExistedWords)
-	rows, err := db.Query(sql)
+	if params.PageNum < 0 || params.Rows <= 0 {
+		return nil, errors.New("invalid params")
+	}
+	sql := fmt.Sprintf("select id from category_items where match (name, introduce) against ('%s') limit ?, ?", params.ExistedWords)
+	rows, err := db.Query(sql, params.PageNum*params.Rows, params.Rows)
 	if err != nil {
 		return nil, err
 	}

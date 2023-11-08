@@ -291,6 +291,12 @@ export class QuerySubItemsReq extends jspb.Message {
   getShareId(): string;
   setShareId(value: string): QuerySubItemsReq;
 
+  getPageNum(): number;
+  setPageNum(value: number): QuerySubItemsReq;
+
+  getRows(): number;
+  setRows(value: number): QuerySubItemsReq;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): QuerySubItemsReq.AsObject;
   static toObject(includeInstance: boolean, msg: QuerySubItemsReq): QuerySubItemsReq.AsObject;
@@ -303,6 +309,8 @@ export namespace QuerySubItemsReq {
   export type AsObject = {
     parentId: number,
     shareId: string,
+    pageNum: number,
+    rows: number,
   }
 }
 
@@ -317,6 +325,9 @@ export class QuerySubItemsRes extends jspb.Message {
   clearItemsList(): QuerySubItemsRes;
   addItems(value?: category_pb.CategoryItem, index?: number): category_pb.CategoryItem;
 
+  getTotalRowCount(): number;
+  setTotalRowCount(value: number): QuerySubItemsRes;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): QuerySubItemsRes.AsObject;
   static toObject(includeInstance: boolean, msg: QuerySubItemsRes): QuerySubItemsRes.AsObject;
@@ -329,6 +340,7 @@ export namespace QuerySubItemsRes {
   export type AsObject = {
     parentItem?: category_pb.CategoryItem.AsObject,
     itemsList: Array<category_pb.CategoryItem.AsObject>,
+    totalRowCount: number,
   }
 }
 
@@ -923,6 +935,12 @@ export class QueryMagnetReq extends jspb.Message {
   getSearchCond(): string;
   setSearchCond(value: string): QueryMagnetReq;
 
+  getPageNum(): number;
+  setPageNum(value: number): QueryMagnetReq;
+
+  getRows(): number;
+  setRows(value: number): QueryMagnetReq;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): QueryMagnetReq.AsObject;
   static toObject(includeInstance: boolean, msg: QueryMagnetReq): QueryMagnetReq.AsObject;
@@ -935,6 +953,8 @@ export namespace QueryMagnetReq {
   export type AsObject = {
     parentId: number,
     searchCond: string,
+    pageNum: number,
+    rows: number,
   }
 }
 
@@ -943,6 +963,9 @@ export class QueryMagnetRsp extends jspb.Message {
   setItemsList(value: Array<category_pb.CategoryItem>): QueryMagnetRsp;
   clearItemsList(): QueryMagnetRsp;
   addItems(value?: category_pb.CategoryItem, index?: number): category_pb.CategoryItem;
+
+  getTotalRowCount(): number;
+  setTotalRowCount(value: number): QueryMagnetRsp;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): QueryMagnetRsp.AsObject;
@@ -955,6 +978,7 @@ export class QueryMagnetRsp extends jspb.Message {
 export namespace QueryMagnetRsp {
   export type AsObject = {
     itemsList: Array<category_pb.CategoryItem.AsObject>,
+    totalRowCount: number,
   }
 }
 

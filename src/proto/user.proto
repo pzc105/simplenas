@@ -123,11 +123,14 @@ message DelCategoryItemRes {
 message QuerySubItemsReq {
   int64 parent_id = 1;
   string share_id = 2;
+  int32 page_num = 3;
+  int32 rows = 4;
 }
 
 message QuerySubItemsRes {
   CategoryItem parent_item = 1;
   repeated CategoryItem items = 2;
+  int32 total_row_count = 3;
 }
 
 message QueryBtVideosReq {
@@ -268,10 +271,13 @@ message AddMagnetUriRsp {
 message QueryMagnetReq {
   int64 parent_id = 1;
   string search_cond = 2;
+  int32 page_num = 3;
+  int32 rows = 4;
 }
 
 message QueryMagnetRsp {
   repeated CategoryItem items = 1;
+  int32 total_row_count = 2;
 }
 
 message DelMagnetCategoryReq {
