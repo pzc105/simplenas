@@ -830,7 +830,7 @@ func (ser *CoreService) JoinChatRoom(req *prpc.JoinChatRoomReq, stream prpc.User
 		RoomKey:          roomKey,
 		SessionId:        ses.Id,
 		MaxCacheNum:      30,
-		MaxCacheDuration: time.Second * 2,
+		MaxCacheDuration: time.Second * 1,
 		NeedRecent:       true,
 		SendFunc: func(cms []*chat.ChatMessage) {
 			var scms []*prpc.ChatMessage
@@ -849,6 +849,9 @@ func (ser *CoreService) JoinChatRoom(req *prpc.JoinChatRoomReq, stream prpc.User
 				ChatMsgs: scms,
 			})
 		},
+	}
+	if req.Room.Type == prpc.Room_Danmaku {
+		joinParams.NeedRecent = false
 	}
 
 	id, err := ser.rooms.Join(&joinParams)

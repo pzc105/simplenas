@@ -169,13 +169,17 @@ export default function Player() {
     stream.on('data', function (res) {
       const chatMsgs = res.getChatMsgsList()
       let dans = chatMsgs.map((msg) => {
-        let item = JSON.parse(msg.getMsg())
-        return {
-          time: item[0],
-          type: item[1],
-          color: item[2],
-          author: item[3],
-          text: item[4],
+        try {
+          let item = JSON.parse(msg.getMsg())
+          return {
+            time: item[0],
+            type: item[1],
+            color: item[2],
+            author: item[3],
+            text: item[4],
+          }
+        } catch {
+          return {}
         }
       })
       if (dplayerRef.current) {

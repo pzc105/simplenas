@@ -25,7 +25,7 @@ func getItemRoomKey(room *prpc.Room) string {
 		return "item_" + fmt.Sprint(room.GetId())
 	}
 	if room.GetType() == prpc.Room_Danmaku {
-		return "item_" + fmt.Sprint(room.GetId())
+		return "danmaku_" + fmt.Sprint(room.GetId())
 	}
 	return ""
 }
