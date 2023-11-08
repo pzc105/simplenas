@@ -33,16 +33,21 @@ export default function MagnetSharesPage() {
   const searchParams = new URLSearchParams(location.search)
   const itemId = searchParams.get('itemid') ? Number(searchParams.get('itemid')) : -1
   const pageRows = 10
-  const pageNum = useSelector((state) => store.selectMagnetSharesPageNum(state, itemId))
-  const totalRows = useSelector((state) => store.selectMagnetSharesTotalRows(state, itemId))
-  console.log("pageNum", totalRows, pageNum)
+  const [totalRows, setTotalRows] = useState(0)
+  const pageNum = useRef(0)
+  const [pageNumState, setPageNumState] = useState(0)
+  const searchCond = useRef("")
 
   useEffect(() => {
-    if (!pageNum && pageNum !== 0) {
-      return
-    }
-    queryMagnet(dispatch, itemId, "", pageNum, pageRows)
-  }, [itemId, pageNum, pageRows])
+    pageNum.current = 0
+    refresh()
+  }, [itemId])
+
+  const refresh = () => {
+    queryMagnet(dispatch, itemId, searchCond.current, pageNum.current, pageRows, (rsp) => {
+      setTotalRows(rsp.getTotalRowCount())
+    })
+  }
 
   const closeGlobalChat = () => {
     dispatch(store.userSlice.actions.setOpenGlobalChat(false))
@@ -57,11 +62,11 @@ export default function MagnetSharesPage() {
       />
       <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
         <Grid item xs={12}>
-          <MagnetItems parentId={itemId} pageNum={pageNum - 1} rows={pageRows} />
+          <MagnetItems onRefresh={refresh} setSearchCond={(v) => { searchCond.current = v }} />
         </Grid>
         <Grid item xs={12}>
           <Container>
-            <UnifiedPage PageTotalCount={parseInt(totalRows / pageRows + 0.5)} PageNum={parseInt(pageNum + 1)} onPage={(n) => dispatch(store.categorySlice.actions.updateMagnetSharesPageNum({ num: n - 1, parentId: itemId }))} />
+            <UnifiedPage PageTotalCount={parseInt(totalRows / pageRows + 0.5)} PageNum={parseInt(pageNumState + 1)} onPage={(n) => { pageNum.current = n - 1; setPageNumState(pageNum.current);refresh() }} />
           </Container>
         </Grid>
       </Grid>
@@ -223,38 +228,9 @@ const MagnetContainer = styled('div')({
   height: '94vh', /* 页面铺满整个视窗 */
 })
 
-const queryMagnet = (dispatch, id, searchWords, pageNum, rows) => {
-  console.log("q", pageNum, rows)
-  var req = new User.QueryMagnetReq()
-  req.setParentId(id)
-  req.setSearchCond(searchWords)
-  req.setPageNum(pageNum)
-  req.setRows(rows)
-  userService.queryMagnet(req, {}, (err, respone) => {
-    if (err != null) {
-      console.log(err)
-      return
-    }
-    let objs = []
-    respone.getItemsList().map((i) => {
-      let obj = i.toObject()
-      if (obj.id != id) {
-        objs.push(obj)
-      }
-      dispatch(store.categorySlice.actions.updateItem(obj))
-      return null
-    })
-    dispatch(store.categorySlice.actions.updateMagnetSharesTotalRows({ totalRows: respone.getTotalRowCount(), parentId: id }))
-    dispatch(store.categorySlice.actions.updateMagnetSharesItems({ items: objs, parentId: id }))
-  })
-}
-
-const MagnetItems = ({ parentId, pageNum, rows }) => {
+const MagnetItems = ({ onRefresh, setSearchCond }) => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const items = useSelector((state) => store.selectMagnetSharesItems(state))
-  const [searchWords, setSearchWords] = useState('')
-
   const [copyDialogOpen, setCopyDialogOpen] = useState(false)
 
   const delItem = (id) => {
@@ -265,15 +241,15 @@ const MagnetItems = ({ parentId, pageNum, rows }) => {
         console.log(err)
         return
       }
-      queryMagnet(dispatch, parentId, searchWords, pageNum, rows)
+      onRefresh()
     })
   }
 
   const onSearchText = (e) => {
-    setSearchWords(e.target.value)
+    setSearchCond(e.target.value)
   }
   const search = (e) => {
-    queryMagnet(dispatch, parentId, searchWords, pageNum, rows)
+    onRefresh()
   }
 
   return (
@@ -368,4 +344,31 @@ const MagnetItems = ({ parentId, pageNum, rows }) => {
       </List>
     </Container >
   )
+}
+
+const queryMagnet = (dispatch, id, searchWords, pageNum, rows, callback) => {
+  var req = new User.QueryMagnetReq()
+  req.setParentId(id)
+  req.setSearchCond(searchWords)
+  req.setPageNum(pageNum)
+  req.setRows(rows)
+  userService.queryMagnet(req, {}, (err, respone) => {
+    if (err != null) {
+      console.log(err)
+      return
+    }
+    let objs = []
+    respone.getItemsList().map((i) => {
+      let obj = i.toObject()
+      if (obj.id != id) {
+        objs.push(obj)
+      }
+      dispatch(store.categorySlice.actions.updateItem(obj))
+      return null
+    })
+    if (callback) {
+      callback(respone)
+    }
+    dispatch(store.magnetShares.actions.updateMagnetSharesItems({ items: objs, parentId: id }))
+  })
 }

@@ -73,7 +73,7 @@ func (ser *CoreService) Init() {
 		bt.WithOnFileCompleted(ser.handleBtFileCompleted))
 	ser.um.Init()
 
-	go crawler.Go36dmBackgroup(&ser.um)
+	go crawler.Go36dmBackgroup(&ser.um, &ser.bt)
 
 	var rooms chat.Rooms
 	rooms.Init()
@@ -946,37 +946,42 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 	if err != nil {
 		return nil, err
 	}
-
+	sudItemIds := item.GetSubItemIds()
 	var items []*category.CategoryItem
+	var totalRows int
 	if len(req.SearchCond) > 0 {
 		if !ser.um.CategoryService().IsRelationOf(category.ID(req.ParentId), ser.um.GetMagnetRootId()) {
 			return nil, status.Error(codes.PermissionDenied, "not found parent id")
 		}
-		items, err = ser.um.CategoryService().Search(&category.SearchParams{
+		params := &category.SearchParams{
 			Querier:      category.AdminId,
 			RootId:       category.ID(req.ParentId),
 			ExistedWords: req.SearchCond,
 			PageNum:      req.PageNum,
 			Rows:         req.Rows,
-		})
+		}
+		totalRows, err = ser.um.CategoryService().SearchRows(params)
+		if err != nil {
+			return nil, err
+		}
+		items, err = ser.um.CategoryService().Search(params)
 		if err != nil {
 			return nil, err
 		}
 	} else {
-
 		items, err = ser.um.QueryMagnetCategorys(&user.QueryCategoryParams{
 			ParentId: category.ID(req.ParentId),
 			PageNum:  req.PageNum,
 			Rows:     req.Rows,
 		})
+		totalRows = len(sudItemIds)
 		if err != nil {
 			return nil, err
 		}
 	}
-	sudItemIds := item.GetSubItemIds()
 
 	res := &prpc.QueryMagnetRsp{
-		TotalRowCount: int32(len(sudItemIds)),
+		TotalRowCount: int32(totalRows),
 	}
 	var resItem prpc.CategoryItem
 	itemInfo := item.GetItemInfo()

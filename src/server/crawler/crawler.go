@@ -1,11 +1,18 @@
 package crawler
 
 import (
+	"context"
+	"pnas/bt"
 	"pnas/category"
+	"pnas/db"
 	"pnas/log"
+	"pnas/prpc"
 	"pnas/user"
 	"regexp"
+	"strconv"
 	"strings"
+	"sync"
+	"sync/atomic"
 
 	"github.com/gocolly/colly"
 )
@@ -14,7 +21,7 @@ const (
 	CategoryName = "36dm"
 )
 
-func Go36dmBackgroup(magnetShares user.IMagnetSharesService) {
+func Go36dmBackgroup(magnetShares user.IMagnetSharesService, btClient *bt.BtClient) {
 
 	items, _ := magnetShares.QueryMagnetCategorys(&user.QueryCategoryParams{
 		ParentId:     magnetShares.GetMagnetRootId(),
@@ -22,6 +29,8 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService) {
 	})
 
 	var rid category.ID
+	var stop atomic.Bool
+	stop.Store(false)
 
 	if len(items) == 0 {
 		var err error
@@ -45,10 +54,8 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService) {
 		),
 	)
 
-	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
-		link := e.Attr("href")
-		c.Visit(e.Request.AbsoluteURL(link))
-	})
+	var flagMtx sync.Mutex
+	flag := make(map[int]bool)
 
 	c.OnHTML("body", func(e *colly.HTMLElement) {
 		var Name string
@@ -58,13 +65,59 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService) {
 		})
 		e.ForEach("a[href]", func(i int, e *colly.HTMLElement) {
 			link := e.Attr("href")
+			if len(link) == 0 {
+				return
+			}
 			if strings.HasPrefix(link, "magnet:?") {
 				Uri = link
+				return
+			} else if strings.Contains(e.Request.URL.Path, "thread") {
+				return
 			}
+			pi := strings.Index(link, "thread-")
+			if pi != -1 {
+				ns := link[pi+len("thread-"):]
+				ns, f := strings.CutSuffix(ns, ".htm")
+				if f {
+					num, err := strconv.Atoi(ns)
+					if err == nil {
+						flagMtx.Lock()
+						if _, ok := flag[num]; ok {
+							flagMtx.Unlock()
+							return
+						}
+						flag[num] = true
+						flagMtx.Unlock()
+						c.Visit(e.Request.AbsoluteURL(link))
+					}
+				}
+				return
+			}
+			c.Visit(e.Request.AbsoluteURL(link))
 		})
 		if len(Uri) == 0 {
 			return
 		}
+
+		rsp, err := btClient.Parse(context.Background(), &prpc.DownloadRequest{
+			Type:    prpc.DownloadRequest_MagnetUri,
+			Content: []byte(Uri),
+		})
+
+		if err != nil {
+			return
+		}
+
+		sql := "insert into magnet(version, info_hash, magnet_uri) values(?, ?, ?)"
+		dr, err := db.Exec(sql, rsp.InfoHash.Version, rsp.InfoHash.Hash, Uri)
+		if err != nil {
+			return
+		}
+		af, err := dr.RowsAffected()
+		if err != nil || af == 0 {
+			return
+		}
+
 		magnetShares.AddMagnetUri(&user.AddMagnetUriParams{
 			Uri:        Uri,
 			CategoryId: rid,
@@ -74,7 +127,7 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService) {
 		})
 	})
 
-	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: 4})
+	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: 3})
 
 	c.Visit("https://www.36dm.org")
 

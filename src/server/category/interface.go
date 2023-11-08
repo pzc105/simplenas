@@ -10,6 +10,7 @@ type IService interface {
 	DelItem(deleter int64, itemId ID) error
 	IsRelationOf(itemId ID, parentId ID) bool
 	Search(params *SearchParams) ([]*CategoryItem, error)
+	SearchRows(params *SearchParams) (int, error)
 }
 
 type GetItemsByParentParams struct {

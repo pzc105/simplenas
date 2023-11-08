@@ -60,13 +60,6 @@ const categorySlice = createSlice({
   initialState: {
     items: {},
     videoInfos: {},
-
-    magnetShares: {
-      parentId: 0,
-      magnetSharesItems: [],
-      magnetSharesPageNum: 0,
-      magnetSharesTotalRows: 0,
-    }
   },
   reducers: {
     clear: (state) => {
@@ -77,30 +70,28 @@ const categorySlice = createSlice({
       let item = action.payload
       state.items[item.id] = item
     },
-    updateMagnetSharesItems: (state, action) => {
-      let items = action.payload.items
-      let parentId = action.payload.parentId
-      state.magnetShares.parentId = parentId
-      state.magnetShares.magnetSharesItems = items
-    },
-    updateMagnetSharesPageNum: (state, action) => {
-      let num = action.payload.num
-      let parentId = action.payload.parentId
-      state.magnetShares.parentId = parentId
-      state.magnetShares.magnetSharesPageNum = num
-    },
-    updateMagnetSharesTotalRows: (state, action) => {
-      let totalRows = action.payload.totalRows
-      let parentId = action.payload.parentId
-      state.magnetShares.parentId = parentId
-      state.magnetShares.magnetSharesTotalRows = totalRows
-    },
     deleteItem: (state, action) => {
       let itemId = action.payload
       delete state.items[itemId]
     },
     updateVideoInfo: (state, action) => {
       state.videoInfos[action.payload.itemId] = action.payload.videoInfo
+    },
+  }
+})
+
+const magnetShares = createSlice({
+  name: 'magnetShares',
+  initialState: {
+    parentId: 0,
+    magnetSharesItems: [],
+  },
+  reducers: {
+    updateMagnetSharesItems: (state, action) => {
+      let items = action.payload.items
+      let parentId = action.payload.parentId
+      state.parentId = parentId
+      state.magnetSharesItems = items
     },
   }
 })
@@ -145,6 +136,7 @@ const reducers = combineReducers({
   category: categorySlice.reducer,
   player: playerSlice.reducer,
   event: eventSlice.reducer,
+  magnetShares: magnetShares.reducer,
 })
 const persistedReducer = persistReducer(persistConfig, reducers);
 const store = configureStore({
@@ -224,23 +216,10 @@ const selectCategorySubItems = (state, parentId) => {
 }
 
 const selectMagnetSharesItems = (state) => {
-  return state.category.magnetShares.magnetSharesItems
+  return state.magnetShares.magnetSharesItems
 }
 
-const selectMagnetSharesPageNum = (state, parentId) => {
-  if (state.category.magnetShares.magnetSharesPageNum && parentId === state.category.magnetShares.parentId) {
-    return state.category.magnetShares.magnetSharesPageNum
-  }
-  return 0
-}
 
-const selectMagnetSharesTotalRows = (state, parentId) => {
-  if (state.category.magnetShares.magnetSharesTotalRows && parentId === state.category.magnetShares.parentId) {
-    return state.category.magnetShares.magnetSharesTotalRows
-  }
-  return 0
-
-}
 
 const selectSubDirectory = (state, parentId) => {
   const ds = []
@@ -281,11 +260,11 @@ const selectAutoPlayVideo = (state) => {
 }
 
 export {
-  store, userSlice, btSlice, categorySlice, eventSlice, playerSlice,
+  store, userSlice, btSlice, categorySlice, eventSlice, playerSlice, magnetShares,
   selectUserInfo, selectShownChatPanel, selectOpenGlobalChat, selectGlobalChatPosition,
   selectTorrent, selectInfoHashs, selectBtVideoFiles,
   selectCategoryItem, selectCategoryItems, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo,
-  selectMagnetSharesItems, selectMagnetSharesPageNum, selectMagnetSharesTotalRows,
+  selectMagnetSharesItems,
   getSelectedAudio, selectAutoPlayVideo,
   isDownloadPageMouseDown
 }

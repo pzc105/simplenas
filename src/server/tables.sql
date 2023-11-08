@@ -113,16 +113,6 @@ begin
 end//
 delimiter ;
 
-drop procedure if exists del_category;
-delimiter //
-create procedure del_category(in del_item_id bigint)
-begin
-  start transaction;
-  delete from pnas.category_items where id = del_item_id;
-  commit;
-end//
-delimiter ;
-
 drop procedure if exists new_user;
 delimiter //
 create procedure new_user(in name varchar(256),
@@ -209,5 +199,5 @@ create table magnet (
   updated_at timestamp default current_timestamp on update current_timestamp not null,
 
   primary key(id),
-  key info_hash (info_hash, version)
+  unique key info_hash (info_hash, version)
 );

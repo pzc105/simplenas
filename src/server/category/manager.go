@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"pnas/db"
 	"pnas/log"
+	"strings"
 	"sync"
 
 	"github.com/pkg/errors"
@@ -159,7 +160,7 @@ func (m *Manager) GetItemsByParent(params *GetItemsByParentParams) ([]*CategoryI
 		if rows > int32(len(subIds))-offset {
 			rows = int32(len(subIds)) - offset
 		}
-		ids := subIds[offset:offset+rows]
+		ids := subIds[offset : offset+rows]
 		return m.GetItems(params.Querier, ids...)
 	}
 	return m.GetItems(params.Querier, item.subItemIds...)
@@ -214,7 +215,7 @@ func (m *Manager) GetItems(querier int64, itemIds ...ID) ([]*CategoryItem, error
 	return ret, err
 }
 
-func (m *Manager) DelItem(deleter int64, itemId ID) error {
+func (m *Manager) DelItem(deleter int64, itemId ID) (err error) {
 	item, err := m.GetItem(deleter, itemId)
 	if err != nil {
 		return err
@@ -223,47 +224,67 @@ func (m *Manager) DelItem(deleter int64, itemId ID) error {
 		return errors.New("not auth")
 	}
 
-	var toDelItems []*CategoryItem
+	var lookingItems []*CategoryItem
 	parentItem, _ := m.GetItem(AdminId, item.base.ParentId)
 	parentDbMtx := m.requireDbMtx(item.base.ParentId)
-	toDelItems = append(toDelItems, item)
-	toDelItemsDbMtx := []*sync.Mutex{m.requireDbMtx(itemId)}
+	lookingItems = append(lookingItems, item)
+
 	parentDbMtx.Lock()
 	defer parentDbMtx.Unlock()
+
+	toDelItemsDbMtx := []*sync.Mutex{m.requireDbMtx(itemId)}
 	toDelItemsDbMtx[0].Lock()
-
-	flags := make(map[ID]bool)
-
-	for len(toDelItems) > 0 {
-		item := toDelItems[len(toDelItems)-1]
-		if _, ok := flags[item.base.Id]; !ok {
-			flags[item.base.Id] = true
-			items, _ := m.GetItems(AdminId, item.GetSubItemIds()...)
-			toDelItems = append(toDelItems, items...)
-			for _, item := range items {
-				dbmtx := m.requireDbMtx(item.base.Id)
-				toDelItemsDbMtx = append(toDelItemsDbMtx, dbmtx)
-				dbmtx.Lock()
+	defer func() {
+		if err != nil {
+			for _, mtx := range toDelItemsDbMtx {
+				mtx.Unlock()
 			}
-		} else {
-			dbmtx := toDelItemsDbMtx[len(toDelItemsDbMtx)-1]
-			toDelItems = toDelItems[:len(toDelItems)-1]
-			toDelItemsDbMtx = toDelItemsDbMtx[:len(toDelItemsDbMtx)-1]
-			_, err = db.Exec("call del_category(?)", item.base.Id)
-			dbmtx.Unlock()
-			if err != nil {
-				log.Warnf("[category] id:%d del error: %v", item.base.Id, err)
-				continue
-			}
-			m.removeItem(item.base.Id)
-			m.delDbMtx(item.base.Id)
+		}
+	}()
+
+	lockedIds := []ID{itemId}
+
+	for len(lookingItems) > 0 {
+		item := lookingItems[len(lookingItems)-1]
+		lookingItems = lookingItems[:len(lookingItems)-1]
+		items, _ := m.GetItems(AdminId, item.GetSubItemIds()...)
+		lookingItems = append(lookingItems, items...)
+		for _, item := range items {
+			dbmtx := m.requireDbMtx(item.base.Id)
+			dbmtx.Lock()
+			toDelItemsDbMtx = append(toDelItemsDbMtx, dbmtx)
+			lockedIds = append(lockedIds, item.base.Id)
 		}
 	}
+
+	var sb strings.Builder
+	for _, id := range lockedIds {
+		if sb.Len() == 0 {
+			sb.WriteString(fmt.Sprint(id))
+		} else {
+			sb.WriteString("," + fmt.Sprint(id))
+		}
+	}
+
+	sql := fmt.Sprintf("delete from category_items where id in (%s)", sb.String())
+	_, err = db.Exec(sql)
+	if err != nil {
+		return err
+	}
+
+	for _, id := range lockedIds {
+		m.removeItem(id)
+	}
+	for _, mtx := range toDelItemsDbMtx {
+		mtx.Unlock()
+
+	}
+	for _, id := range lockedIds {
+		m.delDbMtx(id)
+	}
+
 	if parentItem != nil {
 		parentItem.deletedSubItem(itemId)
-	}
-	if len(toDelItemsDbMtx) > 0 {
-		log.Panic("del item")
 	}
 	return nil
 }
@@ -295,6 +316,29 @@ type SearchParams struct {
 	ExistedWords string
 	PageNum      int32
 	Rows         int32
+}
+
+func (m *Manager) SearchRows(params *SearchParams) (int, error) {
+	if params.PageNum < 0 || params.Rows <= 0 {
+		return -1, errors.New("invalid params")
+	}
+	sql := fmt.Sprintf("select id from category_items where match (name, introduce) against ('%s')", params.ExistedWords)
+	rows, err := db.Query(sql)
+	if err != nil {
+		return -1, err
+	}
+	ret := 0
+	for rows.Next() {
+		var id ID
+		err := rows.Scan(&id)
+		if err != nil {
+			return -1, err
+		}
+		if params.RootId <= 0 || m.IsRelationOf(id, params.RootId) {
+			ret += 1
+		}
+	}
+	return ret, nil
 }
 
 func (m *Manager) Search(params *SearchParams) ([]*CategoryItem, error) {
