@@ -42,6 +42,10 @@ PROTOBUF_CONSTEXPR CategoryItem::CategoryItem(::_pbi::ConstantInitialized)
           &::_pbi::fixed_address_empty_string,
           ::_pbi::ConstantInitialized{},
       },
+      /*decltype(_impl_.other_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
       /*decltype(_impl_.id_)*/ ::int64_t{0},
       /*decltype(_impl_.creator_)*/ ::int64_t{0},
       /*decltype(_impl_.parent_id_)*/ ::int64_t{0},
@@ -100,6 +104,7 @@ const ::uint32_t TableStruct_category_2eproto::offsets[] PROTOBUF_SECTION_VARIAB
     PROTOBUF_FIELD_OFFSET(::prpc::CategoryItem, _impl_.resource_path_),
     PROTOBUF_FIELD_OFFSET(::prpc::CategoryItem, _impl_.poster_path_),
     PROTOBUF_FIELD_OFFSET(::prpc::CategoryItem, _impl_.introduce_),
+    PROTOBUF_FIELD_OFFSET(::prpc::CategoryItem, _impl_.other_),
     PROTOBUF_FIELD_OFFSET(::prpc::CategoryItem, _impl_.parent_id_),
     PROTOBUF_FIELD_OFFSET(::prpc::CategoryItem, _impl_.sub_item_ids_),
     ~0u,  // no _has_bits_
@@ -117,7 +122,7 @@ const ::uint32_t TableStruct_category_2eproto::offsets[] PROTOBUF_SECTION_VARIAB
 static const ::_pbi::MigrationSchema
     schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
         {0, -1, -1, sizeof(::prpc::CategoryItem)},
-        {17, -1, -1, sizeof(::prpc::SharedItem)},
+        {18, -1, -1, sizeof(::prpc::SharedItem)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -125,22 +130,23 @@ static const ::_pb::Message* const file_default_instances[] = {
     &::prpc::_SharedItem_default_instance_._instance,
 };
 const char descriptor_table_protodef_category_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-    "\n\016category.proto\022\004prpc\"\251\002\n\014CategoryItem\022"
+    "\n\016category.proto\022\004prpc\"\270\002\n\014CategoryItem\022"
     "\n\n\002id\030\001 \001(\003\022(\n\007type_id\030\002 \001(\0162\027.prpc.Cate"
     "goryItem.Type\022\017\n\007creator\030\003 \001(\003\022\014\n\004name\030\004"
     " \001(\t\022\025\n\rresource_path\030\005 \001(\t\022\023\n\013poster_pa"
-    "th\030\006 \001(\t\022\021\n\tintroduce\030\007 \001(\t\022\021\n\tparent_id"
-    "\030\010 \001(\003\022\024\n\014sub_item_ids\030\t \003(\003\"\\\n\004Type\022\013\n\007"
-    "Unknown\020\000\022\010\n\004Home\020\001\022\r\n\tDirectory\020\002\022\t\n\005Vi"
-    "deo\020\003\022\t\n\005Other\020\004\022\t\n\005Audio\020\005\022\r\n\tMagnetUri"
-    "\020\006\"/\n\nSharedItem\022\017\n\007item_id\030\001 \001(\003\022\020\n\010sha"
-    "re_id\030\002 \001(\tB\010Z\006./prpcb\006proto3"
+    "th\030\006 \001(\t\022\021\n\tintroduce\030\007 \001(\t\022\r\n\005other\030\010 \001"
+    "(\t\022\021\n\tparent_id\030\t \001(\003\022\024\n\014sub_item_ids\030\n "
+    "\003(\003\"\\\n\004Type\022\013\n\007Unknown\020\000\022\010\n\004Home\020\001\022\r\n\tDi"
+    "rectory\020\002\022\t\n\005Video\020\003\022\t\n\005Other\020\004\022\t\n\005Audio"
+    "\020\005\022\r\n\tMagnetUri\020\006\"/\n\nSharedItem\022\017\n\007item_"
+    "id\030\001 \001(\003\022\020\n\010share_id\030\002 \001(\tB\010Z\006./prpcb\006pr"
+    "oto3"
 };
 static ::absl::once_flag descriptor_table_category_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_category_2eproto = {
     false,
     false,
-    389,
+    404,
     descriptor_table_protodef_category_2eproto,
     "category.proto",
     &descriptor_table_category_2eproto_once,
@@ -228,6 +234,7 @@ CategoryItem::CategoryItem(const CategoryItem& from) : ::google::protobuf::Messa
       decltype(_impl_.resource_path_){},
       decltype(_impl_.poster_path_){},
       decltype(_impl_.introduce_){},
+      decltype(_impl_.other_){},
       decltype(_impl_.id_){},
       decltype(_impl_.creator_){},
       decltype(_impl_.parent_id_){},
@@ -264,6 +271,13 @@ CategoryItem::CategoryItem(const CategoryItem& from) : ::google::protobuf::Messa
   if (!from._internal_introduce().empty()) {
     _this->_impl_.introduce_.Set(from._internal_introduce(), _this->GetArenaForAllocation());
   }
+  _impl_.other_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.other_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_other().empty()) {
+    _this->_impl_.other_.Set(from._internal_other(), _this->GetArenaForAllocation());
+  }
   ::memcpy(&_impl_.id_, &from._impl_.id_,
     static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.type_id_) -
     reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.type_id_));
@@ -279,6 +293,7 @@ inline void CategoryItem::SharedCtor(::_pb::Arena* arena) {
       decltype(_impl_.resource_path_){},
       decltype(_impl_.poster_path_){},
       decltype(_impl_.introduce_){},
+      decltype(_impl_.other_){},
       decltype(_impl_.id_){::int64_t{0}},
       decltype(_impl_.creator_){::int64_t{0}},
       decltype(_impl_.parent_id_){::int64_t{0}},
@@ -301,6 +316,10 @@ inline void CategoryItem::SharedCtor(::_pb::Arena* arena) {
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
         _impl_.introduce_.Set("", GetArenaForAllocation());
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.other_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.other_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 CategoryItem::~CategoryItem() {
   // @@protoc_insertion_point(destructor:prpc.CategoryItem)
@@ -314,6 +333,7 @@ inline void CategoryItem::SharedDtor() {
   _impl_.resource_path_.Destroy();
   _impl_.poster_path_.Destroy();
   _impl_.introduce_.Destroy();
+  _impl_.other_.Destroy();
 }
 void CategoryItem::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
@@ -330,6 +350,7 @@ PROTOBUF_NOINLINE void CategoryItem::Clear() {
   _impl_.resource_path_.ClearToEmpty();
   _impl_.poster_path_.ClearToEmpty();
   _impl_.introduce_.ClearToEmpty();
+  _impl_.other_.ClearToEmpty();
   ::memset(&_impl_.id_, 0, static_cast<::size_t>(
       reinterpret_cast<char*>(&_impl_.type_id_) -
       reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.type_id_));
@@ -344,15 +365,15 @@ const char* CategoryItem::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 9, 0, 71, 2> CategoryItem::_table_ = {
+const ::_pbi::TcParseTable<4, 10, 0, 76, 2> CategoryItem::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    9, 120,  // max_field_number, fast_idx_mask
+    10, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294966784,  // skipmap
+    4294966272,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    9,  // num_field_entries
+    10,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     &_CategoryItem_default_instance_._instance,
@@ -380,13 +401,15 @@ const ::_pbi::TcParseTable<4, 9, 0, 71, 2> CategoryItem::_table_ = {
     // string introduce = 7;
     {::_pbi::TcParser::FastUS1,
      {58, 63, 0, PROTOBUF_FIELD_OFFSET(CategoryItem, _impl_.introduce_)}},
-    // int64 parent_id = 8;
+    // string other = 8;
+    {::_pbi::TcParser::FastUS1,
+     {66, 63, 0, PROTOBUF_FIELD_OFFSET(CategoryItem, _impl_.other_)}},
+    // int64 parent_id = 9;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(CategoryItem, _impl_.parent_id_), 63>(),
-     {64, 63, 0, PROTOBUF_FIELD_OFFSET(CategoryItem, _impl_.parent_id_)}},
-    // repeated int64 sub_item_ids = 9;
+     {72, 63, 0, PROTOBUF_FIELD_OFFSET(CategoryItem, _impl_.parent_id_)}},
+    // repeated int64 sub_item_ids = 10;
     {::_pbi::TcParser::FastV64P1,
-     {74, 63, 0, PROTOBUF_FIELD_OFFSET(CategoryItem, _impl_.sub_item_ids_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+     {82, 63, 0, PROTOBUF_FIELD_OFFSET(CategoryItem, _impl_.sub_item_ids_)}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
@@ -416,21 +439,25 @@ const ::_pbi::TcParseTable<4, 9, 0, 71, 2> CategoryItem::_table_ = {
     // string introduce = 7;
     {PROTOBUF_FIELD_OFFSET(CategoryItem, _impl_.introduce_), 0, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // int64 parent_id = 8;
+    // string other = 8;
+    {PROTOBUF_FIELD_OFFSET(CategoryItem, _impl_.other_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // int64 parent_id = 9;
     {PROTOBUF_FIELD_OFFSET(CategoryItem, _impl_.parent_id_), 0, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
-    // repeated int64 sub_item_ids = 9;
+    // repeated int64 sub_item_ids = 10;
     {PROTOBUF_FIELD_OFFSET(CategoryItem, _impl_.sub_item_ids_), 0, 0,
     (0 | ::_fl::kFcRepeated | ::_fl::kPackedInt64)},
   }},
   // no aux_entries
   {{
-    "\21\0\0\0\4\15\13\11\0\0\0\0\0\0\0\0"
+    "\21\0\0\0\4\15\13\11\5\0\0\0\0\0\0\0"
     "prpc.CategoryItem"
     "name"
     "resource_path"
     "poster_path"
     "introduce"
+    "other"
   }},
 };
 
@@ -494,18 +521,26 @@ const ::_pbi::TcParseTable<4, 9, 0, 71, 2> CategoryItem::_table_ = {
     target = stream->WriteStringMaybeAliased(7, _s, target);
   }
 
-  // int64 parent_id = 8;
+  // string other = 8;
+  if (!this->_internal_other().empty()) {
+    const std::string& _s = this->_internal_other();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.CategoryItem.other");
+    target = stream->WriteStringMaybeAliased(8, _s, target);
+  }
+
+  // int64 parent_id = 9;
   if (this->_internal_parent_id() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::
-        WriteInt64ToArrayWithField<8>(
+        WriteInt64ToArrayWithField<9>(
             stream, this->_internal_parent_id(), target);
   }
 
-  // repeated int64 sub_item_ids = 9;
+  // repeated int64 sub_item_ids = 10;
   {
     int byte_size = _impl_._sub_item_ids_cached_byte_size_.Get();
     if (byte_size > 0) {
-      target = stream->WriteInt64Packed(9, _internal_sub_item_ids(),
+      target = stream->WriteInt64Packed(10, _internal_sub_item_ids(),
                                                  byte_size, target);
     }
   }
@@ -527,7 +562,7 @@ const ::_pbi::TcParseTable<4, 9, 0, 71, 2> CategoryItem::_table_ = {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated int64 sub_item_ids = 9;
+  // repeated int64 sub_item_ids = 10;
   {
     std::size_t data_size = ::_pbi::WireFormatLite::Int64Size(
         this->_internal_sub_item_ids())
@@ -564,6 +599,12 @@ const ::_pbi::TcParseTable<4, 9, 0, 71, 2> CategoryItem::_table_ = {
                                     this->_internal_introduce());
   }
 
+  // string other = 8;
+  if (!this->_internal_other().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_other());
+  }
+
   // int64 id = 1;
   if (this->_internal_id() != 0) {
     total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
@@ -576,7 +617,7 @@ const ::_pbi::TcParseTable<4, 9, 0, 71, 2> CategoryItem::_table_ = {
         this->_internal_creator());
   }
 
-  // int64 parent_id = 8;
+  // int64 parent_id = 9;
   if (this->_internal_parent_id() != 0) {
     total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
         this->_internal_parent_id());
@@ -619,6 +660,9 @@ void CategoryItem::MergeImpl(::google::protobuf::Message& to_msg, const ::google
   if (!from._internal_introduce().empty()) {
     _this->_internal_set_introduce(from._internal_introduce());
   }
+  if (!from._internal_other().empty()) {
+    _this->_internal_set_other(from._internal_other());
+  }
   if (from._internal_id() != 0) {
     _this->_internal_set_id(from._internal_id());
   }
@@ -659,6 +703,8 @@ void CategoryItem::InternalSwap(CategoryItem* other) {
                                        &other->_impl_.poster_path_, rhs_arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.introduce_, lhs_arena,
                                        &other->_impl_.introduce_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.other_, lhs_arena,
+                                       &other->_impl_.other_, rhs_arena);
   ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(CategoryItem, _impl_.type_id_)
       + sizeof(CategoryItem::_impl_.type_id_)

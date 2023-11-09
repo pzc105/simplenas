@@ -497,6 +497,14 @@ func (ser *CoreService) RemoveTorrent(ctx context.Context, req *prpc.RemoveTorre
 	return &prpc.RemoveTorrentRes{}, nil
 }
 
+func (ser *CoreService) GetMagnetUri(ctx context.Context, req *prpc.GetMagnetUriReq) (*prpc.GetMagnetUriRsp, error) {
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "")
+	}
+	return ser.bt.GetMagnetUri(ctx, req)
+}
+
 func (ser *CoreService) OnStatus(statusReq *prpc.StatusRequest, stream prpc.UserService_OnStatusServer) error {
 	ses := ser.getSession(stream.Context())
 	if ses == nil {

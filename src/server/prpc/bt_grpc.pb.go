@@ -22,7 +22,7 @@ const (
 	BtService_Parse_FullMethodName           = "/prpc.BtService/Parse"
 	BtService_Download_FullMethodName        = "/prpc.BtService/Download"
 	BtService_RemoveTorrent_FullMethodName   = "/prpc.BtService/RemoveTorrent"
-	BtService_GenMagnetUri_FullMethodName    = "/prpc.BtService/GenMagnetUri"
+	BtService_GetMagnetUri_FullMethodName    = "/prpc.BtService/GetMagnetUri"
 	BtService_OnStatus_FullMethodName        = "/prpc.BtService/OnStatus"
 	BtService_OnTorrentInfo_FullMethodName   = "/prpc.BtService/OnTorrentInfo"
 	BtService_OnFileCompleted_FullMethodName = "/prpc.BtService/OnFileCompleted"
@@ -36,7 +36,7 @@ type BtServiceClient interface {
 	Parse(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadRespone, error)
 	Download(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadRespone, error)
 	RemoveTorrent(ctx context.Context, in *RemoveTorrentReq, opts ...grpc.CallOption) (*RemoveTorrentRes, error)
-	GenMagnetUri(ctx context.Context, in *GenMagnetUriReq, opts ...grpc.CallOption) (*GenMagnetUriRsp, error)
+	GetMagnetUri(ctx context.Context, in *GetMagnetUriReq, opts ...grpc.CallOption) (*GetMagnetUriRsp, error)
 	OnStatus(ctx context.Context, opts ...grpc.CallOption) (BtService_OnStatusClient, error)
 	OnTorrentInfo(ctx context.Context, opts ...grpc.CallOption) (BtService_OnTorrentInfoClient, error)
 	OnFileCompleted(ctx context.Context, opts ...grpc.CallOption) (BtService_OnFileCompletedClient, error)
@@ -78,9 +78,9 @@ func (c *btServiceClient) RemoveTorrent(ctx context.Context, in *RemoveTorrentRe
 	return out, nil
 }
 
-func (c *btServiceClient) GenMagnetUri(ctx context.Context, in *GenMagnetUriReq, opts ...grpc.CallOption) (*GenMagnetUriRsp, error) {
-	out := new(GenMagnetUriRsp)
-	err := c.cc.Invoke(ctx, BtService_GenMagnetUri_FullMethodName, in, out, opts...)
+func (c *btServiceClient) GetMagnetUri(ctx context.Context, in *GetMagnetUriReq, opts ...grpc.CallOption) (*GetMagnetUriRsp, error) {
+	out := new(GetMagnetUriRsp)
+	err := c.cc.Invoke(ctx, BtService_GetMagnetUri_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -218,7 +218,7 @@ type BtServiceServer interface {
 	Parse(context.Context, *DownloadRequest) (*DownloadRespone, error)
 	Download(context.Context, *DownloadRequest) (*DownloadRespone, error)
 	RemoveTorrent(context.Context, *RemoveTorrentReq) (*RemoveTorrentRes, error)
-	GenMagnetUri(context.Context, *GenMagnetUriReq) (*GenMagnetUriRsp, error)
+	GetMagnetUri(context.Context, *GetMagnetUriReq) (*GetMagnetUriRsp, error)
 	OnStatus(BtService_OnStatusServer) error
 	OnTorrentInfo(BtService_OnTorrentInfoServer) error
 	OnFileCompleted(BtService_OnFileCompletedServer) error
@@ -239,8 +239,8 @@ func (UnimplementedBtServiceServer) Download(context.Context, *DownloadRequest) 
 func (UnimplementedBtServiceServer) RemoveTorrent(context.Context, *RemoveTorrentReq) (*RemoveTorrentRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveTorrent not implemented")
 }
-func (UnimplementedBtServiceServer) GenMagnetUri(context.Context, *GenMagnetUriReq) (*GenMagnetUriRsp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GenMagnetUri not implemented")
+func (UnimplementedBtServiceServer) GetMagnetUri(context.Context, *GetMagnetUriReq) (*GetMagnetUriRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMagnetUri not implemented")
 }
 func (UnimplementedBtServiceServer) OnStatus(BtService_OnStatusServer) error {
 	return status.Errorf(codes.Unimplemented, "method OnStatus not implemented")
@@ -321,20 +321,20 @@ func _BtService_RemoveTorrent_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BtService_GenMagnetUri_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GenMagnetUriReq)
+func _BtService_GetMagnetUri_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMagnetUriReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BtServiceServer).GenMagnetUri(ctx, in)
+		return srv.(BtServiceServer).GetMagnetUri(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BtService_GenMagnetUri_FullMethodName,
+		FullMethod: BtService_GetMagnetUri_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BtServiceServer).GenMagnetUri(ctx, req.(*GenMagnetUriReq))
+		return srv.(BtServiceServer).GetMagnetUri(ctx, req.(*GetMagnetUriReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -463,8 +463,8 @@ var BtService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BtService_RemoveTorrent_Handler,
 		},
 		{
-			MethodName: "GenMagnetUri",
-			Handler:    _BtService_GenMagnetUri_Handler,
+			MethodName: "GetMagnetUri",
+			Handler:    _BtService_GetMagnetUri_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

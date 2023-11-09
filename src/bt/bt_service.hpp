@@ -20,67 +20,67 @@ namespace prpc
   {
     struct tag
     {
-      pusher_base* _owner;
+      pusher_base *_owner;
     };
 
-    pusher_base(pusher_manager* owner) :_owner(owner), _new_tag{ this }, _read_tag{ this }, _write_tag{ this } {}
-    virtual void completed(tag* t, bool ok) = 0;
+    pusher_base(pusher_manager *owner) : _owner(owner), _new_tag{this}, _read_tag{this}, _write_tag{this} {}
+    virtual void completed(tag *t, bool ok) = 0;
     virtual void done() = 0;
 
-    pusher_manager* _owner;
+    pusher_manager *_owner;
     tag _new_tag;
     tag _read_tag;
     tag _write_tag;
   };
 
-  template<typename request_type, typename respone_type>
+  template <typename request_type, typename respone_type>
   class pusher : public pusher_base
   {
   public:
     using push_class = pusher;
 
-    pusher(pusher_manager* owner, bt_service* ser) : pusher_base(owner), _stream(&_context), _ser(ser) {}
+    pusher(pusher_manager *owner, bt_service *ser) : pusher_base(owner), _stream(&_context), _ser(ser) {}
     void read();
-    void write(respone_type&& r);
+    void write(respone_type &&r);
 
     void completed(tag *t, bool ok) override;
 
     std::mutex _mtx;
-    uint32_t _read_count{ 0 };
-    uint32_t _write_count{ 0 };
+    uint32_t _read_count{0};
+    uint32_t _write_count{0};
     std::queue<respone_type> _write_queue;
 
     request_type _req;
     grpc::ServerContext _context;
     grpc::ServerAsyncReaderWriter<respone_type, request_type> _stream;
-    
-    bt_service* _ser;
+
+    bt_service *_ser;
   };
 
   class bt_status_pusher : public pusher<StatusRequest, StatusRespone>
   {
   public:
-    bt_status_pusher(pusher_manager* owner, bt_service* ser);
-    void push(std::vector<lt::torrent_status> const& sts);
-    void completed(tag* t, bool ok) override;
+    bt_status_pusher(pusher_manager *owner, bt_service *ser);
+    void push(std::vector<lt::torrent_status> const &sts);
+    void completed(tag *t, bool ok) override;
     void done() override;
   };
 
   class bt_info_pusher : public pusher<TorrentInfoReq, TorrentInfoRes>
   {
   public:
-    bt_info_pusher(pusher_manager* owner, bt_service* ser);
-    void push(lt::add_torrent_params const& params);
-    void completed(tag* t, bool ok) override;
+    bt_info_pusher(pusher_manager *owner, bt_service *ser);
+    void push(lt::add_torrent_params const &params);
+    void completed(tag *t, bool ok) override;
     void done() override;
   };
 
   class bt_filecompleted_pusher : public pusher<FileCompletedReq, FileCompletedRes>
   {
   public:
-    bt_filecompleted_pusher(pusher_manager* owner, bt_service* ser);
-    void push(lt::file_completed_alert const& params);
-    void completed(tag* t, bool ok) override;
+    bt_filecompleted_pusher(pusher_manager *owner, bt_service *ser);
+    void push(lt::file_completed_alert const &params);
+    void completed(tag *t, bool ok) override;
     void done() override;
   };
 
@@ -95,24 +95,24 @@ namespace prpc
     friend class bt_filecompleted_pusher;
 
   public:
-    pusher_manager(bt_service* ser);
+    pusher_manager(bt_service *ser);
     void start();
-    void push_bt_status(std::vector<lt::torrent_status> const& sts);
-    void push_bt_infos(lt::add_torrent_params const& params);
-    void push_bt_filecompleted(lt::file_completed_alert const& params);
+    void push_bt_status(std::vector<lt::torrent_status> const &sts);
+    void push_bt_infos(lt::add_torrent_params const &params);
+    void push_bt_filecompleted(lt::file_completed_alert const &params);
 
   private:
-    void accepted_status_pusher(pusher_base* pusher);
-    void remove_status_pusher(pusher_base* pusher);
+    void accepted_status_pusher(pusher_base *pusher);
+    void remove_status_pusher(pusher_base *pusher);
 
-    void accepted_btinfo_pusher(pusher_base* pusher);
-    void remove_btinfo_pusher(pusher_base* pusher);
+    void accepted_btinfo_pusher(pusher_base *pusher);
+    void remove_btinfo_pusher(pusher_base *pusher);
 
-    void accepted_filecompleted_pusher(pusher_base* pusher);
-    void remove_filecompleted_pusher(pusher_base* pusher);
+    void accepted_filecompleted_pusher(pusher_base *pusher);
+    void remove_filecompleted_pusher(pusher_base *pusher);
 
   private:
-    bt_service* _ser;
+    bt_service *_ser;
 
     std::vector<status_pusher_ptr> _st_pushers;
     status_pusher_ptr _st_pusher;
@@ -125,33 +125,24 @@ namespace prpc
   };
 
   using _bt_service = BtService::WithAsyncMethod_OnFileCompleted<
-                        BtService::WithAsyncMethod_OnTorrentInfo<
-                        BtService::WithAsyncMethod_OnStatus<BtService::Service>>>;
+      BtService::WithAsyncMethod_OnTorrentInfo<
+          BtService::WithAsyncMethod_OnStatus<BtService::Service>>>;
 
   class bt_service : public _bt_service
   {
   public:
     bt_service();
     ~bt_service();
-    void own_completion_queue(std::unique_ptr<grpc::ServerCompletionQueue>&& cq);
+    void own_completion_queue(std::unique_ptr<grpc::ServerCompletionQueue> &&cq);
     void run();
     void push_bt();
-    grpc::ServerCompletionQueue* get_cq() const { return _cq.get(); }
+    grpc::ServerCompletionQueue *get_cq() const { return _cq.get(); }
 
   private:
-    ::grpc::Status Parse(::grpc::ServerContext* context
-                          , const ::prpc::DownloadRequest* request
-                          , ::prpc::DownloadRespone* response) override;
-    ::grpc::Status Download(::grpc::ServerContext *context
-                            , const ::prpc::DownloadRequest *request
-                            , ::prpc::DownloadRespone *response) override;
-    ::grpc::Status RemoveTorrent(::grpc::ServerContext* context
-                            , const ::prpc::RemoveTorrentReq* request
-                            , ::prpc::RemoveTorrentRes* response) override;
-    ::grpc::Status GenMagnetUri(::grpc::ServerContext* context
-                            , const ::prpc::GenMagnetUriReq* request
-                            , ::prpc::GenMagnetUriRsp* response) override;
-    
+    ::grpc::Status Parse(::grpc::ServerContext *context, const ::prpc::DownloadRequest *request, ::prpc::DownloadRespone *response) override;
+    ::grpc::Status Download(::grpc::ServerContext *context, const ::prpc::DownloadRequest *request, ::prpc::DownloadRespone *response) override;
+    ::grpc::Status RemoveTorrent(::grpc::ServerContext *context, const ::prpc::RemoveTorrentReq *request, ::prpc::RemoveTorrentRes *response) override;
+    ::grpc::Status GetMagnetUri(::grpc::ServerContext *context, const ::prpc::GetMagnetUriReq *request, ::prpc::GetMagnetUriRsp *response) override;
 
   private:
     YAML::Node _bt_config;
@@ -163,7 +154,7 @@ namespace prpc
     pusher_manager _pusher_manager;
   };
 
-  template<typename request_type, typename respone_type>
+  template <typename request_type, typename respone_type>
   void pusher<request_type, respone_type>::read()
   {
     std::lock_guard<std::mutex> lk(_mtx);
@@ -171,60 +162,72 @@ namespace prpc
     _read_count++;
   }
 
-  template<typename request_type, typename respone_type>
-  void pusher<request_type, respone_type>::write(respone_type&& r)
+  template <typename request_type, typename respone_type>
+  void pusher<request_type, respone_type>::write(respone_type &&r)
   {
     std::lock_guard<std::mutex> lk(_mtx);
-    if (_write_count > 0) {
+    if (_write_count > 0)
+    {
       _write_queue.emplace(std::forward<respone_type>(r));
     }
-    else {
+    else
+    {
       _stream.Write(r, &_write_tag);
     }
     _write_count++;
   }
 
-  template<typename request_type, typename respone_type>
-  void pusher<request_type, respone_type>::completed(pusher::tag* t, bool ok)
+  template <typename request_type, typename respone_type>
+  void pusher<request_type, respone_type>::completed(pusher::tag *t, bool ok)
   {
     bool r = false;
 
-    if (t == &_new_tag && ok) {
+    if (t == &_new_tag && ok)
+    {
       read();
     }
 
     {
       std::lock_guard<std::mutex> lk(_mtx);
-      if (t == &_write_tag) {
+      if (t == &_write_tag)
+      {
         _write_count -= 1;
-        if (!ok) {
+        if (!ok)
+        {
           _write_count = 0;
           _write_queue = std::queue<respone_type>();
         }
-        else if (_write_count > 0) {
+        else if (_write_count > 0)
+        {
           respone_type rs = std::move(_write_queue.front());
           _write_queue.pop();
           _stream.Write(rs, &_write_tag);
         }
       }
-      else if (t == &_read_tag) {
+      else if (t == &_read_tag)
+      {
         _read_count--;
-        if (ok) {
+        if (ok)
+        {
           read();
         }
       }
-      else if (t == &_new_tag) {}
-      else {
+      else if (t == &_new_tag)
+      {
+      }
+      else
+      {
         assert(false);
       }
 
-
-      if (!ok && _write_count == 0 && _read_count == 0) {
+      if (!ok && _write_count == 0 && _read_count == 0)
+      {
         r = true;
       }
     }
 
-    if (r) {
+    if (r)
+    {
       done();
     }
   }

@@ -38,6 +38,7 @@ PROTOBUF_CONSTEXPR UserInfo::UserInfo(::_pbi::ConstantInitialized)
       },
       /*decltype(_impl_.id_)*/ ::int64_t{0},
       /*decltype(_impl_.home_directory_id_)*/ ::int64_t{0},
+      /*decltype(_impl_.magnet_root_id_)*/ ::int64_t{0},
       /*decltype(_impl_._cached_size_)*/ {},
     } {}
 struct UserInfoDefaultTypeInternal {
@@ -157,6 +158,45 @@ struct LoginRetDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 LoginRetDefaultTypeInternal _LoginRet_default_instance_;
         template <typename>
+PROTOBUF_CONSTEXPR ChangePasswordReq::ChangePasswordReq(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.email_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.old_passwd_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.new_passwd_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
+struct ChangePasswordReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ChangePasswordReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ChangePasswordReqDefaultTypeInternal() {}
+  union {
+    ChangePasswordReq _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ChangePasswordReqDefaultTypeInternal _ChangePasswordReq_default_instance_;
+      template <typename>
+PROTOBUF_CONSTEXPR ChangePasswordRsp::ChangePasswordRsp(::_pbi::ConstantInitialized) {}
+struct ChangePasswordRspDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ChangePasswordRspDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ChangePasswordRspDefaultTypeInternal() {}
+  union {
+    ChangePasswordRsp _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ChangePasswordRspDefaultTypeInternal _ChangePasswordRsp_default_instance_;
+        template <typename>
 PROTOBUF_CONSTEXPR NewCategoryItemReq::NewCategoryItemReq(::_pbi::ConstantInitialized)
     : _impl_{
       /*decltype(_impl_.name_)*/ {
@@ -233,6 +273,8 @@ PROTOBUF_CONSTEXPR QuerySubItemsReq::QuerySubItemsReq(::_pbi::ConstantInitialize
           ::_pbi::ConstantInitialized{},
       },
       /*decltype(_impl_.parent_id_)*/ ::int64_t{0},
+      /*decltype(_impl_.page_num_)*/ 0,
+      /*decltype(_impl_.rows_)*/ 0,
       /*decltype(_impl_._cached_size_)*/ {},
     } {}
 struct QuerySubItemsReqDefaultTypeInternal {
@@ -252,6 +294,7 @@ PROTOBUF_CONSTEXPR QuerySubItemsRes::QuerySubItemsRes(::_pbi::ConstantInitialize
       /*decltype(_impl_._cached_size_)*/ {},
       /*decltype(_impl_.items_)*/ {},
       /*decltype(_impl_.parent_item_)*/ nullptr,
+      /*decltype(_impl_.total_row_count_)*/ 0,
     } {}
 struct QuerySubItemsResDefaultTypeInternal {
   PROTOBUF_CONSTEXPR QuerySubItemsResDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
@@ -484,34 +527,6 @@ struct DelSharedItemResDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DelSharedItemResDefaultTypeInternal _DelSharedItemRes_default_instance_;
         template <typename>
-PROTOBUF_CONSTEXPR RefreshSubtitleReq::RefreshSubtitleReq(::_pbi::ConstantInitialized)
-    : _impl_{
-      /*decltype(_impl_.item_id_)*/ ::int64_t{0},
-      /*decltype(_impl_._cached_size_)*/ {},
-    } {}
-struct RefreshSubtitleReqDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RefreshSubtitleReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~RefreshSubtitleReqDefaultTypeInternal() {}
-  union {
-    RefreshSubtitleReq _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RefreshSubtitleReqDefaultTypeInternal _RefreshSubtitleReq_default_instance_;
-      template <typename>
-PROTOBUF_CONSTEXPR RefreshSubtitleRes::RefreshSubtitleRes(::_pbi::ConstantInitialized) {}
-struct RefreshSubtitleResDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RefreshSubtitleResDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~RefreshSubtitleResDefaultTypeInternal() {}
-  union {
-    RefreshSubtitleRes _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RefreshSubtitleResDefaultTypeInternal _RefreshSubtitleRes_default_instance_;
-        template <typename>
 PROTOBUF_CONSTEXPR SubtitleFile::SubtitleFile(::_pbi::ConstantInitialized)
     : _impl_{
       /*decltype(_impl_.name_)*/ {
@@ -564,10 +579,28 @@ struct UploadSubtitleResDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 UploadSubtitleResDefaultTypeInternal _UploadSubtitleRes_default_instance_;
         template <typename>
+PROTOBUF_CONSTEXPR Room::Room(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.id_)*/ ::int64_t{0},
+      /*decltype(_impl_.type_)*/ 0,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
+struct RoomDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR RoomDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~RoomDefaultTypeInternal() {}
+  union {
+    Room _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RoomDefaultTypeInternal _Room_default_instance_;
+        template <typename>
 PROTOBUF_CONSTEXPR JoinChatRoomReq::JoinChatRoomReq(::_pbi::ConstantInitialized)
     : _impl_{
-      /*decltype(_impl_.item_id_)*/ ::int64_t{0},
+      /*decltype(_impl_._has_bits_)*/ {},
       /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.room_)*/ nullptr,
     } {}
 struct JoinChatRoomReqDefaultTypeInternal {
   PROTOBUF_CONSTEXPR JoinChatRoomReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
@@ -607,9 +640,10 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
         template <typename>
 PROTOBUF_CONSTEXPR JoinChatRoomRes::JoinChatRoomRes(::_pbi::ConstantInitialized)
     : _impl_{
-      /*decltype(_impl_.chat_msgs_)*/ {},
-      /*decltype(_impl_.item_id_)*/ ::int64_t{0},
+      /*decltype(_impl_._has_bits_)*/ {},
       /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.chat_msgs_)*/ {},
+      /*decltype(_impl_.room_)*/ nullptr,
     } {}
 struct JoinChatRoomResDefaultTypeInternal {
   PROTOBUF_CONSTEXPR JoinChatRoomResDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
@@ -626,8 +660,8 @@ PROTOBUF_CONSTEXPR SendMsg2ChatRoomReq::SendMsg2ChatRoomReq(::_pbi::ConstantInit
     : _impl_{
       /*decltype(_impl_._has_bits_)*/ {},
       /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.room_)*/ nullptr,
       /*decltype(_impl_.chat_msg_)*/ nullptr,
-      /*decltype(_impl_.item_id_)*/ ::int64_t{0},
     } {}
 struct SendMsg2ChatRoomReqDefaultTypeInternal {
   PROTOBUF_CONSTEXPR SendMsg2ChatRoomReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
@@ -651,10 +685,148 @@ struct SendMsg2ChatRoomResDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SendMsg2ChatRoomResDefaultTypeInternal _SendMsg2ChatRoomRes_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR AddMagnetCategoryReq::AddMagnetCategoryReq(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.category_name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.introduce_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.parent_id_)*/ ::int64_t{0},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
+struct AddMagnetCategoryReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR AddMagnetCategoryReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~AddMagnetCategoryReqDefaultTypeInternal() {}
+  union {
+    AddMagnetCategoryReq _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddMagnetCategoryReqDefaultTypeInternal _AddMagnetCategoryReq_default_instance_;
+      template <typename>
+PROTOBUF_CONSTEXPR AddMagnetCategoryRsp::AddMagnetCategoryRsp(::_pbi::ConstantInitialized) {}
+struct AddMagnetCategoryRspDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR AddMagnetCategoryRspDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~AddMagnetCategoryRspDefaultTypeInternal() {}
+  union {
+    AddMagnetCategoryRsp _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddMagnetCategoryRspDefaultTypeInternal _AddMagnetCategoryRsp_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR AddMagnetUriReq::AddMagnetUriReq(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.magnet_uri_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.introduce_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.category_id_)*/ ::int64_t{0},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
+struct AddMagnetUriReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR AddMagnetUriReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~AddMagnetUriReqDefaultTypeInternal() {}
+  union {
+    AddMagnetUriReq _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddMagnetUriReqDefaultTypeInternal _AddMagnetUriReq_default_instance_;
+      template <typename>
+PROTOBUF_CONSTEXPR AddMagnetUriRsp::AddMagnetUriRsp(::_pbi::ConstantInitialized) {}
+struct AddMagnetUriRspDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR AddMagnetUriRspDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~AddMagnetUriRspDefaultTypeInternal() {}
+  union {
+    AddMagnetUriRsp _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddMagnetUriRspDefaultTypeInternal _AddMagnetUriRsp_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR QueryMagnetReq::QueryMagnetReq(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.search_cond_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.parent_id_)*/ ::int64_t{0},
+      /*decltype(_impl_.page_num_)*/ 0,
+      /*decltype(_impl_.rows_)*/ 0,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
+struct QueryMagnetReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR QueryMagnetReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~QueryMagnetReqDefaultTypeInternal() {}
+  union {
+    QueryMagnetReq _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 QueryMagnetReqDefaultTypeInternal _QueryMagnetReq_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR QueryMagnetRsp::QueryMagnetRsp(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.items_)*/ {},
+      /*decltype(_impl_.total_row_count_)*/ 0,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
+struct QueryMagnetRspDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR QueryMagnetRspDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~QueryMagnetRspDefaultTypeInternal() {}
+  union {
+    QueryMagnetRsp _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 QueryMagnetRspDefaultTypeInternal _QueryMagnetRsp_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR DelMagnetCategoryReq::DelMagnetCategoryReq(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.id_)*/ ::int64_t{0},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
+struct DelMagnetCategoryReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR DelMagnetCategoryReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~DelMagnetCategoryReqDefaultTypeInternal() {}
+  union {
+    DelMagnetCategoryReq _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DelMagnetCategoryReqDefaultTypeInternal _DelMagnetCategoryReq_default_instance_;
+      template <typename>
+PROTOBUF_CONSTEXPR DelMagnetCategoryRsp::DelMagnetCategoryRsp(::_pbi::ConstantInitialized) {}
+struct DelMagnetCategoryRspDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR DelMagnetCategoryRspDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~DelMagnetCategoryRspDefaultTypeInternal() {}
+  union {
+    DelMagnetCategoryRsp _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DelMagnetCategoryRspDefaultTypeInternal _DelMagnetCategoryRsp_default_instance_;
 }  // namespace prpc
-static ::_pb::Metadata file_level_metadata_user_2eproto[36];
-static constexpr const ::_pb::EnumDescriptor**
-    file_level_enum_descriptors_user_2eproto = nullptr;
+static ::_pb::Metadata file_level_metadata_user_2eproto[45];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_user_2eproto[1];
 static constexpr const ::_pb::ServiceDescriptor**
     file_level_service_descriptors_user_2eproto = nullptr;
 const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
@@ -672,6 +844,7 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     PROTOBUF_FIELD_OFFSET(::prpc::UserInfo, _impl_.email_),
     PROTOBUF_FIELD_OFFSET(::prpc::UserInfo, _impl_.passwd_),
     PROTOBUF_FIELD_OFFSET(::prpc::UserInfo, _impl_.home_directory_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::UserInfo, _impl_.magnet_root_id_),
     PROTOBUF_FIELD_OFFSET(::prpc::RegisterInfo, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::RegisterInfo, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -733,6 +906,25 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     0,
     ~0u,
     ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::ChangePasswordReq, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::ChangePasswordReq, _impl_.email_),
+    PROTOBUF_FIELD_OFFSET(::prpc::ChangePasswordReq, _impl_.old_passwd_),
+    PROTOBUF_FIELD_OFFSET(::prpc::ChangePasswordReq, _impl_.new_passwd_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::ChangePasswordRsp, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::NewCategoryItemReq, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -780,6 +972,8 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsReq, _impl_.parent_id_),
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsReq, _impl_.share_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsReq, _impl_.page_num_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsReq, _impl_.rows_),
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsRes, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsRes, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -790,7 +984,9 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsRes, _impl_.parent_item_),
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsRes, _impl_.items_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsRes, _impl_.total_row_count_),
     0,
+    ~0u,
     ~0u,
     PROTOBUF_FIELD_OFFSET(::prpc::QueryBtVideosReq, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::QueryBtVideosReq, _internal_metadata_),
@@ -922,23 +1118,6 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     ~0u,  // no _has_bits_
-    PROTOBUF_FIELD_OFFSET(::prpc::RefreshSubtitleReq, _internal_metadata_),
-    ~0u,  // no _extensions_
-    ~0u,  // no _oneof_case_
-    ~0u,  // no _weak_field_map_
-    ~0u,  // no _inlined_string_donated_
-    ~0u,  // no _split_
-    ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::prpc::RefreshSubtitleReq, _impl_.item_id_),
-    ~0u,  // no _has_bits_
-    PROTOBUF_FIELD_OFFSET(::prpc::RefreshSubtitleRes, _internal_metadata_),
-    ~0u,  // no _extensions_
-    ~0u,  // no _oneof_case_
-    ~0u,  // no _weak_field_map_
-    ~0u,  // no _inlined_string_donated_
-    ~0u,  // no _split_
-    ~0u,  // no sizeof(Split)
-    ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::SubtitleFile, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -967,6 +1146,16 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::Room, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::Room, _impl_.type_),
+    PROTOBUF_FIELD_OFFSET(::prpc::Room, _impl_.id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::JoinChatRoomReq, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::JoinChatRoomReq, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -974,7 +1163,8 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::prpc::JoinChatRoomReq, _impl_.item_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::JoinChatRoomReq, _impl_.room_),
+    0,
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::ChatMessage, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -987,7 +1177,7 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     PROTOBUF_FIELD_OFFSET(::prpc::ChatMessage, _impl_.user_name_),
     PROTOBUF_FIELD_OFFSET(::prpc::ChatMessage, _impl_.sent_time_),
     PROTOBUF_FIELD_OFFSET(::prpc::ChatMessage, _impl_.msg_),
-    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::JoinChatRoomRes, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::JoinChatRoomRes, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -995,8 +1185,10 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::prpc::JoinChatRoomRes, _impl_.item_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::JoinChatRoomRes, _impl_.room_),
     PROTOBUF_FIELD_OFFSET(::prpc::JoinChatRoomRes, _impl_.chat_msgs_),
+    0,
+    ~0u,
     PROTOBUF_FIELD_OFFSET(::prpc::SendMsg2ChatRoomReq, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::SendMsg2ChatRoomReq, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -1005,12 +1197,89 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::prpc::SendMsg2ChatRoomReq, _impl_.item_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::SendMsg2ChatRoomReq, _impl_.room_),
     PROTOBUF_FIELD_OFFSET(::prpc::SendMsg2ChatRoomReq, _impl_.chat_msg_),
-    ~0u,
     0,
+    1,
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::SendMsg2ChatRoomRes, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::AddMagnetCategoryReq, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::AddMagnetCategoryReq, _impl_.parent_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::AddMagnetCategoryReq, _impl_.category_name_),
+    PROTOBUF_FIELD_OFFSET(::prpc::AddMagnetCategoryReq, _impl_.introduce_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::AddMagnetCategoryRsp, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::AddMagnetUriReq, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::AddMagnetUriReq, _impl_.category_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::AddMagnetUriReq, _impl_.magnet_uri_),
+    PROTOBUF_FIELD_OFFSET(::prpc::AddMagnetUriReq, _impl_.introduce_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::AddMagnetUriRsp, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryMagnetReq, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryMagnetReq, _impl_.parent_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryMagnetReq, _impl_.search_cond_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryMagnetReq, _impl_.page_num_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryMagnetReq, _impl_.rows_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryMagnetRsp, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryMagnetRsp, _impl_.items_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QueryMagnetRsp, _impl_.total_row_count_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::DelMagnetCategoryReq, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::DelMagnetCategoryReq, _impl_.id_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::DelMagnetCategoryRsp, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
     ~0u,  // no _weak_field_map_
@@ -1022,41 +1291,50 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
 static const ::_pbi::MigrationSchema
     schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
         {0, -1, -1, sizeof(::prpc::UserInfo)},
-        {13, 22, -1, sizeof(::prpc::RegisterInfo)},
-        {23, -1, -1, sizeof(::prpc::RegisterRet)},
-        {31, -1, -1, sizeof(::prpc::EmailInfo)},
-        {40, -1, -1, sizeof(::prpc::IsUsedEmailRet)},
-        {48, -1, -1, sizeof(::prpc::LoginInfo)},
-        {59, 70, -1, sizeof(::prpc::LoginRet)},
-        {73, -1, -1, sizeof(::prpc::NewCategoryItemReq)},
-        {86, -1, -1, sizeof(::prpc::NewCategoryItemRes)},
-        {94, -1, -1, sizeof(::prpc::DelCategoryItemReq)},
-        {103, -1, -1, sizeof(::prpc::DelCategoryItemRes)},
-        {111, -1, -1, sizeof(::prpc::QuerySubItemsReq)},
-        {121, 131, -1, sizeof(::prpc::QuerySubItemsRes)},
-        {133, 142, -1, sizeof(::prpc::QueryBtVideosReq)},
-        {143, 153, -1, sizeof(::prpc::BtFileMetadata)},
-        {155, -1, -1, sizeof(::prpc::QueryBtVideosRes)},
-        {164, 175, -1, sizeof(::prpc::AddBtVideosReq)},
-        {178, -1, -1, sizeof(::prpc::AddBtVideosRes)},
-        {186, -1, -1, sizeof(::prpc::QueryItemInfoReq)},
-        {196, 206, -1, sizeof(::prpc::QueryItemInfoRes)},
-        {208, -1, -1, sizeof(::prpc::ShareItemReq)},
-        {217, -1, -1, sizeof(::prpc::ShareItemRes)},
-        {227, -1, -1, sizeof(::prpc::QuerySharedItemsReq)},
-        {236, -1, -1, sizeof(::prpc::QuerySharedItemsRes)},
-        {245, -1, -1, sizeof(::prpc::DelSharedItemReq)},
-        {254, -1, -1, sizeof(::prpc::DelSharedItemRes)},
-        {262, -1, -1, sizeof(::prpc::RefreshSubtitleReq)},
-        {271, -1, -1, sizeof(::prpc::RefreshSubtitleRes)},
-        {279, -1, -1, sizeof(::prpc::SubtitleFile)},
-        {289, -1, -1, sizeof(::prpc::UploadSubtitleReq)},
-        {299, -1, -1, sizeof(::prpc::UploadSubtitleRes)},
-        {307, -1, -1, sizeof(::prpc::JoinChatRoomReq)},
-        {316, -1, -1, sizeof(::prpc::ChatMessage)},
-        {328, -1, -1, sizeof(::prpc::JoinChatRoomRes)},
-        {338, 348, -1, sizeof(::prpc::SendMsg2ChatRoomReq)},
-        {350, -1, -1, sizeof(::prpc::SendMsg2ChatRoomRes)},
+        {14, 23, -1, sizeof(::prpc::RegisterInfo)},
+        {24, -1, -1, sizeof(::prpc::RegisterRet)},
+        {32, -1, -1, sizeof(::prpc::EmailInfo)},
+        {41, -1, -1, sizeof(::prpc::IsUsedEmailRet)},
+        {49, -1, -1, sizeof(::prpc::LoginInfo)},
+        {60, 71, -1, sizeof(::prpc::LoginRet)},
+        {74, -1, -1, sizeof(::prpc::ChangePasswordReq)},
+        {85, -1, -1, sizeof(::prpc::ChangePasswordRsp)},
+        {93, -1, -1, sizeof(::prpc::NewCategoryItemReq)},
+        {106, -1, -1, sizeof(::prpc::NewCategoryItemRes)},
+        {114, -1, -1, sizeof(::prpc::DelCategoryItemReq)},
+        {123, -1, -1, sizeof(::prpc::DelCategoryItemRes)},
+        {131, -1, -1, sizeof(::prpc::QuerySubItemsReq)},
+        {143, 154, -1, sizeof(::prpc::QuerySubItemsRes)},
+        {157, 166, -1, sizeof(::prpc::QueryBtVideosReq)},
+        {167, 177, -1, sizeof(::prpc::BtFileMetadata)},
+        {179, -1, -1, sizeof(::prpc::QueryBtVideosRes)},
+        {188, 199, -1, sizeof(::prpc::AddBtVideosReq)},
+        {202, -1, -1, sizeof(::prpc::AddBtVideosRes)},
+        {210, -1, -1, sizeof(::prpc::QueryItemInfoReq)},
+        {220, 230, -1, sizeof(::prpc::QueryItemInfoRes)},
+        {232, -1, -1, sizeof(::prpc::ShareItemReq)},
+        {241, -1, -1, sizeof(::prpc::ShareItemRes)},
+        {251, -1, -1, sizeof(::prpc::QuerySharedItemsReq)},
+        {260, -1, -1, sizeof(::prpc::QuerySharedItemsRes)},
+        {269, -1, -1, sizeof(::prpc::DelSharedItemReq)},
+        {278, -1, -1, sizeof(::prpc::DelSharedItemRes)},
+        {286, -1, -1, sizeof(::prpc::SubtitleFile)},
+        {296, -1, -1, sizeof(::prpc::UploadSubtitleReq)},
+        {306, -1, -1, sizeof(::prpc::UploadSubtitleRes)},
+        {314, -1, -1, sizeof(::prpc::Room)},
+        {324, 333, -1, sizeof(::prpc::JoinChatRoomReq)},
+        {334, -1, -1, sizeof(::prpc::ChatMessage)},
+        {346, 356, -1, sizeof(::prpc::JoinChatRoomRes)},
+        {358, 368, -1, sizeof(::prpc::SendMsg2ChatRoomReq)},
+        {370, -1, -1, sizeof(::prpc::SendMsg2ChatRoomRes)},
+        {378, -1, -1, sizeof(::prpc::AddMagnetCategoryReq)},
+        {389, -1, -1, sizeof(::prpc::AddMagnetCategoryRsp)},
+        {397, -1, -1, sizeof(::prpc::AddMagnetUriReq)},
+        {408, -1, -1, sizeof(::prpc::AddMagnetUriRsp)},
+        {416, -1, -1, sizeof(::prpc::QueryMagnetReq)},
+        {428, -1, -1, sizeof(::prpc::QueryMagnetRsp)},
+        {438, -1, -1, sizeof(::prpc::DelMagnetCategoryReq)},
+        {447, -1, -1, sizeof(::prpc::DelMagnetCategoryRsp)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -1067,6 +1345,8 @@ static const ::_pb::Message* const file_default_instances[] = {
     &::prpc::_IsUsedEmailRet_default_instance_._instance,
     &::prpc::_LoginInfo_default_instance_._instance,
     &::prpc::_LoginRet_default_instance_._instance,
+    &::prpc::_ChangePasswordReq_default_instance_._instance,
+    &::prpc::_ChangePasswordRsp_default_instance_._instance,
     &::prpc::_NewCategoryItemReq_default_instance_._instance,
     &::prpc::_NewCategoryItemRes_default_instance_._instance,
     &::prpc::_DelCategoryItemReq_default_instance_._instance,
@@ -1086,105 +1366,134 @@ static const ::_pb::Message* const file_default_instances[] = {
     &::prpc::_QuerySharedItemsRes_default_instance_._instance,
     &::prpc::_DelSharedItemReq_default_instance_._instance,
     &::prpc::_DelSharedItemRes_default_instance_._instance,
-    &::prpc::_RefreshSubtitleReq_default_instance_._instance,
-    &::prpc::_RefreshSubtitleRes_default_instance_._instance,
     &::prpc::_SubtitleFile_default_instance_._instance,
     &::prpc::_UploadSubtitleReq_default_instance_._instance,
     &::prpc::_UploadSubtitleRes_default_instance_._instance,
+    &::prpc::_Room_default_instance_._instance,
     &::prpc::_JoinChatRoomReq_default_instance_._instance,
     &::prpc::_ChatMessage_default_instance_._instance,
     &::prpc::_JoinChatRoomRes_default_instance_._instance,
     &::prpc::_SendMsg2ChatRoomReq_default_instance_._instance,
     &::prpc::_SendMsg2ChatRoomRes_default_instance_._instance,
+    &::prpc::_AddMagnetCategoryReq_default_instance_._instance,
+    &::prpc::_AddMagnetCategoryRsp_default_instance_._instance,
+    &::prpc::_AddMagnetUriReq_default_instance_._instance,
+    &::prpc::_AddMagnetUriRsp_default_instance_._instance,
+    &::prpc::_QueryMagnetReq_default_instance_._instance,
+    &::prpc::_QueryMagnetRsp_default_instance_._instance,
+    &::prpc::_DelMagnetCategoryReq_default_instance_._instance,
+    &::prpc::_DelMagnetCategoryRsp_default_instance_._instance,
 };
 const char descriptor_table_protodef_user_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
     "\n\nuser.proto\022\004prpc\032\016category.proto\032\013vide"
     "o.proto\032\010bt.proto\032\034google/api/annotation"
-    "s.proto\"^\n\010UserInfo\022\n\n\002id\030\001 \001(\003\022\014\n\004name\030"
+    "s.proto\"v\n\010UserInfo\022\n\n\002id\030\001 \001(\003\022\014\n\004name\030"
     "\002 \001(\t\022\r\n\005email\030\003 \001(\t\022\016\n\006passwd\030\004 \001(\t\022\031\n\021"
-    "home_directory_id\030\005 \001(\003\"1\n\014RegisterInfo\022"
-    "!\n\tuser_info\030\001 \001(\0132\016.prpc.UserInfo\"\r\n\013Re"
-    "gisterRet\"\032\n\tEmailInfo\022\r\n\005email\030\001 \001(\t\"\020\n"
-    "\016IsUsedEmailRet\"\?\n\tLoginInfo\022\r\n\005email\030\001 "
-    "\001(\t\022\016\n\006passwd\030\002 \001(\t\022\023\n\013remember_me\030\003 \001(\010"
-    "\"Q\n\010LoginRet\022\r\n\005token\030\001 \001(\t\022!\n\tuser_info"
-    "\030\002 \001(\0132\016.prpc.UserInfo\022\023\n\013remember_me\030\003 "
-    "\001(\010\"\211\001\n\022NewCategoryItemReq\022\014\n\004name\030\001 \001(\t"
-    "\022(\n\007type_id\030\002 \001(\0162\027.prpc.CategoryItem.Ty"
-    "pe\022\025\n\rresource_path\030\003 \001(\t\022\021\n\tintroduce\030\004"
-    " \001(\t\022\021\n\tparent_id\030\005 \001(\003\"\024\n\022NewCategoryIt"
-    "emRes\"%\n\022DelCategoryItemReq\022\017\n\007item_id\030\001"
-    " \001(\003\"\024\n\022DelCategoryItemRes\"7\n\020QuerySubIt"
-    "emsReq\022\021\n\tparent_id\030\001 \001(\003\022\020\n\010share_id\030\002 "
-    "\001(\t\"^\n\020QuerySubItemsRes\022\'\n\013parent_item\030\001"
-    " \001(\0132\022.prpc.CategoryItem\022!\n\005items\030\002 \003(\0132"
-    "\022.prpc.CategoryItem\"5\n\020QueryBtVideosReq\022"
-    "!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\"G\n\016Bt"
-    "FileMetadata\022\022\n\nfile_index\030\001 \001(\005\022!\n\004meta"
-    "\030\002 \001(\0132\023.prpc.VideoMetadata\"6\n\020QueryBtVi"
-    "deosRes\022\"\n\004data\030\001 \003(\0132\024.prpc.BtFileMetad"
-    "ata\"c\n\016AddBtVideosReq\022!\n\tinfo_hash\030\001 \001(\013"
-    "2\016.prpc.InfoHash\022\024\n\014file_indexes\030\002 \003(\005\022\030"
-    "\n\020category_item_id\030\003 \001(\003\"\020\n\016AddBtVideosR"
-    "es\"5\n\020QueryItemInfoReq\022\017\n\007item_id\030\001 \001(\003\022"
-    "\020\n\010share_id\030\002 \001(\t\"Z\n\020QueryItemInfoRes\022%\n"
-    "\titem_info\030\001 \001(\0132\022.prpc.CategoryItem\022\037\n\n"
-    "video_info\030\002 \001(\0132\013.prpc.Video\"\037\n\014ShareIt"
-    "emReq\022\017\n\007item_id\030\001 \001(\003\"1\n\014ShareItemRes\022\017"
-    "\n\007item_id\030\001 \001(\003\022\020\n\010share_id\030\002 \001(\t\"&\n\023Que"
-    "rySharedItemsReq\022\017\n\007user_id\030\001 \001(\003\"=\n\023Que"
-    "rySharedItemsRes\022&\n\014shared_items\030\001 \003(\0132\020"
-    ".prpc.SharedItem\"$\n\020DelSharedItemReq\022\020\n\010"
-    "share_id\030\001 \001(\t\"\022\n\020DelSharedItemRes\"%\n\022Re"
-    "freshSubtitleReq\022\017\n\007item_id\030\001 \001(\003\"\024\n\022Ref"
-    "reshSubtitleRes\"-\n\014SubtitleFile\022\014\n\004name\030"
-    "\001 \001(\t\022\017\n\007content\030\002 \001(\014\"K\n\021UploadSubtitle"
-    "Req\022\017\n\007item_id\030\001 \001(\003\022%\n\tsubtitles\030\002 \003(\0132"
-    "\022.prpc.SubtitleFile\"\023\n\021UploadSubtitleRes"
-    "\"\"\n\017JoinChatRoomReq\022\017\n\007item_id\030\001 \001(\003\"Q\n\013"
-    "ChatMessage\022\017\n\007user_id\030\001 \001(\003\022\021\n\tuser_nam"
-    "e\030\002 \001(\t\022\021\n\tsent_time\030\003 \001(\003\022\013\n\003msg\030\004 \001(\t\""
-    "H\n\017JoinChatRoomRes\022\017\n\007item_id\030\001 \001(\003\022$\n\tc"
-    "hat_msgs\030\002 \003(\0132\021.prpc.ChatMessage\"K\n\023Sen"
-    "dMsg2ChatRoomReq\022\017\n\007item_id\030\001 \001(\003\022#\n\010cha"
-    "t_msg\030\002 \001(\0132\021.prpc.ChatMessage\"\025\n\023SendMs"
-    "g2ChatRoomRes2\225\013\n\013UserService\022G\n\010Registe"
-    "r\022\022.prpc.RegisterInfo\032\021.prpc.RegisterRet"
-    "\"\024\202\323\344\223\002\016\"\t/register:\001*\022M\n\013IsUsedEmail\022\017."
-    "prpc.EmailInfo\032\024.prpc.IsUsedEmailRet\"\027\202\323"
-    "\344\223\002\021\"\014/isusedemail:\001*\022;\n\005Login\022\017.prpc.Lo"
-    "ginInfo\032\016.prpc.LoginRet\"\021\202\323\344\223\002\013\"\006/login:"
-    "\001*\022C\n\tFastLogin\022\017.prpc.LoginInfo\032\016.prpc."
-    "LoginRet\"\025\202\323\344\223\002\017\"\n/fastlogin:\001*\022B\n\tIsLog"
-    "ined\022\017.prpc.LoginInfo\032\016.prpc.LoginRet\"\024\202"
-    "\323\344\223\002\016\"\t/islogged:\001*\022N\n\010Download\022\025.prpc.D"
-    "ownloadRequest\032\025.prpc.DownloadRespone\"\024\202"
-    "\323\344\223\002\016\"\t/download:\001*\022\?\n\rRemoveTorrent\022\026.p"
-    "rpc.RemoveTorrentReq\032\026.prpc.RemoveTorren"
-    "tRes\0226\n\010OnStatus\022\023.prpc.StatusRequest\032\023."
-    "prpc.StatusRespone0\001\022\?\n\rQueryBtVideos\022\026."
-    "prpc.QueryBtVideosReq\032\026.prpc.QueryBtVide"
-    "osRes\022E\n\017NewCategoryItem\022\030.prpc.NewCateg"
-    "oryItemReq\032\030.prpc.NewCategoryItemRes\022E\n\017"
-    "DelCategoryItem\022\030.prpc.DelCategoryItemRe"
-    "q\032\030.prpc.DelCategoryItemRes\0229\n\013AddBtVide"
-    "os\022\024.prpc.AddBtVideosReq\032\024.prpc.AddBtVid"
-    "eosRes\0223\n\tShareItem\022\022.prpc.ShareItemReq\032"
-    "\022.prpc.ShareItemRes\022H\n\020QuerySharedItems\022"
-    "\031.prpc.QuerySharedItemsReq\032\031.prpc.QueryS"
-    "haredItemsRes\022\?\n\rDelSharedItem\022\026.prpc.De"
-    "lSharedItemReq\032\026.prpc.DelSharedItemRes\022\?"
-    "\n\rQuerySubItems\022\026.prpc.QuerySubItemsReq\032"
-    "\026.prpc.QuerySubItemsRes\022\?\n\rQueryItemInfo"
-    "\022\026.prpc.QueryItemInfoReq\032\026.prpc.QueryIte"
-    "mInfoRes\022E\n\017RefreshSubtitle\022\030.prpc.Refre"
-    "shSubtitleReq\032\030.prpc.RefreshSubtitleRes\022"
-    "B\n\016UploadSubtitle\022\027.prpc.UploadSubtitleR"
-    "eq\032\027.prpc.UploadSubtitleRes\022>\n\014JoinChatR"
-    "oom\022\025.prpc.JoinChatRoomReq\032\025.prpc.JoinCh"
-    "atRoomRes0\001\022H\n\020SendMsg2ChatRoom\022\031.prpc.S"
-    "endMsg2ChatRoomReq\032\031.prpc.SendMsg2ChatRo"
-    "omResB\010Z\006./prpcb\006proto3"
+    "home_directory_id\030\005 \001(\003\022\026\n\016magnet_root_i"
+    "d\030\006 \001(\003\"1\n\014RegisterInfo\022!\n\tuser_info\030\001 \001"
+    "(\0132\016.prpc.UserInfo\"\r\n\013RegisterRet\"\032\n\tEma"
+    "ilInfo\022\r\n\005email\030\001 \001(\t\"\020\n\016IsUsedEmailRet\""
+    "\?\n\tLoginInfo\022\r\n\005email\030\001 \001(\t\022\016\n\006passwd\030\002 "
+    "\001(\t\022\023\n\013remember_me\030\003 \001(\010\"Q\n\010LoginRet\022\r\n\005"
+    "token\030\001 \001(\t\022!\n\tuser_info\030\002 \001(\0132\016.prpc.Us"
+    "erInfo\022\023\n\013remember_me\030\003 \001(\010\"J\n\021ChangePas"
+    "swordReq\022\r\n\005email\030\001 \001(\t\022\022\n\nold_passwd\030\002 "
+    "\001(\t\022\022\n\nnew_passwd\030\003 \001(\t\"\023\n\021ChangePasswor"
+    "dRsp\"\211\001\n\022NewCategoryItemReq\022\014\n\004name\030\001 \001("
+    "\t\022(\n\007type_id\030\002 \001(\0162\027.prpc.CategoryItem.T"
+    "ype\022\025\n\rresource_path\030\003 \001(\t\022\021\n\tintroduce\030"
+    "\004 \001(\t\022\021\n\tparent_id\030\005 \001(\003\"\024\n\022NewCategoryI"
+    "temRes\"%\n\022DelCategoryItemReq\022\017\n\007item_id\030"
+    "\001 \001(\003\"\024\n\022DelCategoryItemRes\"W\n\020QuerySubI"
+    "temsReq\022\021\n\tparent_id\030\001 \001(\003\022\020\n\010share_id\030\002"
+    " \001(\t\022\020\n\010page_num\030\003 \001(\005\022\014\n\004rows\030\004 \001(\005\"w\n\020"
+    "QuerySubItemsRes\022\'\n\013parent_item\030\001 \001(\0132\022."
+    "prpc.CategoryItem\022!\n\005items\030\002 \003(\0132\022.prpc."
+    "CategoryItem\022\027\n\017total_row_count\030\003 \001(\005\"5\n"
+    "\020QueryBtVideosReq\022!\n\tinfo_hash\030\001 \001(\0132\016.p"
+    "rpc.InfoHash\"G\n\016BtFileMetadata\022\022\n\nfile_i"
+    "ndex\030\001 \001(\005\022!\n\004meta\030\002 \001(\0132\023.prpc.VideoMet"
+    "adata\"6\n\020QueryBtVideosRes\022\"\n\004data\030\001 \003(\0132"
+    "\024.prpc.BtFileMetadata\"c\n\016AddBtVideosReq\022"
+    "!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\022\024\n\014fi"
+    "le_indexes\030\002 \003(\005\022\030\n\020category_item_id\030\003 \001"
+    "(\003\"\020\n\016AddBtVideosRes\"5\n\020QueryItemInfoReq"
+    "\022\017\n\007item_id\030\001 \001(\003\022\020\n\010share_id\030\002 \001(\t\"Z\n\020Q"
+    "ueryItemInfoRes\022%\n\titem_info\030\001 \001(\0132\022.prp"
+    "c.CategoryItem\022\037\n\nvideo_info\030\002 \001(\0132\013.prp"
+    "c.Video\"\037\n\014ShareItemReq\022\017\n\007item_id\030\001 \001(\003"
+    "\"1\n\014ShareItemRes\022\017\n\007item_id\030\001 \001(\003\022\020\n\010sha"
+    "re_id\030\002 \001(\t\"&\n\023QuerySharedItemsReq\022\017\n\007us"
+    "er_id\030\001 \001(\003\"=\n\023QuerySharedItemsRes\022&\n\014sh"
+    "ared_items\030\001 \003(\0132\020.prpc.SharedItem\"$\n\020De"
+    "lSharedItemReq\022\020\n\010share_id\030\001 \001(\t\"\022\n\020DelS"
+    "haredItemRes\"-\n\014SubtitleFile\022\014\n\004name\030\001 \001"
+    "(\t\022\017\n\007content\030\002 \001(\014\"K\n\021UploadSubtitleReq"
+    "\022\017\n\007item_id\030\001 \001(\003\022%\n\tsubtitles\030\002 \003(\0132\022.p"
+    "rpc.SubtitleFile\"\023\n\021UploadSubtitleRes\"a\n"
+    "\004Room\022\035\n\004type\030\001 \001(\0162\017.prpc.Room.Type\022\n\n\002"
+    "id\030\002 \001(\003\".\n\004Type\022\013\n\007Unknown\020\000\022\014\n\010Categor"
+    "y\020\001\022\013\n\007Danmaku\020\002\"+\n\017JoinChatRoomReq\022\030\n\004r"
+    "oom\030\001 \001(\0132\n.prpc.Room\"Q\n\013ChatMessage\022\017\n\007"
+    "user_id\030\001 \001(\003\022\021\n\tuser_name\030\002 \001(\t\022\021\n\tsent"
+    "_time\030\003 \001(\003\022\013\n\003msg\030\004 \001(\t\"Q\n\017JoinChatRoom"
+    "Res\022\030\n\004room\030\001 \001(\0132\n.prpc.Room\022$\n\tchat_ms"
+    "gs\030\002 \003(\0132\021.prpc.ChatMessage\"T\n\023SendMsg2C"
+    "hatRoomReq\022\030\n\004room\030\001 \001(\0132\n.prpc.Room\022#\n\010"
+    "chat_msg\030\002 \001(\0132\021.prpc.ChatMessage\"\025\n\023Sen"
+    "dMsg2ChatRoomRes\"S\n\024AddMagnetCategoryReq"
+    "\022\021\n\tparent_id\030\001 \001(\003\022\025\n\rcategory_name\030\002 \001"
+    "(\t\022\021\n\tintroduce\030\003 \001(\t\"\026\n\024AddMagnetCatego"
+    "ryRsp\"M\n\017AddMagnetUriReq\022\023\n\013category_id\030"
+    "\001 \001(\003\022\022\n\nmagnet_uri\030\002 \001(\t\022\021\n\tintroduce\030\003"
+    " \001(\t\"\021\n\017AddMagnetUriRsp\"X\n\016QueryMagnetRe"
+    "q\022\021\n\tparent_id\030\001 \001(\003\022\023\n\013search_cond\030\002 \001("
+    "\t\022\020\n\010page_num\030\003 \001(\005\022\014\n\004rows\030\004 \001(\005\"L\n\016Que"
+    "ryMagnetRsp\022!\n\005items\030\001 \003(\0132\022.prpc.Catego"
+    "ryItem\022\027\n\017total_row_count\030\002 \001(\005\"\"\n\024DelMa"
+    "gnetCategoryReq\022\n\n\002id\030\001 \001(\003\"\026\n\024DelMagnet"
+    "CategoryRsp2\336\014\n\013UserService\0221\n\010Register\022"
+    "\022.prpc.RegisterInfo\032\021.prpc.RegisterRet\0224"
+    "\n\013IsUsedEmail\022\017.prpc.EmailInfo\032\024.prpc.Is"
+    "UsedEmailRet\022(\n\005Login\022\017.prpc.LoginInfo\032\016"
+    ".prpc.LoginRet\022,\n\tFastLogin\022\017.prpc.Login"
+    "Info\032\016.prpc.LoginRet\022,\n\tIsLogined\022\017.prpc"
+    ".LoginInfo\032\016.prpc.LoginRet\022B\n\016ChangePass"
+    "word\022\027.prpc.ChangePasswordReq\032\027.prpc.Cha"
+    "ngePasswordRsp\0228\n\010Download\022\025.prpc.Downlo"
+    "adRequest\032\025.prpc.DownloadRespone\022\?\n\rRemo"
+    "veTorrent\022\026.prpc.RemoveTorrentReq\032\026.prpc"
+    ".RemoveTorrentRes\022<\n\014GetMagnetUri\022\025.prpc"
+    ".GetMagnetUriReq\032\025.prpc.GetMagnetUriRsp\022"
+    "6\n\010OnStatus\022\023.prpc.StatusRequest\032\023.prpc."
+    "StatusRespone0\001\022\?\n\rQueryBtVideos\022\026.prpc."
+    "QueryBtVideosReq\032\026.prpc.QueryBtVideosRes"
+    "\022E\n\017NewCategoryItem\022\030.prpc.NewCategoryIt"
+    "emReq\032\030.prpc.NewCategoryItemRes\022E\n\017DelCa"
+    "tegoryItem\022\030.prpc.DelCategoryItemReq\032\030.p"
+    "rpc.DelCategoryItemRes\0229\n\013AddBtVideos\022\024."
+    "prpc.AddBtVideosReq\032\024.prpc.AddBtVideosRe"
+    "s\0223\n\tShareItem\022\022.prpc.ShareItemReq\032\022.prp"
+    "c.ShareItemRes\022H\n\020QuerySharedItems\022\031.prp"
+    "c.QuerySharedItemsReq\032\031.prpc.QueryShared"
+    "ItemsRes\022\?\n\rDelSharedItem\022\026.prpc.DelShar"
+    "edItemReq\032\026.prpc.DelSharedItemRes\022\?\n\rQue"
+    "rySubItems\022\026.prpc.QuerySubItemsReq\032\026.prp"
+    "c.QuerySubItemsRes\022\?\n\rQueryItemInfo\022\026.pr"
+    "pc.QueryItemInfoReq\032\026.prpc.QueryItemInfo"
+    "Res\022B\n\016UploadSubtitle\022\027.prpc.UploadSubti"
+    "tleReq\032\027.prpc.UploadSubtitleRes\022>\n\014JoinC"
+    "hatRoom\022\025.prpc.JoinChatRoomReq\032\025.prpc.Jo"
+    "inChatRoomRes0\001\022H\n\020SendMsg2ChatRoom\022\031.pr"
+    "pc.SendMsg2ChatRoomReq\032\031.prpc.SendMsg2Ch"
+    "atRoomRes\022K\n\021AddMagnetCategory\022\032.prpc.Ad"
+    "dMagnetCategoryReq\032\032.prpc.AddMagnetCateg"
+    "oryRsp\022<\n\014AddMagnetUri\022\025.prpc.AddMagnetU"
+    "riReq\032\025.prpc.AddMagnetUriRsp\0229\n\013QueryMag"
+    "net\022\024.prpc.QueryMagnetReq\032\024.prpc.QueryMa"
+    "gnetRsp\022K\n\021DelMagnetCategory\022\032.prpc.DelM"
+    "agnetCategoryReq\032\032.prpc.DelMagnetCategor"
+    "yRspB\010Z\006./prpcb\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_user_2eproto_deps[4] =
     {
@@ -1197,13 +1506,13 @@ static ::absl::once_flag descriptor_table_user_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_user_2eproto = {
     false,
     false,
-    3463,
+    4342,
     descriptor_table_protodef_user_2eproto,
     "user.proto",
     &descriptor_table_user_2eproto_once,
     descriptor_table_user_2eproto_deps,
     4,
-    36,
+    45,
     schemas,
     file_default_instances,
     TableStruct_user_2eproto::offsets,
@@ -1230,6 +1539,32 @@ PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_user_2ep
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY2
 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_user_2eproto(&descriptor_table_user_2eproto);
 namespace prpc {
+const ::google::protobuf::EnumDescriptor* Room_Type_descriptor() {
+  ::google::protobuf::internal::AssignDescriptors(&descriptor_table_user_2eproto);
+  return file_level_enum_descriptors_user_2eproto[0];
+}
+bool Room_Type_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+#if (__cplusplus < 201703) && \
+  (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
+
+constexpr Room_Type Room::Unknown;
+constexpr Room_Type Room::Category;
+constexpr Room_Type Room::Danmaku;
+constexpr Room_Type Room::Type_MIN;
+constexpr Room_Type Room::Type_MAX;
+constexpr int Room::Type_ARRAYSIZE;
+
+#endif  // (__cplusplus < 201703) &&
+        // (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
 // ===================================================================
 
 class UserInfo::_Internal {
@@ -1250,6 +1585,7 @@ UserInfo::UserInfo(const UserInfo& from) : ::google::protobuf::Message() {
       decltype(_impl_.passwd_){},
       decltype(_impl_.id_){},
       decltype(_impl_.home_directory_id_){},
+      decltype(_impl_.magnet_root_id_){},
       /*decltype(_impl_._cached_size_)*/ {},
   };
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
@@ -1276,8 +1612,8 @@ UserInfo::UserInfo(const UserInfo& from) : ::google::protobuf::Message() {
     _this->_impl_.passwd_.Set(from._internal_passwd(), _this->GetArenaForAllocation());
   }
   ::memcpy(&_impl_.id_, &from._impl_.id_,
-    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.home_directory_id_) -
-    reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.home_directory_id_));
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.magnet_root_id_) -
+    reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.magnet_root_id_));
 
   // @@protoc_insertion_point(copy_constructor:prpc.UserInfo)
 }
@@ -1289,6 +1625,7 @@ inline void UserInfo::SharedCtor(::_pb::Arena* arena) {
       decltype(_impl_.passwd_){},
       decltype(_impl_.id_){::int64_t{0}},
       decltype(_impl_.home_directory_id_){::int64_t{0}},
+      decltype(_impl_.magnet_root_id_){::int64_t{0}},
       /*decltype(_impl_._cached_size_)*/ {},
   };
   _impl_.name_.InitDefault();
@@ -1329,8 +1666,8 @@ PROTOBUF_NOINLINE void UserInfo::Clear() {
   _impl_.email_.ClearToEmpty();
   _impl_.passwd_.ClearToEmpty();
   ::memset(&_impl_.id_, 0, static_cast<::size_t>(
-      reinterpret_cast<char*>(&_impl_.home_directory_id_) -
-      reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.home_directory_id_));
+      reinterpret_cast<char*>(&_impl_.magnet_root_id_) -
+      reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.magnet_root_id_));
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
@@ -1342,15 +1679,15 @@ const char* UserInfo::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 5, 0, 37, 2> UserInfo::_table_ = {
+const ::_pbi::TcParseTable<3, 6, 0, 37, 2> UserInfo::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    5, 56,  // max_field_number, fast_idx_mask
+    6, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967264,  // skipmap
+    4294967232,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    5,  // num_field_entries
+    6,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     &_UserInfo_default_instance_._instance,
@@ -1372,7 +1709,9 @@ const ::_pbi::TcParseTable<3, 5, 0, 37, 2> UserInfo::_table_ = {
     // int64 home_directory_id = 5;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(UserInfo, _impl_.home_directory_id_), 63>(),
      {40, 63, 0, PROTOBUF_FIELD_OFFSET(UserInfo, _impl_.home_directory_id_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+    // int64 magnet_root_id = 6;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(UserInfo, _impl_.magnet_root_id_), 63>(),
+     {48, 63, 0, PROTOBUF_FIELD_OFFSET(UserInfo, _impl_.magnet_root_id_)}},
     {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
@@ -1391,6 +1730,9 @@ const ::_pbi::TcParseTable<3, 5, 0, 37, 2> UserInfo::_table_ = {
     (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // int64 home_directory_id = 5;
     {PROTOBUF_FIELD_OFFSET(UserInfo, _impl_.home_directory_id_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+    // int64 magnet_root_id = 6;
+    {PROTOBUF_FIELD_OFFSET(UserInfo, _impl_.magnet_root_id_), 0, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
   }},
   // no aux_entries
@@ -1448,6 +1790,13 @@ const ::_pbi::TcParseTable<3, 5, 0, 37, 2> UserInfo::_table_ = {
             stream, this->_internal_home_directory_id(), target);
   }
 
+  // int64 magnet_root_id = 6;
+  if (this->_internal_magnet_root_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<6>(
+            stream, this->_internal_magnet_root_id(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -1495,6 +1844,12 @@ const ::_pbi::TcParseTable<3, 5, 0, 37, 2> UserInfo::_table_ = {
         this->_internal_home_directory_id());
   }
 
+  // int64 magnet_root_id = 6;
+  if (this->_internal_magnet_root_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_magnet_root_id());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -1528,6 +1883,9 @@ void UserInfo::MergeImpl(::google::protobuf::Message& to_msg, const ::google::pr
   if (from._internal_home_directory_id() != 0) {
     _this->_internal_set_home_directory_id(from._internal_home_directory_id());
   }
+  if (from._internal_magnet_root_id() != 0) {
+    _this->_internal_set_magnet_root_id(from._internal_magnet_root_id());
+  }
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -1554,8 +1912,8 @@ void UserInfo::InternalSwap(UserInfo* other) {
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.passwd_, lhs_arena,
                                        &other->_impl_.passwd_, rhs_arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(UserInfo, _impl_.home_directory_id_)
-      + sizeof(UserInfo::_impl_.home_directory_id_)
+      PROTOBUF_FIELD_OFFSET(UserInfo, _impl_.magnet_root_id_)
+      + sizeof(UserInfo::_impl_.magnet_root_id_)
       - PROTOBUF_FIELD_OFFSET(UserInfo, _impl_.id_)>(
           reinterpret_cast<char*>(&_impl_.id_),
           reinterpret_cast<char*>(&other->_impl_.id_));
@@ -2568,6 +2926,319 @@ void LoginRet::InternalSwap(LoginRet* other) {
 }
 // ===================================================================
 
+class ChangePasswordReq::_Internal {
+ public:
+};
+
+ChangePasswordReq::ChangePasswordReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.ChangePasswordReq)
+}
+ChangePasswordReq::ChangePasswordReq(const ChangePasswordReq& from) : ::google::protobuf::Message() {
+  ChangePasswordReq* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.email_){},
+      decltype(_impl_.old_passwd_){},
+      decltype(_impl_.new_passwd_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.email_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.email_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_email().empty()) {
+    _this->_impl_.email_.Set(from._internal_email(), _this->GetArenaForAllocation());
+  }
+  _impl_.old_passwd_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.old_passwd_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_old_passwd().empty()) {
+    _this->_impl_.old_passwd_.Set(from._internal_old_passwd(), _this->GetArenaForAllocation());
+  }
+  _impl_.new_passwd_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.new_passwd_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_new_passwd().empty()) {
+    _this->_impl_.new_passwd_.Set(from._internal_new_passwd(), _this->GetArenaForAllocation());
+  }
+
+  // @@protoc_insertion_point(copy_constructor:prpc.ChangePasswordReq)
+}
+inline void ChangePasswordReq::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.email_){},
+      decltype(_impl_.old_passwd_){},
+      decltype(_impl_.new_passwd_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.email_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.email_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.old_passwd_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.old_passwd_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.new_passwd_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.new_passwd_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+ChangePasswordReq::~ChangePasswordReq() {
+  // @@protoc_insertion_point(destructor:prpc.ChangePasswordReq)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void ChangePasswordReq::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.email_.Destroy();
+  _impl_.old_passwd_.Destroy();
+  _impl_.new_passwd_.Destroy();
+}
+void ChangePasswordReq::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void ChangePasswordReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.ChangePasswordReq)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.email_.ClearToEmpty();
+  _impl_.old_passwd_.ClearToEmpty();
+  _impl_.new_passwd_.ClearToEmpty();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* ChangePasswordReq::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 0, 56, 2> ChangePasswordReq::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_ChangePasswordReq_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string email = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(ChangePasswordReq, _impl_.email_)}},
+    // string old_passwd = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(ChangePasswordReq, _impl_.old_passwd_)}},
+    // string new_passwd = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(ChangePasswordReq, _impl_.new_passwd_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string email = 1;
+    {PROTOBUF_FIELD_OFFSET(ChangePasswordReq, _impl_.email_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string old_passwd = 2;
+    {PROTOBUF_FIELD_OFFSET(ChangePasswordReq, _impl_.old_passwd_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string new_passwd = 3;
+    {PROTOBUF_FIELD_OFFSET(ChangePasswordReq, _impl_.new_passwd_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\26\5\12\12\0\0\0\0"
+    "prpc.ChangePasswordReq"
+    "email"
+    "old_passwd"
+    "new_passwd"
+  }},
+};
+
+::uint8_t* ChangePasswordReq::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.ChangePasswordReq)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // string email = 1;
+  if (!this->_internal_email().empty()) {
+    const std::string& _s = this->_internal_email();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.ChangePasswordReq.email");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
+  }
+
+  // string old_passwd = 2;
+  if (!this->_internal_old_passwd().empty()) {
+    const std::string& _s = this->_internal_old_passwd();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.ChangePasswordReq.old_passwd");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
+  // string new_passwd = 3;
+  if (!this->_internal_new_passwd().empty()) {
+    const std::string& _s = this->_internal_new_passwd();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.ChangePasswordReq.new_passwd");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.ChangePasswordReq)
+  return target;
+}
+
+::size_t ChangePasswordReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.ChangePasswordReq)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string email = 1;
+  if (!this->_internal_email().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_email());
+  }
+
+  // string old_passwd = 2;
+  if (!this->_internal_old_passwd().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_old_passwd());
+  }
+
+  // string new_passwd = 3;
+  if (!this->_internal_new_passwd().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_new_passwd());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData ChangePasswordReq::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    ChangePasswordReq::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*ChangePasswordReq::GetClassData() const { return &_class_data_; }
+
+
+void ChangePasswordReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<ChangePasswordReq*>(&to_msg);
+  auto& from = static_cast<const ChangePasswordReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.ChangePasswordReq)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_email().empty()) {
+    _this->_internal_set_email(from._internal_email());
+  }
+  if (!from._internal_old_passwd().empty()) {
+    _this->_internal_set_old_passwd(from._internal_old_passwd());
+  }
+  if (!from._internal_new_passwd().empty()) {
+    _this->_internal_set_new_passwd(from._internal_new_passwd());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void ChangePasswordReq::CopyFrom(const ChangePasswordReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.ChangePasswordReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool ChangePasswordReq::IsInitialized() const {
+  return true;
+}
+
+void ChangePasswordReq::InternalSwap(ChangePasswordReq* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.email_, lhs_arena,
+                                       &other->_impl_.email_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.old_passwd_, lhs_arena,
+                                       &other->_impl_.old_passwd_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.new_passwd_, lhs_arena,
+                                       &other->_impl_.new_passwd_, rhs_arena);
+}
+
+::google::protobuf::Metadata ChangePasswordReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[7]);
+}
+// ===================================================================
+
+class ChangePasswordRsp::_Internal {
+ public:
+};
+
+ChangePasswordRsp::ChangePasswordRsp(::google::protobuf::Arena* arena)
+    : ::google::protobuf::internal::ZeroFieldsBase(arena) {
+  // @@protoc_insertion_point(arena_constructor:prpc.ChangePasswordRsp)
+}
+ChangePasswordRsp::ChangePasswordRsp(const ChangePasswordRsp& from) : ::google::protobuf::internal::ZeroFieldsBase() {
+  ChangePasswordRsp* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
+  // @@protoc_insertion_point(copy_constructor:prpc.ChangePasswordRsp)
+}
+
+
+
+
+const ::google::protobuf::Message::ClassData ChangePasswordRsp::_class_data_ = {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl,
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl,
+};
+const ::google::protobuf::Message::ClassData*ChangePasswordRsp::GetClassData() const { return &_class_data_; }
+
+
+
+
+
+
+
+::google::protobuf::Metadata ChangePasswordRsp::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[8]);
+}
+// ===================================================================
+
 class NewCategoryItemReq::_Internal {
  public:
 };
@@ -2900,7 +3571,7 @@ void NewCategoryItemReq::InternalSwap(NewCategoryItemReq* other) {
 ::google::protobuf::Metadata NewCategoryItemReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[7]);
+      file_level_metadata_user_2eproto[9]);
 }
 // ===================================================================
 
@@ -2939,7 +3610,7 @@ const ::google::protobuf::Message::ClassData*NewCategoryItemRes::GetClassData() 
 ::google::protobuf::Metadata NewCategoryItemRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[8]);
+      file_level_metadata_user_2eproto[10]);
 }
 // ===================================================================
 
@@ -3105,7 +3776,7 @@ void DelCategoryItemReq::InternalSwap(DelCategoryItemReq* other) {
 ::google::protobuf::Metadata DelCategoryItemReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[9]);
+      file_level_metadata_user_2eproto[11]);
 }
 // ===================================================================
 
@@ -3144,7 +3815,7 @@ const ::google::protobuf::Message::ClassData*DelCategoryItemRes::GetClassData() 
 ::google::protobuf::Metadata DelCategoryItemRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[10]);
+      file_level_metadata_user_2eproto[12]);
 }
 // ===================================================================
 
@@ -3163,6 +3834,8 @@ QuerySubItemsReq::QuerySubItemsReq(const QuerySubItemsReq& from) : ::google::pro
   new (&_impl_) Impl_{
       decltype(_impl_.share_id_){},
       decltype(_impl_.parent_id_){},
+      decltype(_impl_.page_num_){},
+      decltype(_impl_.rows_){},
       /*decltype(_impl_._cached_size_)*/ {},
   };
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
@@ -3174,7 +3847,9 @@ QuerySubItemsReq::QuerySubItemsReq(const QuerySubItemsReq& from) : ::google::pro
   if (!from._internal_share_id().empty()) {
     _this->_impl_.share_id_.Set(from._internal_share_id(), _this->GetArenaForAllocation());
   }
-  _this->_impl_.parent_id_ = from._impl_.parent_id_;
+  ::memcpy(&_impl_.parent_id_, &from._impl_.parent_id_,
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.rows_) -
+    reinterpret_cast<char*>(&_impl_.parent_id_)) + sizeof(_impl_.rows_));
 
   // @@protoc_insertion_point(copy_constructor:prpc.QuerySubItemsReq)
 }
@@ -3183,6 +3858,8 @@ inline void QuerySubItemsReq::SharedCtor(::_pb::Arena* arena) {
   new (&_impl_) Impl_{
       decltype(_impl_.share_id_){},
       decltype(_impl_.parent_id_){::int64_t{0}},
+      decltype(_impl_.page_num_){0},
+      decltype(_impl_.rows_){0},
       /*decltype(_impl_._cached_size_)*/ {},
   };
   _impl_.share_id_.InitDefault();
@@ -3210,7 +3887,9 @@ PROTOBUF_NOINLINE void QuerySubItemsReq::Clear() {
   (void) cached_has_bits;
 
   _impl_.share_id_.ClearToEmpty();
-  _impl_.parent_id_ = ::int64_t{0};
+  ::memset(&_impl_.parent_id_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.rows_) -
+      reinterpret_cast<char*>(&_impl_.parent_id_)) + sizeof(_impl_.rows_));
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
@@ -3222,26 +3901,32 @@ const char* QuerySubItemsReq::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 0, 38, 2> QuerySubItemsReq::_table_ = {
+const ::_pbi::TcParseTable<2, 4, 0, 38, 2> QuerySubItemsReq::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    2, 8,  // max_field_number, fast_idx_mask
+    4, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967292,  // skipmap
+    4294967280,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    2,  // num_field_entries
+    4,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     &_QuerySubItemsReq_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
   }, {{
-    // string share_id = 2;
-    {::_pbi::TcParser::FastUS1,
-     {18, 63, 0, PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.share_id_)}},
+    // int32 rows = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(QuerySubItemsReq, _impl_.rows_), 63>(),
+     {32, 63, 0, PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.rows_)}},
     // int64 parent_id = 1;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(QuerySubItemsReq, _impl_.parent_id_), 63>(),
      {8, 63, 0, PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.parent_id_)}},
+    // string share_id = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.share_id_)}},
+    // int32 page_num = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(QuerySubItemsReq, _impl_.page_num_), 63>(),
+     {24, 63, 0, PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.page_num_)}},
   }}, {{
     65535, 65535
   }}, {{
@@ -3251,6 +3936,12 @@ const ::_pbi::TcParseTable<1, 2, 0, 38, 2> QuerySubItemsReq::_table_ = {
     // string share_id = 2;
     {PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.share_id_), 0, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // int32 page_num = 3;
+    {PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.page_num_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // int32 rows = 4;
+    {PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.rows_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
   }},
   // no aux_entries
   {{
@@ -3282,6 +3973,20 @@ const ::_pbi::TcParseTable<1, 2, 0, 38, 2> QuerySubItemsReq::_table_ = {
     target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
+  // int32 page_num = 3;
+  if (this->_internal_page_num() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<3>(
+            stream, this->_internal_page_num(), target);
+  }
+
+  // int32 rows = 4;
+  if (this->_internal_rows() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<4>(
+            stream, this->_internal_rows(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -3311,6 +4016,18 @@ const ::_pbi::TcParseTable<1, 2, 0, 38, 2> QuerySubItemsReq::_table_ = {
         this->_internal_parent_id());
   }
 
+  // int32 page_num = 3;
+  if (this->_internal_page_num() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_page_num());
+  }
+
+  // int32 rows = 4;
+  if (this->_internal_rows() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_rows());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -3335,6 +4052,12 @@ void QuerySubItemsReq::MergeImpl(::google::protobuf::Message& to_msg, const ::go
   if (from._internal_parent_id() != 0) {
     _this->_internal_set_parent_id(from._internal_parent_id());
   }
+  if (from._internal_page_num() != 0) {
+    _this->_internal_set_page_num(from._internal_page_num());
+  }
+  if (from._internal_rows() != 0) {
+    _this->_internal_set_rows(from._internal_rows());
+  }
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -3356,13 +4079,18 @@ void QuerySubItemsReq::InternalSwap(QuerySubItemsReq* other) {
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.share_id_, lhs_arena,
                                        &other->_impl_.share_id_, rhs_arena);
-        swap(_impl_.parent_id_, other->_impl_.parent_id_);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.rows_)
+      + sizeof(QuerySubItemsReq::_impl_.rows_)
+      - PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.parent_id_)>(
+          reinterpret_cast<char*>(&_impl_.parent_id_),
+          reinterpret_cast<char*>(&other->_impl_.parent_id_));
 }
 
 ::google::protobuf::Metadata QuerySubItemsReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[11]);
+      file_level_metadata_user_2eproto[13]);
 }
 // ===================================================================
 
@@ -3400,12 +4128,14 @@ QuerySubItemsRes::QuerySubItemsRes(const QuerySubItemsRes& from) : ::google::pro
       /*decltype(_impl_._cached_size_)*/ {},
       decltype(_impl_.items_){from._impl_.items_},
       decltype(_impl_.parent_item_){nullptr},
+      decltype(_impl_.total_row_count_){},
   };
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.parent_item_ = new ::prpc::CategoryItem(*from._impl_.parent_item_);
   }
+  _this->_impl_.total_row_count_ = from._impl_.total_row_count_;
 
   // @@protoc_insertion_point(copy_constructor:prpc.QuerySubItemsRes)
 }
@@ -3416,6 +4146,7 @@ inline void QuerySubItemsRes::SharedCtor(::_pb::Arena* arena) {
       /*decltype(_impl_._cached_size_)*/ {},
       decltype(_impl_.items_){arena},
       decltype(_impl_.parent_item_){nullptr},
+      decltype(_impl_.total_row_count_){0},
   };
 }
 QuerySubItemsRes::~QuerySubItemsRes() {
@@ -3444,6 +4175,7 @@ PROTOBUF_NOINLINE void QuerySubItemsRes::Clear() {
     ABSL_DCHECK(_impl_.parent_item_ != nullptr);
     _impl_.parent_item_->Clear();
   }
+  _impl_.total_row_count_ = 0;
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -3456,26 +4188,30 @@ const char* QuerySubItemsRes::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 2, 0, 2> QuerySubItemsRes::_table_ = {
+const ::_pbi::TcParseTable<2, 3, 2, 0, 2> QuerySubItemsRes::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(QuerySubItemsRes, _impl_._has_bits_),
     0, // no _extensions_
-    2, 8,  // max_field_number, fast_idx_mask
+    3, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967292,  // skipmap
+    4294967288,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    2,  // num_field_entries
+    3,  // num_field_entries
     2,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     &_QuerySubItemsRes_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
   }, {{
-    // repeated .prpc.CategoryItem items = 2;
-    {::_pbi::TcParser::FastMtR1,
-     {18, 63, 1, PROTOBUF_FIELD_OFFSET(QuerySubItemsRes, _impl_.items_)}},
+    {::_pbi::TcParser::MiniParse, {}},
     // .prpc.CategoryItem parent_item = 1;
     {::_pbi::TcParser::FastMtS1,
      {10, 0, 0, PROTOBUF_FIELD_OFFSET(QuerySubItemsRes, _impl_.parent_item_)}},
+    // repeated .prpc.CategoryItem items = 2;
+    {::_pbi::TcParser::FastMtR1,
+     {18, 63, 1, PROTOBUF_FIELD_OFFSET(QuerySubItemsRes, _impl_.items_)}},
+    // int32 total_row_count = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(QuerySubItemsRes, _impl_.total_row_count_), 63>(),
+     {24, 63, 0, PROTOBUF_FIELD_OFFSET(QuerySubItemsRes, _impl_.total_row_count_)}},
   }}, {{
     65535, 65535
   }}, {{
@@ -3485,6 +4221,9 @@ const ::_pbi::TcParseTable<1, 2, 2, 0, 2> QuerySubItemsRes::_table_ = {
     // repeated .prpc.CategoryItem items = 2;
     {PROTOBUF_FIELD_OFFSET(QuerySubItemsRes, _impl_.items_), -1, 1,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    // int32 total_row_count = 3;
+    {PROTOBUF_FIELD_OFFSET(QuerySubItemsRes, _impl_.total_row_count_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
   }}, {{
     {::_pbi::TcParser::GetTable<::prpc::CategoryItem>()},
     {::_pbi::TcParser::GetTable<::prpc::CategoryItem>()},
@@ -3513,6 +4252,13 @@ const ::_pbi::TcParseTable<1, 2, 2, 0, 2> QuerySubItemsRes::_table_ = {
     const auto& repfield = this->_internal_items().Get(i);
     target = ::google::protobuf::internal::WireFormatLite::
         InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  // int32 total_row_count = 3;
+  if (this->_internal_total_row_count() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<3>(
+            stream, this->_internal_total_row_count(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3546,6 +4292,12 @@ const ::_pbi::TcParseTable<1, 2, 2, 0, 2> QuerySubItemsRes::_table_ = {
         *_impl_.parent_item_);
   }
 
+  // int32 total_row_count = 3;
+  if (this->_internal_total_row_count() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_total_row_count());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -3569,6 +4321,9 @@ void QuerySubItemsRes::MergeImpl(::google::protobuf::Message& to_msg, const ::go
     _this->_internal_mutable_parent_item()->::prpc::CategoryItem::MergeFrom(
         from._internal_parent_item());
   }
+  if (from._internal_total_row_count() != 0) {
+    _this->_internal_set_total_row_count(from._internal_total_row_count());
+  }
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -3588,13 +4343,18 @@ void QuerySubItemsRes::InternalSwap(QuerySubItemsRes* other) {
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   _impl_.items_.InternalSwap(&other->_impl_.items_);
-  swap(_impl_.parent_item_, other->_impl_.parent_item_);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(QuerySubItemsRes, _impl_.total_row_count_)
+      + sizeof(QuerySubItemsRes::_impl_.total_row_count_)
+      - PROTOBUF_FIELD_OFFSET(QuerySubItemsRes, _impl_.parent_item_)>(
+          reinterpret_cast<char*>(&_impl_.parent_item_),
+          reinterpret_cast<char*>(&other->_impl_.parent_item_));
 }
 
 ::google::protobuf::Metadata QuerySubItemsRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[12]);
+      file_level_metadata_user_2eproto[14]);
 }
 // ===================================================================
 
@@ -3796,7 +4556,7 @@ void QueryBtVideosReq::InternalSwap(QueryBtVideosReq* other) {
 ::google::protobuf::Metadata QueryBtVideosReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[13]);
+      file_level_metadata_user_2eproto[15]);
 }
 // ===================================================================
 
@@ -4029,7 +4789,7 @@ void BtFileMetadata::InternalSwap(BtFileMetadata* other) {
 ::google::protobuf::Metadata BtFileMetadata::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[14]);
+      file_level_metadata_user_2eproto[16]);
 }
 // ===================================================================
 
@@ -4201,7 +4961,7 @@ void QueryBtVideosRes::InternalSwap(QueryBtVideosRes* other) {
 ::google::protobuf::Metadata QueryBtVideosRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[15]);
+      file_level_metadata_user_2eproto[17]);
 }
 // ===================================================================
 
@@ -4471,7 +5231,7 @@ void AddBtVideosReq::InternalSwap(AddBtVideosReq* other) {
 ::google::protobuf::Metadata AddBtVideosReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[16]);
+      file_level_metadata_user_2eproto[18]);
 }
 // ===================================================================
 
@@ -4510,7 +5270,7 @@ const ::google::protobuf::Message::ClassData*AddBtVideosRes::GetClassData() cons
 ::google::protobuf::Metadata AddBtVideosRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[17]);
+      file_level_metadata_user_2eproto[19]);
 }
 // ===================================================================
 
@@ -4728,7 +5488,7 @@ void QueryItemInfoReq::InternalSwap(QueryItemInfoReq* other) {
 ::google::protobuf::Metadata QueryItemInfoReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[18]);
+      file_level_metadata_user_2eproto[20]);
 }
 // ===================================================================
 
@@ -4988,7 +5748,7 @@ void QueryItemInfoRes::InternalSwap(QueryItemInfoRes* other) {
 ::google::protobuf::Metadata QueryItemInfoRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[19]);
+      file_level_metadata_user_2eproto[21]);
 }
 // ===================================================================
 
@@ -5154,7 +5914,7 @@ void ShareItemReq::InternalSwap(ShareItemReq* other) {
 ::google::protobuf::Metadata ShareItemReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[20]);
+      file_level_metadata_user_2eproto[22]);
 }
 // ===================================================================
 
@@ -5372,7 +6132,7 @@ void ShareItemRes::InternalSwap(ShareItemRes* other) {
 ::google::protobuf::Metadata ShareItemRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[21]);
+      file_level_metadata_user_2eproto[23]);
 }
 // ===================================================================
 
@@ -5538,7 +6298,7 @@ void QuerySharedItemsReq::InternalSwap(QuerySharedItemsReq* other) {
 ::google::protobuf::Metadata QuerySharedItemsReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[22]);
+      file_level_metadata_user_2eproto[24]);
 }
 // ===================================================================
 
@@ -5713,7 +6473,7 @@ void QuerySharedItemsRes::InternalSwap(QuerySharedItemsRes* other) {
 ::google::protobuf::Metadata QuerySharedItemsRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[23]);
+      file_level_metadata_user_2eproto[25]);
 }
 // ===================================================================
 
@@ -5904,7 +6664,7 @@ void DelSharedItemReq::InternalSwap(DelSharedItemReq* other) {
 ::google::protobuf::Metadata DelSharedItemReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[24]);
+      file_level_metadata_user_2eproto[26]);
 }
 // ===================================================================
 
@@ -5941,211 +6701,6 @@ const ::google::protobuf::Message::ClassData*DelSharedItemRes::GetClassData() co
 
 
 ::google::protobuf::Metadata DelSharedItemRes::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[25]);
-}
-// ===================================================================
-
-class RefreshSubtitleReq::_Internal {
- public:
-};
-
-RefreshSubtitleReq::RefreshSubtitleReq(::google::protobuf::Arena* arena)
-    : ::google::protobuf::Message(arena) {
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.RefreshSubtitleReq)
-}
-RefreshSubtitleReq::RefreshSubtitleReq(const RefreshSubtitleReq& from)
-    : ::google::protobuf::Message(), _impl_(from._impl_) {
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:prpc.RefreshSubtitleReq)
-}
-inline void RefreshSubtitleReq::SharedCtor(::_pb::Arena* arena) {
-  (void)arena;
-  new (&_impl_) Impl_{
-      decltype(_impl_.item_id_){::int64_t{0}},
-      /*decltype(_impl_._cached_size_)*/ {},
-  };
-}
-RefreshSubtitleReq::~RefreshSubtitleReq() {
-  // @@protoc_insertion_point(destructor:prpc.RefreshSubtitleReq)
-  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  SharedDtor();
-}
-inline void RefreshSubtitleReq::SharedDtor() {
-  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
-}
-void RefreshSubtitleReq::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-PROTOBUF_NOINLINE void RefreshSubtitleReq::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.RefreshSubtitleReq)
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.item_id_ = ::int64_t{0};
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-const char* RefreshSubtitleReq::_InternalParse(
-    const char* ptr, ::_pbi::ParseContext* ctx) {
-  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
-  return ptr;
-}
-
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 0, 2> RefreshSubtitleReq::_table_ = {
-  {
-    0,  // no _has_bits_
-    0, // no _extensions_
-    1, 0,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967294,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    1,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    &_RefreshSubtitleReq_default_instance_._instance,
-    ::_pbi::TcParser::GenericFallback,  // fallback
-  }, {{
-    // int64 item_id = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(RefreshSubtitleReq, _impl_.item_id_), 63>(),
-     {8, 63, 0, PROTOBUF_FIELD_OFFSET(RefreshSubtitleReq, _impl_.item_id_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // int64 item_id = 1;
-    {PROTOBUF_FIELD_OFFSET(RefreshSubtitleReq, _impl_.item_id_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
-  }},
-  // no aux_entries
-  {{
-  }},
-};
-
-::uint8_t* RefreshSubtitleReq::_InternalSerialize(
-    ::uint8_t* target,
-    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.RefreshSubtitleReq)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  // int64 item_id = 1;
-  if (this->_internal_item_id() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::
-        WriteInt64ToArrayWithField<1>(
-            stream, this->_internal_item_id(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.RefreshSubtitleReq)
-  return target;
-}
-
-::size_t RefreshSubtitleReq::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.RefreshSubtitleReq)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // int64 item_id = 1;
-  if (this->_internal_item_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
-        this->_internal_item_id());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::google::protobuf::Message::ClassData RefreshSubtitleReq::_class_data_ = {
-    ::google::protobuf::Message::CopyWithSourceCheck,
-    RefreshSubtitleReq::MergeImpl
-};
-const ::google::protobuf::Message::ClassData*RefreshSubtitleReq::GetClassData() const { return &_class_data_; }
-
-
-void RefreshSubtitleReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
-  auto* const _this = static_cast<RefreshSubtitleReq*>(&to_msg);
-  auto& from = static_cast<const RefreshSubtitleReq&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.RefreshSubtitleReq)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (from._internal_item_id() != 0) {
-    _this->_internal_set_item_id(from._internal_item_id());
-  }
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void RefreshSubtitleReq::CopyFrom(const RefreshSubtitleReq& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.RefreshSubtitleReq)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-PROTOBUF_NOINLINE bool RefreshSubtitleReq::IsInitialized() const {
-  return true;
-}
-
-void RefreshSubtitleReq::InternalSwap(RefreshSubtitleReq* other) {
-  using std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-        swap(_impl_.item_id_, other->_impl_.item_id_);
-}
-
-::google::protobuf::Metadata RefreshSubtitleReq::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[26]);
-}
-// ===================================================================
-
-class RefreshSubtitleRes::_Internal {
- public:
-};
-
-RefreshSubtitleRes::RefreshSubtitleRes(::google::protobuf::Arena* arena)
-    : ::google::protobuf::internal::ZeroFieldsBase(arena) {
-  // @@protoc_insertion_point(arena_constructor:prpc.RefreshSubtitleRes)
-}
-RefreshSubtitleRes::RefreshSubtitleRes(const RefreshSubtitleRes& from) : ::google::protobuf::internal::ZeroFieldsBase() {
-  RefreshSubtitleRes* const _this = this;
-  (void)_this;
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-
-  // @@protoc_insertion_point(copy_constructor:prpc.RefreshSubtitleRes)
-}
-
-
-
-
-const ::google::protobuf::Message::ClassData RefreshSubtitleRes::_class_data_ = {
-    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl,
-    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl,
-};
-const ::google::protobuf::Message::ClassData*RefreshSubtitleRes::GetClassData() const { return &_class_data_; }
-
-
-
-
-
-
-
-::google::protobuf::Metadata RefreshSubtitleRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
       file_level_metadata_user_2eproto[27]);
@@ -6619,26 +7174,243 @@ const ::google::protobuf::Message::ClassData*UploadSubtitleRes::GetClassData() c
 }
 // ===================================================================
 
-class JoinChatRoomReq::_Internal {
+class Room::_Internal {
  public:
 };
 
+Room::Room(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.Room)
+}
+Room::Room(const Room& from)
+    : ::google::protobuf::Message(), _impl_(from._impl_) {
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:prpc.Room)
+}
+inline void Room::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.id_){::int64_t{0}},
+      decltype(_impl_.type_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+}
+Room::~Room() {
+  // @@protoc_insertion_point(destructor:prpc.Room)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void Room::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+}
+void Room::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void Room::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.Room)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.id_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.type_) -
+      reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.type_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* Room::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 0, 0, 2> Room::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_Room_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // int64 id = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(Room, _impl_.id_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(Room, _impl_.id_)}},
+    // .prpc.Room.Type type = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(Room, _impl_.type_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(Room, _impl_.type_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.Room.Type type = 1;
+    {PROTOBUF_FIELD_OFFSET(Room, _impl_.type_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
+    // int64 id = 2;
+    {PROTOBUF_FIELD_OFFSET(Room, _impl_.id_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+
+::uint8_t* Room::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.Room)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // .prpc.Room.Type type = 1;
+  if (this->_internal_type() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+        1, this->_internal_type(), target);
+  }
+
+  // int64 id = 2;
+  if (this->_internal_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<2>(
+            stream, this->_internal_id(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.Room)
+  return target;
+}
+
+::size_t Room::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.Room)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int64 id = 2;
+  if (this->_internal_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_id());
+  }
+
+  // .prpc.Room.Type type = 1;
+  if (this->_internal_type() != 0) {
+    total_size += 1 +
+                  ::_pbi::WireFormatLite::EnumSize(this->_internal_type());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData Room::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    Room::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*Room::GetClassData() const { return &_class_data_; }
+
+
+void Room::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<Room*>(&to_msg);
+  auto& from = static_cast<const Room&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.Room)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_id() != 0) {
+    _this->_internal_set_id(from._internal_id());
+  }
+  if (from._internal_type() != 0) {
+    _this->_internal_set_type(from._internal_type());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Room::CopyFrom(const Room& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.Room)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool Room::IsInitialized() const {
+  return true;
+}
+
+void Room::InternalSwap(Room* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Room, _impl_.type_)
+      + sizeof(Room::_impl_.type_)
+      - PROTOBUF_FIELD_OFFSET(Room, _impl_.id_)>(
+          reinterpret_cast<char*>(&_impl_.id_),
+          reinterpret_cast<char*>(&other->_impl_.id_));
+}
+
+::google::protobuf::Metadata Room::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[31]);
+}
+// ===================================================================
+
+class JoinChatRoomReq::_Internal {
+ public:
+  using HasBits = decltype(std::declval<JoinChatRoomReq>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(JoinChatRoomReq, _impl_._has_bits_);
+  static const ::prpc::Room& room(const JoinChatRoomReq* msg);
+  static void set_has_room(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+const ::prpc::Room& JoinChatRoomReq::_Internal::room(const JoinChatRoomReq* msg) {
+  return *msg->_impl_.room_;
+}
 JoinChatRoomReq::JoinChatRoomReq(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:prpc.JoinChatRoomReq)
 }
-JoinChatRoomReq::JoinChatRoomReq(const JoinChatRoomReq& from)
-    : ::google::protobuf::Message(), _impl_(from._impl_) {
+JoinChatRoomReq::JoinChatRoomReq(const JoinChatRoomReq& from) : ::google::protobuf::Message() {
+  JoinChatRoomReq* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.room_){nullptr},
+  };
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.room_ = new ::prpc::Room(*from._impl_.room_);
+  }
+
   // @@protoc_insertion_point(copy_constructor:prpc.JoinChatRoomReq)
 }
 inline void JoinChatRoomReq::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.item_id_){::int64_t{0}},
+      decltype(_impl_._has_bits_){},
       /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.room_){nullptr},
   };
 }
 JoinChatRoomReq::~JoinChatRoomReq() {
@@ -6648,6 +7420,7 @@ JoinChatRoomReq::~JoinChatRoomReq() {
 }
 inline void JoinChatRoomReq::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.room_;
 }
 void JoinChatRoomReq::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
@@ -6659,7 +7432,12 @@ PROTOBUF_NOINLINE void JoinChatRoomReq::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.item_id_ = ::int64_t{0};
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.room_ != nullptr);
+    _impl_.room_->Clear();
+  }
+  _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
@@ -6671,32 +7449,32 @@ const char* JoinChatRoomReq::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 0, 2> JoinChatRoomReq::_table_ = {
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> JoinChatRoomReq::_table_ = {
   {
-    0,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(JoinChatRoomReq, _impl_._has_bits_),
     0, // no _extensions_
     1, 0,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
     4294967294,  // skipmap
     offsetof(decltype(_table_), field_entries),
     1,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
     &_JoinChatRoomReq_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
   }, {{
-    // int64 item_id = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(JoinChatRoomReq, _impl_.item_id_), 63>(),
-     {8, 63, 0, PROTOBUF_FIELD_OFFSET(JoinChatRoomReq, _impl_.item_id_)}},
+    // .prpc.Room room = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(JoinChatRoomReq, _impl_.room_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // int64 item_id = 1;
-    {PROTOBUF_FIELD_OFFSET(JoinChatRoomReq, _impl_.item_id_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
-  }},
-  // no aux_entries
-  {{
+    // .prpc.Room room = 1;
+    {PROTOBUF_FIELD_OFFSET(JoinChatRoomReq, _impl_.room_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::Room>()},
+  }}, {{
   }},
 };
 
@@ -6707,11 +7485,12 @@ const ::_pbi::TcParseTable<0, 1, 0, 0, 2> JoinChatRoomReq::_table_ = {
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // int64 item_id = 1;
-  if (this->_internal_item_id() != 0) {
+  cached_has_bits = _impl_._has_bits_[0];
+  // .prpc.Room room = 1;
+  if (cached_has_bits & 0x00000001u) {
     target = ::google::protobuf::internal::WireFormatLite::
-        WriteInt64ToArrayWithField<1>(
-            stream, this->_internal_item_id(), target);
+      InternalWriteMessage(1, _Internal::room(this),
+        _Internal::room(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -6731,10 +7510,12 @@ const ::_pbi::TcParseTable<0, 1, 0, 0, 2> JoinChatRoomReq::_table_ = {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // int64 item_id = 1;
-  if (this->_internal_item_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
-        this->_internal_item_id());
+  // .prpc.Room room = 1;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *_impl_.room_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -6755,8 +7536,9 @@ void JoinChatRoomReq::MergeImpl(::google::protobuf::Message& to_msg, const ::goo
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_item_id() != 0) {
-    _this->_internal_set_item_id(from._internal_item_id());
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_internal_mutable_room()->::prpc::Room::MergeFrom(
+        from._internal_room());
   }
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -6775,13 +7557,14 @@ PROTOBUF_NOINLINE bool JoinChatRoomReq::IsInitialized() const {
 void JoinChatRoomReq::InternalSwap(JoinChatRoomReq* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-        swap(_impl_.item_id_, other->_impl_.item_id_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  swap(_impl_.room_, other->_impl_.room_);
 }
 
 ::google::protobuf::Metadata JoinChatRoomReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[31]);
+      file_level_metadata_user_2eproto[32]);
 }
 // ===================================================================
 
@@ -7073,14 +7856,24 @@ void ChatMessage::InternalSwap(ChatMessage* other) {
 ::google::protobuf::Metadata ChatMessage::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[32]);
+      file_level_metadata_user_2eproto[33]);
 }
 // ===================================================================
 
 class JoinChatRoomRes::_Internal {
  public:
+  using HasBits = decltype(std::declval<JoinChatRoomRes>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(JoinChatRoomRes, _impl_._has_bits_);
+  static const ::prpc::Room& room(const JoinChatRoomRes* msg);
+  static void set_has_room(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
+const ::prpc::Room& JoinChatRoomRes::_Internal::room(const JoinChatRoomRes* msg) {
+  return *msg->_impl_.room_;
+}
 JoinChatRoomRes::JoinChatRoomRes(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
@@ -7090,22 +7883,26 @@ JoinChatRoomRes::JoinChatRoomRes(const JoinChatRoomRes& from) : ::google::protob
   JoinChatRoomRes* const _this = this;
   (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.chat_msgs_){from._impl_.chat_msgs_},
-      decltype(_impl_.item_id_){},
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
       /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.chat_msgs_){from._impl_.chat_msgs_},
+      decltype(_impl_.room_){nullptr},
   };
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
-  _this->_impl_.item_id_ = from._impl_.item_id_;
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.room_ = new ::prpc::Room(*from._impl_.room_);
+  }
 
   // @@protoc_insertion_point(copy_constructor:prpc.JoinChatRoomRes)
 }
 inline void JoinChatRoomRes::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.chat_msgs_){arena},
-      decltype(_impl_.item_id_){::int64_t{0}},
+      decltype(_impl_._has_bits_){},
       /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.chat_msgs_){arena},
+      decltype(_impl_.room_){nullptr},
   };
 }
 JoinChatRoomRes::~JoinChatRoomRes() {
@@ -7116,6 +7913,7 @@ JoinChatRoomRes::~JoinChatRoomRes() {
 inline void JoinChatRoomRes::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.chat_msgs_.~RepeatedPtrField();
+  if (this != internal_default_instance()) delete _impl_.room_;
 }
 void JoinChatRoomRes::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
@@ -7128,7 +7926,12 @@ PROTOBUF_NOINLINE void JoinChatRoomRes::Clear() {
   (void) cached_has_bits;
 
   _internal_mutable_chat_msgs()->Clear();
-  _impl_.item_id_ = ::int64_t{0};
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.room_ != nullptr);
+    _impl_.room_->Clear();
+  }
+  _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
@@ -7140,36 +7943,37 @@ const char* JoinChatRoomRes::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 1, 0, 2> JoinChatRoomRes::_table_ = {
+const ::_pbi::TcParseTable<1, 2, 2, 0, 2> JoinChatRoomRes::_table_ = {
   {
-    0,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(JoinChatRoomRes, _impl_._has_bits_),
     0, // no _extensions_
     2, 8,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
     4294967292,  // skipmap
     offsetof(decltype(_table_), field_entries),
     2,  // num_field_entries
-    1,  // num_aux_entries
+    2,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     &_JoinChatRoomRes_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
   }, {{
     // repeated .prpc.ChatMessage chat_msgs = 2;
     {::_pbi::TcParser::FastMtR1,
-     {18, 63, 0, PROTOBUF_FIELD_OFFSET(JoinChatRoomRes, _impl_.chat_msgs_)}},
-    // int64 item_id = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(JoinChatRoomRes, _impl_.item_id_), 63>(),
-     {8, 63, 0, PROTOBUF_FIELD_OFFSET(JoinChatRoomRes, _impl_.item_id_)}},
+     {18, 63, 1, PROTOBUF_FIELD_OFFSET(JoinChatRoomRes, _impl_.chat_msgs_)}},
+    // .prpc.Room room = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(JoinChatRoomRes, _impl_.room_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // int64 item_id = 1;
-    {PROTOBUF_FIELD_OFFSET(JoinChatRoomRes, _impl_.item_id_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+    // .prpc.Room room = 1;
+    {PROTOBUF_FIELD_OFFSET(JoinChatRoomRes, _impl_.room_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // repeated .prpc.ChatMessage chat_msgs = 2;
-    {PROTOBUF_FIELD_OFFSET(JoinChatRoomRes, _impl_.chat_msgs_), 0, 0,
+    {PROTOBUF_FIELD_OFFSET(JoinChatRoomRes, _impl_.chat_msgs_), -1, 1,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::Room>()},
     {::_pbi::TcParser::GetTable<::prpc::ChatMessage>()},
   }}, {{
   }},
@@ -7182,11 +7986,12 @@ const ::_pbi::TcParseTable<1, 2, 1, 0, 2> JoinChatRoomRes::_table_ = {
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // int64 item_id = 1;
-  if (this->_internal_item_id() != 0) {
+  cached_has_bits = _impl_._has_bits_[0];
+  // .prpc.Room room = 1;
+  if (cached_has_bits & 0x00000001u) {
     target = ::google::protobuf::internal::WireFormatLite::
-        WriteInt64ToArrayWithField<1>(
-            stream, this->_internal_item_id(), target);
+      InternalWriteMessage(1, _Internal::room(this),
+        _Internal::room(this).GetCachedSize(), target, stream);
   }
 
   // repeated .prpc.ChatMessage chat_msgs = 2;
@@ -7220,10 +8025,12 @@ const ::_pbi::TcParseTable<1, 2, 1, 0, 2> JoinChatRoomRes::_table_ = {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
   }
-  // int64 item_id = 1;
-  if (this->_internal_item_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
-        this->_internal_item_id());
+  // .prpc.Room room = 1;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *_impl_.room_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -7245,8 +8052,9 @@ void JoinChatRoomRes::MergeImpl(::google::protobuf::Message& to_msg, const ::goo
   (void) cached_has_bits;
 
   _this->_internal_mutable_chat_msgs()->MergeFrom(from._internal_chat_msgs());
-  if (from._internal_item_id() != 0) {
-    _this->_internal_set_item_id(from._internal_item_id());
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_internal_mutable_room()->::prpc::Room::MergeFrom(
+        from._internal_room());
   }
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -7265,14 +8073,15 @@ PROTOBUF_NOINLINE bool JoinChatRoomRes::IsInitialized() const {
 void JoinChatRoomRes::InternalSwap(JoinChatRoomRes* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   _impl_.chat_msgs_.InternalSwap(&other->_impl_.chat_msgs_);
-        swap(_impl_.item_id_, other->_impl_.item_id_);
+  swap(_impl_.room_, other->_impl_.room_);
 }
 
 ::google::protobuf::Metadata JoinChatRoomRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[33]);
+      file_level_metadata_user_2eproto[34]);
 }
 // ===================================================================
 
@@ -7281,12 +8090,19 @@ class SendMsg2ChatRoomReq::_Internal {
   using HasBits = decltype(std::declval<SendMsg2ChatRoomReq>()._impl_._has_bits_);
   static constexpr ::int32_t kHasBitsOffset =
     8 * PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_._has_bits_);
+  static const ::prpc::Room& room(const SendMsg2ChatRoomReq* msg);
+  static void set_has_room(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
   static const ::prpc::ChatMessage& chat_msg(const SendMsg2ChatRoomReq* msg);
   static void set_has_chat_msg(HasBits* has_bits) {
-    (*has_bits)[0] |= 1u;
+    (*has_bits)[0] |= 2u;
   }
 };
 
+const ::prpc::Room& SendMsg2ChatRoomReq::_Internal::room(const SendMsg2ChatRoomReq* msg) {
+  return *msg->_impl_.room_;
+}
 const ::prpc::ChatMessage& SendMsg2ChatRoomReq::_Internal::chat_msg(const SendMsg2ChatRoomReq* msg) {
   return *msg->_impl_.chat_msg_;
 }
@@ -7301,15 +8117,17 @@ SendMsg2ChatRoomReq::SendMsg2ChatRoomReq(const SendMsg2ChatRoomReq& from) : ::go
   new (&_impl_) Impl_{
       decltype(_impl_._has_bits_){from._impl_._has_bits_},
       /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.room_){nullptr},
       decltype(_impl_.chat_msg_){nullptr},
-      decltype(_impl_.item_id_){},
   };
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.room_ = new ::prpc::Room(*from._impl_.room_);
+  }
+  if ((from._impl_._has_bits_[0] & 0x00000002u) != 0) {
     _this->_impl_.chat_msg_ = new ::prpc::ChatMessage(*from._impl_.chat_msg_);
   }
-  _this->_impl_.item_id_ = from._impl_.item_id_;
 
   // @@protoc_insertion_point(copy_constructor:prpc.SendMsg2ChatRoomReq)
 }
@@ -7318,8 +8136,8 @@ inline void SendMsg2ChatRoomReq::SharedCtor(::_pb::Arena* arena) {
   new (&_impl_) Impl_{
       decltype(_impl_._has_bits_){},
       /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.room_){nullptr},
       decltype(_impl_.chat_msg_){nullptr},
-      decltype(_impl_.item_id_){::int64_t{0}},
   };
 }
 SendMsg2ChatRoomReq::~SendMsg2ChatRoomReq() {
@@ -7329,6 +8147,7 @@ SendMsg2ChatRoomReq::~SendMsg2ChatRoomReq() {
 }
 inline void SendMsg2ChatRoomReq::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.room_;
   if (this != internal_default_instance()) delete _impl_.chat_msg_;
 }
 void SendMsg2ChatRoomReq::SetCachedSize(int size) const {
@@ -7342,11 +8161,16 @@ PROTOBUF_NOINLINE void SendMsg2ChatRoomReq::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    ABSL_DCHECK(_impl_.chat_msg_ != nullptr);
-    _impl_.chat_msg_->Clear();
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      ABSL_DCHECK(_impl_.room_ != nullptr);
+      _impl_.room_->Clear();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      ABSL_DCHECK(_impl_.chat_msg_ != nullptr);
+      _impl_.chat_msg_->Clear();
+    }
   }
-  _impl_.item_id_ = ::int64_t{0};
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -7359,7 +8183,7 @@ const char* SendMsg2ChatRoomReq::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 1, 0, 2> SendMsg2ChatRoomReq::_table_ = {
+const ::_pbi::TcParseTable<1, 2, 2, 0, 2> SendMsg2ChatRoomReq::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_._has_bits_),
     0, // no _extensions_
@@ -7368,27 +8192,28 @@ const ::_pbi::TcParseTable<1, 2, 1, 0, 2> SendMsg2ChatRoomReq::_table_ = {
     4294967292,  // skipmap
     offsetof(decltype(_table_), field_entries),
     2,  // num_field_entries
-    1,  // num_aux_entries
+    2,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     &_SendMsg2ChatRoomReq_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
   }, {{
     // .prpc.ChatMessage chat_msg = 2;
     {::_pbi::TcParser::FastMtS1,
-     {18, 0, 0, PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_.chat_msg_)}},
-    // int64 item_id = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(SendMsg2ChatRoomReq, _impl_.item_id_), 63>(),
-     {8, 63, 0, PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_.item_id_)}},
+     {18, 1, 1, PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_.chat_msg_)}},
+    // .prpc.Room room = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_.room_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // int64 item_id = 1;
-    {PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_.item_id_), -1, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+    // .prpc.Room room = 1;
+    {PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_.room_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .prpc.ChatMessage chat_msg = 2;
-    {PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_.chat_msg_), _Internal::kHasBitsOffset + 0, 0,
+    {PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_.chat_msg_), _Internal::kHasBitsOffset + 1, 1,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::Room>()},
     {::_pbi::TcParser::GetTable<::prpc::ChatMessage>()},
   }}, {{
   }},
@@ -7401,16 +8226,16 @@ const ::_pbi::TcParseTable<1, 2, 1, 0, 2> SendMsg2ChatRoomReq::_table_ = {
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // int64 item_id = 1;
-  if (this->_internal_item_id() != 0) {
+  cached_has_bits = _impl_._has_bits_[0];
+  // .prpc.Room room = 1;
+  if (cached_has_bits & 0x00000001u) {
     target = ::google::protobuf::internal::WireFormatLite::
-        WriteInt64ToArrayWithField<1>(
-            stream, this->_internal_item_id(), target);
+      InternalWriteMessage(1, _Internal::room(this),
+        _Internal::room(this).GetCachedSize(), target, stream);
   }
 
-  cached_has_bits = _impl_._has_bits_[0];
   // .prpc.ChatMessage chat_msg = 2;
-  if (cached_has_bits & 0x00000001u) {
+  if (cached_has_bits & 0x00000002u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(2, _Internal::chat_msg(this),
         _Internal::chat_msg(this).GetCachedSize(), target, stream);
@@ -7433,20 +8258,23 @@ const ::_pbi::TcParseTable<1, 2, 1, 0, 2> SendMsg2ChatRoomReq::_table_ = {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .prpc.ChatMessage chat_msg = 2;
   cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSize(
-        *_impl_.chat_msg_);
-  }
+  if (cached_has_bits & 0x00000003u) {
+    // .prpc.Room room = 1;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          *_impl_.room_);
+    }
 
-  // int64 item_id = 1;
-  if (this->_internal_item_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
-        this->_internal_item_id());
-  }
+    // .prpc.ChatMessage chat_msg = 2;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          *_impl_.chat_msg_);
+    }
 
+  }
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -7465,12 +8293,16 @@ void SendMsg2ChatRoomReq::MergeImpl(::google::protobuf::Message& to_msg, const :
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    _this->_internal_mutable_chat_msg()->::prpc::ChatMessage::MergeFrom(
-        from._internal_chat_msg());
-  }
-  if (from._internal_item_id() != 0) {
-    _this->_internal_set_item_id(from._internal_item_id());
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      _this->_internal_mutable_room()->::prpc::Room::MergeFrom(
+          from._internal_room());
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _this->_internal_mutable_chat_msg()->::prpc::ChatMessage::MergeFrom(
+          from._internal_chat_msg());
+    }
   }
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -7491,17 +8323,17 @@ void SendMsg2ChatRoomReq::InternalSwap(SendMsg2ChatRoomReq* other) {
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_.item_id_)
-      + sizeof(SendMsg2ChatRoomReq::_impl_.item_id_)
-      - PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_.chat_msg_)>(
-          reinterpret_cast<char*>(&_impl_.chat_msg_),
-          reinterpret_cast<char*>(&other->_impl_.chat_msg_));
+      PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_.chat_msg_)
+      + sizeof(SendMsg2ChatRoomReq::_impl_.chat_msg_)
+      - PROTOBUF_FIELD_OFFSET(SendMsg2ChatRoomReq, _impl_.room_)>(
+          reinterpret_cast<char*>(&_impl_.room_),
+          reinterpret_cast<char*>(&other->_impl_.room_));
 }
 
 ::google::protobuf::Metadata SendMsg2ChatRoomReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[34]);
+      file_level_metadata_user_2eproto[35]);
 }
 // ===================================================================
 
@@ -7540,7 +8372,1287 @@ const ::google::protobuf::Message::ClassData*SendMsg2ChatRoomRes::GetClassData()
 ::google::protobuf::Metadata SendMsg2ChatRoomRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
-      file_level_metadata_user_2eproto[35]);
+      file_level_metadata_user_2eproto[36]);
+}
+// ===================================================================
+
+class AddMagnetCategoryReq::_Internal {
+ public:
+};
+
+AddMagnetCategoryReq::AddMagnetCategoryReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.AddMagnetCategoryReq)
+}
+AddMagnetCategoryReq::AddMagnetCategoryReq(const AddMagnetCategoryReq& from) : ::google::protobuf::Message() {
+  AddMagnetCategoryReq* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.category_name_){},
+      decltype(_impl_.introduce_){},
+      decltype(_impl_.parent_id_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.category_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.category_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_category_name().empty()) {
+    _this->_impl_.category_name_.Set(from._internal_category_name(), _this->GetArenaForAllocation());
+  }
+  _impl_.introduce_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.introduce_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_introduce().empty()) {
+    _this->_impl_.introduce_.Set(from._internal_introduce(), _this->GetArenaForAllocation());
+  }
+  _this->_impl_.parent_id_ = from._impl_.parent_id_;
+
+  // @@protoc_insertion_point(copy_constructor:prpc.AddMagnetCategoryReq)
+}
+inline void AddMagnetCategoryReq::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.category_name_){},
+      decltype(_impl_.introduce_){},
+      decltype(_impl_.parent_id_){::int64_t{0}},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.category_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.category_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.introduce_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.introduce_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+AddMagnetCategoryReq::~AddMagnetCategoryReq() {
+  // @@protoc_insertion_point(destructor:prpc.AddMagnetCategoryReq)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void AddMagnetCategoryReq::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.category_name_.Destroy();
+  _impl_.introduce_.Destroy();
+}
+void AddMagnetCategoryReq::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void AddMagnetCategoryReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.AddMagnetCategoryReq)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.category_name_.ClearToEmpty();
+  _impl_.introduce_.ClearToEmpty();
+  _impl_.parent_id_ = ::int64_t{0};
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* AddMagnetCategoryReq::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 0, 56, 2> AddMagnetCategoryReq::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_AddMagnetCategoryReq_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // int64 parent_id = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(AddMagnetCategoryReq, _impl_.parent_id_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(AddMagnetCategoryReq, _impl_.parent_id_)}},
+    // string category_name = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(AddMagnetCategoryReq, _impl_.category_name_)}},
+    // string introduce = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(AddMagnetCategoryReq, _impl_.introduce_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // int64 parent_id = 1;
+    {PROTOBUF_FIELD_OFFSET(AddMagnetCategoryReq, _impl_.parent_id_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+    // string category_name = 2;
+    {PROTOBUF_FIELD_OFFSET(AddMagnetCategoryReq, _impl_.category_name_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string introduce = 3;
+    {PROTOBUF_FIELD_OFFSET(AddMagnetCategoryReq, _impl_.introduce_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\31\0\15\11\0\0\0\0"
+    "prpc.AddMagnetCategoryReq"
+    "category_name"
+    "introduce"
+  }},
+};
+
+::uint8_t* AddMagnetCategoryReq::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.AddMagnetCategoryReq)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // int64 parent_id = 1;
+  if (this->_internal_parent_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<1>(
+            stream, this->_internal_parent_id(), target);
+  }
+
+  // string category_name = 2;
+  if (!this->_internal_category_name().empty()) {
+    const std::string& _s = this->_internal_category_name();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.AddMagnetCategoryReq.category_name");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
+  // string introduce = 3;
+  if (!this->_internal_introduce().empty()) {
+    const std::string& _s = this->_internal_introduce();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.AddMagnetCategoryReq.introduce");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.AddMagnetCategoryReq)
+  return target;
+}
+
+::size_t AddMagnetCategoryReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.AddMagnetCategoryReq)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string category_name = 2;
+  if (!this->_internal_category_name().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_category_name());
+  }
+
+  // string introduce = 3;
+  if (!this->_internal_introduce().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_introduce());
+  }
+
+  // int64 parent_id = 1;
+  if (this->_internal_parent_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_parent_id());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData AddMagnetCategoryReq::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    AddMagnetCategoryReq::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*AddMagnetCategoryReq::GetClassData() const { return &_class_data_; }
+
+
+void AddMagnetCategoryReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<AddMagnetCategoryReq*>(&to_msg);
+  auto& from = static_cast<const AddMagnetCategoryReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.AddMagnetCategoryReq)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_category_name().empty()) {
+    _this->_internal_set_category_name(from._internal_category_name());
+  }
+  if (!from._internal_introduce().empty()) {
+    _this->_internal_set_introduce(from._internal_introduce());
+  }
+  if (from._internal_parent_id() != 0) {
+    _this->_internal_set_parent_id(from._internal_parent_id());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void AddMagnetCategoryReq::CopyFrom(const AddMagnetCategoryReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.AddMagnetCategoryReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool AddMagnetCategoryReq::IsInitialized() const {
+  return true;
+}
+
+void AddMagnetCategoryReq::InternalSwap(AddMagnetCategoryReq* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.category_name_, lhs_arena,
+                                       &other->_impl_.category_name_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.introduce_, lhs_arena,
+                                       &other->_impl_.introduce_, rhs_arena);
+        swap(_impl_.parent_id_, other->_impl_.parent_id_);
+}
+
+::google::protobuf::Metadata AddMagnetCategoryReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[37]);
+}
+// ===================================================================
+
+class AddMagnetCategoryRsp::_Internal {
+ public:
+};
+
+AddMagnetCategoryRsp::AddMagnetCategoryRsp(::google::protobuf::Arena* arena)
+    : ::google::protobuf::internal::ZeroFieldsBase(arena) {
+  // @@protoc_insertion_point(arena_constructor:prpc.AddMagnetCategoryRsp)
+}
+AddMagnetCategoryRsp::AddMagnetCategoryRsp(const AddMagnetCategoryRsp& from) : ::google::protobuf::internal::ZeroFieldsBase() {
+  AddMagnetCategoryRsp* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
+  // @@protoc_insertion_point(copy_constructor:prpc.AddMagnetCategoryRsp)
+}
+
+
+
+
+const ::google::protobuf::Message::ClassData AddMagnetCategoryRsp::_class_data_ = {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl,
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl,
+};
+const ::google::protobuf::Message::ClassData*AddMagnetCategoryRsp::GetClassData() const { return &_class_data_; }
+
+
+
+
+
+
+
+::google::protobuf::Metadata AddMagnetCategoryRsp::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[38]);
+}
+// ===================================================================
+
+class AddMagnetUriReq::_Internal {
+ public:
+};
+
+AddMagnetUriReq::AddMagnetUriReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.AddMagnetUriReq)
+}
+AddMagnetUriReq::AddMagnetUriReq(const AddMagnetUriReq& from) : ::google::protobuf::Message() {
+  AddMagnetUriReq* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.magnet_uri_){},
+      decltype(_impl_.introduce_){},
+      decltype(_impl_.category_id_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.magnet_uri_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.magnet_uri_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_magnet_uri().empty()) {
+    _this->_impl_.magnet_uri_.Set(from._internal_magnet_uri(), _this->GetArenaForAllocation());
+  }
+  _impl_.introduce_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.introduce_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_introduce().empty()) {
+    _this->_impl_.introduce_.Set(from._internal_introduce(), _this->GetArenaForAllocation());
+  }
+  _this->_impl_.category_id_ = from._impl_.category_id_;
+
+  // @@protoc_insertion_point(copy_constructor:prpc.AddMagnetUriReq)
+}
+inline void AddMagnetUriReq::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.magnet_uri_){},
+      decltype(_impl_.introduce_){},
+      decltype(_impl_.category_id_){::int64_t{0}},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.magnet_uri_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.magnet_uri_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.introduce_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.introduce_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+AddMagnetUriReq::~AddMagnetUriReq() {
+  // @@protoc_insertion_point(destructor:prpc.AddMagnetUriReq)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void AddMagnetUriReq::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.magnet_uri_.Destroy();
+  _impl_.introduce_.Destroy();
+}
+void AddMagnetUriReq::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void AddMagnetUriReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.AddMagnetUriReq)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.magnet_uri_.ClearToEmpty();
+  _impl_.introduce_.ClearToEmpty();
+  _impl_.category_id_ = ::int64_t{0};
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* AddMagnetUriReq::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 0, 48, 2> AddMagnetUriReq::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_AddMagnetUriReq_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // int64 category_id = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(AddMagnetUriReq, _impl_.category_id_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(AddMagnetUriReq, _impl_.category_id_)}},
+    // string magnet_uri = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(AddMagnetUriReq, _impl_.magnet_uri_)}},
+    // string introduce = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(AddMagnetUriReq, _impl_.introduce_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // int64 category_id = 1;
+    {PROTOBUF_FIELD_OFFSET(AddMagnetUriReq, _impl_.category_id_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+    // string magnet_uri = 2;
+    {PROTOBUF_FIELD_OFFSET(AddMagnetUriReq, _impl_.magnet_uri_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string introduce = 3;
+    {PROTOBUF_FIELD_OFFSET(AddMagnetUriReq, _impl_.introduce_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\24\0\12\11\0\0\0\0"
+    "prpc.AddMagnetUriReq"
+    "magnet_uri"
+    "introduce"
+  }},
+};
+
+::uint8_t* AddMagnetUriReq::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.AddMagnetUriReq)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // int64 category_id = 1;
+  if (this->_internal_category_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<1>(
+            stream, this->_internal_category_id(), target);
+  }
+
+  // string magnet_uri = 2;
+  if (!this->_internal_magnet_uri().empty()) {
+    const std::string& _s = this->_internal_magnet_uri();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.AddMagnetUriReq.magnet_uri");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
+  // string introduce = 3;
+  if (!this->_internal_introduce().empty()) {
+    const std::string& _s = this->_internal_introduce();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.AddMagnetUriReq.introduce");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.AddMagnetUriReq)
+  return target;
+}
+
+::size_t AddMagnetUriReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.AddMagnetUriReq)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string magnet_uri = 2;
+  if (!this->_internal_magnet_uri().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_magnet_uri());
+  }
+
+  // string introduce = 3;
+  if (!this->_internal_introduce().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_introduce());
+  }
+
+  // int64 category_id = 1;
+  if (this->_internal_category_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_category_id());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData AddMagnetUriReq::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    AddMagnetUriReq::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*AddMagnetUriReq::GetClassData() const { return &_class_data_; }
+
+
+void AddMagnetUriReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<AddMagnetUriReq*>(&to_msg);
+  auto& from = static_cast<const AddMagnetUriReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.AddMagnetUriReq)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_magnet_uri().empty()) {
+    _this->_internal_set_magnet_uri(from._internal_magnet_uri());
+  }
+  if (!from._internal_introduce().empty()) {
+    _this->_internal_set_introduce(from._internal_introduce());
+  }
+  if (from._internal_category_id() != 0) {
+    _this->_internal_set_category_id(from._internal_category_id());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void AddMagnetUriReq::CopyFrom(const AddMagnetUriReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.AddMagnetUriReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool AddMagnetUriReq::IsInitialized() const {
+  return true;
+}
+
+void AddMagnetUriReq::InternalSwap(AddMagnetUriReq* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.magnet_uri_, lhs_arena,
+                                       &other->_impl_.magnet_uri_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.introduce_, lhs_arena,
+                                       &other->_impl_.introduce_, rhs_arena);
+        swap(_impl_.category_id_, other->_impl_.category_id_);
+}
+
+::google::protobuf::Metadata AddMagnetUriReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[39]);
+}
+// ===================================================================
+
+class AddMagnetUriRsp::_Internal {
+ public:
+};
+
+AddMagnetUriRsp::AddMagnetUriRsp(::google::protobuf::Arena* arena)
+    : ::google::protobuf::internal::ZeroFieldsBase(arena) {
+  // @@protoc_insertion_point(arena_constructor:prpc.AddMagnetUriRsp)
+}
+AddMagnetUriRsp::AddMagnetUriRsp(const AddMagnetUriRsp& from) : ::google::protobuf::internal::ZeroFieldsBase() {
+  AddMagnetUriRsp* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
+  // @@protoc_insertion_point(copy_constructor:prpc.AddMagnetUriRsp)
+}
+
+
+
+
+const ::google::protobuf::Message::ClassData AddMagnetUriRsp::_class_data_ = {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl,
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl,
+};
+const ::google::protobuf::Message::ClassData*AddMagnetUriRsp::GetClassData() const { return &_class_data_; }
+
+
+
+
+
+
+
+::google::protobuf::Metadata AddMagnetUriRsp::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[40]);
+}
+// ===================================================================
+
+class QueryMagnetReq::_Internal {
+ public:
+};
+
+QueryMagnetReq::QueryMagnetReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.QueryMagnetReq)
+}
+QueryMagnetReq::QueryMagnetReq(const QueryMagnetReq& from) : ::google::protobuf::Message() {
+  QueryMagnetReq* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.search_cond_){},
+      decltype(_impl_.parent_id_){},
+      decltype(_impl_.page_num_){},
+      decltype(_impl_.rows_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.search_cond_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.search_cond_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_search_cond().empty()) {
+    _this->_impl_.search_cond_.Set(from._internal_search_cond(), _this->GetArenaForAllocation());
+  }
+  ::memcpy(&_impl_.parent_id_, &from._impl_.parent_id_,
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.rows_) -
+    reinterpret_cast<char*>(&_impl_.parent_id_)) + sizeof(_impl_.rows_));
+
+  // @@protoc_insertion_point(copy_constructor:prpc.QueryMagnetReq)
+}
+inline void QueryMagnetReq::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.search_cond_){},
+      decltype(_impl_.parent_id_){::int64_t{0}},
+      decltype(_impl_.page_num_){0},
+      decltype(_impl_.rows_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.search_cond_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.search_cond_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+QueryMagnetReq::~QueryMagnetReq() {
+  // @@protoc_insertion_point(destructor:prpc.QueryMagnetReq)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void QueryMagnetReq::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.search_cond_.Destroy();
+}
+void QueryMagnetReq::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void QueryMagnetReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.QueryMagnetReq)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.search_cond_.ClearToEmpty();
+  ::memset(&_impl_.parent_id_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.rows_) -
+      reinterpret_cast<char*>(&_impl_.parent_id_)) + sizeof(_impl_.rows_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* QueryMagnetReq::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 4, 0, 39, 2> QueryMagnetReq::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    4, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967280,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    4,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_QueryMagnetReq_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // int32 rows = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(QueryMagnetReq, _impl_.rows_), 63>(),
+     {32, 63, 0, PROTOBUF_FIELD_OFFSET(QueryMagnetReq, _impl_.rows_)}},
+    // int64 parent_id = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(QueryMagnetReq, _impl_.parent_id_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(QueryMagnetReq, _impl_.parent_id_)}},
+    // string search_cond = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(QueryMagnetReq, _impl_.search_cond_)}},
+    // int32 page_num = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(QueryMagnetReq, _impl_.page_num_), 63>(),
+     {24, 63, 0, PROTOBUF_FIELD_OFFSET(QueryMagnetReq, _impl_.page_num_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // int64 parent_id = 1;
+    {PROTOBUF_FIELD_OFFSET(QueryMagnetReq, _impl_.parent_id_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+    // string search_cond = 2;
+    {PROTOBUF_FIELD_OFFSET(QueryMagnetReq, _impl_.search_cond_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // int32 page_num = 3;
+    {PROTOBUF_FIELD_OFFSET(QueryMagnetReq, _impl_.page_num_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // int32 rows = 4;
+    {PROTOBUF_FIELD_OFFSET(QueryMagnetReq, _impl_.rows_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+  }},
+  // no aux_entries
+  {{
+    "\23\0\13\0\0\0\0\0"
+    "prpc.QueryMagnetReq"
+    "search_cond"
+  }},
+};
+
+::uint8_t* QueryMagnetReq::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.QueryMagnetReq)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // int64 parent_id = 1;
+  if (this->_internal_parent_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<1>(
+            stream, this->_internal_parent_id(), target);
+  }
+
+  // string search_cond = 2;
+  if (!this->_internal_search_cond().empty()) {
+    const std::string& _s = this->_internal_search_cond();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.QueryMagnetReq.search_cond");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
+  // int32 page_num = 3;
+  if (this->_internal_page_num() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<3>(
+            stream, this->_internal_page_num(), target);
+  }
+
+  // int32 rows = 4;
+  if (this->_internal_rows() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<4>(
+            stream, this->_internal_rows(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.QueryMagnetReq)
+  return target;
+}
+
+::size_t QueryMagnetReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.QueryMagnetReq)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string search_cond = 2;
+  if (!this->_internal_search_cond().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_search_cond());
+  }
+
+  // int64 parent_id = 1;
+  if (this->_internal_parent_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_parent_id());
+  }
+
+  // int32 page_num = 3;
+  if (this->_internal_page_num() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_page_num());
+  }
+
+  // int32 rows = 4;
+  if (this->_internal_rows() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_rows());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData QueryMagnetReq::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    QueryMagnetReq::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*QueryMagnetReq::GetClassData() const { return &_class_data_; }
+
+
+void QueryMagnetReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<QueryMagnetReq*>(&to_msg);
+  auto& from = static_cast<const QueryMagnetReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.QueryMagnetReq)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_search_cond().empty()) {
+    _this->_internal_set_search_cond(from._internal_search_cond());
+  }
+  if (from._internal_parent_id() != 0) {
+    _this->_internal_set_parent_id(from._internal_parent_id());
+  }
+  if (from._internal_page_num() != 0) {
+    _this->_internal_set_page_num(from._internal_page_num());
+  }
+  if (from._internal_rows() != 0) {
+    _this->_internal_set_rows(from._internal_rows());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void QueryMagnetReq::CopyFrom(const QueryMagnetReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.QueryMagnetReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool QueryMagnetReq::IsInitialized() const {
+  return true;
+}
+
+void QueryMagnetReq::InternalSwap(QueryMagnetReq* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.search_cond_, lhs_arena,
+                                       &other->_impl_.search_cond_, rhs_arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(QueryMagnetReq, _impl_.rows_)
+      + sizeof(QueryMagnetReq::_impl_.rows_)
+      - PROTOBUF_FIELD_OFFSET(QueryMagnetReq, _impl_.parent_id_)>(
+          reinterpret_cast<char*>(&_impl_.parent_id_),
+          reinterpret_cast<char*>(&other->_impl_.parent_id_));
+}
+
+::google::protobuf::Metadata QueryMagnetReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[41]);
+}
+// ===================================================================
+
+class QueryMagnetRsp::_Internal {
+ public:
+};
+
+void QueryMagnetRsp::clear_items() {
+  _internal_mutable_items()->Clear();
+}
+QueryMagnetRsp::QueryMagnetRsp(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.QueryMagnetRsp)
+}
+QueryMagnetRsp::QueryMagnetRsp(const QueryMagnetRsp& from) : ::google::protobuf::Message() {
+  QueryMagnetRsp* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.items_){from._impl_.items_},
+      decltype(_impl_.total_row_count_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _this->_impl_.total_row_count_ = from._impl_.total_row_count_;
+
+  // @@protoc_insertion_point(copy_constructor:prpc.QueryMagnetRsp)
+}
+inline void QueryMagnetRsp::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.items_){arena},
+      decltype(_impl_.total_row_count_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+}
+QueryMagnetRsp::~QueryMagnetRsp() {
+  // @@protoc_insertion_point(destructor:prpc.QueryMagnetRsp)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void QueryMagnetRsp::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.items_.~RepeatedPtrField();
+}
+void QueryMagnetRsp::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void QueryMagnetRsp::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.QueryMagnetRsp)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _internal_mutable_items()->Clear();
+  _impl_.total_row_count_ = 0;
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* QueryMagnetRsp::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 1, 0, 2> QueryMagnetRsp::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_QueryMagnetRsp_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // int32 total_row_count = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(QueryMagnetRsp, _impl_.total_row_count_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(QueryMagnetRsp, _impl_.total_row_count_)}},
+    // repeated .prpc.CategoryItem items = 1;
+    {::_pbi::TcParser::FastMtR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(QueryMagnetRsp, _impl_.items_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // repeated .prpc.CategoryItem items = 1;
+    {PROTOBUF_FIELD_OFFSET(QueryMagnetRsp, _impl_.items_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    // int32 total_row_count = 2;
+    {PROTOBUF_FIELD_OFFSET(QueryMagnetRsp, _impl_.total_row_count_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::CategoryItem>()},
+  }}, {{
+  }},
+};
+
+::uint8_t* QueryMagnetRsp::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.QueryMagnetRsp)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // repeated .prpc.CategoryItem items = 1;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_items_size()); i < n; i++) {
+    const auto& repfield = this->_internal_items().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
+        InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  // int32 total_row_count = 2;
+  if (this->_internal_total_row_count() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<2>(
+            stream, this->_internal_total_row_count(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.QueryMagnetRsp)
+  return target;
+}
+
+::size_t QueryMagnetRsp::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.QueryMagnetRsp)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .prpc.CategoryItem items = 1;
+  total_size += 1UL * this->_internal_items_size();
+  for (const auto& msg : this->_internal_items()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+  }
+  // int32 total_row_count = 2;
+  if (this->_internal_total_row_count() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_total_row_count());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData QueryMagnetRsp::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    QueryMagnetRsp::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*QueryMagnetRsp::GetClassData() const { return &_class_data_; }
+
+
+void QueryMagnetRsp::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<QueryMagnetRsp*>(&to_msg);
+  auto& from = static_cast<const QueryMagnetRsp&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.QueryMagnetRsp)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_internal_mutable_items()->MergeFrom(from._internal_items());
+  if (from._internal_total_row_count() != 0) {
+    _this->_internal_set_total_row_count(from._internal_total_row_count());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void QueryMagnetRsp::CopyFrom(const QueryMagnetRsp& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.QueryMagnetRsp)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool QueryMagnetRsp::IsInitialized() const {
+  return true;
+}
+
+void QueryMagnetRsp::InternalSwap(QueryMagnetRsp* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.items_.InternalSwap(&other->_impl_.items_);
+        swap(_impl_.total_row_count_, other->_impl_.total_row_count_);
+}
+
+::google::protobuf::Metadata QueryMagnetRsp::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[42]);
+}
+// ===================================================================
+
+class DelMagnetCategoryReq::_Internal {
+ public:
+};
+
+DelMagnetCategoryReq::DelMagnetCategoryReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.DelMagnetCategoryReq)
+}
+DelMagnetCategoryReq::DelMagnetCategoryReq(const DelMagnetCategoryReq& from)
+    : ::google::protobuf::Message(), _impl_(from._impl_) {
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:prpc.DelMagnetCategoryReq)
+}
+inline void DelMagnetCategoryReq::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.id_){::int64_t{0}},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+}
+DelMagnetCategoryReq::~DelMagnetCategoryReq() {
+  // @@protoc_insertion_point(destructor:prpc.DelMagnetCategoryReq)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void DelMagnetCategoryReq::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+}
+void DelMagnetCategoryReq::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void DelMagnetCategoryReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.DelMagnetCategoryReq)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.id_ = ::int64_t{0};
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* DelMagnetCategoryReq::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 0, 2> DelMagnetCategoryReq::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_DelMagnetCategoryReq_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // int64 id = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(DelMagnetCategoryReq, _impl_.id_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(DelMagnetCategoryReq, _impl_.id_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // int64 id = 1;
+    {PROTOBUF_FIELD_OFFSET(DelMagnetCategoryReq, _impl_.id_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+
+::uint8_t* DelMagnetCategoryReq::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.DelMagnetCategoryReq)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // int64 id = 1;
+  if (this->_internal_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<1>(
+            stream, this->_internal_id(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.DelMagnetCategoryReq)
+  return target;
+}
+
+::size_t DelMagnetCategoryReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.DelMagnetCategoryReq)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int64 id = 1;
+  if (this->_internal_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_id());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData DelMagnetCategoryReq::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    DelMagnetCategoryReq::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*DelMagnetCategoryReq::GetClassData() const { return &_class_data_; }
+
+
+void DelMagnetCategoryReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<DelMagnetCategoryReq*>(&to_msg);
+  auto& from = static_cast<const DelMagnetCategoryReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.DelMagnetCategoryReq)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_id() != 0) {
+    _this->_internal_set_id(from._internal_id());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void DelMagnetCategoryReq::CopyFrom(const DelMagnetCategoryReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.DelMagnetCategoryReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool DelMagnetCategoryReq::IsInitialized() const {
+  return true;
+}
+
+void DelMagnetCategoryReq::InternalSwap(DelMagnetCategoryReq* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+        swap(_impl_.id_, other->_impl_.id_);
+}
+
+::google::protobuf::Metadata DelMagnetCategoryReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[43]);
+}
+// ===================================================================
+
+class DelMagnetCategoryRsp::_Internal {
+ public:
+};
+
+DelMagnetCategoryRsp::DelMagnetCategoryRsp(::google::protobuf::Arena* arena)
+    : ::google::protobuf::internal::ZeroFieldsBase(arena) {
+  // @@protoc_insertion_point(arena_constructor:prpc.DelMagnetCategoryRsp)
+}
+DelMagnetCategoryRsp::DelMagnetCategoryRsp(const DelMagnetCategoryRsp& from) : ::google::protobuf::internal::ZeroFieldsBase() {
+  DelMagnetCategoryRsp* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
+  // @@protoc_insertion_point(copy_constructor:prpc.DelMagnetCategoryRsp)
+}
+
+
+
+
+const ::google::protobuf::Message::ClassData DelMagnetCategoryRsp::_class_data_ = {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl,
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl,
+};
+const ::google::protobuf::Message::ClassData*DelMagnetCategoryRsp::GetClassData() const { return &_class_data_; }
+
+
+
+
+
+
+
+::google::protobuf::Metadata DelMagnetCategoryRsp::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[44]);
 }
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace prpc

@@ -239,32 +239,52 @@ namespace prpc
     return ::grpc::Status::OK;
   }
 
-  ::grpc::Status bt_service::GenMagnetUri(
+  ::grpc::Status bt_service::GetMagnetUri(
     ::grpc::ServerContext* context
-    , const ::prpc::GenMagnetUriReq* request
-    , ::prpc::GenMagnetUriRsp* response)
+    , const ::prpc::GetMagnetUriReq* request
+    , ::prpc::GetMagnetUriRsp* response)
   {
     (void)(context);
     if (request == nullptr) {
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
     }
-    lt::add_torrent_params params;
-    try {
-      string const& data = request->torrent_data();
-      lt::load_torrent_limits cfg;
-      lt::error_code ec;
-      int err_pos;
-      auto e = lt::bdecode(lt::span<const char>(data), ec, &err_pos
-        , cfg.max_decode_depth, cfg.max_decode_tokens);
-      params.ti = std::make_shared<lt::torrent_info>(e);
+    switch (request->type())
+    {
+    case GetMagnetUriReq_ReqType::GetMagnetUriReq_ReqType_Torrent:
+    {
+      lt::add_torrent_params params;
+      try {
+        string const& data = request->content();
+        lt::load_torrent_limits cfg;
+        lt::error_code ec;
+        int err_pos;
+        auto e = lt::bdecode(lt::span<const char>(data), ec, &err_pos
+          , cfg.max_decode_depth, cfg.max_decode_tokens);
+        params.ti = std::make_shared<lt::torrent_info>(e);
+        
+      }
+      catch (std::exception const& e) {
+        std::cout << e.what() << endl;
+        return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+      }
+      std::string uri = lt::make_magnet_uri(params);
+      response->set_magnet_uri(uri);
+      *response->mutable_info_hash() = get_respone_info_hash(params.ti->info_hashes());
+      break;
     }
-    catch (std::exception const& e) {
-      std::cout << e.what() << endl;
+    case GetMagnetUriReq_ReqType::GetMagnetUriReq_ReqType_InfoHash:
+    {
+      auto th = _ses->find_torrent(get_info_hash(request->info_hash()).get_best());
+      if(!th.is_valid()){
+        return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+      }
+      auto const& ti = th.get_torrent_info();
+      std::string uri = lt::make_magnet_uri(ti);
+      *response->mutable_info_hash() = get_respone_info_hash(ti.info_hashes());
+    }
+    default:
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
     }
-    std::string uri = lt::make_magnet_uri(params);
-    *response->mutable_info_hash() = get_respone_info_hash(params.info_hashes);
-    response->set_magnet_uri(uri);
     return ::grpc::Status::OK;
   }
 

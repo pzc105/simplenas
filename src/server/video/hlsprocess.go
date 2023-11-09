@@ -69,8 +69,10 @@ func (h *HlsProcess) Init() {
 			case <-ticker.C:
 				if h.soQueue.Idle() {
 					task := h.cudaQueue.Steal()
-					htask, _ := task.Identity.(*hlsTask)
-					h.useSoft(htask)
+					if task !=nil{
+						htask, _ := task.Identity.(*hlsTask)
+						h.useSoft(htask)
+					}
 				}
 			case <-h.shutDownCtx.Done():
 				break loop

@@ -230,7 +230,7 @@ func (ut *UserTorrentsImpl) AddTorrent(userId ID, t *bt.TorrentBase) error {
 	}
 	ut.mtx.Unlock()
 
-	_, err := db.Query("call new_torrent(?, ?, ?, @torrent_id);", t.InfoHash.Version, t.InfoHash.Hash, userId)
+	_, err := db.Exec("call new_torrent(?, ?, ?, @torrent_id);", t.InfoHash.Version, t.InfoHash.Hash, userId)
 	if err != nil {
 		log.Warnf("[user] %d failed to add torrent: %s err: %v", userId, hex.EncodeToString([]byte(t.InfoHash.Hash)), err)
 		return err

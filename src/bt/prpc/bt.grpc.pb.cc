@@ -25,7 +25,7 @@ static const char* BtService_method_names[] = {
   "/prpc.BtService/Parse",
   "/prpc.BtService/Download",
   "/prpc.BtService/RemoveTorrent",
-  "/prpc.BtService/GenMagnetUri",
+  "/prpc.BtService/GetMagnetUri",
   "/prpc.BtService/OnStatus",
   "/prpc.BtService/OnTorrentInfo",
   "/prpc.BtService/OnFileCompleted",
@@ -42,7 +42,7 @@ BtService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel,
   : channel_(channel), rpcmethod_Parse_(BtService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_Download_(BtService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_RemoveTorrent_(BtService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GenMagnetUri_(BtService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetMagnetUri_(BtService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_OnStatus_(BtService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
   , rpcmethod_OnTorrentInfo_(BtService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
   , rpcmethod_OnFileCompleted_(BtService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
@@ -118,25 +118,25 @@ void BtService::Stub::async::RemoveTorrent(::grpc::ClientContext* context, const
   return result;
 }
 
-::grpc::Status BtService::Stub::GenMagnetUri(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq& request, ::prpc::GenMagnetUriRsp* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::prpc::GenMagnetUriReq, ::prpc::GenMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GenMagnetUri_, context, request, response);
+::grpc::Status BtService::Stub::GetMagnetUri(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq& request, ::prpc::GetMagnetUriRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::GetMagnetUriReq, ::prpc::GetMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMagnetUri_, context, request, response);
 }
 
-void BtService::Stub::async::GenMagnetUri(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq* request, ::prpc::GenMagnetUriRsp* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::prpc::GenMagnetUriReq, ::prpc::GenMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GenMagnetUri_, context, request, response, std::move(f));
+void BtService::Stub::async::GetMagnetUri(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq* request, ::prpc::GetMagnetUriRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::GetMagnetUriReq, ::prpc::GetMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMagnetUri_, context, request, response, std::move(f));
 }
 
-void BtService::Stub::async::GenMagnetUri(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq* request, ::prpc::GenMagnetUriRsp* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GenMagnetUri_, context, request, response, reactor);
+void BtService::Stub::async::GetMagnetUri(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq* request, ::prpc::GetMagnetUriRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMagnetUri_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::prpc::GenMagnetUriRsp>* BtService::Stub::PrepareAsyncGenMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::GenMagnetUriRsp, ::prpc::GenMagnetUriReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GenMagnetUri_, context, request);
+::grpc::ClientAsyncResponseReader< ::prpc::GetMagnetUriRsp>* BtService::Stub::PrepareAsyncGetMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::GetMagnetUriRsp, ::prpc::GetMagnetUriReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMagnetUri_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::prpc::GenMagnetUriRsp>* BtService::Stub::AsyncGenMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GenMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::prpc::GetMagnetUriRsp>* BtService::Stub::AsyncGetMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncGenMagnetUriRaw(context, request, cq);
+    this->PrepareAsyncGetMagnetUriRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -239,12 +239,12 @@ BtService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       BtService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::GenMagnetUriReq, ::prpc::GenMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::GetMagnetUriReq, ::prpc::GetMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](BtService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::prpc::GenMagnetUriReq* req,
-             ::prpc::GenMagnetUriRsp* resp) {
-               return service->GenMagnetUri(ctx, req, resp);
+             const ::prpc::GetMagnetUriReq* req,
+             ::prpc::GetMagnetUriRsp* resp) {
+               return service->GetMagnetUri(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       BtService_method_names[4],
@@ -312,7 +312,7 @@ BtService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status BtService::Service::GenMagnetUri(::grpc::ServerContext* context, const ::prpc::GenMagnetUriReq* request, ::prpc::GenMagnetUriRsp* response) {
+::grpc::Status BtService::Service::GetMagnetUri(::grpc::ServerContext* context, const ::prpc::GetMagnetUriReq* request, ::prpc::GetMagnetUriRsp* response) {
   (void) context;
   (void) request;
   (void) response;

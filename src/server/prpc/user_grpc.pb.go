@@ -27,6 +27,7 @@ const (
 	UserService_ChangePassword_FullMethodName    = "/prpc.UserService/ChangePassword"
 	UserService_Download_FullMethodName          = "/prpc.UserService/Download"
 	UserService_RemoveTorrent_FullMethodName     = "/prpc.UserService/RemoveTorrent"
+	UserService_GetMagnetUri_FullMethodName      = "/prpc.UserService/GetMagnetUri"
 	UserService_OnStatus_FullMethodName          = "/prpc.UserService/OnStatus"
 	UserService_QueryBtVideos_FullMethodName     = "/prpc.UserService/QueryBtVideos"
 	UserService_NewCategoryItem_FullMethodName   = "/prpc.UserService/NewCategoryItem"
@@ -58,6 +59,7 @@ type UserServiceClient interface {
 	ChangePassword(ctx context.Context, in *ChangePasswordReq, opts ...grpc.CallOption) (*ChangePasswordRsp, error)
 	Download(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadRespone, error)
 	RemoveTorrent(ctx context.Context, in *RemoveTorrentReq, opts ...grpc.CallOption) (*RemoveTorrentRes, error)
+	GetMagnetUri(ctx context.Context, in *GetMagnetUriReq, opts ...grpc.CallOption) (*GetMagnetUriRsp, error)
 	OnStatus(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (UserService_OnStatusClient, error)
 	QueryBtVideos(ctx context.Context, in *QueryBtVideosReq, opts ...grpc.CallOption) (*QueryBtVideosRes, error)
 	NewCategoryItem(ctx context.Context, in *NewCategoryItemReq, opts ...grpc.CallOption) (*NewCategoryItemRes, error)
@@ -151,6 +153,15 @@ func (c *userServiceClient) Download(ctx context.Context, in *DownloadRequest, o
 func (c *userServiceClient) RemoveTorrent(ctx context.Context, in *RemoveTorrentReq, opts ...grpc.CallOption) (*RemoveTorrentRes, error) {
 	out := new(RemoveTorrentRes)
 	err := c.cc.Invoke(ctx, UserService_RemoveTorrent_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) GetMagnetUri(ctx context.Context, in *GetMagnetUriReq, opts ...grpc.CallOption) (*GetMagnetUriRsp, error) {
+	out := new(GetMagnetUriRsp)
+	err := c.cc.Invoke(ctx, UserService_GetMagnetUri_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -368,6 +379,7 @@ type UserServiceServer interface {
 	ChangePassword(context.Context, *ChangePasswordReq) (*ChangePasswordRsp, error)
 	Download(context.Context, *DownloadRequest) (*DownloadRespone, error)
 	RemoveTorrent(context.Context, *RemoveTorrentReq) (*RemoveTorrentRes, error)
+	GetMagnetUri(context.Context, *GetMagnetUriReq) (*GetMagnetUriRsp, error)
 	OnStatus(*StatusRequest, UserService_OnStatusServer) error
 	QueryBtVideos(context.Context, *QueryBtVideosReq) (*QueryBtVideosRes, error)
 	NewCategoryItem(context.Context, *NewCategoryItemReq) (*NewCategoryItemRes, error)
@@ -415,6 +427,9 @@ func (UnimplementedUserServiceServer) Download(context.Context, *DownloadRequest
 }
 func (UnimplementedUserServiceServer) RemoveTorrent(context.Context, *RemoveTorrentReq) (*RemoveTorrentRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveTorrent not implemented")
+}
+func (UnimplementedUserServiceServer) GetMagnetUri(context.Context, *GetMagnetUriReq) (*GetMagnetUriRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMagnetUri not implemented")
 }
 func (UnimplementedUserServiceServer) OnStatus(*StatusRequest, UserService_OnStatusServer) error {
 	return status.Errorf(codes.Unimplemented, "method OnStatus not implemented")
@@ -620,6 +635,24 @@ func _UserService_RemoveTorrent_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).RemoveTorrent(ctx, req.(*RemoveTorrentReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_GetMagnetUri_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMagnetUriReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).GetMagnetUri(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_GetMagnetUri_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).GetMagnetUri(ctx, req.(*GetMagnetUriReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -974,6 +1007,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveTorrent",
 			Handler:    _UserService_RemoveTorrent_Handler,
+		},
+		{
+			MethodName: "GetMagnetUri",
+			Handler:    _UserService_GetMagnetUri_Handler,
 		},
 		{
 			MethodName: "QueryBtVideos",

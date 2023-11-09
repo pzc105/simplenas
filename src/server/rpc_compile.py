@@ -14,9 +14,6 @@ def GenServerRpc():
 
         proto_path = "--proto_path=. --proto_path={0} --proto_path={1}".format(rpc_path, common_rpc_path)
         cmd_pattern = "protoc \
-                        --grpc-gateway_out={out_path} \
-                        --grpc-gateway_opt logtostderr=true \
-                        --grpc-gateway_opt generate_unbound_methods=true \
                         --go_out={out_path} \
                         --go-grpc_out={out_path} {proto_path} {file_name}"
 

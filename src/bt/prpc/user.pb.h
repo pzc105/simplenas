@@ -32,6 +32,7 @@
 #include "google/protobuf/message.h"
 #include "google/protobuf/repeated_field.h"  // IWYU pragma: export
 #include "google/protobuf/extension_set.h"  // IWYU pragma: export
+#include "google/protobuf/generated_enum_reflection.h"
 #include "google/protobuf/unknown_field_set.h"
 #include "category.pb.h"
 #include "video.pb.h"
@@ -65,9 +66,27 @@ extern AddBtVideosReqDefaultTypeInternal _AddBtVideosReq_default_instance_;
 class AddBtVideosRes;
 struct AddBtVideosResDefaultTypeInternal;
 extern AddBtVideosResDefaultTypeInternal _AddBtVideosRes_default_instance_;
+class AddMagnetCategoryReq;
+struct AddMagnetCategoryReqDefaultTypeInternal;
+extern AddMagnetCategoryReqDefaultTypeInternal _AddMagnetCategoryReq_default_instance_;
+class AddMagnetCategoryRsp;
+struct AddMagnetCategoryRspDefaultTypeInternal;
+extern AddMagnetCategoryRspDefaultTypeInternal _AddMagnetCategoryRsp_default_instance_;
+class AddMagnetUriReq;
+struct AddMagnetUriReqDefaultTypeInternal;
+extern AddMagnetUriReqDefaultTypeInternal _AddMagnetUriReq_default_instance_;
+class AddMagnetUriRsp;
+struct AddMagnetUriRspDefaultTypeInternal;
+extern AddMagnetUriRspDefaultTypeInternal _AddMagnetUriRsp_default_instance_;
 class BtFileMetadata;
 struct BtFileMetadataDefaultTypeInternal;
 extern BtFileMetadataDefaultTypeInternal _BtFileMetadata_default_instance_;
+class ChangePasswordReq;
+struct ChangePasswordReqDefaultTypeInternal;
+extern ChangePasswordReqDefaultTypeInternal _ChangePasswordReq_default_instance_;
+class ChangePasswordRsp;
+struct ChangePasswordRspDefaultTypeInternal;
+extern ChangePasswordRspDefaultTypeInternal _ChangePasswordRsp_default_instance_;
 class ChatMessage;
 struct ChatMessageDefaultTypeInternal;
 extern ChatMessageDefaultTypeInternal _ChatMessage_default_instance_;
@@ -77,6 +96,12 @@ extern DelCategoryItemReqDefaultTypeInternal _DelCategoryItemReq_default_instanc
 class DelCategoryItemRes;
 struct DelCategoryItemResDefaultTypeInternal;
 extern DelCategoryItemResDefaultTypeInternal _DelCategoryItemRes_default_instance_;
+class DelMagnetCategoryReq;
+struct DelMagnetCategoryReqDefaultTypeInternal;
+extern DelMagnetCategoryReqDefaultTypeInternal _DelMagnetCategoryReq_default_instance_;
+class DelMagnetCategoryRsp;
+struct DelMagnetCategoryRspDefaultTypeInternal;
+extern DelMagnetCategoryRspDefaultTypeInternal _DelMagnetCategoryRsp_default_instance_;
 class DelSharedItemReq;
 struct DelSharedItemReqDefaultTypeInternal;
 extern DelSharedItemReqDefaultTypeInternal _DelSharedItemReq_default_instance_;
@@ -119,6 +144,12 @@ extern QueryItemInfoReqDefaultTypeInternal _QueryItemInfoReq_default_instance_;
 class QueryItemInfoRes;
 struct QueryItemInfoResDefaultTypeInternal;
 extern QueryItemInfoResDefaultTypeInternal _QueryItemInfoRes_default_instance_;
+class QueryMagnetReq;
+struct QueryMagnetReqDefaultTypeInternal;
+extern QueryMagnetReqDefaultTypeInternal _QueryMagnetReq_default_instance_;
+class QueryMagnetRsp;
+struct QueryMagnetRspDefaultTypeInternal;
+extern QueryMagnetRspDefaultTypeInternal _QueryMagnetRsp_default_instance_;
 class QuerySharedItemsReq;
 struct QuerySharedItemsReqDefaultTypeInternal;
 extern QuerySharedItemsReqDefaultTypeInternal _QuerySharedItemsReq_default_instance_;
@@ -131,18 +162,15 @@ extern QuerySubItemsReqDefaultTypeInternal _QuerySubItemsReq_default_instance_;
 class QuerySubItemsRes;
 struct QuerySubItemsResDefaultTypeInternal;
 extern QuerySubItemsResDefaultTypeInternal _QuerySubItemsRes_default_instance_;
-class RefreshSubtitleReq;
-struct RefreshSubtitleReqDefaultTypeInternal;
-extern RefreshSubtitleReqDefaultTypeInternal _RefreshSubtitleReq_default_instance_;
-class RefreshSubtitleRes;
-struct RefreshSubtitleResDefaultTypeInternal;
-extern RefreshSubtitleResDefaultTypeInternal _RefreshSubtitleRes_default_instance_;
 class RegisterInfo;
 struct RegisterInfoDefaultTypeInternal;
 extern RegisterInfoDefaultTypeInternal _RegisterInfo_default_instance_;
 class RegisterRet;
 struct RegisterRetDefaultTypeInternal;
 extern RegisterRetDefaultTypeInternal _RegisterRet_default_instance_;
+class Room;
+struct RoomDefaultTypeInternal;
+extern RoomDefaultTypeInternal _Room_default_instance_;
 class SendMsg2ChatRoomReq;
 struct SendMsg2ChatRoomReqDefaultTypeInternal;
 extern SendMsg2ChatRoomReqDefaultTypeInternal _SendMsg2ChatRoomReq_default_instance_;
@@ -174,6 +202,39 @@ namespace protobuf {
 }  // namespace google
 
 namespace prpc {
+enum Room_Type : int {
+  Room_Type_Unknown = 0,
+  Room_Type_Category = 1,
+  Room_Type_Danmaku = 2,
+  Room_Type_Room_Type_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      std::numeric_limits<::int32_t>::min(),
+  Room_Type_Room_Type_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      std::numeric_limits<::int32_t>::max(),
+};
+
+bool Room_Type_IsValid(int value);
+constexpr Room_Type Room_Type_Type_MIN = static_cast<Room_Type>(0);
+constexpr Room_Type Room_Type_Type_MAX = static_cast<Room_Type>(2);
+constexpr int Room_Type_Type_ARRAYSIZE = 2 + 1;
+const ::google::protobuf::EnumDescriptor*
+Room_Type_descriptor();
+template <typename T>
+const std::string& Room_Type_Name(T value) {
+  static_assert(std::is_same<T, Room_Type>::value ||
+                    std::is_integral<T>::value,
+                "Incorrect type passed to Type_Name().");
+  return Room_Type_Name(static_cast<Room_Type>(value));
+}
+template <>
+inline const std::string& Room_Type_Name(Room_Type value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<Room_Type_descriptor,
+                                                 0, 2>(
+      static_cast<int>(value));
+}
+inline bool Room_Type_Parse(absl::string_view name, Room_Type* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<Room_Type>(
+      Room_Type_descriptor(), name, value);
+}
 
 // ===================================================================
 
@@ -313,6 +374,7 @@ class UserInfo final :
     kPasswdFieldNumber = 4,
     kIdFieldNumber = 1,
     kHomeDirectoryIdFieldNumber = 5,
+    kMagnetRootIdFieldNumber = 6,
   };
   // string name = 2;
   void clear_name() ;
@@ -382,12 +444,22 @@ class UserInfo final :
   void _internal_set_home_directory_id(::int64_t value);
 
   public:
+  // int64 magnet_root_id = 6;
+  void clear_magnet_root_id() ;
+  ::int64_t magnet_root_id() const;
+  void set_magnet_root_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_magnet_root_id() const;
+  void _internal_set_magnet_root_id(::int64_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:prpc.UserInfo)
  private:
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 5, 0, 37, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<3, 6, 0, 37, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
@@ -397,6 +469,7 @@ class UserInfo final :
     ::google::protobuf::internal::ArenaStringPtr passwd_;
     ::int64_t id_;
     ::int64_t home_directory_id_;
+    ::int64_t magnet_root_id_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -1370,6 +1443,331 @@ class LoginRet final :
   friend struct ::TableStruct_user_2eproto;
 };// -------------------------------------------------------------------
 
+class ChangePasswordReq final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.ChangePasswordReq) */ {
+ public:
+  inline ChangePasswordReq() : ChangePasswordReq(nullptr) {}
+  ~ChangePasswordReq() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR ChangePasswordReq(::google::protobuf::internal::ConstantInitialized);
+
+  ChangePasswordReq(const ChangePasswordReq& from);
+  ChangePasswordReq(ChangePasswordReq&& from) noexcept
+    : ChangePasswordReq() {
+    *this = ::std::move(from);
+  }
+
+  inline ChangePasswordReq& operator=(const ChangePasswordReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ChangePasswordReq& operator=(ChangePasswordReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ChangePasswordReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ChangePasswordReq* internal_default_instance() {
+    return reinterpret_cast<const ChangePasswordReq*>(
+               &_ChangePasswordReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    7;
+
+  friend void swap(ChangePasswordReq& a, ChangePasswordReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ChangePasswordReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ChangePasswordReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ChangePasswordReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ChangePasswordReq>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const ChangePasswordReq& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const ChangePasswordReq& from) {
+    ChangePasswordReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ChangePasswordReq* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.ChangePasswordReq";
+  }
+  protected:
+  explicit ChangePasswordReq(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kEmailFieldNumber = 1,
+    kOldPasswdFieldNumber = 2,
+    kNewPasswdFieldNumber = 3,
+  };
+  // string email = 1;
+  void clear_email() ;
+  const std::string& email() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_email(Arg_&& arg, Args_... args);
+  std::string* mutable_email();
+  PROTOBUF_NODISCARD std::string* release_email();
+  void set_allocated_email(std::string* ptr);
+
+  private:
+  const std::string& _internal_email() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_email(
+      const std::string& value);
+  std::string* _internal_mutable_email();
+
+  public:
+  // string old_passwd = 2;
+  void clear_old_passwd() ;
+  const std::string& old_passwd() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_old_passwd(Arg_&& arg, Args_... args);
+  std::string* mutable_old_passwd();
+  PROTOBUF_NODISCARD std::string* release_old_passwd();
+  void set_allocated_old_passwd(std::string* ptr);
+
+  private:
+  const std::string& _internal_old_passwd() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_old_passwd(
+      const std::string& value);
+  std::string* _internal_mutable_old_passwd();
+
+  public:
+  // string new_passwd = 3;
+  void clear_new_passwd() ;
+  const std::string& new_passwd() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_new_passwd(Arg_&& arg, Args_... args);
+  std::string* mutable_new_passwd();
+  PROTOBUF_NODISCARD std::string* release_new_passwd();
+  void set_allocated_new_passwd(std::string* ptr);
+
+  private:
+  const std::string& _internal_new_passwd() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_new_passwd(
+      const std::string& value);
+  std::string* _internal_mutable_new_passwd();
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.ChangePasswordReq)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 3, 0, 56, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr email_;
+    ::google::protobuf::internal::ArenaStringPtr old_passwd_;
+    ::google::protobuf::internal::ArenaStringPtr new_passwd_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class ChangePasswordRsp final :
+    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.ChangePasswordRsp) */ {
+ public:
+  inline ChangePasswordRsp() : ChangePasswordRsp(nullptr) {}
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR ChangePasswordRsp(::google::protobuf::internal::ConstantInitialized);
+
+  ChangePasswordRsp(const ChangePasswordRsp& from);
+  ChangePasswordRsp(ChangePasswordRsp&& from) noexcept
+    : ChangePasswordRsp() {
+    *this = ::std::move(from);
+  }
+
+  inline ChangePasswordRsp& operator=(const ChangePasswordRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ChangePasswordRsp& operator=(ChangePasswordRsp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ChangePasswordRsp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ChangePasswordRsp* internal_default_instance() {
+    return reinterpret_cast<const ChangePasswordRsp*>(
+               &_ChangePasswordRsp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  friend void swap(ChangePasswordRsp& a, ChangePasswordRsp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ChangePasswordRsp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ChangePasswordRsp* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ChangePasswordRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ChangePasswordRsp>(arena);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const ChangePasswordRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const ChangePasswordRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.ChangePasswordRsp";
+  }
+  protected:
+  explicit ChangePasswordRsp(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:prpc.ChangePasswordRsp)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
 class NewCategoryItemReq final :
     public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.NewCategoryItemReq) */ {
  public:
@@ -1426,7 +1824,7 @@ class NewCategoryItemReq final :
                &_NewCategoryItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    9;
 
   friend void swap(NewCategoryItemReq& a, NewCategoryItemReq& b) {
     a.Swap(&b);
@@ -1649,7 +2047,7 @@ class NewCategoryItemRes final :
                &_NewCategoryItemRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    10;
 
   friend void swap(NewCategoryItemRes& a, NewCategoryItemRes& b) {
     a.Swap(&b);
@@ -1775,7 +2173,7 @@ class DelCategoryItemReq final :
                &_DelCategoryItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    11;
 
   friend void swap(DelCategoryItemReq& a, DelCategoryItemReq& b) {
     a.Swap(&b);
@@ -1932,7 +2330,7 @@ class DelCategoryItemRes final :
                &_DelCategoryItemRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    12;
 
   friend void swap(DelCategoryItemRes& a, DelCategoryItemRes& b) {
     a.Swap(&b);
@@ -2058,7 +2456,7 @@ class QuerySubItemsReq final :
                &_QuerySubItemsReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    13;
 
   friend void swap(QuerySubItemsReq& a, QuerySubItemsReq& b) {
     a.Swap(&b);
@@ -2132,6 +2530,8 @@ class QuerySubItemsReq final :
   enum : int {
     kShareIdFieldNumber = 2,
     kParentIdFieldNumber = 1,
+    kPageNumFieldNumber = 3,
+    kRowsFieldNumber = 4,
   };
   // string share_id = 2;
   void clear_share_id() ;
@@ -2159,18 +2559,40 @@ class QuerySubItemsReq final :
   void _internal_set_parent_id(::int64_t value);
 
   public:
+  // int32 page_num = 3;
+  void clear_page_num() ;
+  ::int32_t page_num() const;
+  void set_page_num(::int32_t value);
+
+  private:
+  ::int32_t _internal_page_num() const;
+  void _internal_set_page_num(::int32_t value);
+
+  public:
+  // int32 rows = 4;
+  void clear_rows() ;
+  ::int32_t rows() const;
+  void set_rows(::int32_t value);
+
+  private:
+  ::int32_t _internal_rows() const;
+  void _internal_set_rows(::int32_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:prpc.QuerySubItemsReq)
  private:
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<1, 2, 0, 38, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<2, 4, 0, 38, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::google::protobuf::internal::ArenaStringPtr share_id_;
     ::int64_t parent_id_;
+    ::int32_t page_num_;
+    ::int32_t rows_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -2234,7 +2656,7 @@ class QuerySubItemsRes final :
                &_QuerySubItemsRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    14;
 
   friend void swap(QuerySubItemsRes& a, QuerySubItemsRes& b) {
     a.Swap(&b);
@@ -2308,6 +2730,7 @@ class QuerySubItemsRes final :
   enum : int {
     kItemsFieldNumber = 2,
     kParentItemFieldNumber = 1,
+    kTotalRowCountFieldNumber = 3,
   };
   // repeated .prpc.CategoryItem items = 2;
   int items_size() const;
@@ -2342,12 +2765,22 @@ class QuerySubItemsRes final :
   ::prpc::CategoryItem* _internal_mutable_parent_item();
 
   public:
+  // int32 total_row_count = 3;
+  void clear_total_row_count() ;
+  ::int32_t total_row_count() const;
+  void set_total_row_count(::int32_t value);
+
+  private:
+  ::int32_t _internal_total_row_count() const;
+  void _internal_set_total_row_count(::int32_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:prpc.QuerySubItemsRes)
  private:
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<1, 2, 2, 0, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<2, 3, 2, 0, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
@@ -2356,6 +2789,7 @@ class QuerySubItemsRes final :
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::RepeatedPtrField< ::prpc::CategoryItem > items_;
     ::prpc::CategoryItem* parent_item_;
+    ::int32_t total_row_count_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -2418,7 +2852,7 @@ class QueryBtVideosReq final :
                &_QueryBtVideosReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    15;
 
   friend void swap(QueryBtVideosReq& a, QueryBtVideosReq& b) {
     a.Swap(&b);
@@ -2582,7 +3016,7 @@ class BtFileMetadata final :
                &_BtFileMetadata_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    16;
 
   friend void swap(BtFileMetadata& a, BtFileMetadata& b) {
     a.Swap(&b);
@@ -2758,7 +3192,7 @@ class QueryBtVideosRes final :
                &_QueryBtVideosRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    17;
 
   friend void swap(QueryBtVideosRes& a, QueryBtVideosRes& b) {
     a.Swap(&b);
@@ -2924,7 +3358,7 @@ class AddBtVideosReq final :
                &_AddBtVideosReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    18;
 
   friend void swap(AddBtVideosReq& a, AddBtVideosReq& b) {
     a.Swap(&b);
@@ -3120,7 +3554,7 @@ class AddBtVideosRes final :
                &_AddBtVideosRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    19;
 
   friend void swap(AddBtVideosRes& a, AddBtVideosRes& b) {
     a.Swap(&b);
@@ -3246,7 +3680,7 @@ class QueryItemInfoReq final :
                &_QueryItemInfoReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    20;
 
   friend void swap(QueryItemInfoReq& a, QueryItemInfoReq& b) {
     a.Swap(&b);
@@ -3422,7 +3856,7 @@ class QueryItemInfoRes final :
                &_QueryItemInfoRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    21;
 
   friend void swap(QueryItemInfoRes& a, QueryItemInfoRes& b) {
     a.Swap(&b);
@@ -3603,7 +4037,7 @@ class ShareItemReq final :
                &_ShareItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    22;
 
   friend void swap(ShareItemReq& a, ShareItemReq& b) {
     a.Swap(&b);
@@ -3761,7 +4195,7 @@ class ShareItemRes final :
                &_ShareItemRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    23;
 
   friend void swap(ShareItemRes& a, ShareItemRes& b) {
     a.Swap(&b);
@@ -3937,7 +4371,7 @@ class QuerySharedItemsReq final :
                &_QuerySharedItemsReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    24;
 
   friend void swap(QuerySharedItemsReq& a, QuerySharedItemsReq& b) {
     a.Swap(&b);
@@ -4095,7 +4529,7 @@ class QuerySharedItemsRes final :
                &_QuerySharedItemsRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    25;
 
   friend void swap(QuerySharedItemsRes& a, QuerySharedItemsRes& b) {
     a.Swap(&b);
@@ -4261,7 +4695,7 @@ class DelSharedItemReq final :
                &_DelSharedItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    26;
 
   friend void swap(DelSharedItemReq& a, DelSharedItemReq& b) {
     a.Swap(&b);
@@ -4424,7 +4858,7 @@ class DelSharedItemRes final :
                &_DelSharedItemRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    27;
 
   friend void swap(DelSharedItemRes& a, DelSharedItemRes& b) {
     a.Swap(&b);
@@ -4482,289 +4916,6 @@ class DelSharedItemRes final :
   // accessors -------------------------------------------------------
 
   // @@protoc_insertion_point(class_scope:prpc.DelSharedItemRes)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  friend struct ::TableStruct_user_2eproto;
-};// -------------------------------------------------------------------
-
-class RefreshSubtitleReq final :
-    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.RefreshSubtitleReq) */ {
- public:
-  inline RefreshSubtitleReq() : RefreshSubtitleReq(nullptr) {}
-  ~RefreshSubtitleReq() override;
-  template<typename = void>
-  explicit PROTOBUF_CONSTEXPR RefreshSubtitleReq(::google::protobuf::internal::ConstantInitialized);
-
-  RefreshSubtitleReq(const RefreshSubtitleReq& from);
-  RefreshSubtitleReq(RefreshSubtitleReq&& from) noexcept
-    : RefreshSubtitleReq() {
-    *this = ::std::move(from);
-  }
-
-  inline RefreshSubtitleReq& operator=(const RefreshSubtitleReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline RefreshSubtitleReq& operator=(RefreshSubtitleReq&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const RefreshSubtitleReq& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const RefreshSubtitleReq* internal_default_instance() {
-    return reinterpret_cast<const RefreshSubtitleReq*>(
-               &_RefreshSubtitleReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    26;
-
-  friend void swap(RefreshSubtitleReq& a, RefreshSubtitleReq& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(RefreshSubtitleReq* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(RefreshSubtitleReq* other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  RefreshSubtitleReq* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<RefreshSubtitleReq>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const RefreshSubtitleReq& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom( const RefreshSubtitleReq& from) {
-    RefreshSubtitleReq::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  ::size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
-  ::uint8_t* _InternalSerialize(
-      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* arena);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(RefreshSubtitleReq* other);
-
-  private:
-  friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() {
-    return "prpc.RefreshSubtitleReq";
-  }
-  protected:
-  explicit RefreshSubtitleReq(::google::protobuf::Arena* arena);
-  public:
-
-  static const ClassData _class_data_;
-  const ::google::protobuf::Message::ClassData*GetClassData() const final;
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kItemIdFieldNumber = 1,
-  };
-  // int64 item_id = 1;
-  void clear_item_id() ;
-  ::int64_t item_id() const;
-  void set_item_id(::int64_t value);
-
-  private:
-  ::int64_t _internal_item_id() const;
-  void _internal_set_item_id(::int64_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:prpc.RefreshSubtitleReq)
- private:
-  class _Internal;
-
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1, 0, 0, 2> _table_;
-  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::int64_t item_id_;
-    mutable ::google::protobuf::internal::CachedSize _cached_size_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_user_2eproto;
-};// -------------------------------------------------------------------
-
-class RefreshSubtitleRes final :
-    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.RefreshSubtitleRes) */ {
- public:
-  inline RefreshSubtitleRes() : RefreshSubtitleRes(nullptr) {}
-  template<typename = void>
-  explicit PROTOBUF_CONSTEXPR RefreshSubtitleRes(::google::protobuf::internal::ConstantInitialized);
-
-  RefreshSubtitleRes(const RefreshSubtitleRes& from);
-  RefreshSubtitleRes(RefreshSubtitleRes&& from) noexcept
-    : RefreshSubtitleRes() {
-    *this = ::std::move(from);
-  }
-
-  inline RefreshSubtitleRes& operator=(const RefreshSubtitleRes& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline RefreshSubtitleRes& operator=(RefreshSubtitleRes&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const RefreshSubtitleRes& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const RefreshSubtitleRes* internal_default_instance() {
-    return reinterpret_cast<const RefreshSubtitleRes*>(
-               &_RefreshSubtitleRes_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    27;
-
-  friend void swap(RefreshSubtitleRes& a, RefreshSubtitleRes& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(RefreshSubtitleRes* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(RefreshSubtitleRes* other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  RefreshSubtitleRes* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<RefreshSubtitleRes>(arena);
-  }
-  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const RefreshSubtitleRes& from) {
-    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
-  }
-  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const RefreshSubtitleRes& from) {
-    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
-  }
-  public:
-
-  private:
-  friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() {
-    return "prpc.RefreshSubtitleRes";
-  }
-  protected:
-  explicit RefreshSubtitleRes(::google::protobuf::Arena* arena);
-  public:
-
-  static const ClassData _class_data_;
-  const ::google::protobuf::Message::ClassData*GetClassData() const final;
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:prpc.RefreshSubtitleRes)
  private:
   class _Internal;
 
@@ -5262,6 +5413,197 @@ class UploadSubtitleRes final :
   friend struct ::TableStruct_user_2eproto;
 };// -------------------------------------------------------------------
 
+class Room final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.Room) */ {
+ public:
+  inline Room() : Room(nullptr) {}
+  ~Room() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR Room(::google::protobuf::internal::ConstantInitialized);
+
+  Room(const Room& from);
+  Room(Room&& from) noexcept
+    : Room() {
+    *this = ::std::move(from);
+  }
+
+  inline Room& operator=(const Room& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Room& operator=(Room&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Room& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Room* internal_default_instance() {
+    return reinterpret_cast<const Room*>(
+               &_Room_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    31;
+
+  friend void swap(Room& a, Room& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Room* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Room* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Room* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Room>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const Room& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const Room& from) {
+    Room::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Room* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.Room";
+  }
+  protected:
+  explicit Room(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  using Type = Room_Type;
+  static constexpr Type Unknown = Room_Type_Unknown;
+  static constexpr Type Category = Room_Type_Category;
+  static constexpr Type Danmaku = Room_Type_Danmaku;
+  static inline bool Type_IsValid(int value) {
+    return Room_Type_IsValid(value);
+  }
+  static constexpr Type Type_MIN = Room_Type_Type_MIN;
+  static constexpr Type Type_MAX = Room_Type_Type_MAX;
+  static constexpr int Type_ARRAYSIZE = Room_Type_Type_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor* Type_descriptor() {
+    return Room_Type_descriptor();
+  }
+  template <typename T>
+  static inline const std::string& Type_Name(T value) {
+    return Room_Type_Name(value);
+  }
+  static inline bool Type_Parse(absl::string_view name, Type* value) {
+    return Room_Type_Parse(name, value);
+  }
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kIdFieldNumber = 2,
+    kTypeFieldNumber = 1,
+  };
+  // int64 id = 2;
+  void clear_id() ;
+  ::int64_t id() const;
+  void set_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_id() const;
+  void _internal_set_id(::int64_t value);
+
+  public:
+  // .prpc.Room.Type type = 1;
+  void clear_type() ;
+  ::prpc::Room_Type type() const;
+  void set_type(::prpc::Room_Type value);
+
+  private:
+  ::prpc::Room_Type _internal_type() const;
+  void _internal_set_type(::prpc::Room_Type value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.Room)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<1, 2, 0, 0, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::int64_t id_;
+    int type_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
 class JoinChatRoomReq final :
     public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.JoinChatRoomReq) */ {
  public:
@@ -5318,7 +5660,7 @@ class JoinChatRoomReq final :
                &_JoinChatRoomReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    32;
 
   friend void swap(JoinChatRoomReq& a, JoinChatRoomReq& b) {
     a.Swap(&b);
@@ -5390,16 +5732,21 @@ class JoinChatRoomReq final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kItemIdFieldNumber = 1,
+    kRoomFieldNumber = 1,
   };
-  // int64 item_id = 1;
-  void clear_item_id() ;
-  ::int64_t item_id() const;
-  void set_item_id(::int64_t value);
+  // .prpc.Room room = 1;
+  bool has_room() const;
+  void clear_room() ;
+  const ::prpc::Room& room() const;
+  PROTOBUF_NODISCARD ::prpc::Room* release_room();
+  ::prpc::Room* mutable_room();
+  void set_allocated_room(::prpc::Room* value);
+  void unsafe_arena_set_allocated_room(::prpc::Room* value);
+  ::prpc::Room* unsafe_arena_release_room();
 
   private:
-  ::int64_t _internal_item_id() const;
-  void _internal_set_item_id(::int64_t value);
+  const ::prpc::Room& _internal_room() const;
+  ::prpc::Room* _internal_mutable_room();
 
   public:
   // @@protoc_insertion_point(class_scope:prpc.JoinChatRoomReq)
@@ -5407,13 +5754,14 @@ class JoinChatRoomReq final :
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1, 0, 0, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<0, 1, 1, 0, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::int64_t item_id_;
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    ::prpc::Room* room_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -5476,7 +5824,7 @@ class ChatMessage final :
                &_ChatMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    33;
 
   friend void swap(ChatMessage& a, ChatMessage& b) {
     a.Swap(&b);
@@ -5682,7 +6030,7 @@ class JoinChatRoomRes final :
                &_JoinChatRoomRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    34;
 
   friend void swap(JoinChatRoomRes& a, JoinChatRoomRes& b) {
     a.Swap(&b);
@@ -5755,7 +6103,7 @@ class JoinChatRoomRes final :
 
   enum : int {
     kChatMsgsFieldNumber = 2,
-    kItemIdFieldNumber = 1,
+    kRoomFieldNumber = 1,
   };
   // repeated .prpc.ChatMessage chat_msgs = 2;
   int chat_msgs_size() const;
@@ -5775,14 +6123,19 @@ class JoinChatRoomRes final :
   ::prpc::ChatMessage* add_chat_msgs();
   const ::google::protobuf::RepeatedPtrField< ::prpc::ChatMessage >&
       chat_msgs() const;
-  // int64 item_id = 1;
-  void clear_item_id() ;
-  ::int64_t item_id() const;
-  void set_item_id(::int64_t value);
+  // .prpc.Room room = 1;
+  bool has_room() const;
+  void clear_room() ;
+  const ::prpc::Room& room() const;
+  PROTOBUF_NODISCARD ::prpc::Room* release_room();
+  ::prpc::Room* mutable_room();
+  void set_allocated_room(::prpc::Room* value);
+  void unsafe_arena_set_allocated_room(::prpc::Room* value);
+  ::prpc::Room* unsafe_arena_release_room();
 
   private:
-  ::int64_t _internal_item_id() const;
-  void _internal_set_item_id(::int64_t value);
+  const ::prpc::Room& _internal_room() const;
+  ::prpc::Room* _internal_mutable_room();
 
   public:
   // @@protoc_insertion_point(class_scope:prpc.JoinChatRoomRes)
@@ -5790,14 +6143,15 @@ class JoinChatRoomRes final :
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<1, 2, 1, 0, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<1, 2, 2, 0, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::google::protobuf::RepeatedPtrField< ::prpc::ChatMessage > chat_msgs_;
-    ::int64_t item_id_;
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField< ::prpc::ChatMessage > chat_msgs_;
+    ::prpc::Room* room_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -5860,7 +6214,7 @@ class SendMsg2ChatRoomReq final :
                &_SendMsg2ChatRoomReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    35;
 
   friend void swap(SendMsg2ChatRoomReq& a, SendMsg2ChatRoomReq& b) {
     a.Swap(&b);
@@ -5932,9 +6286,24 @@ class SendMsg2ChatRoomReq final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kRoomFieldNumber = 1,
     kChatMsgFieldNumber = 2,
-    kItemIdFieldNumber = 1,
   };
+  // .prpc.Room room = 1;
+  bool has_room() const;
+  void clear_room() ;
+  const ::prpc::Room& room() const;
+  PROTOBUF_NODISCARD ::prpc::Room* release_room();
+  ::prpc::Room* mutable_room();
+  void set_allocated_room(::prpc::Room* value);
+  void unsafe_arena_set_allocated_room(::prpc::Room* value);
+  ::prpc::Room* unsafe_arena_release_room();
+
+  private:
+  const ::prpc::Room& _internal_room() const;
+  ::prpc::Room* _internal_mutable_room();
+
+  public:
   // .prpc.ChatMessage chat_msg = 2;
   bool has_chat_msg() const;
   void clear_chat_msg() ;
@@ -5950,30 +6319,20 @@ class SendMsg2ChatRoomReq final :
   ::prpc::ChatMessage* _internal_mutable_chat_msg();
 
   public:
-  // int64 item_id = 1;
-  void clear_item_id() ;
-  ::int64_t item_id() const;
-  void set_item_id(::int64_t value);
-
-  private:
-  ::int64_t _internal_item_id() const;
-  void _internal_set_item_id(::int64_t value);
-
-  public:
   // @@protoc_insertion_point(class_scope:prpc.SendMsg2ChatRoomReq)
  private:
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<1, 2, 1, 0, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<1, 2, 2, 0, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    ::prpc::Room* room_;
     ::prpc::ChatMessage* chat_msg_;
-    ::int64_t item_id_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -6035,7 +6394,7 @@ class SendMsg2ChatRoomRes final :
                &_SendMsg2ChatRoomRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    36;
 
   friend void swap(SendMsg2ChatRoomRes& a, SendMsg2ChatRoomRes& b) {
     a.Swap(&b);
@@ -6093,6 +6452,1305 @@ class SendMsg2ChatRoomRes final :
   // accessors -------------------------------------------------------
 
   // @@protoc_insertion_point(class_scope:prpc.SendMsg2ChatRoomRes)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class AddMagnetCategoryReq final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.AddMagnetCategoryReq) */ {
+ public:
+  inline AddMagnetCategoryReq() : AddMagnetCategoryReq(nullptr) {}
+  ~AddMagnetCategoryReq() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR AddMagnetCategoryReq(::google::protobuf::internal::ConstantInitialized);
+
+  AddMagnetCategoryReq(const AddMagnetCategoryReq& from);
+  AddMagnetCategoryReq(AddMagnetCategoryReq&& from) noexcept
+    : AddMagnetCategoryReq() {
+    *this = ::std::move(from);
+  }
+
+  inline AddMagnetCategoryReq& operator=(const AddMagnetCategoryReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AddMagnetCategoryReq& operator=(AddMagnetCategoryReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AddMagnetCategoryReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AddMagnetCategoryReq* internal_default_instance() {
+    return reinterpret_cast<const AddMagnetCategoryReq*>(
+               &_AddMagnetCategoryReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    37;
+
+  friend void swap(AddMagnetCategoryReq& a, AddMagnetCategoryReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AddMagnetCategoryReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AddMagnetCategoryReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  AddMagnetCategoryReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AddMagnetCategoryReq>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const AddMagnetCategoryReq& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const AddMagnetCategoryReq& from) {
+    AddMagnetCategoryReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AddMagnetCategoryReq* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.AddMagnetCategoryReq";
+  }
+  protected:
+  explicit AddMagnetCategoryReq(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCategoryNameFieldNumber = 2,
+    kIntroduceFieldNumber = 3,
+    kParentIdFieldNumber = 1,
+  };
+  // string category_name = 2;
+  void clear_category_name() ;
+  const std::string& category_name() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_category_name(Arg_&& arg, Args_... args);
+  std::string* mutable_category_name();
+  PROTOBUF_NODISCARD std::string* release_category_name();
+  void set_allocated_category_name(std::string* ptr);
+
+  private:
+  const std::string& _internal_category_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_category_name(
+      const std::string& value);
+  std::string* _internal_mutable_category_name();
+
+  public:
+  // string introduce = 3;
+  void clear_introduce() ;
+  const std::string& introduce() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_introduce(Arg_&& arg, Args_... args);
+  std::string* mutable_introduce();
+  PROTOBUF_NODISCARD std::string* release_introduce();
+  void set_allocated_introduce(std::string* ptr);
+
+  private:
+  const std::string& _internal_introduce() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_introduce(
+      const std::string& value);
+  std::string* _internal_mutable_introduce();
+
+  public:
+  // int64 parent_id = 1;
+  void clear_parent_id() ;
+  ::int64_t parent_id() const;
+  void set_parent_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_parent_id() const;
+  void _internal_set_parent_id(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.AddMagnetCategoryReq)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 3, 0, 56, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr category_name_;
+    ::google::protobuf::internal::ArenaStringPtr introduce_;
+    ::int64_t parent_id_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class AddMagnetCategoryRsp final :
+    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.AddMagnetCategoryRsp) */ {
+ public:
+  inline AddMagnetCategoryRsp() : AddMagnetCategoryRsp(nullptr) {}
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR AddMagnetCategoryRsp(::google::protobuf::internal::ConstantInitialized);
+
+  AddMagnetCategoryRsp(const AddMagnetCategoryRsp& from);
+  AddMagnetCategoryRsp(AddMagnetCategoryRsp&& from) noexcept
+    : AddMagnetCategoryRsp() {
+    *this = ::std::move(from);
+  }
+
+  inline AddMagnetCategoryRsp& operator=(const AddMagnetCategoryRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AddMagnetCategoryRsp& operator=(AddMagnetCategoryRsp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AddMagnetCategoryRsp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AddMagnetCategoryRsp* internal_default_instance() {
+    return reinterpret_cast<const AddMagnetCategoryRsp*>(
+               &_AddMagnetCategoryRsp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    38;
+
+  friend void swap(AddMagnetCategoryRsp& a, AddMagnetCategoryRsp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AddMagnetCategoryRsp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AddMagnetCategoryRsp* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  AddMagnetCategoryRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AddMagnetCategoryRsp>(arena);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const AddMagnetCategoryRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const AddMagnetCategoryRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.AddMagnetCategoryRsp";
+  }
+  protected:
+  explicit AddMagnetCategoryRsp(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:prpc.AddMagnetCategoryRsp)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class AddMagnetUriReq final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.AddMagnetUriReq) */ {
+ public:
+  inline AddMagnetUriReq() : AddMagnetUriReq(nullptr) {}
+  ~AddMagnetUriReq() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR AddMagnetUriReq(::google::protobuf::internal::ConstantInitialized);
+
+  AddMagnetUriReq(const AddMagnetUriReq& from);
+  AddMagnetUriReq(AddMagnetUriReq&& from) noexcept
+    : AddMagnetUriReq() {
+    *this = ::std::move(from);
+  }
+
+  inline AddMagnetUriReq& operator=(const AddMagnetUriReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AddMagnetUriReq& operator=(AddMagnetUriReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AddMagnetUriReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AddMagnetUriReq* internal_default_instance() {
+    return reinterpret_cast<const AddMagnetUriReq*>(
+               &_AddMagnetUriReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    39;
+
+  friend void swap(AddMagnetUriReq& a, AddMagnetUriReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AddMagnetUriReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AddMagnetUriReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  AddMagnetUriReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AddMagnetUriReq>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const AddMagnetUriReq& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const AddMagnetUriReq& from) {
+    AddMagnetUriReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AddMagnetUriReq* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.AddMagnetUriReq";
+  }
+  protected:
+  explicit AddMagnetUriReq(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMagnetUriFieldNumber = 2,
+    kIntroduceFieldNumber = 3,
+    kCategoryIdFieldNumber = 1,
+  };
+  // string magnet_uri = 2;
+  void clear_magnet_uri() ;
+  const std::string& magnet_uri() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_magnet_uri(Arg_&& arg, Args_... args);
+  std::string* mutable_magnet_uri();
+  PROTOBUF_NODISCARD std::string* release_magnet_uri();
+  void set_allocated_magnet_uri(std::string* ptr);
+
+  private:
+  const std::string& _internal_magnet_uri() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_magnet_uri(
+      const std::string& value);
+  std::string* _internal_mutable_magnet_uri();
+
+  public:
+  // string introduce = 3;
+  void clear_introduce() ;
+  const std::string& introduce() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_introduce(Arg_&& arg, Args_... args);
+  std::string* mutable_introduce();
+  PROTOBUF_NODISCARD std::string* release_introduce();
+  void set_allocated_introduce(std::string* ptr);
+
+  private:
+  const std::string& _internal_introduce() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_introduce(
+      const std::string& value);
+  std::string* _internal_mutable_introduce();
+
+  public:
+  // int64 category_id = 1;
+  void clear_category_id() ;
+  ::int64_t category_id() const;
+  void set_category_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_category_id() const;
+  void _internal_set_category_id(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.AddMagnetUriReq)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 3, 0, 48, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr magnet_uri_;
+    ::google::protobuf::internal::ArenaStringPtr introduce_;
+    ::int64_t category_id_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class AddMagnetUriRsp final :
+    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.AddMagnetUriRsp) */ {
+ public:
+  inline AddMagnetUriRsp() : AddMagnetUriRsp(nullptr) {}
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR AddMagnetUriRsp(::google::protobuf::internal::ConstantInitialized);
+
+  AddMagnetUriRsp(const AddMagnetUriRsp& from);
+  AddMagnetUriRsp(AddMagnetUriRsp&& from) noexcept
+    : AddMagnetUriRsp() {
+    *this = ::std::move(from);
+  }
+
+  inline AddMagnetUriRsp& operator=(const AddMagnetUriRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AddMagnetUriRsp& operator=(AddMagnetUriRsp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AddMagnetUriRsp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AddMagnetUriRsp* internal_default_instance() {
+    return reinterpret_cast<const AddMagnetUriRsp*>(
+               &_AddMagnetUriRsp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    40;
+
+  friend void swap(AddMagnetUriRsp& a, AddMagnetUriRsp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AddMagnetUriRsp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AddMagnetUriRsp* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  AddMagnetUriRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AddMagnetUriRsp>(arena);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const AddMagnetUriRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const AddMagnetUriRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.AddMagnetUriRsp";
+  }
+  protected:
+  explicit AddMagnetUriRsp(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:prpc.AddMagnetUriRsp)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class QueryMagnetReq final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.QueryMagnetReq) */ {
+ public:
+  inline QueryMagnetReq() : QueryMagnetReq(nullptr) {}
+  ~QueryMagnetReq() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR QueryMagnetReq(::google::protobuf::internal::ConstantInitialized);
+
+  QueryMagnetReq(const QueryMagnetReq& from);
+  QueryMagnetReq(QueryMagnetReq&& from) noexcept
+    : QueryMagnetReq() {
+    *this = ::std::move(from);
+  }
+
+  inline QueryMagnetReq& operator=(const QueryMagnetReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline QueryMagnetReq& operator=(QueryMagnetReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const QueryMagnetReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const QueryMagnetReq* internal_default_instance() {
+    return reinterpret_cast<const QueryMagnetReq*>(
+               &_QueryMagnetReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    41;
+
+  friend void swap(QueryMagnetReq& a, QueryMagnetReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(QueryMagnetReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(QueryMagnetReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  QueryMagnetReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<QueryMagnetReq>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const QueryMagnetReq& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const QueryMagnetReq& from) {
+    QueryMagnetReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(QueryMagnetReq* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.QueryMagnetReq";
+  }
+  protected:
+  explicit QueryMagnetReq(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSearchCondFieldNumber = 2,
+    kParentIdFieldNumber = 1,
+    kPageNumFieldNumber = 3,
+    kRowsFieldNumber = 4,
+  };
+  // string search_cond = 2;
+  void clear_search_cond() ;
+  const std::string& search_cond() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_search_cond(Arg_&& arg, Args_... args);
+  std::string* mutable_search_cond();
+  PROTOBUF_NODISCARD std::string* release_search_cond();
+  void set_allocated_search_cond(std::string* ptr);
+
+  private:
+  const std::string& _internal_search_cond() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_search_cond(
+      const std::string& value);
+  std::string* _internal_mutable_search_cond();
+
+  public:
+  // int64 parent_id = 1;
+  void clear_parent_id() ;
+  ::int64_t parent_id() const;
+  void set_parent_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_parent_id() const;
+  void _internal_set_parent_id(::int64_t value);
+
+  public:
+  // int32 page_num = 3;
+  void clear_page_num() ;
+  ::int32_t page_num() const;
+  void set_page_num(::int32_t value);
+
+  private:
+  ::int32_t _internal_page_num() const;
+  void _internal_set_page_num(::int32_t value);
+
+  public:
+  // int32 rows = 4;
+  void clear_rows() ;
+  ::int32_t rows() const;
+  void set_rows(::int32_t value);
+
+  private:
+  ::int32_t _internal_rows() const;
+  void _internal_set_rows(::int32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.QueryMagnetReq)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 4, 0, 39, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr search_cond_;
+    ::int64_t parent_id_;
+    ::int32_t page_num_;
+    ::int32_t rows_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class QueryMagnetRsp final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.QueryMagnetRsp) */ {
+ public:
+  inline QueryMagnetRsp() : QueryMagnetRsp(nullptr) {}
+  ~QueryMagnetRsp() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR QueryMagnetRsp(::google::protobuf::internal::ConstantInitialized);
+
+  QueryMagnetRsp(const QueryMagnetRsp& from);
+  QueryMagnetRsp(QueryMagnetRsp&& from) noexcept
+    : QueryMagnetRsp() {
+    *this = ::std::move(from);
+  }
+
+  inline QueryMagnetRsp& operator=(const QueryMagnetRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline QueryMagnetRsp& operator=(QueryMagnetRsp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const QueryMagnetRsp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const QueryMagnetRsp* internal_default_instance() {
+    return reinterpret_cast<const QueryMagnetRsp*>(
+               &_QueryMagnetRsp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    42;
+
+  friend void swap(QueryMagnetRsp& a, QueryMagnetRsp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(QueryMagnetRsp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(QueryMagnetRsp* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  QueryMagnetRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<QueryMagnetRsp>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const QueryMagnetRsp& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const QueryMagnetRsp& from) {
+    QueryMagnetRsp::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(QueryMagnetRsp* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.QueryMagnetRsp";
+  }
+  protected:
+  explicit QueryMagnetRsp(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kItemsFieldNumber = 1,
+    kTotalRowCountFieldNumber = 2,
+  };
+  // repeated .prpc.CategoryItem items = 1;
+  int items_size() const;
+  private:
+  int _internal_items_size() const;
+
+  public:
+  void clear_items() ;
+  ::prpc::CategoryItem* mutable_items(int index);
+  ::google::protobuf::RepeatedPtrField< ::prpc::CategoryItem >*
+      mutable_items();
+  private:
+  const ::google::protobuf::RepeatedPtrField<::prpc::CategoryItem>& _internal_items() const;
+  ::google::protobuf::RepeatedPtrField<::prpc::CategoryItem>* _internal_mutable_items();
+  public:
+  const ::prpc::CategoryItem& items(int index) const;
+  ::prpc::CategoryItem* add_items();
+  const ::google::protobuf::RepeatedPtrField< ::prpc::CategoryItem >&
+      items() const;
+  // int32 total_row_count = 2;
+  void clear_total_row_count() ;
+  ::int32_t total_row_count() const;
+  void set_total_row_count(::int32_t value);
+
+  private:
+  ::int32_t _internal_total_row_count() const;
+  void _internal_set_total_row_count(::int32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.QueryMagnetRsp)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<1, 2, 1, 0, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::RepeatedPtrField< ::prpc::CategoryItem > items_;
+    ::int32_t total_row_count_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class DelMagnetCategoryReq final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.DelMagnetCategoryReq) */ {
+ public:
+  inline DelMagnetCategoryReq() : DelMagnetCategoryReq(nullptr) {}
+  ~DelMagnetCategoryReq() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR DelMagnetCategoryReq(::google::protobuf::internal::ConstantInitialized);
+
+  DelMagnetCategoryReq(const DelMagnetCategoryReq& from);
+  DelMagnetCategoryReq(DelMagnetCategoryReq&& from) noexcept
+    : DelMagnetCategoryReq() {
+    *this = ::std::move(from);
+  }
+
+  inline DelMagnetCategoryReq& operator=(const DelMagnetCategoryReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DelMagnetCategoryReq& operator=(DelMagnetCategoryReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const DelMagnetCategoryReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const DelMagnetCategoryReq* internal_default_instance() {
+    return reinterpret_cast<const DelMagnetCategoryReq*>(
+               &_DelMagnetCategoryReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    43;
+
+  friend void swap(DelMagnetCategoryReq& a, DelMagnetCategoryReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DelMagnetCategoryReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(DelMagnetCategoryReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  DelMagnetCategoryReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<DelMagnetCategoryReq>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const DelMagnetCategoryReq& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const DelMagnetCategoryReq& from) {
+    DelMagnetCategoryReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(DelMagnetCategoryReq* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.DelMagnetCategoryReq";
+  }
+  protected:
+  explicit DelMagnetCategoryReq(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kIdFieldNumber = 1,
+  };
+  // int64 id = 1;
+  void clear_id() ;
+  ::int64_t id() const;
+  void set_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_id() const;
+  void _internal_set_id(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.DelMagnetCategoryReq)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<0, 1, 0, 0, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::int64_t id_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class DelMagnetCategoryRsp final :
+    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.DelMagnetCategoryRsp) */ {
+ public:
+  inline DelMagnetCategoryRsp() : DelMagnetCategoryRsp(nullptr) {}
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR DelMagnetCategoryRsp(::google::protobuf::internal::ConstantInitialized);
+
+  DelMagnetCategoryRsp(const DelMagnetCategoryRsp& from);
+  DelMagnetCategoryRsp(DelMagnetCategoryRsp&& from) noexcept
+    : DelMagnetCategoryRsp() {
+    *this = ::std::move(from);
+  }
+
+  inline DelMagnetCategoryRsp& operator=(const DelMagnetCategoryRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DelMagnetCategoryRsp& operator=(DelMagnetCategoryRsp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const DelMagnetCategoryRsp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const DelMagnetCategoryRsp* internal_default_instance() {
+    return reinterpret_cast<const DelMagnetCategoryRsp*>(
+               &_DelMagnetCategoryRsp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    44;
+
+  friend void swap(DelMagnetCategoryRsp& a, DelMagnetCategoryRsp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DelMagnetCategoryRsp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(DelMagnetCategoryRsp* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  DelMagnetCategoryRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<DelMagnetCategoryRsp>(arena);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const DelMagnetCategoryRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const DelMagnetCategoryRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.DelMagnetCategoryRsp";
+  }
+  protected:
+  explicit DelMagnetCategoryRsp(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:prpc.DelMagnetCategoryRsp)
  private:
   class _Internal;
 
@@ -6316,6 +7974,28 @@ inline void UserInfo::_internal_set_home_directory_id(::int64_t value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   _impl_.home_directory_id_ = value;
+}
+
+// int64 magnet_root_id = 6;
+inline void UserInfo::clear_magnet_root_id() {
+  _impl_.magnet_root_id_ = ::int64_t{0};
+}
+inline ::int64_t UserInfo::magnet_root_id() const {
+  // @@protoc_insertion_point(field_get:prpc.UserInfo.magnet_root_id)
+  return _internal_magnet_root_id();
+}
+inline void UserInfo::set_magnet_root_id(::int64_t value) {
+  _internal_set_magnet_root_id(value);
+  // @@protoc_insertion_point(field_set:prpc.UserInfo.magnet_root_id)
+}
+inline ::int64_t UserInfo::_internal_magnet_root_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.magnet_root_id_;
+}
+inline void UserInfo::_internal_set_magnet_root_id(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.magnet_root_id_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -6784,6 +8464,167 @@ inline void LoginRet::_internal_set_remember_me(bool value) {
 
 // -------------------------------------------------------------------
 
+// ChangePasswordReq
+
+// string email = 1;
+inline void ChangePasswordReq::clear_email() {
+  _impl_.email_.ClearToEmpty();
+}
+inline const std::string& ChangePasswordReq::email() const {
+  // @@protoc_insertion_point(field_get:prpc.ChangePasswordReq.email)
+  return _internal_email();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void ChangePasswordReq::set_email(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.email_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.ChangePasswordReq.email)
+}
+inline std::string* ChangePasswordReq::mutable_email() {
+  std::string* _s = _internal_mutable_email();
+  // @@protoc_insertion_point(field_mutable:prpc.ChangePasswordReq.email)
+  return _s;
+}
+inline const std::string& ChangePasswordReq::_internal_email() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.email_.Get();
+}
+inline void ChangePasswordReq::_internal_set_email(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.email_.Set(value, GetArenaForAllocation());
+}
+inline std::string* ChangePasswordReq::_internal_mutable_email() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.email_.Mutable( GetArenaForAllocation());
+}
+inline std::string* ChangePasswordReq::release_email() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.ChangePasswordReq.email)
+  return _impl_.email_.Release();
+}
+inline void ChangePasswordReq::set_allocated_email(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.email_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.email_.IsDefault()) {
+          _impl_.email_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.ChangePasswordReq.email)
+}
+
+// string old_passwd = 2;
+inline void ChangePasswordReq::clear_old_passwd() {
+  _impl_.old_passwd_.ClearToEmpty();
+}
+inline const std::string& ChangePasswordReq::old_passwd() const {
+  // @@protoc_insertion_point(field_get:prpc.ChangePasswordReq.old_passwd)
+  return _internal_old_passwd();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void ChangePasswordReq::set_old_passwd(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.old_passwd_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.ChangePasswordReq.old_passwd)
+}
+inline std::string* ChangePasswordReq::mutable_old_passwd() {
+  std::string* _s = _internal_mutable_old_passwd();
+  // @@protoc_insertion_point(field_mutable:prpc.ChangePasswordReq.old_passwd)
+  return _s;
+}
+inline const std::string& ChangePasswordReq::_internal_old_passwd() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.old_passwd_.Get();
+}
+inline void ChangePasswordReq::_internal_set_old_passwd(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.old_passwd_.Set(value, GetArenaForAllocation());
+}
+inline std::string* ChangePasswordReq::_internal_mutable_old_passwd() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.old_passwd_.Mutable( GetArenaForAllocation());
+}
+inline std::string* ChangePasswordReq::release_old_passwd() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.ChangePasswordReq.old_passwd)
+  return _impl_.old_passwd_.Release();
+}
+inline void ChangePasswordReq::set_allocated_old_passwd(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.old_passwd_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.old_passwd_.IsDefault()) {
+          _impl_.old_passwd_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.ChangePasswordReq.old_passwd)
+}
+
+// string new_passwd = 3;
+inline void ChangePasswordReq::clear_new_passwd() {
+  _impl_.new_passwd_.ClearToEmpty();
+}
+inline const std::string& ChangePasswordReq::new_passwd() const {
+  // @@protoc_insertion_point(field_get:prpc.ChangePasswordReq.new_passwd)
+  return _internal_new_passwd();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void ChangePasswordReq::set_new_passwd(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.new_passwd_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.ChangePasswordReq.new_passwd)
+}
+inline std::string* ChangePasswordReq::mutable_new_passwd() {
+  std::string* _s = _internal_mutable_new_passwd();
+  // @@protoc_insertion_point(field_mutable:prpc.ChangePasswordReq.new_passwd)
+  return _s;
+}
+inline const std::string& ChangePasswordReq::_internal_new_passwd() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.new_passwd_.Get();
+}
+inline void ChangePasswordReq::_internal_set_new_passwd(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.new_passwd_.Set(value, GetArenaForAllocation());
+}
+inline std::string* ChangePasswordReq::_internal_mutable_new_passwd() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.new_passwd_.Mutable( GetArenaForAllocation());
+}
+inline std::string* ChangePasswordReq::release_new_passwd() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.ChangePasswordReq.new_passwd)
+  return _impl_.new_passwd_.Release();
+}
+inline void ChangePasswordReq::set_allocated_new_passwd(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.new_passwd_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.new_passwd_.IsDefault()) {
+          _impl_.new_passwd_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.ChangePasswordReq.new_passwd)
+}
+
+// -------------------------------------------------------------------
+
+// ChangePasswordRsp
+
+// -------------------------------------------------------------------
+
 // NewCategoryItemReq
 
 // string name = 1;
@@ -7094,6 +8935,50 @@ inline void QuerySubItemsReq::set_allocated_share_id(std::string* value) {
   // @@protoc_insertion_point(field_set_allocated:prpc.QuerySubItemsReq.share_id)
 }
 
+// int32 page_num = 3;
+inline void QuerySubItemsReq::clear_page_num() {
+  _impl_.page_num_ = 0;
+}
+inline ::int32_t QuerySubItemsReq::page_num() const {
+  // @@protoc_insertion_point(field_get:prpc.QuerySubItemsReq.page_num)
+  return _internal_page_num();
+}
+inline void QuerySubItemsReq::set_page_num(::int32_t value) {
+  _internal_set_page_num(value);
+  // @@protoc_insertion_point(field_set:prpc.QuerySubItemsReq.page_num)
+}
+inline ::int32_t QuerySubItemsReq::_internal_page_num() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.page_num_;
+}
+inline void QuerySubItemsReq::_internal_set_page_num(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.page_num_ = value;
+}
+
+// int32 rows = 4;
+inline void QuerySubItemsReq::clear_rows() {
+  _impl_.rows_ = 0;
+}
+inline ::int32_t QuerySubItemsReq::rows() const {
+  // @@protoc_insertion_point(field_get:prpc.QuerySubItemsReq.rows)
+  return _internal_rows();
+}
+inline void QuerySubItemsReq::set_rows(::int32_t value) {
+  _internal_set_rows(value);
+  // @@protoc_insertion_point(field_set:prpc.QuerySubItemsReq.rows)
+}
+inline ::int32_t QuerySubItemsReq::_internal_rows() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.rows_;
+}
+inline void QuerySubItemsReq::_internal_set_rows(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.rows_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // QuerySubItemsRes
@@ -7231,6 +9116,28 @@ inline ::google::protobuf::RepeatedPtrField<::prpc::CategoryItem>*
 QuerySubItemsRes::_internal_mutable_items() {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return &_impl_.items_;
+}
+
+// int32 total_row_count = 3;
+inline void QuerySubItemsRes::clear_total_row_count() {
+  _impl_.total_row_count_ = 0;
+}
+inline ::int32_t QuerySubItemsRes::total_row_count() const {
+  // @@protoc_insertion_point(field_get:prpc.QuerySubItemsRes.total_row_count)
+  return _internal_total_row_count();
+}
+inline void QuerySubItemsRes::set_total_row_count(::int32_t value) {
+  _internal_set_total_row_count(value);
+  // @@protoc_insertion_point(field_set:prpc.QuerySubItemsRes.total_row_count)
+}
+inline ::int32_t QuerySubItemsRes::_internal_total_row_count() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.total_row_count_;
+}
+inline void QuerySubItemsRes::_internal_set_total_row_count(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.total_row_count_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -8163,36 +10070,6 @@ inline void DelSharedItemReq::set_allocated_share_id(std::string* value) {
 
 // -------------------------------------------------------------------
 
-// RefreshSubtitleReq
-
-// int64 item_id = 1;
-inline void RefreshSubtitleReq::clear_item_id() {
-  _impl_.item_id_ = ::int64_t{0};
-}
-inline ::int64_t RefreshSubtitleReq::item_id() const {
-  // @@protoc_insertion_point(field_get:prpc.RefreshSubtitleReq.item_id)
-  return _internal_item_id();
-}
-inline void RefreshSubtitleReq::set_item_id(::int64_t value) {
-  _internal_set_item_id(value);
-  // @@protoc_insertion_point(field_set:prpc.RefreshSubtitleReq.item_id)
-}
-inline ::int64_t RefreshSubtitleReq::_internal_item_id() const {
-  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.item_id_;
-}
-inline void RefreshSubtitleReq::_internal_set_item_id(::int64_t value) {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ;
-  _impl_.item_id_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// RefreshSubtitleRes
-
-// -------------------------------------------------------------------
-
 // SubtitleFile
 
 // string name = 1;
@@ -8375,28 +10252,150 @@ UploadSubtitleReq::_internal_mutable_subtitles() {
 
 // -------------------------------------------------------------------
 
-// JoinChatRoomReq
+// Room
 
-// int64 item_id = 1;
-inline void JoinChatRoomReq::clear_item_id() {
-  _impl_.item_id_ = ::int64_t{0};
+// .prpc.Room.Type type = 1;
+inline void Room::clear_type() {
+  _impl_.type_ = 0;
 }
-inline ::int64_t JoinChatRoomReq::item_id() const {
-  // @@protoc_insertion_point(field_get:prpc.JoinChatRoomReq.item_id)
-  return _internal_item_id();
+inline ::prpc::Room_Type Room::type() const {
+  // @@protoc_insertion_point(field_get:prpc.Room.type)
+  return _internal_type();
 }
-inline void JoinChatRoomReq::set_item_id(::int64_t value) {
-  _internal_set_item_id(value);
-  // @@protoc_insertion_point(field_set:prpc.JoinChatRoomReq.item_id)
+inline void Room::set_type(::prpc::Room_Type value) {
+  _internal_set_type(value);
+  // @@protoc_insertion_point(field_set:prpc.Room.type)
 }
-inline ::int64_t JoinChatRoomReq::_internal_item_id() const {
+inline ::prpc::Room_Type Room::_internal_type() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.item_id_;
+  return static_cast<::prpc::Room_Type>(_impl_.type_);
 }
-inline void JoinChatRoomReq::_internal_set_item_id(::int64_t value) {
+inline void Room::_internal_set_type(::prpc::Room_Type value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
-  _impl_.item_id_ = value;
+  _impl_.type_ = value;
+}
+
+// int64 id = 2;
+inline void Room::clear_id() {
+  _impl_.id_ = ::int64_t{0};
+}
+inline ::int64_t Room::id() const {
+  // @@protoc_insertion_point(field_get:prpc.Room.id)
+  return _internal_id();
+}
+inline void Room::set_id(::int64_t value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:prpc.Room.id)
+}
+inline ::int64_t Room::_internal_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.id_;
+}
+inline void Room::_internal_set_id(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// JoinChatRoomReq
+
+// .prpc.Room room = 1;
+inline bool JoinChatRoomReq::has_room() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.room_ != nullptr);
+  return value;
+}
+inline void JoinChatRoomReq::clear_room() {
+  if (_impl_.room_ != nullptr) _impl_.room_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::prpc::Room& JoinChatRoomReq::_internal_room() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::Room* p = _impl_.room_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::Room&>(::prpc::_Room_default_instance_);
+}
+inline const ::prpc::Room& JoinChatRoomReq::room() const {
+  // @@protoc_insertion_point(field_get:prpc.JoinChatRoomReq.room)
+  return _internal_room();
+}
+inline void JoinChatRoomReq::unsafe_arena_set_allocated_room(::prpc::Room* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.room_);
+  }
+  _impl_.room_ = reinterpret_cast<::prpc::Room*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.JoinChatRoomReq.room)
+}
+inline ::prpc::Room* JoinChatRoomReq::release_room() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::Room* released = _impl_.room_;
+  _impl_.room_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::Room* JoinChatRoomReq::unsafe_arena_release_room() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.JoinChatRoomReq.room)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::Room* temp = _impl_.room_;
+  _impl_.room_ = nullptr;
+  return temp;
+}
+inline ::prpc::Room* JoinChatRoomReq::_internal_mutable_room() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  if (_impl_.room_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::Room>(GetArenaForAllocation());
+    _impl_.room_ = reinterpret_cast<::prpc::Room*>(p);
+  }
+  return _impl_.room_;
+}
+inline ::prpc::Room* JoinChatRoomReq::mutable_room() {
+  ::prpc::Room* _msg = _internal_mutable_room();
+  // @@protoc_insertion_point(field_mutable:prpc.JoinChatRoomReq.room)
+  return _msg;
+}
+inline void JoinChatRoomReq::set_allocated_room(::prpc::Room* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::Room*>(_impl_.room_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::Room*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.room_ = reinterpret_cast<::prpc::Room*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.JoinChatRoomReq.room)
 }
 
 // -------------------------------------------------------------------
@@ -8553,26 +10552,100 @@ inline void ChatMessage::set_allocated_msg(std::string* value) {
 
 // JoinChatRoomRes
 
-// int64 item_id = 1;
-inline void JoinChatRoomRes::clear_item_id() {
-  _impl_.item_id_ = ::int64_t{0};
+// .prpc.Room room = 1;
+inline bool JoinChatRoomRes::has_room() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.room_ != nullptr);
+  return value;
 }
-inline ::int64_t JoinChatRoomRes::item_id() const {
-  // @@protoc_insertion_point(field_get:prpc.JoinChatRoomRes.item_id)
-  return _internal_item_id();
+inline void JoinChatRoomRes::clear_room() {
+  if (_impl_.room_ != nullptr) _impl_.room_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
 }
-inline void JoinChatRoomRes::set_item_id(::int64_t value) {
-  _internal_set_item_id(value);
-  // @@protoc_insertion_point(field_set:prpc.JoinChatRoomRes.item_id)
-}
-inline ::int64_t JoinChatRoomRes::_internal_item_id() const {
+inline const ::prpc::Room& JoinChatRoomRes::_internal_room() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.item_id_;
+  const ::prpc::Room* p = _impl_.room_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::Room&>(::prpc::_Room_default_instance_);
 }
-inline void JoinChatRoomRes::_internal_set_item_id(::int64_t value) {
+inline const ::prpc::Room& JoinChatRoomRes::room() const {
+  // @@protoc_insertion_point(field_get:prpc.JoinChatRoomRes.room)
+  return _internal_room();
+}
+inline void JoinChatRoomRes::unsafe_arena_set_allocated_room(::prpc::Room* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ;
-  _impl_.item_id_ = value;
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.room_);
+  }
+  _impl_.room_ = reinterpret_cast<::prpc::Room*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.JoinChatRoomRes.room)
+}
+inline ::prpc::Room* JoinChatRoomRes::release_room() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::Room* released = _impl_.room_;
+  _impl_.room_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::Room* JoinChatRoomRes::unsafe_arena_release_room() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.JoinChatRoomRes.room)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::Room* temp = _impl_.room_;
+  _impl_.room_ = nullptr;
+  return temp;
+}
+inline ::prpc::Room* JoinChatRoomRes::_internal_mutable_room() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  if (_impl_.room_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::Room>(GetArenaForAllocation());
+    _impl_.room_ = reinterpret_cast<::prpc::Room*>(p);
+  }
+  return _impl_.room_;
+}
+inline ::prpc::Room* JoinChatRoomRes::mutable_room() {
+  ::prpc::Room* _msg = _internal_mutable_room();
+  // @@protoc_insertion_point(field_mutable:prpc.JoinChatRoomRes.room)
+  return _msg;
+}
+inline void JoinChatRoomRes::set_allocated_room(::prpc::Room* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::Room*>(_impl_.room_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::Room*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.room_ = reinterpret_cast<::prpc::Room*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.JoinChatRoomRes.room)
 }
 
 // repeated .prpc.ChatMessage chat_msgs = 2;
@@ -8625,37 +10698,111 @@ JoinChatRoomRes::_internal_mutable_chat_msgs() {
 
 // SendMsg2ChatRoomReq
 
-// int64 item_id = 1;
-inline void SendMsg2ChatRoomReq::clear_item_id() {
-  _impl_.item_id_ = ::int64_t{0};
+// .prpc.Room room = 1;
+inline bool SendMsg2ChatRoomReq::has_room() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.room_ != nullptr);
+  return value;
 }
-inline ::int64_t SendMsg2ChatRoomReq::item_id() const {
-  // @@protoc_insertion_point(field_get:prpc.SendMsg2ChatRoomReq.item_id)
-  return _internal_item_id();
+inline void SendMsg2ChatRoomReq::clear_room() {
+  if (_impl_.room_ != nullptr) _impl_.room_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
 }
-inline void SendMsg2ChatRoomReq::set_item_id(::int64_t value) {
-  _internal_set_item_id(value);
-  // @@protoc_insertion_point(field_set:prpc.SendMsg2ChatRoomReq.item_id)
-}
-inline ::int64_t SendMsg2ChatRoomReq::_internal_item_id() const {
+inline const ::prpc::Room& SendMsg2ChatRoomReq::_internal_room() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.item_id_;
+  const ::prpc::Room* p = _impl_.room_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::Room&>(::prpc::_Room_default_instance_);
 }
-inline void SendMsg2ChatRoomReq::_internal_set_item_id(::int64_t value) {
+inline const ::prpc::Room& SendMsg2ChatRoomReq::room() const {
+  // @@protoc_insertion_point(field_get:prpc.SendMsg2ChatRoomReq.room)
+  return _internal_room();
+}
+inline void SendMsg2ChatRoomReq::unsafe_arena_set_allocated_room(::prpc::Room* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ;
-  _impl_.item_id_ = value;
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.room_);
+  }
+  _impl_.room_ = reinterpret_cast<::prpc::Room*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.SendMsg2ChatRoomReq.room)
+}
+inline ::prpc::Room* SendMsg2ChatRoomReq::release_room() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::Room* released = _impl_.room_;
+  _impl_.room_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::Room* SendMsg2ChatRoomReq::unsafe_arena_release_room() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.SendMsg2ChatRoomReq.room)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::Room* temp = _impl_.room_;
+  _impl_.room_ = nullptr;
+  return temp;
+}
+inline ::prpc::Room* SendMsg2ChatRoomReq::_internal_mutable_room() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  if (_impl_.room_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::Room>(GetArenaForAllocation());
+    _impl_.room_ = reinterpret_cast<::prpc::Room*>(p);
+  }
+  return _impl_.room_;
+}
+inline ::prpc::Room* SendMsg2ChatRoomReq::mutable_room() {
+  ::prpc::Room* _msg = _internal_mutable_room();
+  // @@protoc_insertion_point(field_mutable:prpc.SendMsg2ChatRoomReq.room)
+  return _msg;
+}
+inline void SendMsg2ChatRoomReq::set_allocated_room(::prpc::Room* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::Room*>(_impl_.room_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::Room*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.room_ = reinterpret_cast<::prpc::Room*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.SendMsg2ChatRoomReq.room)
 }
 
 // .prpc.ChatMessage chat_msg = 2;
 inline bool SendMsg2ChatRoomReq::has_chat_msg() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.chat_msg_ != nullptr);
   return value;
 }
 inline void SendMsg2ChatRoomReq::clear_chat_msg() {
   if (_impl_.chat_msg_ != nullptr) _impl_.chat_msg_->Clear();
-  _impl_._has_bits_[0] &= ~0x00000001u;
+  _impl_._has_bits_[0] &= ~0x00000002u;
 }
 inline const ::prpc::ChatMessage& SendMsg2ChatRoomReq::_internal_chat_msg() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
@@ -8673,16 +10820,16 @@ inline void SendMsg2ChatRoomReq::unsafe_arena_set_allocated_chat_msg(::prpc::Cha
   }
   _impl_.chat_msg_ = reinterpret_cast<::prpc::ChatMessage*>(value);
   if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000001u;
+    _impl_._has_bits_[0] |= 0x00000002u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
+    _impl_._has_bits_[0] &= ~0x00000002u;
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.SendMsg2ChatRoomReq.chat_msg)
 }
 inline ::prpc::ChatMessage* SendMsg2ChatRoomReq::release_chat_msg() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
-  _impl_._has_bits_[0] &= ~0x00000001u;
+  _impl_._has_bits_[0] &= ~0x00000002u;
   ::prpc::ChatMessage* released = _impl_.chat_msg_;
   _impl_.chat_msg_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
@@ -8702,14 +10849,14 @@ inline ::prpc::ChatMessage* SendMsg2ChatRoomReq::unsafe_arena_release_chat_msg()
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   // @@protoc_insertion_point(field_release:prpc.SendMsg2ChatRoomReq.chat_msg)
 
-  _impl_._has_bits_[0] &= ~0x00000001u;
+  _impl_._has_bits_[0] &= ~0x00000002u;
   ::prpc::ChatMessage* temp = _impl_.chat_msg_;
   _impl_.chat_msg_ = nullptr;
   return temp;
 }
 inline ::prpc::ChatMessage* SendMsg2ChatRoomReq::_internal_mutable_chat_msg() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  _impl_._has_bits_[0] |= 0x00000001u;
+  _impl_._has_bits_[0] |= 0x00000002u;
   if (_impl_.chat_msg_ == nullptr) {
     auto* p = CreateMaybeMessage<::prpc::ChatMessage>(GetArenaForAllocation());
     _impl_.chat_msg_ = reinterpret_cast<::prpc::ChatMessage*>(p);
@@ -8734,9 +10881,9 @@ inline void SendMsg2ChatRoomReq::set_allocated_chat_msg(::prpc::ChatMessage* val
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    _impl_._has_bits_[0] |= 0x00000001u;
+    _impl_._has_bits_[0] |= 0x00000002u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
+    _impl_._has_bits_[0] &= ~0x00000002u;
   }
 
   _impl_.chat_msg_ = reinterpret_cast<::prpc::ChatMessage*>(value);
@@ -8747,6 +10894,490 @@ inline void SendMsg2ChatRoomReq::set_allocated_chat_msg(::prpc::ChatMessage* val
 
 // SendMsg2ChatRoomRes
 
+// -------------------------------------------------------------------
+
+// AddMagnetCategoryReq
+
+// int64 parent_id = 1;
+inline void AddMagnetCategoryReq::clear_parent_id() {
+  _impl_.parent_id_ = ::int64_t{0};
+}
+inline ::int64_t AddMagnetCategoryReq::parent_id() const {
+  // @@protoc_insertion_point(field_get:prpc.AddMagnetCategoryReq.parent_id)
+  return _internal_parent_id();
+}
+inline void AddMagnetCategoryReq::set_parent_id(::int64_t value) {
+  _internal_set_parent_id(value);
+  // @@protoc_insertion_point(field_set:prpc.AddMagnetCategoryReq.parent_id)
+}
+inline ::int64_t AddMagnetCategoryReq::_internal_parent_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.parent_id_;
+}
+inline void AddMagnetCategoryReq::_internal_set_parent_id(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.parent_id_ = value;
+}
+
+// string category_name = 2;
+inline void AddMagnetCategoryReq::clear_category_name() {
+  _impl_.category_name_.ClearToEmpty();
+}
+inline const std::string& AddMagnetCategoryReq::category_name() const {
+  // @@protoc_insertion_point(field_get:prpc.AddMagnetCategoryReq.category_name)
+  return _internal_category_name();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void AddMagnetCategoryReq::set_category_name(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.category_name_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.AddMagnetCategoryReq.category_name)
+}
+inline std::string* AddMagnetCategoryReq::mutable_category_name() {
+  std::string* _s = _internal_mutable_category_name();
+  // @@protoc_insertion_point(field_mutable:prpc.AddMagnetCategoryReq.category_name)
+  return _s;
+}
+inline const std::string& AddMagnetCategoryReq::_internal_category_name() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.category_name_.Get();
+}
+inline void AddMagnetCategoryReq::_internal_set_category_name(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.category_name_.Set(value, GetArenaForAllocation());
+}
+inline std::string* AddMagnetCategoryReq::_internal_mutable_category_name() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.category_name_.Mutable( GetArenaForAllocation());
+}
+inline std::string* AddMagnetCategoryReq::release_category_name() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.AddMagnetCategoryReq.category_name)
+  return _impl_.category_name_.Release();
+}
+inline void AddMagnetCategoryReq::set_allocated_category_name(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.category_name_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.category_name_.IsDefault()) {
+          _impl_.category_name_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.AddMagnetCategoryReq.category_name)
+}
+
+// string introduce = 3;
+inline void AddMagnetCategoryReq::clear_introduce() {
+  _impl_.introduce_.ClearToEmpty();
+}
+inline const std::string& AddMagnetCategoryReq::introduce() const {
+  // @@protoc_insertion_point(field_get:prpc.AddMagnetCategoryReq.introduce)
+  return _internal_introduce();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void AddMagnetCategoryReq::set_introduce(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.introduce_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.AddMagnetCategoryReq.introduce)
+}
+inline std::string* AddMagnetCategoryReq::mutable_introduce() {
+  std::string* _s = _internal_mutable_introduce();
+  // @@protoc_insertion_point(field_mutable:prpc.AddMagnetCategoryReq.introduce)
+  return _s;
+}
+inline const std::string& AddMagnetCategoryReq::_internal_introduce() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.introduce_.Get();
+}
+inline void AddMagnetCategoryReq::_internal_set_introduce(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.introduce_.Set(value, GetArenaForAllocation());
+}
+inline std::string* AddMagnetCategoryReq::_internal_mutable_introduce() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.introduce_.Mutable( GetArenaForAllocation());
+}
+inline std::string* AddMagnetCategoryReq::release_introduce() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.AddMagnetCategoryReq.introduce)
+  return _impl_.introduce_.Release();
+}
+inline void AddMagnetCategoryReq::set_allocated_introduce(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.introduce_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.introduce_.IsDefault()) {
+          _impl_.introduce_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.AddMagnetCategoryReq.introduce)
+}
+
+// -------------------------------------------------------------------
+
+// AddMagnetCategoryRsp
+
+// -------------------------------------------------------------------
+
+// AddMagnetUriReq
+
+// int64 category_id = 1;
+inline void AddMagnetUriReq::clear_category_id() {
+  _impl_.category_id_ = ::int64_t{0};
+}
+inline ::int64_t AddMagnetUriReq::category_id() const {
+  // @@protoc_insertion_point(field_get:prpc.AddMagnetUriReq.category_id)
+  return _internal_category_id();
+}
+inline void AddMagnetUriReq::set_category_id(::int64_t value) {
+  _internal_set_category_id(value);
+  // @@protoc_insertion_point(field_set:prpc.AddMagnetUriReq.category_id)
+}
+inline ::int64_t AddMagnetUriReq::_internal_category_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.category_id_;
+}
+inline void AddMagnetUriReq::_internal_set_category_id(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.category_id_ = value;
+}
+
+// string magnet_uri = 2;
+inline void AddMagnetUriReq::clear_magnet_uri() {
+  _impl_.magnet_uri_.ClearToEmpty();
+}
+inline const std::string& AddMagnetUriReq::magnet_uri() const {
+  // @@protoc_insertion_point(field_get:prpc.AddMagnetUriReq.magnet_uri)
+  return _internal_magnet_uri();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void AddMagnetUriReq::set_magnet_uri(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.magnet_uri_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.AddMagnetUriReq.magnet_uri)
+}
+inline std::string* AddMagnetUriReq::mutable_magnet_uri() {
+  std::string* _s = _internal_mutable_magnet_uri();
+  // @@protoc_insertion_point(field_mutable:prpc.AddMagnetUriReq.magnet_uri)
+  return _s;
+}
+inline const std::string& AddMagnetUriReq::_internal_magnet_uri() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.magnet_uri_.Get();
+}
+inline void AddMagnetUriReq::_internal_set_magnet_uri(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.magnet_uri_.Set(value, GetArenaForAllocation());
+}
+inline std::string* AddMagnetUriReq::_internal_mutable_magnet_uri() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.magnet_uri_.Mutable( GetArenaForAllocation());
+}
+inline std::string* AddMagnetUriReq::release_magnet_uri() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.AddMagnetUriReq.magnet_uri)
+  return _impl_.magnet_uri_.Release();
+}
+inline void AddMagnetUriReq::set_allocated_magnet_uri(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.magnet_uri_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.magnet_uri_.IsDefault()) {
+          _impl_.magnet_uri_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.AddMagnetUriReq.magnet_uri)
+}
+
+// string introduce = 3;
+inline void AddMagnetUriReq::clear_introduce() {
+  _impl_.introduce_.ClearToEmpty();
+}
+inline const std::string& AddMagnetUriReq::introduce() const {
+  // @@protoc_insertion_point(field_get:prpc.AddMagnetUriReq.introduce)
+  return _internal_introduce();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void AddMagnetUriReq::set_introduce(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.introduce_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.AddMagnetUriReq.introduce)
+}
+inline std::string* AddMagnetUriReq::mutable_introduce() {
+  std::string* _s = _internal_mutable_introduce();
+  // @@protoc_insertion_point(field_mutable:prpc.AddMagnetUriReq.introduce)
+  return _s;
+}
+inline const std::string& AddMagnetUriReq::_internal_introduce() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.introduce_.Get();
+}
+inline void AddMagnetUriReq::_internal_set_introduce(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.introduce_.Set(value, GetArenaForAllocation());
+}
+inline std::string* AddMagnetUriReq::_internal_mutable_introduce() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.introduce_.Mutable( GetArenaForAllocation());
+}
+inline std::string* AddMagnetUriReq::release_introduce() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.AddMagnetUriReq.introduce)
+  return _impl_.introduce_.Release();
+}
+inline void AddMagnetUriReq::set_allocated_introduce(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.introduce_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.introduce_.IsDefault()) {
+          _impl_.introduce_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.AddMagnetUriReq.introduce)
+}
+
+// -------------------------------------------------------------------
+
+// AddMagnetUriRsp
+
+// -------------------------------------------------------------------
+
+// QueryMagnetReq
+
+// int64 parent_id = 1;
+inline void QueryMagnetReq::clear_parent_id() {
+  _impl_.parent_id_ = ::int64_t{0};
+}
+inline ::int64_t QueryMagnetReq::parent_id() const {
+  // @@protoc_insertion_point(field_get:prpc.QueryMagnetReq.parent_id)
+  return _internal_parent_id();
+}
+inline void QueryMagnetReq::set_parent_id(::int64_t value) {
+  _internal_set_parent_id(value);
+  // @@protoc_insertion_point(field_set:prpc.QueryMagnetReq.parent_id)
+}
+inline ::int64_t QueryMagnetReq::_internal_parent_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.parent_id_;
+}
+inline void QueryMagnetReq::_internal_set_parent_id(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.parent_id_ = value;
+}
+
+// string search_cond = 2;
+inline void QueryMagnetReq::clear_search_cond() {
+  _impl_.search_cond_.ClearToEmpty();
+}
+inline const std::string& QueryMagnetReq::search_cond() const {
+  // @@protoc_insertion_point(field_get:prpc.QueryMagnetReq.search_cond)
+  return _internal_search_cond();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void QueryMagnetReq::set_search_cond(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.search_cond_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.QueryMagnetReq.search_cond)
+}
+inline std::string* QueryMagnetReq::mutable_search_cond() {
+  std::string* _s = _internal_mutable_search_cond();
+  // @@protoc_insertion_point(field_mutable:prpc.QueryMagnetReq.search_cond)
+  return _s;
+}
+inline const std::string& QueryMagnetReq::_internal_search_cond() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.search_cond_.Get();
+}
+inline void QueryMagnetReq::_internal_set_search_cond(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.search_cond_.Set(value, GetArenaForAllocation());
+}
+inline std::string* QueryMagnetReq::_internal_mutable_search_cond() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.search_cond_.Mutable( GetArenaForAllocation());
+}
+inline std::string* QueryMagnetReq::release_search_cond() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.QueryMagnetReq.search_cond)
+  return _impl_.search_cond_.Release();
+}
+inline void QueryMagnetReq::set_allocated_search_cond(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.search_cond_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.search_cond_.IsDefault()) {
+          _impl_.search_cond_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.QueryMagnetReq.search_cond)
+}
+
+// int32 page_num = 3;
+inline void QueryMagnetReq::clear_page_num() {
+  _impl_.page_num_ = 0;
+}
+inline ::int32_t QueryMagnetReq::page_num() const {
+  // @@protoc_insertion_point(field_get:prpc.QueryMagnetReq.page_num)
+  return _internal_page_num();
+}
+inline void QueryMagnetReq::set_page_num(::int32_t value) {
+  _internal_set_page_num(value);
+  // @@protoc_insertion_point(field_set:prpc.QueryMagnetReq.page_num)
+}
+inline ::int32_t QueryMagnetReq::_internal_page_num() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.page_num_;
+}
+inline void QueryMagnetReq::_internal_set_page_num(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.page_num_ = value;
+}
+
+// int32 rows = 4;
+inline void QueryMagnetReq::clear_rows() {
+  _impl_.rows_ = 0;
+}
+inline ::int32_t QueryMagnetReq::rows() const {
+  // @@protoc_insertion_point(field_get:prpc.QueryMagnetReq.rows)
+  return _internal_rows();
+}
+inline void QueryMagnetReq::set_rows(::int32_t value) {
+  _internal_set_rows(value);
+  // @@protoc_insertion_point(field_set:prpc.QueryMagnetReq.rows)
+}
+inline ::int32_t QueryMagnetReq::_internal_rows() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.rows_;
+}
+inline void QueryMagnetReq::_internal_set_rows(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.rows_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// QueryMagnetRsp
+
+// repeated .prpc.CategoryItem items = 1;
+inline int QueryMagnetRsp::_internal_items_size() const {
+  return _internal_items().size();
+}
+inline int QueryMagnetRsp::items_size() const {
+  return _internal_items_size();
+}
+inline ::prpc::CategoryItem* QueryMagnetRsp::mutable_items(int index) {
+  // @@protoc_insertion_point(field_mutable:prpc.QueryMagnetRsp.items)
+  return _internal_mutable_items()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::prpc::CategoryItem >*
+QueryMagnetRsp::mutable_items() {
+  // @@protoc_insertion_point(field_mutable_list:prpc.QueryMagnetRsp.items)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  return _internal_mutable_items();
+}
+inline const ::prpc::CategoryItem& QueryMagnetRsp::items(int index) const {
+  // @@protoc_insertion_point(field_get:prpc.QueryMagnetRsp.items)
+    return _internal_items().Get(index);
+}
+inline ::prpc::CategoryItem* QueryMagnetRsp::add_items() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::prpc::CategoryItem* _add = _internal_mutable_items()->Add();
+  // @@protoc_insertion_point(field_add:prpc.QueryMagnetRsp.items)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::prpc::CategoryItem >&
+QueryMagnetRsp::items() const {
+  // @@protoc_insertion_point(field_list:prpc.QueryMagnetRsp.items)
+  return _internal_items();
+}
+inline const ::google::protobuf::RepeatedPtrField<::prpc::CategoryItem>&
+QueryMagnetRsp::_internal_items() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.items_;
+}
+inline ::google::protobuf::RepeatedPtrField<::prpc::CategoryItem>*
+QueryMagnetRsp::_internal_mutable_items() {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return &_impl_.items_;
+}
+
+// int32 total_row_count = 2;
+inline void QueryMagnetRsp::clear_total_row_count() {
+  _impl_.total_row_count_ = 0;
+}
+inline ::int32_t QueryMagnetRsp::total_row_count() const {
+  // @@protoc_insertion_point(field_get:prpc.QueryMagnetRsp.total_row_count)
+  return _internal_total_row_count();
+}
+inline void QueryMagnetRsp::set_total_row_count(::int32_t value) {
+  _internal_set_total_row_count(value);
+  // @@protoc_insertion_point(field_set:prpc.QueryMagnetRsp.total_row_count)
+}
+inline ::int32_t QueryMagnetRsp::_internal_total_row_count() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.total_row_count_;
+}
+inline void QueryMagnetRsp::_internal_set_total_row_count(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.total_row_count_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// DelMagnetCategoryReq
+
+// int64 id = 1;
+inline void DelMagnetCategoryReq::clear_id() {
+  _impl_.id_ = ::int64_t{0};
+}
+inline ::int64_t DelMagnetCategoryReq::id() const {
+  // @@protoc_insertion_point(field_get:prpc.DelMagnetCategoryReq.id)
+  return _internal_id();
+}
+inline void DelMagnetCategoryReq::set_id(::int64_t value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:prpc.DelMagnetCategoryReq.id)
+}
+inline ::int64_t DelMagnetCategoryReq::_internal_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.id_;
+}
+inline void DelMagnetCategoryReq::_internal_set_id(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// DelMagnetCategoryRsp
+
 #ifdef __GNUC__
 #pragma GCC diagnostic pop
 #endif  // __GNUC__
@@ -8754,6 +11385,19 @@ inline void SendMsg2ChatRoomReq::set_allocated_chat_msg(::prpc::ChatMessage* val
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace prpc
 
+
+namespace google {
+namespace protobuf {
+
+template <>
+struct is_proto_enum<::prpc::Room_Type> : std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor<::prpc::Room_Type>() {
+  return ::prpc::Room_Type_descriptor();
+}
+
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)
 

@@ -77,12 +77,12 @@ extern FileProgressReqDefaultTypeInternal _FileProgressReq_default_instance_;
 class FileProgressRes;
 struct FileProgressResDefaultTypeInternal;
 extern FileProgressResDefaultTypeInternal _FileProgressRes_default_instance_;
-class GenMagnetUriReq;
-struct GenMagnetUriReqDefaultTypeInternal;
-extern GenMagnetUriReqDefaultTypeInternal _GenMagnetUriReq_default_instance_;
-class GenMagnetUriRsp;
-struct GenMagnetUriRspDefaultTypeInternal;
-extern GenMagnetUriRspDefaultTypeInternal _GenMagnetUriRsp_default_instance_;
+class GetMagnetUriReq;
+struct GetMagnetUriReqDefaultTypeInternal;
+extern GetMagnetUriReqDefaultTypeInternal _GetMagnetUriReq_default_instance_;
+class GetMagnetUriRsp;
+struct GetMagnetUriRspDefaultTypeInternal;
+extern GetMagnetUriRspDefaultTypeInternal _GetMagnetUriRsp_default_instance_;
 class InfoHash;
 struct InfoHashDefaultTypeInternal;
 extern InfoHashDefaultTypeInternal _InfoHash_default_instance_;
@@ -149,6 +149,38 @@ inline const std::string& DownloadRequest_ReqType_Name(DownloadRequest_ReqType v
 inline bool DownloadRequest_ReqType_Parse(absl::string_view name, DownloadRequest_ReqType* value) {
   return ::google::protobuf::internal::ParseNamedEnum<DownloadRequest_ReqType>(
       DownloadRequest_ReqType_descriptor(), name, value);
+}
+enum GetMagnetUriReq_ReqType : int {
+  GetMagnetUriReq_ReqType_Torrent = 0,
+  GetMagnetUriReq_ReqType_InfoHash = 1,
+  GetMagnetUriReq_ReqType_GetMagnetUriReq_ReqType_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      std::numeric_limits<::int32_t>::min(),
+  GetMagnetUriReq_ReqType_GetMagnetUriReq_ReqType_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      std::numeric_limits<::int32_t>::max(),
+};
+
+bool GetMagnetUriReq_ReqType_IsValid(int value);
+constexpr GetMagnetUriReq_ReqType GetMagnetUriReq_ReqType_ReqType_MIN = static_cast<GetMagnetUriReq_ReqType>(0);
+constexpr GetMagnetUriReq_ReqType GetMagnetUriReq_ReqType_ReqType_MAX = static_cast<GetMagnetUriReq_ReqType>(1);
+constexpr int GetMagnetUriReq_ReqType_ReqType_ARRAYSIZE = 1 + 1;
+const ::google::protobuf::EnumDescriptor*
+GetMagnetUriReq_ReqType_descriptor();
+template <typename T>
+const std::string& GetMagnetUriReq_ReqType_Name(T value) {
+  static_assert(std::is_same<T, GetMagnetUriReq_ReqType>::value ||
+                    std::is_integral<T>::value,
+                "Incorrect type passed to ReqType_Name().");
+  return GetMagnetUriReq_ReqType_Name(static_cast<GetMagnetUriReq_ReqType>(value));
+}
+template <>
+inline const std::string& GetMagnetUriReq_ReqType_Name(GetMagnetUriReq_ReqType value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<GetMagnetUriReq_ReqType_descriptor,
+                                                 0, 1>(
+      static_cast<int>(value));
+}
+inline bool GetMagnetUriReq_ReqType_Parse(absl::string_view name, GetMagnetUriReq_ReqType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<GetMagnetUriReq_ReqType>(
+      GetMagnetUriReq_ReqType_descriptor(), name, value);
 }
 enum BtFile_State : int {
   BtFile_State_stop = 0,
@@ -781,25 +813,25 @@ class DownloadRespone final :
   friend struct ::TableStruct_bt_2eproto;
 };// -------------------------------------------------------------------
 
-class GenMagnetUriReq final :
-    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.GenMagnetUriReq) */ {
+class GetMagnetUriReq final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.GetMagnetUriReq) */ {
  public:
-  inline GenMagnetUriReq() : GenMagnetUriReq(nullptr) {}
-  ~GenMagnetUriReq() override;
+  inline GetMagnetUriReq() : GetMagnetUriReq(nullptr) {}
+  ~GetMagnetUriReq() override;
   template<typename = void>
-  explicit PROTOBUF_CONSTEXPR GenMagnetUriReq(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR GetMagnetUriReq(::google::protobuf::internal::ConstantInitialized);
 
-  GenMagnetUriReq(const GenMagnetUriReq& from);
-  GenMagnetUriReq(GenMagnetUriReq&& from) noexcept
-    : GenMagnetUriReq() {
+  GetMagnetUriReq(const GetMagnetUriReq& from);
+  GetMagnetUriReq(GetMagnetUriReq&& from) noexcept
+    : GetMagnetUriReq() {
     *this = ::std::move(from);
   }
 
-  inline GenMagnetUriReq& operator=(const GenMagnetUriReq& from) {
+  inline GetMagnetUriReq& operator=(const GetMagnetUriReq& from) {
     CopyFrom(from);
     return *this;
   }
-  inline GenMagnetUriReq& operator=(GenMagnetUriReq&& from) noexcept {
+  inline GetMagnetUriReq& operator=(GetMagnetUriReq&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -829,20 +861,20 @@ class GenMagnetUriReq final :
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const GenMagnetUriReq& default_instance() {
+  static const GetMagnetUriReq& default_instance() {
     return *internal_default_instance();
   }
-  static inline const GenMagnetUriReq* internal_default_instance() {
-    return reinterpret_cast<const GenMagnetUriReq*>(
-               &_GenMagnetUriReq_default_instance_);
+  static inline const GetMagnetUriReq* internal_default_instance() {
+    return reinterpret_cast<const GetMagnetUriReq*>(
+               &_GetMagnetUriReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     3;
 
-  friend void swap(GenMagnetUriReq& a, GenMagnetUriReq& b) {
+  friend void swap(GetMagnetUriReq& a, GetMagnetUriReq& b) {
     a.Swap(&b);
   }
-  inline void Swap(GenMagnetUriReq* other) {
+  inline void Swap(GetMagnetUriReq* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -855,7 +887,7 @@ class GenMagnetUriReq final :
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(GenMagnetUriReq* other) {
+  void UnsafeArenaSwap(GetMagnetUriReq* other) {
     if (other == this) return;
     ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -863,14 +895,14 @@ class GenMagnetUriReq final :
 
   // implements Message ----------------------------------------------
 
-  GenMagnetUriReq* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<GenMagnetUriReq>(arena);
+  GetMagnetUriReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetMagnetUriReq>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const GenMagnetUriReq& from);
+  void CopyFrom(const GetMagnetUriReq& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom( const GenMagnetUriReq& from) {
-    GenMagnetUriReq::MergeImpl(*this, from);
+  void MergeFrom( const GetMagnetUriReq& from) {
+    GetMagnetUriReq::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
@@ -888,15 +920,15 @@ class GenMagnetUriReq final :
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(GenMagnetUriReq* other);
+  void InternalSwap(GetMagnetUriReq* other);
 
   private:
   friend class ::google::protobuf::internal::AnyMetadata;
   static ::absl::string_view FullMessageName() {
-    return "prpc.GenMagnetUriReq";
+    return "prpc.GetMagnetUriReq";
   }
   protected:
-  explicit GenMagnetUriReq(::google::protobuf::Arena* arena);
+  explicit GetMagnetUriReq(::google::protobuf::Arena* arena);
   public:
 
   static const ClassData _class_data_;
@@ -906,64 +938,114 @@ class GenMagnetUriReq final :
 
   // nested types ----------------------------------------------------
 
+  using ReqType = GetMagnetUriReq_ReqType;
+  static constexpr ReqType Torrent = GetMagnetUriReq_ReqType_Torrent;
+  static constexpr ReqType InfoHash = GetMagnetUriReq_ReqType_InfoHash;
+  static inline bool ReqType_IsValid(int value) {
+    return GetMagnetUriReq_ReqType_IsValid(value);
+  }
+  static constexpr ReqType ReqType_MIN = GetMagnetUriReq_ReqType_ReqType_MIN;
+  static constexpr ReqType ReqType_MAX = GetMagnetUriReq_ReqType_ReqType_MAX;
+  static constexpr int ReqType_ARRAYSIZE = GetMagnetUriReq_ReqType_ReqType_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor* ReqType_descriptor() {
+    return GetMagnetUriReq_ReqType_descriptor();
+  }
+  template <typename T>
+  static inline const std::string& ReqType_Name(T value) {
+    return GetMagnetUriReq_ReqType_Name(value);
+  }
+  static inline bool ReqType_Parse(absl::string_view name, ReqType* value) {
+    return GetMagnetUriReq_ReqType_Parse(name, value);
+  }
+
   // accessors -------------------------------------------------------
 
   enum : int {
-    kTorrentDataFieldNumber = 1,
+    kContentFieldNumber = 2,
+    kInfoHashFieldNumber = 3,
+    kTypeFieldNumber = 1,
   };
-  // string torrent_data = 1;
-  void clear_torrent_data() ;
-  const std::string& torrent_data() const;
+  // bytes content = 2;
+  void clear_content() ;
+  const std::string& content() const;
   template <typename Arg_ = const std::string&, typename... Args_>
-  void set_torrent_data(Arg_&& arg, Args_... args);
-  std::string* mutable_torrent_data();
-  PROTOBUF_NODISCARD std::string* release_torrent_data();
-  void set_allocated_torrent_data(std::string* ptr);
+  void set_content(Arg_&& arg, Args_... args);
+  std::string* mutable_content();
+  PROTOBUF_NODISCARD std::string* release_content();
+  void set_allocated_content(std::string* ptr);
 
   private:
-  const std::string& _internal_torrent_data() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_torrent_data(
+  const std::string& _internal_content() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_content(
       const std::string& value);
-  std::string* _internal_mutable_torrent_data();
+  std::string* _internal_mutable_content();
 
   public:
-  // @@protoc_insertion_point(class_scope:prpc.GenMagnetUriReq)
+  // .prpc.InfoHash info_hash = 3;
+  bool has_info_hash() const;
+  void clear_info_hash() ;
+  const ::prpc::InfoHash& info_hash() const;
+  PROTOBUF_NODISCARD ::prpc::InfoHash* release_info_hash();
+  ::prpc::InfoHash* mutable_info_hash();
+  void set_allocated_info_hash(::prpc::InfoHash* value);
+  void unsafe_arena_set_allocated_info_hash(::prpc::InfoHash* value);
+  ::prpc::InfoHash* unsafe_arena_release_info_hash();
+
+  private:
+  const ::prpc::InfoHash& _internal_info_hash() const;
+  ::prpc::InfoHash* _internal_mutable_info_hash();
+
+  public:
+  // .prpc.GetMagnetUriReq.ReqType type = 1;
+  void clear_type() ;
+  ::prpc::GetMagnetUriReq_ReqType type() const;
+  void set_type(::prpc::GetMagnetUriReq_ReqType value);
+
+  private:
+  ::prpc::GetMagnetUriReq_ReqType _internal_type() const;
+  void _internal_set_type(::prpc::GetMagnetUriReq_ReqType value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.GetMagnetUriReq)
  private:
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1, 0, 41, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<2, 3, 1, 0, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::google::protobuf::internal::ArenaStringPtr torrent_data_;
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr content_;
+    ::prpc::InfoHash* info_hash_;
+    int type_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_bt_2eproto;
 };// -------------------------------------------------------------------
 
-class GenMagnetUriRsp final :
-    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.GenMagnetUriRsp) */ {
+class GetMagnetUriRsp final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.GetMagnetUriRsp) */ {
  public:
-  inline GenMagnetUriRsp() : GenMagnetUriRsp(nullptr) {}
-  ~GenMagnetUriRsp() override;
+  inline GetMagnetUriRsp() : GetMagnetUriRsp(nullptr) {}
+  ~GetMagnetUriRsp() override;
   template<typename = void>
-  explicit PROTOBUF_CONSTEXPR GenMagnetUriRsp(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR GetMagnetUriRsp(::google::protobuf::internal::ConstantInitialized);
 
-  GenMagnetUriRsp(const GenMagnetUriRsp& from);
-  GenMagnetUriRsp(GenMagnetUriRsp&& from) noexcept
-    : GenMagnetUriRsp() {
+  GetMagnetUriRsp(const GetMagnetUriRsp& from);
+  GetMagnetUriRsp(GetMagnetUriRsp&& from) noexcept
+    : GetMagnetUriRsp() {
     *this = ::std::move(from);
   }
 
-  inline GenMagnetUriRsp& operator=(const GenMagnetUriRsp& from) {
+  inline GetMagnetUriRsp& operator=(const GetMagnetUriRsp& from) {
     CopyFrom(from);
     return *this;
   }
-  inline GenMagnetUriRsp& operator=(GenMagnetUriRsp&& from) noexcept {
+  inline GetMagnetUriRsp& operator=(GetMagnetUriRsp&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -993,20 +1075,20 @@ class GenMagnetUriRsp final :
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const GenMagnetUriRsp& default_instance() {
+  static const GetMagnetUriRsp& default_instance() {
     return *internal_default_instance();
   }
-  static inline const GenMagnetUriRsp* internal_default_instance() {
-    return reinterpret_cast<const GenMagnetUriRsp*>(
-               &_GenMagnetUriRsp_default_instance_);
+  static inline const GetMagnetUriRsp* internal_default_instance() {
+    return reinterpret_cast<const GetMagnetUriRsp*>(
+               &_GetMagnetUriRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     4;
 
-  friend void swap(GenMagnetUriRsp& a, GenMagnetUriRsp& b) {
+  friend void swap(GetMagnetUriRsp& a, GetMagnetUriRsp& b) {
     a.Swap(&b);
   }
-  inline void Swap(GenMagnetUriRsp* other) {
+  inline void Swap(GetMagnetUriRsp* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -1019,7 +1101,7 @@ class GenMagnetUriRsp final :
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(GenMagnetUriRsp* other) {
+  void UnsafeArenaSwap(GetMagnetUriRsp* other) {
     if (other == this) return;
     ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -1027,14 +1109,14 @@ class GenMagnetUriRsp final :
 
   // implements Message ----------------------------------------------
 
-  GenMagnetUriRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<GenMagnetUriRsp>(arena);
+  GetMagnetUriRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetMagnetUriRsp>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const GenMagnetUriRsp& from);
+  void CopyFrom(const GetMagnetUriRsp& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom( const GenMagnetUriRsp& from) {
-    GenMagnetUriRsp::MergeImpl(*this, from);
+  void MergeFrom( const GetMagnetUriRsp& from) {
+    GetMagnetUriRsp::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
@@ -1052,15 +1134,15 @@ class GenMagnetUriRsp final :
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(GenMagnetUriRsp* other);
+  void InternalSwap(GetMagnetUriRsp* other);
 
   private:
   friend class ::google::protobuf::internal::AnyMetadata;
   static ::absl::string_view FullMessageName() {
-    return "prpc.GenMagnetUriRsp";
+    return "prpc.GetMagnetUriRsp";
   }
   protected:
-  explicit GenMagnetUriRsp(::google::protobuf::Arena* arena);
+  explicit GetMagnetUriRsp(::google::protobuf::Arena* arena);
   public:
 
   static const ClassData _class_data_;
@@ -1107,7 +1189,7 @@ class GenMagnetUriRsp final :
   ::prpc::InfoHash* _internal_mutable_info_hash();
 
   public:
-  // @@protoc_insertion_point(class_scope:prpc.GenMagnetUriRsp)
+  // @@protoc_insertion_point(class_scope:prpc.GetMagnetUriRsp)
  private:
   class _Internal;
 
@@ -3819,83 +3901,101 @@ inline void DownloadRespone::set_allocated_info_hash(::prpc::InfoHash* value) {
 
 // -------------------------------------------------------------------
 
-// GenMagnetUriReq
+// GetMagnetUriReq
 
-// string torrent_data = 1;
-inline void GenMagnetUriReq::clear_torrent_data() {
-  _impl_.torrent_data_.ClearToEmpty();
+// .prpc.GetMagnetUriReq.ReqType type = 1;
+inline void GetMagnetUriReq::clear_type() {
+  _impl_.type_ = 0;
 }
-inline const std::string& GenMagnetUriReq::torrent_data() const {
-  // @@protoc_insertion_point(field_get:prpc.GenMagnetUriReq.torrent_data)
-  return _internal_torrent_data();
+inline ::prpc::GetMagnetUriReq_ReqType GetMagnetUriReq::type() const {
+  // @@protoc_insertion_point(field_get:prpc.GetMagnetUriReq.type)
+  return _internal_type();
+}
+inline void GetMagnetUriReq::set_type(::prpc::GetMagnetUriReq_ReqType value) {
+  _internal_set_type(value);
+  // @@protoc_insertion_point(field_set:prpc.GetMagnetUriReq.type)
+}
+inline ::prpc::GetMagnetUriReq_ReqType GetMagnetUriReq::_internal_type() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return static_cast<::prpc::GetMagnetUriReq_ReqType>(_impl_.type_);
+}
+inline void GetMagnetUriReq::_internal_set_type(::prpc::GetMagnetUriReq_ReqType value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.type_ = value;
+}
+
+// bytes content = 2;
+inline void GetMagnetUriReq::clear_content() {
+  _impl_.content_.ClearToEmpty();
+}
+inline const std::string& GetMagnetUriReq::content() const {
+  // @@protoc_insertion_point(field_get:prpc.GetMagnetUriReq.content)
+  return _internal_content();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void GenMagnetUriReq::set_torrent_data(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void GetMagnetUriReq::set_content(Arg_&& arg,
                                                      Args_... args) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
-  _impl_.torrent_data_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:prpc.GenMagnetUriReq.torrent_data)
+  _impl_.content_.SetBytes(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.GetMagnetUriReq.content)
 }
-inline std::string* GenMagnetUriReq::mutable_torrent_data() {
-  std::string* _s = _internal_mutable_torrent_data();
-  // @@protoc_insertion_point(field_mutable:prpc.GenMagnetUriReq.torrent_data)
+inline std::string* GetMagnetUriReq::mutable_content() {
+  std::string* _s = _internal_mutable_content();
+  // @@protoc_insertion_point(field_mutable:prpc.GetMagnetUriReq.content)
   return _s;
 }
-inline const std::string& GenMagnetUriReq::_internal_torrent_data() const {
+inline const std::string& GetMagnetUriReq::_internal_content() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.torrent_data_.Get();
+  return _impl_.content_.Get();
 }
-inline void GenMagnetUriReq::_internal_set_torrent_data(const std::string& value) {
+inline void GetMagnetUriReq::_internal_set_content(const std::string& value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
-  _impl_.torrent_data_.Set(value, GetArenaForAllocation());
+  _impl_.content_.Set(value, GetArenaForAllocation());
 }
-inline std::string* GenMagnetUriReq::_internal_mutable_torrent_data() {
+inline std::string* GetMagnetUriReq::_internal_mutable_content() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
-  return _impl_.torrent_data_.Mutable( GetArenaForAllocation());
+  return _impl_.content_.Mutable( GetArenaForAllocation());
 }
-inline std::string* GenMagnetUriReq::release_torrent_data() {
+inline std::string* GetMagnetUriReq::release_content() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:prpc.GenMagnetUriReq.torrent_data)
-  return _impl_.torrent_data_.Release();
+  // @@protoc_insertion_point(field_release:prpc.GetMagnetUriReq.content)
+  return _impl_.content_.Release();
 }
-inline void GenMagnetUriReq::set_allocated_torrent_data(std::string* value) {
+inline void GetMagnetUriReq::set_allocated_content(std::string* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  _impl_.torrent_data_.SetAllocated(value, GetArenaForAllocation());
+  _impl_.content_.SetAllocated(value, GetArenaForAllocation());
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        if (_impl_.torrent_data_.IsDefault()) {
-          _impl_.torrent_data_.Set("", GetArenaForAllocation());
+        if (_impl_.content_.IsDefault()) {
+          _impl_.content_.Set("", GetArenaForAllocation());
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:prpc.GenMagnetUriReq.torrent_data)
+  // @@protoc_insertion_point(field_set_allocated:prpc.GetMagnetUriReq.content)
 }
 
-// -------------------------------------------------------------------
-
-// GenMagnetUriRsp
-
-// .prpc.InfoHash info_hash = 1;
-inline bool GenMagnetUriRsp::has_info_hash() const {
+// .prpc.InfoHash info_hash = 3;
+inline bool GetMagnetUriReq::has_info_hash() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.info_hash_ != nullptr);
   return value;
 }
-inline void GenMagnetUriRsp::clear_info_hash() {
+inline void GetMagnetUriReq::clear_info_hash() {
   if (_impl_.info_hash_ != nullptr) _impl_.info_hash_->Clear();
   _impl_._has_bits_[0] &= ~0x00000001u;
 }
-inline const ::prpc::InfoHash& GenMagnetUriRsp::_internal_info_hash() const {
+inline const ::prpc::InfoHash& GetMagnetUriReq::_internal_info_hash() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   const ::prpc::InfoHash* p = _impl_.info_hash_;
   return p != nullptr ? *p : reinterpret_cast<const ::prpc::InfoHash&>(::prpc::_InfoHash_default_instance_);
 }
-inline const ::prpc::InfoHash& GenMagnetUriRsp::info_hash() const {
-  // @@protoc_insertion_point(field_get:prpc.GenMagnetUriRsp.info_hash)
+inline const ::prpc::InfoHash& GetMagnetUriReq::info_hash() const {
+  // @@protoc_insertion_point(field_get:prpc.GetMagnetUriReq.info_hash)
   return _internal_info_hash();
 }
-inline void GenMagnetUriRsp::unsafe_arena_set_allocated_info_hash(::prpc::InfoHash* value) {
+inline void GetMagnetUriReq::unsafe_arena_set_allocated_info_hash(::prpc::InfoHash* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.info_hash_);
@@ -3906,9 +4006,9 @@ inline void GenMagnetUriRsp::unsafe_arena_set_allocated_info_hash(::prpc::InfoHa
   } else {
     _impl_._has_bits_[0] &= ~0x00000001u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.GenMagnetUriRsp.info_hash)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.GetMagnetUriReq.info_hash)
 }
-inline ::prpc::InfoHash* GenMagnetUriRsp::release_info_hash() {
+inline ::prpc::InfoHash* GetMagnetUriReq::release_info_hash() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000001u;
@@ -3927,16 +4027,16 @@ inline ::prpc::InfoHash* GenMagnetUriRsp::release_info_hash() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::prpc::InfoHash* GenMagnetUriRsp::unsafe_arena_release_info_hash() {
+inline ::prpc::InfoHash* GetMagnetUriReq::unsafe_arena_release_info_hash() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:prpc.GenMagnetUriRsp.info_hash)
+  // @@protoc_insertion_point(field_release:prpc.GetMagnetUriReq.info_hash)
 
   _impl_._has_bits_[0] &= ~0x00000001u;
   ::prpc::InfoHash* temp = _impl_.info_hash_;
   _impl_.info_hash_ = nullptr;
   return temp;
 }
-inline ::prpc::InfoHash* GenMagnetUriRsp::_internal_mutable_info_hash() {
+inline ::prpc::InfoHash* GetMagnetUriReq::_internal_mutable_info_hash() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_._has_bits_[0] |= 0x00000001u;
   if (_impl_.info_hash_ == nullptr) {
@@ -3945,12 +4045,12 @@ inline ::prpc::InfoHash* GenMagnetUriRsp::_internal_mutable_info_hash() {
   }
   return _impl_.info_hash_;
 }
-inline ::prpc::InfoHash* GenMagnetUriRsp::mutable_info_hash() {
+inline ::prpc::InfoHash* GetMagnetUriReq::mutable_info_hash() {
   ::prpc::InfoHash* _msg = _internal_mutable_info_hash();
-  // @@protoc_insertion_point(field_mutable:prpc.GenMagnetUriRsp.info_hash)
+  // @@protoc_insertion_point(field_mutable:prpc.GetMagnetUriReq.info_hash)
   return _msg;
 }
-inline void GenMagnetUriRsp::set_allocated_info_hash(::prpc::InfoHash* value) {
+inline void GetMagnetUriReq::set_allocated_info_hash(::prpc::InfoHash* value) {
   ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -3969,50 +4069,150 @@ inline void GenMagnetUriRsp::set_allocated_info_hash(::prpc::InfoHash* value) {
   }
 
   _impl_.info_hash_ = reinterpret_cast<::prpc::InfoHash*>(value);
-  // @@protoc_insertion_point(field_set_allocated:prpc.GenMagnetUriRsp.info_hash)
+  // @@protoc_insertion_point(field_set_allocated:prpc.GetMagnetUriReq.info_hash)
+}
+
+// -------------------------------------------------------------------
+
+// GetMagnetUriRsp
+
+// .prpc.InfoHash info_hash = 1;
+inline bool GetMagnetUriRsp::has_info_hash() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.info_hash_ != nullptr);
+  return value;
+}
+inline void GetMagnetUriRsp::clear_info_hash() {
+  if (_impl_.info_hash_ != nullptr) _impl_.info_hash_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::prpc::InfoHash& GetMagnetUriRsp::_internal_info_hash() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::InfoHash* p = _impl_.info_hash_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::InfoHash&>(::prpc::_InfoHash_default_instance_);
+}
+inline const ::prpc::InfoHash& GetMagnetUriRsp::info_hash() const {
+  // @@protoc_insertion_point(field_get:prpc.GetMagnetUriRsp.info_hash)
+  return _internal_info_hash();
+}
+inline void GetMagnetUriRsp::unsafe_arena_set_allocated_info_hash(::prpc::InfoHash* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.info_hash_);
+  }
+  _impl_.info_hash_ = reinterpret_cast<::prpc::InfoHash*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.GetMagnetUriRsp.info_hash)
+}
+inline ::prpc::InfoHash* GetMagnetUriRsp::release_info_hash() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::InfoHash* released = _impl_.info_hash_;
+  _impl_.info_hash_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::InfoHash* GetMagnetUriRsp::unsafe_arena_release_info_hash() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.GetMagnetUriRsp.info_hash)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::InfoHash* temp = _impl_.info_hash_;
+  _impl_.info_hash_ = nullptr;
+  return temp;
+}
+inline ::prpc::InfoHash* GetMagnetUriRsp::_internal_mutable_info_hash() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  if (_impl_.info_hash_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::InfoHash>(GetArenaForAllocation());
+    _impl_.info_hash_ = reinterpret_cast<::prpc::InfoHash*>(p);
+  }
+  return _impl_.info_hash_;
+}
+inline ::prpc::InfoHash* GetMagnetUriRsp::mutable_info_hash() {
+  ::prpc::InfoHash* _msg = _internal_mutable_info_hash();
+  // @@protoc_insertion_point(field_mutable:prpc.GetMagnetUriRsp.info_hash)
+  return _msg;
+}
+inline void GetMagnetUriRsp::set_allocated_info_hash(::prpc::InfoHash* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::InfoHash*>(_impl_.info_hash_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::InfoHash*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.info_hash_ = reinterpret_cast<::prpc::InfoHash*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.GetMagnetUriRsp.info_hash)
 }
 
 // string magnet_uri = 2;
-inline void GenMagnetUriRsp::clear_magnet_uri() {
+inline void GetMagnetUriRsp::clear_magnet_uri() {
   _impl_.magnet_uri_.ClearToEmpty();
 }
-inline const std::string& GenMagnetUriRsp::magnet_uri() const {
-  // @@protoc_insertion_point(field_get:prpc.GenMagnetUriRsp.magnet_uri)
+inline const std::string& GetMagnetUriRsp::magnet_uri() const {
+  // @@protoc_insertion_point(field_get:prpc.GetMagnetUriRsp.magnet_uri)
   return _internal_magnet_uri();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void GenMagnetUriRsp::set_magnet_uri(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void GetMagnetUriRsp::set_magnet_uri(Arg_&& arg,
                                                      Args_... args) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   _impl_.magnet_uri_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:prpc.GenMagnetUriRsp.magnet_uri)
+  // @@protoc_insertion_point(field_set:prpc.GetMagnetUriRsp.magnet_uri)
 }
-inline std::string* GenMagnetUriRsp::mutable_magnet_uri() {
+inline std::string* GetMagnetUriRsp::mutable_magnet_uri() {
   std::string* _s = _internal_mutable_magnet_uri();
-  // @@protoc_insertion_point(field_mutable:prpc.GenMagnetUriRsp.magnet_uri)
+  // @@protoc_insertion_point(field_mutable:prpc.GetMagnetUriRsp.magnet_uri)
   return _s;
 }
-inline const std::string& GenMagnetUriRsp::_internal_magnet_uri() const {
+inline const std::string& GetMagnetUriRsp::_internal_magnet_uri() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.magnet_uri_.Get();
 }
-inline void GenMagnetUriRsp::_internal_set_magnet_uri(const std::string& value) {
+inline void GetMagnetUriRsp::_internal_set_magnet_uri(const std::string& value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   _impl_.magnet_uri_.Set(value, GetArenaForAllocation());
 }
-inline std::string* GenMagnetUriRsp::_internal_mutable_magnet_uri() {
+inline std::string* GetMagnetUriRsp::_internal_mutable_magnet_uri() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   return _impl_.magnet_uri_.Mutable( GetArenaForAllocation());
 }
-inline std::string* GenMagnetUriRsp::release_magnet_uri() {
+inline std::string* GetMagnetUriRsp::release_magnet_uri() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:prpc.GenMagnetUriRsp.magnet_uri)
+  // @@protoc_insertion_point(field_release:prpc.GetMagnetUriRsp.magnet_uri)
   return _impl_.magnet_uri_.Release();
 }
-inline void GenMagnetUriRsp::set_allocated_magnet_uri(std::string* value) {
+inline void GetMagnetUriRsp::set_allocated_magnet_uri(std::string* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.magnet_uri_.SetAllocated(value, GetArenaForAllocation());
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -4020,7 +4220,7 @@ inline void GenMagnetUriRsp::set_allocated_magnet_uri(std::string* value) {
           _impl_.magnet_uri_.Set("", GetArenaForAllocation());
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:prpc.GenMagnetUriRsp.magnet_uri)
+  // @@protoc_insertion_point(field_set_allocated:prpc.GetMagnetUriRsp.magnet_uri)
 }
 
 // -------------------------------------------------------------------
@@ -5578,6 +5778,12 @@ struct is_proto_enum<::prpc::DownloadRequest_ReqType> : std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor<::prpc::DownloadRequest_ReqType>() {
   return ::prpc::DownloadRequest_ReqType_descriptor();
+}
+template <>
+struct is_proto_enum<::prpc::GetMagnetUriReq_ReqType> : std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor<::prpc::GetMagnetUriReq_ReqType>() {
+  return ::prpc::GetMagnetUriReq_ReqType_descriptor();
 }
 template <>
 struct is_proto_enum<::prpc::BtFile_State> : std::true_type {};

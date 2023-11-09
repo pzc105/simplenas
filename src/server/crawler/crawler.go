@@ -22,7 +22,7 @@ const (
 )
 
 func Go36dmBackgroup(magnetShares user.IMagnetSharesService, btClient *bt.BtClient) {
-
+	return
 	items, _ := magnetShares.QueryMagnetCategorys(&user.QueryCategoryParams{
 		ParentId:     magnetShares.GetMagnetRootId(),
 		CategoryName: CategoryName,

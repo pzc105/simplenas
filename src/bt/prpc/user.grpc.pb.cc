@@ -27,8 +27,10 @@ static const char* UserService_method_names[] = {
   "/prpc.UserService/Login",
   "/prpc.UserService/FastLogin",
   "/prpc.UserService/IsLogined",
+  "/prpc.UserService/ChangePassword",
   "/prpc.UserService/Download",
   "/prpc.UserService/RemoveTorrent",
+  "/prpc.UserService/GetMagnetUri",
   "/prpc.UserService/OnStatus",
   "/prpc.UserService/QueryBtVideos",
   "/prpc.UserService/NewCategoryItem",
@@ -39,10 +41,13 @@ static const char* UserService_method_names[] = {
   "/prpc.UserService/DelSharedItem",
   "/prpc.UserService/QuerySubItems",
   "/prpc.UserService/QueryItemInfo",
-  "/prpc.UserService/RefreshSubtitle",
   "/prpc.UserService/UploadSubtitle",
   "/prpc.UserService/JoinChatRoom",
   "/prpc.UserService/SendMsg2ChatRoom",
+  "/prpc.UserService/AddMagnetCategory",
+  "/prpc.UserService/AddMagnetUri",
+  "/prpc.UserService/QueryMagnet",
+  "/prpc.UserService/DelMagnetCategory",
 };
 
 std::unique_ptr< UserService::Stub> UserService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -57,22 +62,27 @@ UserService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channe
   , rpcmethod_Login_(UserService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_FastLogin_(UserService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_IsLogined_(UserService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_Download_(UserService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RemoveTorrent_(UserService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_OnStatus_(UserService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
-  , rpcmethod_QueryBtVideos_(UserService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_NewCategoryItem_(UserService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_DelCategoryItem_(UserService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_AddBtVideos_(UserService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ShareItem_(UserService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QuerySharedItems_(UserService_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_DelSharedItem_(UserService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QuerySubItems_(UserService_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QueryItemInfo_(UserService_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RefreshSubtitle_(UserService_method_names[17], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_UploadSubtitle_(UserService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_JoinChatRoom_(UserService_method_names[19], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
-  , rpcmethod_SendMsg2ChatRoom_(UserService_method_names[20], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ChangePassword_(UserService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_Download_(UserService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RemoveTorrent_(UserService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetMagnetUri_(UserService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_OnStatus_(UserService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_QueryBtVideos_(UserService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_NewCategoryItem_(UserService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DelCategoryItem_(UserService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AddBtVideos_(UserService_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ShareItem_(UserService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QuerySharedItems_(UserService_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DelSharedItem_(UserService_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QuerySubItems_(UserService_method_names[17], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QueryItemInfo_(UserService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_UploadSubtitle_(UserService_method_names[19], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_JoinChatRoom_(UserService_method_names[20], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SendMsg2ChatRoom_(UserService_method_names[21], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AddMagnetCategory_(UserService_method_names[22], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AddMagnetUri_(UserService_method_names[23], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QueryMagnet_(UserService_method_names[24], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DelMagnetCategory_(UserService_method_names[25], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status UserService::Stub::Register(::grpc::ClientContext* context, const ::prpc::RegisterInfo& request, ::prpc::RegisterRet* response) {
@@ -190,6 +200,29 @@ void UserService::Stub::async::IsLogined(::grpc::ClientContext* context, const :
   return result;
 }
 
+::grpc::Status UserService::Stub::ChangePassword(::grpc::ClientContext* context, const ::prpc::ChangePasswordReq& request, ::prpc::ChangePasswordRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::ChangePasswordReq, ::prpc::ChangePasswordRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ChangePassword_, context, request, response);
+}
+
+void UserService::Stub::async::ChangePassword(::grpc::ClientContext* context, const ::prpc::ChangePasswordReq* request, ::prpc::ChangePasswordRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::ChangePasswordReq, ::prpc::ChangePasswordRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ChangePassword_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::ChangePassword(::grpc::ClientContext* context, const ::prpc::ChangePasswordReq* request, ::prpc::ChangePasswordRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ChangePassword_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::ChangePasswordRsp>* UserService::Stub::PrepareAsyncChangePasswordRaw(::grpc::ClientContext* context, const ::prpc::ChangePasswordReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::ChangePasswordRsp, ::prpc::ChangePasswordReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ChangePassword_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::ChangePasswordRsp>* UserService::Stub::AsyncChangePasswordRaw(::grpc::ClientContext* context, const ::prpc::ChangePasswordReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncChangePasswordRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ::grpc::Status UserService::Stub::Download(::grpc::ClientContext* context, const ::prpc::DownloadRequest& request, ::prpc::DownloadRespone* response) {
   return ::grpc::internal::BlockingUnaryCall< ::prpc::DownloadRequest, ::prpc::DownloadRespone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_Download_, context, request, response);
 }
@@ -232,6 +265,29 @@ void UserService::Stub::async::RemoveTorrent(::grpc::ClientContext* context, con
 ::grpc::ClientAsyncResponseReader< ::prpc::RemoveTorrentRes>* UserService::Stub::AsyncRemoveTorrentRaw(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncRemoveTorrentRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status UserService::Stub::GetMagnetUri(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq& request, ::prpc::GetMagnetUriRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::GetMagnetUriReq, ::prpc::GetMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMagnetUri_, context, request, response);
+}
+
+void UserService::Stub::async::GetMagnetUri(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq* request, ::prpc::GetMagnetUriRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::GetMagnetUriReq, ::prpc::GetMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMagnetUri_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::GetMagnetUri(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq* request, ::prpc::GetMagnetUriRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMagnetUri_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::GetMagnetUriRsp>* UserService::Stub::PrepareAsyncGetMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::GetMagnetUriRsp, ::prpc::GetMagnetUriReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMagnetUri_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::GetMagnetUriRsp>* UserService::Stub::AsyncGetMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetMagnetUriRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -459,29 +515,6 @@ void UserService::Stub::async::QueryItemInfo(::grpc::ClientContext* context, con
   return result;
 }
 
-::grpc::Status UserService::Stub::RefreshSubtitle(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq& request, ::prpc::RefreshSubtitleRes* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::prpc::RefreshSubtitleReq, ::prpc::RefreshSubtitleRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RefreshSubtitle_, context, request, response);
-}
-
-void UserService::Stub::async::RefreshSubtitle(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq* request, ::prpc::RefreshSubtitleRes* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::prpc::RefreshSubtitleReq, ::prpc::RefreshSubtitleRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RefreshSubtitle_, context, request, response, std::move(f));
-}
-
-void UserService::Stub::async::RefreshSubtitle(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq* request, ::prpc::RefreshSubtitleRes* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RefreshSubtitle_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::prpc::RefreshSubtitleRes>* UserService::Stub::PrepareAsyncRefreshSubtitleRaw(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::RefreshSubtitleRes, ::prpc::RefreshSubtitleReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RefreshSubtitle_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::prpc::RefreshSubtitleRes>* UserService::Stub::AsyncRefreshSubtitleRaw(::grpc::ClientContext* context, const ::prpc::RefreshSubtitleReq& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncRefreshSubtitleRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
 ::grpc::Status UserService::Stub::UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::prpc::UploadSubtitleRes* response) {
   return ::grpc::internal::BlockingUnaryCall< ::prpc::UploadSubtitleReq, ::prpc::UploadSubtitleRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_UploadSubtitle_, context, request, response);
 }
@@ -544,6 +577,98 @@ void UserService::Stub::async::SendMsg2ChatRoom(::grpc::ClientContext* context, 
   return result;
 }
 
+::grpc::Status UserService::Stub::AddMagnetCategory(::grpc::ClientContext* context, const ::prpc::AddMagnetCategoryReq& request, ::prpc::AddMagnetCategoryRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::AddMagnetCategoryReq, ::prpc::AddMagnetCategoryRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_AddMagnetCategory_, context, request, response);
+}
+
+void UserService::Stub::async::AddMagnetCategory(::grpc::ClientContext* context, const ::prpc::AddMagnetCategoryReq* request, ::prpc::AddMagnetCategoryRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::AddMagnetCategoryReq, ::prpc::AddMagnetCategoryRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddMagnetCategory_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::AddMagnetCategory(::grpc::ClientContext* context, const ::prpc::AddMagnetCategoryReq* request, ::prpc::AddMagnetCategoryRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddMagnetCategory_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::AddMagnetCategoryRsp>* UserService::Stub::PrepareAsyncAddMagnetCategoryRaw(::grpc::ClientContext* context, const ::prpc::AddMagnetCategoryReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::AddMagnetCategoryRsp, ::prpc::AddMagnetCategoryReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_AddMagnetCategory_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::AddMagnetCategoryRsp>* UserService::Stub::AsyncAddMagnetCategoryRaw(::grpc::ClientContext* context, const ::prpc::AddMagnetCategoryReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncAddMagnetCategoryRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status UserService::Stub::AddMagnetUri(::grpc::ClientContext* context, const ::prpc::AddMagnetUriReq& request, ::prpc::AddMagnetUriRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::AddMagnetUriReq, ::prpc::AddMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_AddMagnetUri_, context, request, response);
+}
+
+void UserService::Stub::async::AddMagnetUri(::grpc::ClientContext* context, const ::prpc::AddMagnetUriReq* request, ::prpc::AddMagnetUriRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::AddMagnetUriReq, ::prpc::AddMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddMagnetUri_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::AddMagnetUri(::grpc::ClientContext* context, const ::prpc::AddMagnetUriReq* request, ::prpc::AddMagnetUriRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddMagnetUri_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::AddMagnetUriRsp>* UserService::Stub::PrepareAsyncAddMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::AddMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::AddMagnetUriRsp, ::prpc::AddMagnetUriReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_AddMagnetUri_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::AddMagnetUriRsp>* UserService::Stub::AsyncAddMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::AddMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncAddMagnetUriRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status UserService::Stub::QueryMagnet(::grpc::ClientContext* context, const ::prpc::QueryMagnetReq& request, ::prpc::QueryMagnetRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::QueryMagnetReq, ::prpc::QueryMagnetRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_QueryMagnet_, context, request, response);
+}
+
+void UserService::Stub::async::QueryMagnet(::grpc::ClientContext* context, const ::prpc::QueryMagnetReq* request, ::prpc::QueryMagnetRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::QueryMagnetReq, ::prpc::QueryMagnetRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QueryMagnet_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::QueryMagnet(::grpc::ClientContext* context, const ::prpc::QueryMagnetReq* request, ::prpc::QueryMagnetRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QueryMagnet_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::QueryMagnetRsp>* UserService::Stub::PrepareAsyncQueryMagnetRaw(::grpc::ClientContext* context, const ::prpc::QueryMagnetReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::QueryMagnetRsp, ::prpc::QueryMagnetReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_QueryMagnet_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::QueryMagnetRsp>* UserService::Stub::AsyncQueryMagnetRaw(::grpc::ClientContext* context, const ::prpc::QueryMagnetReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncQueryMagnetRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status UserService::Stub::DelMagnetCategory(::grpc::ClientContext* context, const ::prpc::DelMagnetCategoryReq& request, ::prpc::DelMagnetCategoryRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::DelMagnetCategoryReq, ::prpc::DelMagnetCategoryRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_DelMagnetCategory_, context, request, response);
+}
+
+void UserService::Stub::async::DelMagnetCategory(::grpc::ClientContext* context, const ::prpc::DelMagnetCategoryReq* request, ::prpc::DelMagnetCategoryRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::DelMagnetCategoryReq, ::prpc::DelMagnetCategoryRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DelMagnetCategory_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::DelMagnetCategory(::grpc::ClientContext* context, const ::prpc::DelMagnetCategoryReq* request, ::prpc::DelMagnetCategoryRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DelMagnetCategory_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::DelMagnetCategoryRsp>* UserService::Stub::PrepareAsyncDelMagnetCategoryRaw(::grpc::ClientContext* context, const ::prpc::DelMagnetCategoryReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::DelMagnetCategoryRsp, ::prpc::DelMagnetCategoryReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_DelMagnetCategory_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::DelMagnetCategoryRsp>* UserService::Stub::AsyncDelMagnetCategoryRaw(::grpc::ClientContext* context, const ::prpc::DelMagnetCategoryReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncDelMagnetCategoryRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 UserService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[0],
@@ -598,6 +723,16 @@ UserService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::ChangePasswordReq, ::prpc::ChangePasswordRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::ChangePasswordReq* req,
+             ::prpc::ChangePasswordRsp* resp) {
+               return service->ChangePassword(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[6],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::DownloadRequest, ::prpc::DownloadRespone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
              ::grpc::ServerContext* ctx,
@@ -606,7 +741,7 @@ UserService::Service::Service() {
                return service->Download(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[6],
+      UserService_method_names[7],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::RemoveTorrentReq, ::prpc::RemoveTorrentRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -616,7 +751,17 @@ UserService::Service::Service() {
                return service->RemoveTorrent(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[7],
+      UserService_method_names[8],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::GetMagnetUriReq, ::prpc::GetMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::GetMagnetUriReq* req,
+             ::prpc::GetMagnetUriRsp* resp) {
+               return service->GetMagnetUri(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[9],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< UserService::Service, ::prpc::StatusRequest, ::prpc::StatusRespone>(
           [](UserService::Service* service,
@@ -626,7 +771,7 @@ UserService::Service::Service() {
                return service->OnStatus(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[8],
+      UserService_method_names[10],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QueryBtVideosReq, ::prpc::QueryBtVideosRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -636,7 +781,7 @@ UserService::Service::Service() {
                return service->QueryBtVideos(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[9],
+      UserService_method_names[11],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::NewCategoryItemReq, ::prpc::NewCategoryItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -646,7 +791,7 @@ UserService::Service::Service() {
                return service->NewCategoryItem(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[10],
+      UserService_method_names[12],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::DelCategoryItemReq, ::prpc::DelCategoryItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -656,7 +801,7 @@ UserService::Service::Service() {
                return service->DelCategoryItem(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[11],
+      UserService_method_names[13],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::AddBtVideosReq, ::prpc::AddBtVideosRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -666,7 +811,7 @@ UserService::Service::Service() {
                return service->AddBtVideos(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[12],
+      UserService_method_names[14],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::ShareItemReq, ::prpc::ShareItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -676,7 +821,7 @@ UserService::Service::Service() {
                return service->ShareItem(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[13],
+      UserService_method_names[15],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QuerySharedItemsReq, ::prpc::QuerySharedItemsRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -686,7 +831,7 @@ UserService::Service::Service() {
                return service->QuerySharedItems(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[14],
+      UserService_method_names[16],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::DelSharedItemReq, ::prpc::DelSharedItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -696,7 +841,7 @@ UserService::Service::Service() {
                return service->DelSharedItem(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[15],
+      UserService_method_names[17],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -706,7 +851,7 @@ UserService::Service::Service() {
                return service->QuerySubItems(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[16],
+      UserService_method_names[18],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QueryItemInfoReq, ::prpc::QueryItemInfoRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -716,17 +861,7 @@ UserService::Service::Service() {
                return service->QueryItemInfo(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[17],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::RefreshSubtitleReq, ::prpc::RefreshSubtitleRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](UserService::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::prpc::RefreshSubtitleReq* req,
-             ::prpc::RefreshSubtitleRes* resp) {
-               return service->RefreshSubtitle(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[18],
+      UserService_method_names[19],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::UploadSubtitleReq, ::prpc::UploadSubtitleRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -736,7 +871,7 @@ UserService::Service::Service() {
                return service->UploadSubtitle(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[19],
+      UserService_method_names[20],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< UserService::Service, ::prpc::JoinChatRoomReq, ::prpc::JoinChatRoomRes>(
           [](UserService::Service* service,
@@ -746,7 +881,7 @@ UserService::Service::Service() {
                return service->JoinChatRoom(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[20],
+      UserService_method_names[21],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -754,6 +889,46 @@ UserService::Service::Service() {
              const ::prpc::SendMsg2ChatRoomReq* req,
              ::prpc::SendMsg2ChatRoomRes* resp) {
                return service->SendMsg2ChatRoom(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[22],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::AddMagnetCategoryReq, ::prpc::AddMagnetCategoryRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::AddMagnetCategoryReq* req,
+             ::prpc::AddMagnetCategoryRsp* resp) {
+               return service->AddMagnetCategory(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[23],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::AddMagnetUriReq, ::prpc::AddMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::AddMagnetUriReq* req,
+             ::prpc::AddMagnetUriRsp* resp) {
+               return service->AddMagnetUri(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[24],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QueryMagnetReq, ::prpc::QueryMagnetRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::QueryMagnetReq* req,
+             ::prpc::QueryMagnetRsp* resp) {
+               return service->QueryMagnet(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[25],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::DelMagnetCategoryReq, ::prpc::DelMagnetCategoryRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::DelMagnetCategoryReq* req,
+             ::prpc::DelMagnetCategoryRsp* resp) {
+               return service->DelMagnetCategory(ctx, req, resp);
              }, this)));
 }
 
@@ -795,6 +970,13 @@ UserService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
+::grpc::Status UserService::Service::ChangePassword(::grpc::ServerContext* context, const ::prpc::ChangePasswordReq* request, ::prpc::ChangePasswordRsp* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
 ::grpc::Status UserService::Service::Download(::grpc::ServerContext* context, const ::prpc::DownloadRequest* request, ::prpc::DownloadRespone* response) {
   (void) context;
   (void) request;
@@ -803,6 +985,13 @@ UserService::Service::~Service() {
 }
 
 ::grpc::Status UserService::Service::RemoveTorrent(::grpc::ServerContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::GetMagnetUri(::grpc::ServerContext* context, const ::prpc::GetMagnetUriReq* request, ::prpc::GetMagnetUriRsp* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -879,13 +1068,6 @@ UserService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status UserService::Service::RefreshSubtitle(::grpc::ServerContext* context, const ::prpc::RefreshSubtitleReq* request, ::prpc::RefreshSubtitleRes* response) {
-  (void) context;
-  (void) request;
-  (void) response;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
 ::grpc::Status UserService::Service::UploadSubtitle(::grpc::ServerContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response) {
   (void) context;
   (void) request;
@@ -901,6 +1083,34 @@ UserService::Service::~Service() {
 }
 
 ::grpc::Status UserService::Service::SendMsg2ChatRoom(::grpc::ServerContext* context, const ::prpc::SendMsg2ChatRoomReq* request, ::prpc::SendMsg2ChatRoomRes* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::AddMagnetCategory(::grpc::ServerContext* context, const ::prpc::AddMagnetCategoryReq* request, ::prpc::AddMagnetCategoryRsp* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::AddMagnetUri(::grpc::ServerContext* context, const ::prpc::AddMagnetUriReq* request, ::prpc::AddMagnetUriRsp* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::QueryMagnet(::grpc::ServerContext* context, const ::prpc::QueryMagnetReq* request, ::prpc::QueryMagnetRsp* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::DelMagnetCategory(::grpc::ServerContext* context, const ::prpc::DelMagnetCategoryReq* request, ::prpc::DelMagnetCategoryRsp* response) {
   (void) context;
   (void) request;
   (void) response;

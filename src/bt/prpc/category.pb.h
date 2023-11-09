@@ -264,17 +264,18 @@ class CategoryItem final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kSubItemIdsFieldNumber = 9,
+    kSubItemIdsFieldNumber = 10,
     kNameFieldNumber = 4,
     kResourcePathFieldNumber = 5,
     kPosterPathFieldNumber = 6,
     kIntroduceFieldNumber = 7,
+    kOtherFieldNumber = 8,
     kIdFieldNumber = 1,
     kCreatorFieldNumber = 3,
-    kParentIdFieldNumber = 8,
+    kParentIdFieldNumber = 9,
     kTypeIdFieldNumber = 2,
   };
-  // repeated int64 sub_item_ids = 9;
+  // repeated int64 sub_item_ids = 10;
   int sub_item_ids_size() const;
   private:
   int _internal_sub_item_ids_size() const;
@@ -356,6 +357,22 @@ class CategoryItem final :
   std::string* _internal_mutable_introduce();
 
   public:
+  // string other = 8;
+  void clear_other() ;
+  const std::string& other() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_other(Arg_&& arg, Args_... args);
+  std::string* mutable_other();
+  PROTOBUF_NODISCARD std::string* release_other();
+  void set_allocated_other(std::string* ptr);
+
+  private:
+  const std::string& _internal_other() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_other(
+      const std::string& value);
+  std::string* _internal_mutable_other();
+
+  public:
   // int64 id = 1;
   void clear_id() ;
   ::int64_t id() const;
@@ -376,7 +393,7 @@ class CategoryItem final :
   void _internal_set_creator(::int64_t value);
 
   public:
-  // int64 parent_id = 8;
+  // int64 parent_id = 9;
   void clear_parent_id() ;
   ::int64_t parent_id() const;
   void set_parent_id(::int64_t value);
@@ -401,7 +418,7 @@ class CategoryItem final :
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<4, 9, 0, 71, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<4, 10, 0, 76, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
@@ -412,6 +429,7 @@ class CategoryItem final :
     ::google::protobuf::internal::ArenaStringPtr resource_path_;
     ::google::protobuf::internal::ArenaStringPtr poster_path_;
     ::google::protobuf::internal::ArenaStringPtr introduce_;
+    ::google::protobuf::internal::ArenaStringPtr other_;
     ::int64_t id_;
     ::int64_t creator_;
     ::int64_t parent_id_;
@@ -885,7 +903,58 @@ inline void CategoryItem::set_allocated_introduce(std::string* value) {
   // @@protoc_insertion_point(field_set_allocated:prpc.CategoryItem.introduce)
 }
 
-// int64 parent_id = 8;
+// string other = 8;
+inline void CategoryItem::clear_other() {
+  _impl_.other_.ClearToEmpty();
+}
+inline const std::string& CategoryItem::other() const {
+  // @@protoc_insertion_point(field_get:prpc.CategoryItem.other)
+  return _internal_other();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void CategoryItem::set_other(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.other_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.CategoryItem.other)
+}
+inline std::string* CategoryItem::mutable_other() {
+  std::string* _s = _internal_mutable_other();
+  // @@protoc_insertion_point(field_mutable:prpc.CategoryItem.other)
+  return _s;
+}
+inline const std::string& CategoryItem::_internal_other() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.other_.Get();
+}
+inline void CategoryItem::_internal_set_other(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.other_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CategoryItem::_internal_mutable_other() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.other_.Mutable( GetArenaForAllocation());
+}
+inline std::string* CategoryItem::release_other() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.CategoryItem.other)
+  return _impl_.other_.Release();
+}
+inline void CategoryItem::set_allocated_other(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.other_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.other_.IsDefault()) {
+          _impl_.other_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.CategoryItem.other)
+}
+
+// int64 parent_id = 9;
 inline void CategoryItem::clear_parent_id() {
   _impl_.parent_id_ = ::int64_t{0};
 }
@@ -907,7 +976,7 @@ inline void CategoryItem::_internal_set_parent_id(::int64_t value) {
   _impl_.parent_id_ = value;
 }
 
-// repeated int64 sub_item_ids = 9;
+// repeated int64 sub_item_ids = 10;
 inline int CategoryItem::_internal_sub_item_ids_size() const {
   return _internal_sub_item_ids().size();
 }

@@ -27,6 +27,8 @@ service UserService {
   rpc Download(DownloadRequest) returns (DownloadRespone);
 
   rpc RemoveTorrent(RemoveTorrentReq) returns (RemoveTorrentRes);
+
+  rpc GetMagnetUri(GetMagnetUriReq) returns (GetMagnetUriRsp);
   
   rpc OnStatus(StatusRequest) returns (stream StatusRespone);
 
