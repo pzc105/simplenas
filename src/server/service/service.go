@@ -19,7 +19,6 @@ import (
 	"pnas/utils"
 	"pnas/video"
 	"sort"
-	"strconv"
 	"sync"
 	"time"
 
@@ -782,23 +781,6 @@ func (ser *CoreService) DelSharedItem(ctx context.Context, req *prpc.DelSharedIt
 		return nil, err
 	}
 	return &prpc.DelSharedItemRes{}, nil
-}
-
-func (ser *CoreService) RefreshSubtitle(ctx context.Context, req *prpc.RefreshSubtitleReq) (*prpc.RefreshSubtitleRes, error) {
-	ses := ser.getSession(ctx)
-	if ses == nil {
-		return nil, status.Error(codes.PermissionDenied, "not found session")
-	}
-	item, err := ser.um.CategoryService().GetItem(int64(ses.UserId), category.ID(req.ItemId))
-	if err != nil {
-		return nil, status.Error(codes.PermissionDenied, "not found")
-	}
-	vid, _ := strconv.ParseInt(item.GetItemInfo().ResourcePath, 10, 64)
-	err = ser.um.RefreshSubtitle(video.ID(vid))
-	if err != nil {
-		return nil, status.Error(codes.Aborted, err.Error())
-	}
-	return &prpc.RefreshSubtitleRes{}, nil
 }
 
 func (ser *CoreService) UploadSubtitle(ctx context.Context, req *prpc.UploadSubtitleReq) (*prpc.UploadSubtitleRes, error) {

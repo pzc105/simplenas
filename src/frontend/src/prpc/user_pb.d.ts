@@ -610,38 +610,6 @@ export namespace DelSharedItemRes {
   }
 }
 
-export class RefreshSubtitleReq extends jspb.Message {
-  getItemId(): number;
-  setItemId(value: number): RefreshSubtitleReq;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): RefreshSubtitleReq.AsObject;
-  static toObject(includeInstance: boolean, msg: RefreshSubtitleReq): RefreshSubtitleReq.AsObject;
-  static serializeBinaryToWriter(message: RefreshSubtitleReq, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): RefreshSubtitleReq;
-  static deserializeBinaryFromReader(message: RefreshSubtitleReq, reader: jspb.BinaryReader): RefreshSubtitleReq;
-}
-
-export namespace RefreshSubtitleReq {
-  export type AsObject = {
-    itemId: number,
-  }
-}
-
-export class RefreshSubtitleRes extends jspb.Message {
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): RefreshSubtitleRes.AsObject;
-  static toObject(includeInstance: boolean, msg: RefreshSubtitleRes): RefreshSubtitleRes.AsObject;
-  static serializeBinaryToWriter(message: RefreshSubtitleRes, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): RefreshSubtitleRes;
-  static deserializeBinaryFromReader(message: RefreshSubtitleRes, reader: jspb.BinaryReader): RefreshSubtitleRes;
-}
-
-export namespace RefreshSubtitleRes {
-  export type AsObject = {
-  }
-}
-
 export class SubtitleFile extends jspb.Message {
   getName(): string;
   setName(value: string): SubtitleFile;

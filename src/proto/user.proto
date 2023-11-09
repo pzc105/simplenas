@@ -40,7 +40,6 @@ service UserService {
   rpc DelSharedItem(DelSharedItemReq) returns (DelSharedItemRes);
   rpc QuerySubItems(QuerySubItemsReq) returns (QuerySubItemsRes);
   rpc QueryItemInfo(QueryItemInfoReq) returns (QueryItemInfoRes);
-  rpc RefreshSubtitle(RefreshSubtitleReq) returns (RefreshSubtitleRes);
   rpc UploadSubtitle(UploadSubtitleReq) returns (UploadSubtitleRes);
 
   rpc JoinChatRoom(JoinChatRoomReq) returns (stream JoinChatRoomRes);
@@ -188,14 +187,6 @@ message DelSharedItemReq {
 }
 
 message DelSharedItemRes {
-  
-}
-
-message RefreshSubtitleReq {
-  int64 item_id = 1;
-}
-
-message RefreshSubtitleRes {
   
 }
 

@@ -793,49 +793,6 @@ export class UserServiceClient {
     this.methodDescriptorQueryItemInfo);
   }
 
-  methodDescriptorRefreshSubtitle = new grpcWeb.MethodDescriptor(
-    '/prpc.UserService/RefreshSubtitle',
-    grpcWeb.MethodType.UNARY,
-    user_pb.RefreshSubtitleReq,
-    user_pb.RefreshSubtitleRes,
-    (request: user_pb.RefreshSubtitleReq) => {
-      return request.serializeBinary();
-    },
-    user_pb.RefreshSubtitleRes.deserializeBinary
-  );
-
-  refreshSubtitle(
-    request: user_pb.RefreshSubtitleReq,
-    metadata: grpcWeb.Metadata | null): Promise<user_pb.RefreshSubtitleRes>;
-
-  refreshSubtitle(
-    request: user_pb.RefreshSubtitleReq,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.RpcError,
-               response: user_pb.RefreshSubtitleRes) => void): grpcWeb.ClientReadableStream<user_pb.RefreshSubtitleRes>;
-
-  refreshSubtitle(
-    request: user_pb.RefreshSubtitleReq,
-    metadata: grpcWeb.Metadata | null,
-    callback?: (err: grpcWeb.RpcError,
-               response: user_pb.RefreshSubtitleRes) => void) {
-    if (callback !== undefined) {
-      return this.client_.rpcCall(
-        this.hostname_ +
-          '/prpc.UserService/RefreshSubtitle',
-        request,
-        metadata || {},
-        this.methodDescriptorRefreshSubtitle,
-        callback);
-    }
-    return this.client_.unaryCall(
-    this.hostname_ +
-      '/prpc.UserService/RefreshSubtitle',
-    request,
-    metadata || {},
-    this.methodDescriptorRefreshSubtitle);
-  }
-
   methodDescriptorUploadSubtitle = new grpcWeb.MethodDescriptor(
     '/prpc.UserService/UploadSubtitle',
     grpcWeb.MethodType.UNARY,

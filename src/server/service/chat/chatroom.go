@@ -87,7 +87,7 @@ func (cr *ChatRoomImpl) Init(params *CreateRoomParams) {
 
 func (cr *ChatRoomImpl) Close() {
 	cr.closeFunc()
-	cr.taskqueue.Close()
+	cr.taskqueue.Close(utils.CloseWayImmediate)
 }
 
 func (cr *ChatRoomImpl) Context() context.Context {

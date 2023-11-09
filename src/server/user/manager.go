@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"path"
-	"path/filepath"
 	"pnas/bt"
 	"pnas/category"
 	"pnas/db"
@@ -16,7 +15,6 @@ import (
 	"pnas/utils"
 	"pnas/video"
 	"strconv"
-	"strings"
 	"sync"
 
 	"github.com/pkg/errors"
@@ -30,9 +28,7 @@ type UserManger struct {
 	genHslRecord map[video.ID]bool
 	categorySer  category.IService
 
-	cudaQueue utils.TaskQueue
-	qsvQueue  utils.TaskQueue
-	soQueue   utils.TaskQueue
+	hlsProcess video.HlsProcess
 }
 
 func (um *UserManger) Init() {
@@ -52,15 +48,11 @@ func (um *UserManger) Init() {
 	magnetShares.Init(um.categorySer)
 	um.IMagnetSharesService = &magnetShares
 
-	um.cudaQueue.Init(utils.WithMaxQueue(1024))
-	um.qsvQueue.Init(utils.WithMaxQueue(1024))
-	um.soQueue.Init(utils.WithMaxQueue(1024))
+	um.hlsProcess.Init()
 }
 
 func (um *UserManger) Close() {
-	um.cudaQueue.Close()
-	um.qsvQueue.Close()
-	um.soQueue.Close()
+
 }
 
 func (um *UserManger) Login(email string, passwd string) (*User, error) {
@@ -356,8 +348,8 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 		needGenHls := false
 		if needTryGenHls {
 			um.mtx.Lock()
-			creating, ok := um.genHslRecord[v.Id]
-			if !ok || !creating {
+			_, ok := um.genHslRecord[v.Id]
+			if !ok {
 				um.genHslRecord[v.Id] = true
 				needGenHls = true
 			}
@@ -365,83 +357,22 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 		}
 
 		if needGenHls {
-			makeAsUndeal := func() {
-				um.mtx.Lock()
-				um.genHslRecord[v.Id] = false
-				um.mtx.Unlock()
-			}
 			outDir := setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%d", v.Id)
 			audioTracksFN := um.findAudioTrack(params.InfoHash, i)
 
-			um.cudaQueue.TryPut(func() {
-				err := video.GenHls(
-					&video.GenHlsOpts{
-						VideoFileName:     absVideoFN,
-						AudioFileNames:    audioTracksFN,
-						WantedResolutions: CudaSplitEncoderParams,
-						OutDir:            outDir,
-						Global:            CudaGlobalDecode,
-						GlobalVideoParams: CudaH264GlobalVideoParams,
-						GlobalAudioParams: GlobalAudioParams,
-					})
+			hlsCallback := func(err error) {
 				if err != nil {
-					err = video.GenHls(
-						&video.GenHlsOpts{
-							VideoFileName:     absVideoFN,
-							AudioFileNames:    audioTracksFN,
-							WantedResolutions: CudaEncoderParams2,
-							OutDir:            outDir,
-							Global:            CudaGlobalDecode2,
-							GlobalVideoParams: CudaH264GlobalVideoParams,
-							GlobalAudioParams: GlobalAudioParams,
-						})
+					um.mtx.Lock()
+					delete(um.genHslRecord, v.Id)
+					um.mtx.Unlock()
 				}
+			}
 
-				if err == nil {
-					video.VideoHasHls(v.Id)
-				} else {
-					um.qsvQueue.TryPut(func() {
-						err := video.GenHls(
-							&video.GenHlsOpts{
-								VideoFileName:     absVideoFN,
-								AudioFileNames:    audioTracksFN,
-								WantedResolutions: QsvSplitEncoderParams,
-								Global:            QsvGlobalDecode,
-								OutDir:            outDir,
-								GlobalVideoParams: QsvH264GlobalVideoParams,
-								GlobalAudioParams: GlobalAudioParams,
-							})
-						if err == nil {
-							video.VideoHasHls(v.Id)
-							return
-						}
-						um.soQueue.TryPut(func() {
-							err := video.GenHls(
-								&video.GenHlsOpts{
-									VideoFileName:     absVideoFN,
-									AudioFileNames:    audioTracksFN,
-									WantedResolutions: SoSplitEncoderParams,
-									Global:            SoGlobalDecode,
-									OutDir:            outDir,
-									GlobalVideoParams: SoH264GlobalVideoParams,
-									GlobalAudioParams: GlobalAudioParams,
-								})
-							if err != nil {
-								makeAsUndeal()
-							}
-						})
-					})
-				}
-			})
-
-			um.soQueue.TryPut(func() {
-				video.GenSubtitle(&video.GenSubtitleOpts{
-					InputFileName: absVideoFN,
-					OutDir:        outDir,
-					SubtitleName:  utils.GetFileName(absVideoFN),
-					Format:        "webvtt",
-					Suffix:        "vtt",
-				})
+			um.hlsProcess.Gen(&video.HlsGenParams{
+				FullVideoFileName: absVideoFN,
+				FullAudioFileName: audioTracksFN,
+				OutDir:            outDir,
+				Callback:          hlsCallback,
 			})
 
 			subtitleFileIndex := um.findSubtitle(params.InfoHash, i)
@@ -475,55 +406,6 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 			}
 		}
 	}
-	return nil
-}
-
-func (um *UserManger) RefreshSubtitle(vid video.ID) error {
-	videoFileName, err := video.GetVideoFileName(video.ID(vid))
-	if err != nil {
-		return errors.New("not found")
-	}
-	var fs []string
-	fn := utils.GetFileName(videoFileName)
-	baseName := path.Base(videoFileName)
-	walkPath := path.Dir(setting.GS().Bt.SavePath + "/" + utils.FileNameFormat(videoFileName))
-	filepath.Walk(walkPath, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			log.Warnf("refresh subtitle err: %v", err)
-			return err
-		}
-		if info.IsDir() {
-			if path != walkPath {
-				return filepath.SkipDir
-			}
-			return nil
-		}
-		if strings.HasPrefix(info.Name(), fn) && baseName != info.Name() {
-			fs = append(fs, path)
-		}
-		return nil
-	})
-	if err != nil {
-		return err
-	}
-	for _, f := range fs {
-		video.GenSubtitle(&video.GenSubtitleOpts{
-			InputFileName: f,
-			OutDir:        setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%d", vid),
-			SubtitleName:  utils.GetFileName(f),
-			Format:        "webvtt",
-			Suffix:        "vtt",
-		})
-	}
-	um.soQueue.TryPut(func() {
-		video.GenSubtitle(&video.GenSubtitleOpts{
-			InputFileName: videoFileName,
-			OutDir:        setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%d", vid),
-			SubtitleName:  utils.GetFileName(videoFileName),
-			Format:        "webvtt",
-			Suffix:        "vtt",
-		})
-	})
 	return nil
 }
 
