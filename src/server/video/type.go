@@ -2,8 +2,6 @@ package video
 
 import "strings"
 
-type ID int64
-
 const (
 	VideoStreamType    = "video"
 	AudioStreamType    = "audio"

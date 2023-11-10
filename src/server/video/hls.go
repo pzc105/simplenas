@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os/exec"
 	"pnas/log"
+	"pnas/ptype"
 	"pnas/setting"
 	"sort"
 	"strings"
@@ -120,6 +121,7 @@ type GenHlsOpts struct {
 	GlobalAudioParams []KV
 	OutDir            string
 	BaseUrl           string
+	OnProcess         func(pid int)
 }
 
 func GenHls(params *GenHlsOpts) error {
@@ -187,9 +189,23 @@ func GenHls(params *GenHlsOpts) error {
 
 	cmd := exec.Command("ffmpeg", cmdParams...)
 	log.Info(cmd.String())
-	out, err := cmd.CombinedOutput()
+
+	var stdBuffer bytes.Buffer
+	cmd.Stdout = &stdBuffer
+	cmd.Stderr = &stdBuffer
+	err = cmd.Start()
 	if err != nil {
-		log.Warn(cmd.String())
+		out := stdBuffer.Bytes()
+		log.Warnf("%+v, %v", string(out), err)
+		return err
+	}
+	pid := cmd.Process.Pid
+	if params.OnProcess != nil {
+		params.OnProcess(pid)
+	}
+	err = cmd.Wait()
+	if err != nil {
+		out := stdBuffer.Bytes()
 		log.Warnf("%+v, %v", string(out), err)
 		return err
 	}
@@ -197,6 +213,6 @@ func GenHls(params *GenHlsOpts) error {
 	return nil
 }
 
-func GetHlsPlayListPath(vid ID) string {
+func GetHlsPlayListPath(vid ptype.VideoID) string {
 	return setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%d", vid)
 }

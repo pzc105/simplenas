@@ -10,10 +10,9 @@ import (
 	"os"
 	"pnas/db"
 	"pnas/log"
+	"pnas/ptype"
 	"pnas/service/session"
 	"pnas/setting"
-	"pnas/user"
-	"pnas/video"
 	"strconv"
 	"strings"
 
@@ -22,7 +21,7 @@ import (
 )
 
 type UserVideoData interface {
-	HasVideo(userId user.ID, vid video.ID) bool
+	HasVideo(userId ptype.UserID, vid ptype.VideoID) bool
 }
 
 type VideoService struct {
@@ -30,14 +29,14 @@ type VideoService struct {
 	shares      IItemShares
 	sessions    session.ISessions
 	router      *mux.Router
-	recvDanmaku func(vid video.ID, danmakuJson string)
+	recvDanmaku func(vid ptype.VideoID, danmakuJson string)
 }
 
-func saveStartTime(userId user.ID, vid video.ID, lastTime string) {
+func saveStartTime(userId ptype.UserID, vid ptype.VideoID, lastTime string) {
 	db.GREDIS.Set(context.Background(), fmt.Sprintf("video_offset_%d_%d", userId, vid), lastTime, 0)
 }
 
-func loadStartTime(userId user.ID, vid video.ID) string {
+func loadStartTime(userId ptype.UserID, vid ptype.VideoID) string {
 	startTime, err := db.GREDIS.Get(context.Background(), fmt.Sprintf("video_offset_%d_%d", userId, vid)).Result()
 	if err == nil {
 		return startTime
@@ -50,7 +49,7 @@ type NewVideoServiceParams struct {
 	Shares      IItemShares
 	Sessions    session.ISessions
 	Router      *mux.Router
-	RecvDanmaku func(vid video.ID, danmakuJson string)
+	RecvDanmaku func(vid ptype.VideoID, danmakuJson string)
 }
 
 func newVideoService(params *NewVideoServiceParams) *VideoService {
@@ -65,7 +64,7 @@ func newVideoService(params *NewVideoServiceParams) *VideoService {
 	return vs
 }
 
-func (v *VideoService) getAccessUser(r *http.Request) (user.ID, error) {
+func (v *VideoService) getAccessUser(r *http.Request) (ptype.UserID, error) {
 	queryParams := r.URL.Query()
 	shareid := queryParams.Get("shareid")
 	if len(shareid) > 0 {
@@ -102,7 +101,7 @@ func (v *VideoService) checkAuth(next http.Handler) http.Handler {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		if !v.ud.HasVideo(userId, video.ID(vid)) {
+		if !v.ud.HasVideo(userId, ptype.VideoID(vid)) {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
@@ -277,14 +276,14 @@ func (v *VideoService) handleSetOffsetTime(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	s, _ := v.sessions.GetSession(r)
-	if s == nil || !v.ud.HasVideo(s.UserId, video.ID(vid)) {
+	if s == nil || !v.ud.HasVideo(s.UserId, ptype.VideoID(vid)) {
 		return
 	}
 	timeoffset, ok2 := vars["offset"]
 	if !ok2 {
 		return
 	}
-	saveStartTime(s.UserId, video.ID(vid), timeoffset)
+	saveStartTime(s.UserId, ptype.VideoID(vid), timeoffset)
 }
 
 func (v *VideoService) handleGetOffsetTime(w http.ResponseWriter, r *http.Request) {
@@ -298,10 +297,10 @@ func (v *VideoService) handleGetOffsetTime(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	s, _ := v.sessions.GetSession(r)
-	if s == nil || !v.ud.HasVideo(s.UserId, video.ID(vid)) {
+	if s == nil || !v.ud.HasVideo(s.UserId, ptype.VideoID(vid)) {
 		return
 	}
-	w.Write([]byte(loadStartTime(s.UserId, video.ID(vid))))
+	w.Write([]byte(loadStartTime(s.UserId, ptype.VideoID(vid))))
 }
 
 func (v *VideoService) handleDanmaku(w http.ResponseWriter, r *http.Request) {
@@ -360,7 +359,7 @@ func (v *VideoService) handleDanmaku(w http.ResponseWriter, r *http.Request) {
 		if err == nil {
 			w.Write([]byte("{\"code\":0}"))
 			if v.recvDanmaku != nil {
-				v.recvDanmaku(video.ID(vid), string(wd))
+				v.recvDanmaku(ptype.VideoID(vid), string(wd))
 			}
 		}
 	} else if r.Method == http.MethodGet {

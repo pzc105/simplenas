@@ -22,6 +22,85 @@ namespace _pbi = ::google::protobuf::internal;
 namespace _fl = ::google::protobuf::internal::field_layout;
 namespace prpc {
         template <typename>
+PROTOBUF_CONSTEXPR BtFile::BtFile(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.index_)*/ 0,
+      /*decltype(_impl_.st_)*/ 0,
+      /*decltype(_impl_.total_size_)*/ ::int64_t{0},
+      /*decltype(_impl_.downloaded_)*/ ::int64_t{0},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
+struct BtFileDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR BtFileDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~BtFileDefaultTypeInternal() {}
+  union {
+    BtFile _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BtFileDefaultTypeInternal _BtFile_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR TorrentInfo::TorrentInfo(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.files_)*/ {},
+      /*decltype(_impl_.name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.save_path_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.info_hash_)*/ nullptr,
+      /*decltype(_impl_.total_size_)*/ ::int64_t{0},
+      /*decltype(_impl_.piece_length_)*/ 0,
+      /*decltype(_impl_.num_pieces_)*/ 0,
+    } {}
+struct TorrentInfoDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR TorrentInfoDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~TorrentInfoDefaultTypeInternal() {}
+  union {
+    TorrentInfo _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TorrentInfoDefaultTypeInternal _TorrentInfo_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR TorrentStatus::TorrentStatus(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.info_hash_)*/ nullptr,
+      /*decltype(_impl_.total_done_)*/ ::int64_t{0},
+      /*decltype(_impl_.download_payload_rate_)*/ 0,
+      /*decltype(_impl_.progress_)*/ 0,
+      /*decltype(_impl_.total_)*/ ::int64_t{0},
+      /*decltype(_impl_.num_peers_)*/ 0,
+      /*decltype(_impl_.state_)*/ 0,
+    } {}
+struct TorrentStatusDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR TorrentStatusDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~TorrentStatusDefaultTypeInternal() {}
+  union {
+    TorrentStatus _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TorrentStatusDefaultTypeInternal _TorrentStatus_default_instance_;
+        template <typename>
 PROTOBUF_CONSTEXPR DownloadRequest::DownloadRequest(::_pbi::ConstantInitialized)
     : _impl_{
       /*decltype(_impl_.content_)*/ {
@@ -126,6 +205,110 @@ struct GetMagnetUriRspDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetMagnetUriRspDefaultTypeInternal _GetMagnetUriRsp_default_instance_;
         template <typename>
+PROTOBUF_CONSTEXPR GetResumeDataReq::GetResumeDataReq(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.info_hash_)*/ nullptr,
+    } {}
+struct GetResumeDataReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetResumeDataReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetResumeDataReqDefaultTypeInternal() {}
+  union {
+    GetResumeDataReq _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetResumeDataReqDefaultTypeInternal _GetResumeDataReq_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR GetResumeDataRsp::GetResumeDataRsp(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.resume_data_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
+struct GetResumeDataRspDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetResumeDataRspDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetResumeDataRspDefaultTypeInternal() {}
+  union {
+    GetResumeDataRsp _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetResumeDataRspDefaultTypeInternal _GetResumeDataRsp_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR GetTorrentInfoReq::GetTorrentInfoReq(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.info_hash_)*/ nullptr,
+    } {}
+struct GetTorrentInfoReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetTorrentInfoReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetTorrentInfoReqDefaultTypeInternal() {}
+  union {
+    GetTorrentInfoReq _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetTorrentInfoReqDefaultTypeInternal _GetTorrentInfoReq_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR GetTorrentInfoRsp::GetTorrentInfoRsp(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.torrent_info_)*/ nullptr,
+    } {}
+struct GetTorrentInfoRspDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetTorrentInfoRspDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetTorrentInfoRspDefaultTypeInternal() {}
+  union {
+    GetTorrentInfoRsp _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetTorrentInfoRspDefaultTypeInternal _GetTorrentInfoRsp_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR GetBtStatusReq::GetBtStatusReq(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.info_hash_)*/ nullptr,
+    } {}
+struct GetBtStatusReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetBtStatusReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetBtStatusReqDefaultTypeInternal() {}
+  union {
+    GetBtStatusReq _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetBtStatusReqDefaultTypeInternal _GetBtStatusReq_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR GetBtStatusRsp::GetBtStatusRsp(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.status_)*/ nullptr,
+    } {}
+struct GetBtStatusRspDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetBtStatusRspDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetBtStatusRspDefaultTypeInternal() {}
+  union {
+    GetBtStatusRsp _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetBtStatusRspDefaultTypeInternal _GetBtStatusRsp_default_instance_;
+        template <typename>
 PROTOBUF_CONSTEXPR StatusRequest::StatusRequest(::_pbi::ConstantInitialized)
     : _impl_{
       /*decltype(_impl_.info_hash_)*/ {},
@@ -141,33 +324,6 @@ struct StatusRequestDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StatusRequestDefaultTypeInternal _StatusRequest_default_instance_;
-        template <typename>
-PROTOBUF_CONSTEXPR TorrentStatus::TorrentStatus(::_pbi::ConstantInitialized)
-    : _impl_{
-      /*decltype(_impl_._has_bits_)*/ {},
-      /*decltype(_impl_._cached_size_)*/ {},
-      /*decltype(_impl_.name_)*/ {
-          &::_pbi::fixed_address_empty_string,
-          ::_pbi::ConstantInitialized{},
-      },
-      /*decltype(_impl_.info_hash_)*/ nullptr,
-      /*decltype(_impl_.total_done_)*/ ::int64_t{0},
-      /*decltype(_impl_.download_payload_rate_)*/ 0,
-      /*decltype(_impl_.progress_)*/ 0,
-      /*decltype(_impl_.total_)*/ ::int64_t{0},
-      /*decltype(_impl_.num_peers_)*/ 0,
-      /*decltype(_impl_.state_)*/ 0,
-    } {}
-struct TorrentStatusDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR TorrentStatusDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~TorrentStatusDefaultTypeInternal() {}
-  union {
-    TorrentStatus _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TorrentStatusDefaultTypeInternal _TorrentStatus_default_instance_;
         template <typename>
 PROTOBUF_CONSTEXPR StatusRespone::StatusRespone(::_pbi::ConstantInitialized)
     : _impl_{
@@ -200,63 +356,6 @@ struct TorrentInfoReqDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TorrentInfoReqDefaultTypeInternal _TorrentInfoReq_default_instance_;
-        template <typename>
-PROTOBUF_CONSTEXPR BtFile::BtFile(::_pbi::ConstantInitialized)
-    : _impl_{
-      /*decltype(_impl_.name_)*/ {
-          &::_pbi::fixed_address_empty_string,
-          ::_pbi::ConstantInitialized{},
-      },
-      /*decltype(_impl_.index_)*/ 0,
-      /*decltype(_impl_.st_)*/ 0,
-      /*decltype(_impl_.total_size_)*/ ::int64_t{0},
-      /*decltype(_impl_.downloaded_)*/ ::int64_t{0},
-      /*decltype(_impl_._cached_size_)*/ {},
-    } {}
-struct BtFileDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR BtFileDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~BtFileDefaultTypeInternal() {}
-  union {
-    BtFile _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BtFileDefaultTypeInternal _BtFile_default_instance_;
-        template <typename>
-PROTOBUF_CONSTEXPR TorrentInfo::TorrentInfo(::_pbi::ConstantInitialized)
-    : _impl_{
-      /*decltype(_impl_._has_bits_)*/ {},
-      /*decltype(_impl_._cached_size_)*/ {},
-      /*decltype(_impl_.files_)*/ {},
-      /*decltype(_impl_.name_)*/ {
-          &::_pbi::fixed_address_empty_string,
-          ::_pbi::ConstantInitialized{},
-      },
-      /*decltype(_impl_.save_path_)*/ {
-          &::_pbi::fixed_address_empty_string,
-          ::_pbi::ConstantInitialized{},
-      },
-      /*decltype(_impl_.resume_data_)*/ {
-          &::_pbi::fixed_address_empty_string,
-          ::_pbi::ConstantInitialized{},
-      },
-      /*decltype(_impl_.info_hash_)*/ nullptr,
-      /*decltype(_impl_.state_)*/ 0,
-      /*decltype(_impl_.piece_length_)*/ 0,
-      /*decltype(_impl_.total_size_)*/ ::int64_t{0},
-      /*decltype(_impl_.num_pieces_)*/ 0,
-    } {}
-struct TorrentInfoDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR TorrentInfoDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~TorrentInfoDefaultTypeInternal() {}
-  union {
-    TorrentInfo _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TorrentInfoDefaultTypeInternal _TorrentInfo_default_instance_;
         template <typename>
 PROTOBUF_CONSTEXPR TorrentInfoRes::TorrentInfoRes(::_pbi::ConstantInitialized)
     : _impl_{
@@ -369,12 +468,71 @@ struct FileCompletedResDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 FileCompletedResDefaultTypeInternal _FileCompletedRes_default_instance_;
 }  // namespace prpc
-static ::_pb::Metadata file_level_metadata_bt_2eproto[18];
+static ::_pb::Metadata file_level_metadata_bt_2eproto[24];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_bt_2eproto[4];
 static constexpr const ::_pb::ServiceDescriptor**
     file_level_service_descriptors_bt_2eproto = nullptr;
 const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     protodesc_cold) = {
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _impl_.name_),
+    PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _impl_.index_),
+    PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _impl_.st_),
+    PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _impl_.total_size_),
+    PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _impl_.downloaded_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.info_hash_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.name_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.save_path_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.files_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.total_size_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.piece_length_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.num_pieces_),
+    0,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.info_hash_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.name_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.download_payload_rate_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.total_done_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.total_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.progress_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.num_peers_),
+    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.state_),
+    0,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::DownloadRequest, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -432,6 +590,65 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     PROTOBUF_FIELD_OFFSET(::prpc::GetMagnetUriRsp, _impl_.magnet_uri_),
     0,
     ~0u,
+    PROTOBUF_FIELD_OFFSET(::prpc::GetResumeDataReq, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::prpc::GetResumeDataReq, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::GetResumeDataReq, _impl_.info_hash_),
+    0,
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::GetResumeDataRsp, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::GetResumeDataRsp, _impl_.resume_data_),
+    PROTOBUF_FIELD_OFFSET(::prpc::GetTorrentInfoReq, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::prpc::GetTorrentInfoReq, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::GetTorrentInfoReq, _impl_.info_hash_),
+    0,
+    PROTOBUF_FIELD_OFFSET(::prpc::GetTorrentInfoRsp, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::prpc::GetTorrentInfoRsp, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::GetTorrentInfoRsp, _impl_.torrent_info_),
+    0,
+    PROTOBUF_FIELD_OFFSET(::prpc::GetBtStatusReq, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::prpc::GetBtStatusReq, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::GetBtStatusReq, _impl_.info_hash_),
+    0,
+    PROTOBUF_FIELD_OFFSET(::prpc::GetBtStatusRsp, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::prpc::GetBtStatusRsp, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::GetBtStatusRsp, _impl_.status_),
+    0,
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::StatusRequest, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -441,30 +658,6 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::StatusRequest, _impl_.info_hash_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_._has_bits_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _internal_metadata_),
-    ~0u,  // no _extensions_
-    ~0u,  // no _oneof_case_
-    ~0u,  // no _weak_field_map_
-    ~0u,  // no _inlined_string_donated_
-    ~0u,  // no _split_
-    ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.info_hash_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.name_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.download_payload_rate_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.total_done_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.total_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.progress_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.num_peers_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentStatus, _impl_.state_),
-    0,
-    ~0u,
-    ~0u,
-    ~0u,
-    ~0u,
-    ~0u,
-    ~0u,
-    ~0u,
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::StatusRespone, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -483,45 +676,6 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfoReq, _impl_.info_hash_),
-    ~0u,  // no _has_bits_
-    PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _internal_metadata_),
-    ~0u,  // no _extensions_
-    ~0u,  // no _oneof_case_
-    ~0u,  // no _weak_field_map_
-    ~0u,  // no _inlined_string_donated_
-    ~0u,  // no _split_
-    ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _impl_.name_),
-    PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _impl_.index_),
-    PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _impl_.st_),
-    PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _impl_.total_size_),
-    PROTOBUF_FIELD_OFFSET(::prpc::BtFile, _impl_.downloaded_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_._has_bits_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _internal_metadata_),
-    ~0u,  // no _extensions_
-    ~0u,  // no _oneof_case_
-    ~0u,  // no _weak_field_map_
-    ~0u,  // no _inlined_string_donated_
-    ~0u,  // no _split_
-    ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.info_hash_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.name_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.state_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.save_path_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.files_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.total_size_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.piece_length_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.num_pieces_),
-    PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfo, _impl_.resume_data_),
-    0,
-    ~0u,
-    ~0u,
-    ~0u,
-    ~0u,
-    ~0u,
-    ~0u,
-    ~0u,
-    ~0u,
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfoRes, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfoRes, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -596,38 +750,50 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
 
 static const ::_pbi::MigrationSchema
     schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-        {0, -1, -1, sizeof(::prpc::DownloadRequest)},
-        {11, -1, -1, sizeof(::prpc::InfoHash)},
-        {21, 30, -1, sizeof(::prpc::DownloadRespone)},
-        {31, 42, -1, sizeof(::prpc::GetMagnetUriReq)},
-        {45, 55, -1, sizeof(::prpc::GetMagnetUriRsp)},
-        {57, -1, -1, sizeof(::prpc::StatusRequest)},
-        {66, 82, -1, sizeof(::prpc::TorrentStatus)},
-        {90, -1, -1, sizeof(::prpc::StatusRespone)},
-        {99, -1, -1, sizeof(::prpc::TorrentInfoReq)},
-        {108, -1, -1, sizeof(::prpc::BtFile)},
-        {121, 138, -1, sizeof(::prpc::TorrentInfo)},
-        {147, 156, -1, sizeof(::prpc::TorrentInfoRes)},
-        {157, 166, -1, sizeof(::prpc::RemoveTorrentReq)},
-        {167, -1, -1, sizeof(::prpc::RemoveTorrentRes)},
-        {175, 184, -1, sizeof(::prpc::FileProgressReq)},
-        {185, 195, -1, sizeof(::prpc::FileProgressRes)},
-        {197, -1, -1, sizeof(::prpc::FileCompletedReq)},
-        {205, 215, -1, sizeof(::prpc::FileCompletedRes)},
+        {0, -1, -1, sizeof(::prpc::BtFile)},
+        {13, 28, -1, sizeof(::prpc::TorrentInfo)},
+        {35, 51, -1, sizeof(::prpc::TorrentStatus)},
+        {59, -1, -1, sizeof(::prpc::DownloadRequest)},
+        {70, -1, -1, sizeof(::prpc::InfoHash)},
+        {80, 89, -1, sizeof(::prpc::DownloadRespone)},
+        {90, 101, -1, sizeof(::prpc::GetMagnetUriReq)},
+        {104, 114, -1, sizeof(::prpc::GetMagnetUriRsp)},
+        {116, 125, -1, sizeof(::prpc::GetResumeDataReq)},
+        {126, -1, -1, sizeof(::prpc::GetResumeDataRsp)},
+        {135, 144, -1, sizeof(::prpc::GetTorrentInfoReq)},
+        {145, 154, -1, sizeof(::prpc::GetTorrentInfoRsp)},
+        {155, 164, -1, sizeof(::prpc::GetBtStatusReq)},
+        {165, 174, -1, sizeof(::prpc::GetBtStatusRsp)},
+        {175, -1, -1, sizeof(::prpc::StatusRequest)},
+        {184, -1, -1, sizeof(::prpc::StatusRespone)},
+        {193, -1, -1, sizeof(::prpc::TorrentInfoReq)},
+        {202, 211, -1, sizeof(::prpc::TorrentInfoRes)},
+        {212, 221, -1, sizeof(::prpc::RemoveTorrentReq)},
+        {222, -1, -1, sizeof(::prpc::RemoveTorrentRes)},
+        {230, 239, -1, sizeof(::prpc::FileProgressReq)},
+        {240, 250, -1, sizeof(::prpc::FileProgressRes)},
+        {252, -1, -1, sizeof(::prpc::FileCompletedReq)},
+        {260, 270, -1, sizeof(::prpc::FileCompletedRes)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
+    &::prpc::_BtFile_default_instance_._instance,
+    &::prpc::_TorrentInfo_default_instance_._instance,
+    &::prpc::_TorrentStatus_default_instance_._instance,
     &::prpc::_DownloadRequest_default_instance_._instance,
     &::prpc::_InfoHash_default_instance_._instance,
     &::prpc::_DownloadRespone_default_instance_._instance,
     &::prpc::_GetMagnetUriReq_default_instance_._instance,
     &::prpc::_GetMagnetUriRsp_default_instance_._instance,
+    &::prpc::_GetResumeDataReq_default_instance_._instance,
+    &::prpc::_GetResumeDataRsp_default_instance_._instance,
+    &::prpc::_GetTorrentInfoReq_default_instance_._instance,
+    &::prpc::_GetTorrentInfoRsp_default_instance_._instance,
+    &::prpc::_GetBtStatusReq_default_instance_._instance,
+    &::prpc::_GetBtStatusRsp_default_instance_._instance,
     &::prpc::_StatusRequest_default_instance_._instance,
-    &::prpc::_TorrentStatus_default_instance_._instance,
     &::prpc::_StatusRespone_default_instance_._instance,
     &::prpc::_TorrentInfoReq_default_instance_._instance,
-    &::prpc::_BtFile_default_instance_._instance,
-    &::prpc::_TorrentInfo_default_instance_._instance,
     &::prpc::_TorrentInfoRes_default_instance_._instance,
     &::prpc::_RemoveTorrentReq_default_instance_._instance,
     &::prpc::_RemoveTorrentRes_default_instance_._instance,
@@ -637,76 +803,84 @@ static const ::_pb::Message* const file_default_instances[] = {
     &::prpc::_FileCompletedRes_default_instance_._instance,
 };
 const char descriptor_table_protodef_bt_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-    "\n\010bt.proto\022\004prpc\"\225\001\n\017DownloadRequest\022+\n\004"
-    "type\030\001 \001(\0162\035.prpc.DownloadRequest.ReqTyp"
-    "e\022\017\n\007content\030\002 \001(\014\022\021\n\tsave_path\030\003 \001(\t\"1\n"
-    "\007ReqType\022\r\n\tMagnetUri\020\000\022\013\n\007Torrent\020\001\022\n\n\006"
-    "Resume\020\002\")\n\010InfoHash\022\017\n\007version\030\001 \001(\005\022\014\n"
-    "\004hash\030\002 \001(\014\"4\n\017DownloadRespone\022!\n\tinfo_h"
-    "ash\030\001 \001(\0132\016.prpc.InfoHash\"\230\001\n\017GetMagnetU"
-    "riReq\022+\n\004type\030\001 \001(\0162\035.prpc.GetMagnetUriR"
-    "eq.ReqType\022\017\n\007content\030\002 \001(\014\022!\n\tinfo_hash"
-    "\030\003 \001(\0132\016.prpc.InfoHash\"$\n\007ReqType\022\013\n\007Tor"
-    "rent\020\000\022\014\n\010InfoHash\020\001\"H\n\017GetMagnetUriRsp\022"
-    "!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\022\022\n\nma"
-    "gnet_uri\030\002 \001(\t\"2\n\rStatusRequest\022!\n\tinfo_"
-    "hash\030\001 \003(\0132\016.prpc.InfoHash\"\311\001\n\rTorrentSt"
-    "atus\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\022"
-    "\014\n\004name\030\002 \001(\t\022\035\n\025download_payload_rate\030\003"
-    " \001(\005\022\022\n\ntotal_done\030\004 \001(\003\022\r\n\005total\030\005 \001(\003\022"
-    "\020\n\010progress\030\006 \001(\002\022\021\n\tnum_peers\030\007 \001(\005\022 \n\005"
-    "state\030\010 \001(\0162\021.prpc.BtStateEnum\":\n\rStatus"
-    "Respone\022)\n\014status_array\030\001 \003(\0132\023.prpc.Tor"
-    "rentStatus\"3\n\016TorrentInfoReq\022!\n\tinfo_has"
-    "h\030\001 \003(\0132\016.prpc.InfoHash\"\240\001\n\006BtFile\022\014\n\004na"
-    "me\030\001 \001(\t\022\r\n\005index\030\002 \001(\005\022\036\n\002st\030\003 \001(\0162\022.pr"
-    "pc.BtFile.State\022\022\n\ntotal_size\030\004 \001(\003\022\022\n\nd"
-    "ownloaded\030\005 \001(\003\"1\n\005State\022\010\n\004stop\020\000\022\017\n\013do"
-    "wnloading\020\001\022\r\n\tcompleted\020\002\"\343\001\n\013TorrentIn"
-    "fo\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\022\014\n"
-    "\004name\030\002 \001(\t\022 \n\005state\030\003 \001(\0162\021.prpc.BtStat"
-    "eEnum\022\021\n\tsave_path\030\004 \001(\t\022\033\n\005files\030\005 \003(\0132"
-    "\014.prpc.BtFile\022\022\n\ntotal_size\030\006 \001(\003\022\024\n\014pie"
-    "ce_length\030\007 \001(\005\022\022\n\nnum_pieces\030\010 \001(\005\022\023\n\013r"
-    "esume_data\030\t \001(\014\"/\n\016TorrentInfoRes\022\035\n\002ti"
-    "\030\001 \001(\0132\021.prpc.TorrentInfo\"5\n\020RemoveTorre"
-    "ntReq\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash"
-    "\"\022\n\020RemoveTorrentRes\"4\n\017FileProgressReq\022"
-    "!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\"Q\n\017Fi"
-    "leProgressRes\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc."
-    "InfoHash\022\033\n\005files\030\002 \003(\0132\014.prpc.BtFile\"\022\n"
-    "\020FileCompletedReq\"I\n\020FileCompletedRes\022!\n"
-    "\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\022\022\n\nfile"
-    "_index\030\002 \001(\005*\216\001\n\013BtStateEnum\022\013\n\007unknown\020"
-    "\000\022\022\n\016checking_files\020\001\022\030\n\024downloading_met"
-    "adata\020\002\022\017\n\013downloading\020\003\022\014\n\010finished\020\004\022\013"
-    "\n\007seeding\020\005\022\030\n\024checking_resume_data\020\0072\377\003"
-    "\n\tBtService\0225\n\005Parse\022\025.prpc.DownloadRequ"
-    "est\032\025.prpc.DownloadRespone\0228\n\010Download\022\025"
-    ".prpc.DownloadRequest\032\025.prpc.DownloadRes"
-    "pone\022\?\n\rRemoveTorrent\022\026.prpc.RemoveTorre"
-    "ntReq\032\026.prpc.RemoveTorrentRes\022<\n\014GetMagn"
-    "etUri\022\025.prpc.GetMagnetUriReq\032\025.prpc.GetM"
-    "agnetUriRsp\0228\n\010OnStatus\022\023.prpc.StatusReq"
-    "uest\032\023.prpc.StatusRespone(\0010\001\022\?\n\rOnTorre"
-    "ntInfo\022\024.prpc.TorrentInfoReq\032\024.prpc.Torr"
-    "entInfoRes(\0010\001\022E\n\017OnFileCompleted\022\026.prpc"
-    ".FileCompletedReq\032\026.prpc.FileCompletedRe"
-    "s(\0010\001\022@\n\014FileProgress\022\025.prpc.FileProgres"
-    "sReq\032\025.prpc.FileProgressRes(\0010\001B\010Z\006./prp"
-    "cb\006proto3"
+    "\n\010bt.proto\022\004prpc\"\240\001\n\006BtFile\022\014\n\004name\030\001 \001("
+    "\t\022\r\n\005index\030\002 \001(\005\022\036\n\002st\030\003 \001(\0162\022.prpc.BtFi"
+    "le.State\022\022\n\ntotal_size\030\004 \001(\003\022\022\n\ndownload"
+    "ed\030\005 \001(\003\"1\n\005State\022\010\n\004stop\020\000\022\017\n\013downloadi"
+    "ng\020\001\022\r\n\tcompleted\020\002\"\254\001\n\013TorrentInfo\022!\n\ti"
+    "nfo_hash\030\001 \001(\0132\016.prpc.InfoHash\022\014\n\004name\030\002"
+    " \001(\t\022\021\n\tsave_path\030\003 \001(\t\022\033\n\005files\030\004 \003(\0132\014"
+    ".prpc.BtFile\022\022\n\ntotal_size\030\005 \001(\003\022\024\n\014piec"
+    "e_length\030\006 \001(\005\022\022\n\nnum_pieces\030\007 \001(\005\"\311\001\n\rT"
+    "orrentStatus\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.I"
+    "nfoHash\022\014\n\004name\030\002 \001(\t\022\035\n\025download_payloa"
+    "d_rate\030\003 \001(\005\022\022\n\ntotal_done\030\004 \001(\003\022\r\n\005tota"
+    "l\030\005 \001(\003\022\020\n\010progress\030\006 \001(\002\022\021\n\tnum_peers\030\007"
+    " \001(\005\022 \n\005state\030\010 \001(\0162\021.prpc.BtStateEnum\"\225"
+    "\001\n\017DownloadRequest\022+\n\004type\030\001 \001(\0162\035.prpc."
+    "DownloadRequest.ReqType\022\017\n\007content\030\002 \001(\014"
+    "\022\021\n\tsave_path\030\003 \001(\t\"1\n\007ReqType\022\r\n\tMagnet"
+    "Uri\020\000\022\013\n\007Torrent\020\001\022\n\n\006Resume\020\002\")\n\010InfoHa"
+    "sh\022\017\n\007version\030\001 \001(\005\022\014\n\004hash\030\002 \001(\014\"4\n\017Dow"
+    "nloadRespone\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.I"
+    "nfoHash\"\230\001\n\017GetMagnetUriReq\022+\n\004type\030\001 \001("
+    "\0162\035.prpc.GetMagnetUriReq.ReqType\022\017\n\007cont"
+    "ent\030\002 \001(\014\022!\n\tinfo_hash\030\003 \001(\0132\016.prpc.Info"
+    "Hash\"$\n\007ReqType\022\013\n\007Torrent\020\000\022\014\n\010InfoHash"
+    "\020\001\"H\n\017GetMagnetUriRsp\022!\n\tinfo_hash\030\001 \001(\013"
+    "2\016.prpc.InfoHash\022\022\n\nmagnet_uri\030\002 \001(\t\"5\n\020"
+    "GetResumeDataReq\022!\n\tinfo_hash\030\001 \001(\0132\016.pr"
+    "pc.InfoHash\"\'\n\020GetResumeDataRsp\022\023\n\013resum"
+    "e_data\030\t \001(\014\"6\n\021GetTorrentInfoReq\022!\n\tinf"
+    "o_hash\030\001 \001(\0132\016.prpc.InfoHash\"<\n\021GetTorre"
+    "ntInfoRsp\022\'\n\014torrent_info\030\001 \001(\0132\021.prpc.T"
+    "orrentInfo\"3\n\016GetBtStatusReq\022!\n\tinfo_has"
+    "h\030\001 \001(\0132\016.prpc.InfoHash\"5\n\016GetBtStatusRs"
+    "p\022#\n\006status\030\001 \001(\0132\023.prpc.TorrentStatus\"2"
+    "\n\rStatusRequest\022!\n\tinfo_hash\030\001 \003(\0132\016.prp"
+    "c.InfoHash\":\n\rStatusRespone\022)\n\014status_ar"
+    "ray\030\001 \003(\0132\023.prpc.TorrentStatus\"3\n\016Torren"
+    "tInfoReq\022!\n\tinfo_hash\030\001 \003(\0132\016.prpc.InfoH"
+    "ash\"/\n\016TorrentInfoRes\022\035\n\002ti\030\001 \001(\0132\021.prpc"
+    ".TorrentInfo\"5\n\020RemoveTorrentReq\022!\n\tinfo"
+    "_hash\030\001 \001(\0132\016.prpc.InfoHash\"\022\n\020RemoveTor"
+    "rentRes\"4\n\017FileProgressReq\022!\n\tinfo_hash\030"
+    "\001 \001(\0132\016.prpc.InfoHash\"Q\n\017FileProgressRes"
+    "\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\022\033\n\005f"
+    "iles\030\002 \003(\0132\014.prpc.BtFile\"\022\n\020FileComplete"
+    "dReq\"I\n\020FileCompletedRes\022!\n\tinfo_hash\030\001 "
+    "\001(\0132\016.prpc.InfoHash\022\022\n\nfile_index\030\002 \001(\005*"
+    "\216\001\n\013BtStateEnum\022\013\n\007unknown\020\000\022\022\n\016checking"
+    "_files\020\001\022\030\n\024downloading_metadata\020\002\022\017\n\013do"
+    "wnloading\020\003\022\014\n\010finished\020\004\022\013\n\007seeding\020\005\022\030"
+    "\n\024checking_resume_data\020\0072\276\004\n\tBtService\0225"
+    "\n\005Parse\022\025.prpc.DownloadRequest\032\025.prpc.Do"
+    "wnloadRespone\0228\n\010Download\022\025.prpc.Downloa"
+    "dRequest\032\025.prpc.DownloadRespone\022\?\n\rRemov"
+    "eTorrent\022\026.prpc.RemoveTorrentReq\032\026.prpc."
+    "RemoveTorrentRes\022<\n\014GetMagnetUri\022\025.prpc."
+    "GetMagnetUriReq\032\025.prpc.GetMagnetUriRsp\022\?"
+    "\n\rGetResumeData\022\026.prpc.GetResumeDataReq\032"
+    "\026.prpc.GetResumeDataRsp\022B\n\016GetTorrentInf"
+    "o\022\027.prpc.GetTorrentInfoReq\032\027.prpc.GetTor"
+    "rentInfoRsp\0229\n\013GetBtStatus\022\024.prpc.GetBtS"
+    "tatusReq\032\024.prpc.GetBtStatusRsp\022:\n\nOnBtSt"
+    "atus\022\023.prpc.StatusRequest\032\023.prpc.StatusR"
+    "espone(\0010\001\022E\n\017OnFileCompleted\022\026.prpc.Fil"
+    "eCompletedReq\032\026.prpc.FileCompletedRes(\0010"
+    "\001B\010Z\006./prpcb\006proto3"
 };
 static ::absl::once_flag descriptor_table_bt_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_bt_2eproto = {
     false,
     false,
-    2289,
+    2619,
     descriptor_table_protodef_bt_2eproto,
     "bt.proto",
     &descriptor_table_bt_2eproto_once,
     nullptr,
     0,
-    18,
+    24,
     schemas,
     file_default_instances,
     TableStruct_bt_2eproto::offsets,
@@ -733,9 +907,35 @@ PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_bt_2epro
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY2
 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_bt_2eproto(&descriptor_table_bt_2eproto);
 namespace prpc {
-const ::google::protobuf::EnumDescriptor* DownloadRequest_ReqType_descriptor() {
+const ::google::protobuf::EnumDescriptor* BtFile_State_descriptor() {
   ::google::protobuf::internal::AssignDescriptors(&descriptor_table_bt_2eproto);
   return file_level_enum_descriptors_bt_2eproto[0];
+}
+bool BtFile_State_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+#if (__cplusplus < 201703) && \
+  (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
+
+constexpr BtFile_State BtFile::stop;
+constexpr BtFile_State BtFile::downloading;
+constexpr BtFile_State BtFile::completed;
+constexpr BtFile_State BtFile::State_MIN;
+constexpr BtFile_State BtFile::State_MAX;
+constexpr int BtFile::State_ARRAYSIZE;
+
+#endif  // (__cplusplus < 201703) &&
+        // (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
+const ::google::protobuf::EnumDescriptor* DownloadRequest_ReqType_descriptor() {
+  ::google::protobuf::internal::AssignDescriptors(&descriptor_table_bt_2eproto);
+  return file_level_enum_descriptors_bt_2eproto[1];
 }
 bool DownloadRequest_ReqType_IsValid(int value) {
   switch (value) {
@@ -761,7 +961,7 @@ constexpr int DownloadRequest::ReqType_ARRAYSIZE;
         // (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
 const ::google::protobuf::EnumDescriptor* GetMagnetUriReq_ReqType_descriptor() {
   ::google::protobuf::internal::AssignDescriptors(&descriptor_table_bt_2eproto);
-  return file_level_enum_descriptors_bt_2eproto[1];
+  return file_level_enum_descriptors_bt_2eproto[2];
 }
 bool GetMagnetUriReq_ReqType_IsValid(int value) {
   switch (value) {
@@ -780,32 +980,6 @@ constexpr GetMagnetUriReq_ReqType GetMagnetUriReq::InfoHash;
 constexpr GetMagnetUriReq_ReqType GetMagnetUriReq::ReqType_MIN;
 constexpr GetMagnetUriReq_ReqType GetMagnetUriReq::ReqType_MAX;
 constexpr int GetMagnetUriReq::ReqType_ARRAYSIZE;
-
-#endif  // (__cplusplus < 201703) &&
-        // (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
-const ::google::protobuf::EnumDescriptor* BtFile_State_descriptor() {
-  ::google::protobuf::internal::AssignDescriptors(&descriptor_table_bt_2eproto);
-  return file_level_enum_descriptors_bt_2eproto[2];
-}
-bool BtFile_State_IsValid(int value) {
-  switch (value) {
-    case 0:
-    case 1:
-    case 2:
-      return true;
-    default:
-      return false;
-  }
-}
-#if (__cplusplus < 201703) && \
-  (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
-
-constexpr BtFile_State BtFile::stop;
-constexpr BtFile_State BtFile::downloading;
-constexpr BtFile_State BtFile::completed;
-constexpr BtFile_State BtFile::State_MIN;
-constexpr BtFile_State BtFile::State_MAX;
-constexpr int BtFile::State_ARRAYSIZE;
 
 #endif  // (__cplusplus < 201703) &&
         // (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
@@ -829,32 +1003,349 @@ bool BtStateEnum_IsValid(int value) {
 }
 // ===================================================================
 
-class DownloadRequest::_Internal {
+class BtFile::_Internal {
  public:
 };
 
-DownloadRequest::DownloadRequest(::google::protobuf::Arena* arena)
+BtFile::BtFile(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.DownloadRequest)
+  // @@protoc_insertion_point(arena_constructor:prpc.BtFile)
 }
-DownloadRequest::DownloadRequest(const DownloadRequest& from) : ::google::protobuf::Message() {
-  DownloadRequest* const _this = this;
+BtFile::BtFile(const BtFile& from) : ::google::protobuf::Message() {
+  BtFile* const _this = this;
   (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.content_){},
-      decltype(_impl_.save_path_){},
-      decltype(_impl_.type_){},
+      decltype(_impl_.name_){},
+      decltype(_impl_.index_){},
+      decltype(_impl_.st_){},
+      decltype(_impl_.total_size_){},
+      decltype(_impl_.downloaded_){},
       /*decltype(_impl_._cached_size_)*/ {},
   };
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
-  _impl_.content_.InitDefault();
+  _impl_.name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.content_.Set("", GetArenaForAllocation());
+        _impl_.name_.Set("", GetArenaForAllocation());
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_content().empty()) {
-    _this->_impl_.content_.Set(from._internal_content(), _this->GetArenaForAllocation());
+  if (!from._internal_name().empty()) {
+    _this->_impl_.name_.Set(from._internal_name(), _this->GetArenaForAllocation());
+  }
+  ::memcpy(&_impl_.index_, &from._impl_.index_,
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.downloaded_) -
+    reinterpret_cast<char*>(&_impl_.index_)) + sizeof(_impl_.downloaded_));
+
+  // @@protoc_insertion_point(copy_constructor:prpc.BtFile)
+}
+inline void BtFile::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.name_){},
+      decltype(_impl_.index_){0},
+      decltype(_impl_.st_){0},
+      decltype(_impl_.total_size_){::int64_t{0}},
+      decltype(_impl_.downloaded_){::int64_t{0}},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+BtFile::~BtFile() {
+  // @@protoc_insertion_point(destructor:prpc.BtFile)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void BtFile::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.name_.Destroy();
+}
+void BtFile::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void BtFile::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.BtFile)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.name_.ClearToEmpty();
+  ::memset(&_impl_.index_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.downloaded_) -
+      reinterpret_cast<char*>(&_impl_.index_)) + sizeof(_impl_.downloaded_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* BtFile::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 5, 0, 24, 2> BtFile::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    5, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967264,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    5,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_BtFile_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string name = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.name_)}},
+    // int32 index = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(BtFile, _impl_.index_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.index_)}},
+    // .prpc.BtFile.State st = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(BtFile, _impl_.st_), 63>(),
+     {24, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.st_)}},
+    // int64 total_size = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(BtFile, _impl_.total_size_), 63>(),
+     {32, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.total_size_)}},
+    // int64 downloaded = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(BtFile, _impl_.downloaded_), 63>(),
+     {40, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.downloaded_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string name = 1;
+    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.name_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // int32 index = 2;
+    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.index_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // .prpc.BtFile.State st = 3;
+    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.st_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
+    // int64 total_size = 4;
+    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.total_size_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+    // int64 downloaded = 5;
+    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.downloaded_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+  }},
+  // no aux_entries
+  {{
+    "\13\4\0\0\0\0\0\0"
+    "prpc.BtFile"
+    "name"
+  }},
+};
+
+::uint8_t* BtFile::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.BtFile)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // string name = 1;
+  if (!this->_internal_name().empty()) {
+    const std::string& _s = this->_internal_name();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.BtFile.name");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
+  }
+
+  // int32 index = 2;
+  if (this->_internal_index() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<2>(
+            stream, this->_internal_index(), target);
+  }
+
+  // .prpc.BtFile.State st = 3;
+  if (this->_internal_st() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+        3, this->_internal_st(), target);
+  }
+
+  // int64 total_size = 4;
+  if (this->_internal_total_size() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<4>(
+            stream, this->_internal_total_size(), target);
+  }
+
+  // int64 downloaded = 5;
+  if (this->_internal_downloaded() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<5>(
+            stream, this->_internal_downloaded(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.BtFile)
+  return target;
+}
+
+::size_t BtFile::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.BtFile)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string name = 1;
+  if (!this->_internal_name().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_name());
+  }
+
+  // int32 index = 2;
+  if (this->_internal_index() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_index());
+  }
+
+  // .prpc.BtFile.State st = 3;
+  if (this->_internal_st() != 0) {
+    total_size += 1 +
+                  ::_pbi::WireFormatLite::EnumSize(this->_internal_st());
+  }
+
+  // int64 total_size = 4;
+  if (this->_internal_total_size() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_total_size());
+  }
+
+  // int64 downloaded = 5;
+  if (this->_internal_downloaded() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_downloaded());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData BtFile::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    BtFile::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*BtFile::GetClassData() const { return &_class_data_; }
+
+
+void BtFile::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<BtFile*>(&to_msg);
+  auto& from = static_cast<const BtFile&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.BtFile)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_name().empty()) {
+    _this->_internal_set_name(from._internal_name());
+  }
+  if (from._internal_index() != 0) {
+    _this->_internal_set_index(from._internal_index());
+  }
+  if (from._internal_st() != 0) {
+    _this->_internal_set_st(from._internal_st());
+  }
+  if (from._internal_total_size() != 0) {
+    _this->_internal_set_total_size(from._internal_total_size());
+  }
+  if (from._internal_downloaded() != 0) {
+    _this->_internal_set_downloaded(from._internal_downloaded());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void BtFile::CopyFrom(const BtFile& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.BtFile)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool BtFile::IsInitialized() const {
+  return true;
+}
+
+void BtFile::InternalSwap(BtFile* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, lhs_arena,
+                                       &other->_impl_.name_, rhs_arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(BtFile, _impl_.downloaded_)
+      + sizeof(BtFile::_impl_.downloaded_)
+      - PROTOBUF_FIELD_OFFSET(BtFile, _impl_.index_)>(
+          reinterpret_cast<char*>(&_impl_.index_),
+          reinterpret_cast<char*>(&other->_impl_.index_));
+}
+
+::google::protobuf::Metadata BtFile::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[0]);
+}
+// ===================================================================
+
+class TorrentInfo::_Internal {
+ public:
+  using HasBits = decltype(std::declval<TorrentInfo>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_._has_bits_);
+  static const ::prpc::InfoHash& info_hash(const TorrentInfo* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+const ::prpc::InfoHash& TorrentInfo::_Internal::info_hash(const TorrentInfo* msg) {
+  return *msg->_impl_.info_hash_;
+}
+TorrentInfo::TorrentInfo(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.TorrentInfo)
+}
+TorrentInfo::TorrentInfo(const TorrentInfo& from) : ::google::protobuf::Message() {
+  TorrentInfo* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.files_){from._impl_.files_},
+      decltype(_impl_.name_){},
+      decltype(_impl_.save_path_){},
+      decltype(_impl_.info_hash_){nullptr},
+      decltype(_impl_.total_size_){},
+      decltype(_impl_.piece_length_){},
+      decltype(_impl_.num_pieces_){},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_name().empty()) {
+    _this->_impl_.name_.Set(from._internal_name(), _this->GetArenaForAllocation());
   }
   _impl_.save_path_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -863,54 +1354,75 @@ DownloadRequest::DownloadRequest(const DownloadRequest& from) : ::google::protob
   if (!from._internal_save_path().empty()) {
     _this->_impl_.save_path_.Set(from._internal_save_path(), _this->GetArenaForAllocation());
   }
-  _this->_impl_.type_ = from._impl_.type_;
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
+  }
+  ::memcpy(&_impl_.total_size_, &from._impl_.total_size_,
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.num_pieces_) -
+    reinterpret_cast<char*>(&_impl_.total_size_)) + sizeof(_impl_.num_pieces_));
 
-  // @@protoc_insertion_point(copy_constructor:prpc.DownloadRequest)
+  // @@protoc_insertion_point(copy_constructor:prpc.TorrentInfo)
 }
-inline void DownloadRequest::SharedCtor(::_pb::Arena* arena) {
+inline void TorrentInfo::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.content_){},
-      decltype(_impl_.save_path_){},
-      decltype(_impl_.type_){0},
+      decltype(_impl_._has_bits_){},
       /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.files_){arena},
+      decltype(_impl_.name_){},
+      decltype(_impl_.save_path_){},
+      decltype(_impl_.info_hash_){nullptr},
+      decltype(_impl_.total_size_){::int64_t{0}},
+      decltype(_impl_.piece_length_){0},
+      decltype(_impl_.num_pieces_){0},
   };
-  _impl_.content_.InitDefault();
+  _impl_.name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.content_.Set("", GetArenaForAllocation());
+        _impl_.name_.Set("", GetArenaForAllocation());
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   _impl_.save_path_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
         _impl_.save_path_.Set("", GetArenaForAllocation());
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-DownloadRequest::~DownloadRequest() {
-  // @@protoc_insertion_point(destructor:prpc.DownloadRequest)
+TorrentInfo::~TorrentInfo() {
+  // @@protoc_insertion_point(destructor:prpc.TorrentInfo)
   _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-inline void DownloadRequest::SharedDtor() {
+inline void TorrentInfo::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.content_.Destroy();
+  _impl_.files_.~RepeatedPtrField();
+  _impl_.name_.Destroy();
   _impl_.save_path_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.info_hash_;
 }
-void DownloadRequest::SetCachedSize(int size) const {
+void TorrentInfo::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-PROTOBUF_NOINLINE void DownloadRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.DownloadRequest)
+PROTOBUF_NOINLINE void TorrentInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.TorrentInfo)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.content_.ClearToEmpty();
+  _internal_mutable_files()->Clear();
+  _impl_.name_.ClearToEmpty();
   _impl_.save_path_.ClearToEmpty();
-  _impl_.type_ = 0;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
+  }
+  ::memset(&_impl_.total_size_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.num_pieces_) -
+      reinterpret_cast<char*>(&_impl_.total_size_)) + sizeof(_impl_.num_pieces_));
+  _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* DownloadRequest::_InternalParse(
+const char* TorrentInfo::_InternalParse(
     const char* ptr, ::_pbi::ParseContext* ctx) {
   ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
@@ -918,77 +1430,135 @@ const char* DownloadRequest::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 3, 0, 38, 2> DownloadRequest::_table_ = {
+const ::_pbi::TcParseTable<3, 7, 2, 38, 2> TorrentInfo::_table_ = {
   {
-    0,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_._has_bits_),
     0, // no _extensions_
-    3, 24,  // max_field_number, fast_idx_mask
+    7, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967288,  // skipmap
+    4294967168,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    3,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    &_DownloadRequest_default_instance_._instance,
+    7,  // num_field_entries
+    2,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_TorrentInfo_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
-    // .prpc.DownloadRequest.ReqType type = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DownloadRequest, _impl_.type_), 63>(),
-     {8, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.type_)}},
-    // bytes content = 2;
-    {::_pbi::TcParser::FastBS1,
-     {18, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.content_)}},
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.info_hash_)}},
+    // string name = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.name_)}},
     // string save_path = 3;
     {::_pbi::TcParser::FastUS1,
-     {26, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.save_path_)}},
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.save_path_)}},
+    // repeated .prpc.BtFile files = 4;
+    {::_pbi::TcParser::FastMtR1,
+     {34, 63, 1, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.files_)}},
+    // int64 total_size = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TorrentInfo, _impl_.total_size_), 63>(),
+     {40, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.total_size_)}},
+    // int32 piece_length = 6;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TorrentInfo, _impl_.piece_length_), 63>(),
+     {48, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.piece_length_)}},
+    // int32 num_pieces = 7;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TorrentInfo, _impl_.num_pieces_), 63>(),
+     {56, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.num_pieces_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // .prpc.DownloadRequest.ReqType type = 1;
-    {PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.type_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
-    // bytes content = 2;
-    {PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.content_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kBytes | ::_fl::kRepAString)},
-    // string save_path = 3;
-    {PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.save_path_), 0, 0,
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // string name = 2;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.name_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
-  }},
-  // no aux_entries
-  {{
-    "\24\0\0\11\0\0\0\0"
-    "prpc.DownloadRequest"
+    // string save_path = 3;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.save_path_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // repeated .prpc.BtFile files = 4;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.files_), -1, 1,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    // int64 total_size = 5;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.total_size_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+    // int32 piece_length = 6;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.piece_length_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // int32 num_pieces = 7;
+    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.num_pieces_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+    {::_pbi::TcParser::GetTable<::prpc::BtFile>()},
+  }}, {{
+    "\20\0\4\11\0\0\0\0"
+    "prpc.TorrentInfo"
+    "name"
     "save_path"
   }},
 };
 
-::uint8_t* DownloadRequest::_InternalSerialize(
+::uint8_t* TorrentInfo::_InternalSerialize(
     ::uint8_t* target,
     ::google::protobuf::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.DownloadRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.TorrentInfo)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // .prpc.DownloadRequest.ReqType type = 1;
-  if (this->_internal_type() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteEnumToArray(
-        1, this->_internal_type(), target);
+  cached_has_bits = _impl_._has_bits_[0];
+  // .prpc.InfoHash info_hash = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::info_hash(this),
+        _Internal::info_hash(this).GetCachedSize(), target, stream);
   }
 
-  // bytes content = 2;
-  if (!this->_internal_content().empty()) {
-    const std::string& _s = this->_internal_content();
-    target = stream->WriteBytesMaybeAliased(2, _s, target);
+  // string name = 2;
+  if (!this->_internal_name().empty()) {
+    const std::string& _s = this->_internal_name();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.TorrentInfo.name");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   // string save_path = 3;
   if (!this->_internal_save_path().empty()) {
     const std::string& _s = this->_internal_save_path();
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.DownloadRequest.save_path");
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.TorrentInfo.save_path");
     target = stream->WriteStringMaybeAliased(3, _s, target);
+  }
+
+  // repeated .prpc.BtFile files = 4;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_files_size()); i < n; i++) {
+    const auto& repfield = this->_internal_files().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
+        InternalWriteMessage(4, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  // int64 total_size = 5;
+  if (this->_internal_total_size() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<5>(
+            stream, this->_internal_total_size(), target);
+  }
+
+  // int32 piece_length = 6;
+  if (this->_internal_piece_length() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<6>(
+            stream, this->_internal_piece_length(), target);
+  }
+
+  // int32 num_pieces = 7;
+  if (this->_internal_num_pieces() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<7>(
+            stream, this->_internal_num_pieces(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -996,22 +1566,28 @@ const ::_pbi::TcParseTable<2, 3, 0, 38, 2> DownloadRequest::_table_ = {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.DownloadRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.TorrentInfo)
   return target;
 }
 
-::size_t DownloadRequest::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.DownloadRequest)
+::size_t TorrentInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.TorrentInfo)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // bytes content = 2;
-  if (!this->_internal_content().empty()) {
-    total_size += 1 + ::google::protobuf::internal::WireFormatLite::BytesSize(
-                                    this->_internal_content());
+  // repeated .prpc.BtFile files = 4;
+  total_size += 1UL * this->_internal_files_size();
+  for (const auto& msg : this->_internal_files()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+  }
+  // string name = 2;
+  if (!this->_internal_name().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_name());
   }
 
   // string save_path = 3;
@@ -1020,1165 +1596,107 @@ const ::_pbi::TcParseTable<2, 3, 0, 38, 2> DownloadRequest::_table_ = {
                                     this->_internal_save_path());
   }
 
-  // .prpc.DownloadRequest.ReqType type = 1;
-  if (this->_internal_type() != 0) {
+  // .prpc.InfoHash info_hash = 1;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
-                  ::_pbi::WireFormatLite::EnumSize(this->_internal_type());
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *_impl_.info_hash_);
+  }
+
+  // int64 total_size = 5;
+  if (this->_internal_total_size() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_total_size());
+  }
+
+  // int32 piece_length = 6;
+  if (this->_internal_piece_length() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_piece_length());
+  }
+
+  // int32 num_pieces = 7;
+  if (this->_internal_num_pieces() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_num_pieces());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::google::protobuf::Message::ClassData DownloadRequest::_class_data_ = {
+const ::google::protobuf::Message::ClassData TorrentInfo::_class_data_ = {
     ::google::protobuf::Message::CopyWithSourceCheck,
-    DownloadRequest::MergeImpl
+    TorrentInfo::MergeImpl
 };
-const ::google::protobuf::Message::ClassData*DownloadRequest::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*TorrentInfo::GetClassData() const { return &_class_data_; }
 
 
-void DownloadRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
-  auto* const _this = static_cast<DownloadRequest*>(&to_msg);
-  auto& from = static_cast<const DownloadRequest&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.DownloadRequest)
+void TorrentInfo::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<TorrentInfo*>(&to_msg);
+  auto& from = static_cast<const TorrentInfo&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.TorrentInfo)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_content().empty()) {
-    _this->_internal_set_content(from._internal_content());
+  _this->_internal_mutable_files()->MergeFrom(from._internal_files());
+  if (!from._internal_name().empty()) {
+    _this->_internal_set_name(from._internal_name());
   }
   if (!from._internal_save_path().empty()) {
     _this->_internal_set_save_path(from._internal_save_path());
   }
-  if (from._internal_type() != 0) {
-    _this->_internal_set_type(from._internal_type());
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
+        from._internal_info_hash());
+  }
+  if (from._internal_total_size() != 0) {
+    _this->_internal_set_total_size(from._internal_total_size());
+  }
+  if (from._internal_piece_length() != 0) {
+    _this->_internal_set_piece_length(from._internal_piece_length());
+  }
+  if (from._internal_num_pieces() != 0) {
+    _this->_internal_set_num_pieces(from._internal_num_pieces());
   }
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void DownloadRequest::CopyFrom(const DownloadRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.DownloadRequest)
+void TorrentInfo::CopyFrom(const TorrentInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.TorrentInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-PROTOBUF_NOINLINE bool DownloadRequest::IsInitialized() const {
+PROTOBUF_NOINLINE bool TorrentInfo::IsInitialized() const {
   return true;
 }
 
-void DownloadRequest::InternalSwap(DownloadRequest* other) {
+void TorrentInfo::InternalSwap(TorrentInfo* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.content_, lhs_arena,
-                                       &other->_impl_.content_, rhs_arena);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  _impl_.files_.InternalSwap(&other->_impl_.files_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, lhs_arena,
+                                       &other->_impl_.name_, rhs_arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.save_path_, lhs_arena,
                                        &other->_impl_.save_path_, rhs_arena);
-  swap(_impl_.type_, other->_impl_.type_);
-}
-
-::google::protobuf::Metadata DownloadRequest::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[0]);
-}
-// ===================================================================
-
-class InfoHash::_Internal {
- public:
-};
-
-InfoHash::InfoHash(::google::protobuf::Arena* arena)
-    : ::google::protobuf::Message(arena) {
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.InfoHash)
-}
-InfoHash::InfoHash(const InfoHash& from) : ::google::protobuf::Message() {
-  InfoHash* const _this = this;
-  (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.hash_){},
-      decltype(_impl_.version_){},
-      /*decltype(_impl_._cached_size_)*/ {},
-  };
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-  _impl_.hash_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.hash_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_hash().empty()) {
-    _this->_impl_.hash_.Set(from._internal_hash(), _this->GetArenaForAllocation());
-  }
-  _this->_impl_.version_ = from._impl_.version_;
-
-  // @@protoc_insertion_point(copy_constructor:prpc.InfoHash)
-}
-inline void InfoHash::SharedCtor(::_pb::Arena* arena) {
-  (void)arena;
-  new (&_impl_) Impl_{
-      decltype(_impl_.hash_){},
-      decltype(_impl_.version_){0},
-      /*decltype(_impl_._cached_size_)*/ {},
-  };
-  _impl_.hash_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.hash_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-InfoHash::~InfoHash() {
-  // @@protoc_insertion_point(destructor:prpc.InfoHash)
-  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  SharedDtor();
-}
-inline void InfoHash::SharedDtor() {
-  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.hash_.Destroy();
-}
-void InfoHash::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-PROTOBUF_NOINLINE void InfoHash::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.InfoHash)
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.hash_.ClearToEmpty();
-  _impl_.version_ = 0;
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-const char* InfoHash::_InternalParse(
-    const char* ptr, ::_pbi::ParseContext* ctx) {
-  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
-  return ptr;
-}
-
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 0, 0, 2> InfoHash::_table_ = {
-  {
-    0,  // no _has_bits_
-    0, // no _extensions_
-    2, 8,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967292,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    2,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    &_InfoHash_default_instance_._instance,
-    ::_pbi::TcParser::GenericFallback,  // fallback
-  }, {{
-    // bytes hash = 2;
-    {::_pbi::TcParser::FastBS1,
-     {18, 63, 0, PROTOBUF_FIELD_OFFSET(InfoHash, _impl_.hash_)}},
-    // int32 version = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(InfoHash, _impl_.version_), 63>(),
-     {8, 63, 0, PROTOBUF_FIELD_OFFSET(InfoHash, _impl_.version_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // int32 version = 1;
-    {PROTOBUF_FIELD_OFFSET(InfoHash, _impl_.version_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
-    // bytes hash = 2;
-    {PROTOBUF_FIELD_OFFSET(InfoHash, _impl_.hash_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kBytes | ::_fl::kRepAString)},
-  }},
-  // no aux_entries
-  {{
-  }},
-};
-
-::uint8_t* InfoHash::_InternalSerialize(
-    ::uint8_t* target,
-    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.InfoHash)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  // int32 version = 1;
-  if (this->_internal_version() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::
-        WriteInt32ToArrayWithField<1>(
-            stream, this->_internal_version(), target);
-  }
-
-  // bytes hash = 2;
-  if (!this->_internal_hash().empty()) {
-    const std::string& _s = this->_internal_hash();
-    target = stream->WriteBytesMaybeAliased(2, _s, target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.InfoHash)
-  return target;
-}
-
-::size_t InfoHash::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.InfoHash)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // bytes hash = 2;
-  if (!this->_internal_hash().empty()) {
-    total_size += 1 + ::google::protobuf::internal::WireFormatLite::BytesSize(
-                                    this->_internal_hash());
-  }
-
-  // int32 version = 1;
-  if (this->_internal_version() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
-        this->_internal_version());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::google::protobuf::Message::ClassData InfoHash::_class_data_ = {
-    ::google::protobuf::Message::CopyWithSourceCheck,
-    InfoHash::MergeImpl
-};
-const ::google::protobuf::Message::ClassData*InfoHash::GetClassData() const { return &_class_data_; }
-
-
-void InfoHash::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
-  auto* const _this = static_cast<InfoHash*>(&to_msg);
-  auto& from = static_cast<const InfoHash&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.InfoHash)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (!from._internal_hash().empty()) {
-    _this->_internal_set_hash(from._internal_hash());
-  }
-  if (from._internal_version() != 0) {
-    _this->_internal_set_version(from._internal_version());
-  }
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void InfoHash::CopyFrom(const InfoHash& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.InfoHash)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-PROTOBUF_NOINLINE bool InfoHash::IsInitialized() const {
-  return true;
-}
-
-void InfoHash::InternalSwap(InfoHash* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.hash_, lhs_arena,
-                                       &other->_impl_.hash_, rhs_arena);
-        swap(_impl_.version_, other->_impl_.version_);
-}
-
-::google::protobuf::Metadata InfoHash::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[1]);
-}
-// ===================================================================
-
-class DownloadRespone::_Internal {
- public:
-  using HasBits = decltype(std::declval<DownloadRespone>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-    8 * PROTOBUF_FIELD_OFFSET(DownloadRespone, _impl_._has_bits_);
-  static const ::prpc::InfoHash& info_hash(const DownloadRespone* msg);
-  static void set_has_info_hash(HasBits* has_bits) {
-    (*has_bits)[0] |= 1u;
-  }
-};
-
-const ::prpc::InfoHash& DownloadRespone::_Internal::info_hash(const DownloadRespone* msg) {
-  return *msg->_impl_.info_hash_;
-}
-DownloadRespone::DownloadRespone(::google::protobuf::Arena* arena)
-    : ::google::protobuf::Message(arena) {
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.DownloadRespone)
-}
-DownloadRespone::DownloadRespone(const DownloadRespone& from) : ::google::protobuf::Message() {
-  DownloadRespone* const _this = this;
-  (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_._has_bits_){from._impl_._has_bits_},
-      /*decltype(_impl_._cached_size_)*/ {},
-      decltype(_impl_.info_hash_){nullptr},
-  };
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
-  }
-
-  // @@protoc_insertion_point(copy_constructor:prpc.DownloadRespone)
-}
-inline void DownloadRespone::SharedCtor(::_pb::Arena* arena) {
-  (void)arena;
-  new (&_impl_) Impl_{
-      decltype(_impl_._has_bits_){},
-      /*decltype(_impl_._cached_size_)*/ {},
-      decltype(_impl_.info_hash_){nullptr},
-  };
-}
-DownloadRespone::~DownloadRespone() {
-  // @@protoc_insertion_point(destructor:prpc.DownloadRespone)
-  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  SharedDtor();
-}
-inline void DownloadRespone::SharedDtor() {
-  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete _impl_.info_hash_;
-}
-void DownloadRespone::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-PROTOBUF_NOINLINE void DownloadRespone::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.DownloadRespone)
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
-    _impl_.info_hash_->Clear();
-  }
-  _impl_._has_bits_.Clear();
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-const char* DownloadRespone::_InternalParse(
-    const char* ptr, ::_pbi::ParseContext* ctx) {
-  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
-  return ptr;
-}
-
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 1, 0, 2> DownloadRespone::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(DownloadRespone, _impl_._has_bits_),
-    0, // no _extensions_
-    1, 0,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967294,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    1,  // num_field_entries
-    1,  // num_aux_entries
-    offsetof(decltype(_table_), aux_entries),
-    &_DownloadRespone_default_instance_._instance,
-    ::_pbi::TcParser::GenericFallback,  // fallback
-  }, {{
-    // .prpc.InfoHash info_hash = 1;
-    {::_pbi::TcParser::FastMtS1,
-     {10, 0, 0, PROTOBUF_FIELD_OFFSET(DownloadRespone, _impl_.info_hash_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // .prpc.InfoHash info_hash = 1;
-    {PROTOBUF_FIELD_OFFSET(DownloadRespone, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-  }}, {{
-    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
-  }}, {{
-  }},
-};
-
-::uint8_t* DownloadRespone::_InternalSerialize(
-    ::uint8_t* target,
-    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.DownloadRespone)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  cached_has_bits = _impl_._has_bits_[0];
-  // .prpc.InfoHash info_hash = 1;
-  if (cached_has_bits & 0x00000001u) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::info_hash(this),
-        _Internal::info_hash(this).GetCachedSize(), target, stream);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.DownloadRespone)
-  return target;
-}
-
-::size_t DownloadRespone::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.DownloadRespone)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // .prpc.InfoHash info_hash = 1;
-  cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSize(
-        *_impl_.info_hash_);
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::google::protobuf::Message::ClassData DownloadRespone::_class_data_ = {
-    ::google::protobuf::Message::CopyWithSourceCheck,
-    DownloadRespone::MergeImpl
-};
-const ::google::protobuf::Message::ClassData*DownloadRespone::GetClassData() const { return &_class_data_; }
-
-
-void DownloadRespone::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
-  auto* const _this = static_cast<DownloadRespone*>(&to_msg);
-  auto& from = static_cast<const DownloadRespone&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.DownloadRespone)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
-        from._internal_info_hash());
-  }
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void DownloadRespone::CopyFrom(const DownloadRespone& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.DownloadRespone)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-PROTOBUF_NOINLINE bool DownloadRespone::IsInitialized() const {
-  return true;
-}
-
-void DownloadRespone::InternalSwap(DownloadRespone* other) {
-  using std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  swap(_impl_.info_hash_, other->_impl_.info_hash_);
-}
-
-::google::protobuf::Metadata DownloadRespone::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[2]);
-}
-// ===================================================================
-
-class GetMagnetUriReq::_Internal {
- public:
-  using HasBits = decltype(std::declval<GetMagnetUriReq>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-    8 * PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_._has_bits_);
-  static const ::prpc::InfoHash& info_hash(const GetMagnetUriReq* msg);
-  static void set_has_info_hash(HasBits* has_bits) {
-    (*has_bits)[0] |= 1u;
-  }
-};
-
-const ::prpc::InfoHash& GetMagnetUriReq::_Internal::info_hash(const GetMagnetUriReq* msg) {
-  return *msg->_impl_.info_hash_;
-}
-GetMagnetUriReq::GetMagnetUriReq(::google::protobuf::Arena* arena)
-    : ::google::protobuf::Message(arena) {
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.GetMagnetUriReq)
-}
-GetMagnetUriReq::GetMagnetUriReq(const GetMagnetUriReq& from) : ::google::protobuf::Message() {
-  GetMagnetUriReq* const _this = this;
-  (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_._has_bits_){from._impl_._has_bits_},
-      /*decltype(_impl_._cached_size_)*/ {},
-      decltype(_impl_.content_){},
-      decltype(_impl_.info_hash_){nullptr},
-      decltype(_impl_.type_){},
-  };
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-  _impl_.content_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.content_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_content().empty()) {
-    _this->_impl_.content_.Set(from._internal_content(), _this->GetArenaForAllocation());
-  }
-  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
-  }
-  _this->_impl_.type_ = from._impl_.type_;
-
-  // @@protoc_insertion_point(copy_constructor:prpc.GetMagnetUriReq)
-}
-inline void GetMagnetUriReq::SharedCtor(::_pb::Arena* arena) {
-  (void)arena;
-  new (&_impl_) Impl_{
-      decltype(_impl_._has_bits_){},
-      /*decltype(_impl_._cached_size_)*/ {},
-      decltype(_impl_.content_){},
-      decltype(_impl_.info_hash_){nullptr},
-      decltype(_impl_.type_){0},
-  };
-  _impl_.content_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.content_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-GetMagnetUriReq::~GetMagnetUriReq() {
-  // @@protoc_insertion_point(destructor:prpc.GetMagnetUriReq)
-  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  SharedDtor();
-}
-inline void GetMagnetUriReq::SharedDtor() {
-  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.content_.Destroy();
-  if (this != internal_default_instance()) delete _impl_.info_hash_;
-}
-void GetMagnetUriReq::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-PROTOBUF_NOINLINE void GetMagnetUriReq::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.GetMagnetUriReq)
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.content_.ClearToEmpty();
-  cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
-    _impl_.info_hash_->Clear();
-  }
-  _impl_.type_ = 0;
-  _impl_._has_bits_.Clear();
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-const char* GetMagnetUriReq::_InternalParse(
-    const char* ptr, ::_pbi::ParseContext* ctx) {
-  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
-  return ptr;
-}
-
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 3, 1, 0, 2> GetMagnetUriReq::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_._has_bits_),
-    0, // no _extensions_
-    3, 24,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967288,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    3,  // num_field_entries
-    1,  // num_aux_entries
-    offsetof(decltype(_table_), aux_entries),
-    &_GetMagnetUriReq_default_instance_._instance,
-    ::_pbi::TcParser::GenericFallback,  // fallback
-  }, {{
-    {::_pbi::TcParser::MiniParse, {}},
-    // .prpc.GetMagnetUriReq.ReqType type = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GetMagnetUriReq, _impl_.type_), 63>(),
-     {8, 63, 0, PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.type_)}},
-    // bytes content = 2;
-    {::_pbi::TcParser::FastBS1,
-     {18, 63, 0, PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.content_)}},
-    // .prpc.InfoHash info_hash = 3;
-    {::_pbi::TcParser::FastMtS1,
-     {26, 0, 0, PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.info_hash_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // .prpc.GetMagnetUriReq.ReqType type = 1;
-    {PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.type_), -1, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
-    // bytes content = 2;
-    {PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.content_), -1, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kBytes | ::_fl::kRepAString)},
-    // .prpc.InfoHash info_hash = 3;
-    {PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-  }}, {{
-    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
-  }}, {{
-  }},
-};
-
-::uint8_t* GetMagnetUriReq::_InternalSerialize(
-    ::uint8_t* target,
-    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.GetMagnetUriReq)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  // .prpc.GetMagnetUriReq.ReqType type = 1;
-  if (this->_internal_type() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteEnumToArray(
-        1, this->_internal_type(), target);
-  }
-
-  // bytes content = 2;
-  if (!this->_internal_content().empty()) {
-    const std::string& _s = this->_internal_content();
-    target = stream->WriteBytesMaybeAliased(2, _s, target);
-  }
-
-  cached_has_bits = _impl_._has_bits_[0];
-  // .prpc.InfoHash info_hash = 3;
-  if (cached_has_bits & 0x00000001u) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessage(3, _Internal::info_hash(this),
-        _Internal::info_hash(this).GetCachedSize(), target, stream);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.GetMagnetUriReq)
-  return target;
-}
-
-::size_t GetMagnetUriReq::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.GetMagnetUriReq)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // bytes content = 2;
-  if (!this->_internal_content().empty()) {
-    total_size += 1 + ::google::protobuf::internal::WireFormatLite::BytesSize(
-                                    this->_internal_content());
-  }
-
-  // .prpc.InfoHash info_hash = 3;
-  cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSize(
-        *_impl_.info_hash_);
-  }
-
-  // .prpc.GetMagnetUriReq.ReqType type = 1;
-  if (this->_internal_type() != 0) {
-    total_size += 1 +
-                  ::_pbi::WireFormatLite::EnumSize(this->_internal_type());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::google::protobuf::Message::ClassData GetMagnetUriReq::_class_data_ = {
-    ::google::protobuf::Message::CopyWithSourceCheck,
-    GetMagnetUriReq::MergeImpl
-};
-const ::google::protobuf::Message::ClassData*GetMagnetUriReq::GetClassData() const { return &_class_data_; }
-
-
-void GetMagnetUriReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
-  auto* const _this = static_cast<GetMagnetUriReq*>(&to_msg);
-  auto& from = static_cast<const GetMagnetUriReq&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.GetMagnetUriReq)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (!from._internal_content().empty()) {
-    _this->_internal_set_content(from._internal_content());
-  }
-  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
-        from._internal_info_hash());
-  }
-  if (from._internal_type() != 0) {
-    _this->_internal_set_type(from._internal_type());
-  }
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void GetMagnetUriReq::CopyFrom(const GetMagnetUriReq& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.GetMagnetUriReq)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-PROTOBUF_NOINLINE bool GetMagnetUriReq::IsInitialized() const {
-  return true;
-}
-
-void GetMagnetUriReq::InternalSwap(GetMagnetUriReq* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.content_, lhs_arena,
-                                       &other->_impl_.content_, rhs_arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.type_)
-      + sizeof(GetMagnetUriReq::_impl_.type_)
-      - PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.info_hash_)>(
+      PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.num_pieces_)
+      + sizeof(TorrentInfo::_impl_.num_pieces_)
+      - PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.info_hash_)>(
           reinterpret_cast<char*>(&_impl_.info_hash_),
           reinterpret_cast<char*>(&other->_impl_.info_hash_));
 }
 
-::google::protobuf::Metadata GetMagnetUriReq::GetMetadata() const {
+::google::protobuf::Metadata TorrentInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[3]);
-}
-// ===================================================================
-
-class GetMagnetUriRsp::_Internal {
- public:
-  using HasBits = decltype(std::declval<GetMagnetUriRsp>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-    8 * PROTOBUF_FIELD_OFFSET(GetMagnetUriRsp, _impl_._has_bits_);
-  static const ::prpc::InfoHash& info_hash(const GetMagnetUriRsp* msg);
-  static void set_has_info_hash(HasBits* has_bits) {
-    (*has_bits)[0] |= 1u;
-  }
-};
-
-const ::prpc::InfoHash& GetMagnetUriRsp::_Internal::info_hash(const GetMagnetUriRsp* msg) {
-  return *msg->_impl_.info_hash_;
-}
-GetMagnetUriRsp::GetMagnetUriRsp(::google::protobuf::Arena* arena)
-    : ::google::protobuf::Message(arena) {
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.GetMagnetUriRsp)
-}
-GetMagnetUriRsp::GetMagnetUriRsp(const GetMagnetUriRsp& from) : ::google::protobuf::Message() {
-  GetMagnetUriRsp* const _this = this;
-  (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_._has_bits_){from._impl_._has_bits_},
-      /*decltype(_impl_._cached_size_)*/ {},
-      decltype(_impl_.magnet_uri_){},
-      decltype(_impl_.info_hash_){nullptr},
-  };
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-  _impl_.magnet_uri_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.magnet_uri_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_magnet_uri().empty()) {
-    _this->_impl_.magnet_uri_.Set(from._internal_magnet_uri(), _this->GetArenaForAllocation());
-  }
-  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
-  }
-
-  // @@protoc_insertion_point(copy_constructor:prpc.GetMagnetUriRsp)
-}
-inline void GetMagnetUriRsp::SharedCtor(::_pb::Arena* arena) {
-  (void)arena;
-  new (&_impl_) Impl_{
-      decltype(_impl_._has_bits_){},
-      /*decltype(_impl_._cached_size_)*/ {},
-      decltype(_impl_.magnet_uri_){},
-      decltype(_impl_.info_hash_){nullptr},
-  };
-  _impl_.magnet_uri_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.magnet_uri_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-GetMagnetUriRsp::~GetMagnetUriRsp() {
-  // @@protoc_insertion_point(destructor:prpc.GetMagnetUriRsp)
-  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  SharedDtor();
-}
-inline void GetMagnetUriRsp::SharedDtor() {
-  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.magnet_uri_.Destroy();
-  if (this != internal_default_instance()) delete _impl_.info_hash_;
-}
-void GetMagnetUriRsp::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-PROTOBUF_NOINLINE void GetMagnetUriRsp::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.GetMagnetUriRsp)
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.magnet_uri_.ClearToEmpty();
-  cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
-    _impl_.info_hash_->Clear();
-  }
-  _impl_._has_bits_.Clear();
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-const char* GetMagnetUriRsp::_InternalParse(
-    const char* ptr, ::_pbi::ParseContext* ctx) {
-  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
-  return ptr;
-}
-
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 1, 39, 2> GetMagnetUriRsp::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(GetMagnetUriRsp, _impl_._has_bits_),
-    0, // no _extensions_
-    2, 8,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967292,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    2,  // num_field_entries
-    1,  // num_aux_entries
-    offsetof(decltype(_table_), aux_entries),
-    &_GetMagnetUriRsp_default_instance_._instance,
-    ::_pbi::TcParser::GenericFallback,  // fallback
-  }, {{
-    // string magnet_uri = 2;
-    {::_pbi::TcParser::FastUS1,
-     {18, 63, 0, PROTOBUF_FIELD_OFFSET(GetMagnetUriRsp, _impl_.magnet_uri_)}},
-    // .prpc.InfoHash info_hash = 1;
-    {::_pbi::TcParser::FastMtS1,
-     {10, 0, 0, PROTOBUF_FIELD_OFFSET(GetMagnetUriRsp, _impl_.info_hash_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // .prpc.InfoHash info_hash = 1;
-    {PROTOBUF_FIELD_OFFSET(GetMagnetUriRsp, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // string magnet_uri = 2;
-    {PROTOBUF_FIELD_OFFSET(GetMagnetUriRsp, _impl_.magnet_uri_), -1, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
-  }}, {{
-    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
-  }}, {{
-    "\24\0\12\0\0\0\0\0"
-    "prpc.GetMagnetUriRsp"
-    "magnet_uri"
-  }},
-};
-
-::uint8_t* GetMagnetUriRsp::_InternalSerialize(
-    ::uint8_t* target,
-    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.GetMagnetUriRsp)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  cached_has_bits = _impl_._has_bits_[0];
-  // .prpc.InfoHash info_hash = 1;
-  if (cached_has_bits & 0x00000001u) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::info_hash(this),
-        _Internal::info_hash(this).GetCachedSize(), target, stream);
-  }
-
-  // string magnet_uri = 2;
-  if (!this->_internal_magnet_uri().empty()) {
-    const std::string& _s = this->_internal_magnet_uri();
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.GetMagnetUriRsp.magnet_uri");
-    target = stream->WriteStringMaybeAliased(2, _s, target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.GetMagnetUriRsp)
-  return target;
-}
-
-::size_t GetMagnetUriRsp::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.GetMagnetUriRsp)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // string magnet_uri = 2;
-  if (!this->_internal_magnet_uri().empty()) {
-    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                    this->_internal_magnet_uri());
-  }
-
-  // .prpc.InfoHash info_hash = 1;
-  cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSize(
-        *_impl_.info_hash_);
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::google::protobuf::Message::ClassData GetMagnetUriRsp::_class_data_ = {
-    ::google::protobuf::Message::CopyWithSourceCheck,
-    GetMagnetUriRsp::MergeImpl
-};
-const ::google::protobuf::Message::ClassData*GetMagnetUriRsp::GetClassData() const { return &_class_data_; }
-
-
-void GetMagnetUriRsp::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
-  auto* const _this = static_cast<GetMagnetUriRsp*>(&to_msg);
-  auto& from = static_cast<const GetMagnetUriRsp&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.GetMagnetUriRsp)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (!from._internal_magnet_uri().empty()) {
-    _this->_internal_set_magnet_uri(from._internal_magnet_uri());
-  }
-  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
-        from._internal_info_hash());
-  }
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void GetMagnetUriRsp::CopyFrom(const GetMagnetUriRsp& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.GetMagnetUriRsp)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-PROTOBUF_NOINLINE bool GetMagnetUriRsp::IsInitialized() const {
-  return true;
-}
-
-void GetMagnetUriRsp::InternalSwap(GetMagnetUriRsp* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.magnet_uri_, lhs_arena,
-                                       &other->_impl_.magnet_uri_, rhs_arena);
-  swap(_impl_.info_hash_, other->_impl_.info_hash_);
-}
-
-::google::protobuf::Metadata GetMagnetUriRsp::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[4]);
-}
-// ===================================================================
-
-class StatusRequest::_Internal {
- public:
-};
-
-StatusRequest::StatusRequest(::google::protobuf::Arena* arena)
-    : ::google::protobuf::Message(arena) {
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.StatusRequest)
-}
-StatusRequest::StatusRequest(const StatusRequest& from) : ::google::protobuf::Message() {
-  StatusRequest* const _this = this;
-  (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){from._impl_.info_hash_},
-      /*decltype(_impl_._cached_size_)*/ {},
-  };
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-
-  // @@protoc_insertion_point(copy_constructor:prpc.StatusRequest)
-}
-inline void StatusRequest::SharedCtor(::_pb::Arena* arena) {
-  (void)arena;
-  new (&_impl_) Impl_{
-      decltype(_impl_.info_hash_){arena},
-      /*decltype(_impl_._cached_size_)*/ {},
-  };
-}
-StatusRequest::~StatusRequest() {
-  // @@protoc_insertion_point(destructor:prpc.StatusRequest)
-  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  SharedDtor();
-}
-inline void StatusRequest::SharedDtor() {
-  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.info_hash_.~RepeatedPtrField();
-}
-void StatusRequest::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-PROTOBUF_NOINLINE void StatusRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.StatusRequest)
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _internal_mutable_info_hash()->Clear();
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-const char* StatusRequest::_InternalParse(
-    const char* ptr, ::_pbi::ParseContext* ctx) {
-  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
-  return ptr;
-}
-
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRequest::_table_ = {
-  {
-    0,  // no _has_bits_
-    0, // no _extensions_
-    1, 0,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967294,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    1,  // num_field_entries
-    1,  // num_aux_entries
-    offsetof(decltype(_table_), aux_entries),
-    &_StatusRequest_default_instance_._instance,
-    ::_pbi::TcParser::GenericFallback,  // fallback
-  }, {{
-    // repeated .prpc.InfoHash info_hash = 1;
-    {::_pbi::TcParser::FastMtR1,
-     {10, 63, 0, PROTOBUF_FIELD_OFFSET(StatusRequest, _impl_.info_hash_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // repeated .prpc.InfoHash info_hash = 1;
-    {PROTOBUF_FIELD_OFFSET(StatusRequest, _impl_.info_hash_), 0, 0,
-    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
-  }}, {{
-    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
-  }}, {{
-  }},
-};
-
-::uint8_t* StatusRequest::_InternalSerialize(
-    ::uint8_t* target,
-    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.StatusRequest)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  // repeated .prpc.InfoHash info_hash = 1;
-  for (unsigned i = 0,
-      n = static_cast<unsigned>(this->_internal_info_hash_size()); i < n; i++) {
-    const auto& repfield = this->_internal_info_hash().Get(i);
-    target = ::google::protobuf::internal::WireFormatLite::
-        InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.StatusRequest)
-  return target;
-}
-
-::size_t StatusRequest::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.StatusRequest)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // repeated .prpc.InfoHash info_hash = 1;
-  total_size += 1UL * this->_internal_info_hash_size();
-  for (const auto& msg : this->_internal_info_hash()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
-  }
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::google::protobuf::Message::ClassData StatusRequest::_class_data_ = {
-    ::google::protobuf::Message::CopyWithSourceCheck,
-    StatusRequest::MergeImpl
-};
-const ::google::protobuf::Message::ClassData*StatusRequest::GetClassData() const { return &_class_data_; }
-
-
-void StatusRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
-  auto* const _this = static_cast<StatusRequest*>(&to_msg);
-  auto& from = static_cast<const StatusRequest&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.StatusRequest)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  _this->_internal_mutable_info_hash()->MergeFrom(from._internal_info_hash());
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void StatusRequest::CopyFrom(const StatusRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.StatusRequest)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-PROTOBUF_NOINLINE bool StatusRequest::IsInitialized() const {
-  return true;
-}
-
-void StatusRequest::InternalSwap(StatusRequest* other) {
-  using std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  _impl_.info_hash_.InternalSwap(&other->_impl_.info_hash_);
-}
-
-::google::protobuf::Metadata StatusRequest::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[5]);
+      file_level_metadata_bt_2eproto[1]);
 }
 // ===================================================================
 
@@ -2590,7 +2108,2536 @@ void TorrentStatus::InternalSwap(TorrentStatus* other) {
 ::google::protobuf::Metadata TorrentStatus::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[2]);
+}
+// ===================================================================
+
+class DownloadRequest::_Internal {
+ public:
+};
+
+DownloadRequest::DownloadRequest(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.DownloadRequest)
+}
+DownloadRequest::DownloadRequest(const DownloadRequest& from) : ::google::protobuf::Message() {
+  DownloadRequest* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.content_){},
+      decltype(_impl_.save_path_){},
+      decltype(_impl_.type_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.content_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.content_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_content().empty()) {
+    _this->_impl_.content_.Set(from._internal_content(), _this->GetArenaForAllocation());
+  }
+  _impl_.save_path_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.save_path_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_save_path().empty()) {
+    _this->_impl_.save_path_.Set(from._internal_save_path(), _this->GetArenaForAllocation());
+  }
+  _this->_impl_.type_ = from._impl_.type_;
+
+  // @@protoc_insertion_point(copy_constructor:prpc.DownloadRequest)
+}
+inline void DownloadRequest::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.content_){},
+      decltype(_impl_.save_path_){},
+      decltype(_impl_.type_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.content_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.content_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.save_path_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.save_path_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+DownloadRequest::~DownloadRequest() {
+  // @@protoc_insertion_point(destructor:prpc.DownloadRequest)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void DownloadRequest::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.content_.Destroy();
+  _impl_.save_path_.Destroy();
+}
+void DownloadRequest::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void DownloadRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.DownloadRequest)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.content_.ClearToEmpty();
+  _impl_.save_path_.ClearToEmpty();
+  _impl_.type_ = 0;
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* DownloadRequest::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 0, 38, 2> DownloadRequest::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_DownloadRequest_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // .prpc.DownloadRequest.ReqType type = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DownloadRequest, _impl_.type_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.type_)}},
+    // bytes content = 2;
+    {::_pbi::TcParser::FastBS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.content_)}},
+    // string save_path = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.save_path_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.DownloadRequest.ReqType type = 1;
+    {PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.type_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
+    // bytes content = 2;
+    {PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.content_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBytes | ::_fl::kRepAString)},
+    // string save_path = 3;
+    {PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.save_path_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\24\0\0\11\0\0\0\0"
+    "prpc.DownloadRequest"
+    "save_path"
+  }},
+};
+
+::uint8_t* DownloadRequest::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.DownloadRequest)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // .prpc.DownloadRequest.ReqType type = 1;
+  if (this->_internal_type() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+        1, this->_internal_type(), target);
+  }
+
+  // bytes content = 2;
+  if (!this->_internal_content().empty()) {
+    const std::string& _s = this->_internal_content();
+    target = stream->WriteBytesMaybeAliased(2, _s, target);
+  }
+
+  // string save_path = 3;
+  if (!this->_internal_save_path().empty()) {
+    const std::string& _s = this->_internal_save_path();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.DownloadRequest.save_path");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.DownloadRequest)
+  return target;
+}
+
+::size_t DownloadRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.DownloadRequest)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // bytes content = 2;
+  if (!this->_internal_content().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::BytesSize(
+                                    this->_internal_content());
+  }
+
+  // string save_path = 3;
+  if (!this->_internal_save_path().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_save_path());
+  }
+
+  // .prpc.DownloadRequest.ReqType type = 1;
+  if (this->_internal_type() != 0) {
+    total_size += 1 +
+                  ::_pbi::WireFormatLite::EnumSize(this->_internal_type());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData DownloadRequest::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    DownloadRequest::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*DownloadRequest::GetClassData() const { return &_class_data_; }
+
+
+void DownloadRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<DownloadRequest*>(&to_msg);
+  auto& from = static_cast<const DownloadRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.DownloadRequest)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_content().empty()) {
+    _this->_internal_set_content(from._internal_content());
+  }
+  if (!from._internal_save_path().empty()) {
+    _this->_internal_set_save_path(from._internal_save_path());
+  }
+  if (from._internal_type() != 0) {
+    _this->_internal_set_type(from._internal_type());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void DownloadRequest::CopyFrom(const DownloadRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.DownloadRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool DownloadRequest::IsInitialized() const {
+  return true;
+}
+
+void DownloadRequest::InternalSwap(DownloadRequest* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.content_, lhs_arena,
+                                       &other->_impl_.content_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.save_path_, lhs_arena,
+                                       &other->_impl_.save_path_, rhs_arena);
+  swap(_impl_.type_, other->_impl_.type_);
+}
+
+::google::protobuf::Metadata DownloadRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[3]);
+}
+// ===================================================================
+
+class InfoHash::_Internal {
+ public:
+};
+
+InfoHash::InfoHash(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.InfoHash)
+}
+InfoHash::InfoHash(const InfoHash& from) : ::google::protobuf::Message() {
+  InfoHash* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.hash_){},
+      decltype(_impl_.version_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.hash_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.hash_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_hash().empty()) {
+    _this->_impl_.hash_.Set(from._internal_hash(), _this->GetArenaForAllocation());
+  }
+  _this->_impl_.version_ = from._impl_.version_;
+
+  // @@protoc_insertion_point(copy_constructor:prpc.InfoHash)
+}
+inline void InfoHash::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.hash_){},
+      decltype(_impl_.version_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.hash_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.hash_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+InfoHash::~InfoHash() {
+  // @@protoc_insertion_point(destructor:prpc.InfoHash)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void InfoHash::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.hash_.Destroy();
+}
+void InfoHash::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void InfoHash::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.InfoHash)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.hash_.ClearToEmpty();
+  _impl_.version_ = 0;
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* InfoHash::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 0, 0, 2> InfoHash::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_InfoHash_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // bytes hash = 2;
+    {::_pbi::TcParser::FastBS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(InfoHash, _impl_.hash_)}},
+    // int32 version = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(InfoHash, _impl_.version_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(InfoHash, _impl_.version_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // int32 version = 1;
+    {PROTOBUF_FIELD_OFFSET(InfoHash, _impl_.version_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // bytes hash = 2;
+    {PROTOBUF_FIELD_OFFSET(InfoHash, _impl_.hash_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBytes | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+
+::uint8_t* InfoHash::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.InfoHash)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // int32 version = 1;
+  if (this->_internal_version() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<1>(
+            stream, this->_internal_version(), target);
+  }
+
+  // bytes hash = 2;
+  if (!this->_internal_hash().empty()) {
+    const std::string& _s = this->_internal_hash();
+    target = stream->WriteBytesMaybeAliased(2, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.InfoHash)
+  return target;
+}
+
+::size_t InfoHash::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.InfoHash)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // bytes hash = 2;
+  if (!this->_internal_hash().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::BytesSize(
+                                    this->_internal_hash());
+  }
+
+  // int32 version = 1;
+  if (this->_internal_version() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_version());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData InfoHash::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    InfoHash::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*InfoHash::GetClassData() const { return &_class_data_; }
+
+
+void InfoHash::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<InfoHash*>(&to_msg);
+  auto& from = static_cast<const InfoHash&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.InfoHash)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_hash().empty()) {
+    _this->_internal_set_hash(from._internal_hash());
+  }
+  if (from._internal_version() != 0) {
+    _this->_internal_set_version(from._internal_version());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void InfoHash::CopyFrom(const InfoHash& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.InfoHash)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool InfoHash::IsInitialized() const {
+  return true;
+}
+
+void InfoHash::InternalSwap(InfoHash* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.hash_, lhs_arena,
+                                       &other->_impl_.hash_, rhs_arena);
+        swap(_impl_.version_, other->_impl_.version_);
+}
+
+::google::protobuf::Metadata InfoHash::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[4]);
+}
+// ===================================================================
+
+class DownloadRespone::_Internal {
+ public:
+  using HasBits = decltype(std::declval<DownloadRespone>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(DownloadRespone, _impl_._has_bits_);
+  static const ::prpc::InfoHash& info_hash(const DownloadRespone* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+const ::prpc::InfoHash& DownloadRespone::_Internal::info_hash(const DownloadRespone* msg) {
+  return *msg->_impl_.info_hash_;
+}
+DownloadRespone::DownloadRespone(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.DownloadRespone)
+}
+DownloadRespone::DownloadRespone(const DownloadRespone& from) : ::google::protobuf::Message() {
+  DownloadRespone* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
+  }
+
+  // @@protoc_insertion_point(copy_constructor:prpc.DownloadRespone)
+}
+inline void DownloadRespone::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+}
+DownloadRespone::~DownloadRespone() {
+  // @@protoc_insertion_point(destructor:prpc.DownloadRespone)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void DownloadRespone::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.info_hash_;
+}
+void DownloadRespone::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void DownloadRespone::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.DownloadRespone)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* DownloadRespone::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> DownloadRespone::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(DownloadRespone, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_DownloadRespone_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(DownloadRespone, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(DownloadRespone, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+  }},
+};
+
+::uint8_t* DownloadRespone::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.DownloadRespone)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  // .prpc.InfoHash info_hash = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::info_hash(this),
+        _Internal::info_hash(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.DownloadRespone)
+  return target;
+}
+
+::size_t DownloadRespone::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.DownloadRespone)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .prpc.InfoHash info_hash = 1;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *_impl_.info_hash_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData DownloadRespone::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    DownloadRespone::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*DownloadRespone::GetClassData() const { return &_class_data_; }
+
+
+void DownloadRespone::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<DownloadRespone*>(&to_msg);
+  auto& from = static_cast<const DownloadRespone&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.DownloadRespone)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
+        from._internal_info_hash());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void DownloadRespone::CopyFrom(const DownloadRespone& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.DownloadRespone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool DownloadRespone::IsInitialized() const {
+  return true;
+}
+
+void DownloadRespone::InternalSwap(DownloadRespone* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  swap(_impl_.info_hash_, other->_impl_.info_hash_);
+}
+
+::google::protobuf::Metadata DownloadRespone::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[5]);
+}
+// ===================================================================
+
+class GetMagnetUriReq::_Internal {
+ public:
+  using HasBits = decltype(std::declval<GetMagnetUriReq>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_._has_bits_);
+  static const ::prpc::InfoHash& info_hash(const GetMagnetUriReq* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+const ::prpc::InfoHash& GetMagnetUriReq::_Internal::info_hash(const GetMagnetUriReq* msg) {
+  return *msg->_impl_.info_hash_;
+}
+GetMagnetUriReq::GetMagnetUriReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.GetMagnetUriReq)
+}
+GetMagnetUriReq::GetMagnetUriReq(const GetMagnetUriReq& from) : ::google::protobuf::Message() {
+  GetMagnetUriReq* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.content_){},
+      decltype(_impl_.info_hash_){nullptr},
+      decltype(_impl_.type_){},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.content_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.content_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_content().empty()) {
+    _this->_impl_.content_.Set(from._internal_content(), _this->GetArenaForAllocation());
+  }
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
+  }
+  _this->_impl_.type_ = from._impl_.type_;
+
+  // @@protoc_insertion_point(copy_constructor:prpc.GetMagnetUriReq)
+}
+inline void GetMagnetUriReq::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.content_){},
+      decltype(_impl_.info_hash_){nullptr},
+      decltype(_impl_.type_){0},
+  };
+  _impl_.content_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.content_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+GetMagnetUriReq::~GetMagnetUriReq() {
+  // @@protoc_insertion_point(destructor:prpc.GetMagnetUriReq)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void GetMagnetUriReq::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.content_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.info_hash_;
+}
+void GetMagnetUriReq::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void GetMagnetUriReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.GetMagnetUriReq)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.content_.ClearToEmpty();
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
+  }
+  _impl_.type_ = 0;
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* GetMagnetUriReq::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 1, 0, 2> GetMagnetUriReq::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_._has_bits_),
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_GetMagnetUriReq_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // .prpc.GetMagnetUriReq.ReqType type = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GetMagnetUriReq, _impl_.type_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.type_)}},
+    // bytes content = 2;
+    {::_pbi::TcParser::FastBS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.content_)}},
+    // .prpc.InfoHash info_hash = 3;
+    {::_pbi::TcParser::FastMtS1,
+     {26, 0, 0, PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.GetMagnetUriReq.ReqType type = 1;
+    {PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.type_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
+    // bytes content = 2;
+    {PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.content_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBytes | ::_fl::kRepAString)},
+    // .prpc.InfoHash info_hash = 3;
+    {PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+  }},
+};
+
+::uint8_t* GetMagnetUriReq::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.GetMagnetUriReq)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // .prpc.GetMagnetUriReq.ReqType type = 1;
+  if (this->_internal_type() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+        1, this->_internal_type(), target);
+  }
+
+  // bytes content = 2;
+  if (!this->_internal_content().empty()) {
+    const std::string& _s = this->_internal_content();
+    target = stream->WriteBytesMaybeAliased(2, _s, target);
+  }
+
+  cached_has_bits = _impl_._has_bits_[0];
+  // .prpc.InfoHash info_hash = 3;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessage(3, _Internal::info_hash(this),
+        _Internal::info_hash(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.GetMagnetUriReq)
+  return target;
+}
+
+::size_t GetMagnetUriReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.GetMagnetUriReq)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // bytes content = 2;
+  if (!this->_internal_content().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::BytesSize(
+                                    this->_internal_content());
+  }
+
+  // .prpc.InfoHash info_hash = 3;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *_impl_.info_hash_);
+  }
+
+  // .prpc.GetMagnetUriReq.ReqType type = 1;
+  if (this->_internal_type() != 0) {
+    total_size += 1 +
+                  ::_pbi::WireFormatLite::EnumSize(this->_internal_type());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData GetMagnetUriReq::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    GetMagnetUriReq::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*GetMagnetUriReq::GetClassData() const { return &_class_data_; }
+
+
+void GetMagnetUriReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GetMagnetUriReq*>(&to_msg);
+  auto& from = static_cast<const GetMagnetUriReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.GetMagnetUriReq)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_content().empty()) {
+    _this->_internal_set_content(from._internal_content());
+  }
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
+        from._internal_info_hash());
+  }
+  if (from._internal_type() != 0) {
+    _this->_internal_set_type(from._internal_type());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GetMagnetUriReq::CopyFrom(const GetMagnetUriReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.GetMagnetUriReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool GetMagnetUriReq::IsInitialized() const {
+  return true;
+}
+
+void GetMagnetUriReq::InternalSwap(GetMagnetUriReq* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.content_, lhs_arena,
+                                       &other->_impl_.content_, rhs_arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.type_)
+      + sizeof(GetMagnetUriReq::_impl_.type_)
+      - PROTOBUF_FIELD_OFFSET(GetMagnetUriReq, _impl_.info_hash_)>(
+          reinterpret_cast<char*>(&_impl_.info_hash_),
+          reinterpret_cast<char*>(&other->_impl_.info_hash_));
+}
+
+::google::protobuf::Metadata GetMagnetUriReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[6]);
+}
+// ===================================================================
+
+class GetMagnetUriRsp::_Internal {
+ public:
+  using HasBits = decltype(std::declval<GetMagnetUriRsp>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(GetMagnetUriRsp, _impl_._has_bits_);
+  static const ::prpc::InfoHash& info_hash(const GetMagnetUriRsp* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+const ::prpc::InfoHash& GetMagnetUriRsp::_Internal::info_hash(const GetMagnetUriRsp* msg) {
+  return *msg->_impl_.info_hash_;
+}
+GetMagnetUriRsp::GetMagnetUriRsp(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.GetMagnetUriRsp)
+}
+GetMagnetUriRsp::GetMagnetUriRsp(const GetMagnetUriRsp& from) : ::google::protobuf::Message() {
+  GetMagnetUriRsp* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.magnet_uri_){},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.magnet_uri_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.magnet_uri_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_magnet_uri().empty()) {
+    _this->_impl_.magnet_uri_.Set(from._internal_magnet_uri(), _this->GetArenaForAllocation());
+  }
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
+  }
+
+  // @@protoc_insertion_point(copy_constructor:prpc.GetMagnetUriRsp)
+}
+inline void GetMagnetUriRsp::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.magnet_uri_){},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+  _impl_.magnet_uri_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.magnet_uri_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+GetMagnetUriRsp::~GetMagnetUriRsp() {
+  // @@protoc_insertion_point(destructor:prpc.GetMagnetUriRsp)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void GetMagnetUriRsp::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.magnet_uri_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.info_hash_;
+}
+void GetMagnetUriRsp::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void GetMagnetUriRsp::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.GetMagnetUriRsp)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.magnet_uri_.ClearToEmpty();
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* GetMagnetUriRsp::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 1, 39, 2> GetMagnetUriRsp::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(GetMagnetUriRsp, _impl_._has_bits_),
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_GetMagnetUriRsp_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // string magnet_uri = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(GetMagnetUriRsp, _impl_.magnet_uri_)}},
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(GetMagnetUriRsp, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(GetMagnetUriRsp, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // string magnet_uri = 2;
+    {PROTOBUF_FIELD_OFFSET(GetMagnetUriRsp, _impl_.magnet_uri_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+    "\24\0\12\0\0\0\0\0"
+    "prpc.GetMagnetUriRsp"
+    "magnet_uri"
+  }},
+};
+
+::uint8_t* GetMagnetUriRsp::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.GetMagnetUriRsp)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  // .prpc.InfoHash info_hash = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::info_hash(this),
+        _Internal::info_hash(this).GetCachedSize(), target, stream);
+  }
+
+  // string magnet_uri = 2;
+  if (!this->_internal_magnet_uri().empty()) {
+    const std::string& _s = this->_internal_magnet_uri();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.GetMagnetUriRsp.magnet_uri");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.GetMagnetUriRsp)
+  return target;
+}
+
+::size_t GetMagnetUriRsp::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.GetMagnetUriRsp)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string magnet_uri = 2;
+  if (!this->_internal_magnet_uri().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_magnet_uri());
+  }
+
+  // .prpc.InfoHash info_hash = 1;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *_impl_.info_hash_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData GetMagnetUriRsp::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    GetMagnetUriRsp::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*GetMagnetUriRsp::GetClassData() const { return &_class_data_; }
+
+
+void GetMagnetUriRsp::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GetMagnetUriRsp*>(&to_msg);
+  auto& from = static_cast<const GetMagnetUriRsp&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.GetMagnetUriRsp)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_magnet_uri().empty()) {
+    _this->_internal_set_magnet_uri(from._internal_magnet_uri());
+  }
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
+        from._internal_info_hash());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GetMagnetUriRsp::CopyFrom(const GetMagnetUriRsp& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.GetMagnetUriRsp)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool GetMagnetUriRsp::IsInitialized() const {
+  return true;
+}
+
+void GetMagnetUriRsp::InternalSwap(GetMagnetUriRsp* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.magnet_uri_, lhs_arena,
+                                       &other->_impl_.magnet_uri_, rhs_arena);
+  swap(_impl_.info_hash_, other->_impl_.info_hash_);
+}
+
+::google::protobuf::Metadata GetMagnetUriRsp::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[7]);
+}
+// ===================================================================
+
+class GetResumeDataReq::_Internal {
+ public:
+  using HasBits = decltype(std::declval<GetResumeDataReq>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(GetResumeDataReq, _impl_._has_bits_);
+  static const ::prpc::InfoHash& info_hash(const GetResumeDataReq* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+const ::prpc::InfoHash& GetResumeDataReq::_Internal::info_hash(const GetResumeDataReq* msg) {
+  return *msg->_impl_.info_hash_;
+}
+GetResumeDataReq::GetResumeDataReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.GetResumeDataReq)
+}
+GetResumeDataReq::GetResumeDataReq(const GetResumeDataReq& from) : ::google::protobuf::Message() {
+  GetResumeDataReq* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
+  }
+
+  // @@protoc_insertion_point(copy_constructor:prpc.GetResumeDataReq)
+}
+inline void GetResumeDataReq::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+}
+GetResumeDataReq::~GetResumeDataReq() {
+  // @@protoc_insertion_point(destructor:prpc.GetResumeDataReq)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void GetResumeDataReq::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.info_hash_;
+}
+void GetResumeDataReq::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void GetResumeDataReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.GetResumeDataReq)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* GetResumeDataReq::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> GetResumeDataReq::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(GetResumeDataReq, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_GetResumeDataReq_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(GetResumeDataReq, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(GetResumeDataReq, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+  }},
+};
+
+::uint8_t* GetResumeDataReq::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.GetResumeDataReq)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  // .prpc.InfoHash info_hash = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::info_hash(this),
+        _Internal::info_hash(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.GetResumeDataReq)
+  return target;
+}
+
+::size_t GetResumeDataReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.GetResumeDataReq)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .prpc.InfoHash info_hash = 1;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *_impl_.info_hash_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData GetResumeDataReq::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    GetResumeDataReq::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*GetResumeDataReq::GetClassData() const { return &_class_data_; }
+
+
+void GetResumeDataReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GetResumeDataReq*>(&to_msg);
+  auto& from = static_cast<const GetResumeDataReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.GetResumeDataReq)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
+        from._internal_info_hash());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GetResumeDataReq::CopyFrom(const GetResumeDataReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.GetResumeDataReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool GetResumeDataReq::IsInitialized() const {
+  return true;
+}
+
+void GetResumeDataReq::InternalSwap(GetResumeDataReq* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  swap(_impl_.info_hash_, other->_impl_.info_hash_);
+}
+
+::google::protobuf::Metadata GetResumeDataReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[8]);
+}
+// ===================================================================
+
+class GetResumeDataRsp::_Internal {
+ public:
+};
+
+GetResumeDataRsp::GetResumeDataRsp(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.GetResumeDataRsp)
+}
+GetResumeDataRsp::GetResumeDataRsp(const GetResumeDataRsp& from) : ::google::protobuf::Message() {
+  GetResumeDataRsp* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.resume_data_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.resume_data_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.resume_data_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_resume_data().empty()) {
+    _this->_impl_.resume_data_.Set(from._internal_resume_data(), _this->GetArenaForAllocation());
+  }
+
+  // @@protoc_insertion_point(copy_constructor:prpc.GetResumeDataRsp)
+}
+inline void GetResumeDataRsp::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.resume_data_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.resume_data_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.resume_data_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+GetResumeDataRsp::~GetResumeDataRsp() {
+  // @@protoc_insertion_point(destructor:prpc.GetResumeDataRsp)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void GetResumeDataRsp::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.resume_data_.Destroy();
+}
+void GetResumeDataRsp::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void GetResumeDataRsp::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.GetResumeDataRsp)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.resume_data_.ClearToEmpty();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* GetResumeDataRsp::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 0, 2> GetResumeDataRsp::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    9, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967039,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_GetResumeDataRsp_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // bytes resume_data = 9;
+    {::_pbi::TcParser::FastBS1,
+     {74, 63, 0, PROTOBUF_FIELD_OFFSET(GetResumeDataRsp, _impl_.resume_data_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // bytes resume_data = 9;
+    {PROTOBUF_FIELD_OFFSET(GetResumeDataRsp, _impl_.resume_data_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBytes | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+
+::uint8_t* GetResumeDataRsp::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.GetResumeDataRsp)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // bytes resume_data = 9;
+  if (!this->_internal_resume_data().empty()) {
+    const std::string& _s = this->_internal_resume_data();
+    target = stream->WriteBytesMaybeAliased(9, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.GetResumeDataRsp)
+  return target;
+}
+
+::size_t GetResumeDataRsp::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.GetResumeDataRsp)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // bytes resume_data = 9;
+  if (!this->_internal_resume_data().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::BytesSize(
+                                    this->_internal_resume_data());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData GetResumeDataRsp::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    GetResumeDataRsp::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*GetResumeDataRsp::GetClassData() const { return &_class_data_; }
+
+
+void GetResumeDataRsp::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GetResumeDataRsp*>(&to_msg);
+  auto& from = static_cast<const GetResumeDataRsp&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.GetResumeDataRsp)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_resume_data().empty()) {
+    _this->_internal_set_resume_data(from._internal_resume_data());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GetResumeDataRsp::CopyFrom(const GetResumeDataRsp& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.GetResumeDataRsp)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool GetResumeDataRsp::IsInitialized() const {
+  return true;
+}
+
+void GetResumeDataRsp::InternalSwap(GetResumeDataRsp* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.resume_data_, lhs_arena,
+                                       &other->_impl_.resume_data_, rhs_arena);
+}
+
+::google::protobuf::Metadata GetResumeDataRsp::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[9]);
+}
+// ===================================================================
+
+class GetTorrentInfoReq::_Internal {
+ public:
+  using HasBits = decltype(std::declval<GetTorrentInfoReq>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(GetTorrentInfoReq, _impl_._has_bits_);
+  static const ::prpc::InfoHash& info_hash(const GetTorrentInfoReq* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+const ::prpc::InfoHash& GetTorrentInfoReq::_Internal::info_hash(const GetTorrentInfoReq* msg) {
+  return *msg->_impl_.info_hash_;
+}
+GetTorrentInfoReq::GetTorrentInfoReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.GetTorrentInfoReq)
+}
+GetTorrentInfoReq::GetTorrentInfoReq(const GetTorrentInfoReq& from) : ::google::protobuf::Message() {
+  GetTorrentInfoReq* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
+  }
+
+  // @@protoc_insertion_point(copy_constructor:prpc.GetTorrentInfoReq)
+}
+inline void GetTorrentInfoReq::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+}
+GetTorrentInfoReq::~GetTorrentInfoReq() {
+  // @@protoc_insertion_point(destructor:prpc.GetTorrentInfoReq)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void GetTorrentInfoReq::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.info_hash_;
+}
+void GetTorrentInfoReq::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void GetTorrentInfoReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.GetTorrentInfoReq)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* GetTorrentInfoReq::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> GetTorrentInfoReq::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(GetTorrentInfoReq, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_GetTorrentInfoReq_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(GetTorrentInfoReq, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(GetTorrentInfoReq, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+  }},
+};
+
+::uint8_t* GetTorrentInfoReq::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.GetTorrentInfoReq)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  // .prpc.InfoHash info_hash = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::info_hash(this),
+        _Internal::info_hash(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.GetTorrentInfoReq)
+  return target;
+}
+
+::size_t GetTorrentInfoReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.GetTorrentInfoReq)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .prpc.InfoHash info_hash = 1;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *_impl_.info_hash_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData GetTorrentInfoReq::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    GetTorrentInfoReq::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*GetTorrentInfoReq::GetClassData() const { return &_class_data_; }
+
+
+void GetTorrentInfoReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GetTorrentInfoReq*>(&to_msg);
+  auto& from = static_cast<const GetTorrentInfoReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.GetTorrentInfoReq)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
+        from._internal_info_hash());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GetTorrentInfoReq::CopyFrom(const GetTorrentInfoReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.GetTorrentInfoReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool GetTorrentInfoReq::IsInitialized() const {
+  return true;
+}
+
+void GetTorrentInfoReq::InternalSwap(GetTorrentInfoReq* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  swap(_impl_.info_hash_, other->_impl_.info_hash_);
+}
+
+::google::protobuf::Metadata GetTorrentInfoReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[10]);
+}
+// ===================================================================
+
+class GetTorrentInfoRsp::_Internal {
+ public:
+  using HasBits = decltype(std::declval<GetTorrentInfoRsp>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(GetTorrentInfoRsp, _impl_._has_bits_);
+  static const ::prpc::TorrentInfo& torrent_info(const GetTorrentInfoRsp* msg);
+  static void set_has_torrent_info(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+const ::prpc::TorrentInfo& GetTorrentInfoRsp::_Internal::torrent_info(const GetTorrentInfoRsp* msg) {
+  return *msg->_impl_.torrent_info_;
+}
+GetTorrentInfoRsp::GetTorrentInfoRsp(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.GetTorrentInfoRsp)
+}
+GetTorrentInfoRsp::GetTorrentInfoRsp(const GetTorrentInfoRsp& from) : ::google::protobuf::Message() {
+  GetTorrentInfoRsp* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.torrent_info_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.torrent_info_ = new ::prpc::TorrentInfo(*from._impl_.torrent_info_);
+  }
+
+  // @@protoc_insertion_point(copy_constructor:prpc.GetTorrentInfoRsp)
+}
+inline void GetTorrentInfoRsp::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.torrent_info_){nullptr},
+  };
+}
+GetTorrentInfoRsp::~GetTorrentInfoRsp() {
+  // @@protoc_insertion_point(destructor:prpc.GetTorrentInfoRsp)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void GetTorrentInfoRsp::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.torrent_info_;
+}
+void GetTorrentInfoRsp::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void GetTorrentInfoRsp::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.GetTorrentInfoRsp)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.torrent_info_ != nullptr);
+    _impl_.torrent_info_->Clear();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* GetTorrentInfoRsp::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> GetTorrentInfoRsp::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(GetTorrentInfoRsp, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_GetTorrentInfoRsp_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // .prpc.TorrentInfo torrent_info = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(GetTorrentInfoRsp, _impl_.torrent_info_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.TorrentInfo torrent_info = 1;
+    {PROTOBUF_FIELD_OFFSET(GetTorrentInfoRsp, _impl_.torrent_info_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::TorrentInfo>()},
+  }}, {{
+  }},
+};
+
+::uint8_t* GetTorrentInfoRsp::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.GetTorrentInfoRsp)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  // .prpc.TorrentInfo torrent_info = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::torrent_info(this),
+        _Internal::torrent_info(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.GetTorrentInfoRsp)
+  return target;
+}
+
+::size_t GetTorrentInfoRsp::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.GetTorrentInfoRsp)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .prpc.TorrentInfo torrent_info = 1;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *_impl_.torrent_info_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData GetTorrentInfoRsp::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    GetTorrentInfoRsp::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*GetTorrentInfoRsp::GetClassData() const { return &_class_data_; }
+
+
+void GetTorrentInfoRsp::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GetTorrentInfoRsp*>(&to_msg);
+  auto& from = static_cast<const GetTorrentInfoRsp&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.GetTorrentInfoRsp)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_internal_mutable_torrent_info()->::prpc::TorrentInfo::MergeFrom(
+        from._internal_torrent_info());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GetTorrentInfoRsp::CopyFrom(const GetTorrentInfoRsp& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.GetTorrentInfoRsp)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool GetTorrentInfoRsp::IsInitialized() const {
+  return true;
+}
+
+void GetTorrentInfoRsp::InternalSwap(GetTorrentInfoRsp* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  swap(_impl_.torrent_info_, other->_impl_.torrent_info_);
+}
+
+::google::protobuf::Metadata GetTorrentInfoRsp::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[11]);
+}
+// ===================================================================
+
+class GetBtStatusReq::_Internal {
+ public:
+  using HasBits = decltype(std::declval<GetBtStatusReq>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(GetBtStatusReq, _impl_._has_bits_);
+  static const ::prpc::InfoHash& info_hash(const GetBtStatusReq* msg);
+  static void set_has_info_hash(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+const ::prpc::InfoHash& GetBtStatusReq::_Internal::info_hash(const GetBtStatusReq* msg) {
+  return *msg->_impl_.info_hash_;
+}
+GetBtStatusReq::GetBtStatusReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.GetBtStatusReq)
+}
+GetBtStatusReq::GetBtStatusReq(const GetBtStatusReq& from) : ::google::protobuf::Message() {
+  GetBtStatusReq* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
+  }
+
+  // @@protoc_insertion_point(copy_constructor:prpc.GetBtStatusReq)
+}
+inline void GetBtStatusReq::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.info_hash_){nullptr},
+  };
+}
+GetBtStatusReq::~GetBtStatusReq() {
+  // @@protoc_insertion_point(destructor:prpc.GetBtStatusReq)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void GetBtStatusReq::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.info_hash_;
+}
+void GetBtStatusReq::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void GetBtStatusReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.GetBtStatusReq)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
+    _impl_.info_hash_->Clear();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* GetBtStatusReq::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> GetBtStatusReq::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(GetBtStatusReq, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_GetBtStatusReq_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(GetBtStatusReq, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(GetBtStatusReq, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+  }},
+};
+
+::uint8_t* GetBtStatusReq::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.GetBtStatusReq)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  // .prpc.InfoHash info_hash = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::info_hash(this),
+        _Internal::info_hash(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.GetBtStatusReq)
+  return target;
+}
+
+::size_t GetBtStatusReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.GetBtStatusReq)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .prpc.InfoHash info_hash = 1;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *_impl_.info_hash_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData GetBtStatusReq::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    GetBtStatusReq::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*GetBtStatusReq::GetClassData() const { return &_class_data_; }
+
+
+void GetBtStatusReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GetBtStatusReq*>(&to_msg);
+  auto& from = static_cast<const GetBtStatusReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.GetBtStatusReq)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
+        from._internal_info_hash());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GetBtStatusReq::CopyFrom(const GetBtStatusReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.GetBtStatusReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool GetBtStatusReq::IsInitialized() const {
+  return true;
+}
+
+void GetBtStatusReq::InternalSwap(GetBtStatusReq* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  swap(_impl_.info_hash_, other->_impl_.info_hash_);
+}
+
+::google::protobuf::Metadata GetBtStatusReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[12]);
+}
+// ===================================================================
+
+class GetBtStatusRsp::_Internal {
+ public:
+  using HasBits = decltype(std::declval<GetBtStatusRsp>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(GetBtStatusRsp, _impl_._has_bits_);
+  static const ::prpc::TorrentStatus& status(const GetBtStatusRsp* msg);
+  static void set_has_status(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+const ::prpc::TorrentStatus& GetBtStatusRsp::_Internal::status(const GetBtStatusRsp* msg) {
+  return *msg->_impl_.status_;
+}
+GetBtStatusRsp::GetBtStatusRsp(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.GetBtStatusRsp)
+}
+GetBtStatusRsp::GetBtStatusRsp(const GetBtStatusRsp& from) : ::google::protobuf::Message() {
+  GetBtStatusRsp* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.status_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.status_ = new ::prpc::TorrentStatus(*from._impl_.status_);
+  }
+
+  // @@protoc_insertion_point(copy_constructor:prpc.GetBtStatusRsp)
+}
+inline void GetBtStatusRsp::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.status_){nullptr},
+  };
+}
+GetBtStatusRsp::~GetBtStatusRsp() {
+  // @@protoc_insertion_point(destructor:prpc.GetBtStatusRsp)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void GetBtStatusRsp::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.status_;
+}
+void GetBtStatusRsp::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void GetBtStatusRsp::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.GetBtStatusRsp)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.status_ != nullptr);
+    _impl_.status_->Clear();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* GetBtStatusRsp::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> GetBtStatusRsp::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(GetBtStatusRsp, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_GetBtStatusRsp_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // .prpc.TorrentStatus status = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(GetBtStatusRsp, _impl_.status_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .prpc.TorrentStatus status = 1;
+    {PROTOBUF_FIELD_OFFSET(GetBtStatusRsp, _impl_.status_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::TorrentStatus>()},
+  }}, {{
+  }},
+};
+
+::uint8_t* GetBtStatusRsp::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.GetBtStatusRsp)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  // .prpc.TorrentStatus status = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::status(this),
+        _Internal::status(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.GetBtStatusRsp)
+  return target;
+}
+
+::size_t GetBtStatusRsp::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.GetBtStatusRsp)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .prpc.TorrentStatus status = 1;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *_impl_.status_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData GetBtStatusRsp::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    GetBtStatusRsp::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*GetBtStatusRsp::GetClassData() const { return &_class_data_; }
+
+
+void GetBtStatusRsp::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GetBtStatusRsp*>(&to_msg);
+  auto& from = static_cast<const GetBtStatusRsp&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.GetBtStatusRsp)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_internal_mutable_status()->::prpc::TorrentStatus::MergeFrom(
+        from._internal_status());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GetBtStatusRsp::CopyFrom(const GetBtStatusRsp& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.GetBtStatusRsp)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool GetBtStatusRsp::IsInitialized() const {
+  return true;
+}
+
+void GetBtStatusRsp::InternalSwap(GetBtStatusRsp* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  swap(_impl_.status_, other->_impl_.status_);
+}
+
+::google::protobuf::Metadata GetBtStatusRsp::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[13]);
+}
+// ===================================================================
+
+class StatusRequest::_Internal {
+ public:
+};
+
+StatusRequest::StatusRequest(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.StatusRequest)
+}
+StatusRequest::StatusRequest(const StatusRequest& from) : ::google::protobuf::Message() {
+  StatusRequest* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.info_hash_){from._impl_.info_hash_},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
+  // @@protoc_insertion_point(copy_constructor:prpc.StatusRequest)
+}
+inline void StatusRequest::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.info_hash_){arena},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+}
+StatusRequest::~StatusRequest() {
+  // @@protoc_insertion_point(destructor:prpc.StatusRequest)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void StatusRequest::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.info_hash_.~RepeatedPtrField();
+}
+void StatusRequest::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void StatusRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.StatusRequest)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _internal_mutable_info_hash()->Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* StatusRequest::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRequest::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_StatusRequest_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // repeated .prpc.InfoHash info_hash = 1;
+    {::_pbi::TcParser::FastMtR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(StatusRequest, _impl_.info_hash_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // repeated .prpc.InfoHash info_hash = 1;
+    {PROTOBUF_FIELD_OFFSET(StatusRequest, _impl_.info_hash_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
+  }}, {{
+  }},
+};
+
+::uint8_t* StatusRequest::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.StatusRequest)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // repeated .prpc.InfoHash info_hash = 1;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_info_hash_size()); i < n; i++) {
+    const auto& repfield = this->_internal_info_hash().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
+        InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.StatusRequest)
+  return target;
+}
+
+::size_t StatusRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.StatusRequest)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .prpc.InfoHash info_hash = 1;
+  total_size += 1UL * this->_internal_info_hash_size();
+  for (const auto& msg : this->_internal_info_hash()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+  }
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData StatusRequest::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    StatusRequest::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*StatusRequest::GetClassData() const { return &_class_data_; }
+
+
+void StatusRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<StatusRequest*>(&to_msg);
+  auto& from = static_cast<const StatusRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.StatusRequest)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_internal_mutable_info_hash()->MergeFrom(from._internal_info_hash());
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void StatusRequest::CopyFrom(const StatusRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.StatusRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool StatusRequest::IsInitialized() const {
+  return true;
+}
+
+void StatusRequest::InternalSwap(StatusRequest* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.info_hash_.InternalSwap(&other->_impl_.info_hash_);
+}
+
+::google::protobuf::Metadata StatusRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
+      file_level_metadata_bt_2eproto[14]);
 }
 // ===================================================================
 
@@ -2762,7 +4809,7 @@ void StatusRespone::InternalSwap(StatusRespone* other) {
 ::google::protobuf::Metadata StatusRespone::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[7]);
+      file_level_metadata_bt_2eproto[15]);
 }
 // ===================================================================
 
@@ -2934,772 +4981,7 @@ void TorrentInfoReq::InternalSwap(TorrentInfoReq* other) {
 ::google::protobuf::Metadata TorrentInfoReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[8]);
-}
-// ===================================================================
-
-class BtFile::_Internal {
- public:
-};
-
-BtFile::BtFile(::google::protobuf::Arena* arena)
-    : ::google::protobuf::Message(arena) {
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.BtFile)
-}
-BtFile::BtFile(const BtFile& from) : ::google::protobuf::Message() {
-  BtFile* const _this = this;
-  (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.name_){},
-      decltype(_impl_.index_){},
-      decltype(_impl_.st_){},
-      decltype(_impl_.total_size_){},
-      decltype(_impl_.downloaded_){},
-      /*decltype(_impl_._cached_size_)*/ {},
-  };
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-  _impl_.name_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.name_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_name().empty()) {
-    _this->_impl_.name_.Set(from._internal_name(), _this->GetArenaForAllocation());
-  }
-  ::memcpy(&_impl_.index_, &from._impl_.index_,
-    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.downloaded_) -
-    reinterpret_cast<char*>(&_impl_.index_)) + sizeof(_impl_.downloaded_));
-
-  // @@protoc_insertion_point(copy_constructor:prpc.BtFile)
-}
-inline void BtFile::SharedCtor(::_pb::Arena* arena) {
-  (void)arena;
-  new (&_impl_) Impl_{
-      decltype(_impl_.name_){},
-      decltype(_impl_.index_){0},
-      decltype(_impl_.st_){0},
-      decltype(_impl_.total_size_){::int64_t{0}},
-      decltype(_impl_.downloaded_){::int64_t{0}},
-      /*decltype(_impl_._cached_size_)*/ {},
-  };
-  _impl_.name_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.name_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-BtFile::~BtFile() {
-  // @@protoc_insertion_point(destructor:prpc.BtFile)
-  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  SharedDtor();
-}
-inline void BtFile::SharedDtor() {
-  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.name_.Destroy();
-}
-void BtFile::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-PROTOBUF_NOINLINE void BtFile::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.BtFile)
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.name_.ClearToEmpty();
-  ::memset(&_impl_.index_, 0, static_cast<::size_t>(
-      reinterpret_cast<char*>(&_impl_.downloaded_) -
-      reinterpret_cast<char*>(&_impl_.index_)) + sizeof(_impl_.downloaded_));
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-const char* BtFile::_InternalParse(
-    const char* ptr, ::_pbi::ParseContext* ctx) {
-  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
-  return ptr;
-}
-
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 5, 0, 24, 2> BtFile::_table_ = {
-  {
-    0,  // no _has_bits_
-    0, // no _extensions_
-    5, 56,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967264,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    5,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    &_BtFile_default_instance_._instance,
-    ::_pbi::TcParser::GenericFallback,  // fallback
-  }, {{
-    {::_pbi::TcParser::MiniParse, {}},
-    // string name = 1;
-    {::_pbi::TcParser::FastUS1,
-     {10, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.name_)}},
-    // int32 index = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(BtFile, _impl_.index_), 63>(),
-     {16, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.index_)}},
-    // .prpc.BtFile.State st = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(BtFile, _impl_.st_), 63>(),
-     {24, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.st_)}},
-    // int64 total_size = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(BtFile, _impl_.total_size_), 63>(),
-     {32, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.total_size_)}},
-    // int64 downloaded = 5;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(BtFile, _impl_.downloaded_), 63>(),
-     {40, 63, 0, PROTOBUF_FIELD_OFFSET(BtFile, _impl_.downloaded_)}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // string name = 1;
-    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.name_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // int32 index = 2;
-    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.index_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
-    // .prpc.BtFile.State st = 3;
-    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.st_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
-    // int64 total_size = 4;
-    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.total_size_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
-    // int64 downloaded = 5;
-    {PROTOBUF_FIELD_OFFSET(BtFile, _impl_.downloaded_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
-  }},
-  // no aux_entries
-  {{
-    "\13\4\0\0\0\0\0\0"
-    "prpc.BtFile"
-    "name"
-  }},
-};
-
-::uint8_t* BtFile::_InternalSerialize(
-    ::uint8_t* target,
-    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.BtFile)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  // string name = 1;
-  if (!this->_internal_name().empty()) {
-    const std::string& _s = this->_internal_name();
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.BtFile.name");
-    target = stream->WriteStringMaybeAliased(1, _s, target);
-  }
-
-  // int32 index = 2;
-  if (this->_internal_index() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::
-        WriteInt32ToArrayWithField<2>(
-            stream, this->_internal_index(), target);
-  }
-
-  // .prpc.BtFile.State st = 3;
-  if (this->_internal_st() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteEnumToArray(
-        3, this->_internal_st(), target);
-  }
-
-  // int64 total_size = 4;
-  if (this->_internal_total_size() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::
-        WriteInt64ToArrayWithField<4>(
-            stream, this->_internal_total_size(), target);
-  }
-
-  // int64 downloaded = 5;
-  if (this->_internal_downloaded() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::
-        WriteInt64ToArrayWithField<5>(
-            stream, this->_internal_downloaded(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.BtFile)
-  return target;
-}
-
-::size_t BtFile::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.BtFile)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // string name = 1;
-  if (!this->_internal_name().empty()) {
-    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                    this->_internal_name());
-  }
-
-  // int32 index = 2;
-  if (this->_internal_index() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
-        this->_internal_index());
-  }
-
-  // .prpc.BtFile.State st = 3;
-  if (this->_internal_st() != 0) {
-    total_size += 1 +
-                  ::_pbi::WireFormatLite::EnumSize(this->_internal_st());
-  }
-
-  // int64 total_size = 4;
-  if (this->_internal_total_size() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
-        this->_internal_total_size());
-  }
-
-  // int64 downloaded = 5;
-  if (this->_internal_downloaded() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
-        this->_internal_downloaded());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::google::protobuf::Message::ClassData BtFile::_class_data_ = {
-    ::google::protobuf::Message::CopyWithSourceCheck,
-    BtFile::MergeImpl
-};
-const ::google::protobuf::Message::ClassData*BtFile::GetClassData() const { return &_class_data_; }
-
-
-void BtFile::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
-  auto* const _this = static_cast<BtFile*>(&to_msg);
-  auto& from = static_cast<const BtFile&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.BtFile)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (!from._internal_name().empty()) {
-    _this->_internal_set_name(from._internal_name());
-  }
-  if (from._internal_index() != 0) {
-    _this->_internal_set_index(from._internal_index());
-  }
-  if (from._internal_st() != 0) {
-    _this->_internal_set_st(from._internal_st());
-  }
-  if (from._internal_total_size() != 0) {
-    _this->_internal_set_total_size(from._internal_total_size());
-  }
-  if (from._internal_downloaded() != 0) {
-    _this->_internal_set_downloaded(from._internal_downloaded());
-  }
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void BtFile::CopyFrom(const BtFile& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.BtFile)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-PROTOBUF_NOINLINE bool BtFile::IsInitialized() const {
-  return true;
-}
-
-void BtFile::InternalSwap(BtFile* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, lhs_arena,
-                                       &other->_impl_.name_, rhs_arena);
-  ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(BtFile, _impl_.downloaded_)
-      + sizeof(BtFile::_impl_.downloaded_)
-      - PROTOBUF_FIELD_OFFSET(BtFile, _impl_.index_)>(
-          reinterpret_cast<char*>(&_impl_.index_),
-          reinterpret_cast<char*>(&other->_impl_.index_));
-}
-
-::google::protobuf::Metadata BtFile::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[9]);
-}
-// ===================================================================
-
-class TorrentInfo::_Internal {
- public:
-  using HasBits = decltype(std::declval<TorrentInfo>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-    8 * PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_._has_bits_);
-  static const ::prpc::InfoHash& info_hash(const TorrentInfo* msg);
-  static void set_has_info_hash(HasBits* has_bits) {
-    (*has_bits)[0] |= 1u;
-  }
-};
-
-const ::prpc::InfoHash& TorrentInfo::_Internal::info_hash(const TorrentInfo* msg) {
-  return *msg->_impl_.info_hash_;
-}
-TorrentInfo::TorrentInfo(::google::protobuf::Arena* arena)
-    : ::google::protobuf::Message(arena) {
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.TorrentInfo)
-}
-TorrentInfo::TorrentInfo(const TorrentInfo& from) : ::google::protobuf::Message() {
-  TorrentInfo* const _this = this;
-  (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_._has_bits_){from._impl_._has_bits_},
-      /*decltype(_impl_._cached_size_)*/ {},
-      decltype(_impl_.files_){from._impl_.files_},
-      decltype(_impl_.name_){},
-      decltype(_impl_.save_path_){},
-      decltype(_impl_.resume_data_){},
-      decltype(_impl_.info_hash_){nullptr},
-      decltype(_impl_.state_){},
-      decltype(_impl_.piece_length_){},
-      decltype(_impl_.total_size_){},
-      decltype(_impl_.num_pieces_){},
-  };
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-  _impl_.name_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.name_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_name().empty()) {
-    _this->_impl_.name_.Set(from._internal_name(), _this->GetArenaForAllocation());
-  }
-  _impl_.save_path_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.save_path_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_save_path().empty()) {
-    _this->_impl_.save_path_.Set(from._internal_save_path(), _this->GetArenaForAllocation());
-  }
-  _impl_.resume_data_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.resume_data_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_resume_data().empty()) {
-    _this->_impl_.resume_data_.Set(from._internal_resume_data(), _this->GetArenaForAllocation());
-  }
-  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    _this->_impl_.info_hash_ = new ::prpc::InfoHash(*from._impl_.info_hash_);
-  }
-  ::memcpy(&_impl_.state_, &from._impl_.state_,
-    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.num_pieces_) -
-    reinterpret_cast<char*>(&_impl_.state_)) + sizeof(_impl_.num_pieces_));
-
-  // @@protoc_insertion_point(copy_constructor:prpc.TorrentInfo)
-}
-inline void TorrentInfo::SharedCtor(::_pb::Arena* arena) {
-  (void)arena;
-  new (&_impl_) Impl_{
-      decltype(_impl_._has_bits_){},
-      /*decltype(_impl_._cached_size_)*/ {},
-      decltype(_impl_.files_){arena},
-      decltype(_impl_.name_){},
-      decltype(_impl_.save_path_){},
-      decltype(_impl_.resume_data_){},
-      decltype(_impl_.info_hash_){nullptr},
-      decltype(_impl_.state_){0},
-      decltype(_impl_.piece_length_){0},
-      decltype(_impl_.total_size_){::int64_t{0}},
-      decltype(_impl_.num_pieces_){0},
-  };
-  _impl_.name_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.name_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.save_path_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.save_path_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.resume_data_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.resume_data_.Set("", GetArenaForAllocation());
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-TorrentInfo::~TorrentInfo() {
-  // @@protoc_insertion_point(destructor:prpc.TorrentInfo)
-  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  SharedDtor();
-}
-inline void TorrentInfo::SharedDtor() {
-  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.files_.~RepeatedPtrField();
-  _impl_.name_.Destroy();
-  _impl_.save_path_.Destroy();
-  _impl_.resume_data_.Destroy();
-  if (this != internal_default_instance()) delete _impl_.info_hash_;
-}
-void TorrentInfo::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-PROTOBUF_NOINLINE void TorrentInfo::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.TorrentInfo)
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _internal_mutable_files()->Clear();
-  _impl_.name_.ClearToEmpty();
-  _impl_.save_path_.ClearToEmpty();
-  _impl_.resume_data_.ClearToEmpty();
-  cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    ABSL_DCHECK(_impl_.info_hash_ != nullptr);
-    _impl_.info_hash_->Clear();
-  }
-  ::memset(&_impl_.state_, 0, static_cast<::size_t>(
-      reinterpret_cast<char*>(&_impl_.num_pieces_) -
-      reinterpret_cast<char*>(&_impl_.state_)) + sizeof(_impl_.num_pieces_));
-  _impl_._has_bits_.Clear();
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-const char* TorrentInfo::_InternalParse(
-    const char* ptr, ::_pbi::ParseContext* ctx) {
-  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
-  return ptr;
-}
-
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 9, 2, 46, 2> TorrentInfo::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_._has_bits_),
-    0, // no _extensions_
-    9, 120,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294966784,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    9,  // num_field_entries
-    2,  // num_aux_entries
-    offsetof(decltype(_table_), aux_entries),
-    &_TorrentInfo_default_instance_._instance,
-    ::_pbi::TcParser::GenericFallback,  // fallback
-  }, {{
-    {::_pbi::TcParser::MiniParse, {}},
-    // .prpc.InfoHash info_hash = 1;
-    {::_pbi::TcParser::FastMtS1,
-     {10, 0, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.info_hash_)}},
-    // string name = 2;
-    {::_pbi::TcParser::FastUS1,
-     {18, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.name_)}},
-    // .prpc.BtStateEnum state = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TorrentInfo, _impl_.state_), 63>(),
-     {24, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.state_)}},
-    // string save_path = 4;
-    {::_pbi::TcParser::FastUS1,
-     {34, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.save_path_)}},
-    // repeated .prpc.BtFile files = 5;
-    {::_pbi::TcParser::FastMtR1,
-     {42, 63, 1, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.files_)}},
-    // int64 total_size = 6;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TorrentInfo, _impl_.total_size_), 63>(),
-     {48, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.total_size_)}},
-    // int32 piece_length = 7;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TorrentInfo, _impl_.piece_length_), 63>(),
-     {56, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.piece_length_)}},
-    // int32 num_pieces = 8;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TorrentInfo, _impl_.num_pieces_), 63>(),
-     {64, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.num_pieces_)}},
-    // bytes resume_data = 9;
-    {::_pbi::TcParser::FastBS1,
-     {74, 63, 0, PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.resume_data_)}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // .prpc.InfoHash info_hash = 1;
-    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.info_hash_), _Internal::kHasBitsOffset + 0, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // string name = 2;
-    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.name_), -1, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // .prpc.BtStateEnum state = 3;
-    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.state_), -1, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
-    // string save_path = 4;
-    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.save_path_), -1, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // repeated .prpc.BtFile files = 5;
-    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.files_), -1, 1,
-    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
-    // int64 total_size = 6;
-    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.total_size_), -1, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
-    // int32 piece_length = 7;
-    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.piece_length_), -1, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
-    // int32 num_pieces = 8;
-    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.num_pieces_), -1, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
-    // bytes resume_data = 9;
-    {PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.resume_data_), -1, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kBytes | ::_fl::kRepAString)},
-  }}, {{
-    {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
-    {::_pbi::TcParser::GetTable<::prpc::BtFile>()},
-  }}, {{
-    "\20\0\4\0\11\0\0\0\0\0\0\0\0\0\0\0"
-    "prpc.TorrentInfo"
-    "name"
-    "save_path"
-  }},
-};
-
-::uint8_t* TorrentInfo::_InternalSerialize(
-    ::uint8_t* target,
-    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.TorrentInfo)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  cached_has_bits = _impl_._has_bits_[0];
-  // .prpc.InfoHash info_hash = 1;
-  if (cached_has_bits & 0x00000001u) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::info_hash(this),
-        _Internal::info_hash(this).GetCachedSize(), target, stream);
-  }
-
-  // string name = 2;
-  if (!this->_internal_name().empty()) {
-    const std::string& _s = this->_internal_name();
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.TorrentInfo.name");
-    target = stream->WriteStringMaybeAliased(2, _s, target);
-  }
-
-  // .prpc.BtStateEnum state = 3;
-  if (this->_internal_state() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteEnumToArray(
-        3, this->_internal_state(), target);
-  }
-
-  // string save_path = 4;
-  if (!this->_internal_save_path().empty()) {
-    const std::string& _s = this->_internal_save_path();
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.TorrentInfo.save_path");
-    target = stream->WriteStringMaybeAliased(4, _s, target);
-  }
-
-  // repeated .prpc.BtFile files = 5;
-  for (unsigned i = 0,
-      n = static_cast<unsigned>(this->_internal_files_size()); i < n; i++) {
-    const auto& repfield = this->_internal_files().Get(i);
-    target = ::google::protobuf::internal::WireFormatLite::
-        InternalWriteMessage(5, repfield, repfield.GetCachedSize(), target, stream);
-  }
-
-  // int64 total_size = 6;
-  if (this->_internal_total_size() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::
-        WriteInt64ToArrayWithField<6>(
-            stream, this->_internal_total_size(), target);
-  }
-
-  // int32 piece_length = 7;
-  if (this->_internal_piece_length() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::
-        WriteInt32ToArrayWithField<7>(
-            stream, this->_internal_piece_length(), target);
-  }
-
-  // int32 num_pieces = 8;
-  if (this->_internal_num_pieces() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::
-        WriteInt32ToArrayWithField<8>(
-            stream, this->_internal_num_pieces(), target);
-  }
-
-  // bytes resume_data = 9;
-  if (!this->_internal_resume_data().empty()) {
-    const std::string& _s = this->_internal_resume_data();
-    target = stream->WriteBytesMaybeAliased(9, _s, target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.TorrentInfo)
-  return target;
-}
-
-::size_t TorrentInfo::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.TorrentInfo)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // repeated .prpc.BtFile files = 5;
-  total_size += 1UL * this->_internal_files_size();
-  for (const auto& msg : this->_internal_files()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
-  }
-  // string name = 2;
-  if (!this->_internal_name().empty()) {
-    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                    this->_internal_name());
-  }
-
-  // string save_path = 4;
-  if (!this->_internal_save_path().empty()) {
-    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                    this->_internal_save_path());
-  }
-
-  // bytes resume_data = 9;
-  if (!this->_internal_resume_data().empty()) {
-    total_size += 1 + ::google::protobuf::internal::WireFormatLite::BytesSize(
-                                    this->_internal_resume_data());
-  }
-
-  // .prpc.InfoHash info_hash = 1;
-  cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSize(
-        *_impl_.info_hash_);
-  }
-
-  // .prpc.BtStateEnum state = 3;
-  if (this->_internal_state() != 0) {
-    total_size += 1 +
-                  ::_pbi::WireFormatLite::EnumSize(this->_internal_state());
-  }
-
-  // int32 piece_length = 7;
-  if (this->_internal_piece_length() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
-        this->_internal_piece_length());
-  }
-
-  // int64 total_size = 6;
-  if (this->_internal_total_size() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
-        this->_internal_total_size());
-  }
-
-  // int32 num_pieces = 8;
-  if (this->_internal_num_pieces() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
-        this->_internal_num_pieces());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::google::protobuf::Message::ClassData TorrentInfo::_class_data_ = {
-    ::google::protobuf::Message::CopyWithSourceCheck,
-    TorrentInfo::MergeImpl
-};
-const ::google::protobuf::Message::ClassData*TorrentInfo::GetClassData() const { return &_class_data_; }
-
-
-void TorrentInfo::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
-  auto* const _this = static_cast<TorrentInfo*>(&to_msg);
-  auto& from = static_cast<const TorrentInfo&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.TorrentInfo)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  _this->_internal_mutable_files()->MergeFrom(from._internal_files());
-  if (!from._internal_name().empty()) {
-    _this->_internal_set_name(from._internal_name());
-  }
-  if (!from._internal_save_path().empty()) {
-    _this->_internal_set_save_path(from._internal_save_path());
-  }
-  if (!from._internal_resume_data().empty()) {
-    _this->_internal_set_resume_data(from._internal_resume_data());
-  }
-  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    _this->_internal_mutable_info_hash()->::prpc::InfoHash::MergeFrom(
-        from._internal_info_hash());
-  }
-  if (from._internal_state() != 0) {
-    _this->_internal_set_state(from._internal_state());
-  }
-  if (from._internal_piece_length() != 0) {
-    _this->_internal_set_piece_length(from._internal_piece_length());
-  }
-  if (from._internal_total_size() != 0) {
-    _this->_internal_set_total_size(from._internal_total_size());
-  }
-  if (from._internal_num_pieces() != 0) {
-    _this->_internal_set_num_pieces(from._internal_num_pieces());
-  }
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void TorrentInfo::CopyFrom(const TorrentInfo& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.TorrentInfo)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-PROTOBUF_NOINLINE bool TorrentInfo::IsInitialized() const {
-  return true;
-}
-
-void TorrentInfo::InternalSwap(TorrentInfo* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  _impl_.files_.InternalSwap(&other->_impl_.files_);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, lhs_arena,
-                                       &other->_impl_.name_, rhs_arena);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.save_path_, lhs_arena,
-                                       &other->_impl_.save_path_, rhs_arena);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.resume_data_, lhs_arena,
-                                       &other->_impl_.resume_data_, rhs_arena);
-  ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.num_pieces_)
-      + sizeof(TorrentInfo::_impl_.num_pieces_)
-      - PROTOBUF_FIELD_OFFSET(TorrentInfo, _impl_.info_hash_)>(
-          reinterpret_cast<char*>(&_impl_.info_hash_),
-          reinterpret_cast<char*>(&other->_impl_.info_hash_));
-}
-
-::google::protobuf::Metadata TorrentInfo::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[10]);
+      file_level_metadata_bt_2eproto[16]);
 }
 // ===================================================================
 
@@ -3897,7 +5179,7 @@ void TorrentInfoRes::InternalSwap(TorrentInfoRes* other) {
 ::google::protobuf::Metadata TorrentInfoRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[11]);
+      file_level_metadata_bt_2eproto[17]);
 }
 // ===================================================================
 
@@ -4095,7 +5377,7 @@ void RemoveTorrentReq::InternalSwap(RemoveTorrentReq* other) {
 ::google::protobuf::Metadata RemoveTorrentReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[12]);
+      file_level_metadata_bt_2eproto[18]);
 }
 // ===================================================================
 
@@ -4134,7 +5416,7 @@ const ::google::protobuf::Message::ClassData*RemoveTorrentRes::GetClassData() co
 ::google::protobuf::Metadata RemoveTorrentRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[13]);
+      file_level_metadata_bt_2eproto[19]);
 }
 // ===================================================================
 
@@ -4332,7 +5614,7 @@ void FileProgressReq::InternalSwap(FileProgressReq* other) {
 ::google::protobuf::Metadata FileProgressReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[14]);
+      file_level_metadata_bt_2eproto[20]);
 }
 // ===================================================================
 
@@ -4557,7 +5839,7 @@ void FileProgressRes::InternalSwap(FileProgressRes* other) {
 ::google::protobuf::Metadata FileProgressRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[15]);
+      file_level_metadata_bt_2eproto[21]);
 }
 // ===================================================================
 
@@ -4596,7 +5878,7 @@ const ::google::protobuf::Message::ClassData*FileCompletedReq::GetClassData() co
 ::google::protobuf::Metadata FileCompletedReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[16]);
+      file_level_metadata_bt_2eproto[22]);
 }
 // ===================================================================
 
@@ -4825,7 +6107,7 @@ void FileCompletedRes::InternalSwap(FileCompletedRes* other) {
 ::google::protobuf::Metadata FileCompletedRes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
-      file_level_metadata_bt_2eproto[17]);
+      file_level_metadata_bt_2eproto[23]);
 }
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace prpc

@@ -3,10 +3,10 @@ package crawler
 import (
 	"context"
 	"pnas/bt"
-	"pnas/category"
 	"pnas/db"
 	"pnas/log"
 	"pnas/prpc"
+	"pnas/ptype"
 	"pnas/user"
 	"regexp"
 	"strconv"
@@ -22,13 +22,12 @@ const (
 )
 
 func Go36dmBackgroup(magnetShares user.IMagnetSharesService, btClient *bt.BtClient) {
-	return
 	items, _ := magnetShares.QueryMagnetCategorys(&user.QueryCategoryParams{
 		ParentId:     magnetShares.GetMagnetRootId(),
 		CategoryName: CategoryName,
 	})
 
-	var rid category.ID
+	var rid ptype.CategoryID
 	var stop atomic.Bool
 	stop.Store(false)
 
@@ -38,7 +37,7 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, btClient *bt.BtClie
 			ParentId:  magnetShares.GetMagnetRootId(),
 			Name:      CategoryName,
 			Introduce: "from crawler",
-			Creator:   category.AdminId,
+			Creator:   ptype.AdminId,
 		})
 		if err != nil {
 			log.Errorf("failed to create crawler category: %v", err)
@@ -123,7 +122,7 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, btClient *bt.BtClie
 			CategoryId: rid,
 			Name:       "",
 			Introduce:  Name,
-			Creator:    category.AdminId,
+			Creator:    ptype.AdminId,
 		})
 	})
 

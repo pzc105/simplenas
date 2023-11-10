@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"pnas/db"
 	"pnas/log"
+	"pnas/ptype"
 	"strings"
 	"sync"
 
@@ -12,18 +13,18 @@ import (
 
 type Manager struct {
 	itemsMtx sync.Mutex
-	items    map[ID]*CategoryItem
+	items    map[ptype.CategoryID]*CategoryItem
 
 	dbMapMtx    sync.Mutex
-	dbItemMtxes map[ID]*sync.Mutex
+	dbItemMtxes map[ptype.CategoryID]*sync.Mutex
 }
 
 func (m *Manager) Init() {
-	m.items = make(map[ID]*CategoryItem)
-	m.dbItemMtxes = make(map[ID]*sync.Mutex)
+	m.items = make(map[ptype.CategoryID]*CategoryItem)
+	m.dbItemMtxes = make(map[ptype.CategoryID]*sync.Mutex)
 }
 
-func (m *Manager) requireDbMtx(itemId ID) *sync.Mutex {
+func (m *Manager) requireDbMtx(itemId ptype.CategoryID) *sync.Mutex {
 	m.dbMapMtx.Lock()
 	defer m.dbMapMtx.Unlock()
 	dbmtx, ok := m.dbItemMtxes[itemId]
@@ -34,7 +35,7 @@ func (m *Manager) requireDbMtx(itemId ID) *sync.Mutex {
 	return dbmtx
 }
 
-func (m *Manager) delDbMtx(itemId ID) {
+func (m *Manager) delDbMtx(itemId ptype.CategoryID) {
 	m.dbMapMtx.Lock()
 	defer m.dbMapMtx.Unlock()
 	_, ok := m.dbItemMtxes[itemId]
@@ -54,7 +55,7 @@ func (m *Manager) addItem(item *CategoryItem) {
 	m.items[item.base.Id] = item
 }
 
-func (m *Manager) queryItem(itemId ID) *CategoryItem {
+func (m *Manager) queryItem(itemId ptype.CategoryID) *CategoryItem {
 	m.itemsMtx.Lock()
 	defer m.itemsMtx.Unlock()
 	item, ok := m.items[itemId]
@@ -64,7 +65,7 @@ func (m *Manager) queryItem(itemId ID) *CategoryItem {
 	return nil
 }
 
-func (m *Manager) removeItem(itemId ID) {
+func (m *Manager) removeItem(itemId ptype.CategoryID) {
 	m.itemsMtx.Lock()
 	defer m.itemsMtx.Unlock()
 	_, ok := m.items[itemId]
@@ -76,7 +77,7 @@ func (m *Manager) removeItem(itemId ID) {
 func (m *Manager) AddItem(params *NewCategoryParams) (*CategoryItem, error) {
 	querier := params.Creator
 	if params.Sudo {
-		querier = AdminId
+		querier = ptype.AdminId
 	}
 	parentItem, err := m.GetItem(querier, params.ParentId)
 	if err != nil {
@@ -101,7 +102,7 @@ func (m *Manager) AddItem(params *NewCategoryParams) (*CategoryItem, error) {
 	return item, err
 }
 
-func (m *Manager) GetItem(querier int64, itemId ID) (*CategoryItem, error) {
+func (m *Manager) GetItem(querier ptype.UserID, itemId ptype.CategoryID) (*CategoryItem, error) {
 	item := m.queryItem(itemId)
 	if item != nil {
 		if !item.HasReadAuth(querier) {
@@ -134,7 +135,7 @@ func (m *Manager) GetItem(querier int64, itemId ID) (*CategoryItem, error) {
 	return item, err
 }
 
-func (m *Manager) GetItemByName(querier int64, parentId ID, name string) (*CategoryItem, error) {
+func (m *Manager) GetItemByName(querier ptype.UserID, parentId ptype.CategoryID, name string) (*CategoryItem, error) {
 	if parentId <= 0 {
 		return nil, errors.New("wrong parent id")
 	}
@@ -166,8 +167,8 @@ func (m *Manager) GetItemsByParent(params *GetItemsByParentParams) ([]*CategoryI
 	return m.GetItems(params.Querier, item.subItemIds...)
 }
 
-func (m *Manager) GetItems(querier int64, itemIds ...ID) ([]*CategoryItem, error) {
-	remainIds := make([]ID, 0, len(itemIds))
+func (m *Manager) GetItems(querier ptype.UserID, itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
+	remainIds := make([]ptype.CategoryID, 0, len(itemIds))
 	ret := make([]*CategoryItem, 0, len(itemIds))
 	m.itemsMtx.Lock()
 	for _, id := range itemIds {
@@ -184,7 +185,7 @@ func (m *Manager) GetItems(querier int64, itemIds ...ID) ([]*CategoryItem, error
 	}
 
 	mtxes := make([]*sync.Mutex, 0, len(remainIds))
-	realNeedQueryIds := make([]ID, 0, len(remainIds))
+	realNeedQueryIds := make([]ptype.CategoryID, 0, len(remainIds))
 	for _, itemId := range remainIds {
 		mtx := m.requireDbMtx(itemId)
 		mtxes = append(mtxes, mtx)
@@ -215,7 +216,7 @@ func (m *Manager) GetItems(querier int64, itemIds ...ID) ([]*CategoryItem, error
 	return ret, err
 }
 
-func (m *Manager) DelItem(deleter int64, itemId ID) (err error) {
+func (m *Manager) DelItem(deleter ptype.UserID, itemId ptype.CategoryID) (err error) {
 	item, err := m.GetItem(deleter, itemId)
 	if err != nil {
 		return err
@@ -225,7 +226,7 @@ func (m *Manager) DelItem(deleter int64, itemId ID) (err error) {
 	}
 
 	var lookingItems []*CategoryItem
-	parentItem, _ := m.GetItem(AdminId, item.base.ParentId)
+	parentItem, _ := m.GetItem(ptype.AdminId, item.base.ParentId)
 	parentDbMtx := m.requireDbMtx(item.base.ParentId)
 	lookingItems = append(lookingItems, item)
 
@@ -242,12 +243,12 @@ func (m *Manager) DelItem(deleter int64, itemId ID) (err error) {
 		}
 	}()
 
-	lockedIds := []ID{itemId}
+	lockedIds := []ptype.CategoryID{itemId}
 
 	for len(lookingItems) > 0 {
 		item := lookingItems[len(lookingItems)-1]
 		lookingItems = lookingItems[:len(lookingItems)-1]
-		items, _ := m.GetItems(AdminId, item.GetSubItemIds()...)
+		items, _ := m.GetItems(ptype.AdminId, item.GetSubItemIds()...)
 		lookingItems = append(lookingItems, items...)
 		for _, item := range items {
 			dbmtx := m.requireDbMtx(item.base.Id)
@@ -289,14 +290,14 @@ func (m *Manager) DelItem(deleter int64, itemId ID) (err error) {
 	return nil
 }
 
-func (m *Manager) IsRelationOf(itemId ID, parentId ID) bool {
-	_, err := m.GetItem(AdminId, parentId)
+func (m *Manager) IsRelationOf(itemId ptype.CategoryID, parentId ptype.CategoryID) bool {
+	_, err := m.GetItem(ptype.AdminId, parentId)
 	if err != nil {
 		return false
 	}
 	var nextParentId = itemId
 	for {
-		item, err := m.GetItem(AdminId, nextParentId)
+		item, err := m.GetItem(ptype.AdminId, nextParentId)
 		if err != nil {
 			return false
 		}
@@ -312,8 +313,8 @@ func (m *Manager) IsRelationOf(itemId ID, parentId ID) bool {
 }
 
 type SearchParams struct {
-	Querier      int64
-	RootId       ID
+	Querier      ptype.UserID
+	RootId       ptype.CategoryID
 	ExistedWords string
 	PageNum      int32
 	Rows         int32
@@ -331,7 +332,7 @@ func (m *Manager) SearchRows(params *SearchParams) (int, error) {
 	defer rows.Close()
 	ret := 0
 	for rows.Next() {
-		var id ID
+		var id ptype.CategoryID
 		err := rows.Scan(&id)
 		if err != nil {
 			return -1, err
@@ -355,7 +356,7 @@ func (m *Manager) Search(params *SearchParams) ([]*CategoryItem, error) {
 	defer rows.Close()
 	var ret []*CategoryItem
 	for rows.Next() {
-		var id ID
+		var id ptype.CategoryID
 		err := rows.Scan(&id)
 		if err != nil {
 			return nil, err

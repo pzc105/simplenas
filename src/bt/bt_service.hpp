@@ -85,7 +85,6 @@ namespace prpc
   };
 
   using status_pusher_ptr = std::unique_ptr<bt_status_pusher>;
-  using btinfo_pusher_ptr = std::unique_ptr<bt_info_pusher>;
   using filecompleted_pusher_ptr = std::unique_ptr<bt_filecompleted_pusher>;
 
   class pusher_manager
@@ -98,15 +97,11 @@ namespace prpc
     pusher_manager(bt_service *ser);
     void start();
     void push_bt_status(std::vector<lt::torrent_status> const &sts);
-    void push_bt_infos(lt::add_torrent_params const &params);
     void push_bt_filecompleted(lt::file_completed_alert const &params);
 
   private:
     void accepted_status_pusher(pusher_base *pusher);
     void remove_status_pusher(pusher_base *pusher);
-
-    void accepted_btinfo_pusher(pusher_base *pusher);
-    void remove_btinfo_pusher(pusher_base *pusher);
 
     void accepted_filecompleted_pusher(pusher_base *pusher);
     void remove_filecompleted_pusher(pusher_base *pusher);
@@ -116,17 +111,13 @@ namespace prpc
 
     std::vector<status_pusher_ptr> _st_pushers;
     status_pusher_ptr _st_pusher;
-
-    std::vector<btinfo_pusher_ptr> _info_pushers;
-    btinfo_pusher_ptr _info_pusher;
-
+    
     std::vector<filecompleted_pusher_ptr> _filecompleted_pushers;
     filecompleted_pusher_ptr _filecompleted_pusher;
   };
 
   using _bt_service = BtService::WithAsyncMethod_OnFileCompleted<
-      BtService::WithAsyncMethod_OnTorrentInfo<
-          BtService::WithAsyncMethod_OnStatus<BtService::Service>>>;
+          BtService::WithAsyncMethod_OnBtStatus<BtService::Service>>;
 
   class bt_service : public _bt_service
   {
@@ -143,6 +134,9 @@ namespace prpc
     ::grpc::Status Download(::grpc::ServerContext *context, const ::prpc::DownloadRequest *request, ::prpc::DownloadRespone *response) override;
     ::grpc::Status RemoveTorrent(::grpc::ServerContext *context, const ::prpc::RemoveTorrentReq *request, ::prpc::RemoveTorrentRes *response) override;
     ::grpc::Status GetMagnetUri(::grpc::ServerContext *context, const ::prpc::GetMagnetUriReq *request, ::prpc::GetMagnetUriRsp *response) override;
+    ::grpc::Status GetResumeData(::grpc::ServerContext* context, const ::prpc::GetResumeDataReq* request, ::prpc::GetResumeDataRsp* response) override;
+    ::grpc::Status GetTorrentInfo(::grpc::ServerContext* context, const ::prpc::GetTorrentInfoReq* request, ::prpc::GetTorrentInfoRsp* response) override;
+    ::grpc::Status GetBtStatus(::grpc::ServerContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response) override;
 
   private:
     YAML::Node _bt_config;

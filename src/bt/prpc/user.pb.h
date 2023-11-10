@@ -37,7 +37,6 @@
 #include "category.pb.h"
 #include "video.pb.h"
 #include "bt.pb.h"
-#include "google/api/annotations.pb.h"
 // @@protoc_insertion_point(includes)
 
 // Must be included last.

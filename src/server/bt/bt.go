@@ -28,7 +28,6 @@ type BtClient struct {
 
 type btClientOpts struct {
 	onStatus        func(*prpc.StatusRespone)
-	onTorrentInfo   func(*prpc.TorrentInfoRes)
 	onFileCompleted func(*prpc.FileCompletedRes)
 	onConnect       func()
 }
@@ -49,14 +48,6 @@ func WithOnStatus(onStatus func(*prpc.StatusRespone)) *funcBtClientOpt {
 	return &funcBtClientOpt{
 		do: func(opts *btClientOpts) {
 			opts.onStatus = onStatus
-		},
-	}
-}
-
-func WithOnTorrentInfo(onTorrentInfo func(*prpc.TorrentInfoRes)) *funcBtClientOpt {
-	return &funcBtClientOpt{
-		do: func(opts *btClientOpts) {
-			opts.onTorrentInfo = onTorrentInfo
 		},
 	}
 }
@@ -98,7 +89,6 @@ func (bt *BtClient) Init(opts ...BtClientOpt) {
 	bt.BtServiceClient = prpc.NewBtServiceClient(conn)
 	bt.closeCtx, bt.closeFunc = context.WithCancel(context.Background())
 	go bt.handleStatus()
-	go bt.handleTorrentInfo()
 	go bt.handleConState()
 	go bt.handleFileCompleted()
 }
@@ -141,7 +131,7 @@ func (bt *BtClient) handleStatus() {
 		go bt.handleStatus()
 	}()
 
-	stream, err := bt.OnStatus(bt.closeCtx)
+	stream, err := bt.OnBtStatus(bt.closeCtx)
 	if err != nil {
 		return
 	}
@@ -159,40 +149,6 @@ func (bt *BtClient) handleStatus() {
 
 		if bt.opts.onStatus != nil {
 			bt.opts.onStatus(response)
-		}
-	}
-}
-
-func (bt *BtClient) handleTorrentInfo() {
-	bt.wg.Add(1)
-	defer bt.wg.Done()
-
-	defer func() {
-		if bt.conn.GetState() == connectivity.Shutdown {
-			return
-		}
-		time.Sleep(1 * time.Second)
-		go bt.handleTorrentInfo()
-	}()
-
-	stream, err := bt.OnTorrentInfo(bt.closeCtx)
-	if err != nil {
-		return
-	}
-
-	for {
-		response, err := stream.Recv()
-		if err == io.EOF {
-			stream.CloseSend()
-			break
-		}
-		if err != nil {
-			stream.CloseSend()
-			break
-		}
-
-		if bt.opts.onTorrentInfo != nil {
-			bt.opts.onTorrentInfo(response)
 		}
 	}
 }

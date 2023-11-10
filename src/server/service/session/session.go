@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"pnas/db"
 	"pnas/log"
-	"pnas/user"
+	"pnas/ptype"
 	"pnas/utils"
 	"strconv"
 	"time"
@@ -33,7 +33,7 @@ const (
 
 type Session struct {
 	Id        int64
-	UserId    user.ID
+	UserId    ptype.UserID
 	Token     string
 	ExpiresAt time.Time
 }
@@ -90,7 +90,7 @@ func (ss *Sessions) clearIdTick() {
 type NewSessionParams struct {
 	OldId     int64
 	ExpiresAt time.Time
-	UserId    user.ID
+	UserId    ptype.UserID
 }
 
 func (ss *Sessions) NewSession(params *NewSessionParams) *Session {

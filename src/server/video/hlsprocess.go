@@ -3,6 +3,8 @@ package video
 import (
 	"context"
 	"errors"
+	"fmt"
+	"os/exec"
 	"pnas/utils"
 	"sync"
 	"time"
@@ -29,6 +31,7 @@ type hlsTask struct {
 	params    *HlsGenParams
 	cancel    bool
 	mtx       sync.Mutex
+	pid       int
 	callback  HlsCallback
 }
 
@@ -69,7 +72,7 @@ func (h *HlsProcess) Init() {
 			case <-ticker.C:
 				if h.soQueue.Idle() {
 					task := h.cudaQueue.Steal()
-					if task !=nil{
+					if task != nil {
 						htask, _ := task.Identity.(*hlsTask)
 						h.useSoft(htask)
 					}
@@ -122,54 +125,10 @@ func (h *HlsProcess) onCallback(task *hlsTask, err error) {
 	}
 }
 
-func (h *HlsProcess) Gen(params *HlsGenParams) (HlsTaskId, error) {
-	task := &hlsTask{
-		id:        HlsTaskId(h.idPool.NewId()),
-		queueType: CudaType,
-		params:    params,
-		cancel:    false,
-		callback:  params.Callback,
-	}
-
+func (h *HlsProcess) onHlsProcess(task *hlsTask, pid int) {
 	task.mtx.Lock()
-	defer task.mtx.Unlock()
-
-	tid, err := h.cudaQueue.TryPutWithIdentity(func() {
-		err := GenHls(
-			&GenHlsOpts{
-				VideoFileName:     params.FullVideoFileName,
-				AudioFileNames:    params.FullAudioFileName,
-				WantedResolutions: CudaSplitEncoderParams,
-				OutDir:            params.OutDir,
-				Global:            CudaGlobalDecode,
-				GlobalVideoParams: CudaH264GlobalVideoParams,
-				GlobalAudioParams: GlobalAudioParams,
-			})
-		if err != nil {
-			err = GenHls(
-				&GenHlsOpts{
-					VideoFileName:     params.FullVideoFileName,
-					AudioFileNames:    params.FullAudioFileName,
-					WantedResolutions: CudaEncoderParams2,
-					OutDir:            params.OutDir,
-					Global:            CudaGlobalDecode2,
-					GlobalVideoParams: CudaH264GlobalVideoParams,
-					GlobalAudioParams: GlobalAudioParams,
-				})
-		}
-		h.onCallback(task, err)
-	}, task)
-
-	if err != nil {
-		return -1, ErrFailed
-	}
-	task.qtaskId = tid
-
-	h.mtx.Lock()
-	h.tasks[task.id] = task
-	h.mtx.Unlock()
-
-	return task.id, nil
+	task.pid = pid
+	task.mtx.Unlock()
 }
 
 func (h *HlsProcess) Stop(id HlsTaskId) {
@@ -193,6 +152,66 @@ func (h *HlsProcess) Stop(id HlsTaskId) {
 	case QsvType:
 		h.qsvQueue.Remove(task.qtaskId)
 	}
+	if task.pid > 0 {
+		exec.Command("kill", "-9", fmt.Sprint(task.pid)).Run()
+	}
+}
+
+func (h *HlsProcess) Gen(params *HlsGenParams) (HlsTaskId, error) {
+	task := &hlsTask{
+		id:        HlsTaskId(h.idPool.NewId()),
+		queueType: CudaType,
+		params:    params,
+		cancel:    false,
+		callback:  params.Callback,
+		pid:       -1,
+	}
+
+	task.mtx.Lock()
+	defer task.mtx.Unlock()
+
+	onProcess := func(pid int) {
+		h.onHlsProcess(task, pid)
+	}
+
+	tid, err := h.cudaQueue.TryPutWithIdentity(func() {
+		err := GenHls(
+			&GenHlsOpts{
+				VideoFileName:     params.FullVideoFileName,
+				AudioFileNames:    params.FullAudioFileName,
+				WantedResolutions: CudaSplitEncoderParams,
+				OutDir:            params.OutDir,
+				Global:            CudaGlobalDecode,
+				GlobalVideoParams: CudaH264GlobalVideoParams,
+				GlobalAudioParams: GlobalAudioParams,
+				OnProcess:         onProcess,
+			})
+		if err != nil {
+			err = GenHls(
+				&GenHlsOpts{
+					VideoFileName:     params.FullVideoFileName,
+					AudioFileNames:    params.FullAudioFileName,
+					WantedResolutions: CudaEncoderParams2,
+					OutDir:            params.OutDir,
+					Global:            CudaGlobalDecode2,
+					GlobalVideoParams: CudaH264GlobalVideoParams,
+					GlobalAudioParams: GlobalAudioParams,
+					OnProcess:         onProcess,
+				})
+		}
+		h.onCallback(task, err)
+	}, task)
+
+	if err != nil {
+		return -1, ErrFailed
+	}
+	task.qtaskId = tid
+
+	h.mtx.Lock()
+	h.tasks[task.id] = task
+	h.mtx.Unlock()
+
+	return task.id, nil
 }
 
 func (h *HlsProcess) useQsv(task *hlsTask) {
@@ -212,6 +231,10 @@ func (h *HlsProcess) useQsv(task *hlsTask) {
 		return
 	}
 
+	onProcess := func(pid int) {
+		h.onHlsProcess(task, pid)
+	}
+
 	task.queueType = QsvType
 	params := task.params
 	tid, err = h.soQueue.TryPut(func() {
@@ -224,6 +247,7 @@ func (h *HlsProcess) useQsv(task *hlsTask) {
 				OutDir:            params.OutDir,
 				GlobalVideoParams: QsvH264GlobalVideoParams,
 				GlobalAudioParams: GlobalAudioParams,
+				OnProcess:         onProcess,
 			})
 		h.onCallback(task, err)
 	})
@@ -252,6 +276,10 @@ func (h *HlsProcess) useSoft(task *hlsTask) {
 		return
 	}
 
+	onProcess := func(pid int) {
+		h.onHlsProcess(task, pid)
+	}
+
 	task.queueType = SoftwareType
 	params := task.params
 	tid, err = h.soQueue.TryPut(func() {
@@ -264,6 +292,7 @@ func (h *HlsProcess) useSoft(task *hlsTask) {
 				OutDir:            params.OutDir,
 				GlobalVideoParams: SoH264GlobalVideoParams,
 				GlobalAudioParams: GlobalAudioParams,
+				OnProcess:         onProcess,
 			})
 		h.onCallback(task, err)
 	})

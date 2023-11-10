@@ -152,7 +152,6 @@ create table torrent (
   piece_length int default 0  not null,
   num_pieces int default 0  not null,
   introduce text not null,
-  resume_data longblob not null,
   created_at datetime default current_timestamp not null,
   updated_at timestamp default current_timestamp on update current_timestamp not null,
 
@@ -166,7 +165,8 @@ create table user_torrent (
   torrent_id bigint not null,
   created_at datetime default current_timestamp not null,
 
-  primary key(user_id, torrent_id)
+  primary key(user_id, torrent_id),
+  key torrent_id(torrent_id)
 );
 
 drop procedure if exists new_torrent;

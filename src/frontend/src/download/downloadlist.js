@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, MenuItem, List, Paper, Button, Box, Typography } from '@mui/material';
+import { Menu, MenuItem, List, Paper, Button, Box, Typography, Dialog } from '@mui/material';
 import { styled } from "@mui/material/styles";
 import LinearProgress from '@mui/material/LinearProgress';
 import { useSelector, useDispatch } from 'react-redux';
@@ -34,16 +34,18 @@ function ProgressBar(props) {
   const dispatch = useDispatch()
   const torrent = useSelector(state => selectTorrent(state, infoHash))
   const [showVideos, setShowVideos] = useState(false)
+  const [magnetUri, setMagnetUri] = useState("")
+  const [sMagnetUri, setSMagnetUri] = useState(false)
   const onClick = () => {
     setShowVideos(!showVideos)
   }
 
   const RemoveTorrent = () => {
     var req = new Bt.RemoveTorrentReq()
-    var i = new Bt.InfoHash()
-    i.setVersion(infoHash.version)
-    i.setHash(infoHash.hash)
-    req.setInfoHash(i)
+    var ih = new Bt.InfoHash()
+    ih.setVersion(infoHash.version)
+    ih.setHash(infoHash.hash)
+    req.setInfoHash(ih)
     userService.removeTorrent(req, {}, (err, dRespone) => {
       if (err != null) {
         console.log(err)
@@ -51,6 +53,29 @@ function ProgressBar(props) {
       }
       dispatch(btSlice.actions.removeTorrent(infoHash))
     })
+    setOpen(false)
+  }
+
+  const GetMagnetUri = () => {
+    var req = new Bt.GetMagnetUriReq()
+    var ih = new Bt.InfoHash()
+    ih.setVersion(infoHash.version)
+    ih.setHash(infoHash.hash)
+    req.setType(Bt.GetMagnetUriReq.ReqType.INFOHASH)
+    req.setInfoHash(ih)
+    userService.getMagnetUri(req, {}, (err, rsp) => {
+      if (err != null) {
+        console.log(err)
+        return
+      }
+      setSMagnetUri(true)
+      setMagnetUri(rsp.getMagnetUri())
+    })
+    setOpen(false)
+  }
+
+  const setShowMagnetUri = (f) => {
+    setSMagnetUri(false)
   }
 
   const [anchorPosition, setAnchorPosition] = useState({ left: 0, top: 0 });
@@ -83,6 +108,12 @@ function ProgressBar(props) {
       </Box>
       {showVideos ? <BtVideosHandler infoHash={torrent.infoHash} /> : null}
 
+      <Dialog open={sMagnetUri} onClose={() => setShowMagnetUri(false)}>
+        <div style={{ padding: '16px' }}>
+          {magnetUri}
+        </div>
+      </Dialog>
+
       <Menu
         anchorReference="anchorPosition"
         anchorPosition={anchorPosition}
@@ -90,6 +121,7 @@ function ProgressBar(props) {
         onClose={handleClose}
       >
         <MenuItem onClick={RemoveTorrent}>删除</MenuItem>
+        <MenuItem onClick={GetMagnetUri}>获取magnet</MenuItem>
       </Menu>
     </Box>
   );

@@ -5,8 +5,8 @@ import (
 	"pnas/db"
 	"pnas/log"
 	"pnas/prpc"
+	"pnas/ptype"
 	"pnas/utils"
-	"pnas/video"
 	"strconv"
 	"strings"
 	"sync"
@@ -16,20 +16,14 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-type ID int64
-
 const (
 	RootId     = 1
 	NotExisted = -2
 )
 
-const (
-	AdminId = 1
-)
-
 type BaseItem struct {
-	Id           ID
-	Creator      int64
+	Id           ptype.CategoryID
+	Creator      ptype.UserID
 	CreatedAt    time.Time
 	TypeId       prpc.CategoryItem_Type
 	Name         string
@@ -38,14 +32,14 @@ type BaseItem struct {
 	Introduce    string
 	Other        string
 	UpdatedAt    time.Time
-	ParentId     ID
+	ParentId     ptype.CategoryID
 }
 
 type CategoryItem struct {
 	mtx        sync.Mutex
 	base       BaseItem
 	auth       utils.AuthBitSet
-	subItemIds []ID
+	subItemIds []ptype.CategoryID
 }
 
 func _initSubItemIds(item *CategoryItem) error {
@@ -55,9 +49,9 @@ func _initSubItemIds(item *CategoryItem) error {
 		return errors.WithStack(err)
 	}
 	defer rows.Close()
-	var subIds []ID
+	var subIds []ptype.CategoryID
 	for rows.Next() {
-		var itemId ID
+		var itemId ptype.CategoryID
 		err := rows.Scan(&itemId)
 		if err != nil {
 			log.Warn(err)
@@ -69,7 +63,7 @@ func _initSubItemIds(item *CategoryItem) error {
 	return nil
 }
 
-func _loadItem(itemId ID) (*CategoryItem, error) {
+func _loadItem(itemId ptype.CategoryID) (*CategoryItem, error) {
 	var item CategoryItem
 	item.base.Id = itemId
 	var byteAuth []byte
@@ -93,14 +87,14 @@ func _loadItem(itemId ID) (*CategoryItem, error) {
 	return &item, nil
 }
 
-func _loadItemIdByName(parentId ID, name string) (ID, error) {
-	var ret ID
+func _loadItemIdByName(parentId ptype.CategoryID, name string) (ptype.CategoryID, error) {
+	var ret ptype.CategoryID
 	sql := `select id from pnas.category_items where parent_id=? and name=?`
 	err := db.QueryRow(sql, parentId, name).Scan(&ret)
 	return ret, err
 }
 
-func _loadItems(itemIds ...ID) ([]*CategoryItem, error) {
+func _loadItems(itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
 	if len(itemIds) == 0 {
 		return []*CategoryItem{}, nil
 	}
@@ -140,8 +134,8 @@ func _loadItems(itemIds ...ID) ([]*CategoryItem, error) {
 }
 
 type NewCategoryParams struct {
-	ParentId     ID
-	Creator      int64
+	ParentId     ptype.CategoryID
+	Creator      ptype.UserID
 	TypeId       prpc.CategoryItem_Type
 	Name         string
 	ResourcePath string
@@ -154,7 +148,7 @@ type NewCategoryParams struct {
 }
 
 func addItem(params *NewCategoryParams) (*CategoryItem, error) {
-	var newId ID
+	var newId ptype.CategoryID
 
 	if params.CompareName {
 		var c int
@@ -194,20 +188,20 @@ func addItem(params *NewCategoryParams) (*CategoryItem, error) {
 	return _loadItem(newId)
 }
 
-func (c *CategoryItem) addedSubItem(subItemId ID) {
+func (c *CategoryItem) addedSubItem(subItemId ptype.CategoryID) {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
-	if slices.IndexFunc(c.subItemIds, func(sid ID) bool { return subItemId == sid }) != -1 {
+	if slices.IndexFunc(c.subItemIds, func(sid ptype.CategoryID) bool { return subItemId == sid }) != -1 {
 		log.Warnf("[category] duplicate added sub id: %d", subItemId)
 		return
 	}
 	c.subItemIds = append(c.subItemIds, subItemId)
 }
 
-func (c *CategoryItem) deletedSubItem(subItemId ID) {
+func (c *CategoryItem) deletedSubItem(subItemId ptype.CategoryID) {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
-	index := slices.IndexFunc(c.subItemIds, func(sid ID) bool { return subItemId == sid })
+	index := slices.IndexFunc(c.subItemIds, func(sid ptype.CategoryID) bool { return subItemId == sid })
 	if index == -1 {
 		log.Warnf("[category] not found sub id: %d", subItemId)
 		return
@@ -234,7 +228,7 @@ func (c *CategoryItem) Rename(newName string) error {
 	return nil
 }
 
-func (c *CategoryItem) GetOwner() int64 {
+func (c *CategoryItem) GetOwner() ptype.UserID {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
 	return c.base.Creator
@@ -251,8 +245,8 @@ func (c *CategoryItem) HasAndAuths(auths ...uint) bool {
 	return true
 }
 
-func (c *CategoryItem) HasReadAuth(who int64) bool {
-	if who == AdminId {
+func (c *CategoryItem) HasReadAuth(who ptype.UserID) bool {
+	if who == ptype.AdminId {
 		return true
 	}
 	c.mtx.Lock()
@@ -263,8 +257,8 @@ func (c *CategoryItem) HasReadAuth(who int64) bool {
 	return false
 }
 
-func (c *CategoryItem) HasWriteAuth(who int64) bool {
-	if who == AdminId {
+func (c *CategoryItem) HasWriteAuth(who ptype.UserID) bool {
+	if who == ptype.AdminId {
 		return true
 	}
 	c.mtx.Lock()
@@ -287,10 +281,10 @@ func (c *CategoryItem) IsDirectory() bool {
 	return c.base.TypeId == prpc.CategoryItem_Directory || c.base.TypeId == prpc.CategoryItem_Home
 }
 
-func (c *CategoryItem) GetSubItemIds() []ID {
+func (c *CategoryItem) GetSubItemIds() []ptype.CategoryID {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
-	ret := make([]ID, len(c.subItemIds))
+	ret := make([]ptype.CategoryID, len(c.subItemIds))
 	copy(ret, c.subItemIds)
 	return ret
 }
@@ -314,7 +308,7 @@ func (c *CategoryItem) GetPosterPath() string {
 	return c.base.PosterPath
 }
 
-func (c *CategoryItem) GetVideoId() video.ID {
+func (c *CategoryItem) GetVideoId() ptype.VideoID {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
 	if c.base.TypeId != prpc.CategoryItem_Video {
@@ -324,7 +318,7 @@ func (c *CategoryItem) GetVideoId() video.ID {
 	if err != nil {
 		return -1
 	}
-	return video.ID(vid)
+	return ptype.VideoID(vid)
 }
 
 func (c *CategoryItem) GetOther() string {

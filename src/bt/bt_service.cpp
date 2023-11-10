@@ -2,6 +2,7 @@
 #include <string_view>
 #include "bt_service.hpp"
 #include "libtorrent/read_resume_data.hpp"
+#include "libtorrent/write_resume_data.hpp"
 #include "libtorrent/magnet_uri.hpp"
 #include "translate.hpp"
 
@@ -30,7 +31,8 @@ namespace prpc
     int download_rate_limit = std::atoi(bt_config["download_rate_limit"].as<string>().c_str());
     int upload_rate_limit = std::atoi(bt_config["upload_rate_limit"].as<string>().c_str());
     int hashing_threads = std::atoi(bt_config["hashing_threads"].as<string>().c_str());
-    if (!proxy_host.empty() && proxy_port > 0 && !proxy_type.empty() && type_map.find(proxy_type) != type_map.end()) {
+    if (!proxy_host.empty() && proxy_port > 0 && !proxy_type.empty() && type_map.find(proxy_type) != type_map.end())
+    {
       sp.set_str(lt::settings_pack::proxy_hostname, proxy_host);
       sp.set_int(lt::settings_pack::proxy_type, type_map[proxy_type]);
       sp.set_int(lt::settings_pack::proxy_port, proxy_port);
@@ -45,11 +47,14 @@ namespace prpc
 
   bt_service::~bt_service()
   {
-    if (_cq) {
+    if (_cq)
+    {
       _cq->Shutdown();
       void *ignored_tag;
       bool ignored_ok;
-      while (_cq->Next(&ignored_tag, &ignored_ok)) { }
+      while (_cq->Next(&ignored_tag, &ignored_ok))
+      {
+      }
     }
   }
 
@@ -65,7 +70,8 @@ namespace prpc
 
     _pusher_manager.start();
 
-    for (;;) {
+    for (;;)
+    {
       void *got_tag;
       bool ok = false;
       auto st = _cq->AsyncNext(&got_tag, &ok, gpr_time_from_millis(2000, GPR_TIMESPAN));
@@ -74,12 +80,13 @@ namespace prpc
         break;
 
       push_bt();
-      
-      if (st == CompletionQueue::TIMEOUT) {
+
+      if (st == CompletionQueue::TIMEOUT)
+      {
         continue;
       }
 
-      pusher_base::tag* tag = static_cast<pusher_base::tag*>(got_tag);
+      pusher_base::tag *tag = static_cast<pusher_base::tag *>(got_tag);
 
       tag->_owner->completed(tag, ok);
     }
@@ -88,117 +95,118 @@ namespace prpc
   void bt_service::push_bt()
   {
     auto n = lt::time_point::clock::now();
-    if (lt::duration_cast<lt::seconds>(n - _last_push_time).count() < 2) {
+    if (lt::duration_cast<lt::seconds>(n - _last_push_time).count() < 2)
+    {
       return;
     }
 
     _last_push_time = n;
 
-    _ses->post_torrent_updates();
-    auto tss = _ses->get_torrents();
-    for (auto const& t : tss) {
-      t.save_resume_data(lt::torrent_handle::only_if_modified | lt::torrent_handle::save_info_dict);
-    }
-
     vector<lt::alert *> as;
     _ses->pop_alerts(&as);
-    for (size_t i = 0; i < as.size(); i++) {
+    for (size_t i = 0; i < as.size(); i++)
+    {
 
-      if (auto sua = lt::alert_cast<lt::state_update_alert>(as[i])) {
-        vector<lt::torrent_status> const& sts = sua->status;
-        if (sts.size() > 0) {
+      if (auto sua = lt::alert_cast<lt::state_update_alert>(as[i]))
+      {
+        vector<lt::torrent_status> const &sts = sua->status;
+        if (sts.size() > 0)
+        {
           _pusher_manager.push_bt_status(sts);
         }
       }
-      else if (auto srd = lt::alert_cast<lt::save_resume_data_alert>(as[i])) {
-        _pusher_manager.push_bt_infos(srd->params);
-      }
-      else if (auto fc = lt::alert_cast<lt::file_completed_alert>(as[i])) {
+      else if (auto fc = lt::alert_cast<lt::file_completed_alert>(as[i]))
+      {
         _pusher_manager.push_bt_filecompleted(*fc);
       }
     }
   }
 
   ::grpc::Status bt_service::Parse(
-    ::grpc::ServerContext* context
-    , const::prpc::DownloadRequest* request
-    , ::prpc::DownloadRespone* response)
+      ::grpc::ServerContext *context, const ::prpc::DownloadRequest *request, ::prpc::DownloadRespone *response)
   {
     (void)(context);
     lt::add_torrent_params params;
 
     switch (request->type())
     {
-    case DownloadRequest_ReqType::DownloadRequest_ReqType_MagnetUri: {
+    case DownloadRequest_ReqType::DownloadRequest_ReqType_MagnetUri:
+    {
       lt::error_code ec;
 
       lt::parse_magnet_uri(request->content(), params, ec);
-      if (ec) {
+      if (ec)
+      {
         return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
       }
       *response->mutable_info_hash() = get_respone_info_hash(params.info_hashes);
       return ::grpc::Status::OK;
     }
-    case DownloadRequest_ReqType::DownloadRequest_ReqType_Torrent: {
-      try {
+    case DownloadRequest_ReqType::DownloadRequest_ReqType_Torrent:
+    {
+      try
+      {
         string data = request->content();
         lt::load_torrent_limits cfg;
         lt::error_code ec;
         int err_pos;
-        auto e = lt::bdecode(lt::span<const char>(data), ec, &err_pos
-          , cfg.max_decode_depth, cfg.max_decode_tokens);
+        auto e = lt::bdecode(lt::span<const char>(data), ec, &err_pos, cfg.max_decode_depth, cfg.max_decode_tokens);
         params.ti = std::make_shared<lt::torrent_info>(e);
       }
-      catch (std::exception const& e) {
+      catch (std::exception const &e)
+      {
         std::cout << e.what() << endl;
         return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
       }
       *response->mutable_info_hash() = get_respone_info_hash(params.info_hashes);
       return ::grpc::Status::OK;
     }
-    default: {
-
+    default:
+    {
     }
     }
     return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
   }
 
   ::grpc::Status bt_service::Download(
-    ::grpc::ServerContext* context
-    , const ::prpc::DownloadRequest* request
-    , ::prpc::DownloadRespone* response)
+      ::grpc::ServerContext *context, const ::prpc::DownloadRequest *request, ::prpc::DownloadRespone *response)
   {
     (void)(context);
     lt::add_torrent_params params;
 
     switch (request->type())
     {
-    case DownloadRequest_ReqType::DownloadRequest_ReqType_MagnetUri: {
+    case DownloadRequest_ReqType::DownloadRequest_ReqType_MagnetUri:
+    {
       lt::error_code ec;
 
       lt::parse_magnet_uri(request->content(), params, ec);
-      if (ec) {
+      if (ec)
+      {
         return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
       }
       params.save_path = request->save_path();
       break;
     }
-    case DownloadRequest_ReqType::DownloadRequest_ReqType_Resume:{
+    case DownloadRequest_ReqType::DownloadRequest_ReqType_Resume:
+    {
       params = lt::read_resume_data(request->content());
       params.save_path = request->save_path();
       break;
     }
-    case DownloadRequest_ReqType::DownloadRequest_ReqType_Torrent: {
-      try {
-        string const& data = request->content();
+    case DownloadRequest_ReqType::DownloadRequest_ReqType_Torrent:
+    {
+      try
+      {
+        string const &data = request->content();
         lt::load_torrent_limits cfg;
         lt::error_code ec;
         int err_pos;
-        auto e = lt::bdecode(lt::span<const char>(data), ec, &err_pos
-          , cfg.max_decode_depth, cfg.max_decode_tokens);
+        auto e = lt::bdecode(lt::span<const char>(data), ec, &err_pos, cfg.max_decode_depth, cfg.max_decode_tokens);
         params.ti = std::make_shared<lt::torrent_info>(e);
       }
-      catch (std::exception const& e) {
+      catch (std::exception const &e)
+      {
         std::cout << e.what() << endl;
         return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
       }
@@ -206,14 +214,16 @@ namespace prpc
       break;
     }
     default:
-     return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
     }
 
-    try {
+    try
+    {
       auto handle = _ses->add_torrent(std::move(params));
       *response->mutable_info_hash() = get_respone_info_hash(handle.info_hashes());
     }
-    catch (std::exception const&) {
+    catch (std::exception const &)
+    {
       return ::grpc::Status(grpc::INTERNAL, "");
     }
 
@@ -221,18 +231,18 @@ namespace prpc
   }
 
   ::grpc::Status bt_service::RemoveTorrent(
-    ::grpc::ServerContext* context
-    , const::prpc::RemoveTorrentReq* request
-    , ::prpc::RemoveTorrentRes* response)
+      ::grpc::ServerContext *context, const ::prpc::RemoveTorrentReq *request, ::prpc::RemoveTorrentRes *response)
   {
     (void)(context);
     (void)(response);
-    if (request == nullptr) {
+    if (request == nullptr)
+    {
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
     }
     auto info_hash = get_info_hash(request->info_hash());
     auto t = _ses->find_torrent(info_hash.get_best());
-    if (!t.is_valid()) {
+    if (!t.is_valid())
+    {
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
     }
     _ses->remove_torrent(t);
@@ -240,12 +250,11 @@ namespace prpc
   }
 
   ::grpc::Status bt_service::GetMagnetUri(
-    ::grpc::ServerContext* context
-    , const ::prpc::GetMagnetUriReq* request
-    , ::prpc::GetMagnetUriRsp* response)
+      ::grpc::ServerContext *context, const ::prpc::GetMagnetUriReq *request, ::prpc::GetMagnetUriRsp *response)
   {
     (void)(context);
-    if (request == nullptr) {
+    if (request == nullptr)
+    {
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
     }
     switch (request->type())
@@ -253,17 +262,17 @@ namespace prpc
     case GetMagnetUriReq_ReqType::GetMagnetUriReq_ReqType_Torrent:
     {
       lt::add_torrent_params params;
-      try {
-        string const& data = request->content();
+      try
+      {
+        string const &data = request->content();
         lt::load_torrent_limits cfg;
         lt::error_code ec;
         int err_pos;
-        auto e = lt::bdecode(lt::span<const char>(data), ec, &err_pos
-          , cfg.max_decode_depth, cfg.max_decode_tokens);
+        auto e = lt::bdecode(lt::span<const char>(data), ec, &err_pos, cfg.max_decode_depth, cfg.max_decode_tokens);
         params.ti = std::make_shared<lt::torrent_info>(e);
-        
       }
-      catch (std::exception const& e) {
+      catch (std::exception const &e)
+      {
         std::cout << e.what() << endl;
         return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
       }
@@ -275,12 +284,19 @@ namespace prpc
     case GetMagnetUriReq_ReqType::GetMagnetUriReq_ReqType_InfoHash:
     {
       auto th = _ses->find_torrent(get_info_hash(request->info_hash()).get_best());
-      if(!th.is_valid()){
-        return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+      if (!th.is_valid())
+      {
+        return ::grpc::Status(grpc::INVALID_ARGUMENT, "can't find torrent");
       }
-      auto const& ti = th.get_torrent_info();
-      std::string uri = lt::make_magnet_uri(ti);
-      *response->mutable_info_hash() = get_respone_info_hash(ti.info_hashes());
+      auto tf = th.torrent_file();
+      if (tf == nullptr)
+      {
+        return ::grpc::Status(grpc::INTERNAL, "");
+      }
+      std::string uri = lt::make_magnet_uri(*tf);
+      response->set_magnet_uri(uri);
+      *response->mutable_info_hash() = get_respone_info_hash(tf->info_hashes());
+      break;
     }
     default:
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
@@ -288,9 +304,59 @@ namespace prpc
     return ::grpc::Status::OK;
   }
 
+  ::grpc::Status bt_service::GetResumeData(::grpc::ServerContext *context, const ::prpc::GetResumeDataReq *request, ::prpc::GetResumeDataRsp *response)
+  {
+    (void)(context);
+    if (request == nullptr)
+    {
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+    }
+    auto th = _ses->find_torrent(get_info_hash(request->info_hash()).get_best());
+    if (!th.is_valid())
+    {
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "can't find torrent");
+    }
+    auto rd = th.get_resume_data(lt::torrent_handle::save_info_dict);
+    auto const b = lt::write_resume_data_buf(rd);
+    *response->mutable_resume_data() = std::string(b.data(), b.size());
+    return ::grpc::Status::OK;
+  }
+
+  ::grpc::Status bt_service::GetTorrentInfo(::grpc::ServerContext *context, const ::prpc::GetTorrentInfoReq *request, ::prpc::GetTorrentInfoRsp *response)
+  {
+    (void)(context);
+    if (request == nullptr)
+    {
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+    }
+    auto th = _ses->find_torrent(get_info_hash(request->info_hash()).get_best());
+    if (!th.is_valid())
+    {
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "can't find torrent");
+    }
+    *response->mutable_torrent_info() = get_torrent_info(th);
+    return ::grpc::Status::OK;
+  }
+
+  ::grpc::Status bt_service::GetBtStatus(::grpc::ServerContext *context, const ::prpc::GetBtStatusReq *request, ::prpc::GetBtStatusRsp *response)
+  {
+    (void)(context);
+    if (request == nullptr)
+    {
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+    }
+    auto th = _ses->find_torrent(get_info_hash(request->info_hash()).get_best());
+    if (!th.is_valid())
+    {
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "can't find torrent");
+    }
+    *response->mutable_status() = get_status_respone(th.status());
+    return ::grpc::Status::OK;
+  }
+
   bt_status_pusher::bt_status_pusher(pusher_manager *owner, bt_service *ser) : pusher(owner, ser)
   {
-    _ser->RequestOnStatus(&_context, &_stream, _ser->get_cq(), _ser->get_cq(), &_new_tag);
+    _ser->RequestOnBtStatus(&_context, &_stream, _ser->get_cq(), _ser->get_cq(), &_new_tag);
   }
 
   void bt_status_pusher::push(std::vector<lt::torrent_status> const &tss)
@@ -298,15 +364,18 @@ namespace prpc
     StatusRespone sr;
 
     auto const &req_info_hashs = _req.info_hash();
-    for (auto const &ts : tss) {
+    for (auto const &ts : tss)
+    {
       InfoHash info_hash = get_respone_info_hash(ts.info_hashes);
       if (info_hash.version() <= 0)
         continue;
 
-      if (req_info_hashs.size() > 0) {
+      if (req_info_hashs.size() > 0)
+      {
         auto iter = std::find_if(req_info_hashs.begin(), req_info_hashs.end(), [&info_hash](InfoHash const &i)
                                  { return i.version() == info_hash.version() && i.hash() == info_hash.hash(); });
-        if (iter == req_info_hashs.end()) {
+        if (iter == req_info_hashs.end())
+        {
           continue;
         }
       }
@@ -316,9 +385,10 @@ namespace prpc
     write(std::move(sr));
   }
 
-  void bt_status_pusher::completed(tag* t, bool ok)
+  void bt_status_pusher::completed(tag *t, bool ok)
   {
-    if (t == &_new_tag && ok) {
+    if (t == &_new_tag && ok)
+    {
       _owner->accepted_status_pusher(this);
     }
     pusher::completed(t, ok);
@@ -329,45 +399,20 @@ namespace prpc
     _owner->remove_status_pusher(this);
   }
 
-  bt_info_pusher::bt_info_pusher(pusher_manager* owner, bt_service* ser) : pusher(owner, ser)
-  {
-    _ser->RequestOnTorrentInfo(&_context, &_stream, _ser->get_cq(), _ser->get_cq(), &_new_tag);
-  }
-
-  void bt_info_pusher::push(lt::add_torrent_params const& params)
-  {
-    TorrentInfoRes tr;
-    *tr.mutable_ti() = get_torrent_info(params);
-    write(std::move(tr));
-  }
-
-  void bt_info_pusher::completed(tag* t, bool ok)
-  {
-    if (t == &_new_tag && ok) {
-      _owner->accepted_btinfo_pusher(this);
-    }
-    pusher::completed(t, ok);
-  }
-
-  void bt_info_pusher::done()
-  {
-    _owner->remove_btinfo_pusher(this);
-  }
-
-
-  bt_filecompleted_pusher::bt_filecompleted_pusher(pusher_manager* owner, bt_service* ser) : pusher(owner, ser)
+  bt_filecompleted_pusher::bt_filecompleted_pusher(pusher_manager *owner, bt_service *ser) : pusher(owner, ser)
   {
     _ser->RequestOnFileCompleted(&_context, &_stream, _ser->get_cq(), _ser->get_cq(), &_new_tag);
   }
 
-  void bt_filecompleted_pusher::push(lt::file_completed_alert const& params)
+  void bt_filecompleted_pusher::push(lt::file_completed_alert const &params)
   {
     write(get_filecompleted(params));
   }
 
-  void bt_filecompleted_pusher::completed(tag* t, bool ok)
+  void bt_filecompleted_pusher::completed(tag *t, bool ok)
   {
-    if (t == &_new_tag && ok) {
+    if (t == &_new_tag && ok)
+    {
       _owner->accepted_filecompleted_pusher(this);
     }
     pusher::completed(t, ok);
@@ -385,32 +430,26 @@ namespace prpc
   void pusher_manager::start()
   {
     _st_pusher = std::make_unique<bt_status_pusher>(this, _ser);
-    _info_pusher = std::make_unique<bt_info_pusher>(this, _ser);
     _filecompleted_pusher = std::make_unique<bt_filecompleted_pusher>(this, _ser);
   }
 
   void pusher_manager::push_bt_status(std::vector<lt::torrent_status> const &sts)
   {
-    for (auto &pusher : _st_pushers) {
+    for (auto &pusher : _st_pushers)
+    {
       pusher->push(sts);
     }
   }
 
-  void pusher_manager::push_bt_infos(lt::add_torrent_params const& params)
+  void pusher_manager::push_bt_filecompleted(lt::file_completed_alert const &params)
   {
-    for (auto& pusher : _info_pushers) {
+    for (auto &pusher : _filecompleted_pushers)
+    {
       pusher->push(params);
     }
   }
 
-  void pusher_manager::push_bt_filecompleted(lt::file_completed_alert const& params)
-  {
-    for (auto& pusher : _filecompleted_pushers) {
-      pusher->push(params);
-    }
-  }
-
-  void pusher_manager::accepted_status_pusher(pusher_base* pusher)
+  void pusher_manager::accepted_status_pusher(pusher_base *pusher)
   {
     (void)(pusher);
     assert(_st_pusher != nullptr);
@@ -418,29 +457,14 @@ namespace prpc
     _st_pusher = std::make_unique<bt_status_pusher>(this, _ser);
   }
 
-  void pusher_manager::remove_status_pusher(pusher_base* pusher)
+  void pusher_manager::remove_status_pusher(pusher_base *pusher)
   {
-    auto iter = std::remove_if(_st_pushers.begin(), _st_pushers.end(), [pusher](status_pusher_ptr const& p)
-      { return pusher == p.get(); });
+    auto iter = std::remove_if(_st_pushers.begin(), _st_pushers.end(), [pusher](status_pusher_ptr const &p)
+                               { return pusher == p.get(); });
     _st_pushers.erase(iter, _st_pushers.end());
   }
 
-  void pusher_manager::accepted_btinfo_pusher(pusher_base* pusher)
-  {
-    (void)(pusher);
-    assert(_info_pusher != nullptr);
-    _info_pushers.push_back(std::move(_info_pusher));
-    _info_pusher = std::make_unique<bt_info_pusher>(this, _ser);
-  }
-
-  void pusher_manager::remove_btinfo_pusher(pusher_base *pusher)
-  {
-    auto iter = std::remove_if(_info_pushers.begin(), _info_pushers.end(), [pusher](btinfo_pusher_ptr const& p)
-      { return pusher == p.get(); });
-    _info_pushers.erase(iter, _info_pushers.end());
-  }
-
-  void pusher_manager::accepted_filecompleted_pusher(pusher_base* pusher)
+  void pusher_manager::accepted_filecompleted_pusher(pusher_base *pusher)
   {
     (void)(pusher);
     assert(_filecompleted_pusher != nullptr);
@@ -448,10 +472,11 @@ namespace prpc
     _filecompleted_pusher = std::make_unique<bt_filecompleted_pusher>(this, _ser);
   }
 
-  void pusher_manager::remove_filecompleted_pusher(pusher_base* pusher)
+  void pusher_manager::remove_filecompleted_pusher(pusher_base *pusher)
   {
     auto iter = std::remove_if(_filecompleted_pushers.begin(), _filecompleted_pushers.end(),
-      [pusher](filecompleted_pusher_ptr const& p) { return pusher == p.get(); });
+                               [pusher](filecompleted_pusher_ptr const &p)
+                               { return pusher == p.get(); });
     _filecompleted_pushers.erase(iter, _filecompleted_pushers.end());
   }
 }

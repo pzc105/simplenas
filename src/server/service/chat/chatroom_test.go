@@ -3,7 +3,7 @@ package chat
 import (
 	"fmt"
 	"math/rand"
-	"pnas/user"
+	"pnas/ptype"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -17,7 +17,7 @@ func TestChatRoom(t *testing.T) {
 	msgs := []*ChatMessage{}
 	for i := 0; i < 300000; i++ {
 		msgs = append(msgs, &ChatMessage{
-			UserId:   user.ID(rand.Int63()),
+			UserId:   ptype.UserID(rand.Int63()),
 			SentTime: time.Now(),
 			Msg:      fmt.Sprintf("%d", i),
 		})

@@ -8,16 +8,15 @@ import (
 	"net/http"
 	"pnas/bt"
 	"pnas/category"
-	"pnas/crawler"
 	"pnas/log"
 	"pnas/phttp"
 	"pnas/prpc"
+	"pnas/ptype"
 	"pnas/service/chat"
 	"pnas/service/session"
 	"pnas/setting"
 	"pnas/user"
 	"pnas/utils"
-	"pnas/video"
 	"sort"
 	"sync"
 	"time"
@@ -39,7 +38,6 @@ type CoreService struct {
 
 	sessions session.ISessions
 
-	bt              bt.BtClient
 	btStatusPushMtx sync.Mutex
 	btStatusPush    map[int64]chan *prpc.StatusRespone
 
@@ -66,13 +64,8 @@ func (ser *CoreService) Init() {
 
 	ser.notCheckTokenMethods = []string{"Register", "IsUsedEmail", "Login", "FastLogin", "QueryItemInfo", "QuerySubItems"}
 	sort.Strings(ser.notCheckTokenMethods)
-	ser.bt.Init(bt.WithOnStatus(ser.handleBtStatus),
-		bt.WithOnTorrentInfo(ser.handleTorrentInfo),
-		bt.WithOnConnect(ser.handleBtClientConnected),
-		bt.WithOnFileCompleted(ser.handleBtFileCompleted))
-	ser.um.Init()
 
-	go crawler.Go36dmBackgroup(&ser.um, &ser.bt)
+	ser.um.Init()
 
 	var rooms chat.Rooms
 	rooms.Init()
@@ -139,8 +132,8 @@ func (ser *CoreService) Serve() {
 	}
 }
 
-func (ser *CoreService) recvDanmaku(vid video.ID, danmaku string) {
-	roomKey := getItemRoomKey(&prpc.Room{
+func (ser *CoreService) recvDanmaku(vid ptype.VideoID, danmaku string) {
+	roomKey := utils.GetItemRoomKey(&prpc.Room{
 		Type: prpc.Room_Danmaku,
 		Id:   int64(vid),
 	})
@@ -166,7 +159,6 @@ func (ser *CoreService) recvDanmaku(vid video.ID, danmaku string) {
 
 func (ser *CoreService) Close() {
 	ser.closeFunc()
-	ser.bt.Close()
 	ser.httpSer.Shutdown(context.Background())
 	ser.grpcSer.GracefulStop()
 	ser.wg.Wait()
@@ -179,66 +171,6 @@ func (ser *CoreService) GetUserManager() *user.UserManger {
 func (ser *CoreService) GetSession(r *http.Request) *session.Session {
 	s, _ := ser.sessions.GetSession(r)
 	return s
-}
-
-func (ser *CoreService) handleBtClientConnected() {
-	log.Info("connected to bt service")
-	resumeData := user.LoadDownloadingTorrent()
-	for _, resume := range resumeData {
-		var req prpc.DownloadRequest
-		req.Type = prpc.DownloadRequest_Resume
-		req.Content = resume
-		req.SavePath = setting.GS().Bt.SavePath
-		_, err := ser.bt.Download(context.Background(), &req)
-		if err != nil {
-			log.Warnf("[bt] failed to download, err: %v", err)
-		}
-	}
-}
-
-func (ser *CoreService) handleTorrentInfo(tis *prpc.TorrentInfoRes) {
-	var b bt.TorrentBase
-	ti := tis.GetTi()
-	copier.Copy(&b, ti)
-	var files []bt.File
-	copier.Copy(&files, ti.Files)
-	go ser.um.UpdateTorrent(&user.UpdateTorrentParams{
-		Base:       &b,
-		State:      ti.GetState(),
-		FileNames:  files,
-		ResumeData: ti.GetResumeData(),
-	})
-}
-
-func (ser *CoreService) handleBtStatus(sr *prpc.StatusRespone) {
-	ser.btStatusPushMtx.Lock()
-	defer ser.btStatusPushMtx.Unlock()
-	for sid, ch := range ser.btStatusPush {
-		ses, err := ser.sessions.GetSession3(sid)
-		if err != nil {
-			delete(ser.btStatusPush, sid)
-			continue
-		}
-		var r prpc.StatusRespone
-		for _, st := range sr.StatusArray {
-			tInfoHash := TranInfoHash(st.InfoHash)
-			if !ser.um.HasTorrent(ses.UserId, tInfoHash) {
-				continue
-			}
-			r.StatusArray = append(r.StatusArray, st)
-		}
-		if len(r.StatusArray) > 0 && len(ch) == 0 {
-			ch <- &r
-		}
-	}
-}
-
-func (ser *CoreService) handleBtFileCompleted(fs *prpc.FileCompletedRes) {
-	lfc := &user.FileCompleted{
-		InfoHash:  TranInfoHash(fs.InfoHash),
-		FileIndex: fs.FileIndex,
-	}
-	go ser.um.BtFileStateComplete(lfc)
 }
 
 func (ser *CoreService) getSession(ctx context.Context) *session.Session {
@@ -443,66 +375,16 @@ func (ser *CoreService) Download(
 		return nil, status.Error(codes.PermissionDenied, "")
 	}
 
-	res, err := ser.bt.Parse(context.Background(), req)
-	if err != nil {
-		return nil, err
-	}
-	resumeData, err := user.LoadTorrent(TranInfoHash(res.InfoHash))
-	if err == nil {
-		req.Type = prpc.DownloadRequest_Resume
-		req.Content = resumeData
-	}
+	return nil, status.Error(codes.InvalidArgument, "")
 
-	req.SavePath = setting.GS().Bt.SavePath
-	res, err = ser.bt.Download(context.Background(), req)
-	if err == nil {
-		log.Infof("[bt] user %d token:%s add torrent: %s",
-			ses.UserId,
-			ses.Token,
-			hex.EncodeToString(res.InfoHash.Hash))
-		ser.um.AddTorrent(ses.UserId, &bt.TorrentBase{
-			InfoHash: TranInfoHash(res.InfoHash),
-		})
-		return res, nil
-	} else {
-		return res, status.Error(codes.InvalidArgument, "")
-	}
 }
 
 func (ser *CoreService) RemoveTorrent(ctx context.Context, req *prpc.RemoveTorrentReq) (*prpc.RemoveTorrentRes, error) {
-	ses := ser.getSession(ctx)
-	if ses == nil {
-		return nil, status.Error(codes.PermissionDenied, "")
-	}
-
-	if ses.UserId == user.AdminId {
-		err := ser.um.RemoveTorrent(user.AdminId, TranInfoHash(req.InfoHash))
-		if err != nil {
-			log.Warnf("[user] user %d failed to remove torrent %s, err: %v", ses.UserId, hex.EncodeToString(req.InfoHash.Hash), err)
-			return nil, status.Error(codes.Unknown, "")
-		}
-		_, err = ser.bt.RemoveTorrent(context.Background(), req)
-		if err != nil {
-			log.Warnf("[bt] user %d failed to remove torrent %s, err: %v", ses.UserId, hex.EncodeToString(req.InfoHash.Hash), err)
-			return nil, status.Error(codes.Unknown, "")
-		}
-		return &prpc.RemoveTorrentRes{}, nil
-	}
-
-	err := ser.um.RemoveUserTorrent(ses.UserId, TranInfoHash(req.InfoHash))
-	if err != nil {
-		log.Warnf("[user] user %d failed to remove torrent %s, err: %v", ses.UserId, hex.EncodeToString(req.InfoHash.Hash), err)
-		return nil, status.Error(codes.Unknown, "")
-	}
-	return &prpc.RemoveTorrentRes{}, nil
+	return nil, status.Error(codes.InvalidArgument, "")
 }
 
 func (ser *CoreService) GetMagnetUri(ctx context.Context, req *prpc.GetMagnetUriReq) (*prpc.GetMagnetUriRsp, error) {
-	ses := ser.getSession(ctx)
-	if ses == nil {
-		return nil, status.Error(codes.PermissionDenied, "")
-	}
-	return ser.bt.GetMagnetUri(ctx, req)
+	return nil, status.Error(codes.InvalidArgument, "")
 }
 
 func (ser *CoreService) OnStatus(statusReq *prpc.StatusRequest, stream prpc.UserService_OnStatusServer) error {
@@ -546,7 +428,7 @@ func (ser *CoreService) QueryBtVideos(ctx context.Context, req *prpc.QueryBtVide
 	if req.InfoHash == nil {
 		return nil, status.Error(codes.InvalidArgument, "")
 	}
-	ms, err := ser.um.QueryBtVideoMetadata(ses.UserId, TranInfoHash(req.InfoHash))
+	ms, err := ser.um.QueryBtVideoMetadata(ses.UserId, bt.TranInfoHash(req.InfoHash))
 	if err != nil {
 		log.Warnf("[user] user %d infoHash %s, query bt video meta err: %s", ses.UserId, hex.EncodeToString(req.InfoHash.Hash), err.Error())
 		return nil, err
@@ -572,8 +454,8 @@ func (ser *CoreService) NewCategoryItem(ctx context.Context, req *prpc.NewCatego
 		return nil, status.Error(codes.InvalidArgument, "")
 	}
 	params := &category.NewCategoryParams{
-		ParentId:     category.ID(req.ParentId),
-		Creator:      int64(ses.UserId),
+		ParentId:     ptype.CategoryID(req.ParentId),
+		Creator:      ses.UserId,
 		TypeId:       prpc.CategoryItem_Directory,
 		Name:         req.Name,
 		ResourcePath: req.ResourcePath,
@@ -593,7 +475,7 @@ func (ser *CoreService) DelCategoryItem(ctx context.Context, req *prpc.DelCatego
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "")
 	}
-	err := ser.um.DelCategoryItem(ses.UserId, category.ID(req.GetItemId()))
+	err := ser.um.DelCategoryItem(ses.UserId, ptype.CategoryID(req.GetItemId()))
 	if err != nil {
 		log.Warnf("[user] %d delete category %d err: %v", ses.UserId, req.GetItemId(), err)
 		return nil, status.Error(codes.Unknown, "")
@@ -602,13 +484,13 @@ func (ser *CoreService) DelCategoryItem(ctx context.Context, req *prpc.DelCatego
 }
 
 func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubItemsReq) (*prpc.QuerySubItemsRes, error) {
-	var userId user.ID
+	var userId ptype.UserID
 	if len(req.ShareId) > 0 {
 		si, err := ser.shares.GetShareItemInfo(req.ShareId)
 		if err != nil {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		if !ser.um.IsRelationOf(category.ID(req.ParentId), si.ShareItemInfo.ItemId) {
+		if !ser.um.IsRelationOf(ptype.CategoryID(req.ParentId), si.ShareItemInfo.ItemId) {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
 		userId = si.UserId
@@ -620,15 +502,15 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 		userId = ses.UserId
 	}
 
-	parentItem, err := ser.um.CategoryService().GetItem(int64(userId), category.ID(req.ParentId))
+	parentItem, err := ser.um.CategoryService().GetItem(userId, ptype.CategoryID(req.ParentId))
 	if err != nil {
 		log.Warnf("[user] %d query category %d err: %v", userId, req.ParentId, err)
 		return nil, status.Error(codes.PermissionDenied, "not found")
 	}
 	items, err := ser.um.CategoryService().GetItemsByParent(
 		&category.GetItemsByParentParams{
-			Querier:  int64(userId),
-			ParentId: category.ID(req.ParentId),
+			Querier:  userId,
+			ParentId: ptype.CategoryID(req.ParentId),
 			PageNum:  req.PageNum,
 			Rows:     req.Rows,
 		})
@@ -662,13 +544,13 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 }
 
 func (ser *CoreService) QueryItemInfo(ctx context.Context, req *prpc.QueryItemInfoReq) (*prpc.QueryItemInfoRes, error) {
-	var userId user.ID
+	var userId ptype.UserID
 	if len(req.ShareId) > 0 {
 		si, err := ser.shares.GetShareItemInfo(req.ShareId)
 		if err != nil {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		if !ser.um.IsRelationOf(category.ID(req.ItemId), si.ShareItemInfo.ItemId) {
+		if !ser.um.IsRelationOf(ptype.CategoryID(req.ItemId), si.ShareItemInfo.ItemId) {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
 		userId = si.UserId
@@ -680,7 +562,7 @@ func (ser *CoreService) QueryItemInfo(ctx context.Context, req *prpc.QueryItemIn
 		userId = ses.UserId
 	}
 
-	item, err := ser.um.CategoryService().GetItem(int64(userId), category.ID(req.ItemId))
+	item, err := ser.um.CategoryService().GetItem(userId, ptype.CategoryID(req.ItemId))
 	if err != nil {
 		return nil, status.Error(codes.PermissionDenied, "not found")
 	}
@@ -717,8 +599,8 @@ func (ser *CoreService) AddBtVideos(ctx context.Context, req *prpc.AddBtVideosRe
 	}
 	err := ser.um.AddBtVideos(&user.AddBtVideosParams{
 		UserId:         ses.UserId,
-		CategoryItemId: category.ID(req.CategoryItemId),
-		InfoHash:       TranInfoHash(req.InfoHash),
+		CategoryItemId: ptype.CategoryID(req.CategoryItemId),
+		InfoHash:       bt.TranInfoHash(req.InfoHash),
 		FileIndexes:    req.FileIndexes,
 	})
 	if err != nil {
@@ -733,13 +615,13 @@ func (ser *CoreService) ShareItem(ctx context.Context, req *prpc.ShareItemReq) (
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
-	_, err := ser.um.CategoryService().GetItem(int64(ses.UserId), category.ID(req.ItemId))
+	_, err := ser.um.CategoryService().GetItem(ses.UserId, ptype.CategoryID(req.ItemId))
 	if err != nil {
 		return nil, status.Error(codes.PermissionDenied, "not found")
 	}
 	shareid, err := ser.shares.ShareCategoryItem(&ShareCategoryItemParams{
 		UserId:    ses.UserId,
-		ItemId:    category.ID(req.ItemId),
+		ItemId:    ptype.CategoryID(req.ItemId),
 		MaxCount:  0,
 		ExpiresAt: time.Now().Add(time.Hour * 24 * 7),
 	})
@@ -815,7 +697,7 @@ func (ser *CoreService) JoinChatRoom(req *prpc.JoinChatRoomReq, stream prpc.User
 		return status.Error(codes.PermissionDenied, "")
 	}
 
-	roomKey := getItemRoomKey(req.Room)
+	roomKey := utils.GetItemRoomKey(req.Room)
 	joinParams := chat.JoinParams{
 		RoomKey:          roomKey,
 		SessionId:        ses.Id,
@@ -875,7 +757,7 @@ func (ser *CoreService) SendMsg2ChatRoom(ctx context.Context, req *prpc.SendMsg2
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
 
-	roomKey := getItemRoomKey(req.GetRoom())
+	roomKey := utils.GetItemRoomKey(req.GetRoom())
 	ser.rooms.Broadcast(roomKey, &chat.ChatMessage{
 		UserId:   ses.UserId,
 		SentTime: time.Now(),
@@ -894,7 +776,7 @@ func (ser *CoreService) AddMagnetCategory(ctx context.Context, req *prpc.AddMagn
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
 	_, err := ser.um.AddMagnetCategory(&user.AddMagnetCategoryParams{
-		ParentId:  category.ID(req.ParentId),
+		ParentId:  ptype.CategoryID(req.ParentId),
 		Name:      req.CategoryName,
 		Introduce: req.Introduce,
 		Creator:   ses.UserId,
@@ -915,7 +797,7 @@ func (ser *CoreService) AddMagnetUri(ctx context.Context, req *prpc.AddMagnetUri
 	}
 
 	err := ser.um.AddMagnetUri(&user.AddMagnetUriParams{
-		CategoryId: category.ID(req.CategoryId),
+		CategoryId: ptype.CategoryID(req.CategoryId),
 		Uri:        req.MagnetUri,
 		Introduce:  req.Introduce,
 		Creator:    ses.UserId,
@@ -935,7 +817,7 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
 
-	item, err := ser.um.CategoryService().GetItem(category.AdminId, category.ID(req.ParentId))
+	item, err := ser.um.CategoryService().GetItem(ptype.AdminId, ptype.CategoryID(req.ParentId))
 	if err != nil {
 		return nil, err
 	}
@@ -943,12 +825,12 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 	var items []*category.CategoryItem
 	var totalRows int
 	if len(req.SearchCond) > 0 {
-		if !ser.um.CategoryService().IsRelationOf(category.ID(req.ParentId), ser.um.GetMagnetRootId()) {
+		if !ser.um.CategoryService().IsRelationOf(ptype.CategoryID(req.ParentId), ser.um.GetMagnetRootId()) {
 			return nil, status.Error(codes.PermissionDenied, "not found parent id")
 		}
 		params := &category.SearchParams{
-			Querier:      category.AdminId,
-			RootId:       category.ID(req.ParentId),
+			Querier:      ptype.AdminId,
+			RootId:       ptype.CategoryID(req.ParentId),
 			ExistedWords: req.SearchCond,
 			PageNum:      req.PageNum,
 			Rows:         req.Rows,
@@ -963,7 +845,7 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 		}
 	} else {
 		items, err = ser.um.QueryMagnetCategorys(&user.QueryCategoryParams{
-			ParentId: category.ID(req.ParentId),
+			ParentId: ptype.CategoryID(req.ParentId),
 			PageNum:  req.PageNum,
 			Rows:     req.Rows,
 		})
@@ -1006,7 +888,7 @@ func (ser *CoreService) DelMagnetCategory(ctx context.Context, req *prpc.DelMagn
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
 
-	err := ser.um.DelMagnetCategory(ses.UserId, category.ID(req.Id))
+	err := ser.um.DelMagnetCategory(ses.UserId, ptype.CategoryID(req.Id))
 	if err != nil {
 		return nil, err
 	}

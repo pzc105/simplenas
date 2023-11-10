@@ -4,6 +4,7 @@ import (
 	"pnas/db"
 	"pnas/log"
 	"pnas/prpc"
+	"pnas/ptype"
 	"pnas/setting"
 	"pnas/utils"
 	"testing"
@@ -20,7 +21,7 @@ func TestNewItem(t *testing.T) {
 	m.Init()
 	auth := utils.NewBitSet(AuthMax)
 	auth.Set(AuthOtherWrite)
-	otherId := int64(124)
+	otherId := ptype.UserID(124)
 	params := &NewCategoryParams{
 		ParentId:     2,
 		Creator:      123,
@@ -59,12 +60,12 @@ func TestNewItem(t *testing.T) {
 	if item1.HasReadAuth(otherId) != item2.HasReadAuth(otherId) || item1.HasReadAuth(otherId) {
 		t.Error("read auth not equal")
 	}
-	err = m.DelItem(AdminId, item1.base.Id)
+	err = m.DelItem(ptype.AdminId, item1.base.Id)
 	if err != nil {
 		t.Errorf("failed to del: %v", err)
 		return
 	}
-	if eitem, _ := m.GetItem(AdminId, item1.base.Id); eitem != nil {
+	if eitem, _ := m.GetItem(ptype.AdminId, item1.base.Id); eitem != nil {
 		t.Errorf("not be deleted item cache: %v", err)
 	}
 	if eitem, _ := _loadItem(item1.base.Id); eitem != nil {

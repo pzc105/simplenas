@@ -1,7 +1,6 @@
 package user
 
 import (
-	"encoding/hex"
 	"fmt"
 	"os"
 	"path"
@@ -11,6 +10,7 @@ import (
 	"pnas/log"
 	"pnas/phttp"
 	"pnas/prpc"
+	"pnas/ptype"
 	"pnas/setting"
 	"pnas/utils"
 	"pnas/video"
@@ -22,24 +22,24 @@ import (
 
 type UserManger struct {
 	IMagnetSharesService
-	UserTorrents
+	bt.UserTorrents
 	mtx          sync.Mutex
-	users        map[ID]*User
-	genHslRecord map[video.ID]bool
+	users        map[ptype.UserID]*User
+	genHslRecord map[ptype.VideoID]bool
 	categorySer  category.IService
 
 	hlsProcess video.HlsProcess
 }
 
 func (um *UserManger) Init() {
-	ut := &UserTorrentsImpl{}
+	ut := &bt.UserTorrentsImpl{}
 	ut.Init()
 	um.UserTorrents = ut
 	um.mtx.Lock()
 	defer um.mtx.Unlock()
 
-	um.users = make(map[ID]*User)
-	um.genHslRecord = make(map[video.ID]bool)
+	um.users = make(map[ptype.UserID]*User)
+	um.genHslRecord = make(map[ptype.VideoID]bool)
 
 	um.categorySer = &category.Manager{}
 	um.categorySer.Init()
@@ -52,12 +52,12 @@ func (um *UserManger) Init() {
 }
 
 func (um *UserManger) Close() {
-
+	um.UserTorrents.Close()
 }
 
 func (um *UserManger) Login(email string, passwd string) (*User, error) {
 	sql := "select id from pnas.user where email=? and passwd=?"
-	var userId ID
+	var userId ptype.UserID
 	err := db.QueryRow(sql, email, passwd).Scan(&userId)
 	if err != nil {
 		return nil, err
@@ -65,7 +65,7 @@ func (um *UserManger) Login(email string, passwd string) (*User, error) {
 	return um.LoadUser(userId)
 }
 
-func (um *UserManger) LoadUser(userId ID) (*User, error) {
+func (um *UserManger) LoadUser(userId ptype.UserID) (*User, error) {
 	um.mtx.Lock()
 	user, ok := um.users[userId]
 	if ok {
@@ -82,28 +82,6 @@ func (um *UserManger) LoadUser(userId ID) (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	sql := `select t.version, t.info_hash from user_torrent u 
-					left join torrent t on u.torrent_id = t.id where u.user_id=?`
-	rows, err := db.Query(sql, userId)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var hashs []bt.InfoHash
-	for rows.Next() {
-		var infoHash bt.InfoHash
-		err = rows.Scan(&infoHash.Version, &infoHash.Hash)
-		if err != nil {
-			log.Warnf("[user] %d query user torrent %s err: %v", userId, hex.EncodeToString([]byte(infoHash.Hash)), err)
-			continue
-		}
-		hashs = append(hashs, infoHash)
-	}
-
-	for _, infoHash := range hashs {
-		um.AddUserTorrent(userId, infoHash)
-	}
 	return user, nil
 }
 
@@ -114,7 +92,7 @@ func (um *UserManger) addUser(user *User) error {
 	return nil
 }
 
-func (um *UserManger) getUser(id ID) *User {
+func (um *UserManger) getUser(id ptype.UserID) *User {
 	um.mtx.Lock()
 	u, ok := um.users[id]
 	if !ok {
@@ -125,7 +103,7 @@ func (um *UserManger) getUser(id ID) *User {
 	return u
 }
 
-func (um *UserManger) ChangeUserName(id ID, name string) error {
+func (um *UserManger) ChangeUserName(id ptype.UserID, name string) error {
 	u := um.getUser(id)
 	if u == nil {
 		return errors.New("not exist")
@@ -135,7 +113,7 @@ func (um *UserManger) ChangeUserName(id ID, name string) error {
 }
 
 type ChangePasswordParams struct {
-	UserId      ID
+	UserId      ptype.UserID
 	Email       string
 	OldPassword string
 	NewPassword string
@@ -161,7 +139,7 @@ func (um *UserManger) ChangePassword(params *ChangePasswordParams) bool {
 	}
 }
 
-func (um *UserManger) HasVideo(userId ID, vid video.ID) bool {
+func (um *UserManger) HasVideo(userId ptype.UserID, vid ptype.VideoID) bool {
 	if userId == AdminId {
 		return true
 	}
@@ -175,7 +153,7 @@ func (um *UserManger) HasVideo(userId ID, vid video.ID) bool {
 	return c > 0
 }
 
-func (um *UserManger) QueryBtVideoMetadata(userId ID, infoHash bt.InfoHash) (map[int]*video.Metadata, error) {
+func (um *UserManger) QueryBtVideoMetadata(userId ptype.UserID, infoHash bt.InfoHash) (map[int]*video.Metadata, error) {
 	if !um.HasTorrent(userId, infoHash) {
 		return nil, errors.New("not found bt")
 	}
@@ -200,7 +178,7 @@ func (um *UserManger) QueryBtVideoMetadata(userId ID, infoHash bt.InfoHash) (map
 	return ret, nil
 }
 
-func (um *UserManger) NewCategoryItem(userId ID, params *category.NewCategoryParams) error {
+func (um *UserManger) NewCategoryItem(userId ptype.UserID, params *category.NewCategoryParams) error {
 	user := um.getUser(userId)
 	if user == nil {
 		return errors.New("not found user")
@@ -216,20 +194,20 @@ func (um *UserManger) CategoryService() category.IService {
 	return um.categorySer
 }
 
-func (um *UserManger) DelCategoryItem(userId ID, itemId category.ID) error {
-	item, err := um.categorySer.GetItem(int64(userId), itemId)
+func (um *UserManger) DelCategoryItem(userId ptype.UserID, itemId ptype.CategoryID) error {
+	item, err := um.categorySer.GetItem(userId, itemId)
 	if err != nil {
 		return err
 	}
 	if item.GetType() == prpc.CategoryItem_Home {
 		return errors.New("can't delete home")
 	}
-	return um.categorySer.DelItem(int64(userId), itemId)
+	return um.categorySer.DelItem(userId, itemId)
 }
 
 type AddBtVideosParams struct {
-	UserId         ID
-	CategoryItemId category.ID
+	UserId         ptype.UserID
+	CategoryItemId ptype.CategoryID
 	InfoHash       bt.InfoHash
 	FileIndexes    []int32
 }
@@ -286,12 +264,12 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	parentItem, err := um.categorySer.GetItem(int64(params.UserId), category.ID(params.CategoryItemId))
+	parentItem, err := um.categorySer.GetItem(params.UserId, ptype.CategoryID(params.CategoryItemId))
 	if err != nil {
 		return errors.WithStack(err)
 	}
 	if !parentItem.IsDirectory() ||
-		!parentItem.HasWriteAuth(int64(user.userInfo.Id)) ||
+		!parentItem.HasWriteAuth(user.userInfo.Id) ||
 		!um.HasTorrent(params.UserId, params.InfoHash) {
 		return errors.New("permission denied")
 	}
@@ -332,7 +310,7 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 
 		newCParams := &category.NewCategoryParams{
 			ParentId:     params.CategoryItemId,
-			Creator:      int64(params.UserId),
+			Creator:      params.UserId,
 			TypeId:       prpc.CategoryItem_Video,
 			Name:         utils.GetFileName(files[i].Name),
 			ResourcePath: strconv.FormatInt(int64(v.Id), 10),
@@ -409,7 +387,7 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 	return nil
 }
 
-func (um *UserManger) IsRelationOf(itemId category.ID, parentId category.ID) bool {
+func (um *UserManger) IsRelationOf(itemId ptype.CategoryID, parentId ptype.CategoryID) bool {
 	return um.categorySer.IsRelationOf(itemId, parentId)
 }
 
@@ -444,8 +422,8 @@ func writeSubtitle2Item(item *category.CategoryItem, rpcSubtitle *prpc.SubtitleF
 	return nil
 }
 
-func (um *UserManger) UploadSubtitle(userId ID, req *prpc.UploadSubtitleReq) error {
-	item, err := um.categorySer.GetItem(int64(userId), category.ID(req.ItemId))
+func (um *UserManger) UploadSubtitle(userId ptype.UserID, req *prpc.UploadSubtitleReq) error {
+	item, err := um.categorySer.GetItem(userId, ptype.CategoryID(req.ItemId))
 	if err != nil {
 		return err
 	}
@@ -454,7 +432,7 @@ func (um *UserManger) UploadSubtitle(userId ID, req *prpc.UploadSubtitleReq) err
 			writeSubtitle2Item(item, s)
 		}
 	} else {
-		subItems, err := um.categorySer.GetItems(int64(userId), item.GetSubItemIds()...)
+		subItems, err := um.categorySer.GetItems(userId, item.GetSubItemIds()...)
 		if err != nil {
 			return err
 		}

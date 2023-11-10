@@ -26,10 +26,11 @@ static const char* BtService_method_names[] = {
   "/prpc.BtService/Download",
   "/prpc.BtService/RemoveTorrent",
   "/prpc.BtService/GetMagnetUri",
-  "/prpc.BtService/OnStatus",
-  "/prpc.BtService/OnTorrentInfo",
+  "/prpc.BtService/GetResumeData",
+  "/prpc.BtService/GetTorrentInfo",
+  "/prpc.BtService/GetBtStatus",
+  "/prpc.BtService/OnBtStatus",
   "/prpc.BtService/OnFileCompleted",
-  "/prpc.BtService/FileProgress",
 };
 
 std::unique_ptr< BtService::Stub> BtService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -43,10 +44,11 @@ BtService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel,
   , rpcmethod_Download_(BtService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_RemoveTorrent_(BtService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetMagnetUri_(BtService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_OnStatus_(BtService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
-  , rpcmethod_OnTorrentInfo_(BtService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
-  , rpcmethod_OnFileCompleted_(BtService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
-  , rpcmethod_FileProgress_(BtService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
+  , rpcmethod_GetResumeData_(BtService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetTorrentInfo_(BtService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBtStatus_(BtService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_OnBtStatus_(BtService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
+  , rpcmethod_OnFileCompleted_(BtService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
   {}
 
 ::grpc::Status BtService::Stub::Parse(::grpc::ClientContext* context, const ::prpc::DownloadRequest& request, ::prpc::DownloadRespone* response) {
@@ -141,36 +143,89 @@ void BtService::Stub::async::GetMagnetUri(::grpc::ClientContext* context, const 
   return result;
 }
 
-::grpc::ClientReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* BtService::Stub::OnStatusRaw(::grpc::ClientContext* context) {
-  return ::grpc::internal::ClientReaderWriterFactory< ::prpc::StatusRequest, ::prpc::StatusRespone>::Create(channel_.get(), rpcmethod_OnStatus_, context);
+::grpc::Status BtService::Stub::GetResumeData(::grpc::ClientContext* context, const ::prpc::GetResumeDataReq& request, ::prpc::GetResumeDataRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::GetResumeDataReq, ::prpc::GetResumeDataRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetResumeData_, context, request, response);
 }
 
-void BtService::Stub::async::OnStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::StatusRequest,::prpc::StatusRespone>* reactor) {
-  ::grpc::internal::ClientCallbackReaderWriterFactory< ::prpc::StatusRequest,::prpc::StatusRespone>::Create(stub_->channel_.get(), stub_->rpcmethod_OnStatus_, context, reactor);
+void BtService::Stub::async::GetResumeData(::grpc::ClientContext* context, const ::prpc::GetResumeDataReq* request, ::prpc::GetResumeDataRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::GetResumeDataReq, ::prpc::GetResumeDataRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetResumeData_, context, request, response, std::move(f));
 }
 
-::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* BtService::Stub::AsyncOnStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::prpc::StatusRequest, ::prpc::StatusRespone>::Create(channel_.get(), cq, rpcmethod_OnStatus_, context, true, tag);
+void BtService::Stub::async::GetResumeData(::grpc::ClientContext* context, const ::prpc::GetResumeDataReq* request, ::prpc::GetResumeDataRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetResumeData_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* BtService::Stub::PrepareAsyncOnStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::prpc::StatusRequest, ::prpc::StatusRespone>::Create(channel_.get(), cq, rpcmethod_OnStatus_, context, false, nullptr);
+::grpc::ClientAsyncResponseReader< ::prpc::GetResumeDataRsp>* BtService::Stub::PrepareAsyncGetResumeDataRaw(::grpc::ClientContext* context, const ::prpc::GetResumeDataReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::GetResumeDataRsp, ::prpc::GetResumeDataReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetResumeData_, context, request);
 }
 
-::grpc::ClientReaderWriter< ::prpc::TorrentInfoReq, ::prpc::TorrentInfoRes>* BtService::Stub::OnTorrentInfoRaw(::grpc::ClientContext* context) {
-  return ::grpc::internal::ClientReaderWriterFactory< ::prpc::TorrentInfoReq, ::prpc::TorrentInfoRes>::Create(channel_.get(), rpcmethod_OnTorrentInfo_, context);
+::grpc::ClientAsyncResponseReader< ::prpc::GetResumeDataRsp>* BtService::Stub::AsyncGetResumeDataRaw(::grpc::ClientContext* context, const ::prpc::GetResumeDataReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetResumeDataRaw(context, request, cq);
+  result->StartCall();
+  return result;
 }
 
-void BtService::Stub::async::OnTorrentInfo(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::TorrentInfoReq,::prpc::TorrentInfoRes>* reactor) {
-  ::grpc::internal::ClientCallbackReaderWriterFactory< ::prpc::TorrentInfoReq,::prpc::TorrentInfoRes>::Create(stub_->channel_.get(), stub_->rpcmethod_OnTorrentInfo_, context, reactor);
+::grpc::Status BtService::Stub::GetTorrentInfo(::grpc::ClientContext* context, const ::prpc::GetTorrentInfoReq& request, ::prpc::GetTorrentInfoRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::GetTorrentInfoReq, ::prpc::GetTorrentInfoRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetTorrentInfo_, context, request, response);
 }
 
-::grpc::ClientAsyncReaderWriter< ::prpc::TorrentInfoReq, ::prpc::TorrentInfoRes>* BtService::Stub::AsyncOnTorrentInfoRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::prpc::TorrentInfoReq, ::prpc::TorrentInfoRes>::Create(channel_.get(), cq, rpcmethod_OnTorrentInfo_, context, true, tag);
+void BtService::Stub::async::GetTorrentInfo(::grpc::ClientContext* context, const ::prpc::GetTorrentInfoReq* request, ::prpc::GetTorrentInfoRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::GetTorrentInfoReq, ::prpc::GetTorrentInfoRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetTorrentInfo_, context, request, response, std::move(f));
 }
 
-::grpc::ClientAsyncReaderWriter< ::prpc::TorrentInfoReq, ::prpc::TorrentInfoRes>* BtService::Stub::PrepareAsyncOnTorrentInfoRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::prpc::TorrentInfoReq, ::prpc::TorrentInfoRes>::Create(channel_.get(), cq, rpcmethod_OnTorrentInfo_, context, false, nullptr);
+void BtService::Stub::async::GetTorrentInfo(::grpc::ClientContext* context, const ::prpc::GetTorrentInfoReq* request, ::prpc::GetTorrentInfoRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetTorrentInfo_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::GetTorrentInfoRsp>* BtService::Stub::PrepareAsyncGetTorrentInfoRaw(::grpc::ClientContext* context, const ::prpc::GetTorrentInfoReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::GetTorrentInfoRsp, ::prpc::GetTorrentInfoReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetTorrentInfo_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::GetTorrentInfoRsp>* BtService::Stub::AsyncGetTorrentInfoRaw(::grpc::ClientContext* context, const ::prpc::GetTorrentInfoReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetTorrentInfoRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status BtService::Stub::GetBtStatus(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq& request, ::prpc::GetBtStatusRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::GetBtStatusReq, ::prpc::GetBtStatusRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetBtStatus_, context, request, response);
+}
+
+void BtService::Stub::async::GetBtStatus(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::GetBtStatusReq, ::prpc::GetBtStatusRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBtStatus_, context, request, response, std::move(f));
+}
+
+void BtService::Stub::async::GetBtStatus(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBtStatus_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::GetBtStatusRsp>* BtService::Stub::PrepareAsyncGetBtStatusRaw(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::GetBtStatusRsp, ::prpc::GetBtStatusReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetBtStatus_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::GetBtStatusRsp>* BtService::Stub::AsyncGetBtStatusRaw(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetBtStatusRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::ClientReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* BtService::Stub::OnBtStatusRaw(::grpc::ClientContext* context) {
+  return ::grpc::internal::ClientReaderWriterFactory< ::prpc::StatusRequest, ::prpc::StatusRespone>::Create(channel_.get(), rpcmethod_OnBtStatus_, context);
+}
+
+void BtService::Stub::async::OnBtStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::StatusRequest,::prpc::StatusRespone>* reactor) {
+  ::grpc::internal::ClientCallbackReaderWriterFactory< ::prpc::StatusRequest,::prpc::StatusRespone>::Create(stub_->channel_.get(), stub_->rpcmethod_OnBtStatus_, context, reactor);
+}
+
+::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* BtService::Stub::AsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::prpc::StatusRequest, ::prpc::StatusRespone>::Create(channel_.get(), cq, rpcmethod_OnBtStatus_, context, true, tag);
+}
+
+::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* BtService::Stub::PrepareAsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::prpc::StatusRequest, ::prpc::StatusRespone>::Create(channel_.get(), cq, rpcmethod_OnBtStatus_, context, false, nullptr);
 }
 
 ::grpc::ClientReaderWriter< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* BtService::Stub::OnFileCompletedRaw(::grpc::ClientContext* context) {
@@ -187,22 +242,6 @@ void BtService::Stub::async::OnFileCompleted(::grpc::ClientContext* context, ::g
 
 ::grpc::ClientAsyncReaderWriter< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* BtService::Stub::PrepareAsyncOnFileCompletedRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
   return ::grpc::internal::ClientAsyncReaderWriterFactory< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>::Create(channel_.get(), cq, rpcmethod_OnFileCompleted_, context, false, nullptr);
-}
-
-::grpc::ClientReaderWriter< ::prpc::FileProgressReq, ::prpc::FileProgressRes>* BtService::Stub::FileProgressRaw(::grpc::ClientContext* context) {
-  return ::grpc::internal::ClientReaderWriterFactory< ::prpc::FileProgressReq, ::prpc::FileProgressRes>::Create(channel_.get(), rpcmethod_FileProgress_, context);
-}
-
-void BtService::Stub::async::FileProgress(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::FileProgressReq,::prpc::FileProgressRes>* reactor) {
-  ::grpc::internal::ClientCallbackReaderWriterFactory< ::prpc::FileProgressReq,::prpc::FileProgressRes>::Create(stub_->channel_.get(), stub_->rpcmethod_FileProgress_, context, reactor);
-}
-
-::grpc::ClientAsyncReaderWriter< ::prpc::FileProgressReq, ::prpc::FileProgressRes>* BtService::Stub::AsyncFileProgressRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::prpc::FileProgressReq, ::prpc::FileProgressRes>::Create(channel_.get(), cq, rpcmethod_FileProgress_, context, true, tag);
-}
-
-::grpc::ClientAsyncReaderWriter< ::prpc::FileProgressReq, ::prpc::FileProgressRes>* BtService::Stub::PrepareAsyncFileProgressRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::prpc::FileProgressReq, ::prpc::FileProgressRes>::Create(channel_.get(), cq, rpcmethod_FileProgress_, context, false, nullptr);
 }
 
 BtService::Service::Service() {
@@ -248,26 +287,46 @@ BtService::Service::Service() {
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       BtService_method_names[4],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::GetResumeDataReq, ::prpc::GetResumeDataRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](BtService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::GetResumeDataReq* req,
+             ::prpc::GetResumeDataRsp* resp) {
+               return service->GetResumeData(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      BtService_method_names[5],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::GetTorrentInfoReq, ::prpc::GetTorrentInfoRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](BtService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::GetTorrentInfoReq* req,
+             ::prpc::GetTorrentInfoRsp* resp) {
+               return service->GetTorrentInfo(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      BtService_method_names[6],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::GetBtStatusReq, ::prpc::GetBtStatusRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](BtService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::GetBtStatusReq* req,
+             ::prpc::GetBtStatusRsp* resp) {
+               return service->GetBtStatus(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      BtService_method_names[7],
       ::grpc::internal::RpcMethod::BIDI_STREAMING,
       new ::grpc::internal::BidiStreamingHandler< BtService::Service, ::prpc::StatusRequest, ::prpc::StatusRespone>(
           [](BtService::Service* service,
              ::grpc::ServerContext* ctx,
              ::grpc::ServerReaderWriter<::prpc::StatusRespone,
              ::prpc::StatusRequest>* stream) {
-               return service->OnStatus(ctx, stream);
+               return service->OnBtStatus(ctx, stream);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      BtService_method_names[5],
-      ::grpc::internal::RpcMethod::BIDI_STREAMING,
-      new ::grpc::internal::BidiStreamingHandler< BtService::Service, ::prpc::TorrentInfoReq, ::prpc::TorrentInfoRes>(
-          [](BtService::Service* service,
-             ::grpc::ServerContext* ctx,
-             ::grpc::ServerReaderWriter<::prpc::TorrentInfoRes,
-             ::prpc::TorrentInfoReq>* stream) {
-               return service->OnTorrentInfo(ctx, stream);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      BtService_method_names[6],
+      BtService_method_names[8],
       ::grpc::internal::RpcMethod::BIDI_STREAMING,
       new ::grpc::internal::BidiStreamingHandler< BtService::Service, ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>(
           [](BtService::Service* service,
@@ -275,16 +334,6 @@ BtService::Service::Service() {
              ::grpc::ServerReaderWriter<::prpc::FileCompletedRes,
              ::prpc::FileCompletedReq>* stream) {
                return service->OnFileCompleted(ctx, stream);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      BtService_method_names[7],
-      ::grpc::internal::RpcMethod::BIDI_STREAMING,
-      new ::grpc::internal::BidiStreamingHandler< BtService::Service, ::prpc::FileProgressReq, ::prpc::FileProgressRes>(
-          [](BtService::Service* service,
-             ::grpc::ServerContext* ctx,
-             ::grpc::ServerReaderWriter<::prpc::FileProgressRes,
-             ::prpc::FileProgressReq>* stream) {
-               return service->FileProgress(ctx, stream);
              }, this)));
 }
 
@@ -319,25 +368,34 @@ BtService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status BtService::Service::OnStatus(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* stream) {
+::grpc::Status BtService::Service::GetResumeData(::grpc::ServerContext* context, const ::prpc::GetResumeDataReq* request, ::prpc::GetResumeDataRsp* response) {
   (void) context;
-  (void) stream;
+  (void) request;
+  (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status BtService::Service::OnTorrentInfo(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::TorrentInfoRes, ::prpc::TorrentInfoReq>* stream) {
+::grpc::Status BtService::Service::GetTorrentInfo(::grpc::ServerContext* context, const ::prpc::GetTorrentInfoReq* request, ::prpc::GetTorrentInfoRsp* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status BtService::Service::GetBtStatus(::grpc::ServerContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status BtService::Service::OnBtStatus(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* stream) {
   (void) context;
   (void) stream;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
 ::grpc::Status BtService::Service::OnFileCompleted(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::FileCompletedRes, ::prpc::FileCompletedReq>* stream) {
-  (void) context;
-  (void) stream;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
-::grpc::Status BtService::Service::FileProgress(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::FileProgressRes, ::prpc::FileProgressReq>* stream) {
   (void) context;
   (void) stream;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");

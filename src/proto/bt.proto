@@ -9,11 +9,56 @@ service BtService {
   rpc Download(DownloadRequest) returns (DownloadRespone);
   rpc RemoveTorrent(RemoveTorrentReq) returns (RemoveTorrentRes);
   rpc GetMagnetUri(GetMagnetUriReq) returns (GetMagnetUriRsp);
+  rpc GetResumeData(GetResumeDataReq) returns (GetResumeDataRsp);
+  rpc GetTorrentInfo(GetTorrentInfoReq) returns (GetTorrentInfoRsp);
+  rpc GetBtStatus(GetBtStatusReq) returns (GetBtStatusRsp);
 
-  rpc OnStatus(stream StatusRequest) returns (stream StatusRespone);
-  rpc OnTorrentInfo(stream TorrentInfoReq) returns (stream TorrentInfoRes);
+  rpc OnBtStatus(stream StatusRequest) returns (stream StatusRespone);
   rpc OnFileCompleted(stream FileCompletedReq) returns (stream FileCompletedRes);
-  rpc FileProgress(stream FileProgressReq) returns (stream FileProgressRes);
+}
+
+message BtFile {
+  enum State {
+    stop = 0;
+    downloading = 1;
+    completed = 2;
+  }
+  string name = 1;
+  int32 index = 2;
+  State st = 3;
+  int64 total_size = 4;
+  int64 downloaded = 5;
+}
+
+message TorrentInfo {
+  InfoHash info_hash = 1;
+  string name = 2;
+  string save_path = 3;
+  repeated BtFile files = 4;
+  int64 total_size = 5;
+  int32 piece_length = 6;
+  int32 num_pieces = 7;
+}
+
+enum BtStateEnum {
+  unknown = 0;
+  checking_files = 1;
+  downloading_metadata = 2;
+  downloading = 3;
+  finished = 4;
+  seeding = 5;
+  checking_resume_data = 7;
+}
+
+message TorrentStatus {
+  InfoHash info_hash = 1;
+  string name = 2;
+  int32 download_payload_rate = 3;
+  int64 total_done = 4;
+  int64 total = 5;
+  float progress = 6;
+  int32 num_peers = 7;
+  BtStateEnum state = 8;
 }
 
 message DownloadRequest {
@@ -51,29 +96,32 @@ message GetMagnetUriRsp {
   string magnet_uri = 2;
 }
 
+message GetResumeDataReq {
+  InfoHash info_hash = 1;
+}
+
+message GetResumeDataRsp {
+  bytes resume_data = 9; 
+}
+
+message GetTorrentInfoReq {
+  InfoHash info_hash = 1;
+}
+
+message GetTorrentInfoRsp {
+  TorrentInfo torrent_info = 1;
+}
+
+message GetBtStatusReq {
+  InfoHash info_hash = 1;
+}
+
+message GetBtStatusRsp {
+  TorrentStatus status = 1;
+}
+
 message StatusRequest {
   repeated InfoHash info_hash = 1;
-}
-
-enum BtStateEnum {
-  unknown = 0;
-  checking_files = 1;
-  downloading_metadata = 2;
-  downloading = 3;
-  finished = 4;
-  seeding = 5;
-  checking_resume_data = 7;
-}
-
-message TorrentStatus {
-  InfoHash info_hash = 1;
-  string name = 2;
-  int32 download_payload_rate = 3;
-  int64 total_done = 4;
-  int64 total = 5;
-  float progress = 6;
-  int32 num_peers = 7;
-  BtStateEnum state = 8;
 }
 
 message StatusRespone {
@@ -82,31 +130,6 @@ message StatusRespone {
 
 message TorrentInfoReq {
   repeated InfoHash info_hash = 1;
-}
-
-message BtFile {
-  enum State {
-    stop = 0;
-    downloading = 1;
-    completed = 2;
-  }
-  string name = 1;
-  int32 index = 2;
-  State st = 3;
-  int64 total_size = 4;
-  int64 downloaded = 5;
-}
-
-message TorrentInfo {
-  InfoHash info_hash = 1;
-  string name = 2;
-  BtStateEnum state = 3;
-  string save_path = 4;
-  repeated BtFile files = 5;
-  int64 total_size = 6;
-  int32 piece_length = 7;
-  int32 num_pieces = 8;
-  bytes resume_data = 9; 
 }
 
 message TorrentInfoRes {

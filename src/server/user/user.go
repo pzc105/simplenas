@@ -4,13 +4,12 @@ import (
 	"fmt"
 	"pnas/category"
 	"pnas/db"
+	"pnas/ptype"
 	"pnas/utils"
 	"sync"
 
 	"github.com/pkg/errors"
 )
-
-type ID int64
 
 const (
 	AdminId = 1
@@ -26,10 +25,10 @@ const (
 )
 
 type UserBaseInfo struct {
-	Id              ID
+	Id              ptype.UserID
 	Name            string
 	Email           string
-	HomeDirectoryId category.ID
+	HomeDirectoryId ptype.CategoryID
 }
 
 type User struct {
@@ -56,8 +55,8 @@ func NewUser(params *NewUserParams) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	var userId ID
-	var homeId category.ID
+	var userId ptype.UserID
+	var homeId ptype.CategoryID
 	err = db.QueryRow(sql,
 		params.Name,
 		params.Email,
@@ -85,7 +84,7 @@ func IsUsedEmail(email string) bool {
 	return false
 }
 
-func loadUser(userId ID) (*User, error) {
+func loadUser(userId ptype.UserID) (*User, error) {
 	var user User
 	user.userInfo.Id = userId
 	sql := "select name, email, auth, directory_id from pnas.user where id=?"
@@ -117,7 +116,7 @@ func (user *User) ChangeUserName(name string) error {
 	return nil
 }
 
-func (user *User) GetHomeDirectoryId() category.ID {
+func (user *User) GetHomeDirectoryId() ptype.CategoryID {
 	user.mtx.Lock()
 	defer user.mtx.Unlock()
 	return user.userInfo.HomeDirectoryId

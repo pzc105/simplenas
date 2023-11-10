@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
   YAML::Node config = bt::setting::read();
   std::string server_address(config["server"]["boundAddress"].as<std::string>());
 
-  prpc::BtService::WithAsyncMethod_OnStatus<prpc::bt_service> service;
+  prpc::bt_service service;
   grpc::ServerBuilder builder;
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
   builder.RegisterService(&service);

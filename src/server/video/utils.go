@@ -2,16 +2,17 @@ package video
 
 import (
 	"pnas/db"
+	"pnas/ptype"
 )
 
 type Video struct {
-	Id         ID
+	Id         ptype.VideoID
 	HlsCreated bool
 	FileName   string
 }
 
-func New(fileName string) (ID, error) {
-	var newId ID
+func New(fileName string) (ptype.VideoID, error) {
+	var newId ptype.VideoID
 	err := db.QueryRow("call new_video(?, @new_video_id)", fileName).Scan(&newId)
 	if err != nil {
 		return -1, err
@@ -19,7 +20,7 @@ func New(fileName string) (ID, error) {
 	return newId, nil
 }
 
-func VideoHasHls(vid ID) error {
+func VideoHasHls(vid ptype.VideoID) error {
 	sqlStr := "update video set hls_created=1 where id=?"
 	_, err := db.Exec(sqlStr, vid)
 	return err
@@ -35,7 +36,7 @@ func GetVideoByFileName(fileName string) (Video, error) {
 	return v, nil
 }
 
-func GetVideoFileName(vid ID) (string, error) {
+func GetVideoFileName(vid ptype.VideoID) (string, error) {
 	sqlStr := "select file_name from video where id=?"
 	var fileName string
 	err := db.QueryRow(sqlStr, vid).Scan(&fileName)

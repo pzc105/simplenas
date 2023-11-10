@@ -4,6 +4,7 @@ import (
 	"errors"
 	"pnas/log"
 	"pnas/prpc"
+	"pnas/ptype"
 	"pnas/video"
 	"sync"
 	"time"
@@ -15,6 +16,7 @@ type InfoHash struct {
 }
 
 type TorrentBase struct {
+	Id          ptype.TorrentID
 	InfoHash    InfoHash
 	Name        string
 	SavePath    string

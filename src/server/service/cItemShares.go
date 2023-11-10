@@ -6,9 +6,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"pnas/category"
 	"pnas/db"
-	"pnas/user"
+	"pnas/ptype"
 	"pnas/utils"
 	"sync"
 	"sync/atomic"
@@ -29,12 +28,12 @@ func init() {
 }
 
 type ShareItemInfo struct {
-	ItemId category.ID
+	ItemId ptype.CategoryID
 }
 
 type ShareInfo struct {
 	ShareId     string
-	UserId      user.ID
+	UserId      ptype.UserID
 	UseCounting bool
 	MaxCount    int
 	ExpiresAt   time.Time
@@ -60,14 +59,14 @@ type IItemShares interface {
 	ShareCategoryItem(params *ShareCategoryItemParams) (shareid string, err error)
 	DelShare(shareid string) error
 	GetShareItemInfo(shareid string) (*ShareInfo, error)
-	GetUserSharedItemInfos(userId user.ID) []*ShareInfo
+	GetUserSharedItemInfos(userId ptype.UserID) []*ShareInfo
 }
 
 type ShareManager struct {
 	IItemShares
 	mtx        sync.Mutex
 	shares     map[string]*ShareInfo
-	userShares map[user.ID][]string
+	userShares map[ptype.UserID][]string
 	timeOut    timeHeap
 
 	nextId atomic.Int64
@@ -84,7 +83,7 @@ func (sm *ShareManager) genShareId() string {
 
 func (sm *ShareManager) Init() {
 	sm.shares = make(map[string]*ShareInfo)
-	sm.userShares = make(map[user.ID][]string)
+	sm.userShares = make(map[ptype.UserID][]string)
 	keys, err := db.GREDIS.Keys(context.Background(), shareObjectRedisKey("*")).Result()
 	if err == nil {
 		for _, k := range keys {
@@ -103,9 +102,9 @@ func (sm *ShareManager) Init() {
 }
 
 type ShareCategoryItemParams struct {
-	UserId    user.ID
-	ItemOwner user.ID
-	ItemId    category.ID
+	UserId    ptype.UserID
+	ItemOwner ptype.UserID
+	ItemId    ptype.CategoryID
 	MaxCount  int
 	ExpiresAt time.Time
 }
@@ -176,7 +175,7 @@ func (sm *ShareManager) GetShareItemInfo(shareid string) (*ShareInfo, error) {
 	return nil, errors.New("not found")
 }
 
-func (sm *ShareManager) GetUserSharedIds(userId user.ID) []string {
+func (sm *ShareManager) GetUserSharedIds(userId ptype.UserID) []string {
 	sm.mtx.Lock()
 	defer sm.mtx.Unlock()
 	ss, ok := sm.userShares[userId]
@@ -188,7 +187,7 @@ func (sm *ShareManager) GetUserSharedIds(userId user.ID) []string {
 	return ret
 }
 
-func (sm *ShareManager) GetUserSharedItemInfos(userId user.ID) []*ShareInfo {
+func (sm *ShareManager) GetUserSharedItemInfos(userId ptype.UserID) []*ShareInfo {
 	sm.mtx.Lock()
 	defer sm.mtx.Unlock()
 	ss, ok := sm.userShares[userId]

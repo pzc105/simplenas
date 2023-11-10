@@ -7,7 +7,6 @@ option go_package = "./prpc";
 import "category.proto";
 import "video.proto";
 import "bt.proto";
-import "google/api/annotations.proto";
 
 
 service UserService {

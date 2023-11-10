@@ -3,7 +3,7 @@ package chat
 import (
 	"context"
 	"pnas/log"
-	"pnas/user"
+	"pnas/ptype"
 	"pnas/utils"
 	"sync"
 	"sync/atomic"
@@ -39,7 +39,7 @@ func (ud *userData) elapse(now time.Time) time.Duration {
 }
 
 type ChatMessage struct {
-	UserId   user.ID
+	UserId   ptype.UserID
 	SentTime time.Time
 	Msg      string
 }
