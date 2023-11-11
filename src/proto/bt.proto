@@ -36,7 +36,8 @@ message InitSessionReq {
   int32 upload_rate_limit = 4;
   int32 download_rate_limit = 5;
   int32 hashing_threads = 6;
-  bytes resume_data = 7; 
+  bytes resume_data = 7;
+  string listen_interfaces = 8;
 }
 
 message InitSessionRsp {

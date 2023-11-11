@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"pnas/db"
+	"pnas/log"
 	"pnas/prpc"
 	"pnas/ptype"
 	"strings"
@@ -101,7 +102,7 @@ func deleteUserTorrentids(tid ptype.TorrentID, ids ...ptype.UserID) error {
 			cond.WriteString("," + fmt.Sprint(uid))
 		}
 	}
-	sql := fmt.Sprintf(`delete from user_torrent where torrent_id=? user_id in (%s)`, cond.String())
+	sql := fmt.Sprintf(`delete from user_torrent where torrent_id=? and user_id in (%s)`, cond.String())
 	_, err := db.Exec(sql, tid)
 	return err
 }
@@ -112,7 +113,7 @@ const (
 )
 
 func getHKey(infoHash *InfoHash) string {
-	return infoHash.Hash + fmt.Sprint(infoHash.Version)
+	return fmt.Sprint(infoHash.Version) + infoHash.Hash
 }
 
 func saveResumeData(infoHash *InfoHash, data []byte) error {
@@ -140,4 +141,12 @@ func saveBtSessionParams(data []byte) error {
 func loadBtSessionParams() ([]byte, error) {
 	d, err := db.GREDIS.Get(context.Background(), RedisKeyBtSessionParams).Result()
 	return []byte(d), err
+}
+
+func saveMagnetUri(infoHash *InfoHash, uri string) {
+	sql := "insert into magnet(version, info_hash, magnet_uri) values(?, ?, ?) on duplicate key update magnet_uri=values(magnet_uri)"
+	_, err := db.Exec(sql, infoHash.Version, infoHash.Hash, uri)
+	if err != nil {
+		log.Debugf("failed to save err: %v", err)
+	}
 }

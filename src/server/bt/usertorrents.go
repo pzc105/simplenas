@@ -209,12 +209,13 @@ func (ut *UserTorrentsImpl) handleBtClientConnected() {
 	if !rsp.Inited {
 		resume, _ := loadBtSessionParams()
 		req := &prpc.InitSessionReq{
-			ProxyHost:     setting.GS().Bt.ProxyHost,
+			ProxyHost:         setting.GS().Bt.ProxyHost,
 			ProxyPort:         setting.GS().Bt.ProxyPort,
 			ProxyType:         setting.GS().Bt.ProxyType,
 			UploadRateLimit:   setting.GS().Bt.UploadRateLimit,
 			DownloadRateLimit: setting.GS().Bt.DownloadRateLimit,
 			HashingThreads:    setting.GS().Bt.HashingThreads,
+			ListenInterfaces:  setting.GS().Bt.ListenInterfaces,
 			ResumeData:        resume,
 		}
 		ut.btClient.InitSession(context.Background(), req)
@@ -263,7 +264,7 @@ func (ut *UserTorrentsImpl) handleBtStatus(s *prpc.TorrentStatus) {
 		return
 	}
 	ut.mtx.Unlock()
-	if !t.hasBaseInfo() {
+	if !t.hasBaseInfo() && s.State != prpc.BtStateEnum_downloading_metadata {
 		req := &prpc.GetTorrentInfoReq{
 			InfoHash: s.InfoHash,
 		}
@@ -383,6 +384,11 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 		}
 	}
 
+	var magnetUri string
+	if params.Req.Type == prpc.DownloadRequest_MagnetUri {
+		magnetUri = string(params.Req.Content)
+	}
+
 	resumeData, err := loadResumeData(infoHash)
 	if err == nil {
 		req.Type = prpc.DownloadRequest_Resume
@@ -397,6 +403,9 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 			t.addUser(params.UserId)
 			ut.saveUserTorrent(t, params.UserId)
 		}
+		if len(magnetUri) > 0 {
+			saveMagnetUri(&t.base.InfoHash, magnetUri)
+		}
 		return res, nil
 	} else {
 		return res, status.Error(codes.InvalidArgument, "")
@@ -404,17 +413,21 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 }
 
 func (ut *UserTorrentsImpl) RemoveTorrent(params *RemoveTorrentParams) (*prpc.RemoveTorrentRes, error) {
+
+	infoHash := *TranInfoHash(params.Req.InfoHash)
+
 	if params.UserId == ptype.AdminId {
 		res, err := ut.btClient.RemoveTorrent(context.Background(), params.Req)
 		if err != nil {
 			return nil, err
 		}
 		ut.mtx.Lock()
-		t, ok := ut.torrents[*TranInfoHash(params.Req.InfoHash)]
+		t, ok := ut.torrents[infoHash]
 		if !ok {
 			ut.mtx.Unlock()
 			return nil, errors.New("not found torrent")
 		}
+		delete(ut.torrents, infoHash)
 		uids := t.getAllUser()
 		for _, uid := range uids {
 			ud := ut.users[uid]
@@ -426,7 +439,7 @@ func (ut *UserTorrentsImpl) RemoveTorrent(params *RemoveTorrentParams) (*prpc.Re
 		return res, err
 	} else {
 		ut.mtx.Lock()
-		t, ok := ut.torrents[*TranInfoHash(params.Req.InfoHash)]
+		t, ok := ut.torrents[infoHash]
 		if !ok {
 			ut.mtx.Unlock()
 			return nil, errors.New("not found torrent")
