@@ -22,6 +22,8 @@
 namespace prpc {
 
 static const char* BtService_method_names[] = {
+  "/prpc.BtService/InitedSession",
+  "/prpc.BtService/InitSession",
   "/prpc.BtService/Parse",
   "/prpc.BtService/Download",
   "/prpc.BtService/RemoveTorrent",
@@ -29,6 +31,7 @@ static const char* BtService_method_names[] = {
   "/prpc.BtService/GetResumeData",
   "/prpc.BtService/GetTorrentInfo",
   "/prpc.BtService/GetBtStatus",
+  "/prpc.BtService/GetSessionParams",
   "/prpc.BtService/OnBtStatus",
   "/prpc.BtService/OnFileCompleted",
 };
@@ -40,16 +43,65 @@ std::unique_ptr< BtService::Stub> BtService::NewStub(const std::shared_ptr< ::gr
 }
 
 BtService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
-  : channel_(channel), rpcmethod_Parse_(BtService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_Download_(BtService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RemoveTorrent_(BtService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetMagnetUri_(BtService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetResumeData_(BtService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetTorrentInfo_(BtService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBtStatus_(BtService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_OnBtStatus_(BtService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
-  , rpcmethod_OnFileCompleted_(BtService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
+  : channel_(channel), rpcmethod_InitedSession_(BtService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_InitSession_(BtService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_Parse_(BtService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_Download_(BtService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RemoveTorrent_(BtService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetMagnetUri_(BtService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetResumeData_(BtService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetTorrentInfo_(BtService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBtStatus_(BtService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSessionParams_(BtService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_OnBtStatus_(BtService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
+  , rpcmethod_OnFileCompleted_(BtService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
   {}
+
+::grpc::Status BtService::Stub::InitedSession(::grpc::ClientContext* context, const ::prpc::InitedSessionReq& request, ::prpc::InitedSessionRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::InitedSessionReq, ::prpc::InitedSessionRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_InitedSession_, context, request, response);
+}
+
+void BtService::Stub::async::InitedSession(::grpc::ClientContext* context, const ::prpc::InitedSessionReq* request, ::prpc::InitedSessionRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::InitedSessionReq, ::prpc::InitedSessionRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_InitedSession_, context, request, response, std::move(f));
+}
+
+void BtService::Stub::async::InitedSession(::grpc::ClientContext* context, const ::prpc::InitedSessionReq* request, ::prpc::InitedSessionRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_InitedSession_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::InitedSessionRsp>* BtService::Stub::PrepareAsyncInitedSessionRaw(::grpc::ClientContext* context, const ::prpc::InitedSessionReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::InitedSessionRsp, ::prpc::InitedSessionReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_InitedSession_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::InitedSessionRsp>* BtService::Stub::AsyncInitedSessionRaw(::grpc::ClientContext* context, const ::prpc::InitedSessionReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncInitedSessionRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status BtService::Stub::InitSession(::grpc::ClientContext* context, const ::prpc::InitSessionReq& request, ::prpc::InitSessionRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::InitSessionReq, ::prpc::InitSessionRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_InitSession_, context, request, response);
+}
+
+void BtService::Stub::async::InitSession(::grpc::ClientContext* context, const ::prpc::InitSessionReq* request, ::prpc::InitSessionRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::InitSessionReq, ::prpc::InitSessionRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_InitSession_, context, request, response, std::move(f));
+}
+
+void BtService::Stub::async::InitSession(::grpc::ClientContext* context, const ::prpc::InitSessionReq* request, ::prpc::InitSessionRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_InitSession_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::InitSessionRsp>* BtService::Stub::PrepareAsyncInitSessionRaw(::grpc::ClientContext* context, const ::prpc::InitSessionReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::InitSessionRsp, ::prpc::InitSessionReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_InitSession_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::InitSessionRsp>* BtService::Stub::AsyncInitSessionRaw(::grpc::ClientContext* context, const ::prpc::InitSessionReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncInitSessionRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
 
 ::grpc::Status BtService::Stub::Parse(::grpc::ClientContext* context, const ::prpc::DownloadRequest& request, ::prpc::DownloadRespone* response) {
   return ::grpc::internal::BlockingUnaryCall< ::prpc::DownloadRequest, ::prpc::DownloadRespone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_Parse_, context, request, response);
@@ -212,6 +264,29 @@ void BtService::Stub::async::GetBtStatus(::grpc::ClientContext* context, const :
   return result;
 }
 
+::grpc::Status BtService::Stub::GetSessionParams(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq& request, ::prpc::GetSessionParamsRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::GetSessionParamsReq, ::prpc::GetSessionParamsRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetSessionParams_, context, request, response);
+}
+
+void BtService::Stub::async::GetSessionParams(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq* request, ::prpc::GetSessionParamsRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::GetSessionParamsReq, ::prpc::GetSessionParamsRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSessionParams_, context, request, response, std::move(f));
+}
+
+void BtService::Stub::async::GetSessionParams(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq* request, ::prpc::GetSessionParamsRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSessionParams_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::GetSessionParamsRsp>* BtService::Stub::PrepareAsyncGetSessionParamsRaw(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::GetSessionParamsRsp, ::prpc::GetSessionParamsReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetSessionParams_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::GetSessionParamsRsp>* BtService::Stub::AsyncGetSessionParamsRaw(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetSessionParamsRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ::grpc::ClientReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* BtService::Stub::OnBtStatusRaw(::grpc::ClientContext* context) {
   return ::grpc::internal::ClientReaderWriterFactory< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>::Create(channel_.get(), rpcmethod_OnBtStatus_, context);
 }
@@ -248,6 +323,26 @@ BtService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       BtService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::InitedSessionReq, ::prpc::InitedSessionRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](BtService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::InitedSessionReq* req,
+             ::prpc::InitedSessionRsp* resp) {
+               return service->InitedSession(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      BtService_method_names[1],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::InitSessionReq, ::prpc::InitSessionRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](BtService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::InitSessionReq* req,
+             ::prpc::InitSessionRsp* resp) {
+               return service->InitSession(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      BtService_method_names[2],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::DownloadRequest, ::prpc::DownloadRespone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](BtService::Service* service,
              ::grpc::ServerContext* ctx,
@@ -256,7 +351,7 @@ BtService::Service::Service() {
                return service->Parse(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      BtService_method_names[1],
+      BtService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::DownloadRequest, ::prpc::DownloadRespone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](BtService::Service* service,
@@ -266,7 +361,7 @@ BtService::Service::Service() {
                return service->Download(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      BtService_method_names[2],
+      BtService_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::RemoveTorrentReq, ::prpc::RemoveTorrentRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](BtService::Service* service,
@@ -276,7 +371,7 @@ BtService::Service::Service() {
                return service->RemoveTorrent(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      BtService_method_names[3],
+      BtService_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::GetMagnetUriReq, ::prpc::GetMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](BtService::Service* service,
@@ -286,7 +381,7 @@ BtService::Service::Service() {
                return service->GetMagnetUri(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      BtService_method_names[4],
+      BtService_method_names[6],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::GetResumeDataReq, ::prpc::GetResumeDataRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](BtService::Service* service,
@@ -296,7 +391,7 @@ BtService::Service::Service() {
                return service->GetResumeData(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      BtService_method_names[5],
+      BtService_method_names[7],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::GetTorrentInfoReq, ::prpc::GetTorrentInfoRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](BtService::Service* service,
@@ -306,7 +401,7 @@ BtService::Service::Service() {
                return service->GetTorrentInfo(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      BtService_method_names[6],
+      BtService_method_names[8],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::GetBtStatusReq, ::prpc::GetBtStatusRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](BtService::Service* service,
@@ -316,7 +411,17 @@ BtService::Service::Service() {
                return service->GetBtStatus(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      BtService_method_names[7],
+      BtService_method_names[9],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::GetSessionParamsReq, ::prpc::GetSessionParamsRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](BtService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::GetSessionParamsReq* req,
+             ::prpc::GetSessionParamsRsp* resp) {
+               return service->GetSessionParams(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      BtService_method_names[10],
       ::grpc::internal::RpcMethod::BIDI_STREAMING,
       new ::grpc::internal::BidiStreamingHandler< BtService::Service, ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>(
           [](BtService::Service* service,
@@ -326,7 +431,7 @@ BtService::Service::Service() {
                return service->OnBtStatus(ctx, stream);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      BtService_method_names[8],
+      BtService_method_names[11],
       ::grpc::internal::RpcMethod::BIDI_STREAMING,
       new ::grpc::internal::BidiStreamingHandler< BtService::Service, ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>(
           [](BtService::Service* service,
@@ -338,6 +443,20 @@ BtService::Service::Service() {
 }
 
 BtService::Service::~Service() {
+}
+
+::grpc::Status BtService::Service::InitedSession(::grpc::ServerContext* context, const ::prpc::InitedSessionReq* request, ::prpc::InitedSessionRsp* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status BtService::Service::InitSession(::grpc::ServerContext* context, const ::prpc::InitSessionReq* request, ::prpc::InitSessionRsp* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
 ::grpc::Status BtService::Service::Parse(::grpc::ServerContext* context, const ::prpc::DownloadRequest* request, ::prpc::DownloadRespone* response) {
@@ -383,6 +502,13 @@ BtService::Service::~Service() {
 }
 
 ::grpc::Status BtService::Service::GetBtStatus(::grpc::ServerContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status BtService::Service::GetSessionParams(::grpc::ServerContext* context, const ::prpc::GetSessionParamsReq* request, ::prpc::GetSessionParamsRsp* response) {
   (void) context;
   (void) request;
   (void) response;

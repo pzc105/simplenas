@@ -2,7 +2,6 @@ package bt
 
 import (
 	"context"
-	"fmt"
 	"io"
 	"pnas/log"
 	"pnas/prpc"
@@ -71,7 +70,7 @@ func WithOnFileCompleted(onFileCompleted func(*prpc.FileCompletedRes)) *funcBtCl
 func (bt *BtClient) Init(opts ...BtClientOpt) {
 	bc := backoff.DefaultConfig
 	bc.MaxDelay = time.Second * 3
-	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", setting.GS().Bt.Ip, setting.GS().Bt.Port),
+	conn, err := grpc.Dial(setting.GS().Bt.BtClientAddress,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 		grpc.WithConnectParams(grpc.ConnectParams{
 			Backoff:           bc,

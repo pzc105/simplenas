@@ -101,6 +101,12 @@ extern GetResumeDataReqDefaultTypeInternal _GetResumeDataReq_default_instance_;
 class GetResumeDataRsp;
 struct GetResumeDataRspDefaultTypeInternal;
 extern GetResumeDataRspDefaultTypeInternal _GetResumeDataRsp_default_instance_;
+class GetSessionParamsReq;
+struct GetSessionParamsReqDefaultTypeInternal;
+extern GetSessionParamsReqDefaultTypeInternal _GetSessionParamsReq_default_instance_;
+class GetSessionParamsRsp;
+struct GetSessionParamsRspDefaultTypeInternal;
+extern GetSessionParamsRspDefaultTypeInternal _GetSessionParamsRsp_default_instance_;
 class GetTorrentInfoReq;
 struct GetTorrentInfoReqDefaultTypeInternal;
 extern GetTorrentInfoReqDefaultTypeInternal _GetTorrentInfoReq_default_instance_;
@@ -110,6 +116,18 @@ extern GetTorrentInfoRspDefaultTypeInternal _GetTorrentInfoRsp_default_instance_
 class InfoHash;
 struct InfoHashDefaultTypeInternal;
 extern InfoHashDefaultTypeInternal _InfoHash_default_instance_;
+class InitSessionReq;
+struct InitSessionReqDefaultTypeInternal;
+extern InitSessionReqDefaultTypeInternal _InitSessionReq_default_instance_;
+class InitSessionRsp;
+struct InitSessionRspDefaultTypeInternal;
+extern InitSessionRspDefaultTypeInternal _InitSessionRsp_default_instance_;
+class InitedSessionReq;
+struct InitedSessionReqDefaultTypeInternal;
+extern InitedSessionReqDefaultTypeInternal _InitedSessionReq_default_instance_;
+class InitedSessionRsp;
+struct InitedSessionRspDefaultTypeInternal;
+extern InitedSessionRspDefaultTypeInternal _InitedSessionRsp_default_instance_;
 class RemoveTorrentReq;
 struct RemoveTorrentReqDefaultTypeInternal;
 extern RemoveTorrentReqDefaultTypeInternal _RemoveTorrentReq_default_instance_;
@@ -276,6 +294,662 @@ inline bool BtStateEnum_Parse(absl::string_view name, BtStateEnum* value) {
 
 // -------------------------------------------------------------------
 
+class InitedSessionReq final :
+    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.InitedSessionReq) */ {
+ public:
+  inline InitedSessionReq() : InitedSessionReq(nullptr) {}
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR InitedSessionReq(::google::protobuf::internal::ConstantInitialized);
+
+  InitedSessionReq(const InitedSessionReq& from);
+  InitedSessionReq(InitedSessionReq&& from) noexcept
+    : InitedSessionReq() {
+    *this = ::std::move(from);
+  }
+
+  inline InitedSessionReq& operator=(const InitedSessionReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline InitedSessionReq& operator=(InitedSessionReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const InitedSessionReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const InitedSessionReq* internal_default_instance() {
+    return reinterpret_cast<const InitedSessionReq*>(
+               &_InitedSessionReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    0;
+
+  friend void swap(InitedSessionReq& a, InitedSessionReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(InitedSessionReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(InitedSessionReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  InitedSessionReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<InitedSessionReq>(arena);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const InitedSessionReq& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const InitedSessionReq& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.InitedSessionReq";
+  }
+  protected:
+  explicit InitedSessionReq(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:prpc.InitedSessionReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  friend struct ::TableStruct_bt_2eproto;
+};// -------------------------------------------------------------------
+
+class InitedSessionRsp final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.InitedSessionRsp) */ {
+ public:
+  inline InitedSessionRsp() : InitedSessionRsp(nullptr) {}
+  ~InitedSessionRsp() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR InitedSessionRsp(::google::protobuf::internal::ConstantInitialized);
+
+  InitedSessionRsp(const InitedSessionRsp& from);
+  InitedSessionRsp(InitedSessionRsp&& from) noexcept
+    : InitedSessionRsp() {
+    *this = ::std::move(from);
+  }
+
+  inline InitedSessionRsp& operator=(const InitedSessionRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline InitedSessionRsp& operator=(InitedSessionRsp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const InitedSessionRsp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const InitedSessionRsp* internal_default_instance() {
+    return reinterpret_cast<const InitedSessionRsp*>(
+               &_InitedSessionRsp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  friend void swap(InitedSessionRsp& a, InitedSessionRsp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(InitedSessionRsp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(InitedSessionRsp* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  InitedSessionRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<InitedSessionRsp>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const InitedSessionRsp& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const InitedSessionRsp& from) {
+    InitedSessionRsp::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(InitedSessionRsp* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.InitedSessionRsp";
+  }
+  protected:
+  explicit InitedSessionRsp(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kInitedFieldNumber = 1,
+  };
+  // bool inited = 1;
+  void clear_inited() ;
+  bool inited() const;
+  void set_inited(bool value);
+
+  private:
+  bool _internal_inited() const;
+  void _internal_set_inited(bool value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.InitedSessionRsp)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<0, 1, 0, 0, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    bool inited_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_bt_2eproto;
+};// -------------------------------------------------------------------
+
+class InitSessionReq final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.InitSessionReq) */ {
+ public:
+  inline InitSessionReq() : InitSessionReq(nullptr) {}
+  ~InitSessionReq() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR InitSessionReq(::google::protobuf::internal::ConstantInitialized);
+
+  InitSessionReq(const InitSessionReq& from);
+  InitSessionReq(InitSessionReq&& from) noexcept
+    : InitSessionReq() {
+    *this = ::std::move(from);
+  }
+
+  inline InitSessionReq& operator=(const InitSessionReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline InitSessionReq& operator=(InitSessionReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const InitSessionReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const InitSessionReq* internal_default_instance() {
+    return reinterpret_cast<const InitSessionReq*>(
+               &_InitSessionReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(InitSessionReq& a, InitSessionReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(InitSessionReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(InitSessionReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  InitSessionReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<InitSessionReq>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const InitSessionReq& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const InitSessionReq& from) {
+    InitSessionReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(InitSessionReq* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.InitSessionReq";
+  }
+  protected:
+  explicit InitSessionReq(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kProxyHostnameFieldNumber = 1,
+    kProxyTypeFieldNumber = 3,
+    kResumeDataFieldNumber = 7,
+    kProxyPortFieldNumber = 2,
+    kUploadRateLimitFieldNumber = 4,
+    kDownloadRateLimitFieldNumber = 5,
+    kHashingThreadsFieldNumber = 6,
+  };
+  // string proxy_hostname = 1;
+  void clear_proxy_hostname() ;
+  const std::string& proxy_hostname() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_proxy_hostname(Arg_&& arg, Args_... args);
+  std::string* mutable_proxy_hostname();
+  PROTOBUF_NODISCARD std::string* release_proxy_hostname();
+  void set_allocated_proxy_hostname(std::string* ptr);
+
+  private:
+  const std::string& _internal_proxy_hostname() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_proxy_hostname(
+      const std::string& value);
+  std::string* _internal_mutable_proxy_hostname();
+
+  public:
+  // string proxy_type = 3;
+  void clear_proxy_type() ;
+  const std::string& proxy_type() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_proxy_type(Arg_&& arg, Args_... args);
+  std::string* mutable_proxy_type();
+  PROTOBUF_NODISCARD std::string* release_proxy_type();
+  void set_allocated_proxy_type(std::string* ptr);
+
+  private:
+  const std::string& _internal_proxy_type() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_proxy_type(
+      const std::string& value);
+  std::string* _internal_mutable_proxy_type();
+
+  public:
+  // bytes resume_data = 7;
+  void clear_resume_data() ;
+  const std::string& resume_data() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_resume_data(Arg_&& arg, Args_... args);
+  std::string* mutable_resume_data();
+  PROTOBUF_NODISCARD std::string* release_resume_data();
+  void set_allocated_resume_data(std::string* ptr);
+
+  private:
+  const std::string& _internal_resume_data() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_resume_data(
+      const std::string& value);
+  std::string* _internal_mutable_resume_data();
+
+  public:
+  // int32 proxy_port = 2;
+  void clear_proxy_port() ;
+  ::int32_t proxy_port() const;
+  void set_proxy_port(::int32_t value);
+
+  private:
+  ::int32_t _internal_proxy_port() const;
+  void _internal_set_proxy_port(::int32_t value);
+
+  public:
+  // int32 upload_rate_limit = 4;
+  void clear_upload_rate_limit() ;
+  ::int32_t upload_rate_limit() const;
+  void set_upload_rate_limit(::int32_t value);
+
+  private:
+  ::int32_t _internal_upload_rate_limit() const;
+  void _internal_set_upload_rate_limit(::int32_t value);
+
+  public:
+  // int32 download_rate_limit = 5;
+  void clear_download_rate_limit() ;
+  ::int32_t download_rate_limit() const;
+  void set_download_rate_limit(::int32_t value);
+
+  private:
+  ::int32_t _internal_download_rate_limit() const;
+  void _internal_set_download_rate_limit(::int32_t value);
+
+  public:
+  // int32 hashing_threads = 6;
+  void clear_hashing_threads() ;
+  ::int32_t hashing_threads() const;
+  void set_hashing_threads(::int32_t value);
+
+  private:
+  ::int32_t _internal_hashing_threads() const;
+  void _internal_set_hashing_threads(::int32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.InitSessionReq)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<3, 7, 0, 52, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr proxy_hostname_;
+    ::google::protobuf::internal::ArenaStringPtr proxy_type_;
+    ::google::protobuf::internal::ArenaStringPtr resume_data_;
+    ::int32_t proxy_port_;
+    ::int32_t upload_rate_limit_;
+    ::int32_t download_rate_limit_;
+    ::int32_t hashing_threads_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_bt_2eproto;
+};// -------------------------------------------------------------------
+
+class InitSessionRsp final :
+    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.InitSessionRsp) */ {
+ public:
+  inline InitSessionRsp() : InitSessionRsp(nullptr) {}
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR InitSessionRsp(::google::protobuf::internal::ConstantInitialized);
+
+  InitSessionRsp(const InitSessionRsp& from);
+  InitSessionRsp(InitSessionRsp&& from) noexcept
+    : InitSessionRsp() {
+    *this = ::std::move(from);
+  }
+
+  inline InitSessionRsp& operator=(const InitSessionRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline InitSessionRsp& operator=(InitSessionRsp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const InitSessionRsp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const InitSessionRsp* internal_default_instance() {
+    return reinterpret_cast<const InitSessionRsp*>(
+               &_InitSessionRsp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(InitSessionRsp& a, InitSessionRsp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(InitSessionRsp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(InitSessionRsp* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  InitSessionRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<InitSessionRsp>(arena);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const InitSessionRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const InitSessionRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.InitSessionRsp";
+  }
+  protected:
+  explicit InitSessionRsp(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:prpc.InitSessionRsp)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  friend struct ::TableStruct_bt_2eproto;
+};// -------------------------------------------------------------------
+
 class BtFile final :
     public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.BtFile) */ {
  public:
@@ -332,7 +1006,7 @@ class BtFile final :
                &_BtFile_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    0;
+    4;
 
   friend void swap(BtFile& a, BtFile& b) {
     a.Swap(&b);
@@ -565,7 +1239,7 @@ class TorrentInfo final :
                &_TorrentInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    5;
 
   friend void swap(TorrentInfo& a, TorrentInfo& b) {
     a.Swap(&b);
@@ -821,7 +1495,7 @@ class TorrentStatus final :
                &_TorrentStatus_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    6;
 
   friend void swap(TorrentStatus& a, TorrentStatus& b) {
     a.Swap(&b);
@@ -1075,7 +1749,7 @@ class DownloadRequest final :
                &_DownloadRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    7;
 
   friend void swap(DownloadRequest& a, DownloadRequest& b) {
     a.Swap(&b);
@@ -1290,7 +1964,7 @@ class InfoHash final :
                &_InfoHash_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    8;
 
   friend void swap(InfoHash& a, InfoHash& b) {
     a.Swap(&b);
@@ -1466,7 +2140,7 @@ class DownloadRespone final :
                &_DownloadRespone_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    9;
 
   friend void swap(DownloadRespone& a, DownloadRespone& b) {
     a.Swap(&b);
@@ -1630,7 +2304,7 @@ class GetMagnetUriReq final :
                &_GetMagnetUriReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    10;
 
   friend void swap(GetMagnetUriReq& a, GetMagnetUriReq& b) {
     a.Swap(&b);
@@ -1844,7 +2518,7 @@ class GetMagnetUriRsp final :
                &_GetMagnetUriRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    11;
 
   friend void swap(GetMagnetUriRsp& a, GetMagnetUriRsp& b) {
     a.Swap(&b);
@@ -2026,7 +2700,7 @@ class GetResumeDataReq final :
                &_GetResumeDataReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    12;
 
   friend void swap(GetResumeDataReq& a, GetResumeDataReq& b) {
     a.Swap(&b);
@@ -2190,7 +2864,7 @@ class GetResumeDataRsp final :
                &_GetResumeDataRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    13;
 
   friend void swap(GetResumeDataRsp& a, GetResumeDataRsp& b) {
     a.Swap(&b);
@@ -2262,9 +2936,9 @@ class GetResumeDataRsp final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kResumeDataFieldNumber = 9,
+    kResumeDataFieldNumber = 1,
   };
-  // bytes resume_data = 9;
+  // bytes resume_data = 1;
   void clear_resume_data() ;
   const std::string& resume_data() const;
   template <typename Arg_ = const std::string&, typename... Args_>
@@ -2354,7 +3028,7 @@ class GetTorrentInfoReq final :
                &_GetTorrentInfoReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    14;
 
   friend void swap(GetTorrentInfoReq& a, GetTorrentInfoReq& b) {
     a.Swap(&b);
@@ -2518,7 +3192,7 @@ class GetTorrentInfoRsp final :
                &_GetTorrentInfoRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    15;
 
   friend void swap(GetTorrentInfoRsp& a, GetTorrentInfoRsp& b) {
     a.Swap(&b);
@@ -2626,6 +3300,295 @@ class GetTorrentInfoRsp final :
   friend struct ::TableStruct_bt_2eproto;
 };// -------------------------------------------------------------------
 
+class GetSessionParamsReq final :
+    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.GetSessionParamsReq) */ {
+ public:
+  inline GetSessionParamsReq() : GetSessionParamsReq(nullptr) {}
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR GetSessionParamsReq(::google::protobuf::internal::ConstantInitialized);
+
+  GetSessionParamsReq(const GetSessionParamsReq& from);
+  GetSessionParamsReq(GetSessionParamsReq&& from) noexcept
+    : GetSessionParamsReq() {
+    *this = ::std::move(from);
+  }
+
+  inline GetSessionParamsReq& operator=(const GetSessionParamsReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetSessionParamsReq& operator=(GetSessionParamsReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetSessionParamsReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetSessionParamsReq* internal_default_instance() {
+    return reinterpret_cast<const GetSessionParamsReq*>(
+               &_GetSessionParamsReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    16;
+
+  friend void swap(GetSessionParamsReq& a, GetSessionParamsReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetSessionParamsReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetSessionParamsReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetSessionParamsReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetSessionParamsReq>(arena);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const GetSessionParamsReq& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const GetSessionParamsReq& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.GetSessionParamsReq";
+  }
+  protected:
+  explicit GetSessionParamsReq(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:prpc.GetSessionParamsReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  friend struct ::TableStruct_bt_2eproto;
+};// -------------------------------------------------------------------
+
+class GetSessionParamsRsp final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.GetSessionParamsRsp) */ {
+ public:
+  inline GetSessionParamsRsp() : GetSessionParamsRsp(nullptr) {}
+  ~GetSessionParamsRsp() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR GetSessionParamsRsp(::google::protobuf::internal::ConstantInitialized);
+
+  GetSessionParamsRsp(const GetSessionParamsRsp& from);
+  GetSessionParamsRsp(GetSessionParamsRsp&& from) noexcept
+    : GetSessionParamsRsp() {
+    *this = ::std::move(from);
+  }
+
+  inline GetSessionParamsRsp& operator=(const GetSessionParamsRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetSessionParamsRsp& operator=(GetSessionParamsRsp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetSessionParamsRsp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetSessionParamsRsp* internal_default_instance() {
+    return reinterpret_cast<const GetSessionParamsRsp*>(
+               &_GetSessionParamsRsp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    17;
+
+  friend void swap(GetSessionParamsRsp& a, GetSessionParamsRsp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetSessionParamsRsp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetSessionParamsRsp* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetSessionParamsRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetSessionParamsRsp>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const GetSessionParamsRsp& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const GetSessionParamsRsp& from) {
+    GetSessionParamsRsp::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetSessionParamsRsp* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.GetSessionParamsRsp";
+  }
+  protected:
+  explicit GetSessionParamsRsp(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kResumeDataFieldNumber = 1,
+  };
+  // bytes resume_data = 1;
+  void clear_resume_data() ;
+  const std::string& resume_data() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_resume_data(Arg_&& arg, Args_... args);
+  std::string* mutable_resume_data();
+  PROTOBUF_NODISCARD std::string* release_resume_data();
+  void set_allocated_resume_data(std::string* ptr);
+
+  private:
+  const std::string& _internal_resume_data() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_resume_data(
+      const std::string& value);
+  std::string* _internal_mutable_resume_data();
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.GetSessionParamsRsp)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<0, 1, 0, 0, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr resume_data_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_bt_2eproto;
+};// -------------------------------------------------------------------
+
 class GetBtStatusReq final :
     public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.GetBtStatusReq) */ {
  public:
@@ -2682,7 +3645,7 @@ class GetBtStatusReq final :
                &_GetBtStatusReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    18;
 
   friend void swap(GetBtStatusReq& a, GetBtStatusReq& b) {
     a.Swap(&b);
@@ -2846,7 +3809,7 @@ class GetBtStatusRsp final :
                &_GetBtStatusRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    19;
 
   friend void swap(GetBtStatusRsp& a, GetBtStatusRsp& b) {
     a.Swap(&b);
@@ -3010,7 +3973,7 @@ class BtStatusRequest final :
                &_BtStatusRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    20;
 
   friend void swap(BtStatusRequest& a, BtStatusRequest& b) {
     a.Swap(&b);
@@ -3176,7 +4139,7 @@ class BtStatusRespone final :
                &_BtStatusRespone_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    21;
 
   friend void swap(BtStatusRespone& a, BtStatusRespone& b) {
     a.Swap(&b);
@@ -3342,7 +4305,7 @@ class TorrentInfoReq final :
                &_TorrentInfoReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    22;
 
   friend void swap(TorrentInfoReq& a, TorrentInfoReq& b) {
     a.Swap(&b);
@@ -3508,7 +4471,7 @@ class TorrentInfoRes final :
                &_TorrentInfoRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    23;
 
   friend void swap(TorrentInfoRes& a, TorrentInfoRes& b) {
     a.Swap(&b);
@@ -3672,7 +4635,7 @@ class RemoveTorrentReq final :
                &_RemoveTorrentReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    24;
 
   friend void swap(RemoveTorrentReq& a, RemoveTorrentReq& b) {
     a.Swap(&b);
@@ -3835,7 +4798,7 @@ class RemoveTorrentRes final :
                &_RemoveTorrentRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    25;
 
   friend void swap(RemoveTorrentRes& a, RemoveTorrentRes& b) {
     a.Swap(&b);
@@ -3961,7 +4924,7 @@ class FileProgressReq final :
                &_FileProgressReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    26;
 
   friend void swap(FileProgressReq& a, FileProgressReq& b) {
     a.Swap(&b);
@@ -4125,7 +5088,7 @@ class FileProgressRes final :
                &_FileProgressRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    27;
 
   friend void swap(FileProgressRes& a, FileProgressRes& b) {
     a.Swap(&b);
@@ -4308,7 +5271,7 @@ class FileCompletedReq final :
                &_FileCompletedReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    28;
 
   friend void swap(FileCompletedReq& a, FileCompletedReq& b) {
     a.Swap(&b);
@@ -4434,7 +5397,7 @@ class FileCompletedRes final :
                &_FileCompletedRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    29;
 
   friend void swap(FileCompletedRes& a, FileCompletedRes& b) {
     a.Swap(&b);
@@ -4566,6 +5529,285 @@ class FileCompletedRes final :
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// InitedSessionReq
+
+// -------------------------------------------------------------------
+
+// InitedSessionRsp
+
+// bool inited = 1;
+inline void InitedSessionRsp::clear_inited() {
+  _impl_.inited_ = false;
+}
+inline bool InitedSessionRsp::inited() const {
+  // @@protoc_insertion_point(field_get:prpc.InitedSessionRsp.inited)
+  return _internal_inited();
+}
+inline void InitedSessionRsp::set_inited(bool value) {
+  _internal_set_inited(value);
+  // @@protoc_insertion_point(field_set:prpc.InitedSessionRsp.inited)
+}
+inline bool InitedSessionRsp::_internal_inited() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.inited_;
+}
+inline void InitedSessionRsp::_internal_set_inited(bool value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.inited_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// InitSessionReq
+
+// string proxy_hostname = 1;
+inline void InitSessionReq::clear_proxy_hostname() {
+  _impl_.proxy_hostname_.ClearToEmpty();
+}
+inline const std::string& InitSessionReq::proxy_hostname() const {
+  // @@protoc_insertion_point(field_get:prpc.InitSessionReq.proxy_hostname)
+  return _internal_proxy_hostname();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void InitSessionReq::set_proxy_hostname(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.proxy_hostname_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.InitSessionReq.proxy_hostname)
+}
+inline std::string* InitSessionReq::mutable_proxy_hostname() {
+  std::string* _s = _internal_mutable_proxy_hostname();
+  // @@protoc_insertion_point(field_mutable:prpc.InitSessionReq.proxy_hostname)
+  return _s;
+}
+inline const std::string& InitSessionReq::_internal_proxy_hostname() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.proxy_hostname_.Get();
+}
+inline void InitSessionReq::_internal_set_proxy_hostname(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.proxy_hostname_.Set(value, GetArenaForAllocation());
+}
+inline std::string* InitSessionReq::_internal_mutable_proxy_hostname() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.proxy_hostname_.Mutable( GetArenaForAllocation());
+}
+inline std::string* InitSessionReq::release_proxy_hostname() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.InitSessionReq.proxy_hostname)
+  return _impl_.proxy_hostname_.Release();
+}
+inline void InitSessionReq::set_allocated_proxy_hostname(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.proxy_hostname_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.proxy_hostname_.IsDefault()) {
+          _impl_.proxy_hostname_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.InitSessionReq.proxy_hostname)
+}
+
+// int32 proxy_port = 2;
+inline void InitSessionReq::clear_proxy_port() {
+  _impl_.proxy_port_ = 0;
+}
+inline ::int32_t InitSessionReq::proxy_port() const {
+  // @@protoc_insertion_point(field_get:prpc.InitSessionReq.proxy_port)
+  return _internal_proxy_port();
+}
+inline void InitSessionReq::set_proxy_port(::int32_t value) {
+  _internal_set_proxy_port(value);
+  // @@protoc_insertion_point(field_set:prpc.InitSessionReq.proxy_port)
+}
+inline ::int32_t InitSessionReq::_internal_proxy_port() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.proxy_port_;
+}
+inline void InitSessionReq::_internal_set_proxy_port(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.proxy_port_ = value;
+}
+
+// string proxy_type = 3;
+inline void InitSessionReq::clear_proxy_type() {
+  _impl_.proxy_type_.ClearToEmpty();
+}
+inline const std::string& InitSessionReq::proxy_type() const {
+  // @@protoc_insertion_point(field_get:prpc.InitSessionReq.proxy_type)
+  return _internal_proxy_type();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void InitSessionReq::set_proxy_type(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.proxy_type_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.InitSessionReq.proxy_type)
+}
+inline std::string* InitSessionReq::mutable_proxy_type() {
+  std::string* _s = _internal_mutable_proxy_type();
+  // @@protoc_insertion_point(field_mutable:prpc.InitSessionReq.proxy_type)
+  return _s;
+}
+inline const std::string& InitSessionReq::_internal_proxy_type() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.proxy_type_.Get();
+}
+inline void InitSessionReq::_internal_set_proxy_type(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.proxy_type_.Set(value, GetArenaForAllocation());
+}
+inline std::string* InitSessionReq::_internal_mutable_proxy_type() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.proxy_type_.Mutable( GetArenaForAllocation());
+}
+inline std::string* InitSessionReq::release_proxy_type() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.InitSessionReq.proxy_type)
+  return _impl_.proxy_type_.Release();
+}
+inline void InitSessionReq::set_allocated_proxy_type(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.proxy_type_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.proxy_type_.IsDefault()) {
+          _impl_.proxy_type_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.InitSessionReq.proxy_type)
+}
+
+// int32 upload_rate_limit = 4;
+inline void InitSessionReq::clear_upload_rate_limit() {
+  _impl_.upload_rate_limit_ = 0;
+}
+inline ::int32_t InitSessionReq::upload_rate_limit() const {
+  // @@protoc_insertion_point(field_get:prpc.InitSessionReq.upload_rate_limit)
+  return _internal_upload_rate_limit();
+}
+inline void InitSessionReq::set_upload_rate_limit(::int32_t value) {
+  _internal_set_upload_rate_limit(value);
+  // @@protoc_insertion_point(field_set:prpc.InitSessionReq.upload_rate_limit)
+}
+inline ::int32_t InitSessionReq::_internal_upload_rate_limit() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.upload_rate_limit_;
+}
+inline void InitSessionReq::_internal_set_upload_rate_limit(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.upload_rate_limit_ = value;
+}
+
+// int32 download_rate_limit = 5;
+inline void InitSessionReq::clear_download_rate_limit() {
+  _impl_.download_rate_limit_ = 0;
+}
+inline ::int32_t InitSessionReq::download_rate_limit() const {
+  // @@protoc_insertion_point(field_get:prpc.InitSessionReq.download_rate_limit)
+  return _internal_download_rate_limit();
+}
+inline void InitSessionReq::set_download_rate_limit(::int32_t value) {
+  _internal_set_download_rate_limit(value);
+  // @@protoc_insertion_point(field_set:prpc.InitSessionReq.download_rate_limit)
+}
+inline ::int32_t InitSessionReq::_internal_download_rate_limit() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.download_rate_limit_;
+}
+inline void InitSessionReq::_internal_set_download_rate_limit(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.download_rate_limit_ = value;
+}
+
+// int32 hashing_threads = 6;
+inline void InitSessionReq::clear_hashing_threads() {
+  _impl_.hashing_threads_ = 0;
+}
+inline ::int32_t InitSessionReq::hashing_threads() const {
+  // @@protoc_insertion_point(field_get:prpc.InitSessionReq.hashing_threads)
+  return _internal_hashing_threads();
+}
+inline void InitSessionReq::set_hashing_threads(::int32_t value) {
+  _internal_set_hashing_threads(value);
+  // @@protoc_insertion_point(field_set:prpc.InitSessionReq.hashing_threads)
+}
+inline ::int32_t InitSessionReq::_internal_hashing_threads() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.hashing_threads_;
+}
+inline void InitSessionReq::_internal_set_hashing_threads(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.hashing_threads_ = value;
+}
+
+// bytes resume_data = 7;
+inline void InitSessionReq::clear_resume_data() {
+  _impl_.resume_data_.ClearToEmpty();
+}
+inline const std::string& InitSessionReq::resume_data() const {
+  // @@protoc_insertion_point(field_get:prpc.InitSessionReq.resume_data)
+  return _internal_resume_data();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void InitSessionReq::set_resume_data(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.resume_data_.SetBytes(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.InitSessionReq.resume_data)
+}
+inline std::string* InitSessionReq::mutable_resume_data() {
+  std::string* _s = _internal_mutable_resume_data();
+  // @@protoc_insertion_point(field_mutable:prpc.InitSessionReq.resume_data)
+  return _s;
+}
+inline const std::string& InitSessionReq::_internal_resume_data() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.resume_data_.Get();
+}
+inline void InitSessionReq::_internal_set_resume_data(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.resume_data_.Set(value, GetArenaForAllocation());
+}
+inline std::string* InitSessionReq::_internal_mutable_resume_data() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.resume_data_.Mutable( GetArenaForAllocation());
+}
+inline std::string* InitSessionReq::release_resume_data() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.InitSessionReq.resume_data)
+  return _impl_.resume_data_.Release();
+}
+inline void InitSessionReq::set_allocated_resume_data(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.resume_data_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.resume_data_.IsDefault()) {
+          _impl_.resume_data_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.InitSessionReq.resume_data)
+}
+
+// -------------------------------------------------------------------
+
+// InitSessionRsp
+
 // -------------------------------------------------------------------
 
 // BtFile
@@ -6039,7 +7281,7 @@ inline void GetResumeDataReq::set_allocated_info_hash(::prpc::InfoHash* value) {
 
 // GetResumeDataRsp
 
-// bytes resume_data = 9;
+// bytes resume_data = 1;
 inline void GetResumeDataRsp::clear_resume_data() {
   _impl_.resume_data_.ClearToEmpty();
 }
@@ -6288,6 +7530,65 @@ inline void GetTorrentInfoRsp::set_allocated_torrent_info(::prpc::TorrentInfo* v
 
   _impl_.torrent_info_ = reinterpret_cast<::prpc::TorrentInfo*>(value);
   // @@protoc_insertion_point(field_set_allocated:prpc.GetTorrentInfoRsp.torrent_info)
+}
+
+// -------------------------------------------------------------------
+
+// GetSessionParamsReq
+
+// -------------------------------------------------------------------
+
+// GetSessionParamsRsp
+
+// bytes resume_data = 1;
+inline void GetSessionParamsRsp::clear_resume_data() {
+  _impl_.resume_data_.ClearToEmpty();
+}
+inline const std::string& GetSessionParamsRsp::resume_data() const {
+  // @@protoc_insertion_point(field_get:prpc.GetSessionParamsRsp.resume_data)
+  return _internal_resume_data();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void GetSessionParamsRsp::set_resume_data(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.resume_data_.SetBytes(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.GetSessionParamsRsp.resume_data)
+}
+inline std::string* GetSessionParamsRsp::mutable_resume_data() {
+  std::string* _s = _internal_mutable_resume_data();
+  // @@protoc_insertion_point(field_mutable:prpc.GetSessionParamsRsp.resume_data)
+  return _s;
+}
+inline const std::string& GetSessionParamsRsp::_internal_resume_data() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.resume_data_.Get();
+}
+inline void GetSessionParamsRsp::_internal_set_resume_data(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.resume_data_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetSessionParamsRsp::_internal_mutable_resume_data() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.resume_data_.Mutable( GetArenaForAllocation());
+}
+inline std::string* GetSessionParamsRsp::release_resume_data() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.GetSessionParamsRsp.resume_data)
+  return _impl_.resume_data_.Release();
+}
+inline void GetSessionParamsRsp::set_allocated_resume_data(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.resume_data_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.resume_data_.IsDefault()) {
+          _impl_.resume_data_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.GetSessionParamsRsp.resume_data)
 }
 
 // -------------------------------------------------------------------

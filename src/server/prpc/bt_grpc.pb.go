@@ -19,21 +19,26 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	BtService_Parse_FullMethodName           = "/prpc.BtService/Parse"
-	BtService_Download_FullMethodName        = "/prpc.BtService/Download"
-	BtService_RemoveTorrent_FullMethodName   = "/prpc.BtService/RemoveTorrent"
-	BtService_GetMagnetUri_FullMethodName    = "/prpc.BtService/GetMagnetUri"
-	BtService_GetResumeData_FullMethodName   = "/prpc.BtService/GetResumeData"
-	BtService_GetTorrentInfo_FullMethodName  = "/prpc.BtService/GetTorrentInfo"
-	BtService_GetBtStatus_FullMethodName     = "/prpc.BtService/GetBtStatus"
-	BtService_OnBtStatus_FullMethodName      = "/prpc.BtService/OnBtStatus"
-	BtService_OnFileCompleted_FullMethodName = "/prpc.BtService/OnFileCompleted"
+	BtService_InitedSession_FullMethodName    = "/prpc.BtService/InitedSession"
+	BtService_InitSession_FullMethodName      = "/prpc.BtService/InitSession"
+	BtService_Parse_FullMethodName            = "/prpc.BtService/Parse"
+	BtService_Download_FullMethodName         = "/prpc.BtService/Download"
+	BtService_RemoveTorrent_FullMethodName    = "/prpc.BtService/RemoveTorrent"
+	BtService_GetMagnetUri_FullMethodName     = "/prpc.BtService/GetMagnetUri"
+	BtService_GetResumeData_FullMethodName    = "/prpc.BtService/GetResumeData"
+	BtService_GetTorrentInfo_FullMethodName   = "/prpc.BtService/GetTorrentInfo"
+	BtService_GetBtStatus_FullMethodName      = "/prpc.BtService/GetBtStatus"
+	BtService_GetSessionParams_FullMethodName = "/prpc.BtService/GetSessionParams"
+	BtService_OnBtStatus_FullMethodName       = "/prpc.BtService/OnBtStatus"
+	BtService_OnFileCompleted_FullMethodName  = "/prpc.BtService/OnFileCompleted"
 )
 
 // BtServiceClient is the client API for BtService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BtServiceClient interface {
+	InitedSession(ctx context.Context, in *InitedSessionReq, opts ...grpc.CallOption) (*InitedSessionRsp, error)
+	InitSession(ctx context.Context, in *InitSessionReq, opts ...grpc.CallOption) (*InitSessionRsp, error)
 	Parse(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadRespone, error)
 	Download(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadRespone, error)
 	RemoveTorrent(ctx context.Context, in *RemoveTorrentReq, opts ...grpc.CallOption) (*RemoveTorrentRes, error)
@@ -41,6 +46,7 @@ type BtServiceClient interface {
 	GetResumeData(ctx context.Context, in *GetResumeDataReq, opts ...grpc.CallOption) (*GetResumeDataRsp, error)
 	GetTorrentInfo(ctx context.Context, in *GetTorrentInfoReq, opts ...grpc.CallOption) (*GetTorrentInfoRsp, error)
 	GetBtStatus(ctx context.Context, in *GetBtStatusReq, opts ...grpc.CallOption) (*GetBtStatusRsp, error)
+	GetSessionParams(ctx context.Context, in *GetSessionParamsReq, opts ...grpc.CallOption) (*GetSessionParamsRsp, error)
 	OnBtStatus(ctx context.Context, opts ...grpc.CallOption) (BtService_OnBtStatusClient, error)
 	OnFileCompleted(ctx context.Context, opts ...grpc.CallOption) (BtService_OnFileCompletedClient, error)
 }
@@ -51,6 +57,24 @@ type btServiceClient struct {
 
 func NewBtServiceClient(cc grpc.ClientConnInterface) BtServiceClient {
 	return &btServiceClient{cc}
+}
+
+func (c *btServiceClient) InitedSession(ctx context.Context, in *InitedSessionReq, opts ...grpc.CallOption) (*InitedSessionRsp, error) {
+	out := new(InitedSessionRsp)
+	err := c.cc.Invoke(ctx, BtService_InitedSession_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *btServiceClient) InitSession(ctx context.Context, in *InitSessionReq, opts ...grpc.CallOption) (*InitSessionRsp, error) {
+	out := new(InitSessionRsp)
+	err := c.cc.Invoke(ctx, BtService_InitSession_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *btServiceClient) Parse(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadRespone, error) {
@@ -110,6 +134,15 @@ func (c *btServiceClient) GetTorrentInfo(ctx context.Context, in *GetTorrentInfo
 func (c *btServiceClient) GetBtStatus(ctx context.Context, in *GetBtStatusReq, opts ...grpc.CallOption) (*GetBtStatusRsp, error) {
 	out := new(GetBtStatusRsp)
 	err := c.cc.Invoke(ctx, BtService_GetBtStatus_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *btServiceClient) GetSessionParams(ctx context.Context, in *GetSessionParamsReq, opts ...grpc.CallOption) (*GetSessionParamsRsp, error) {
+	out := new(GetSessionParamsRsp)
+	err := c.cc.Invoke(ctx, BtService_GetSessionParams_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -182,6 +215,8 @@ func (x *btServiceOnFileCompletedClient) Recv() (*FileCompletedRes, error) {
 // All implementations must embed UnimplementedBtServiceServer
 // for forward compatibility
 type BtServiceServer interface {
+	InitedSession(context.Context, *InitedSessionReq) (*InitedSessionRsp, error)
+	InitSession(context.Context, *InitSessionReq) (*InitSessionRsp, error)
 	Parse(context.Context, *DownloadRequest) (*DownloadRespone, error)
 	Download(context.Context, *DownloadRequest) (*DownloadRespone, error)
 	RemoveTorrent(context.Context, *RemoveTorrentReq) (*RemoveTorrentRes, error)
@@ -189,6 +224,7 @@ type BtServiceServer interface {
 	GetResumeData(context.Context, *GetResumeDataReq) (*GetResumeDataRsp, error)
 	GetTorrentInfo(context.Context, *GetTorrentInfoReq) (*GetTorrentInfoRsp, error)
 	GetBtStatus(context.Context, *GetBtStatusReq) (*GetBtStatusRsp, error)
+	GetSessionParams(context.Context, *GetSessionParamsReq) (*GetSessionParamsRsp, error)
 	OnBtStatus(BtService_OnBtStatusServer) error
 	OnFileCompleted(BtService_OnFileCompletedServer) error
 	mustEmbedUnimplementedBtServiceServer()
@@ -198,6 +234,12 @@ type BtServiceServer interface {
 type UnimplementedBtServiceServer struct {
 }
 
+func (UnimplementedBtServiceServer) InitedSession(context.Context, *InitedSessionReq) (*InitedSessionRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InitedSession not implemented")
+}
+func (UnimplementedBtServiceServer) InitSession(context.Context, *InitSessionReq) (*InitSessionRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InitSession not implemented")
+}
 func (UnimplementedBtServiceServer) Parse(context.Context, *DownloadRequest) (*DownloadRespone, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Parse not implemented")
 }
@@ -219,6 +261,9 @@ func (UnimplementedBtServiceServer) GetTorrentInfo(context.Context, *GetTorrentI
 func (UnimplementedBtServiceServer) GetBtStatus(context.Context, *GetBtStatusReq) (*GetBtStatusRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBtStatus not implemented")
 }
+func (UnimplementedBtServiceServer) GetSessionParams(context.Context, *GetSessionParamsReq) (*GetSessionParamsRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSessionParams not implemented")
+}
 func (UnimplementedBtServiceServer) OnBtStatus(BtService_OnBtStatusServer) error {
 	return status.Errorf(codes.Unimplemented, "method OnBtStatus not implemented")
 }
@@ -236,6 +281,42 @@ type UnsafeBtServiceServer interface {
 
 func RegisterBtServiceServer(s grpc.ServiceRegistrar, srv BtServiceServer) {
 	s.RegisterService(&BtService_ServiceDesc, srv)
+}
+
+func _BtService_InitedSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InitedSessionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BtServiceServer).InitedSession(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BtService_InitedSession_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BtServiceServer).InitedSession(ctx, req.(*InitedSessionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BtService_InitSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InitSessionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BtServiceServer).InitSession(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BtService_InitSession_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BtServiceServer).InitSession(ctx, req.(*InitSessionReq))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _BtService_Parse_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -364,6 +445,24 @@ func _BtService_GetBtStatus_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BtService_GetSessionParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSessionParamsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BtServiceServer).GetSessionParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BtService_GetSessionParams_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BtServiceServer).GetSessionParams(ctx, req.(*GetSessionParamsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _BtService_OnBtStatus_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(BtServiceServer).OnBtStatus(&btServiceOnBtStatusServer{stream})
 }
@@ -424,6 +523,14 @@ var BtService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*BtServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "InitedSession",
+			Handler:    _BtService_InitedSession_Handler,
+		},
+		{
+			MethodName: "InitSession",
+			Handler:    _BtService_InitSession_Handler,
+		},
+		{
 			MethodName: "Parse",
 			Handler:    _BtService_Parse_Handler,
 		},
@@ -450,6 +557,10 @@ var BtService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBtStatus",
 			Handler:    _BtService_GetBtStatus_Handler,
+		},
+		{
+			MethodName: "GetSessionParams",
+			Handler:    _BtService_GetSessionParams_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

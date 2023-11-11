@@ -6,7 +6,6 @@
 #include "libtorrent/torrent_info.hpp"
 #include "libtorrent/magnet_uri.hpp"
 #include "libtorrent/alert_types.hpp"
-#include "setting.hpp"
 #include "prpc/bt.grpc.pb.h"
 #include <queue>
 #include <mutex>
@@ -111,13 +110,13 @@ namespace prpc
 
     std::vector<status_pusher_ptr> _st_pushers;
     status_pusher_ptr _st_pusher;
-    
+
     std::vector<filecompleted_pusher_ptr> _filecompleted_pushers;
     filecompleted_pusher_ptr _filecompleted_pusher;
   };
 
   using _bt_service = BtService::WithAsyncMethod_OnFileCompleted<
-          BtService::WithAsyncMethod_OnBtStatus<BtService::Service>>;
+      BtService::WithAsyncMethod_OnBtStatus<BtService::Service>>;
 
   class bt_service : public _bt_service
   {
@@ -130,16 +129,18 @@ namespace prpc
     grpc::ServerCompletionQueue *get_cq() const { return _cq.get(); }
 
   private:
+    ::grpc::Status InitedSession(::grpc::ServerContext* context, const ::prpc::InitedSessionReq* request, ::prpc::InitedSessionRsp* response) override;
+    ::grpc::Status InitSession(::grpc::ServerContext *context, const ::prpc::InitSessionReq *request, ::prpc::InitSessionRsp *response) override;
     ::grpc::Status Parse(::grpc::ServerContext *context, const ::prpc::DownloadRequest *request, ::prpc::DownloadRespone *response) override;
     ::grpc::Status Download(::grpc::ServerContext *context, const ::prpc::DownloadRequest *request, ::prpc::DownloadRespone *response) override;
     ::grpc::Status RemoveTorrent(::grpc::ServerContext *context, const ::prpc::RemoveTorrentReq *request, ::prpc::RemoveTorrentRes *response) override;
     ::grpc::Status GetMagnetUri(::grpc::ServerContext *context, const ::prpc::GetMagnetUriReq *request, ::prpc::GetMagnetUriRsp *response) override;
-    ::grpc::Status GetResumeData(::grpc::ServerContext* context, const ::prpc::GetResumeDataReq* request, ::prpc::GetResumeDataRsp* response) override;
-    ::grpc::Status GetTorrentInfo(::grpc::ServerContext* context, const ::prpc::GetTorrentInfoReq* request, ::prpc::GetTorrentInfoRsp* response) override;
-    ::grpc::Status GetBtStatus(::grpc::ServerContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response) override;
+    ::grpc::Status GetResumeData(::grpc::ServerContext *context, const ::prpc::GetResumeDataReq *request, ::prpc::GetResumeDataRsp *response) override;
+    ::grpc::Status GetTorrentInfo(::grpc::ServerContext *context, const ::prpc::GetTorrentInfoReq *request, ::prpc::GetTorrentInfoRsp *response) override;
+    ::grpc::Status GetBtStatus(::grpc::ServerContext *context, const ::prpc::GetBtStatusReq *request, ::prpc::GetBtStatusRsp *response) override;
+    ::grpc::Status GetSessionParams(::grpc::ServerContext *context, const ::prpc::GetSessionParamsReq *request, ::prpc::GetSessionParamsRsp *response) override;
 
   private:
-    YAML::Node _bt_config;
     std::unique_ptr<lt::session> _ses;
     lt::time_point _last_push_time;
 

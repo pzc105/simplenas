@@ -127,7 +127,7 @@ func (x BtFile_State) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BtFile_State.Descriptor instead.
 func (BtFile_State) EnumDescriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{0, 0}
+	return file_bt_proto_rawDescGZIP(), []int{4, 0}
 }
 
 type DownloadRequest_ReqType int32
@@ -176,7 +176,7 @@ func (x DownloadRequest_ReqType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DownloadRequest_ReqType.Descriptor instead.
 func (DownloadRequest_ReqType) EnumDescriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{3, 0}
+	return file_bt_proto_rawDescGZIP(), []int{7, 0}
 }
 
 type GetMagnetUriReq_ReqType int32
@@ -222,7 +222,225 @@ func (x GetMagnetUriReq_ReqType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use GetMagnetUriReq_ReqType.Descriptor instead.
 func (GetMagnetUriReq_ReqType) EnumDescriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{6, 0}
+	return file_bt_proto_rawDescGZIP(), []int{10, 0}
+}
+
+type InitedSessionReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *InitedSessionReq) Reset() {
+	*x = InitedSessionReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_bt_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InitedSessionReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InitedSessionReq) ProtoMessage() {}
+
+func (x *InitedSessionReq) ProtoReflect() protoreflect.Message {
+	mi := &file_bt_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InitedSessionReq.ProtoReflect.Descriptor instead.
+func (*InitedSessionReq) Descriptor() ([]byte, []int) {
+	return file_bt_proto_rawDescGZIP(), []int{0}
+}
+
+type InitedSessionRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Inited bool `protobuf:"varint,1,opt,name=inited,proto3" json:"inited,omitempty"`
+}
+
+func (x *InitedSessionRsp) Reset() {
+	*x = InitedSessionRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_bt_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InitedSessionRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InitedSessionRsp) ProtoMessage() {}
+
+func (x *InitedSessionRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_bt_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InitedSessionRsp.ProtoReflect.Descriptor instead.
+func (*InitedSessionRsp) Descriptor() ([]byte, []int) {
+	return file_bt_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *InitedSessionRsp) GetInited() bool {
+	if x != nil {
+		return x.Inited
+	}
+	return false
+}
+
+type InitSessionReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ProxyHostname     string `protobuf:"bytes,1,opt,name=proxy_hostname,json=proxyHostname,proto3" json:"proxy_hostname,omitempty"`
+	ProxyPort         int32  `protobuf:"varint,2,opt,name=proxy_port,json=proxyPort,proto3" json:"proxy_port,omitempty"`
+	ProxyType         string `protobuf:"bytes,3,opt,name=proxy_type,json=proxyType,proto3" json:"proxy_type,omitempty"`
+	UploadRateLimit   int32  `protobuf:"varint,4,opt,name=upload_rate_limit,json=uploadRateLimit,proto3" json:"upload_rate_limit,omitempty"`
+	DownloadRateLimit int32  `protobuf:"varint,5,opt,name=download_rate_limit,json=downloadRateLimit,proto3" json:"download_rate_limit,omitempty"`
+	HashingThreads    int32  `protobuf:"varint,6,opt,name=hashing_threads,json=hashingThreads,proto3" json:"hashing_threads,omitempty"`
+	ResumeData        []byte `protobuf:"bytes,7,opt,name=resume_data,json=resumeData,proto3" json:"resume_data,omitempty"`
+}
+
+func (x *InitSessionReq) Reset() {
+	*x = InitSessionReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_bt_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InitSessionReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InitSessionReq) ProtoMessage() {}
+
+func (x *InitSessionReq) ProtoReflect() protoreflect.Message {
+	mi := &file_bt_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InitSessionReq.ProtoReflect.Descriptor instead.
+func (*InitSessionReq) Descriptor() ([]byte, []int) {
+	return file_bt_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *InitSessionReq) GetProxyHostname() string {
+	if x != nil {
+		return x.ProxyHostname
+	}
+	return ""
+}
+
+func (x *InitSessionReq) GetProxyPort() int32 {
+	if x != nil {
+		return x.ProxyPort
+	}
+	return 0
+}
+
+func (x *InitSessionReq) GetProxyType() string {
+	if x != nil {
+		return x.ProxyType
+	}
+	return ""
+}
+
+func (x *InitSessionReq) GetUploadRateLimit() int32 {
+	if x != nil {
+		return x.UploadRateLimit
+	}
+	return 0
+}
+
+func (x *InitSessionReq) GetDownloadRateLimit() int32 {
+	if x != nil {
+		return x.DownloadRateLimit
+	}
+	return 0
+}
+
+func (x *InitSessionReq) GetHashingThreads() int32 {
+	if x != nil {
+		return x.HashingThreads
+	}
+	return 0
+}
+
+func (x *InitSessionReq) GetResumeData() []byte {
+	if x != nil {
+		return x.ResumeData
+	}
+	return nil
+}
+
+type InitSessionRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *InitSessionRsp) Reset() {
+	*x = InitSessionRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_bt_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InitSessionRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InitSessionRsp) ProtoMessage() {}
+
+func (x *InitSessionRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_bt_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InitSessionRsp.ProtoReflect.Descriptor instead.
+func (*InitSessionRsp) Descriptor() ([]byte, []int) {
+	return file_bt_proto_rawDescGZIP(), []int{3}
 }
 
 type BtFile struct {
@@ -240,7 +458,7 @@ type BtFile struct {
 func (x *BtFile) Reset() {
 	*x = BtFile{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[0]
+		mi := &file_bt_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -253,7 +471,7 @@ func (x *BtFile) String() string {
 func (*BtFile) ProtoMessage() {}
 
 func (x *BtFile) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[0]
+	mi := &file_bt_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -266,7 +484,7 @@ func (x *BtFile) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BtFile.ProtoReflect.Descriptor instead.
 func (*BtFile) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{0}
+	return file_bt_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *BtFile) GetName() string {
@@ -321,7 +539,7 @@ type TorrentInfo struct {
 func (x *TorrentInfo) Reset() {
 	*x = TorrentInfo{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[1]
+		mi := &file_bt_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -334,7 +552,7 @@ func (x *TorrentInfo) String() string {
 func (*TorrentInfo) ProtoMessage() {}
 
 func (x *TorrentInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[1]
+	mi := &file_bt_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -347,7 +565,7 @@ func (x *TorrentInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TorrentInfo.ProtoReflect.Descriptor instead.
 func (*TorrentInfo) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{1}
+	return file_bt_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *TorrentInfo) GetInfoHash() *InfoHash {
@@ -417,7 +635,7 @@ type TorrentStatus struct {
 func (x *TorrentStatus) Reset() {
 	*x = TorrentStatus{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[2]
+		mi := &file_bt_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -430,7 +648,7 @@ func (x *TorrentStatus) String() string {
 func (*TorrentStatus) ProtoMessage() {}
 
 func (x *TorrentStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[2]
+	mi := &file_bt_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -443,7 +661,7 @@ func (x *TorrentStatus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TorrentStatus.ProtoReflect.Descriptor instead.
 func (*TorrentStatus) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{2}
+	return file_bt_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *TorrentStatus) GetInfoHash() *InfoHash {
@@ -515,7 +733,7 @@ type DownloadRequest struct {
 func (x *DownloadRequest) Reset() {
 	*x = DownloadRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[3]
+		mi := &file_bt_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -528,7 +746,7 @@ func (x *DownloadRequest) String() string {
 func (*DownloadRequest) ProtoMessage() {}
 
 func (x *DownloadRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[3]
+	mi := &file_bt_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -541,7 +759,7 @@ func (x *DownloadRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DownloadRequest.ProtoReflect.Descriptor instead.
 func (*DownloadRequest) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{3}
+	return file_bt_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *DownloadRequest) GetType() DownloadRequest_ReqType {
@@ -577,7 +795,7 @@ type InfoHash struct {
 func (x *InfoHash) Reset() {
 	*x = InfoHash{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[4]
+		mi := &file_bt_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -590,7 +808,7 @@ func (x *InfoHash) String() string {
 func (*InfoHash) ProtoMessage() {}
 
 func (x *InfoHash) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[4]
+	mi := &file_bt_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -603,7 +821,7 @@ func (x *InfoHash) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InfoHash.ProtoReflect.Descriptor instead.
 func (*InfoHash) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{4}
+	return file_bt_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *InfoHash) GetVersion() int32 {
@@ -631,7 +849,7 @@ type DownloadRespone struct {
 func (x *DownloadRespone) Reset() {
 	*x = DownloadRespone{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[5]
+		mi := &file_bt_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -644,7 +862,7 @@ func (x *DownloadRespone) String() string {
 func (*DownloadRespone) ProtoMessage() {}
 
 func (x *DownloadRespone) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[5]
+	mi := &file_bt_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -657,7 +875,7 @@ func (x *DownloadRespone) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DownloadRespone.ProtoReflect.Descriptor instead.
 func (*DownloadRespone) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{5}
+	return file_bt_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *DownloadRespone) GetInfoHash() *InfoHash {
@@ -680,7 +898,7 @@ type GetMagnetUriReq struct {
 func (x *GetMagnetUriReq) Reset() {
 	*x = GetMagnetUriReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[6]
+		mi := &file_bt_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -693,7 +911,7 @@ func (x *GetMagnetUriReq) String() string {
 func (*GetMagnetUriReq) ProtoMessage() {}
 
 func (x *GetMagnetUriReq) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[6]
+	mi := &file_bt_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -706,7 +924,7 @@ func (x *GetMagnetUriReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetMagnetUriReq.ProtoReflect.Descriptor instead.
 func (*GetMagnetUriReq) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{6}
+	return file_bt_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *GetMagnetUriReq) GetType() GetMagnetUriReq_ReqType {
@@ -742,7 +960,7 @@ type GetMagnetUriRsp struct {
 func (x *GetMagnetUriRsp) Reset() {
 	*x = GetMagnetUriRsp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[7]
+		mi := &file_bt_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -755,7 +973,7 @@ func (x *GetMagnetUriRsp) String() string {
 func (*GetMagnetUriRsp) ProtoMessage() {}
 
 func (x *GetMagnetUriRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[7]
+	mi := &file_bt_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -768,7 +986,7 @@ func (x *GetMagnetUriRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetMagnetUriRsp.ProtoReflect.Descriptor instead.
 func (*GetMagnetUriRsp) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{7}
+	return file_bt_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *GetMagnetUriRsp) GetInfoHash() *InfoHash {
@@ -796,7 +1014,7 @@ type GetResumeDataReq struct {
 func (x *GetResumeDataReq) Reset() {
 	*x = GetResumeDataReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[8]
+		mi := &file_bt_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -809,7 +1027,7 @@ func (x *GetResumeDataReq) String() string {
 func (*GetResumeDataReq) ProtoMessage() {}
 
 func (x *GetResumeDataReq) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[8]
+	mi := &file_bt_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -822,7 +1040,7 @@ func (x *GetResumeDataReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetResumeDataReq.ProtoReflect.Descriptor instead.
 func (*GetResumeDataReq) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{8}
+	return file_bt_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *GetResumeDataReq) GetInfoHash() *InfoHash {
@@ -837,13 +1055,13 @@ type GetResumeDataRsp struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ResumeData []byte `protobuf:"bytes,9,opt,name=resume_data,json=resumeData,proto3" json:"resume_data,omitempty"`
+	ResumeData []byte `protobuf:"bytes,1,opt,name=resume_data,json=resumeData,proto3" json:"resume_data,omitempty"`
 }
 
 func (x *GetResumeDataRsp) Reset() {
 	*x = GetResumeDataRsp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[9]
+		mi := &file_bt_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -856,7 +1074,7 @@ func (x *GetResumeDataRsp) String() string {
 func (*GetResumeDataRsp) ProtoMessage() {}
 
 func (x *GetResumeDataRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[9]
+	mi := &file_bt_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -869,7 +1087,7 @@ func (x *GetResumeDataRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetResumeDataRsp.ProtoReflect.Descriptor instead.
 func (*GetResumeDataRsp) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{9}
+	return file_bt_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetResumeDataRsp) GetResumeData() []byte {
@@ -890,7 +1108,7 @@ type GetTorrentInfoReq struct {
 func (x *GetTorrentInfoReq) Reset() {
 	*x = GetTorrentInfoReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[10]
+		mi := &file_bt_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -903,7 +1121,7 @@ func (x *GetTorrentInfoReq) String() string {
 func (*GetTorrentInfoReq) ProtoMessage() {}
 
 func (x *GetTorrentInfoReq) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[10]
+	mi := &file_bt_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -916,7 +1134,7 @@ func (x *GetTorrentInfoReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTorrentInfoReq.ProtoReflect.Descriptor instead.
 func (*GetTorrentInfoReq) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{10}
+	return file_bt_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *GetTorrentInfoReq) GetInfoHash() *InfoHash {
@@ -937,7 +1155,7 @@ type GetTorrentInfoRsp struct {
 func (x *GetTorrentInfoRsp) Reset() {
 	*x = GetTorrentInfoRsp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[11]
+		mi := &file_bt_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -950,7 +1168,7 @@ func (x *GetTorrentInfoRsp) String() string {
 func (*GetTorrentInfoRsp) ProtoMessage() {}
 
 func (x *GetTorrentInfoRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[11]
+	mi := &file_bt_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -963,12 +1181,97 @@ func (x *GetTorrentInfoRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTorrentInfoRsp.ProtoReflect.Descriptor instead.
 func (*GetTorrentInfoRsp) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{11}
+	return file_bt_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *GetTorrentInfoRsp) GetTorrentInfo() *TorrentInfo {
 	if x != nil {
 		return x.TorrentInfo
+	}
+	return nil
+}
+
+type GetSessionParamsReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *GetSessionParamsReq) Reset() {
+	*x = GetSessionParamsReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_bt_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetSessionParamsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSessionParamsReq) ProtoMessage() {}
+
+func (x *GetSessionParamsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_bt_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSessionParamsReq.ProtoReflect.Descriptor instead.
+func (*GetSessionParamsReq) Descriptor() ([]byte, []int) {
+	return file_bt_proto_rawDescGZIP(), []int{16}
+}
+
+type GetSessionParamsRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ResumeData []byte `protobuf:"bytes,1,opt,name=resume_data,json=resumeData,proto3" json:"resume_data,omitempty"`
+}
+
+func (x *GetSessionParamsRsp) Reset() {
+	*x = GetSessionParamsRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_bt_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetSessionParamsRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSessionParamsRsp) ProtoMessage() {}
+
+func (x *GetSessionParamsRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_bt_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSessionParamsRsp.ProtoReflect.Descriptor instead.
+func (*GetSessionParamsRsp) Descriptor() ([]byte, []int) {
+	return file_bt_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *GetSessionParamsRsp) GetResumeData() []byte {
+	if x != nil {
+		return x.ResumeData
 	}
 	return nil
 }
@@ -984,7 +1287,7 @@ type GetBtStatusReq struct {
 func (x *GetBtStatusReq) Reset() {
 	*x = GetBtStatusReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[12]
+		mi := &file_bt_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -997,7 +1300,7 @@ func (x *GetBtStatusReq) String() string {
 func (*GetBtStatusReq) ProtoMessage() {}
 
 func (x *GetBtStatusReq) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[12]
+	mi := &file_bt_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1010,7 +1313,7 @@ func (x *GetBtStatusReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBtStatusReq.ProtoReflect.Descriptor instead.
 func (*GetBtStatusReq) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{12}
+	return file_bt_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *GetBtStatusReq) GetInfoHash() *InfoHash {
@@ -1031,7 +1334,7 @@ type GetBtStatusRsp struct {
 func (x *GetBtStatusRsp) Reset() {
 	*x = GetBtStatusRsp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[13]
+		mi := &file_bt_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1044,7 +1347,7 @@ func (x *GetBtStatusRsp) String() string {
 func (*GetBtStatusRsp) ProtoMessage() {}
 
 func (x *GetBtStatusRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[13]
+	mi := &file_bt_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1057,7 +1360,7 @@ func (x *GetBtStatusRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBtStatusRsp.ProtoReflect.Descriptor instead.
 func (*GetBtStatusRsp) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{13}
+	return file_bt_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *GetBtStatusRsp) GetStatus() *TorrentStatus {
@@ -1078,7 +1381,7 @@ type BtStatusRequest struct {
 func (x *BtStatusRequest) Reset() {
 	*x = BtStatusRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[14]
+		mi := &file_bt_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1091,7 +1394,7 @@ func (x *BtStatusRequest) String() string {
 func (*BtStatusRequest) ProtoMessage() {}
 
 func (x *BtStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[14]
+	mi := &file_bt_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1104,7 +1407,7 @@ func (x *BtStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BtStatusRequest.ProtoReflect.Descriptor instead.
 func (*BtStatusRequest) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{14}
+	return file_bt_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *BtStatusRequest) GetInfoHash() []*InfoHash {
@@ -1125,7 +1428,7 @@ type BtStatusRespone struct {
 func (x *BtStatusRespone) Reset() {
 	*x = BtStatusRespone{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[15]
+		mi := &file_bt_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1138,7 +1441,7 @@ func (x *BtStatusRespone) String() string {
 func (*BtStatusRespone) ProtoMessage() {}
 
 func (x *BtStatusRespone) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[15]
+	mi := &file_bt_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1151,7 +1454,7 @@ func (x *BtStatusRespone) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BtStatusRespone.ProtoReflect.Descriptor instead.
 func (*BtStatusRespone) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{15}
+	return file_bt_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *BtStatusRespone) GetStatusArray() []*TorrentStatus {
@@ -1172,7 +1475,7 @@ type TorrentInfoReq struct {
 func (x *TorrentInfoReq) Reset() {
 	*x = TorrentInfoReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[16]
+		mi := &file_bt_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1185,7 +1488,7 @@ func (x *TorrentInfoReq) String() string {
 func (*TorrentInfoReq) ProtoMessage() {}
 
 func (x *TorrentInfoReq) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[16]
+	mi := &file_bt_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1198,7 +1501,7 @@ func (x *TorrentInfoReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TorrentInfoReq.ProtoReflect.Descriptor instead.
 func (*TorrentInfoReq) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{16}
+	return file_bt_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *TorrentInfoReq) GetInfoHash() []*InfoHash {
@@ -1219,7 +1522,7 @@ type TorrentInfoRes struct {
 func (x *TorrentInfoRes) Reset() {
 	*x = TorrentInfoRes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[17]
+		mi := &file_bt_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1232,7 +1535,7 @@ func (x *TorrentInfoRes) String() string {
 func (*TorrentInfoRes) ProtoMessage() {}
 
 func (x *TorrentInfoRes) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[17]
+	mi := &file_bt_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1245,7 +1548,7 @@ func (x *TorrentInfoRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TorrentInfoRes.ProtoReflect.Descriptor instead.
 func (*TorrentInfoRes) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{17}
+	return file_bt_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *TorrentInfoRes) GetTi() *TorrentInfo {
@@ -1266,7 +1569,7 @@ type RemoveTorrentReq struct {
 func (x *RemoveTorrentReq) Reset() {
 	*x = RemoveTorrentReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[18]
+		mi := &file_bt_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1279,7 +1582,7 @@ func (x *RemoveTorrentReq) String() string {
 func (*RemoveTorrentReq) ProtoMessage() {}
 
 func (x *RemoveTorrentReq) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[18]
+	mi := &file_bt_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1292,7 +1595,7 @@ func (x *RemoveTorrentReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveTorrentReq.ProtoReflect.Descriptor instead.
 func (*RemoveTorrentReq) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{18}
+	return file_bt_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *RemoveTorrentReq) GetInfoHash() *InfoHash {
@@ -1311,7 +1614,7 @@ type RemoveTorrentRes struct {
 func (x *RemoveTorrentRes) Reset() {
 	*x = RemoveTorrentRes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[19]
+		mi := &file_bt_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1324,7 +1627,7 @@ func (x *RemoveTorrentRes) String() string {
 func (*RemoveTorrentRes) ProtoMessage() {}
 
 func (x *RemoveTorrentRes) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[19]
+	mi := &file_bt_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1337,7 +1640,7 @@ func (x *RemoveTorrentRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveTorrentRes.ProtoReflect.Descriptor instead.
 func (*RemoveTorrentRes) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{19}
+	return file_bt_proto_rawDescGZIP(), []int{25}
 }
 
 type FileProgressReq struct {
@@ -1351,7 +1654,7 @@ type FileProgressReq struct {
 func (x *FileProgressReq) Reset() {
 	*x = FileProgressReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[20]
+		mi := &file_bt_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1364,7 +1667,7 @@ func (x *FileProgressReq) String() string {
 func (*FileProgressReq) ProtoMessage() {}
 
 func (x *FileProgressReq) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[20]
+	mi := &file_bt_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1377,7 +1680,7 @@ func (x *FileProgressReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FileProgressReq.ProtoReflect.Descriptor instead.
 func (*FileProgressReq) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{20}
+	return file_bt_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *FileProgressReq) GetInfoHash() *InfoHash {
@@ -1399,7 +1702,7 @@ type FileProgressRes struct {
 func (x *FileProgressRes) Reset() {
 	*x = FileProgressRes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[21]
+		mi := &file_bt_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1412,7 +1715,7 @@ func (x *FileProgressRes) String() string {
 func (*FileProgressRes) ProtoMessage() {}
 
 func (x *FileProgressRes) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[21]
+	mi := &file_bt_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1425,7 +1728,7 @@ func (x *FileProgressRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FileProgressRes.ProtoReflect.Descriptor instead.
 func (*FileProgressRes) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{21}
+	return file_bt_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *FileProgressRes) GetInfoHash() *InfoHash {
@@ -1451,7 +1754,7 @@ type FileCompletedReq struct {
 func (x *FileCompletedReq) Reset() {
 	*x = FileCompletedReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[22]
+		mi := &file_bt_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1464,7 +1767,7 @@ func (x *FileCompletedReq) String() string {
 func (*FileCompletedReq) ProtoMessage() {}
 
 func (x *FileCompletedReq) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[22]
+	mi := &file_bt_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1477,7 +1780,7 @@ func (x *FileCompletedReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FileCompletedReq.ProtoReflect.Descriptor instead.
 func (*FileCompletedReq) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{22}
+	return file_bt_proto_rawDescGZIP(), []int{28}
 }
 
 type FileCompletedRes struct {
@@ -1492,7 +1795,7 @@ type FileCompletedRes struct {
 func (x *FileCompletedRes) Reset() {
 	*x = FileCompletedRes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bt_proto_msgTypes[23]
+		mi := &file_bt_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1505,7 +1808,7 @@ func (x *FileCompletedRes) String() string {
 func (*FileCompletedRes) ProtoMessage() {}
 
 func (x *FileCompletedRes) ProtoReflect() protoreflect.Message {
-	mi := &file_bt_proto_msgTypes[23]
+	mi := &file_bt_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1518,7 +1821,7 @@ func (x *FileCompletedRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FileCompletedRes.ProtoReflect.Descriptor instead.
 func (*FileCompletedRes) Descriptor() ([]byte, []int) {
-	return file_bt_proto_rawDescGZIP(), []int{23}
+	return file_bt_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *FileCompletedRes) GetInfoHash() *InfoHash {
@@ -1539,6 +1842,29 @@ var File_bt_proto protoreflect.FileDescriptor
 
 var file_bt_proto_rawDesc = []byte{
 	0x0a, 0x08, 0x62, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x04, 0x70, 0x72, 0x70, 0x63,
+	0x22, 0x12, 0x0a, 0x10, 0x49, 0x6e, 0x69, 0x74, 0x65, 0x64, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f,
+	0x6e, 0x52, 0x65, 0x71, 0x22, 0x2a, 0x0a, 0x10, 0x49, 0x6e, 0x69, 0x74, 0x65, 0x64, 0x53, 0x65,
+	0x73, 0x73, 0x69, 0x6f, 0x6e, 0x52, 0x73, 0x70, 0x12, 0x16, 0x0a, 0x06, 0x69, 0x6e, 0x69, 0x74,
+	0x65, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x69, 0x6e, 0x69, 0x74, 0x65, 0x64,
+	0x22, 0x9b, 0x02, 0x0a, 0x0e, 0x49, 0x6e, 0x69, 0x74, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e,
+	0x52, 0x65, 0x71, 0x12, 0x25, 0x0a, 0x0e, 0x70, 0x72, 0x6f, 0x78, 0x79, 0x5f, 0x68, 0x6f, 0x73,
+	0x74, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x70, 0x72, 0x6f,
+	0x78, 0x79, 0x48, 0x6f, 0x73, 0x74, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x72,
+	0x6f, 0x78, 0x79, 0x5f, 0x70, 0x6f, 0x72, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09,
+	0x70, 0x72, 0x6f, 0x78, 0x79, 0x50, 0x6f, 0x72, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x72, 0x6f,
+	0x78, 0x79, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70,
+	0x72, 0x6f, 0x78, 0x79, 0x54, 0x79, 0x70, 0x65, 0x12, 0x2a, 0x0a, 0x11, 0x75, 0x70, 0x6c, 0x6f,
+	0x61, 0x64, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x5f, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x0f, 0x75, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x52, 0x61, 0x74, 0x65, 0x4c,
+	0x69, 0x6d, 0x69, 0x74, 0x12, 0x2e, 0x0a, 0x13, 0x64, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64,
+	0x5f, 0x72, 0x61, 0x74, 0x65, 0x5f, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x11, 0x64, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x52, 0x61, 0x74, 0x65, 0x4c,
+	0x69, 0x6d, 0x69, 0x74, 0x12, 0x27, 0x0a, 0x0f, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x5f,
+	0x74, 0x68, 0x72, 0x65, 0x61, 0x64, 0x73, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0e, 0x68,
+	0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x54, 0x68, 0x72, 0x65, 0x61, 0x64, 0x73, 0x12, 0x1f, 0x0a,
+	0x0b, 0x72, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x5f, 0x64, 0x61, 0x74, 0x61, 0x18, 0x07, 0x20, 0x01,
+	0x28, 0x0c, 0x52, 0x0a, 0x72, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x44, 0x61, 0x74, 0x61, 0x22, 0x10,
+	0x0a, 0x0e, 0x49, 0x6e, 0x69, 0x74, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x52, 0x73, 0x70,
 	0x22, 0xc8, 0x01, 0x0a, 0x06, 0x42, 0x74, 0x46, 0x69, 0x6c, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x6e,
 	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12,
 	0x14, 0x0a, 0x05, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05,
@@ -1626,7 +1952,7 @@ var file_bt_proto_rawDesc = []byte{
 	0x0b, 0x32, 0x0e, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73,
 	0x68, 0x52, 0x08, 0x69, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x22, 0x33, 0x0a, 0x10, 0x47,
 	0x65, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x73, 0x70, 0x12,
-	0x1f, 0x0a, 0x0b, 0x72, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x5f, 0x64, 0x61, 0x74, 0x61, 0x18, 0x09,
+	0x1f, 0x0a, 0x0b, 0x72, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x5f, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x0c, 0x52, 0x0a, 0x72, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x44, 0x61, 0x74, 0x61,
 	0x22, 0x40, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x49, 0x6e,
 	0x66, 0x6f, 0x52, 0x65, 0x71, 0x12, 0x2b, 0x0a, 0x09, 0x69, 0x6e, 0x66, 0x6f, 0x5f, 0x68, 0x61,
@@ -1636,100 +1962,118 @@ var file_bt_proto_rawDesc = []byte{
 	0x49, 0x6e, 0x66, 0x6f, 0x52, 0x73, 0x70, 0x12, 0x34, 0x0a, 0x0c, 0x74, 0x6f, 0x72, 0x72, 0x65,
 	0x6e, 0x74, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e,
 	0x70, 0x72, 0x70, 0x63, 0x2e, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x49, 0x6e, 0x66, 0x6f,
-	0x52, 0x0b, 0x74, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x3d, 0x0a,
-	0x0e, 0x47, 0x65, 0x74, 0x42, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x12,
-	0x2b, 0x0a, 0x09, 0x69, 0x6e, 0x66, 0x6f, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x61,
-	0x73, 0x68, 0x52, 0x08, 0x69, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x22, 0x3d, 0x0a, 0x0e,
-	0x47, 0x65, 0x74, 0x42, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x73, 0x70, 0x12, 0x2b,
-	0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13,
-	0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61,
-	0x74, 0x75, 0x73, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x3e, 0x0a, 0x0f, 0x42,
-	0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2b,
-	0x0a, 0x09, 0x69, 0x6e, 0x66, 0x6f, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18, 0x01, 0x20, 0x03, 0x28,
-	0x0b, 0x32, 0x0e, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73,
-	0x68, 0x52, 0x08, 0x69, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x22, 0x49, 0x0a, 0x0f, 0x42,
-	0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x65, 0x12, 0x36,
-	0x0a, 0x0c, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x5f, 0x61, 0x72, 0x72, 0x61, 0x79, 0x18, 0x01,
-	0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x54, 0x6f, 0x72, 0x72,
-	0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x0b, 0x73, 0x74, 0x61, 0x74, 0x75,
-	0x73, 0x41, 0x72, 0x72, 0x61, 0x79, 0x22, 0x3d, 0x0a, 0x0e, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e,
-	0x74, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x12, 0x2b, 0x0a, 0x09, 0x69, 0x6e, 0x66, 0x6f,
-	0x5f, 0x68, 0x61, 0x73, 0x68, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x70, 0x72,
-	0x70, 0x63, 0x2e, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x52, 0x08, 0x69, 0x6e, 0x66,
-	0x6f, 0x48, 0x61, 0x73, 0x68, 0x22, 0x33, 0x0a, 0x0e, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74,
-	0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x12, 0x21, 0x0a, 0x02, 0x74, 0x69, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x54, 0x6f, 0x72, 0x72, 0x65,
-	0x6e, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x02, 0x74, 0x69, 0x22, 0x3f, 0x0a, 0x10, 0x52, 0x65,
-	0x6d, 0x6f, 0x76, 0x65, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x12, 0x2b,
+	0x52, 0x0b, 0x74, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x15, 0x0a,
+	0x13, 0x47, 0x65, 0x74, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x50, 0x61, 0x72, 0x61, 0x6d,
+	0x73, 0x52, 0x65, 0x71, 0x22, 0x36, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x53, 0x65, 0x73, 0x73, 0x69,
+	0x6f, 0x6e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x73, 0x70, 0x12, 0x1f, 0x0a, 0x0b, 0x72,
+	0x65, 0x73, 0x75, 0x6d, 0x65, 0x5f, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c,
+	0x52, 0x0a, 0x72, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x44, 0x61, 0x74, 0x61, 0x22, 0x3d, 0x0a, 0x0e,
+	0x47, 0x65, 0x74, 0x42, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x12, 0x2b,
 	0x0a, 0x09, 0x69, 0x6e, 0x66, 0x6f, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x0b, 0x32, 0x0e, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73,
-	0x68, 0x52, 0x08, 0x69, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x22, 0x12, 0x0a, 0x10, 0x52,
-	0x65, 0x6d, 0x6f, 0x76, 0x65, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x22,
-	0x3e, 0x0a, 0x0f, 0x46, 0x69, 0x6c, 0x65, 0x50, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x52,
-	0x65, 0x71, 0x12, 0x2b, 0x0a, 0x09, 0x69, 0x6e, 0x66, 0x6f, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x66,
-	0x6f, 0x48, 0x61, 0x73, 0x68, 0x52, 0x08, 0x69, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x22,
-	0x62, 0x0a, 0x0f, 0x46, 0x69, 0x6c, 0x65, 0x50, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x52,
-	0x65, 0x73, 0x12, 0x2b, 0x0a, 0x09, 0x69, 0x6e, 0x66, 0x6f, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x66,
-	0x6f, 0x48, 0x61, 0x73, 0x68, 0x52, 0x08, 0x69, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x12,
-	0x22, 0x0a, 0x05, 0x66, 0x69, 0x6c, 0x65, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0c,
-	0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x42, 0x74, 0x46, 0x69, 0x6c, 0x65, 0x52, 0x05, 0x66, 0x69,
-	0x6c, 0x65, 0x73, 0x22, 0x12, 0x0a, 0x10, 0x46, 0x69, 0x6c, 0x65, 0x43, 0x6f, 0x6d, 0x70, 0x6c,
-	0x65, 0x74, 0x65, 0x64, 0x52, 0x65, 0x71, 0x22, 0x5e, 0x0a, 0x10, 0x46, 0x69, 0x6c, 0x65, 0x43,
-	0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x52, 0x65, 0x73, 0x12, 0x2b, 0x0a, 0x09, 0x69,
-	0x6e, 0x66, 0x6f, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e,
-	0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x52, 0x08,
-	0x69, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x12, 0x1d, 0x0a, 0x0a, 0x66, 0x69, 0x6c, 0x65,
-	0x5f, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x66, 0x69,
-	0x6c, 0x65, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x2a, 0x8e, 0x01, 0x0a, 0x0b, 0x42, 0x74, 0x53, 0x74,
-	0x61, 0x74, 0x65, 0x45, 0x6e, 0x75, 0x6d, 0x12, 0x0b, 0x0a, 0x07, 0x75, 0x6e, 0x6b, 0x6e, 0x6f,
-	0x77, 0x6e, 0x10, 0x00, 0x12, 0x12, 0x0a, 0x0e, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x69, 0x6e, 0x67,
-	0x5f, 0x66, 0x69, 0x6c, 0x65, 0x73, 0x10, 0x01, 0x12, 0x18, 0x0a, 0x14, 0x64, 0x6f, 0x77, 0x6e,
-	0x6c, 0x6f, 0x61, 0x64, 0x69, 0x6e, 0x67, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
-	0x10, 0x02, 0x12, 0x0f, 0x0a, 0x0b, 0x64, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x69, 0x6e,
-	0x67, 0x10, 0x03, 0x12, 0x0c, 0x0a, 0x08, 0x66, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x65, 0x64, 0x10,
-	0x04, 0x12, 0x0b, 0x0a, 0x07, 0x73, 0x65, 0x65, 0x64, 0x69, 0x6e, 0x67, 0x10, 0x05, 0x12, 0x18,
-	0x0a, 0x14, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x69, 0x6e, 0x67, 0x5f, 0x72, 0x65, 0x73, 0x75, 0x6d,
-	0x65, 0x5f, 0x64, 0x61, 0x74, 0x61, 0x10, 0x07, 0x32, 0xc2, 0x04, 0x0a, 0x09, 0x42, 0x74, 0x53,
-	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x35, 0x0a, 0x05, 0x50, 0x61, 0x72, 0x73, 0x65, 0x12,
-	0x15, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x44, 0x6f,
-	0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x65, 0x12, 0x38, 0x0a,
-	0x08, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x12, 0x15, 0x2e, 0x70, 0x72, 0x70, 0x63,
-	0x2e, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x15, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x65, 0x12, 0x3f, 0x0a, 0x0d, 0x52, 0x65, 0x6d, 0x6f, 0x76,
-	0x65, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x12, 0x16, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e,
-	0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71,
-	0x1a, 0x16, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x54, 0x6f,
-	0x72, 0x72, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x12, 0x3c, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x4d,
-	0x61, 0x67, 0x6e, 0x65, 0x74, 0x55, 0x72, 0x69, 0x12, 0x15, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e,
-	0x47, 0x65, 0x74, 0x4d, 0x61, 0x67, 0x6e, 0x65, 0x74, 0x55, 0x72, 0x69, 0x52, 0x65, 0x71, 0x1a,
-	0x15, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x4d, 0x61, 0x67, 0x6e, 0x65, 0x74,
-	0x55, 0x72, 0x69, 0x52, 0x73, 0x70, 0x12, 0x3f, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x52, 0x65, 0x73,
-	0x75, 0x6d, 0x65, 0x44, 0x61, 0x74, 0x61, 0x12, 0x16, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x47,
-	0x65, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x1a,
-	0x16, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6d, 0x65,
-	0x44, 0x61, 0x74, 0x61, 0x52, 0x73, 0x70, 0x12, 0x42, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x54, 0x6f,
-	0x72, 0x72, 0x65, 0x6e, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x17, 0x2e, 0x70, 0x72, 0x70, 0x63,
-	0x2e, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x52,
-	0x65, 0x71, 0x1a, 0x17, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x72,
-	0x72, 0x65, 0x6e, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x73, 0x70, 0x12, 0x39, 0x0a, 0x0b, 0x47,
-	0x65, 0x74, 0x42, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x14, 0x2e, 0x70, 0x72, 0x70,
-	0x63, 0x2e, 0x47, 0x65, 0x74, 0x42, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71,
-	0x1a, 0x14, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x42, 0x74, 0x53, 0x74, 0x61,
-	0x74, 0x75, 0x73, 0x52, 0x73, 0x70, 0x12, 0x3e, 0x0a, 0x0a, 0x4f, 0x6e, 0x42, 0x74, 0x53, 0x74,
-	0x61, 0x74, 0x75, 0x73, 0x12, 0x15, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x42, 0x74, 0x53, 0x74,
-	0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x70, 0x72,
-	0x70, 0x63, 0x2e, 0x42, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x65, 0x28, 0x01, 0x30, 0x01, 0x12, 0x45, 0x0a, 0x0f, 0x4f, 0x6e, 0x46, 0x69, 0x6c, 0x65,
-	0x43, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x12, 0x16, 0x2e, 0x70, 0x72, 0x70, 0x63,
-	0x2e, 0x46, 0x69, 0x6c, 0x65, 0x43, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x52, 0x65,
-	0x71, 0x1a, 0x16, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x46, 0x69, 0x6c, 0x65, 0x43, 0x6f, 0x6d,
-	0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x52, 0x65, 0x73, 0x28, 0x01, 0x30, 0x01, 0x42, 0x08, 0x5a,
-	0x06, 0x2e, 0x2f, 0x70, 0x72, 0x70, 0x63, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x68, 0x52, 0x08, 0x69, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x22, 0x3d, 0x0a, 0x0e, 0x47,
+	0x65, 0x74, 0x42, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x73, 0x70, 0x12, 0x2b, 0x0a,
+	0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e,
+	0x70, 0x72, 0x70, 0x63, 0x2e, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74,
+	0x75, 0x73, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x3e, 0x0a, 0x0f, 0x42, 0x74,
+	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2b, 0x0a,
+	0x09, 0x69, 0x6e, 0x66, 0x6f, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x0e, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68,
+	0x52, 0x08, 0x69, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x22, 0x49, 0x0a, 0x0f, 0x42, 0x74,
+	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x65, 0x12, 0x36, 0x0a,
+	0x0c, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x5f, 0x61, 0x72, 0x72, 0x61, 0x79, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x54, 0x6f, 0x72, 0x72, 0x65,
+	0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x0b, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x41, 0x72, 0x72, 0x61, 0x79, 0x22, 0x3d, 0x0a, 0x0e, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74,
+	0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x12, 0x2b, 0x0a, 0x09, 0x69, 0x6e, 0x66, 0x6f, 0x5f,
+	0x68, 0x61, 0x73, 0x68, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x70, 0x72, 0x70,
+	0x63, 0x2e, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x52, 0x08, 0x69, 0x6e, 0x66, 0x6f,
+	0x48, 0x61, 0x73, 0x68, 0x22, 0x33, 0x0a, 0x0e, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x49,
+	0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x12, 0x21, 0x0a, 0x02, 0x74, 0x69, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x11, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e,
+	0x74, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x02, 0x74, 0x69, 0x22, 0x3f, 0x0a, 0x10, 0x52, 0x65, 0x6d,
+	0x6f, 0x76, 0x65, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x12, 0x2b, 0x0a,
+	0x09, 0x69, 0x6e, 0x66, 0x6f, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x0e, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68,
+	0x52, 0x08, 0x69, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x22, 0x12, 0x0a, 0x10, 0x52, 0x65,
+	0x6d, 0x6f, 0x76, 0x65, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x22, 0x3e,
+	0x0a, 0x0f, 0x46, 0x69, 0x6c, 0x65, 0x50, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x52, 0x65,
+	0x71, 0x12, 0x2b, 0x0a, 0x09, 0x69, 0x6e, 0x66, 0x6f, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x66, 0x6f,
+	0x48, 0x61, 0x73, 0x68, 0x52, 0x08, 0x69, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x22, 0x62,
+	0x0a, 0x0f, 0x46, 0x69, 0x6c, 0x65, 0x50, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x52, 0x65,
+	0x73, 0x12, 0x2b, 0x0a, 0x09, 0x69, 0x6e, 0x66, 0x6f, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x66, 0x6f,
+	0x48, 0x61, 0x73, 0x68, 0x52, 0x08, 0x69, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x12, 0x22,
+	0x0a, 0x05, 0x66, 0x69, 0x6c, 0x65, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0c, 0x2e,
+	0x70, 0x72, 0x70, 0x63, 0x2e, 0x42, 0x74, 0x46, 0x69, 0x6c, 0x65, 0x52, 0x05, 0x66, 0x69, 0x6c,
+	0x65, 0x73, 0x22, 0x12, 0x0a, 0x10, 0x46, 0x69, 0x6c, 0x65, 0x43, 0x6f, 0x6d, 0x70, 0x6c, 0x65,
+	0x74, 0x65, 0x64, 0x52, 0x65, 0x71, 0x22, 0x5e, 0x0a, 0x10, 0x46, 0x69, 0x6c, 0x65, 0x43, 0x6f,
+	0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x52, 0x65, 0x73, 0x12, 0x2b, 0x0a, 0x09, 0x69, 0x6e,
+	0x66, 0x6f, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e,
+	0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x52, 0x08, 0x69,
+	0x6e, 0x66, 0x6f, 0x48, 0x61, 0x73, 0x68, 0x12, 0x1d, 0x0a, 0x0a, 0x66, 0x69, 0x6c, 0x65, 0x5f,
+	0x69, 0x6e, 0x64, 0x65, 0x78, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x66, 0x69, 0x6c,
+	0x65, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x2a, 0x8e, 0x01, 0x0a, 0x0b, 0x42, 0x74, 0x53, 0x74, 0x61,
+	0x74, 0x65, 0x45, 0x6e, 0x75, 0x6d, 0x12, 0x0b, 0x0a, 0x07, 0x75, 0x6e, 0x6b, 0x6e, 0x6f, 0x77,
+	0x6e, 0x10, 0x00, 0x12, 0x12, 0x0a, 0x0e, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x69, 0x6e, 0x67, 0x5f,
+	0x66, 0x69, 0x6c, 0x65, 0x73, 0x10, 0x01, 0x12, 0x18, 0x0a, 0x14, 0x64, 0x6f, 0x77, 0x6e, 0x6c,
+	0x6f, 0x61, 0x64, 0x69, 0x6e, 0x67, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x10,
+	0x02, 0x12, 0x0f, 0x0a, 0x0b, 0x64, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x69, 0x6e, 0x67,
+	0x10, 0x03, 0x12, 0x0c, 0x0a, 0x08, 0x66, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x65, 0x64, 0x10, 0x04,
+	0x12, 0x0b, 0x0a, 0x07, 0x73, 0x65, 0x65, 0x64, 0x69, 0x6e, 0x67, 0x10, 0x05, 0x12, 0x18, 0x0a,
+	0x14, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x69, 0x6e, 0x67, 0x5f, 0x72, 0x65, 0x73, 0x75, 0x6d, 0x65,
+	0x5f, 0x64, 0x61, 0x74, 0x61, 0x10, 0x07, 0x32, 0x88, 0x06, 0x0a, 0x09, 0x42, 0x74, 0x53, 0x65,
+	0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3f, 0x0a, 0x0d, 0x49, 0x6e, 0x69, 0x74, 0x65, 0x64, 0x53,
+	0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x16, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e,
+	0x69, 0x74, 0x65, 0x64, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x1a, 0x16,
+	0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x69, 0x74, 0x65, 0x64, 0x53, 0x65, 0x73, 0x73,
+	0x69, 0x6f, 0x6e, 0x52, 0x73, 0x70, 0x12, 0x39, 0x0a, 0x0b, 0x49, 0x6e, 0x69, 0x74, 0x53, 0x65,
+	0x73, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x14, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x6e, 0x69,
+	0x74, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x1a, 0x14, 0x2e, 0x70, 0x72,
+	0x70, 0x63, 0x2e, 0x49, 0x6e, 0x69, 0x74, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x52, 0x73,
+	0x70, 0x12, 0x35, 0x0a, 0x05, 0x50, 0x61, 0x72, 0x73, 0x65, 0x12, 0x15, 0x2e, 0x70, 0x72, 0x70,
+	0x63, 0x2e, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x15, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61,
+	0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x65, 0x12, 0x38, 0x0a, 0x08, 0x44, 0x6f, 0x77, 0x6e,
+	0x6c, 0x6f, 0x61, 0x64, 0x12, 0x15, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x44, 0x6f, 0x77, 0x6e,
+	0x6c, 0x6f, 0x61, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x70, 0x72,
+	0x70, 0x63, 0x2e, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x65, 0x12, 0x3f, 0x0a, 0x0d, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x54, 0x6f, 0x72, 0x72,
+	0x65, 0x6e, 0x74, 0x12, 0x16, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x52, 0x65, 0x6d, 0x6f, 0x76,
+	0x65, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x16, 0x2e, 0x70, 0x72,
+	0x70, 0x63, 0x2e, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74,
+	0x52, 0x65, 0x73, 0x12, 0x3c, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x4d, 0x61, 0x67, 0x6e, 0x65, 0x74,
+	0x55, 0x72, 0x69, 0x12, 0x15, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x4d, 0x61,
+	0x67, 0x6e, 0x65, 0x74, 0x55, 0x72, 0x69, 0x52, 0x65, 0x71, 0x1a, 0x15, 0x2e, 0x70, 0x72, 0x70,
+	0x63, 0x2e, 0x47, 0x65, 0x74, 0x4d, 0x61, 0x67, 0x6e, 0x65, 0x74, 0x55, 0x72, 0x69, 0x52, 0x73,
+	0x70, 0x12, 0x3f, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x44, 0x61,
+	0x74, 0x61, 0x12, 0x16, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x52, 0x65, 0x73,
+	0x75, 0x6d, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x1a, 0x16, 0x2e, 0x70, 0x72, 0x70,
+	0x63, 0x2e, 0x47, 0x65, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52,
+	0x73, 0x70, 0x12, 0x42, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74,
+	0x49, 0x6e, 0x66, 0x6f, 0x12, 0x17, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x54,
+	0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x1a, 0x17, 0x2e,
+	0x70, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x49,
+	0x6e, 0x66, 0x6f, 0x52, 0x73, 0x70, 0x12, 0x39, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x42, 0x74, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x14, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74,
+	0x42, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x1a, 0x14, 0x2e, 0x70, 0x72,
+	0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x42, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x73,
+	0x70, 0x12, 0x48, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x50,
+	0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x19, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74,
+	0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71,
+	0x1a, 0x19, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x53, 0x65, 0x73, 0x73, 0x69,
+	0x6f, 0x6e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x73, 0x70, 0x12, 0x3e, 0x0a, 0x0a, 0x4f,
+	0x6e, 0x42, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x15, 0x2e, 0x70, 0x72, 0x70, 0x63,
+	0x2e, 0x42, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x15, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x42, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x65, 0x28, 0x01, 0x30, 0x01, 0x12, 0x45, 0x0a, 0x0f, 0x4f,
+	0x6e, 0x46, 0x69, 0x6c, 0x65, 0x43, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x12, 0x16,
+	0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x46, 0x69, 0x6c, 0x65, 0x43, 0x6f, 0x6d, 0x70, 0x6c, 0x65,
+	0x74, 0x65, 0x64, 0x52, 0x65, 0x71, 0x1a, 0x16, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x46, 0x69,
+	0x6c, 0x65, 0x43, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x52, 0x65, 0x73, 0x28, 0x01,
+	0x30, 0x01, 0x42, 0x08, 0x5a, 0x06, 0x2e, 0x2f, 0x70, 0x72, 0x70, 0x63, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1745,82 +2089,94 @@ func file_bt_proto_rawDescGZIP() []byte {
 }
 
 var file_bt_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_bt_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
+var file_bt_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
 var file_bt_proto_goTypes = []interface{}{
 	(BtStateEnum)(0),             // 0: prpc.BtStateEnum
 	(BtFile_State)(0),            // 1: prpc.BtFile.State
 	(DownloadRequest_ReqType)(0), // 2: prpc.DownloadRequest.ReqType
 	(GetMagnetUriReq_ReqType)(0), // 3: prpc.GetMagnetUriReq.ReqType
-	(*BtFile)(nil),               // 4: prpc.BtFile
-	(*TorrentInfo)(nil),          // 5: prpc.TorrentInfo
-	(*TorrentStatus)(nil),        // 6: prpc.TorrentStatus
-	(*DownloadRequest)(nil),      // 7: prpc.DownloadRequest
-	(*InfoHash)(nil),             // 8: prpc.InfoHash
-	(*DownloadRespone)(nil),      // 9: prpc.DownloadRespone
-	(*GetMagnetUriReq)(nil),      // 10: prpc.GetMagnetUriReq
-	(*GetMagnetUriRsp)(nil),      // 11: prpc.GetMagnetUriRsp
-	(*GetResumeDataReq)(nil),     // 12: prpc.GetResumeDataReq
-	(*GetResumeDataRsp)(nil),     // 13: prpc.GetResumeDataRsp
-	(*GetTorrentInfoReq)(nil),    // 14: prpc.GetTorrentInfoReq
-	(*GetTorrentInfoRsp)(nil),    // 15: prpc.GetTorrentInfoRsp
-	(*GetBtStatusReq)(nil),       // 16: prpc.GetBtStatusReq
-	(*GetBtStatusRsp)(nil),       // 17: prpc.GetBtStatusRsp
-	(*BtStatusRequest)(nil),      // 18: prpc.BtStatusRequest
-	(*BtStatusRespone)(nil),      // 19: prpc.BtStatusRespone
-	(*TorrentInfoReq)(nil),       // 20: prpc.TorrentInfoReq
-	(*TorrentInfoRes)(nil),       // 21: prpc.TorrentInfoRes
-	(*RemoveTorrentReq)(nil),     // 22: prpc.RemoveTorrentReq
-	(*RemoveTorrentRes)(nil),     // 23: prpc.RemoveTorrentRes
-	(*FileProgressReq)(nil),      // 24: prpc.FileProgressReq
-	(*FileProgressRes)(nil),      // 25: prpc.FileProgressRes
-	(*FileCompletedReq)(nil),     // 26: prpc.FileCompletedReq
-	(*FileCompletedRes)(nil),     // 27: prpc.FileCompletedRes
+	(*InitedSessionReq)(nil),     // 4: prpc.InitedSessionReq
+	(*InitedSessionRsp)(nil),     // 5: prpc.InitedSessionRsp
+	(*InitSessionReq)(nil),       // 6: prpc.InitSessionReq
+	(*InitSessionRsp)(nil),       // 7: prpc.InitSessionRsp
+	(*BtFile)(nil),               // 8: prpc.BtFile
+	(*TorrentInfo)(nil),          // 9: prpc.TorrentInfo
+	(*TorrentStatus)(nil),        // 10: prpc.TorrentStatus
+	(*DownloadRequest)(nil),      // 11: prpc.DownloadRequest
+	(*InfoHash)(nil),             // 12: prpc.InfoHash
+	(*DownloadRespone)(nil),      // 13: prpc.DownloadRespone
+	(*GetMagnetUriReq)(nil),      // 14: prpc.GetMagnetUriReq
+	(*GetMagnetUriRsp)(nil),      // 15: prpc.GetMagnetUriRsp
+	(*GetResumeDataReq)(nil),     // 16: prpc.GetResumeDataReq
+	(*GetResumeDataRsp)(nil),     // 17: prpc.GetResumeDataRsp
+	(*GetTorrentInfoReq)(nil),    // 18: prpc.GetTorrentInfoReq
+	(*GetTorrentInfoRsp)(nil),    // 19: prpc.GetTorrentInfoRsp
+	(*GetSessionParamsReq)(nil),  // 20: prpc.GetSessionParamsReq
+	(*GetSessionParamsRsp)(nil),  // 21: prpc.GetSessionParamsRsp
+	(*GetBtStatusReq)(nil),       // 22: prpc.GetBtStatusReq
+	(*GetBtStatusRsp)(nil),       // 23: prpc.GetBtStatusRsp
+	(*BtStatusRequest)(nil),      // 24: prpc.BtStatusRequest
+	(*BtStatusRespone)(nil),      // 25: prpc.BtStatusRespone
+	(*TorrentInfoReq)(nil),       // 26: prpc.TorrentInfoReq
+	(*TorrentInfoRes)(nil),       // 27: prpc.TorrentInfoRes
+	(*RemoveTorrentReq)(nil),     // 28: prpc.RemoveTorrentReq
+	(*RemoveTorrentRes)(nil),     // 29: prpc.RemoveTorrentRes
+	(*FileProgressReq)(nil),      // 30: prpc.FileProgressReq
+	(*FileProgressRes)(nil),      // 31: prpc.FileProgressRes
+	(*FileCompletedReq)(nil),     // 32: prpc.FileCompletedReq
+	(*FileCompletedRes)(nil),     // 33: prpc.FileCompletedRes
 }
 var file_bt_proto_depIdxs = []int32{
 	1,  // 0: prpc.BtFile.st:type_name -> prpc.BtFile.State
-	8,  // 1: prpc.TorrentInfo.info_hash:type_name -> prpc.InfoHash
-	4,  // 2: prpc.TorrentInfo.files:type_name -> prpc.BtFile
-	8,  // 3: prpc.TorrentStatus.info_hash:type_name -> prpc.InfoHash
+	12, // 1: prpc.TorrentInfo.info_hash:type_name -> prpc.InfoHash
+	8,  // 2: prpc.TorrentInfo.files:type_name -> prpc.BtFile
+	12, // 3: prpc.TorrentStatus.info_hash:type_name -> prpc.InfoHash
 	0,  // 4: prpc.TorrentStatus.state:type_name -> prpc.BtStateEnum
 	2,  // 5: prpc.DownloadRequest.type:type_name -> prpc.DownloadRequest.ReqType
-	8,  // 6: prpc.DownloadRespone.info_hash:type_name -> prpc.InfoHash
+	12, // 6: prpc.DownloadRespone.info_hash:type_name -> prpc.InfoHash
 	3,  // 7: prpc.GetMagnetUriReq.type:type_name -> prpc.GetMagnetUriReq.ReqType
-	8,  // 8: prpc.GetMagnetUriReq.info_hash:type_name -> prpc.InfoHash
-	8,  // 9: prpc.GetMagnetUriRsp.info_hash:type_name -> prpc.InfoHash
-	8,  // 10: prpc.GetResumeDataReq.info_hash:type_name -> prpc.InfoHash
-	8,  // 11: prpc.GetTorrentInfoReq.info_hash:type_name -> prpc.InfoHash
-	5,  // 12: prpc.GetTorrentInfoRsp.torrent_info:type_name -> prpc.TorrentInfo
-	8,  // 13: prpc.GetBtStatusReq.info_hash:type_name -> prpc.InfoHash
-	6,  // 14: prpc.GetBtStatusRsp.status:type_name -> prpc.TorrentStatus
-	8,  // 15: prpc.BtStatusRequest.info_hash:type_name -> prpc.InfoHash
-	6,  // 16: prpc.BtStatusRespone.status_array:type_name -> prpc.TorrentStatus
-	8,  // 17: prpc.TorrentInfoReq.info_hash:type_name -> prpc.InfoHash
-	5,  // 18: prpc.TorrentInfoRes.ti:type_name -> prpc.TorrentInfo
-	8,  // 19: prpc.RemoveTorrentReq.info_hash:type_name -> prpc.InfoHash
-	8,  // 20: prpc.FileProgressReq.info_hash:type_name -> prpc.InfoHash
-	8,  // 21: prpc.FileProgressRes.info_hash:type_name -> prpc.InfoHash
-	4,  // 22: prpc.FileProgressRes.files:type_name -> prpc.BtFile
-	8,  // 23: prpc.FileCompletedRes.info_hash:type_name -> prpc.InfoHash
-	7,  // 24: prpc.BtService.Parse:input_type -> prpc.DownloadRequest
-	7,  // 25: prpc.BtService.Download:input_type -> prpc.DownloadRequest
-	22, // 26: prpc.BtService.RemoveTorrent:input_type -> prpc.RemoveTorrentReq
-	10, // 27: prpc.BtService.GetMagnetUri:input_type -> prpc.GetMagnetUriReq
-	12, // 28: prpc.BtService.GetResumeData:input_type -> prpc.GetResumeDataReq
-	14, // 29: prpc.BtService.GetTorrentInfo:input_type -> prpc.GetTorrentInfoReq
-	16, // 30: prpc.BtService.GetBtStatus:input_type -> prpc.GetBtStatusReq
-	18, // 31: prpc.BtService.OnBtStatus:input_type -> prpc.BtStatusRequest
-	26, // 32: prpc.BtService.OnFileCompleted:input_type -> prpc.FileCompletedReq
-	9,  // 33: prpc.BtService.Parse:output_type -> prpc.DownloadRespone
-	9,  // 34: prpc.BtService.Download:output_type -> prpc.DownloadRespone
-	23, // 35: prpc.BtService.RemoveTorrent:output_type -> prpc.RemoveTorrentRes
-	11, // 36: prpc.BtService.GetMagnetUri:output_type -> prpc.GetMagnetUriRsp
-	13, // 37: prpc.BtService.GetResumeData:output_type -> prpc.GetResumeDataRsp
-	15, // 38: prpc.BtService.GetTorrentInfo:output_type -> prpc.GetTorrentInfoRsp
-	17, // 39: prpc.BtService.GetBtStatus:output_type -> prpc.GetBtStatusRsp
-	19, // 40: prpc.BtService.OnBtStatus:output_type -> prpc.BtStatusRespone
-	27, // 41: prpc.BtService.OnFileCompleted:output_type -> prpc.FileCompletedRes
-	33, // [33:42] is the sub-list for method output_type
-	24, // [24:33] is the sub-list for method input_type
+	12, // 8: prpc.GetMagnetUriReq.info_hash:type_name -> prpc.InfoHash
+	12, // 9: prpc.GetMagnetUriRsp.info_hash:type_name -> prpc.InfoHash
+	12, // 10: prpc.GetResumeDataReq.info_hash:type_name -> prpc.InfoHash
+	12, // 11: prpc.GetTorrentInfoReq.info_hash:type_name -> prpc.InfoHash
+	9,  // 12: prpc.GetTorrentInfoRsp.torrent_info:type_name -> prpc.TorrentInfo
+	12, // 13: prpc.GetBtStatusReq.info_hash:type_name -> prpc.InfoHash
+	10, // 14: prpc.GetBtStatusRsp.status:type_name -> prpc.TorrentStatus
+	12, // 15: prpc.BtStatusRequest.info_hash:type_name -> prpc.InfoHash
+	10, // 16: prpc.BtStatusRespone.status_array:type_name -> prpc.TorrentStatus
+	12, // 17: prpc.TorrentInfoReq.info_hash:type_name -> prpc.InfoHash
+	9,  // 18: prpc.TorrentInfoRes.ti:type_name -> prpc.TorrentInfo
+	12, // 19: prpc.RemoveTorrentReq.info_hash:type_name -> prpc.InfoHash
+	12, // 20: prpc.FileProgressReq.info_hash:type_name -> prpc.InfoHash
+	12, // 21: prpc.FileProgressRes.info_hash:type_name -> prpc.InfoHash
+	8,  // 22: prpc.FileProgressRes.files:type_name -> prpc.BtFile
+	12, // 23: prpc.FileCompletedRes.info_hash:type_name -> prpc.InfoHash
+	4,  // 24: prpc.BtService.InitedSession:input_type -> prpc.InitedSessionReq
+	6,  // 25: prpc.BtService.InitSession:input_type -> prpc.InitSessionReq
+	11, // 26: prpc.BtService.Parse:input_type -> prpc.DownloadRequest
+	11, // 27: prpc.BtService.Download:input_type -> prpc.DownloadRequest
+	28, // 28: prpc.BtService.RemoveTorrent:input_type -> prpc.RemoveTorrentReq
+	14, // 29: prpc.BtService.GetMagnetUri:input_type -> prpc.GetMagnetUriReq
+	16, // 30: prpc.BtService.GetResumeData:input_type -> prpc.GetResumeDataReq
+	18, // 31: prpc.BtService.GetTorrentInfo:input_type -> prpc.GetTorrentInfoReq
+	22, // 32: prpc.BtService.GetBtStatus:input_type -> prpc.GetBtStatusReq
+	20, // 33: prpc.BtService.GetSessionParams:input_type -> prpc.GetSessionParamsReq
+	24, // 34: prpc.BtService.OnBtStatus:input_type -> prpc.BtStatusRequest
+	32, // 35: prpc.BtService.OnFileCompleted:input_type -> prpc.FileCompletedReq
+	5,  // 36: prpc.BtService.InitedSession:output_type -> prpc.InitedSessionRsp
+	7,  // 37: prpc.BtService.InitSession:output_type -> prpc.InitSessionRsp
+	13, // 38: prpc.BtService.Parse:output_type -> prpc.DownloadRespone
+	13, // 39: prpc.BtService.Download:output_type -> prpc.DownloadRespone
+	29, // 40: prpc.BtService.RemoveTorrent:output_type -> prpc.RemoveTorrentRes
+	15, // 41: prpc.BtService.GetMagnetUri:output_type -> prpc.GetMagnetUriRsp
+	17, // 42: prpc.BtService.GetResumeData:output_type -> prpc.GetResumeDataRsp
+	19, // 43: prpc.BtService.GetTorrentInfo:output_type -> prpc.GetTorrentInfoRsp
+	23, // 44: prpc.BtService.GetBtStatus:output_type -> prpc.GetBtStatusRsp
+	21, // 45: prpc.BtService.GetSessionParams:output_type -> prpc.GetSessionParamsRsp
+	25, // 46: prpc.BtService.OnBtStatus:output_type -> prpc.BtStatusRespone
+	33, // 47: prpc.BtService.OnFileCompleted:output_type -> prpc.FileCompletedRes
+	36, // [36:48] is the sub-list for method output_type
+	24, // [24:36] is the sub-list for method input_type
 	24, // [24:24] is the sub-list for extension type_name
 	24, // [24:24] is the sub-list for extension extendee
 	0,  // [0:24] is the sub-list for field type_name
@@ -1833,7 +2189,7 @@ func file_bt_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_bt_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BtFile); i {
+			switch v := v.(*InitedSessionReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1845,7 +2201,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TorrentInfo); i {
+			switch v := v.(*InitedSessionRsp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1857,7 +2213,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TorrentStatus); i {
+			switch v := v.(*InitSessionReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1869,7 +2225,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DownloadRequest); i {
+			switch v := v.(*InitSessionRsp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1881,7 +2237,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*InfoHash); i {
+			switch v := v.(*BtFile); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1893,7 +2249,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DownloadRespone); i {
+			switch v := v.(*TorrentInfo); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1905,7 +2261,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetMagnetUriReq); i {
+			switch v := v.(*TorrentStatus); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1917,7 +2273,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetMagnetUriRsp); i {
+			switch v := v.(*DownloadRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1929,7 +2285,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetResumeDataReq); i {
+			switch v := v.(*InfoHash); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1941,7 +2297,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetResumeDataRsp); i {
+			switch v := v.(*DownloadRespone); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1953,7 +2309,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetTorrentInfoReq); i {
+			switch v := v.(*GetMagnetUriReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1965,7 +2321,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetTorrentInfoRsp); i {
+			switch v := v.(*GetMagnetUriRsp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1977,7 +2333,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetBtStatusReq); i {
+			switch v := v.(*GetResumeDataReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1989,7 +2345,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetBtStatusRsp); i {
+			switch v := v.(*GetResumeDataRsp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2001,7 +2357,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BtStatusRequest); i {
+			switch v := v.(*GetTorrentInfoReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2013,7 +2369,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BtStatusRespone); i {
+			switch v := v.(*GetTorrentInfoRsp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2025,7 +2381,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TorrentInfoReq); i {
+			switch v := v.(*GetSessionParamsReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2037,7 +2393,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TorrentInfoRes); i {
+			switch v := v.(*GetSessionParamsRsp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2049,7 +2405,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RemoveTorrentReq); i {
+			switch v := v.(*GetBtStatusReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2061,7 +2417,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RemoveTorrentRes); i {
+			switch v := v.(*GetBtStatusRsp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2073,7 +2429,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FileProgressReq); i {
+			switch v := v.(*BtStatusRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2085,7 +2441,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FileProgressRes); i {
+			switch v := v.(*BtStatusRespone); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2097,7 +2453,7 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FileCompletedReq); i {
+			switch v := v.(*TorrentInfoReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2109,6 +2465,78 @@ func file_bt_proto_init() {
 			}
 		}
 		file_bt_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TorrentInfoRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_bt_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RemoveTorrentReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_bt_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RemoveTorrentRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_bt_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FileProgressReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_bt_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FileProgressRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_bt_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FileCompletedReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_bt_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*FileCompletedRes); i {
 			case 0:
 				return &v.state
@@ -2127,7 +2555,7 @@ func file_bt_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_bt_proto_rawDesc,
 			NumEnums:      4,
-			NumMessages:   24,
+			NumMessages:   30,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

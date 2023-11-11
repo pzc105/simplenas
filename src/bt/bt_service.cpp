@@ -13,36 +13,6 @@ namespace prpc
 {
   bt_service::bt_service() : _pusher_manager(this)
   {
-    YAML::Node config = bt::setting::read();
-    YAML::Node bt_config = config["bt"];
-
-    static unordered_map<string, lt::settings_pack::proxy_type_t> type_map = {
-        {"socks4", lt::settings_pack::proxy_type_t::socks4},
-        {"socks5", lt::settings_pack::proxy_type_t::socks5},
-        {"socks5_pw", lt::settings_pack::proxy_type_t::socks5_pw},
-        {"http", lt::settings_pack::proxy_type_t::http},
-        {"http_pw", lt::settings_pack::proxy_type_t::http_pw},
-    };
-
-    lt::settings_pack sp;
-    string const proxy_host = bt_config["proxy_hostname"].as<string>();
-    int proxy_port = std::atoi(bt_config["proxy_port"].as<string>().c_str());
-    string const proxy_type = bt_config["proxy_type"].as<string>();
-    int download_rate_limit = std::atoi(bt_config["download_rate_limit"].as<string>().c_str());
-    int upload_rate_limit = std::atoi(bt_config["upload_rate_limit"].as<string>().c_str());
-    int hashing_threads = std::atoi(bt_config["hashing_threads"].as<string>().c_str());
-    if (!proxy_host.empty() && proxy_port > 0 && !proxy_type.empty() && type_map.find(proxy_type) != type_map.end())
-    {
-      sp.set_str(lt::settings_pack::proxy_hostname, proxy_host);
-      sp.set_int(lt::settings_pack::proxy_type, type_map[proxy_type]);
-      sp.set_int(lt::settings_pack::proxy_port, proxy_port);
-    }
-    sp.set_int(lt::settings_pack::download_rate_limit, download_rate_limit);
-    sp.set_int(lt::settings_pack::upload_rate_limit, upload_rate_limit);
-    sp.set_int(lt::settings_pack::hashing_threads, hashing_threads);
-    sp.set_int(lt::settings_pack::alert_mask, lt::file_completed_alert::static_category);
-    lt::session_params sps(sp);
-    _ses = std::make_unique<lt::session>(sps);
   }
 
   bt_service::~bt_service()
@@ -67,7 +37,6 @@ namespace prpc
   {
     if (!_cq)
       return;
-
     _pusher_manager.start();
 
     for (;;)
@@ -128,10 +97,62 @@ namespace prpc
     }
   }
 
+  ::grpc::Status bt_service::InitedSession(::grpc::ServerContext *context, const ::prpc::InitedSessionReq *request, ::prpc::InitedSessionRsp *response)
+  {
+    response->set_inited(_ses != nullptr);
+    return ::grpc::Status::OK;
+  }
+
+  ::grpc::Status bt_service::InitSession(::grpc::ServerContext *context, const ::prpc::InitSessionReq *request, ::prpc::InitSessionRsp *response)
+  {
+    (void)(context);
+    if (request == nullptr)
+    {
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+    }
+    static unordered_map<string, lt::settings_pack::proxy_type_t> type_map = {
+        {"socks4", lt::settings_pack::proxy_type_t::socks4},
+        {"socks5", lt::settings_pack::proxy_type_t::socks5},
+        {"socks5_pw", lt::settings_pack::proxy_type_t::socks5_pw},
+        {"http", lt::settings_pack::proxy_type_t::http},
+        {"http_pw", lt::settings_pack::proxy_type_t::http_pw},
+    };
+
+    lt::settings_pack sp;
+    string const proxy_host = request->proxy_type();
+    int proxy_port = request->proxy_port();
+    string const proxy_type = request->proxy_type();
+    int download_rate_limit = request->download_rate_limit();
+    int upload_rate_limit = request->upload_rate_limit();
+    int hashing_threads = request->hashing_threads();
+    if (!proxy_host.empty() && proxy_port > 0 && !proxy_type.empty() && type_map.find(proxy_type) != type_map.end())
+    {
+      sp.set_str(lt::settings_pack::proxy_hostname, proxy_host);
+      sp.set_int(lt::settings_pack::proxy_type, type_map[proxy_type]);
+      sp.set_int(lt::settings_pack::proxy_port, proxy_port);
+    }
+    sp.set_int(lt::settings_pack::download_rate_limit, download_rate_limit);
+    sp.set_int(lt::settings_pack::upload_rate_limit, upload_rate_limit);
+    sp.set_int(lt::settings_pack::hashing_threads, hashing_threads);
+    sp.set_int(lt::settings_pack::alert_mask, lt::file_completed_alert::static_category);
+    lt::session_params sps = lt::read_session_params(request->resume_data());
+    sps.settings = sp;
+    _ses = std::make_unique<lt::session>(sps);
+    return ::grpc::Status::OK;
+  }
+
   ::grpc::Status bt_service::Parse(
       ::grpc::ServerContext *context, const ::prpc::DownloadRequest *request, ::prpc::DownloadRespone *response)
   {
     (void)(context);
+    if (request == nullptr)
+    {
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+    }
+    if (_ses == nullptr)
+    {
+      return ::grpc::Status(grpc::UNAVAILABLE, "");
+    }
     lt::add_torrent_params params;
 
     switch (request->type())
@@ -178,6 +199,14 @@ namespace prpc
       ::grpc::ServerContext *context, const ::prpc::DownloadRequest *request, ::prpc::DownloadRespone *response)
   {
     (void)(context);
+    if (request == nullptr)
+    {
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+    }
+    if (_ses == nullptr)
+    {
+      return ::grpc::Status(grpc::UNAVAILABLE, "");
+    }
     lt::add_torrent_params params;
 
     switch (request->type())
@@ -245,6 +274,10 @@ namespace prpc
     {
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
     }
+    if (_ses == nullptr)
+    {
+      return ::grpc::Status(grpc::UNAVAILABLE, "");
+    }
     auto info_hash = get_info_hash(request->info_hash());
     auto t = _ses->find_torrent(info_hash.get_best());
     if (!t.is_valid())
@@ -262,6 +295,10 @@ namespace prpc
     if (request == nullptr)
     {
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+    }
+    if (_ses == nullptr)
+    {
+      return ::grpc::Status(grpc::UNAVAILABLE, "");
     }
     switch (request->type())
     {
@@ -317,6 +354,10 @@ namespace prpc
     {
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
     }
+    if (_ses == nullptr)
+    {
+      return ::grpc::Status(grpc::UNAVAILABLE, "");
+    }
     auto th = _ses->find_torrent(get_info_hash(request->info_hash()).get_best());
     if (!th.is_valid())
     {
@@ -334,6 +375,10 @@ namespace prpc
     if (request == nullptr)
     {
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+    }
+    if (_ses == nullptr)
+    {
+      return ::grpc::Status(grpc::UNAVAILABLE, "");
     }
     auto th = _ses->find_torrent(get_info_hash(request->info_hash()).get_best());
     if (!th.is_valid())
@@ -356,12 +401,33 @@ namespace prpc
     {
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
     }
+    if (_ses == nullptr)
+    {
+      return ::grpc::Status(grpc::UNAVAILABLE, "");
+    }
     auto th = _ses->find_torrent(get_info_hash(request->info_hash()).get_best());
     if (!th.is_valid())
     {
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "can't find torrent");
     }
     *response->mutable_status() = get_status_respone(th.status());
+    return ::grpc::Status::OK;
+  }
+
+  ::grpc::Status bt_service::GetSessionParams(::grpc::ServerContext *context, const ::prpc::GetSessionParamsReq *request, ::prpc::GetSessionParamsRsp *response)
+  {
+    (void)(context);
+    if (request == nullptr)
+    {
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+    }
+    if (_ses == nullptr)
+    {
+      return ::grpc::Status(grpc::UNAVAILABLE, "");
+    }
+    auto sparams = _ses->session_state(lt::session_handle::save_dht_settings | lt::session::save_dht_state | lt::session::save_extension_state);
+    auto buf = lt::write_session_params_buf(sparams);
+    *response->mutable_resume_data() = std::string(buf.data(), buf.size());
     return ::grpc::Status::OK;
   }
 

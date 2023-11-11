@@ -8,8 +8,13 @@ server:
   mediaPath: E:/media
 
 bt:
-  ip: 127.0.0.1
-  port: 12345
+  btClientAddress: 127.0.0.1:22345
+  proxyHostname: 
+  proxyPort: 
+  proxyType: 
+  uploadRateLimit: 10000000
+  downloadRateLimit: 0
+  hashingThreads: 8
   savePath: D:/bt
 
 log:

@@ -5,6 +5,9 @@ package prpc;
 option go_package = "./prpc";
 
 service BtService {
+  rpc InitedSession(InitedSessionReq) returns (InitedSessionRsp);
+  rpc InitSession(InitSessionReq) returns (InitSessionRsp);
+
   rpc Parse(DownloadRequest) returns (DownloadRespone);
   rpc Download(DownloadRequest) returns (DownloadRespone);
   rpc RemoveTorrent(RemoveTorrentReq) returns (RemoveTorrentRes);
@@ -12,9 +15,32 @@ service BtService {
   rpc GetResumeData(GetResumeDataReq) returns (GetResumeDataRsp);
   rpc GetTorrentInfo(GetTorrentInfoReq) returns (GetTorrentInfoRsp);
   rpc GetBtStatus(GetBtStatusReq) returns (GetBtStatusRsp);
+  rpc GetSessionParams(GetSessionParamsReq) returns (GetSessionParamsRsp);
 
   rpc OnBtStatus(stream BtStatusRequest) returns (stream BtStatusRespone);
   rpc OnFileCompleted(stream FileCompletedReq) returns (stream FileCompletedRes);
+}
+
+message InitedSessionReq {
+
+}
+
+message InitedSessionRsp {
+  bool inited = 1;
+}
+
+message InitSessionReq {
+  string proxy_hostname = 1;
+  int32 proxy_port =2; 
+  string proxy_type = 3;
+  int32 upload_rate_limit = 4;
+  int32 download_rate_limit = 5;
+  int32 hashing_threads = 6;
+  bytes resume_data = 7; 
+}
+
+message InitSessionRsp {
+
 }
 
 message BtFile {
@@ -101,7 +127,7 @@ message GetResumeDataReq {
 }
 
 message GetResumeDataRsp {
-  bytes resume_data = 9; 
+  bytes resume_data = 1; 
 }
 
 message GetTorrentInfoReq {
@@ -110,6 +136,14 @@ message GetTorrentInfoReq {
 
 message GetTorrentInfoRsp {
   TorrentInfo torrent_info = 1;
+}
+
+message GetSessionParamsReq {
+
+}
+
+message GetSessionParamsRsp {
+  bytes resume_data = 1; 
 }
 
 message GetBtStatusReq {

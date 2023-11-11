@@ -34,9 +34,14 @@ type ServerSetting struct {
 }
 
 type BtServerSetting struct {
-	Ip       string `yaml:"ip"`
-	Port     int    `yaml:"port"`
-	SavePath string `yaml:"savePath"`
+	BtClientAddress   string `yaml:"btClientAddress"`
+	SavePath          string `yaml:"savePath"`
+	ProxyHostname     string `yaml:"proxyHostname"`
+	ProxyPort         int32  `yaml:"proxyPort"`
+	ProxyType         string `yaml:"proxyType"`
+	UploadRateLimit   int32  `yaml:"uploadRateLimit"`
+	DownloadRateLimit int32  `yaml:"downloadRateLimit"`
+	HashingThreads    int32  `yaml:"hashingThreads"`
 }
 
 type LogSetting struct {

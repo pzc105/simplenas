@@ -107,7 +107,8 @@ func deleteUserTorrentids(tid ptype.TorrentID, ids ...ptype.UserID) error {
 }
 
 const (
-	RedisKeyResumeData = "torrent_resume"
+	RedisKeyResumeData      = "torrent_resume"
+	RedisKeyBtSessionParams = "bt_session"
 )
 
 func getHKey(infoHash *InfoHash) string {
@@ -129,4 +130,14 @@ func getMagnetByInfoHash(infoHash *InfoHash) (string, error) {
 	var ret string
 	err := db.QueryRow(sql, infoHash.Hash, infoHash.Version).Scan(&ret)
 	return ret, err
+}
+
+func saveBtSessionParams(data []byte) error {
+	_, err := db.GREDIS.Set(context.Background(), RedisKeyBtSessionParams, data, 0).Result()
+	return err
+}
+
+func loadBtSessionParams() ([]byte, error) {
+	d, err := db.GREDIS.Get(context.Background(), RedisKeyBtSessionParams).Result()
+	return []byte(d), err
 }

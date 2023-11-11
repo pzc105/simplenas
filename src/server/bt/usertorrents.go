@@ -8,6 +8,7 @@ import (
 	"pnas/ptype"
 	"pnas/setting"
 	"sync"
+	"time"
 
 	"github.com/pkg/errors"
 	"google.golang.org/grpc/codes"
@@ -117,10 +118,17 @@ type UserTorrentsImpl struct {
 	torrents map[InfoHash]*Torrent
 	users    map[ptype.UserID]*userData
 
+	shutDownCtx context.Context
+	closeFunc   context.CancelFunc
+	wg          sync.WaitGroup
+
 	btClient BtClient
 }
 
 func (ut *UserTorrentsImpl) Init() {
+
+	ut.shutDownCtx, ut.closeFunc = context.WithCancel(context.Background())
+
 	ut.torrents = make(map[InfoHash]*Torrent)
 	ut.users = make(map[ptype.UserID]*userData)
 	ut.load()
@@ -128,6 +136,24 @@ func (ut *UserTorrentsImpl) Init() {
 	ut.btClient.Init(WithOnStatus(ut.onBtStatus),
 		WithOnConnect(ut.handleBtClientConnected),
 		WithOnFileCompleted(ut.handleBtFileCompleted))
+
+	ut.wg.Add(1)
+	go func() {
+		defer ut.wg.Add(-1)
+		ticker := time.NewTicker(time.Minute * 1)
+	loop:
+		for {
+			select {
+			case <-ticker.C:
+				rsp, err := ut.btClient.GetSessionParams(ut.shutDownCtx, &prpc.GetSessionParamsReq{})
+				if err == nil {
+					saveBtSessionParams(rsp.ResumeData)
+				}
+			case <-ut.shutDownCtx.Done():
+				break loop
+			}
+		}
+	}()
 }
 
 func (ut *UserTorrentsImpl) load() {
@@ -169,10 +195,31 @@ func (ut *UserTorrentsImpl) load() {
 
 func (ut *UserTorrentsImpl) Close() {
 	ut.btClient.Close()
+	ut.wg.Wait()
 }
 
 func (ut *UserTorrentsImpl) handleBtClientConnected() {
 	log.Info("connected to bt service")
+
+	rsp, err := ut.btClient.InitedSession(context.Background(), &prpc.InitedSessionReq{})
+	if err != nil {
+		return
+	}
+
+	if !rsp.Inited {
+		resume, _ := loadBtSessionParams()
+		req := &prpc.InitSessionReq{
+			ProxyHostname:     setting.GS().Bt.ProxyHostname,
+			ProxyPort:         setting.GS().Bt.ProxyPort,
+			ProxyType:         setting.GS().Bt.ProxyType,
+			UploadRateLimit:   setting.GS().Bt.UploadRateLimit,
+			DownloadRateLimit: setting.GS().Bt.DownloadRateLimit,
+			HashingThreads:    setting.GS().Bt.HashingThreads,
+			ResumeData:        resume,
+		}
+		ut.btClient.InitSession(context.Background(), req)
+	}
+
 	ut.mtx.Lock()
 	defer ut.mtx.Unlock()
 
