@@ -68,28 +68,46 @@ func WithOnFileCompleted(onFileCompleted func(*prpc.FileCompletedRes)) *funcBtCl
 }
 
 func (bt *BtClient) Init(opts ...BtClientOpt) {
-	bc := backoff.DefaultConfig
-	bc.MaxDelay = time.Second * 3
-	conn, err := grpc.Dial(setting.GS().Bt.BtClientAddress,
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithConnectParams(grpc.ConnectParams{
-			Backoff:           bc,
-			MinConnectTimeout: time.Second * 5,
-		}))
-	if err != nil {
-		log.Error("failed to connect bt")
-		return
-	}
+
 	for _, opt := range opts {
 		opt.apply(&bt.opts)
 	}
 
-	bt.conn = conn
-	bt.BtServiceClient = prpc.NewBtServiceClient(conn)
+	initClient := func() {
+		if len(setting.GS().Bt.BtClientAddress) == 0 {
+			log.Error("[bt] empty address")
+			return
+		}
+		if bt.conn!=nil && setting.GS().Bt.BtClientAddress == bt.conn.Target(){
+			return
+		}
+		bc := backoff.DefaultConfig
+		bc.MaxDelay = time.Second * 3
+		conn, err := grpc.Dial(setting.GS().Bt.BtClientAddress,
+			grpc.WithTransportCredentials(insecure.NewCredentials()),
+			grpc.WithConnectParams(grpc.ConnectParams{
+				Backoff:           bc,
+				MinConnectTimeout: time.Second * 5,
+			}))
+		if err != nil {
+			log.Error("failed to connect bt")
+			return
+		}
+		if bt.conn != nil {
+			bt.conn.Close()
+		}
+		bt.conn = conn
+		bt.BtServiceClient = prpc.NewBtServiceClient(conn)
+		go bt.handleStatus(conn)
+		go bt.handleConState(conn)
+		go bt.handleFileCompleted(conn)
+	}
+
+	initClient()
+
+	setting.AddOnCfgChangeFun("bt_client", initClient)
+
 	bt.closeCtx, bt.closeFunc = context.WithCancel(context.Background())
-	go bt.handleStatus()
-	go bt.handleConState()
-	go bt.handleFileCompleted()
 }
 
 func (bt *BtClient) Close() {
@@ -98,16 +116,16 @@ func (bt *BtClient) Close() {
 	bt.wg.Wait()
 }
 
-func (bt *BtClient) handleConState() {
+func (bt *BtClient) handleConState(conn *grpc.ClientConn) {
 	bt.wg.Add(1)
 	defer bt.wg.Done()
 
 	for {
-		lst := bt.conn.GetState()
-		if !bt.conn.WaitForStateChange(bt.closeCtx, lst) {
+		lst := conn.GetState()
+		if !conn.WaitForStateChange(bt.closeCtx, lst) {
 			return
 		}
-		nst := bt.conn.GetState()
+		nst := conn.GetState()
 		if lst != nst && nst == connectivity.Ready {
 			if bt.opts.onConnect != nil {
 				bt.opts.onConnect()
@@ -118,16 +136,16 @@ func (bt *BtClient) handleConState() {
 	}
 }
 
-func (bt *BtClient) handleStatus() {
+func (bt *BtClient) handleStatus(conn *grpc.ClientConn) {
 	bt.wg.Add(1)
 	defer bt.wg.Done()
 
 	defer func() {
-		if bt.conn.GetState() == connectivity.Shutdown {
+		if conn.GetState() == connectivity.Shutdown {
 			return
 		}
 		time.Sleep(1 * time.Second)
-		go bt.handleStatus()
+		go bt.handleStatus(conn)
 	}()
 
 	stream, err := bt.OnBtStatus(bt.closeCtx)
@@ -152,16 +170,16 @@ func (bt *BtClient) handleStatus() {
 	}
 }
 
-func (bt *BtClient) handleFileCompleted() {
+func (bt *BtClient) handleFileCompleted(conn *grpc.ClientConn) {
 	bt.wg.Add(1)
 	defer bt.wg.Done()
 
 	defer func() {
-		if bt.conn.GetState() == connectivity.Shutdown {
+		if conn.GetState() == connectivity.Shutdown {
 			return
 		}
 		time.Sleep(1 * time.Second)
-		go bt.handleFileCompleted()
+		go bt.handleFileCompleted(conn)
 	}()
 
 	stream, err := bt.OnFileCompleted(bt.closeCtx)

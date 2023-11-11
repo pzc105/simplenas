@@ -981,3 +981,37 @@ export namespace DelMagnetCategoryRsp {
   }
 }
 
+export class GetTorrentsReq extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetTorrentsReq.AsObject;
+  static toObject(includeInstance: boolean, msg: GetTorrentsReq): GetTorrentsReq.AsObject;
+  static serializeBinaryToWriter(message: GetTorrentsReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetTorrentsReq;
+  static deserializeBinaryFromReader(message: GetTorrentsReq, reader: jspb.BinaryReader): GetTorrentsReq;
+}
+
+export namespace GetTorrentsReq {
+  export type AsObject = {
+  }
+}
+
+export class GetTorrentsRsp extends jspb.Message {
+  getTorrentInfoList(): Array<bt_pb.TorrentInfo>;
+  setTorrentInfoList(value: Array<bt_pb.TorrentInfo>): GetTorrentsRsp;
+  clearTorrentInfoList(): GetTorrentsRsp;
+  addTorrentInfo(value?: bt_pb.TorrentInfo, index?: number): bt_pb.TorrentInfo;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetTorrentsRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: GetTorrentsRsp): GetTorrentsRsp.AsObject;
+  static serializeBinaryToWriter(message: GetTorrentsRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetTorrentsRsp;
+  static deserializeBinaryFromReader(message: GetTorrentsRsp, reader: jspb.BinaryReader): GetTorrentsRsp;
+}
+
+export namespace GetTorrentsRsp {
+  export type AsObject = {
+    torrentInfoList: Array<bt_pb.TorrentInfo.AsObject>,
+  }
+}
+

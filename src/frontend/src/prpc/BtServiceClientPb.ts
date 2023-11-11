@@ -39,6 +39,92 @@ export class BtServiceClient {
     this.options_ = options;
   }
 
+  methodDescriptorInitedSession = new grpcWeb.MethodDescriptor(
+    '/prpc.BtService/InitedSession',
+    grpcWeb.MethodType.UNARY,
+    bt_pb.InitedSessionReq,
+    bt_pb.InitedSessionRsp,
+    (request: bt_pb.InitedSessionReq) => {
+      return request.serializeBinary();
+    },
+    bt_pb.InitedSessionRsp.deserializeBinary
+  );
+
+  initedSession(
+    request: bt_pb.InitedSessionReq,
+    metadata: grpcWeb.Metadata | null): Promise<bt_pb.InitedSessionRsp>;
+
+  initedSession(
+    request: bt_pb.InitedSessionReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: bt_pb.InitedSessionRsp) => void): grpcWeb.ClientReadableStream<bt_pb.InitedSessionRsp>;
+
+  initedSession(
+    request: bt_pb.InitedSessionReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: bt_pb.InitedSessionRsp) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.BtService/InitedSession',
+        request,
+        metadata || {},
+        this.methodDescriptorInitedSession,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.BtService/InitedSession',
+    request,
+    metadata || {},
+    this.methodDescriptorInitedSession);
+  }
+
+  methodDescriptorInitSession = new grpcWeb.MethodDescriptor(
+    '/prpc.BtService/InitSession',
+    grpcWeb.MethodType.UNARY,
+    bt_pb.InitSessionReq,
+    bt_pb.InitSessionRsp,
+    (request: bt_pb.InitSessionReq) => {
+      return request.serializeBinary();
+    },
+    bt_pb.InitSessionRsp.deserializeBinary
+  );
+
+  initSession(
+    request: bt_pb.InitSessionReq,
+    metadata: grpcWeb.Metadata | null): Promise<bt_pb.InitSessionRsp>;
+
+  initSession(
+    request: bt_pb.InitSessionReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: bt_pb.InitSessionRsp) => void): grpcWeb.ClientReadableStream<bt_pb.InitSessionRsp>;
+
+  initSession(
+    request: bt_pb.InitSessionReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: bt_pb.InitSessionRsp) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.BtService/InitSession',
+        request,
+        metadata || {},
+        this.methodDescriptorInitSession,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.BtService/InitSession',
+    request,
+    metadata || {},
+    this.methodDescriptorInitSession);
+  }
+
   methodDescriptorParse = new grpcWeb.MethodDescriptor(
     '/prpc.BtService/Parse',
     grpcWeb.MethodType.UNARY,
@@ -338,6 +424,49 @@ export class BtServiceClient {
     request,
     metadata || {},
     this.methodDescriptorGetBtStatus);
+  }
+
+  methodDescriptorGetSessionParams = new grpcWeb.MethodDescriptor(
+    '/prpc.BtService/GetSessionParams',
+    grpcWeb.MethodType.UNARY,
+    bt_pb.GetSessionParamsReq,
+    bt_pb.GetSessionParamsRsp,
+    (request: bt_pb.GetSessionParamsReq) => {
+      return request.serializeBinary();
+    },
+    bt_pb.GetSessionParamsRsp.deserializeBinary
+  );
+
+  getSessionParams(
+    request: bt_pb.GetSessionParamsReq,
+    metadata: grpcWeb.Metadata | null): Promise<bt_pb.GetSessionParamsRsp>;
+
+  getSessionParams(
+    request: bt_pb.GetSessionParamsReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: bt_pb.GetSessionParamsRsp) => void): grpcWeb.ClientReadableStream<bt_pb.GetSessionParamsRsp>;
+
+  getSessionParams(
+    request: bt_pb.GetSessionParamsReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: bt_pb.GetSessionParamsRsp) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.BtService/GetSessionParams',
+        request,
+        metadata || {},
+        this.methodDescriptorGetSessionParams,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.BtService/GetSessionParams',
+    request,
+    metadata || {},
+    this.methodDescriptorGetSessionParams);
   }
 
 }

@@ -2,6 +2,100 @@ import * as jspb from 'google-protobuf'
 
 
 
+export class InitedSessionReq extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): InitedSessionReq.AsObject;
+  static toObject(includeInstance: boolean, msg: InitedSessionReq): InitedSessionReq.AsObject;
+  static serializeBinaryToWriter(message: InitedSessionReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): InitedSessionReq;
+  static deserializeBinaryFromReader(message: InitedSessionReq, reader: jspb.BinaryReader): InitedSessionReq;
+}
+
+export namespace InitedSessionReq {
+  export type AsObject = {
+  }
+}
+
+export class InitedSessionRsp extends jspb.Message {
+  getInited(): boolean;
+  setInited(value: boolean): InitedSessionRsp;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): InitedSessionRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: InitedSessionRsp): InitedSessionRsp.AsObject;
+  static serializeBinaryToWriter(message: InitedSessionRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): InitedSessionRsp;
+  static deserializeBinaryFromReader(message: InitedSessionRsp, reader: jspb.BinaryReader): InitedSessionRsp;
+}
+
+export namespace InitedSessionRsp {
+  export type AsObject = {
+    inited: boolean,
+  }
+}
+
+export class InitSessionReq extends jspb.Message {
+  getProxyHost(): string;
+  setProxyHost(value: string): InitSessionReq;
+
+  getProxyPort(): number;
+  setProxyPort(value: number): InitSessionReq;
+
+  getProxyType(): string;
+  setProxyType(value: string): InitSessionReq;
+
+  getUploadRateLimit(): number;
+  setUploadRateLimit(value: number): InitSessionReq;
+
+  getDownloadRateLimit(): number;
+  setDownloadRateLimit(value: number): InitSessionReq;
+
+  getHashingThreads(): number;
+  setHashingThreads(value: number): InitSessionReq;
+
+  getResumeData(): Uint8Array | string;
+  getResumeData_asU8(): Uint8Array;
+  getResumeData_asB64(): string;
+  setResumeData(value: Uint8Array | string): InitSessionReq;
+
+  getListenInterfaces(): string;
+  setListenInterfaces(value: string): InitSessionReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): InitSessionReq.AsObject;
+  static toObject(includeInstance: boolean, msg: InitSessionReq): InitSessionReq.AsObject;
+  static serializeBinaryToWriter(message: InitSessionReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): InitSessionReq;
+  static deserializeBinaryFromReader(message: InitSessionReq, reader: jspb.BinaryReader): InitSessionReq;
+}
+
+export namespace InitSessionReq {
+  export type AsObject = {
+    proxyHost: string,
+    proxyPort: number,
+    proxyType: string,
+    uploadRateLimit: number,
+    downloadRateLimit: number,
+    hashingThreads: number,
+    resumeData: Uint8Array | string,
+    listenInterfaces: string,
+  }
+}
+
+export class InitSessionRsp extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): InitSessionRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: InitSessionRsp): InitSessionRsp.AsObject;
+  static serializeBinaryToWriter(message: InitSessionRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): InitSessionRsp;
+  static deserializeBinaryFromReader(message: InitSessionRsp, reader: jspb.BinaryReader): InitSessionRsp;
+}
+
+export namespace InitSessionRsp {
+  export type AsObject = {
+  }
+}
+
 export class BtFile extends jspb.Message {
   getName(): string;
   setName(value: string): BtFile;
@@ -350,6 +444,40 @@ export class GetTorrentInfoRsp extends jspb.Message {
 export namespace GetTorrentInfoRsp {
   export type AsObject = {
     torrentInfo?: TorrentInfo.AsObject,
+  }
+}
+
+export class GetSessionParamsReq extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetSessionParamsReq.AsObject;
+  static toObject(includeInstance: boolean, msg: GetSessionParamsReq): GetSessionParamsReq.AsObject;
+  static serializeBinaryToWriter(message: GetSessionParamsReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetSessionParamsReq;
+  static deserializeBinaryFromReader(message: GetSessionParamsReq, reader: jspb.BinaryReader): GetSessionParamsReq;
+}
+
+export namespace GetSessionParamsReq {
+  export type AsObject = {
+  }
+}
+
+export class GetSessionParamsRsp extends jspb.Message {
+  getResumeData(): Uint8Array | string;
+  getResumeData_asU8(): Uint8Array;
+  getResumeData_asB64(): string;
+  setResumeData(value: Uint8Array | string): GetSessionParamsRsp;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetSessionParamsRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: GetSessionParamsRsp): GetSessionParamsRsp.AsObject;
+  static serializeBinaryToWriter(message: GetSessionParamsRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetSessionParamsRsp;
+  static deserializeBinaryFromReader(message: GetSessionParamsRsp, reader: jspb.BinaryReader): GetSessionParamsRsp;
+}
+
+export namespace GetSessionParamsRsp {
+  export type AsObject = {
+    resumeData: Uint8Array | string,
   }
 }
 

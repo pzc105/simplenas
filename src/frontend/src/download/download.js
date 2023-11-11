@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SideUtils from '../sideManager.js';
 import * as store from '../store.js'
 import * as Bt from '../prpc/bt_pb.js'
+import * as User from '../prpc/user_pb.js'
 import * as router from '../router.js'
 import userService from '../rpcClient.js'
 import FileUpload from '../uploadTorrent.js'
@@ -39,16 +40,44 @@ const RightColumn = styled('div')(({ theme }) => ({
 export default function Download() {
   const dispatch = useDispatch()
   const showGlobalChat = useSelector((state) => store.selectOpenGlobalChat(state))
+  const torrents = useSelector(state => store.selectTorrents(state))
+
+  const queryTorrens = () => {
+    var req = new User.GetTorrentsReq()
+    userService.getTorrents(req, {}, (err, rsp) => {
+      if (err != null) {
+        console.log(err)
+        return
+      }
+      let ts = {}
+      rsp.getTorrentInfoList().map((t) => {
+        let torrent = t.toObject()
+        ts[torrent.infoHash.hash] = torrent
+        return null
+      })
+      dispatch(store.btSlice.actions.updateTorrents(ts))
+    })
+  }
 
   useEffect(() => {
+    queryTorrens()
+
     const statusRequest = new Bt.BtStatusRequest()
     var stream = userService.onBtStatus(statusRequest)
     stream.on('data', function (sResponse) {
       const trs = sResponse.getStatusArrayList()
+      let needQueryTorrents = false
       trs.map((t) => {
-        dispatch(store.btSlice.actions.updateTorrentStatus(t.toObject()))
+        let status = t.toObject()
+        if (!torrents[status.infoHash.hash]) {
+          needQueryTorrents = true
+        }
+        dispatch(store.btSlice.actions.updateTorrentStatus(status))
         return null
       })
+      if (needQueryTorrents) {
+        queryTorrens()
+      }
     })
     stream.on('status', function (status) {
     });

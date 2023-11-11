@@ -33,27 +33,40 @@ const userSlice = createSlice({
 const btSlice = createSlice({
   name: 'bt',
   initialState: {
-    torrentInfo: {},
+    torrents: {},
     torrentStatus: {},
     viodeFiles: {},
   },
   reducers: {
-    updateTorrentInfo: (state, action) => {
-      var torrent = action.payload
-      state.torrentInfo[torrent.infoHash.hash] = torrent
+    updateTorrents: (state, action) => {
+      var torrents = action.payload
+      state.torrents = {}
+      for (const [key, value] of Object.entries(torrents)) {
+        state.torrents[key] = value
+      }
     },
     updateTorrentStatus: (state, action) => {
-      var torrent = action.payload
-      state.torrentStatus[torrent.infoHash.hash] = torrent
+      if (!state.torrentStatus) {
+        state.torrentStatus = {}
+      }
+      var status = action.payload
+      if (!status.infoHash.hash) {
+        return
+      }
+      state.torrentStatus[status.infoHash.hash] = status
     },
     removeTorrent: (state, action) => {
       const hash = action.payload.hash
       delete state.torrentStatus[hash]
+      delete state.torrents[hash]
     },
     removeAllTorrent: (state) => {
       state.torrentStatus = {}
     },
     updateVideoFiles: (state, action) => {
+      if (!state.viodeFiles) {
+        state.viodeFiles = {}
+      }
       var payload = action.payload
       state.viodeFiles[payload.infoHash.hash] = payload.btVideoMetadat
     },
@@ -169,20 +182,36 @@ const selectGlobalChatPosition = (state, itemId) => {
 }
 
 const selectTorrent = (state, infoHash) => {
-  if (state.bt.torrentInfo) {
-    return state.bt.torrentInfo[infoHash.hash]
+  if (state.bt.torrents) {
+    return state.bt.torrents[infoHash.hash]
   }
 }
 
 const selectTorrentStatus = (state, infoHash) => {
+  let ret
   if (state.bt.torrentStatus) {
-    return state.bt.torrentStatus[infoHash.hash]
+    ret = state.bt.torrentStatus[infoHash.hash]
   }
+  if (ret) {
+    return ret
+  }
+  let t = state.bt.torrents[infoHash.hash]
+  if (!ret && t) {
+    return {
+      "totalDone": 0,
+      "progress": 0,
+      "downloadPayloadRate": 0,
+    }
+  }
+}
+
+const selectTorrents = (state) => {
+  return state.bt.torrents
 }
 
 const selectInfoHashs = (state) => {
   const keys = []
-  Object.values(state.bt.torrentStatus).forEach((v) => {
+  Object.values(state.bt.torrents).forEach((v) => {
     var infoHash = {
       version: v.infoHash.version,
       hash: v.infoHash.hash
@@ -273,7 +302,7 @@ const selectAutoPlayVideo = (state) => {
 export {
   store, userSlice, btSlice, categorySlice, eventSlice, playerSlice, magnetShares,
   selectUserInfo, selectShownChatPanel, selectOpenGlobalChat, selectGlobalChatPosition,
-  selectTorrent, selectInfoHashs, selectBtVideoFiles, selectTorrentStatus,
+  selectTorrent, selectInfoHashs, selectBtVideoFiles, selectTorrentStatus, selectTorrents,
   selectCategoryItem, selectCategoryItems, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo,
   selectMagnetSharesItems,
   getSelectedAudio, selectAutoPlayVideo,

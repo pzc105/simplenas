@@ -401,6 +401,30 @@ func (ser *CoreService) GetMagnetUri(ctx context.Context, req *prpc.GetMagnetUri
 	return ser.um.GetMagnetUri(params)
 }
 
+func (ser *CoreService) GetTorrents(ctx context.Context, req *prpc.GetTorrentsReq) (*prpc.GetTorrentsRsp, error) {
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "")
+	}
+	if req == nil {
+		return nil, status.Error(codes.InvalidArgument, "req == nil")
+	}
+	ts := ser.um.GetTorrents(ses.UserId)
+	rts := []*prpc.TorrentInfo{}
+	for _, t := range ts {
+		var rt prpc.TorrentInfo
+		copier.Copy(&rt, t.GetBaseInfo())
+		fs := t.GetFiles()
+		copier.Copy(&rt.Files, fs)
+		rt.SavePath = ""
+		rts = append(rts, &rt)
+	}
+	rsp := &prpc.GetTorrentsRsp{
+		TorrentInfo: rts,
+	}
+	return rsp, nil
+}
+
 func (ser *CoreService) OnBtStatus(statusReq *prpc.BtStatusRequest, stream prpc.UserService_OnBtStatusServer) error {
 	ses := ser.getSession(stream.Context())
 	if ses == nil {

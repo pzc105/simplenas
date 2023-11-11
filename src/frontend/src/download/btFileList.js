@@ -48,7 +48,6 @@ const FolderSelector = ({ select }) => {
   }
 
   const handleSelectOpen = () => {
-    console.log("open")
     setIsSelectOpen(!isSelectOpen);
   };
 

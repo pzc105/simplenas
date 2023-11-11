@@ -142,11 +142,15 @@ func Init(config_file_full_path string) {
 							continue
 						}
 						setting.Store(&s)
+						funs := []OnConfigChange{}
 						onFunsMtx.Lock()
 						for _, f := range onCfgChangeFuns {
-							f()
+							funs = append(funs, f)
 						}
 						onFunsMtx.Unlock()
+						for _, f := range funs {
+							f()
+						}
 					}
 				case _, ok := <-watcher.Errors:
 					if !ok {

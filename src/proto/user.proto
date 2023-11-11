@@ -29,6 +29,7 @@ service UserService {
 
   rpc GetMagnetUri(GetMagnetUriReq) returns (GetMagnetUriRsp);
   
+  rpc GetTorrents(GetTorrentsReq) returns (GetTorrentsRsp);
   rpc OnBtStatus(BtStatusRequest) returns (stream BtStatusRespone);
 
   rpc QueryBtVideos(QueryBtVideosReq) returns (QueryBtVideosRes);
@@ -278,4 +279,12 @@ message DelMagnetCategoryReq {
 
 message DelMagnetCategoryRsp {
 
+}
+
+message GetTorrentsReq {
+
+}
+
+message GetTorrentsRsp {
+  repeated TorrentInfo torrent_info = 1;
 }

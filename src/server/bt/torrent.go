@@ -137,14 +137,14 @@ func (t *Torrent) updateStatus(s *prpc.TorrentStatus) {
 	old := t.state
 	t.state = s.State
 
-	if t.state != s.State && s.State == prpc.BtStateEnum_finished {
+	if old != s.State && (s.State == prpc.BtStateEnum_seeding) {
 		for i := range t.files {
 			t.updateFileTypeLocked(i)
 		}
 	}
 
 	if t.state == prpc.BtStateEnum_downloading ||
-		old != prpc.BtStateEnum_finished && t.state == prpc.BtStateEnum_finished {
+		old != prpc.BtStateEnum_seeding && t.state == prpc.BtStateEnum_seeding {
 		now := time.Now()
 		if now.Sub(t.lastSave) > time.Second*10 {
 			req := &prpc.GetResumeDataReq{

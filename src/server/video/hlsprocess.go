@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os/exec"
+	"pnas/log"
 	"pnas/utils"
 	"sync"
 	"time"
@@ -74,6 +75,7 @@ func (h *HlsProcess) Init() {
 					task := h.cudaQueue.Steal()
 					if task != nil {
 						htask, _ := task.Identity.(*hlsTask)
+						log.Debugf("steal task: %s", htask.params.FullVideoFileName)
 						h.useSoft(htask)
 					}
 				}

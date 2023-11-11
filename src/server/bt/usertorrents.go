@@ -27,12 +27,12 @@ type FileCompleted struct {
 type userData struct {
 	mtx       sync.Mutex
 	userId    ptype.UserID
-	torrents  map[ptype.TorrentID]bool
+	torrents  map[ptype.TorrentID]*Torrent
 	callbacks map[ptype.SessionID]UserOnBtStatusCallback
 }
 
 func (ud *userData) init() {
-	ud.torrents = make(map[ptype.TorrentID]bool)
+	ud.torrents = make(map[ptype.TorrentID]*Torrent)
 	ud.callbacks = make(map[ptype.SessionID]UserOnBtStatusCallback)
 }
 
@@ -78,22 +78,22 @@ func (ud *userData) hasTorrent(id ptype.TorrentID) bool {
 	return ok
 }
 
-func (ud *userData) initTorrent(id ptype.TorrentID) {
+func (ud *userData) initTorrent(t *Torrent) {
 	ud.mtx.Lock()
-	ud.torrents[id] = true
+	ud.torrents[t.base.Id] = t
 	ud.mtx.Unlock()
 }
 
-func (ud *userData) addTorrent(id ptype.TorrentID) error {
-	if ud.hasTorrent(id) {
+func (ud *userData) addTorrent(t *Torrent) error {
+	if ud.hasTorrent(t.base.Id) {
 		return errors.New(("duplicated"))
 	}
 	ud.mtx.Lock()
 	defer ud.mtx.Unlock()
 	sql := "insert into user_torrent (user_id, torrent_id) values(?, ?)"
-	_, err := db.Exec(sql, ud.userId, id)
+	_, err := db.Exec(sql, ud.userId, t.base.Id)
 	if err == nil {
-		ud.torrents[id] = true
+		ud.torrents[t.base.Id] = t
 	}
 	return err
 }
@@ -105,12 +105,23 @@ func (ud *userData) removeTorrent(id ptype.TorrentID, dodb bool) error {
 	if !ok {
 		return errors.New("not found torrent")
 	}
+	delete(ud.torrents, id)
 	if dodb {
 		sql := "delete from user_torrent where user_id=? and torrent_id=?"
 		_, err := db.Exec(sql, ud.userId, id)
 		return err
 	}
 	return nil
+}
+
+func (ud *userData) getTorrents() []*Torrent {
+	ud.mtx.Lock()
+	defer ud.mtx.Unlock()
+	ts := []*Torrent{}
+	for _, t := range ud.torrents {
+		ts = append(ts, t)
+	}
+	return ts
 }
 
 type UserTorrentsImpl struct {
@@ -334,12 +345,12 @@ func (ut *UserTorrentsImpl) initTorrent(infoHash *InfoHash) *Torrent {
 }
 
 func (ut *UserTorrentsImpl) initUserTorrent(t *Torrent, uid ptype.UserID) {
-	ut.getUserData(uid).initTorrent(t.base.Id)
+	ut.getUserData(uid).initTorrent(t)
 }
 
 func (ut *UserTorrentsImpl) saveUserTorrent(t *Torrent, uid ptype.UserID) error {
 	ud := ut.getUserData(uid)
-	ud.addTorrent(t.base.Id)
+	ud.addTorrent(t)
 	return nil
 }
 
@@ -454,4 +465,17 @@ func (ut *UserTorrentsImpl) RemoveTorrent(params *RemoveTorrentParams) (*prpc.Re
 
 func (ut *UserTorrentsImpl) GetMagnetUri(params *GetMagnetUriParams) (*prpc.GetMagnetUriRsp, error) {
 	return ut.btClient.GetMagnetUri(context.Background(), params.Req)
+}
+
+func (ut *UserTorrentsImpl) GetTorrents(userId ptype.UserID) []*Torrent {
+	if userId == ptype.AdminId {
+		ut.mtx.Lock()
+		defer ut.mtx.Unlock()
+		ret := []*Torrent{}
+		for _, t := range ut.torrents {
+			ret = append(ret, t)
+		}
+		return ret
+	}
+	return ut.getUserData(userId).getTorrents()
 }

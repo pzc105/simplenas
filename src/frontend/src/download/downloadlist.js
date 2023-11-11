@@ -94,12 +94,12 @@ function ProgressBar(props) {
 
   return (
     <Box onContextMenu={handleContextMenu}>
-      {torrentStatus ? <Box p={2} boxShadow={3} borderRadius={6} sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Name onClick={onClick}>{torrentStatus.name}</Name>
+      {torrent ? <Box p={2} boxShadow={3} borderRadius={6} sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Name onClick={onClick}>{torrent.name}</Name>
         <Box sx={{ alignItems: 'center' }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <DownloadedSize>{`${(torrentStatus.totalDone / 1024 / 1024).toFixed(2)} MB`}</DownloadedSize>
-            <TotalSize>{`${(torrentStatus.total / 1024 / 1024).toFixed(2)} MB`}</TotalSize>
+            <TotalSize>{`${(torrent.totalSize / 1024 / 1024).toFixed(2)} MB`}</TotalSize>
           </Box>
           <Box>
             <LinearProgress variant="determinate" value={torrentStatus.progress * 100} />
@@ -107,7 +107,7 @@ function ProgressBar(props) {
         </Box>
         <DownloadSpeed>{`${(torrentStatus.downloadPayloadRate / 1000).toFixed(2)} KB/s`}</DownloadSpeed>
       </Box> : null}
-      {showVideos ? <BtVideosHandler infoHash={torrentStatus.infoHash} /> : null}
+      {showVideos ? <BtVideosHandler infoHash={torrent.infoHash} /> : null}
 
       <Dialog open={sMagnetUri} onClose={() => setShowMagnetUri(false)}>
         <div style={{ padding: '16px' }}>

@@ -76,11 +76,6 @@ namespace prpc
     }
 
     _ses->post_torrent_updates();
-    auto tss = _ses->get_torrents();
-    for (auto const &t : tss)
-    {
-      t.save_resume_data(lt::torrent_handle::only_if_modified | lt::torrent_handle::save_info_dict);
-    }
 
     vector<lt::alert *> as;
     _ses->pop_alerts(&as);

@@ -427,6 +427,49 @@ export class UserServiceClient {
     this.methodDescriptorGetMagnetUri);
   }
 
+  methodDescriptorGetTorrents = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/GetTorrents',
+    grpcWeb.MethodType.UNARY,
+    user_pb.GetTorrentsReq,
+    user_pb.GetTorrentsRsp,
+    (request: user_pb.GetTorrentsReq) => {
+      return request.serializeBinary();
+    },
+    user_pb.GetTorrentsRsp.deserializeBinary
+  );
+
+  getTorrents(
+    request: user_pb.GetTorrentsReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.GetTorrentsRsp>;
+
+  getTorrents(
+    request: user_pb.GetTorrentsReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: user_pb.GetTorrentsRsp) => void): grpcWeb.ClientReadableStream<user_pb.GetTorrentsRsp>;
+
+  getTorrents(
+    request: user_pb.GetTorrentsReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: user_pb.GetTorrentsRsp) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.UserService/GetTorrents',
+        request,
+        metadata || {},
+        this.methodDescriptorGetTorrents,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.UserService/GetTorrents',
+    request,
+    metadata || {},
+    this.methodDescriptorGetTorrents);
+  }
+
   methodDescriptorOnBtStatus = new grpcWeb.MethodDescriptor(
     '/prpc.UserService/OnBtStatus',
     grpcWeb.MethodType.SERVER_STREAMING,

@@ -15,6 +15,8 @@ type UserTorrents interface {
 	RemoveTorrent(*RemoveTorrentParams) (*prpc.RemoveTorrentRes, error)
 	GetMagnetUri(*GetMagnetUriParams) (*prpc.GetMagnetUriRsp, error)
 
+	GetTorrents(userId ptype.UserID) []*Torrent
+
 	Close()
 }
 
