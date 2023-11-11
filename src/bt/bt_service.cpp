@@ -99,6 +99,10 @@ namespace prpc
       {
         _pusher_manager.push_bt_filecompleted(*fc);
       }
+      else if (auto la = lt::alert_cast<lt::log_alert>(as[i]))
+      {
+        std::cout << la->message() << std::endl;
+      }
     }
   }
 
@@ -139,7 +143,9 @@ namespace prpc
     sp.set_int(lt::settings_pack::download_rate_limit, download_rate_limit);
     sp.set_int(lt::settings_pack::upload_rate_limit, upload_rate_limit);
     sp.set_int(lt::settings_pack::hashing_threads, hashing_threads);
-    sp.set_int(lt::settings_pack::alert_mask, lt::file_completed_alert::static_category);
+    sp.set_int(lt::settings_pack::alert_mask, 
+      lt::file_completed_alert::static_category
+    | lt::log_alert::static_category);
     lt::session_params sps;
     try {
       sps = lt::read_session_params(request->resume_data());
@@ -149,6 +155,7 @@ namespace prpc
     }
     sps.settings = sp;
     _ses = std::make_unique<lt::session>(sps);
+    _ses->add_dht_router(std::make_pair(std::string("router.utorrent.com"), 6881));
     return ::grpc::Status::OK;
   }
 
