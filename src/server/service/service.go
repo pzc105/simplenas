@@ -38,9 +38,6 @@ type CoreService struct {
 
 	sessions session.ISessions
 
-	btStatusPushMtx sync.Mutex
-	btStatusPush    map[int64]chan *prpc.StatusRespone
-
 	um          user.UserManger
 	shutDownCtx context.Context
 	closeFunc   context.CancelFunc
@@ -60,7 +57,6 @@ func (ser *CoreService) Init() {
 	ss := &session.Sessions{}
 	ser.sessions = ss
 	ss.Init()
-	ser.btStatusPush = make(map[int64]chan *prpc.StatusRespone)
 
 	ser.notCheckTokenMethods = []string{"Register", "IsUsedEmail", "Login", "FastLogin", "QueryItemInfo", "QuerySubItems"}
 	sort.Strings(ser.notCheckTokenMethods)
@@ -374,49 +370,65 @@ func (ser *CoreService) Download(
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "")
 	}
-
-	return nil, status.Error(codes.InvalidArgument, "")
-
+	params := &bt.DownloadParams{
+		UserId: ses.UserId,
+		Req:    req,
+	}
+	return ser.um.Download(params)
 }
 
 func (ser *CoreService) RemoveTorrent(ctx context.Context, req *prpc.RemoveTorrentReq) (*prpc.RemoveTorrentRes, error) {
-	return nil, status.Error(codes.InvalidArgument, "")
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "")
+	}
+	params := &bt.RemoveTorrentParams{
+		UserId: ses.UserId,
+		Req:    req,
+	}
+	return ser.um.RemoveTorrent(params)
 }
 
 func (ser *CoreService) GetMagnetUri(ctx context.Context, req *prpc.GetMagnetUriReq) (*prpc.GetMagnetUriRsp, error) {
-	return nil, status.Error(codes.InvalidArgument, "")
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "")
+	}
+	params := &bt.GetMagnetUriParams{
+		UserId: ses.UserId,
+		Req:    req,
+	}
+	return ser.um.GetMagnetUri(params)
 }
 
-func (ser *CoreService) OnStatus(statusReq *prpc.StatusRequest, stream prpc.UserService_OnStatusServer) error {
+func (ser *CoreService) OnBtStatus(statusReq *prpc.BtStatusRequest, stream prpc.UserService_OnBtStatusServer) error {
 	ses := ser.getSession(stream.Context())
 	if ses == nil {
 		return status.Error(codes.PermissionDenied, "")
 	}
 
-	ser.btStatusPushMtx.Lock()
-	ch, ok := ser.btStatusPush[ses.Id]
-	if ok {
-		close(ch)
+	done, c := context.WithCancel(context.Background())
+	onError := func() {
+		c()
 	}
-	ch = make(chan *prpc.StatusRespone, 1)
-	ser.btStatusPush[ses.Id] = ch
-	ser.btStatusPushMtx.Unlock()
 
-	for {
-		b := false
-		select {
-		case sr, ok := <-ch:
-			if !ok {
-				return nil
-			}
-			stream.Send(sr)
-		case <-stream.Context().Done():
-			b = true
+	ser.um.SetCallback(ses.UserId, ses.Id, func(s *prpc.TorrentStatus) {
+		ret := &prpc.BtStatusRespone{
+			StatusArray: []*prpc.TorrentStatus{s},
 		}
-		if b {
-			break
+		err := stream.Send(ret)
+		if err != nil {
+			onError()
 		}
+	})
+
+	select {
+	case <-stream.Context().Done():
+	case <-done.Done():
 	}
+
+	ser.um.SetCallback(ses.UserId, ses.Id, nil)
+
 	return nil
 }
 

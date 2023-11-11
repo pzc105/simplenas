@@ -28,7 +28,7 @@ const (
 	UserService_Download_FullMethodName          = "/prpc.UserService/Download"
 	UserService_RemoveTorrent_FullMethodName     = "/prpc.UserService/RemoveTorrent"
 	UserService_GetMagnetUri_FullMethodName      = "/prpc.UserService/GetMagnetUri"
-	UserService_OnStatus_FullMethodName          = "/prpc.UserService/OnStatus"
+	UserService_OnBtStatus_FullMethodName        = "/prpc.UserService/OnBtStatus"
 	UserService_QueryBtVideos_FullMethodName     = "/prpc.UserService/QueryBtVideos"
 	UserService_NewCategoryItem_FullMethodName   = "/prpc.UserService/NewCategoryItem"
 	UserService_DelCategoryItem_FullMethodName   = "/prpc.UserService/DelCategoryItem"
@@ -60,7 +60,7 @@ type UserServiceClient interface {
 	Download(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadRespone, error)
 	RemoveTorrent(ctx context.Context, in *RemoveTorrentReq, opts ...grpc.CallOption) (*RemoveTorrentRes, error)
 	GetMagnetUri(ctx context.Context, in *GetMagnetUriReq, opts ...grpc.CallOption) (*GetMagnetUriRsp, error)
-	OnStatus(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (UserService_OnStatusClient, error)
+	OnBtStatus(ctx context.Context, in *BtStatusRequest, opts ...grpc.CallOption) (UserService_OnBtStatusClient, error)
 	QueryBtVideos(ctx context.Context, in *QueryBtVideosReq, opts ...grpc.CallOption) (*QueryBtVideosRes, error)
 	NewCategoryItem(ctx context.Context, in *NewCategoryItemReq, opts ...grpc.CallOption) (*NewCategoryItemRes, error)
 	DelCategoryItem(ctx context.Context, in *DelCategoryItemReq, opts ...grpc.CallOption) (*DelCategoryItemRes, error)
@@ -168,12 +168,12 @@ func (c *userServiceClient) GetMagnetUri(ctx context.Context, in *GetMagnetUriRe
 	return out, nil
 }
 
-func (c *userServiceClient) OnStatus(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (UserService_OnStatusClient, error) {
-	stream, err := c.cc.NewStream(ctx, &UserService_ServiceDesc.Streams[0], UserService_OnStatus_FullMethodName, opts...)
+func (c *userServiceClient) OnBtStatus(ctx context.Context, in *BtStatusRequest, opts ...grpc.CallOption) (UserService_OnBtStatusClient, error) {
+	stream, err := c.cc.NewStream(ctx, &UserService_ServiceDesc.Streams[0], UserService_OnBtStatus_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &userServiceOnStatusClient{stream}
+	x := &userServiceOnBtStatusClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -183,17 +183,17 @@ func (c *userServiceClient) OnStatus(ctx context.Context, in *StatusRequest, opt
 	return x, nil
 }
 
-type UserService_OnStatusClient interface {
-	Recv() (*StatusRespone, error)
+type UserService_OnBtStatusClient interface {
+	Recv() (*BtStatusRespone, error)
 	grpc.ClientStream
 }
 
-type userServiceOnStatusClient struct {
+type userServiceOnBtStatusClient struct {
 	grpc.ClientStream
 }
 
-func (x *userServiceOnStatusClient) Recv() (*StatusRespone, error) {
-	m := new(StatusRespone)
+func (x *userServiceOnBtStatusClient) Recv() (*BtStatusRespone, error) {
+	m := new(BtStatusRespone)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -380,7 +380,7 @@ type UserServiceServer interface {
 	Download(context.Context, *DownloadRequest) (*DownloadRespone, error)
 	RemoveTorrent(context.Context, *RemoveTorrentReq) (*RemoveTorrentRes, error)
 	GetMagnetUri(context.Context, *GetMagnetUriReq) (*GetMagnetUriRsp, error)
-	OnStatus(*StatusRequest, UserService_OnStatusServer) error
+	OnBtStatus(*BtStatusRequest, UserService_OnBtStatusServer) error
 	QueryBtVideos(context.Context, *QueryBtVideosReq) (*QueryBtVideosRes, error)
 	NewCategoryItem(context.Context, *NewCategoryItemReq) (*NewCategoryItemRes, error)
 	DelCategoryItem(context.Context, *DelCategoryItemReq) (*DelCategoryItemRes, error)
@@ -431,8 +431,8 @@ func (UnimplementedUserServiceServer) RemoveTorrent(context.Context, *RemoveTorr
 func (UnimplementedUserServiceServer) GetMagnetUri(context.Context, *GetMagnetUriReq) (*GetMagnetUriRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMagnetUri not implemented")
 }
-func (UnimplementedUserServiceServer) OnStatus(*StatusRequest, UserService_OnStatusServer) error {
-	return status.Errorf(codes.Unimplemented, "method OnStatus not implemented")
+func (UnimplementedUserServiceServer) OnBtStatus(*BtStatusRequest, UserService_OnBtStatusServer) error {
+	return status.Errorf(codes.Unimplemented, "method OnBtStatus not implemented")
 }
 func (UnimplementedUserServiceServer) QueryBtVideos(context.Context, *QueryBtVideosReq) (*QueryBtVideosRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryBtVideos not implemented")
@@ -657,24 +657,24 @@ func _UserService_GetMagnetUri_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_OnStatus_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(StatusRequest)
+func _UserService_OnBtStatus_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(BtStatusRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(UserServiceServer).OnStatus(m, &userServiceOnStatusServer{stream})
+	return srv.(UserServiceServer).OnBtStatus(m, &userServiceOnBtStatusServer{stream})
 }
 
-type UserService_OnStatusServer interface {
-	Send(*StatusRespone) error
+type UserService_OnBtStatusServer interface {
+	Send(*BtStatusRespone) error
 	grpc.ServerStream
 }
 
-type userServiceOnStatusServer struct {
+type userServiceOnBtStatusServer struct {
 	grpc.ServerStream
 }
 
-func (x *userServiceOnStatusServer) Send(m *StatusRespone) error {
+func (x *userServiceOnBtStatusServer) Send(m *BtStatusRespone) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -1075,8 +1075,8 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "OnStatus",
-			Handler:       _UserService_OnStatus_Handler,
+			StreamName:    "OnBtStatus",
+			Handler:       _UserService_OnBtStatus_Handler,
 			ServerStreams: true,
 		},
 		{

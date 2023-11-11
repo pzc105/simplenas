@@ -1,4 +1,4 @@
-#include "setting.hpp"
+﻿#include "setting.hpp"
 
 namespace bt
 {

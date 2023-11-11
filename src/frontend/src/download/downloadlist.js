@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import LinearProgress from '@mui/material/LinearProgress';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { btSlice, selectTorrent, selectInfoHashs } from '../store.js'
+import * as store from '../store.js'
 import * as Bt from '../prpc/bt_pb.js'
 import userService from '../rpcClient.js'
 import BtVideosHandler from './btFileList.js'
@@ -32,7 +32,8 @@ const DownloadSpeed = styled(Typography)({
 function ProgressBar(props) {
   const infoHash = props.infoHash
   const dispatch = useDispatch()
-  const torrent = useSelector(state => selectTorrent(state, infoHash))
+  const torrent = useSelector(state => store.selectTorrent(state, infoHash))
+  const torrentStatus = useSelector(state => store.selectTorrentStatus(state, infoHash))
   const [showVideos, setShowVideos] = useState(false)
   const [magnetUri, setMagnetUri] = useState("")
   const [sMagnetUri, setSMagnetUri] = useState(false)
@@ -51,7 +52,7 @@ function ProgressBar(props) {
         console.log(err)
         return
       }
-      dispatch(btSlice.actions.removeTorrent(infoHash))
+      dispatch(store.btSlice.actions.removeTorrent(infoHash))
     })
     setOpen(false)
   }
@@ -93,20 +94,20 @@ function ProgressBar(props) {
 
   return (
     <Box onContextMenu={handleContextMenu}>
-      <Box p={2} boxShadow={3} borderRadius={6} sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Name onClick={onClick}>{torrent.name}</Name>
+      {torrentStatus ? <Box p={2} boxShadow={3} borderRadius={6} sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Name onClick={onClick}>{torrentStatus.name}</Name>
         <Box sx={{ alignItems: 'center' }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <DownloadedSize>{`${(torrent.totalDone / 1024 / 1024).toFixed(2)} MB`}</DownloadedSize>
-            <TotalSize>{`${(torrent.total / 1024 / 1024).toFixed(2)} MB`}</TotalSize>
+            <DownloadedSize>{`${(torrentStatus.totalDone / 1024 / 1024).toFixed(2)} MB`}</DownloadedSize>
+            <TotalSize>{`${(torrentStatus.total / 1024 / 1024).toFixed(2)} MB`}</TotalSize>
           </Box>
           <Box>
-            <LinearProgress variant="determinate" value={torrent.progress * 100} />
+            <LinearProgress variant="determinate" value={torrentStatus.progress * 100} />
           </Box>
         </Box>
-        <DownloadSpeed>{`${(torrent.downloadPayloadRate / 1000).toFixed(2)} KB/s`}</DownloadSpeed>
-      </Box>
-      {showVideos ? <BtVideosHandler infoHash={torrent.infoHash} /> : null}
+        <DownloadSpeed>{`${(torrentStatus.downloadPayloadRate / 1000).toFixed(2)} KB/s`}</DownloadSpeed>
+      </Box> : null}
+      {showVideos ? <BtVideosHandler infoHash={torrentStatus.infoHash} /> : null}
 
       <Dialog open={sMagnetUri} onClose={() => setShowMagnetUri(false)}>
         <div style={{ padding: '16px' }}>
@@ -128,7 +129,7 @@ function ProgressBar(props) {
 }
 
 export function ProgressLists() {
-  const infoHashs = useSelector(state => selectInfoHashs(state))
+  const infoHashs = useSelector(state => store.selectInfoHashs(state))
 
   return (
     <Paper style={{ maxHeight: '90vh', overflow: 'auto' }}>

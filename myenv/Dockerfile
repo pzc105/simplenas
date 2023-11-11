@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+﻿FROM ubuntu:22.04
 
 ARG TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -70,6 +70,9 @@ RUN apt-fast install mysql-server redis-server -y && \
 RUN git clone --recursive https://github.com/grpc/grpc.git /thirdparty/grpc && \
   cd /thirdparty/grpc && \
   git switch v1.59.x && \
+  cd ./third_party/protobuf && \
+  git switch 24.x && \
+  cd - && \
   mkdir cmake/build && \
   cd cmake/build && \
   cmake -DgRPC_SSL_PROVIDER=package -DOPENSSL_USE_STATIC_LIBS=ON -DgRPC_MSVC_STATIC_RUNTIME=ON ../.. && \

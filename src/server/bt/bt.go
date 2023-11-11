@@ -27,7 +27,7 @@ type BtClient struct {
 }
 
 type btClientOpts struct {
-	onStatus        func(*prpc.StatusRespone)
+	onStatus        func(*prpc.BtStatusRespone)
 	onFileCompleted func(*prpc.FileCompletedRes)
 	onConnect       func()
 }
@@ -44,7 +44,7 @@ func (f *funcBtClientOpt) apply(opts *btClientOpts) {
 	f.do(opts)
 }
 
-func WithOnStatus(onStatus func(*prpc.StatusRespone)) *funcBtClientOpt {
+func WithOnStatus(onStatus func(*prpc.BtStatusRespone)) *funcBtClientOpt {
 	return &funcBtClientOpt{
 		do: func(opts *btClientOpts) {
 			opts.onStatus = onStatus
@@ -109,7 +109,7 @@ func (bt *BtClient) handleConState() {
 			return
 		}
 		nst := bt.conn.GetState()
-		if lst == connectivity.Connecting && nst == connectivity.Ready {
+		if lst != nst && nst == connectivity.Ready {
 			if bt.opts.onConnect != nil {
 				bt.opts.onConnect()
 			}

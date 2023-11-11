@@ -84,14 +84,14 @@ class BtService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetBtStatusRsp>> PrepareAsyncGetBtStatus(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetBtStatusRsp>>(PrepareAsyncGetBtStatusRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>> OnBtStatus(::grpc::ClientContext* context) {
-      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>>(OnBtStatusRaw(context));
+    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>> OnBtStatus(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>>(OnBtStatusRaw(context));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>> AsyncOnBtStatus(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>>(AsyncOnBtStatusRaw(context, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>> AsyncOnBtStatus(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>>(AsyncOnBtStatusRaw(context, cq, tag));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>> PrepareAsyncOnBtStatus(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>>(PrepareAsyncOnBtStatusRaw(context, cq));
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>> PrepareAsyncOnBtStatus(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>>(PrepareAsyncOnBtStatusRaw(context, cq));
     }
     std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>> OnFileCompleted(::grpc::ClientContext* context) {
       return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>>(OnFileCompletedRaw(context));
@@ -119,7 +119,7 @@ class BtService final {
       virtual void GetTorrentInfo(::grpc::ClientContext* context, const ::prpc::GetTorrentInfoReq* request, ::prpc::GetTorrentInfoRsp* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void GetBtStatus(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetBtStatus(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void OnBtStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::StatusRequest,::prpc::StatusRespone>* reactor) = 0;
+      virtual void OnBtStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::BtStatusRequest,::prpc::BtStatusRespone>* reactor) = 0;
       virtual void OnFileCompleted(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::FileCompletedReq,::prpc::FileCompletedRes>* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
@@ -140,9 +140,9 @@ class BtService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetTorrentInfoRsp>* PrepareAsyncGetTorrentInfoRaw(::grpc::ClientContext* context, const ::prpc::GetTorrentInfoReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetBtStatusRsp>* AsyncGetBtStatusRaw(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetBtStatusRsp>* PrepareAsyncGetBtStatusRaw(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>* OnBtStatusRaw(::grpc::ClientContext* context) = 0;
-    virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>* AsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
-    virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::StatusRequest, ::prpc::StatusRespone>* PrepareAsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* OnBtStatusRaw(::grpc::ClientContext* context) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* AsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* PrepareAsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientReaderWriterInterface< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* OnFileCompletedRaw(::grpc::ClientContext* context) = 0;
     virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* AsyncOnFileCompletedRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* PrepareAsyncOnFileCompletedRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
@@ -199,14 +199,14 @@ class BtService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GetBtStatusRsp>> PrepareAsyncGetBtStatus(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GetBtStatusRsp>>(PrepareAsyncGetBtStatusRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>> OnBtStatus(::grpc::ClientContext* context) {
-      return std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>>(OnBtStatusRaw(context));
+    std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>> OnBtStatus(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>>(OnBtStatusRaw(context));
     }
-    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>> AsyncOnBtStatus(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>>(AsyncOnBtStatusRaw(context, cq, tag));
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>> AsyncOnBtStatus(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>>(AsyncOnBtStatusRaw(context, cq, tag));
     }
-    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>> PrepareAsyncOnBtStatus(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>>(PrepareAsyncOnBtStatusRaw(context, cq));
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>> PrepareAsyncOnBtStatus(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>>(PrepareAsyncOnBtStatusRaw(context, cq));
     }
     std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>> OnFileCompleted(::grpc::ClientContext* context) {
       return std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>>(OnFileCompletedRaw(context));
@@ -234,7 +234,7 @@ class BtService final {
       void GetTorrentInfo(::grpc::ClientContext* context, const ::prpc::GetTorrentInfoReq* request, ::prpc::GetTorrentInfoRsp* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetBtStatus(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response, std::function<void(::grpc::Status)>) override;
       void GetBtStatus(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void OnBtStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::StatusRequest,::prpc::StatusRespone>* reactor) override;
+      void OnBtStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::BtStatusRequest,::prpc::BtStatusRespone>* reactor) override;
       void OnFileCompleted(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::FileCompletedReq,::prpc::FileCompletedRes>* reactor) override;
      private:
       friend class Stub;
@@ -261,9 +261,9 @@ class BtService final {
     ::grpc::ClientAsyncResponseReader< ::prpc::GetTorrentInfoRsp>* PrepareAsyncGetTorrentInfoRaw(::grpc::ClientContext* context, const ::prpc::GetTorrentInfoReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::GetBtStatusRsp>* AsyncGetBtStatusRaw(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::GetBtStatusRsp>* PrepareAsyncGetBtStatusRaw(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* OnBtStatusRaw(::grpc::ClientContext* context) override;
-    ::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* AsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
-    ::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* PrepareAsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* OnBtStatusRaw(::grpc::ClientContext* context) override;
+    ::grpc::ClientAsyncReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* AsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* PrepareAsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientReaderWriter< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* OnFileCompletedRaw(::grpc::ClientContext* context) override;
     ::grpc::ClientAsyncReaderWriter< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* AsyncOnFileCompletedRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReaderWriter< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* PrepareAsyncOnFileCompletedRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
@@ -290,7 +290,7 @@ class BtService final {
     virtual ::grpc::Status GetResumeData(::grpc::ServerContext* context, const ::prpc::GetResumeDataReq* request, ::prpc::GetResumeDataRsp* response);
     virtual ::grpc::Status GetTorrentInfo(::grpc::ServerContext* context, const ::prpc::GetTorrentInfoReq* request, ::prpc::GetTorrentInfoRsp* response);
     virtual ::grpc::Status GetBtStatus(::grpc::ServerContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response);
-    virtual ::grpc::Status OnBtStatus(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* stream);
+    virtual ::grpc::Status OnBtStatus(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::BtStatusRespone, ::prpc::BtStatusRequest>* stream);
     virtual ::grpc::Status OnFileCompleted(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::FileCompletedRes, ::prpc::FileCompletedReq>* stream);
   };
   template <class BaseClass>
@@ -445,11 +445,11 @@ class BtService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* /*stream*/)  override {
+    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::BtStatusRespone, ::prpc::BtStatusRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestOnBtStatus(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestOnBtStatus(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::prpc::BtStatusRespone, ::prpc::BtStatusRequest>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncBidiStreaming(7, context, stream, new_call_cq, notification_cq, tag);
     }
   };
@@ -670,7 +670,7 @@ class BtService final {
    public:
     WithCallbackMethod_OnBtStatus() {
       ::grpc::Service::MarkMethodCallback(7,
-          new ::grpc::internal::CallbackBidiHandler< ::prpc::StatusRequest, ::prpc::StatusRespone>(
+          new ::grpc::internal::CallbackBidiHandler< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnBtStatus(context); }));
     }
@@ -678,11 +678,11 @@ class BtService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* /*stream*/)  override {
+    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::BtStatusRespone, ::prpc::BtStatusRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerBidiReactor< ::prpc::StatusRequest, ::prpc::StatusRespone>* OnBtStatus(
+    virtual ::grpc::ServerBidiReactor< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* OnBtStatus(
       ::grpc::CallbackServerContext* /*context*/)
       { return nullptr; }
   };
@@ -842,7 +842,7 @@ class BtService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* /*stream*/)  override {
+    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::BtStatusRespone, ::prpc::BtStatusRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1016,7 +1016,7 @@ class BtService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* /*stream*/)  override {
+    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::BtStatusRespone, ::prpc::BtStatusRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1213,7 +1213,7 @@ class BtService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* /*stream*/)  override {
+    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::prpc::BtStatusRespone, ::prpc::BtStatusRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }

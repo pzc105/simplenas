@@ -1,13 +1,16 @@
 package bt
 
 import (
+	"context"
+	"fmt"
 	"pnas/db"
-	"pnas/log"
 	"pnas/prpc"
+	"pnas/ptype"
+	"strings"
 )
 
-func TranInfoHash(info *prpc.InfoHash) InfoHash {
-	return InfoHash{
+func TranInfoHash(info *prpc.InfoHash) *InfoHash {
+	return &InfoHash{
 		Version: info.GetVersion(),
 		Hash:    string(info.GetHash()),
 	}
@@ -20,33 +23,110 @@ func GetInfoHash(infoHash *InfoHash) *prpc.InfoHash {
 	}
 }
 
-func LoadTorrentResumeData(infoHash InfoHash) ([]byte, error) {
-	sql := `select resume_data from torrent where info_hash=? and version=?`
-	var resumeData []byte
-	err := db.QueryRow(sql, infoHash.Hash, infoHash.Version).Scan(&resumeData)
-	return resumeData, err
+func loadTorrent(btClient *BtClient, id ptype.TorrentID) *Torrent {
+	sql := `select name, version, info_hash, state, total_size, piece_length, num_pieces, introduce from torrent where id=?`
+	var t Torrent
+	t.base.Id = id
+	err := db.QueryRow(sql, id).Scan(
+		&t.base.Name,
+		&t.base.InfoHash.Version,
+		&t.base.InfoHash.Hash,
+		&t.state,
+		&t.base.TotalSize,
+		&t.base.PieceLength,
+		&t.base.NumPieces,
+		&t.base.Introduce,
+	)
+	if err != nil {
+		return nil
+	}
+	t.btClient = btClient
+	t.init()
+	return &t
 }
 
-func LoadDownloadingTorrent() [][]byte {
-	sql := `select resume_data from user_torrent u 
-					left join torrent t on u.torrent_id = t.id`
-
-	rows, err := db.Query(sql)
+func loadTorrentByInfoHash(btClient *BtClient, infoHash *InfoHash) *Torrent {
+	sql := `select id, name, version, info_hash, state, total_size, piece_length, num_pieces, introduce 
+					from torrent where version=? and info_hash=?`
+	var t Torrent
+	err := db.QueryRow(sql, infoHash.Version, infoHash.Hash).Scan(
+		&t.base.Id,
+		&t.base.Name,
+		&t.base.InfoHash.Version,
+		&t.base.InfoHash.Hash,
+		&t.state,
+		&t.base.TotalSize,
+		&t.base.PieceLength,
+		&t.base.NumPieces,
+		&t.base.Introduce,
+	)
 	if err != nil {
-		log.Warnf("[bt] failed to load downloading torrent err: %v", err)
-		return [][]byte{}
+		return nil
 	}
-	defer rows.Close()
+	t.btClient = btClient
+	t.init()
+	return &t
+}
 
-	var resumData [][]byte
-	for rows.Next() {
-		var resume []byte
-		err = rows.Scan(&resume)
-		if err != nil {
-			log.Warnf("[bt] failed to load downloading torrent err: %v", err)
-			continue
-		}
-		resumData = append(resumData, resume)
+func newTorrent(btClient *BtClient, infoHash *InfoHash) *Torrent {
+	sql := `insert into torrent(version, info_hash, introduce) values(?, ?, "")`
+	r, err := db.Exec(sql, infoHash.Version, infoHash.Hash)
+	if err != nil {
+		return nil
 	}
-	return resumData
+	id, err := r.LastInsertId()
+	if err != nil {
+		return nil
+	}
+	t := &Torrent{
+		base: TorrentBase{
+			Id:       ptype.TorrentID(id),
+			InfoHash: *infoHash,
+		},
+	}
+	t.btClient = btClient
+	t.init()
+	return t
+}
+
+func deleteUserTorrentids(tid ptype.TorrentID, ids ...ptype.UserID) error {
+	if len(ids) == 0 {
+		return nil
+	}
+	var cond strings.Builder
+	for _, uid := range ids {
+		if cond.Len() == 0 {
+			cond.WriteString(fmt.Sprint(uid))
+		} else {
+			cond.WriteString("," + fmt.Sprint(uid))
+		}
+	}
+	sql := fmt.Sprintf(`delete from user_torrent where torrent_id=? user_id in (%s)`, cond.String())
+	_, err := db.Exec(sql, tid)
+	return err
+}
+
+const (
+	RedisKeyResumeData = "torrent_resume"
+)
+
+func getHKey(infoHash *InfoHash) string {
+	return infoHash.Hash + fmt.Sprint(infoHash.Version)
+}
+
+func saveResumeData(infoHash *InfoHash, data []byte) error {
+	_, err := db.GREDIS.HSet(context.Background(), RedisKeyResumeData, getHKey(infoHash), data).Result()
+	return err
+}
+
+func loadResumeData(infoHash *InfoHash) ([]byte, error) {
+	d, err := db.GREDIS.HGet(context.Background(), RedisKeyResumeData, getHKey(infoHash)).Result()
+	return []byte(d), err
+}
+
+func getMagnetByInfoHash(infoHash *InfoHash) (string, error) {
+	sql := `select magnet_uri from magnet where info_hash=? and version=?`
+	var ret string
+	err := db.QueryRow(sql, infoHash.Hash, infoHash.Version).Scan(&ret)
+	return ret, err
 }

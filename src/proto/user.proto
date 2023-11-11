@@ -29,7 +29,7 @@ service UserService {
 
   rpc GetMagnetUri(GetMagnetUriReq) returns (GetMagnetUriRsp);
   
-  rpc OnStatus(StatusRequest) returns (stream StatusRespone);
+  rpc OnBtStatus(BtStatusRequest) returns (stream BtStatusRespone);
 
   rpc QueryBtVideos(QueryBtVideosReq) returns (QueryBtVideosRes);
 

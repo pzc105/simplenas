@@ -99,8 +99,14 @@ namespace prpc
     {
       return;
     }
-
     _last_push_time = n;
+
+    _ses->post_torrent_updates();
+    auto tss = _ses->get_torrents();
+    for (auto const &t : tss)
+    {
+      t.save_resume_data(lt::torrent_handle::only_if_modified | lt::torrent_handle::save_info_dict);
+    }
 
     vector<lt::alert *> as;
     _ses->pop_alerts(&as);
@@ -334,7 +340,12 @@ namespace prpc
     {
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "can't find torrent");
     }
-    *response->mutable_torrent_info() = get_torrent_info(th);
+    auto ti = get_torrent_info(th);
+    if (ti == nullptr)
+    {
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "not yet done init");
+    }
+    *response->mutable_torrent_info() = *ti;
     return ::grpc::Status::OK;
   }
 
@@ -361,7 +372,7 @@ namespace prpc
 
   void bt_status_pusher::push(std::vector<lt::torrent_status> const &tss)
   {
-    StatusRespone sr;
+    BtStatusRespone sr;
 
     auto const &req_info_hashs = _req.info_hash();
     for (auto const &ts : tss)

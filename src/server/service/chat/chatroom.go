@@ -16,7 +16,7 @@ const (
 
 type userData struct {
 	id               int64
-	sessionId        int64
+	sessionId        ptype.SessionID
 	sendFunc         SendFunc
 	nextReadPos      atomic.Uint64
 	maxCacheNum      uint64

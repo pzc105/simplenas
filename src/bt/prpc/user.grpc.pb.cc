@@ -31,7 +31,7 @@ static const char* UserService_method_names[] = {
   "/prpc.UserService/Download",
   "/prpc.UserService/RemoveTorrent",
   "/prpc.UserService/GetMagnetUri",
-  "/prpc.UserService/OnStatus",
+  "/prpc.UserService/OnBtStatus",
   "/prpc.UserService/QueryBtVideos",
   "/prpc.UserService/NewCategoryItem",
   "/prpc.UserService/DelCategoryItem",
@@ -66,7 +66,7 @@ UserService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channe
   , rpcmethod_Download_(UserService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_RemoveTorrent_(UserService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetMagnetUri_(UserService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_OnStatus_(UserService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_OnBtStatus_(UserService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_QueryBtVideos_(UserService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_NewCategoryItem_(UserService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_DelCategoryItem_(UserService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
@@ -292,20 +292,20 @@ void UserService::Stub::async::GetMagnetUri(::grpc::ClientContext* context, cons
   return result;
 }
 
-::grpc::ClientReader< ::prpc::StatusRespone>* UserService::Stub::OnStatusRaw(::grpc::ClientContext* context, const ::prpc::StatusRequest& request) {
-  return ::grpc::internal::ClientReaderFactory< ::prpc::StatusRespone>::Create(channel_.get(), rpcmethod_OnStatus_, context, request);
+::grpc::ClientReader< ::prpc::BtStatusRespone>* UserService::Stub::OnBtStatusRaw(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request) {
+  return ::grpc::internal::ClientReaderFactory< ::prpc::BtStatusRespone>::Create(channel_.get(), rpcmethod_OnBtStatus_, context, request);
 }
 
-void UserService::Stub::async::OnStatus(::grpc::ClientContext* context, const ::prpc::StatusRequest* request, ::grpc::ClientReadReactor< ::prpc::StatusRespone>* reactor) {
-  ::grpc::internal::ClientCallbackReaderFactory< ::prpc::StatusRespone>::Create(stub_->channel_.get(), stub_->rpcmethod_OnStatus_, context, request, reactor);
+void UserService::Stub::async::OnBtStatus(::grpc::ClientContext* context, const ::prpc::BtStatusRequest* request, ::grpc::ClientReadReactor< ::prpc::BtStatusRespone>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::prpc::BtStatusRespone>::Create(stub_->channel_.get(), stub_->rpcmethod_OnBtStatus_, context, request, reactor);
 }
 
-::grpc::ClientAsyncReader< ::prpc::StatusRespone>* UserService::Stub::AsyncOnStatusRaw(::grpc::ClientContext* context, const ::prpc::StatusRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc::internal::ClientAsyncReaderFactory< ::prpc::StatusRespone>::Create(channel_.get(), cq, rpcmethod_OnStatus_, context, request, true, tag);
+::grpc::ClientAsyncReader< ::prpc::BtStatusRespone>* UserService::Stub::AsyncOnBtStatusRaw(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::prpc::BtStatusRespone>::Create(channel_.get(), cq, rpcmethod_OnBtStatus_, context, request, true, tag);
 }
 
-::grpc::ClientAsyncReader< ::prpc::StatusRespone>* UserService::Stub::PrepareAsyncOnStatusRaw(::grpc::ClientContext* context, const ::prpc::StatusRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncReaderFactory< ::prpc::StatusRespone>::Create(channel_.get(), cq, rpcmethod_OnStatus_, context, request, false, nullptr);
+::grpc::ClientAsyncReader< ::prpc::BtStatusRespone>* UserService::Stub::PrepareAsyncOnBtStatusRaw(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::prpc::BtStatusRespone>::Create(channel_.get(), cq, rpcmethod_OnBtStatus_, context, request, false, nullptr);
 }
 
 ::grpc::Status UserService::Stub::QueryBtVideos(::grpc::ClientContext* context, const ::prpc::QueryBtVideosReq& request, ::prpc::QueryBtVideosRes* response) {
@@ -763,12 +763,12 @@ UserService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[9],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
-      new ::grpc::internal::ServerStreamingHandler< UserService::Service, ::prpc::StatusRequest, ::prpc::StatusRespone>(
+      new ::grpc::internal::ServerStreamingHandler< UserService::Service, ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>(
           [](UserService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::prpc::StatusRequest* req,
-             ::grpc::ServerWriter<::prpc::StatusRespone>* writer) {
-               return service->OnStatus(ctx, req, writer);
+             const ::prpc::BtStatusRequest* req,
+             ::grpc::ServerWriter<::prpc::BtStatusRespone>* writer) {
+               return service->OnBtStatus(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[10],
@@ -998,7 +998,7 @@ UserService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status UserService::Service::OnStatus(::grpc::ServerContext* context, const ::prpc::StatusRequest* request, ::grpc::ServerWriter< ::prpc::StatusRespone>* writer) {
+::grpc::Status UserService::Service::OnBtStatus(::grpc::ServerContext* context, const ::prpc::BtStatusRequest* request, ::grpc::ServerWriter< ::prpc::BtStatusRespone>* writer) {
   (void) context;
   (void) request;
   (void) writer;

@@ -2,6 +2,7 @@ package chat
 
 import (
 	"context"
+	"pnas/ptype"
 	"time"
 )
 
@@ -24,7 +25,7 @@ type IRooms interface {
 
 type JoinParams struct {
 	RoomKey          string
-	SessionId        int64
+	SessionId        ptype.SessionID
 	SendFunc         SendFunc
 	MaxCacheNum      uint64
 	MaxCacheDuration time.Duration

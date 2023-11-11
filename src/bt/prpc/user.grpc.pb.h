@@ -98,14 +98,14 @@ class UserService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetMagnetUriRsp>> PrepareAsyncGetMagnetUri(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetMagnetUriRsp>>(PrepareAsyncGetMagnetUriRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientReaderInterface< ::prpc::StatusRespone>> OnStatus(::grpc::ClientContext* context, const ::prpc::StatusRequest& request) {
-      return std::unique_ptr< ::grpc::ClientReaderInterface< ::prpc::StatusRespone>>(OnStatusRaw(context, request));
+    std::unique_ptr< ::grpc::ClientReaderInterface< ::prpc::BtStatusRespone>> OnBtStatus(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReaderInterface< ::prpc::BtStatusRespone>>(OnBtStatusRaw(context, request));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::prpc::StatusRespone>> AsyncOnStatus(::grpc::ClientContext* context, const ::prpc::StatusRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::prpc::StatusRespone>>(AsyncOnStatusRaw(context, request, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::prpc::BtStatusRespone>> AsyncOnBtStatus(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::prpc::BtStatusRespone>>(AsyncOnBtStatusRaw(context, request, cq, tag));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::prpc::StatusRespone>> PrepareAsyncOnStatus(::grpc::ClientContext* context, const ::prpc::StatusRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::prpc::StatusRespone>>(PrepareAsyncOnStatusRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::prpc::BtStatusRespone>> PrepareAsyncOnBtStatus(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::prpc::BtStatusRespone>>(PrepareAsyncOnBtStatusRaw(context, request, cq));
     }
     virtual ::grpc::Status QueryBtVideos(::grpc::ClientContext* context, const ::prpc::QueryBtVideosReq& request, ::prpc::QueryBtVideosRes* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QueryBtVideosRes>> AsyncQueryBtVideos(::grpc::ClientContext* context, const ::prpc::QueryBtVideosReq& request, ::grpc::CompletionQueue* cq) {
@@ -242,7 +242,7 @@ class UserService final {
       virtual void RemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void GetMagnetUri(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq* request, ::prpc::GetMagnetUriRsp* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetMagnetUri(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq* request, ::prpc::GetMagnetUriRsp* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void OnStatus(::grpc::ClientContext* context, const ::prpc::StatusRequest* request, ::grpc::ClientReadReactor< ::prpc::StatusRespone>* reactor) = 0;
+      virtual void OnBtStatus(::grpc::ClientContext* context, const ::prpc::BtStatusRequest* request, ::grpc::ClientReadReactor< ::prpc::BtStatusRespone>* reactor) = 0;
       virtual void QueryBtVideos(::grpc::ClientContext* context, const ::prpc::QueryBtVideosReq* request, ::prpc::QueryBtVideosRes* response, std::function<void(::grpc::Status)>) = 0;
       virtual void QueryBtVideos(::grpc::ClientContext* context, const ::prpc::QueryBtVideosReq* request, ::prpc::QueryBtVideosRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void NewCategoryItem(::grpc::ClientContext* context, const ::prpc::NewCategoryItemReq* request, ::prpc::NewCategoryItemRes* response, std::function<void(::grpc::Status)>) = 0;
@@ -297,9 +297,9 @@ class UserService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RemoveTorrentRes>* PrepareAsyncRemoveTorrentRaw(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetMagnetUriRsp>* AsyncGetMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetMagnetUriRsp>* PrepareAsyncGetMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientReaderInterface< ::prpc::StatusRespone>* OnStatusRaw(::grpc::ClientContext* context, const ::prpc::StatusRequest& request) = 0;
-    virtual ::grpc::ClientAsyncReaderInterface< ::prpc::StatusRespone>* AsyncOnStatusRaw(::grpc::ClientContext* context, const ::prpc::StatusRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
-    virtual ::grpc::ClientAsyncReaderInterface< ::prpc::StatusRespone>* PrepareAsyncOnStatusRaw(::grpc::ClientContext* context, const ::prpc::StatusRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderInterface< ::prpc::BtStatusRespone>* OnBtStatusRaw(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::prpc::BtStatusRespone>* AsyncOnBtStatusRaw(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::prpc::BtStatusRespone>* PrepareAsyncOnBtStatusRaw(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QueryBtVideosRes>* AsyncQueryBtVideosRaw(::grpc::ClientContext* context, const ::prpc::QueryBtVideosReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QueryBtVideosRes>* PrepareAsyncQueryBtVideosRaw(::grpc::ClientContext* context, const ::prpc::QueryBtVideosReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::NewCategoryItemRes>* AsyncNewCategoryItemRaw(::grpc::ClientContext* context, const ::prpc::NewCategoryItemReq& request, ::grpc::CompletionQueue* cq) = 0;
@@ -400,14 +400,14 @@ class UserService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GetMagnetUriRsp>> PrepareAsyncGetMagnetUri(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GetMagnetUriRsp>>(PrepareAsyncGetMagnetUriRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientReader< ::prpc::StatusRespone>> OnStatus(::grpc::ClientContext* context, const ::prpc::StatusRequest& request) {
-      return std::unique_ptr< ::grpc::ClientReader< ::prpc::StatusRespone>>(OnStatusRaw(context, request));
+    std::unique_ptr< ::grpc::ClientReader< ::prpc::BtStatusRespone>> OnBtStatus(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReader< ::prpc::BtStatusRespone>>(OnBtStatusRaw(context, request));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReader< ::prpc::StatusRespone>> AsyncOnStatus(::grpc::ClientContext* context, const ::prpc::StatusRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReader< ::prpc::StatusRespone>>(AsyncOnStatusRaw(context, request, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::prpc::BtStatusRespone>> AsyncOnBtStatus(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::prpc::BtStatusRespone>>(AsyncOnBtStatusRaw(context, request, cq, tag));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReader< ::prpc::StatusRespone>> PrepareAsyncOnStatus(::grpc::ClientContext* context, const ::prpc::StatusRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReader< ::prpc::StatusRespone>>(PrepareAsyncOnStatusRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::prpc::BtStatusRespone>> PrepareAsyncOnBtStatus(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::prpc::BtStatusRespone>>(PrepareAsyncOnBtStatusRaw(context, request, cq));
     }
     ::grpc::Status QueryBtVideos(::grpc::ClientContext* context, const ::prpc::QueryBtVideosReq& request, ::prpc::QueryBtVideosRes* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::QueryBtVideosRes>> AsyncQueryBtVideos(::grpc::ClientContext* context, const ::prpc::QueryBtVideosReq& request, ::grpc::CompletionQueue* cq) {
@@ -544,7 +544,7 @@ class UserService final {
       void RemoveTorrent(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetMagnetUri(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq* request, ::prpc::GetMagnetUriRsp* response, std::function<void(::grpc::Status)>) override;
       void GetMagnetUri(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq* request, ::prpc::GetMagnetUriRsp* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void OnStatus(::grpc::ClientContext* context, const ::prpc::StatusRequest* request, ::grpc::ClientReadReactor< ::prpc::StatusRespone>* reactor) override;
+      void OnBtStatus(::grpc::ClientContext* context, const ::prpc::BtStatusRequest* request, ::grpc::ClientReadReactor< ::prpc::BtStatusRespone>* reactor) override;
       void QueryBtVideos(::grpc::ClientContext* context, const ::prpc::QueryBtVideosReq* request, ::prpc::QueryBtVideosRes* response, std::function<void(::grpc::Status)>) override;
       void QueryBtVideos(::grpc::ClientContext* context, const ::prpc::QueryBtVideosReq* request, ::prpc::QueryBtVideosRes* response, ::grpc::ClientUnaryReactor* reactor) override;
       void NewCategoryItem(::grpc::ClientContext* context, const ::prpc::NewCategoryItemReq* request, ::prpc::NewCategoryItemRes* response, std::function<void(::grpc::Status)>) override;
@@ -605,9 +605,9 @@ class UserService final {
     ::grpc::ClientAsyncResponseReader< ::prpc::RemoveTorrentRes>* PrepareAsyncRemoveTorrentRaw(::grpc::ClientContext* context, const ::prpc::RemoveTorrentReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::GetMagnetUriRsp>* AsyncGetMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::GetMagnetUriRsp>* PrepareAsyncGetMagnetUriRaw(::grpc::ClientContext* context, const ::prpc::GetMagnetUriReq& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientReader< ::prpc::StatusRespone>* OnStatusRaw(::grpc::ClientContext* context, const ::prpc::StatusRequest& request) override;
-    ::grpc::ClientAsyncReader< ::prpc::StatusRespone>* AsyncOnStatusRaw(::grpc::ClientContext* context, const ::prpc::StatusRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
-    ::grpc::ClientAsyncReader< ::prpc::StatusRespone>* PrepareAsyncOnStatusRaw(::grpc::ClientContext* context, const ::prpc::StatusRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReader< ::prpc::BtStatusRespone>* OnBtStatusRaw(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request) override;
+    ::grpc::ClientAsyncReader< ::prpc::BtStatusRespone>* AsyncOnBtStatusRaw(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReader< ::prpc::BtStatusRespone>* PrepareAsyncOnBtStatusRaw(::grpc::ClientContext* context, const ::prpc::BtStatusRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::QueryBtVideosRes>* AsyncQueryBtVideosRaw(::grpc::ClientContext* context, const ::prpc::QueryBtVideosReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::QueryBtVideosRes>* PrepareAsyncQueryBtVideosRaw(::grpc::ClientContext* context, const ::prpc::QueryBtVideosReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::NewCategoryItemRes>* AsyncNewCategoryItemRaw(::grpc::ClientContext* context, const ::prpc::NewCategoryItemReq& request, ::grpc::CompletionQueue* cq) override;
@@ -650,7 +650,7 @@ class UserService final {
     const ::grpc::internal::RpcMethod rpcmethod_Download_;
     const ::grpc::internal::RpcMethod rpcmethod_RemoveTorrent_;
     const ::grpc::internal::RpcMethod rpcmethod_GetMagnetUri_;
-    const ::grpc::internal::RpcMethod rpcmethod_OnStatus_;
+    const ::grpc::internal::RpcMethod rpcmethod_OnBtStatus_;
     const ::grpc::internal::RpcMethod rpcmethod_QueryBtVideos_;
     const ::grpc::internal::RpcMethod rpcmethod_NewCategoryItem_;
     const ::grpc::internal::RpcMethod rpcmethod_DelCategoryItem_;
@@ -683,7 +683,7 @@ class UserService final {
     virtual ::grpc::Status Download(::grpc::ServerContext* context, const ::prpc::DownloadRequest* request, ::prpc::DownloadRespone* response);
     virtual ::grpc::Status RemoveTorrent(::grpc::ServerContext* context, const ::prpc::RemoveTorrentReq* request, ::prpc::RemoveTorrentRes* response);
     virtual ::grpc::Status GetMagnetUri(::grpc::ServerContext* context, const ::prpc::GetMagnetUriReq* request, ::prpc::GetMagnetUriRsp* response);
-    virtual ::grpc::Status OnStatus(::grpc::ServerContext* context, const ::prpc::StatusRequest* request, ::grpc::ServerWriter< ::prpc::StatusRespone>* writer);
+    virtual ::grpc::Status OnBtStatus(::grpc::ServerContext* context, const ::prpc::BtStatusRequest* request, ::grpc::ServerWriter< ::prpc::BtStatusRespone>* writer);
     virtual ::grpc::Status QueryBtVideos(::grpc::ServerContext* context, const ::prpc::QueryBtVideosReq* request, ::prpc::QueryBtVideosRes* response);
     virtual ::grpc::Status NewCategoryItem(::grpc::ServerContext* context, const ::prpc::NewCategoryItemReq* request, ::prpc::NewCategoryItemRes* response);
     virtual ::grpc::Status DelCategoryItem(::grpc::ServerContext* context, const ::prpc::DelCategoryItemReq* request, ::prpc::DelCategoryItemRes* response);
@@ -882,22 +882,22 @@ class UserService final {
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_OnStatus : public BaseClass {
+  class WithAsyncMethod_OnBtStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_OnStatus() {
+    WithAsyncMethod_OnBtStatus() {
       ::grpc::Service::MarkMethodAsync(9);
     }
-    ~WithAsyncMethod_OnStatus() override {
+    ~WithAsyncMethod_OnBtStatus() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnStatus(::grpc::ServerContext* /*context*/, const ::prpc::StatusRequest* /*request*/, ::grpc::ServerWriter< ::prpc::StatusRespone>* /*writer*/) override {
+    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, const ::prpc::BtStatusRequest* /*request*/, ::grpc::ServerWriter< ::prpc::BtStatusRespone>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestOnStatus(::grpc::ServerContext* context, ::prpc::StatusRequest* request, ::grpc::ServerAsyncWriter< ::prpc::StatusRespone>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestOnBtStatus(::grpc::ServerContext* context, ::prpc::BtStatusRequest* request, ::grpc::ServerAsyncWriter< ::prpc::BtStatusRespone>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncServerStreaming(9, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
@@ -1221,7 +1221,7 @@ class UserService final {
       ::grpc::Service::RequestAsyncUnary(25, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_Register<WithAsyncMethod_IsUsedEmail<WithAsyncMethod_Login<WithAsyncMethod_FastLogin<WithAsyncMethod_IsLogined<WithAsyncMethod_ChangePassword<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_GetMagnetUri<WithAsyncMethod_OnStatus<WithAsyncMethod_QueryBtVideos<WithAsyncMethod_NewCategoryItem<WithAsyncMethod_DelCategoryItem<WithAsyncMethod_AddBtVideos<WithAsyncMethod_ShareItem<WithAsyncMethod_QuerySharedItems<WithAsyncMethod_DelSharedItem<WithAsyncMethod_QuerySubItems<WithAsyncMethod_QueryItemInfo<WithAsyncMethod_UploadSubtitle<WithAsyncMethod_JoinChatRoom<WithAsyncMethod_SendMsg2ChatRoom<WithAsyncMethod_AddMagnetCategory<WithAsyncMethod_AddMagnetUri<WithAsyncMethod_QueryMagnet<WithAsyncMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > AsyncService;
+  typedef WithAsyncMethod_Register<WithAsyncMethod_IsUsedEmail<WithAsyncMethod_Login<WithAsyncMethod_FastLogin<WithAsyncMethod_IsLogined<WithAsyncMethod_ChangePassword<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_GetMagnetUri<WithAsyncMethod_OnBtStatus<WithAsyncMethod_QueryBtVideos<WithAsyncMethod_NewCategoryItem<WithAsyncMethod_DelCategoryItem<WithAsyncMethod_AddBtVideos<WithAsyncMethod_ShareItem<WithAsyncMethod_QuerySharedItems<WithAsyncMethod_DelSharedItem<WithAsyncMethod_QuerySubItems<WithAsyncMethod_QueryItemInfo<WithAsyncMethod_UploadSubtitle<WithAsyncMethod_JoinChatRoom<WithAsyncMethod_SendMsg2ChatRoom<WithAsyncMethod_AddMagnetCategory<WithAsyncMethod_AddMagnetUri<WithAsyncMethod_QueryMagnet<WithAsyncMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_Register : public BaseClass {
    private:
@@ -1466,26 +1466,26 @@ class UserService final {
       ::grpc::CallbackServerContext* /*context*/, const ::prpc::GetMagnetUriReq* /*request*/, ::prpc::GetMagnetUriRsp* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_OnStatus : public BaseClass {
+  class WithCallbackMethod_OnBtStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_OnStatus() {
+    WithCallbackMethod_OnBtStatus() {
       ::grpc::Service::MarkMethodCallback(9,
-          new ::grpc::internal::CallbackServerStreamingHandler< ::prpc::StatusRequest, ::prpc::StatusRespone>(
+          new ::grpc::internal::CallbackServerStreamingHandler< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::prpc::StatusRequest* request) { return this->OnStatus(context, request); }));
+                   ::grpc::CallbackServerContext* context, const ::prpc::BtStatusRequest* request) { return this->OnBtStatus(context, request); }));
     }
-    ~WithCallbackMethod_OnStatus() override {
+    ~WithCallbackMethod_OnBtStatus() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnStatus(::grpc::ServerContext* /*context*/, const ::prpc::StatusRequest* /*request*/, ::grpc::ServerWriter< ::prpc::StatusRespone>* /*writer*/) override {
+    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, const ::prpc::BtStatusRequest* /*request*/, ::grpc::ServerWriter< ::prpc::BtStatusRespone>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerWriteReactor< ::prpc::StatusRespone>* OnStatus(
-      ::grpc::CallbackServerContext* /*context*/, const ::prpc::StatusRequest* /*request*/)  { return nullptr; }
+    virtual ::grpc::ServerWriteReactor< ::prpc::BtStatusRespone>* OnBtStatus(
+      ::grpc::CallbackServerContext* /*context*/, const ::prpc::BtStatusRequest* /*request*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_QueryBtVideos : public BaseClass {
@@ -1914,7 +1914,7 @@ class UserService final {
     virtual ::grpc::ServerUnaryReactor* DelMagnetCategory(
       ::grpc::CallbackServerContext* /*context*/, const ::prpc::DelMagnetCategoryReq* /*request*/, ::prpc::DelMagnetCategoryRsp* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_Register<WithCallbackMethod_IsUsedEmail<WithCallbackMethod_Login<WithCallbackMethod_FastLogin<WithCallbackMethod_IsLogined<WithCallbackMethod_ChangePassword<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_GetMagnetUri<WithCallbackMethod_OnStatus<WithCallbackMethod_QueryBtVideos<WithCallbackMethod_NewCategoryItem<WithCallbackMethod_DelCategoryItem<WithCallbackMethod_AddBtVideos<WithCallbackMethod_ShareItem<WithCallbackMethod_QuerySharedItems<WithCallbackMethod_DelSharedItem<WithCallbackMethod_QuerySubItems<WithCallbackMethod_QueryItemInfo<WithCallbackMethod_UploadSubtitle<WithCallbackMethod_JoinChatRoom<WithCallbackMethod_SendMsg2ChatRoom<WithCallbackMethod_AddMagnetCategory<WithCallbackMethod_AddMagnetUri<WithCallbackMethod_QueryMagnet<WithCallbackMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > CallbackService;
+  typedef WithCallbackMethod_Register<WithCallbackMethod_IsUsedEmail<WithCallbackMethod_Login<WithCallbackMethod_FastLogin<WithCallbackMethod_IsLogined<WithCallbackMethod_ChangePassword<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_GetMagnetUri<WithCallbackMethod_OnBtStatus<WithCallbackMethod_QueryBtVideos<WithCallbackMethod_NewCategoryItem<WithCallbackMethod_DelCategoryItem<WithCallbackMethod_AddBtVideos<WithCallbackMethod_ShareItem<WithCallbackMethod_QuerySharedItems<WithCallbackMethod_DelSharedItem<WithCallbackMethod_QuerySubItems<WithCallbackMethod_QueryItemInfo<WithCallbackMethod_UploadSubtitle<WithCallbackMethod_JoinChatRoom<WithCallbackMethod_SendMsg2ChatRoom<WithCallbackMethod_AddMagnetCategory<WithCallbackMethod_AddMagnetUri<WithCallbackMethod_QueryMagnet<WithCallbackMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_Register : public BaseClass {
@@ -2070,18 +2070,18 @@ class UserService final {
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_OnStatus : public BaseClass {
+  class WithGenericMethod_OnBtStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_OnStatus() {
+    WithGenericMethod_OnBtStatus() {
       ::grpc::Service::MarkMethodGeneric(9);
     }
-    ~WithGenericMethod_OnStatus() override {
+    ~WithGenericMethod_OnBtStatus() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnStatus(::grpc::ServerContext* /*context*/, const ::prpc::StatusRequest* /*request*/, ::grpc::ServerWriter< ::prpc::StatusRespone>* /*writer*/) override {
+    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, const ::prpc::BtStatusRequest* /*request*/, ::grpc::ServerWriter< ::prpc::BtStatusRespone>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -2539,22 +2539,22 @@ class UserService final {
     }
   };
   template <class BaseClass>
-  class WithRawMethod_OnStatus : public BaseClass {
+  class WithRawMethod_OnBtStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_OnStatus() {
+    WithRawMethod_OnBtStatus() {
       ::grpc::Service::MarkMethodRaw(9);
     }
-    ~WithRawMethod_OnStatus() override {
+    ~WithRawMethod_OnBtStatus() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnStatus(::grpc::ServerContext* /*context*/, const ::prpc::StatusRequest* /*request*/, ::grpc::ServerWriter< ::prpc::StatusRespone>* /*writer*/) override {
+    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, const ::prpc::BtStatusRequest* /*request*/, ::grpc::ServerWriter< ::prpc::BtStatusRespone>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestOnStatus(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestOnBtStatus(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncServerStreaming(9, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
@@ -3077,25 +3077,25 @@ class UserService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_OnStatus : public BaseClass {
+  class WithRawCallbackMethod_OnBtStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_OnStatus() {
+    WithRawCallbackMethod_OnBtStatus() {
       ::grpc::Service::MarkMethodRawCallback(9,
           new ::grpc::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->OnStatus(context, request); }));
+                   ::grpc::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->OnBtStatus(context, request); }));
     }
-    ~WithRawCallbackMethod_OnStatus() override {
+    ~WithRawCallbackMethod_OnBtStatus() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnStatus(::grpc::ServerContext* /*context*/, const ::prpc::StatusRequest* /*request*/, ::grpc::ServerWriter< ::prpc::StatusRespone>* /*writer*/) override {
+    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, const ::prpc::BtStatusRequest* /*request*/, ::grpc::ServerWriter< ::prpc::BtStatusRespone>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerWriteReactor< ::grpc::ByteBuffer>* OnStatus(
+    virtual ::grpc::ServerWriteReactor< ::grpc::ByteBuffer>* OnBtStatus(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -4100,31 +4100,31 @@ class UserService final {
   };
   typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_ChangePassword<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_UploadSubtitle<WithStreamedUnaryMethod_SendMsg2ChatRoom<WithStreamedUnaryMethod_AddMagnetCategory<WithStreamedUnaryMethod_AddMagnetUri<WithStreamedUnaryMethod_QueryMagnet<WithStreamedUnaryMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > StreamedUnaryService;
   template <class BaseClass>
-  class WithSplitStreamingMethod_OnStatus : public BaseClass {
+  class WithSplitStreamingMethod_OnBtStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithSplitStreamingMethod_OnStatus() {
+    WithSplitStreamingMethod_OnBtStatus() {
       ::grpc::Service::MarkMethodStreamed(9,
         new ::grpc::internal::SplitServerStreamingHandler<
-          ::prpc::StatusRequest, ::prpc::StatusRespone>(
+          ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerSplitStreamer<
-                     ::prpc::StatusRequest, ::prpc::StatusRespone>* streamer) {
-                       return this->StreamedOnStatus(context,
+                     ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* streamer) {
+                       return this->StreamedOnBtStatus(context,
                          streamer);
                   }));
     }
-    ~WithSplitStreamingMethod_OnStatus() override {
+    ~WithSplitStreamingMethod_OnBtStatus() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status OnStatus(::grpc::ServerContext* /*context*/, const ::prpc::StatusRequest* /*request*/, ::grpc::ServerWriter< ::prpc::StatusRespone>* /*writer*/) override {
+    ::grpc::Status OnBtStatus(::grpc::ServerContext* /*context*/, const ::prpc::BtStatusRequest* /*request*/, ::grpc::ServerWriter< ::prpc::BtStatusRespone>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with split streamed
-    virtual ::grpc::Status StreamedOnStatus(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::prpc::StatusRequest,::prpc::StatusRespone>* server_split_streamer) = 0;
+    virtual ::grpc::Status StreamedOnBtStatus(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::prpc::BtStatusRequest,::prpc::BtStatusRespone>* server_split_streamer) = 0;
   };
   template <class BaseClass>
   class WithSplitStreamingMethod_JoinChatRoom : public BaseClass {
@@ -4153,8 +4153,8 @@ class UserService final {
     // replace default version of method with split streamed
     virtual ::grpc::Status StreamedJoinChatRoom(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::prpc::JoinChatRoomReq,::prpc::JoinChatRoomRes>* server_split_streamer) = 0;
   };
-  typedef WithSplitStreamingMethod_OnStatus<WithSplitStreamingMethod_JoinChatRoom<Service > > SplitStreamedService;
-  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_ChangePassword<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithSplitStreamingMethod_OnStatus<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_UploadSubtitle<WithSplitStreamingMethod_JoinChatRoom<WithStreamedUnaryMethod_SendMsg2ChatRoom<WithStreamedUnaryMethod_AddMagnetCategory<WithStreamedUnaryMethod_AddMagnetUri<WithStreamedUnaryMethod_QueryMagnet<WithStreamedUnaryMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedService;
+  typedef WithSplitStreamingMethod_OnBtStatus<WithSplitStreamingMethod_JoinChatRoom<Service > > SplitStreamedService;
+  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_ChangePassword<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithSplitStreamingMethod_OnBtStatus<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_UploadSubtitle<WithSplitStreamingMethod_JoinChatRoom<WithStreamedUnaryMethod_SendMsg2ChatRoom<WithStreamedUnaryMethod_AddMagnetCategory<WithStreamedUnaryMethod_AddMagnetUri<WithStreamedUnaryMethod_QueryMagnet<WithStreamedUnaryMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace prpc

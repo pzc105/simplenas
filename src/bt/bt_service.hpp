@@ -57,7 +57,7 @@ namespace prpc
     bt_service *_ser;
   };
 
-  class bt_status_pusher : public pusher<StatusRequest, StatusRespone>
+  class bt_status_pusher : public pusher<BtStatusRequest, BtStatusRespone>
   {
   public:
     bt_status_pusher(pusher_manager *owner, bt_service *ser);

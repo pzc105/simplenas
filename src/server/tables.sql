@@ -60,8 +60,8 @@ create table category_items (
   name varchar(256) not null,
   creator bigint not null,
   auth varbinary(64) not null,
-  resource_path varchar(256) not null,
-  poster_path varchar(256) not null,
+  resource_path varchar(256) not null default "",
+  poster_path varchar(256) not null default "",
   introduce text not null,
   other text not null,
   created_at datetime default current_timestamp not null,
@@ -144,13 +144,13 @@ drop table user_torrent;
 
 create table torrent (
   id bigint not null auto_increment,
-  name varchar(128) not null,
+  name varchar(128) not null default "",
   version int not null,
   info_hash varbinary(64) not null,
   state int default 0 not null comment 'unknown = 0,checking_files = 1, downloading_metadata = 2, downloading = 3, finished = 4, seeding = 5, checking_resume_data = 7',
-  total_size bigint default 0  not null,
-  piece_length int default 0  not null,
-  num_pieces int default 0  not null,
+  total_size bigint default 0  not null default 0,
+  piece_length int default 0  not null default 0,
+  num_pieces int default 0  not null default 0,
   introduce text not null,
   created_at datetime default current_timestamp not null,
   updated_at timestamp default current_timestamp on update current_timestamp not null,
@@ -168,27 +168,6 @@ create table user_torrent (
   primary key(user_id, torrent_id),
   key torrent_id(torrent_id)
 );
-
-drop procedure if exists new_torrent;
-delimiter //
-create procedure new_torrent(in version int,
-                             in info_hash varbinary(64),
-                             in user_id bigint, out torrent_id bigint)
-begin
-  declare ut_count int default 0;
-  start transaction;
-  select count(*) into ut_count from pnas.user_torrent u left join torrent t on t.id = u.torrent_id
-    where u.user_id = user_id and t.info_hash = info_hash;
-  if ut_count = 0 then
-    insert into pnas.torrent (name, version, info_hash, introduce, resume_data) values ('', version, info_hash, '', '');
-    select last_insert_id() into torrent_id;
-    insert into pnas.user_torrent (user_id, torrent_id) values (user_id, torrent_id);
-    select torrent_id;
-  end if;
-  commit;
-end//
-delimiter ;
-
 
 create table magnet (
   id bigint not null auto_increment,

@@ -41,12 +41,12 @@ export default function Download() {
   const showGlobalChat = useSelector((state) => store.selectOpenGlobalChat(state))
 
   useEffect(() => {
-    const statusRequest = new Bt.StatusRequest()
-    var stream = userService.onStatus(statusRequest)
+    const statusRequest = new Bt.BtStatusRequest()
+    var stream = userService.onBtStatus(statusRequest)
     stream.on('data', function (sResponse) {
       const trs = sResponse.getStatusArrayList()
       trs.map((t) => {
-        dispatch(store.btSlice.actions.updateTorrent(t.toObject()))
+        dispatch(store.btSlice.actions.updateTorrentStatus(t.toObject()))
         return null
       })
     })

@@ -212,20 +212,20 @@ void BtService::Stub::async::GetBtStatus(::grpc::ClientContext* context, const :
   return result;
 }
 
-::grpc::ClientReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* BtService::Stub::OnBtStatusRaw(::grpc::ClientContext* context) {
-  return ::grpc::internal::ClientReaderWriterFactory< ::prpc::StatusRequest, ::prpc::StatusRespone>::Create(channel_.get(), rpcmethod_OnBtStatus_, context);
+::grpc::ClientReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* BtService::Stub::OnBtStatusRaw(::grpc::ClientContext* context) {
+  return ::grpc::internal::ClientReaderWriterFactory< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>::Create(channel_.get(), rpcmethod_OnBtStatus_, context);
 }
 
-void BtService::Stub::async::OnBtStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::StatusRequest,::prpc::StatusRespone>* reactor) {
-  ::grpc::internal::ClientCallbackReaderWriterFactory< ::prpc::StatusRequest,::prpc::StatusRespone>::Create(stub_->channel_.get(), stub_->rpcmethod_OnBtStatus_, context, reactor);
+void BtService::Stub::async::OnBtStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::BtStatusRequest,::prpc::BtStatusRespone>* reactor) {
+  ::grpc::internal::ClientCallbackReaderWriterFactory< ::prpc::BtStatusRequest,::prpc::BtStatusRespone>::Create(stub_->channel_.get(), stub_->rpcmethod_OnBtStatus_, context, reactor);
 }
 
-::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* BtService::Stub::AsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::prpc::StatusRequest, ::prpc::StatusRespone>::Create(channel_.get(), cq, rpcmethod_OnBtStatus_, context, true, tag);
+::grpc::ClientAsyncReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* BtService::Stub::AsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>::Create(channel_.get(), cq, rpcmethod_OnBtStatus_, context, true, tag);
 }
 
-::grpc::ClientAsyncReaderWriter< ::prpc::StatusRequest, ::prpc::StatusRespone>* BtService::Stub::PrepareAsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::prpc::StatusRequest, ::prpc::StatusRespone>::Create(channel_.get(), cq, rpcmethod_OnBtStatus_, context, false, nullptr);
+::grpc::ClientAsyncReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* BtService::Stub::PrepareAsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>::Create(channel_.get(), cq, rpcmethod_OnBtStatus_, context, false, nullptr);
 }
 
 ::grpc::ClientReaderWriter< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>* BtService::Stub::OnFileCompletedRaw(::grpc::ClientContext* context) {
@@ -318,11 +318,11 @@ BtService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       BtService_method_names[7],
       ::grpc::internal::RpcMethod::BIDI_STREAMING,
-      new ::grpc::internal::BidiStreamingHandler< BtService::Service, ::prpc::StatusRequest, ::prpc::StatusRespone>(
+      new ::grpc::internal::BidiStreamingHandler< BtService::Service, ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>(
           [](BtService::Service* service,
              ::grpc::ServerContext* ctx,
-             ::grpc::ServerReaderWriter<::prpc::StatusRespone,
-             ::prpc::StatusRequest>* stream) {
+             ::grpc::ServerReaderWriter<::prpc::BtStatusRespone,
+             ::prpc::BtStatusRequest>* stream) {
                return service->OnBtStatus(ctx, stream);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
@@ -389,7 +389,7 @@ BtService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status BtService::Service::OnBtStatus(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::StatusRespone, ::prpc::StatusRequest>* stream) {
+::grpc::Status BtService::Service::OnBtStatus(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::BtStatusRespone, ::prpc::BtStatusRequest>* stream) {
   (void) context;
   (void) stream;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");

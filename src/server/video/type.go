@@ -20,36 +20,46 @@ func IsSubTitleStream(stream *Stream) bool {
 	return stream.CodecType == "subtitle"
 }
 
-func IsSubTitle(absFileName string) bool {
-	meta, err := GetMetadata(absFileName)
-	if err != nil {
-		return false
-	}
+func IsSubTitle(meta *Metadata) bool {
 	f := strings.Contains(meta.Format.FormatName, "srt") ||
 		strings.Contains(meta.Format.FormatName, "vtt") ||
 		strings.Contains(meta.Format.FormatName, "matroska")
 	return f && HasSubtitleStream(meta)
 }
 
-func IsVideo(absFileName string) bool {
+func IsSubTitle2(absFileName string) bool {
 	meta, err := GetMetadata(absFileName)
 	if err != nil {
 		return false
 	}
+	return IsSubTitle(meta)
+}
+
+func IsVideo(meta *Metadata) bool {
 	f := strings.Contains(meta.Format.FormatName, "mp4") ||
 		strings.Contains(meta.Format.FormatName, "matroska") ||
 		strings.Contains(meta.Format.FormatName, "mpegts")
 	return f && HasVideoStream(meta)
 }
 
-func IsAudio(absFileName string) bool {
+func IsVideo2(absFileName string) bool {
 	meta, err := GetMetadata(absFileName)
 	if err != nil {
 		return false
 	}
+	return IsVideo(meta)
+}
+func IsAudio(meta *Metadata) bool {
 	f := strings.Contains(meta.Format.FormatName, "mp3") ||
 		strings.Contains(meta.Format.FormatName, "matroska")
 	return f && HasAudioStream(meta)
+}
+func IsAudio2(absFileName string) bool {
+	meta, err := GetMetadata(absFileName)
+	if err != nil {
+		return false
+	}
+	return IsAudio(meta)
 }
 
 func HasVideoStream(meta *Metadata) bool {

@@ -2,6 +2,140 @@ import * as jspb from 'google-protobuf'
 
 
 
+export class BtFile extends jspb.Message {
+  getName(): string;
+  setName(value: string): BtFile;
+
+  getIndex(): number;
+  setIndex(value: number): BtFile;
+
+  getSt(): BtFile.State;
+  setSt(value: BtFile.State): BtFile;
+
+  getTotalSize(): number;
+  setTotalSize(value: number): BtFile;
+
+  getDownloaded(): number;
+  setDownloaded(value: number): BtFile;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): BtFile.AsObject;
+  static toObject(includeInstance: boolean, msg: BtFile): BtFile.AsObject;
+  static serializeBinaryToWriter(message: BtFile, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): BtFile;
+  static deserializeBinaryFromReader(message: BtFile, reader: jspb.BinaryReader): BtFile;
+}
+
+export namespace BtFile {
+  export type AsObject = {
+    name: string,
+    index: number,
+    st: BtFile.State,
+    totalSize: number,
+    downloaded: number,
+  }
+
+  export enum State { 
+    STOP = 0,
+    DOWNLOADING = 1,
+    COMPLETED = 2,
+  }
+}
+
+export class TorrentInfo extends jspb.Message {
+  getInfoHash(): InfoHash | undefined;
+  setInfoHash(value?: InfoHash): TorrentInfo;
+  hasInfoHash(): boolean;
+  clearInfoHash(): TorrentInfo;
+
+  getName(): string;
+  setName(value: string): TorrentInfo;
+
+  getSavePath(): string;
+  setSavePath(value: string): TorrentInfo;
+
+  getFilesList(): Array<BtFile>;
+  setFilesList(value: Array<BtFile>): TorrentInfo;
+  clearFilesList(): TorrentInfo;
+  addFiles(value?: BtFile, index?: number): BtFile;
+
+  getTotalSize(): number;
+  setTotalSize(value: number): TorrentInfo;
+
+  getPieceLength(): number;
+  setPieceLength(value: number): TorrentInfo;
+
+  getNumPieces(): number;
+  setNumPieces(value: number): TorrentInfo;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): TorrentInfo.AsObject;
+  static toObject(includeInstance: boolean, msg: TorrentInfo): TorrentInfo.AsObject;
+  static serializeBinaryToWriter(message: TorrentInfo, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): TorrentInfo;
+  static deserializeBinaryFromReader(message: TorrentInfo, reader: jspb.BinaryReader): TorrentInfo;
+}
+
+export namespace TorrentInfo {
+  export type AsObject = {
+    infoHash?: InfoHash.AsObject,
+    name: string,
+    savePath: string,
+    filesList: Array<BtFile.AsObject>,
+    totalSize: number,
+    pieceLength: number,
+    numPieces: number,
+  }
+}
+
+export class TorrentStatus extends jspb.Message {
+  getInfoHash(): InfoHash | undefined;
+  setInfoHash(value?: InfoHash): TorrentStatus;
+  hasInfoHash(): boolean;
+  clearInfoHash(): TorrentStatus;
+
+  getName(): string;
+  setName(value: string): TorrentStatus;
+
+  getDownloadPayloadRate(): number;
+  setDownloadPayloadRate(value: number): TorrentStatus;
+
+  getTotalDone(): number;
+  setTotalDone(value: number): TorrentStatus;
+
+  getTotal(): number;
+  setTotal(value: number): TorrentStatus;
+
+  getProgress(): number;
+  setProgress(value: number): TorrentStatus;
+
+  getNumPeers(): number;
+  setNumPeers(value: number): TorrentStatus;
+
+  getState(): BtStateEnum;
+  setState(value: BtStateEnum): TorrentStatus;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): TorrentStatus.AsObject;
+  static toObject(includeInstance: boolean, msg: TorrentStatus): TorrentStatus.AsObject;
+  static serializeBinaryToWriter(message: TorrentStatus, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): TorrentStatus;
+  static deserializeBinaryFromReader(message: TorrentStatus, reader: jspb.BinaryReader): TorrentStatus;
+}
+
+export namespace TorrentStatus {
+  export type AsObject = {
+    infoHash?: InfoHash.AsObject,
+    name: string,
+    downloadPayloadRate: number,
+    totalDone: number,
+    total: number,
+    progress: number,
+    numPeers: number,
+    state: BtStateEnum,
+  }
+}
+
 export class DownloadRequest extends jspb.Message {
   getType(): DownloadRequest.ReqType;
   setType(value: DownloadRequest.ReqType): DownloadRequest;
@@ -139,89 +273,161 @@ export namespace GetMagnetUriRsp {
   }
 }
 
-export class StatusRequest extends jspb.Message {
+export class GetResumeDataReq extends jspb.Message {
+  getInfoHash(): InfoHash | undefined;
+  setInfoHash(value?: InfoHash): GetResumeDataReq;
+  hasInfoHash(): boolean;
+  clearInfoHash(): GetResumeDataReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetResumeDataReq.AsObject;
+  static toObject(includeInstance: boolean, msg: GetResumeDataReq): GetResumeDataReq.AsObject;
+  static serializeBinaryToWriter(message: GetResumeDataReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetResumeDataReq;
+  static deserializeBinaryFromReader(message: GetResumeDataReq, reader: jspb.BinaryReader): GetResumeDataReq;
+}
+
+export namespace GetResumeDataReq {
+  export type AsObject = {
+    infoHash?: InfoHash.AsObject,
+  }
+}
+
+export class GetResumeDataRsp extends jspb.Message {
+  getResumeData(): Uint8Array | string;
+  getResumeData_asU8(): Uint8Array;
+  getResumeData_asB64(): string;
+  setResumeData(value: Uint8Array | string): GetResumeDataRsp;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetResumeDataRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: GetResumeDataRsp): GetResumeDataRsp.AsObject;
+  static serializeBinaryToWriter(message: GetResumeDataRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetResumeDataRsp;
+  static deserializeBinaryFromReader(message: GetResumeDataRsp, reader: jspb.BinaryReader): GetResumeDataRsp;
+}
+
+export namespace GetResumeDataRsp {
+  export type AsObject = {
+    resumeData: Uint8Array | string,
+  }
+}
+
+export class GetTorrentInfoReq extends jspb.Message {
+  getInfoHash(): InfoHash | undefined;
+  setInfoHash(value?: InfoHash): GetTorrentInfoReq;
+  hasInfoHash(): boolean;
+  clearInfoHash(): GetTorrentInfoReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetTorrentInfoReq.AsObject;
+  static toObject(includeInstance: boolean, msg: GetTorrentInfoReq): GetTorrentInfoReq.AsObject;
+  static serializeBinaryToWriter(message: GetTorrentInfoReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetTorrentInfoReq;
+  static deserializeBinaryFromReader(message: GetTorrentInfoReq, reader: jspb.BinaryReader): GetTorrentInfoReq;
+}
+
+export namespace GetTorrentInfoReq {
+  export type AsObject = {
+    infoHash?: InfoHash.AsObject,
+  }
+}
+
+export class GetTorrentInfoRsp extends jspb.Message {
+  getTorrentInfo(): TorrentInfo | undefined;
+  setTorrentInfo(value?: TorrentInfo): GetTorrentInfoRsp;
+  hasTorrentInfo(): boolean;
+  clearTorrentInfo(): GetTorrentInfoRsp;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetTorrentInfoRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: GetTorrentInfoRsp): GetTorrentInfoRsp.AsObject;
+  static serializeBinaryToWriter(message: GetTorrentInfoRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetTorrentInfoRsp;
+  static deserializeBinaryFromReader(message: GetTorrentInfoRsp, reader: jspb.BinaryReader): GetTorrentInfoRsp;
+}
+
+export namespace GetTorrentInfoRsp {
+  export type AsObject = {
+    torrentInfo?: TorrentInfo.AsObject,
+  }
+}
+
+export class GetBtStatusReq extends jspb.Message {
+  getInfoHash(): InfoHash | undefined;
+  setInfoHash(value?: InfoHash): GetBtStatusReq;
+  hasInfoHash(): boolean;
+  clearInfoHash(): GetBtStatusReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetBtStatusReq.AsObject;
+  static toObject(includeInstance: boolean, msg: GetBtStatusReq): GetBtStatusReq.AsObject;
+  static serializeBinaryToWriter(message: GetBtStatusReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetBtStatusReq;
+  static deserializeBinaryFromReader(message: GetBtStatusReq, reader: jspb.BinaryReader): GetBtStatusReq;
+}
+
+export namespace GetBtStatusReq {
+  export type AsObject = {
+    infoHash?: InfoHash.AsObject,
+  }
+}
+
+export class GetBtStatusRsp extends jspb.Message {
+  getStatus(): TorrentStatus | undefined;
+  setStatus(value?: TorrentStatus): GetBtStatusRsp;
+  hasStatus(): boolean;
+  clearStatus(): GetBtStatusRsp;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetBtStatusRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: GetBtStatusRsp): GetBtStatusRsp.AsObject;
+  static serializeBinaryToWriter(message: GetBtStatusRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetBtStatusRsp;
+  static deserializeBinaryFromReader(message: GetBtStatusRsp, reader: jspb.BinaryReader): GetBtStatusRsp;
+}
+
+export namespace GetBtStatusRsp {
+  export type AsObject = {
+    status?: TorrentStatus.AsObject,
+  }
+}
+
+export class BtStatusRequest extends jspb.Message {
   getInfoHashList(): Array<InfoHash>;
-  setInfoHashList(value: Array<InfoHash>): StatusRequest;
-  clearInfoHashList(): StatusRequest;
+  setInfoHashList(value: Array<InfoHash>): BtStatusRequest;
+  clearInfoHashList(): BtStatusRequest;
   addInfoHash(value?: InfoHash, index?: number): InfoHash;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StatusRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: StatusRequest): StatusRequest.AsObject;
-  static serializeBinaryToWriter(message: StatusRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StatusRequest;
-  static deserializeBinaryFromReader(message: StatusRequest, reader: jspb.BinaryReader): StatusRequest;
+  toObject(includeInstance?: boolean): BtStatusRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: BtStatusRequest): BtStatusRequest.AsObject;
+  static serializeBinaryToWriter(message: BtStatusRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): BtStatusRequest;
+  static deserializeBinaryFromReader(message: BtStatusRequest, reader: jspb.BinaryReader): BtStatusRequest;
 }
 
-export namespace StatusRequest {
+export namespace BtStatusRequest {
   export type AsObject = {
     infoHashList: Array<InfoHash.AsObject>,
   }
 }
 
-export class TorrentStatus extends jspb.Message {
-  getInfoHash(): InfoHash | undefined;
-  setInfoHash(value?: InfoHash): TorrentStatus;
-  hasInfoHash(): boolean;
-  clearInfoHash(): TorrentStatus;
-
-  getName(): string;
-  setName(value: string): TorrentStatus;
-
-  getDownloadPayloadRate(): number;
-  setDownloadPayloadRate(value: number): TorrentStatus;
-
-  getTotalDone(): number;
-  setTotalDone(value: number): TorrentStatus;
-
-  getTotal(): number;
-  setTotal(value: number): TorrentStatus;
-
-  getProgress(): number;
-  setProgress(value: number): TorrentStatus;
-
-  getNumPeers(): number;
-  setNumPeers(value: number): TorrentStatus;
-
-  getState(): BtStateEnum;
-  setState(value: BtStateEnum): TorrentStatus;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): TorrentStatus.AsObject;
-  static toObject(includeInstance: boolean, msg: TorrentStatus): TorrentStatus.AsObject;
-  static serializeBinaryToWriter(message: TorrentStatus, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): TorrentStatus;
-  static deserializeBinaryFromReader(message: TorrentStatus, reader: jspb.BinaryReader): TorrentStatus;
-}
-
-export namespace TorrentStatus {
-  export type AsObject = {
-    infoHash?: InfoHash.AsObject,
-    name: string,
-    downloadPayloadRate: number,
-    totalDone: number,
-    total: number,
-    progress: number,
-    numPeers: number,
-    state: BtStateEnum,
-  }
-}
-
-export class StatusRespone extends jspb.Message {
+export class BtStatusRespone extends jspb.Message {
   getStatusArrayList(): Array<TorrentStatus>;
-  setStatusArrayList(value: Array<TorrentStatus>): StatusRespone;
-  clearStatusArrayList(): StatusRespone;
+  setStatusArrayList(value: Array<TorrentStatus>): BtStatusRespone;
+  clearStatusArrayList(): BtStatusRespone;
   addStatusArray(value?: TorrentStatus, index?: number): TorrentStatus;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StatusRespone.AsObject;
-  static toObject(includeInstance: boolean, msg: StatusRespone): StatusRespone.AsObject;
-  static serializeBinaryToWriter(message: StatusRespone, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StatusRespone;
-  static deserializeBinaryFromReader(message: StatusRespone, reader: jspb.BinaryReader): StatusRespone;
+  toObject(includeInstance?: boolean): BtStatusRespone.AsObject;
+  static toObject(includeInstance: boolean, msg: BtStatusRespone): BtStatusRespone.AsObject;
+  static serializeBinaryToWriter(message: BtStatusRespone, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): BtStatusRespone;
+  static deserializeBinaryFromReader(message: BtStatusRespone, reader: jspb.BinaryReader): BtStatusRespone;
 }
 
-export namespace StatusRespone {
+export namespace BtStatusRespone {
   export type AsObject = {
     statusArrayList: Array<TorrentStatus.AsObject>,
   }
@@ -244,102 +450,6 @@ export class TorrentInfoReq extends jspb.Message {
 export namespace TorrentInfoReq {
   export type AsObject = {
     infoHashList: Array<InfoHash.AsObject>,
-  }
-}
-
-export class BtFile extends jspb.Message {
-  getName(): string;
-  setName(value: string): BtFile;
-
-  getIndex(): number;
-  setIndex(value: number): BtFile;
-
-  getSt(): BtFile.State;
-  setSt(value: BtFile.State): BtFile;
-
-  getTotalSize(): number;
-  setTotalSize(value: number): BtFile;
-
-  getDownloaded(): number;
-  setDownloaded(value: number): BtFile;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): BtFile.AsObject;
-  static toObject(includeInstance: boolean, msg: BtFile): BtFile.AsObject;
-  static serializeBinaryToWriter(message: BtFile, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): BtFile;
-  static deserializeBinaryFromReader(message: BtFile, reader: jspb.BinaryReader): BtFile;
-}
-
-export namespace BtFile {
-  export type AsObject = {
-    name: string,
-    index: number,
-    st: BtFile.State,
-    totalSize: number,
-    downloaded: number,
-  }
-
-  export enum State { 
-    STOP = 0,
-    DOWNLOADING = 1,
-    COMPLETED = 2,
-  }
-}
-
-export class TorrentInfo extends jspb.Message {
-  getInfoHash(): InfoHash | undefined;
-  setInfoHash(value?: InfoHash): TorrentInfo;
-  hasInfoHash(): boolean;
-  clearInfoHash(): TorrentInfo;
-
-  getName(): string;
-  setName(value: string): TorrentInfo;
-
-  getState(): BtStateEnum;
-  setState(value: BtStateEnum): TorrentInfo;
-
-  getSavePath(): string;
-  setSavePath(value: string): TorrentInfo;
-
-  getFilesList(): Array<BtFile>;
-  setFilesList(value: Array<BtFile>): TorrentInfo;
-  clearFilesList(): TorrentInfo;
-  addFiles(value?: BtFile, index?: number): BtFile;
-
-  getTotalSize(): number;
-  setTotalSize(value: number): TorrentInfo;
-
-  getPieceLength(): number;
-  setPieceLength(value: number): TorrentInfo;
-
-  getNumPieces(): number;
-  setNumPieces(value: number): TorrentInfo;
-
-  getResumeData(): Uint8Array | string;
-  getResumeData_asU8(): Uint8Array;
-  getResumeData_asB64(): string;
-  setResumeData(value: Uint8Array | string): TorrentInfo;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): TorrentInfo.AsObject;
-  static toObject(includeInstance: boolean, msg: TorrentInfo): TorrentInfo.AsObject;
-  static serializeBinaryToWriter(message: TorrentInfo, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): TorrentInfo;
-  static deserializeBinaryFromReader(message: TorrentInfo, reader: jspb.BinaryReader): TorrentInfo;
-}
-
-export namespace TorrentInfo {
-  export type AsObject = {
-    infoHash?: InfoHash.AsObject,
-    name: string,
-    state: BtStateEnum,
-    savePath: string,
-    filesList: Array<BtFile.AsObject>,
-    totalSize: number,
-    pieceLength: number,
-    numPieces: number,
-    resumeData: Uint8Array | string,
   }
 }
 

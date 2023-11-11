@@ -32,7 +32,7 @@ const (
 )
 
 type Session struct {
-	Id        int64
+	Id        ptype.SessionID
 	UserId    ptype.UserID
 	Token     string
 	ExpiresAt time.Time
@@ -79,7 +79,8 @@ func (ss *Sessions) clearIdTick() {
 	for {
 		<-timer.C
 		for _, id := range ss.idPool.GetAllocatedIds() {
-			_, err := db.GREDIS.Get(context.Background(), genSessionRedisKey(id)).Result()
+			id2 := ptype.SessionID(id)
+			_, err := db.GREDIS.Get(context.Background(), genSessionRedisKey(id2)).Result()
 			if err == redis.Nil {
 				ss.idPool.ReleaseId(id)
 			}
@@ -88,7 +89,7 @@ func (ss *Sessions) clearIdTick() {
 }
 
 type NewSessionParams struct {
-	OldId     int64
+	OldId     ptype.SessionID
 	ExpiresAt time.Time
 	UserId    ptype.UserID
 }
@@ -96,7 +97,7 @@ type NewSessionParams struct {
 func (ss *Sessions) NewSession(params *NewSessionParams) *Session {
 	var session Session
 	if params.OldId < 0 {
-		session.Id = ss.idPool.NewId()
+		session.Id = ptype.SessionID(ss.idPool.NewId())
 	} else {
 		session.Id = params.OldId
 	}
@@ -117,16 +118,17 @@ func (ss *Sessions) getSession(cookie string) (*Session, error) {
 	request := http.Request{Header: header}
 	cookies := request.Cookies()
 
-	var id int64
+	var id ptype.SessionID
 	var err error
 	var token string
 	for i := range cookies {
 		cookie := cookies[i]
 		if cookie.Name == SessionIdFieldName {
-			id, err = strconv.ParseInt(cookie.Value, 10, 64)
+			idt, err := strconv.ParseInt(cookie.Value, 10, 64)
 			if err != nil {
 				return nil, err
 			}
+			id = ptype.SessionID(idt)
 		} else if cookie.Name == ToeknFieldName {
 			token = cookie.Value
 		}
@@ -155,11 +157,11 @@ func (ss *Sessions) GetSession2(ctx context.Context) (*Session, error) {
 	return ss.getSession(raw[0])
 }
 
-func (ss *Sessions) GetSession3(sessionId int64) (*Session, error) {
+func (ss *Sessions) GetSession3(sessionId ptype.SessionID) (*Session, error) {
 	return loadSession(sessionId)
 }
 
-func genSessionRedisKey(id int64) string {
+func genSessionRedisKey(id ptype.SessionID) string {
 	return fmt.Sprintf("%s%d", SessionRedisKey, id)
 }
 
@@ -175,7 +177,7 @@ func saveSession(session *Session) error {
 	return nil
 }
 
-func loadSession(id int64) (*Session, error) {
+func loadSession(id ptype.SessionID) (*Session, error) {
 	jsonStr, err := db.GREDIS.Get(context.Background(), genSessionRedisKey(id)).Result()
 	if err != nil {
 		return nil, err

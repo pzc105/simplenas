@@ -1,5 +1,6 @@
 #include "translate.hpp"
 #include "libtorrent/write_resume_data.hpp"
+#include <memory>
 
 namespace prpc
 {
@@ -45,30 +46,30 @@ namespace prpc
     return ret;
   }
 
-  TorrentInfo get_torrent_info(lt::torrent_handle const &th)
+  std::unique_ptr<TorrentInfo> get_torrent_info(lt::torrent_handle const &th)
   {
     auto tf = th.torrent_file();
     if (tf == nullptr)
     {
-      return TorrentInfo();
+      return nullptr;
     }
-    TorrentInfo ret;
-    *ret.mutable_info_hash() = get_respone_info_hash(th.info_hashes());
-    ret.set_name(tf->name());
-    ret.set_save_path(th.save_path());
+    auto ret = std::make_unique<TorrentInfo>();
+    *ret->mutable_info_hash() = get_respone_info_hash(th.info_hashes());
+    ret->set_name(tf->name());
+    ret->set_save_path(th.save_path());
 
     auto const &storage = tf->files();
     int32_t index = 0;
     for (auto const &f : storage)
     {
-      auto file = ret.add_files();
+      auto file = ret->add_files();
       file->set_index(index++);
       file->set_name(storage.file_path(f));
       file->set_total_size(storage.file_size(f));
     }
-    ret.set_total_size(tf->total_size());
-    ret.set_piece_length(tf->piece_length());
-    ret.set_num_pieces(tf->num_pieces());
+    ret->set_total_size(tf->total_size());
+    ret->set_piece_length(tf->piece_length());
+    ret->set_num_pieces(tf->num_pieces());
     return ret;
   }
 

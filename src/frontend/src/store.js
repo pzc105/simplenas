@@ -33,20 +33,25 @@ const userSlice = createSlice({
 const btSlice = createSlice({
   name: 'bt',
   initialState: {
-    torrents: {},
+    torrentInfo: {},
+    torrentStatus: {},
     viodeFiles: {},
   },
   reducers: {
-    updateTorrent: (state, action) => {
+    updateTorrentInfo: (state, action) => {
       var torrent = action.payload
-      state.torrents[torrent.infoHash.hash] = torrent
+      state.torrentInfo[torrent.infoHash.hash] = torrent
+    },
+    updateTorrentStatus: (state, action) => {
+      var torrent = action.payload
+      state.torrentStatus[torrent.infoHash.hash] = torrent
     },
     removeTorrent: (state, action) => {
       const hash = action.payload.hash
-      delete state.torrents[hash]
+      delete state.torrentStatus[hash]
     },
     removeAllTorrent: (state) => {
-      state.torrents = {}
+      state.torrentStatus = {}
     },
     updateVideoFiles: (state, action) => {
       var payload = action.payload
@@ -164,12 +169,20 @@ const selectGlobalChatPosition = (state, itemId) => {
 }
 
 const selectTorrent = (state, infoHash) => {
-  return state.bt.torrents[infoHash.hash]
+  if (state.bt.torrentInfo) {
+    return state.bt.torrentInfo[infoHash.hash]
+  }
+}
+
+const selectTorrentStatus = (state, infoHash) => {
+  if (state.bt.torrentStatus) {
+    return state.bt.torrentStatus[infoHash.hash]
+  }
 }
 
 const selectInfoHashs = (state) => {
   const keys = []
-  Object.values(state.bt.torrents).forEach((v) => {
+  Object.values(state.bt.torrentStatus).forEach((v) => {
     var infoHash = {
       version: v.infoHash.version,
       hash: v.infoHash.hash
@@ -219,8 +232,6 @@ const selectMagnetSharesItems = (state) => {
   return state.magnetShares.magnetSharesItems
 }
 
-
-
 const selectSubDirectory = (state, parentId) => {
   const ds = []
   if (!state.category.items[parentId]) {
@@ -262,7 +273,7 @@ const selectAutoPlayVideo = (state) => {
 export {
   store, userSlice, btSlice, categorySlice, eventSlice, playerSlice, magnetShares,
   selectUserInfo, selectShownChatPanel, selectOpenGlobalChat, selectGlobalChatPosition,
-  selectTorrent, selectInfoHashs, selectBtVideoFiles,
+  selectTorrent, selectInfoHashs, selectBtVideoFiles, selectTorrentStatus,
   selectCategoryItem, selectCategoryItems, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo,
   selectMagnetSharesItems,
   getSelectedAudio, selectAutoPlayVideo,

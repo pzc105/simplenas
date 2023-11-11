@@ -126,8 +126,8 @@ func (c *btServiceClient) OnBtStatus(ctx context.Context, opts ...grpc.CallOptio
 }
 
 type BtService_OnBtStatusClient interface {
-	Send(*StatusRequest) error
-	Recv() (*StatusRespone, error)
+	Send(*BtStatusRequest) error
+	Recv() (*BtStatusRespone, error)
 	grpc.ClientStream
 }
 
@@ -135,12 +135,12 @@ type btServiceOnBtStatusClient struct {
 	grpc.ClientStream
 }
 
-func (x *btServiceOnBtStatusClient) Send(m *StatusRequest) error {
+func (x *btServiceOnBtStatusClient) Send(m *BtStatusRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *btServiceOnBtStatusClient) Recv() (*StatusRespone, error) {
-	m := new(StatusRespone)
+func (x *btServiceOnBtStatusClient) Recv() (*BtStatusRespone, error) {
+	m := new(BtStatusRespone)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -369,8 +369,8 @@ func _BtService_OnBtStatus_Handler(srv interface{}, stream grpc.ServerStream) er
 }
 
 type BtService_OnBtStatusServer interface {
-	Send(*StatusRespone) error
-	Recv() (*StatusRequest, error)
+	Send(*BtStatusRespone) error
+	Recv() (*BtStatusRequest, error)
 	grpc.ServerStream
 }
 
@@ -378,12 +378,12 @@ type btServiceOnBtStatusServer struct {
 	grpc.ServerStream
 }
 
-func (x *btServiceOnBtStatusServer) Send(m *StatusRespone) error {
+func (x *btServiceOnBtStatusServer) Send(m *BtStatusRespone) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *btServiceOnBtStatusServer) Recv() (*StatusRequest, error) {
-	m := new(StatusRequest)
+func (x *btServiceOnBtStatusServer) Recv() (*BtStatusRequest, error) {
+	m := new(BtStatusRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}

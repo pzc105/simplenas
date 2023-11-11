@@ -13,7 +13,7 @@ service BtService {
   rpc GetTorrentInfo(GetTorrentInfoReq) returns (GetTorrentInfoRsp);
   rpc GetBtStatus(GetBtStatusReq) returns (GetBtStatusRsp);
 
-  rpc OnBtStatus(stream StatusRequest) returns (stream StatusRespone);
+  rpc OnBtStatus(stream BtStatusRequest) returns (stream BtStatusRespone);
   rpc OnFileCompleted(stream FileCompletedReq) returns (stream FileCompletedRes);
 }
 
@@ -120,11 +120,11 @@ message GetBtStatusRsp {
   TorrentStatus status = 1;
 }
 
-message StatusRequest {
+message BtStatusRequest {
   repeated InfoHash info_hash = 1;
 }
 
-message StatusRespone {
+message BtStatusRespone {
   repeated TorrentStatus status_array = 1;
 }
 

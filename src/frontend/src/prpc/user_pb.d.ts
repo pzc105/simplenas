@@ -3,7 +3,6 @@ import * as jspb from 'google-protobuf'
 import * as category_pb from './category_pb';
 import * as video_pb from './video_pb';
 import * as bt_pb from './bt_pb';
-import * as google_api_annotations_pb from './google/api/annotations_pb';
 
 
 export class UserInfo extends jspb.Message {

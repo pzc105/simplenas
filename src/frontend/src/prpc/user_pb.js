@@ -27,8 +27,6 @@ var video_pb = require('./video_pb.js');
 goog.object.extend(proto, video_pb);
 var bt_pb = require('./bt_pb.js');
 goog.object.extend(proto, bt_pb);
-var google_api_annotations_pb = require('./google/api/annotations_pb.js');
-goog.object.extend(proto, google_api_annotations_pb);
 goog.exportSymbol('proto.prpc.AddBtVideosReq', null, global);
 goog.exportSymbol('proto.prpc.AddBtVideosRes', null, global);
 goog.exportSymbol('proto.prpc.AddMagnetCategoryReq', null, global);

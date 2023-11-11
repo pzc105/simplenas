@@ -6,8 +6,10 @@ import (
 )
 
 type UserTorrents interface {
-	HasTorrent(userId ptype.UserID, infoHash InfoHash) bool
-	GetTorrent(infoHash InfoHash) (*Torrent, error)
+	HasTorrent(userId ptype.UserID, infoHash *InfoHash) bool
+	GetTorrent(infoHash *InfoHash) (*Torrent, error)
+
+	SetCallback(userId ptype.UserID, sid ptype.SessionID, callback UserOnBtStatusCallback)
 
 	Download(*DownloadParams) (*prpc.DownloadRespone, error)
 	RemoveTorrent(*RemoveTorrentParams) (*prpc.RemoveTorrentRes, error)
@@ -30,3 +32,5 @@ type GetMagnetUriParams struct {
 	UserId ptype.UserID
 	Req    *prpc.GetMagnetUriReq
 }
+
+type UserOnBtStatusCallback func(*prpc.TorrentStatus)

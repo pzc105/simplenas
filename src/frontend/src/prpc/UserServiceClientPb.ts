@@ -427,26 +427,26 @@ export class UserServiceClient {
     this.methodDescriptorGetMagnetUri);
   }
 
-  methodDescriptorOnStatus = new grpcWeb.MethodDescriptor(
-    '/prpc.UserService/OnStatus',
+  methodDescriptorOnBtStatus = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/OnBtStatus',
     grpcWeb.MethodType.SERVER_STREAMING,
-    bt_pb.StatusRequest,
-    bt_pb.StatusRespone,
-    (request: bt_pb.StatusRequest) => {
+    bt_pb.BtStatusRequest,
+    bt_pb.BtStatusRespone,
+    (request: bt_pb.BtStatusRequest) => {
       return request.serializeBinary();
     },
-    bt_pb.StatusRespone.deserializeBinary
+    bt_pb.BtStatusRespone.deserializeBinary
   );
 
-  onStatus(
-    request: bt_pb.StatusRequest,
-    metadata?: grpcWeb.Metadata): grpcWeb.ClientReadableStream<bt_pb.StatusRespone> {
+  onBtStatus(
+    request: bt_pb.BtStatusRequest,
+    metadata?: grpcWeb.Metadata): grpcWeb.ClientReadableStream<bt_pb.BtStatusRespone> {
     return this.client_.serverStreaming(
       this.hostname_ +
-        '/prpc.UserService/OnStatus',
+        '/prpc.UserService/OnBtStatus',
       request,
       metadata || {},
-      this.methodDescriptorOnStatus);
+      this.methodDescriptorOnBtStatus);
   }
 
   methodDescriptorQueryBtVideos = new grpcWeb.MethodDescriptor(

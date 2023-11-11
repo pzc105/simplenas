@@ -309,37 +309,37 @@ struct GetBtStatusRspDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetBtStatusRspDefaultTypeInternal _GetBtStatusRsp_default_instance_;
         template <typename>
-PROTOBUF_CONSTEXPR StatusRequest::StatusRequest(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR BtStatusRequest::BtStatusRequest(::_pbi::ConstantInitialized)
     : _impl_{
       /*decltype(_impl_.info_hash_)*/ {},
       /*decltype(_impl_._cached_size_)*/ {},
     } {}
-struct StatusRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR StatusRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~StatusRequestDefaultTypeInternal() {}
+struct BtStatusRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR BtStatusRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~BtStatusRequestDefaultTypeInternal() {}
   union {
-    StatusRequest _instance;
+    BtStatusRequest _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StatusRequestDefaultTypeInternal _StatusRequest_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BtStatusRequestDefaultTypeInternal _BtStatusRequest_default_instance_;
         template <typename>
-PROTOBUF_CONSTEXPR StatusRespone::StatusRespone(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR BtStatusRespone::BtStatusRespone(::_pbi::ConstantInitialized)
     : _impl_{
       /*decltype(_impl_.status_array_)*/ {},
       /*decltype(_impl_._cached_size_)*/ {},
     } {}
-struct StatusResponeDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR StatusResponeDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~StatusResponeDefaultTypeInternal() {}
+struct BtStatusResponeDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR BtStatusResponeDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~BtStatusResponeDefaultTypeInternal() {}
   union {
-    StatusRespone _instance;
+    BtStatusRespone _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StatusResponeDefaultTypeInternal _StatusRespone_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BtStatusResponeDefaultTypeInternal _BtStatusRespone_default_instance_;
         template <typename>
 PROTOBUF_CONSTEXPR TorrentInfoReq::TorrentInfoReq(::_pbi::ConstantInitialized)
     : _impl_{
@@ -650,23 +650,23 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     PROTOBUF_FIELD_OFFSET(::prpc::GetBtStatusRsp, _impl_.status_),
     0,
     ~0u,  // no _has_bits_
-    PROTOBUF_FIELD_OFFSET(::prpc::StatusRequest, _internal_metadata_),
+    PROTOBUF_FIELD_OFFSET(::prpc::BtStatusRequest, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
     ~0u,  // no _weak_field_map_
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::prpc::StatusRequest, _impl_.info_hash_),
+    PROTOBUF_FIELD_OFFSET(::prpc::BtStatusRequest, _impl_.info_hash_),
     ~0u,  // no _has_bits_
-    PROTOBUF_FIELD_OFFSET(::prpc::StatusRespone, _internal_metadata_),
+    PROTOBUF_FIELD_OFFSET(::prpc::BtStatusRespone, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
     ~0u,  // no _weak_field_map_
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::prpc::StatusRespone, _impl_.status_array_),
+    PROTOBUF_FIELD_OFFSET(::prpc::BtStatusRespone, _impl_.status_array_),
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::TorrentInfoReq, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -764,8 +764,8 @@ static const ::_pbi::MigrationSchema
         {145, 154, -1, sizeof(::prpc::GetTorrentInfoRsp)},
         {155, 164, -1, sizeof(::prpc::GetBtStatusReq)},
         {165, 174, -1, sizeof(::prpc::GetBtStatusRsp)},
-        {175, -1, -1, sizeof(::prpc::StatusRequest)},
-        {184, -1, -1, sizeof(::prpc::StatusRespone)},
+        {175, -1, -1, sizeof(::prpc::BtStatusRequest)},
+        {184, -1, -1, sizeof(::prpc::BtStatusRespone)},
         {193, -1, -1, sizeof(::prpc::TorrentInfoReq)},
         {202, 211, -1, sizeof(::prpc::TorrentInfoRes)},
         {212, 221, -1, sizeof(::prpc::RemoveTorrentReq)},
@@ -791,8 +791,8 @@ static const ::_pb::Message* const file_default_instances[] = {
     &::prpc::_GetTorrentInfoRsp_default_instance_._instance,
     &::prpc::_GetBtStatusReq_default_instance_._instance,
     &::prpc::_GetBtStatusRsp_default_instance_._instance,
-    &::prpc::_StatusRequest_default_instance_._instance,
-    &::prpc::_StatusRespone_default_instance_._instance,
+    &::prpc::_BtStatusRequest_default_instance_._instance,
+    &::prpc::_BtStatusRespone_default_instance_._instance,
     &::prpc::_TorrentInfoReq_default_instance_._instance,
     &::prpc::_TorrentInfoRes_default_instance_._instance,
     &::prpc::_RemoveTorrentReq_default_instance_._instance,
@@ -836,45 +836,45 @@ const char descriptor_table_protodef_bt_2eproto[] PROTOBUF_SECTION_VARIABLE(prot
     "ntInfoRsp\022\'\n\014torrent_info\030\001 \001(\0132\021.prpc.T"
     "orrentInfo\"3\n\016GetBtStatusReq\022!\n\tinfo_has"
     "h\030\001 \001(\0132\016.prpc.InfoHash\"5\n\016GetBtStatusRs"
-    "p\022#\n\006status\030\001 \001(\0132\023.prpc.TorrentStatus\"2"
-    "\n\rStatusRequest\022!\n\tinfo_hash\030\001 \003(\0132\016.prp"
-    "c.InfoHash\":\n\rStatusRespone\022)\n\014status_ar"
-    "ray\030\001 \003(\0132\023.prpc.TorrentStatus\"3\n\016Torren"
-    "tInfoReq\022!\n\tinfo_hash\030\001 \003(\0132\016.prpc.InfoH"
-    "ash\"/\n\016TorrentInfoRes\022\035\n\002ti\030\001 \001(\0132\021.prpc"
-    ".TorrentInfo\"5\n\020RemoveTorrentReq\022!\n\tinfo"
-    "_hash\030\001 \001(\0132\016.prpc.InfoHash\"\022\n\020RemoveTor"
-    "rentRes\"4\n\017FileProgressReq\022!\n\tinfo_hash\030"
-    "\001 \001(\0132\016.prpc.InfoHash\"Q\n\017FileProgressRes"
-    "\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\022\033\n\005f"
-    "iles\030\002 \003(\0132\014.prpc.BtFile\"\022\n\020FileComplete"
-    "dReq\"I\n\020FileCompletedRes\022!\n\tinfo_hash\030\001 "
-    "\001(\0132\016.prpc.InfoHash\022\022\n\nfile_index\030\002 \001(\005*"
-    "\216\001\n\013BtStateEnum\022\013\n\007unknown\020\000\022\022\n\016checking"
-    "_files\020\001\022\030\n\024downloading_metadata\020\002\022\017\n\013do"
-    "wnloading\020\003\022\014\n\010finished\020\004\022\013\n\007seeding\020\005\022\030"
-    "\n\024checking_resume_data\020\0072\276\004\n\tBtService\0225"
-    "\n\005Parse\022\025.prpc.DownloadRequest\032\025.prpc.Do"
-    "wnloadRespone\0228\n\010Download\022\025.prpc.Downloa"
-    "dRequest\032\025.prpc.DownloadRespone\022\?\n\rRemov"
-    "eTorrent\022\026.prpc.RemoveTorrentReq\032\026.prpc."
-    "RemoveTorrentRes\022<\n\014GetMagnetUri\022\025.prpc."
-    "GetMagnetUriReq\032\025.prpc.GetMagnetUriRsp\022\?"
-    "\n\rGetResumeData\022\026.prpc.GetResumeDataReq\032"
-    "\026.prpc.GetResumeDataRsp\022B\n\016GetTorrentInf"
-    "o\022\027.prpc.GetTorrentInfoReq\032\027.prpc.GetTor"
-    "rentInfoRsp\0229\n\013GetBtStatus\022\024.prpc.GetBtS"
-    "tatusReq\032\024.prpc.GetBtStatusRsp\022:\n\nOnBtSt"
-    "atus\022\023.prpc.StatusRequest\032\023.prpc.StatusR"
-    "espone(\0010\001\022E\n\017OnFileCompleted\022\026.prpc.Fil"
-    "eCompletedReq\032\026.prpc.FileCompletedRes(\0010"
-    "\001B\010Z\006./prpcb\006proto3"
+    "p\022#\n\006status\030\001 \001(\0132\023.prpc.TorrentStatus\"4"
+    "\n\017BtStatusRequest\022!\n\tinfo_hash\030\001 \003(\0132\016.p"
+    "rpc.InfoHash\"<\n\017BtStatusRespone\022)\n\014statu"
+    "s_array\030\001 \003(\0132\023.prpc.TorrentStatus\"3\n\016To"
+    "rrentInfoReq\022!\n\tinfo_hash\030\001 \003(\0132\016.prpc.I"
+    "nfoHash\"/\n\016TorrentInfoRes\022\035\n\002ti\030\001 \001(\0132\021."
+    "prpc.TorrentInfo\"5\n\020RemoveTorrentReq\022!\n\t"
+    "info_hash\030\001 \001(\0132\016.prpc.InfoHash\"\022\n\020Remov"
+    "eTorrentRes\"4\n\017FileProgressReq\022!\n\tinfo_h"
+    "ash\030\001 \001(\0132\016.prpc.InfoHash\"Q\n\017FileProgres"
+    "sRes\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\022"
+    "\033\n\005files\030\002 \003(\0132\014.prpc.BtFile\"\022\n\020FileComp"
+    "letedReq\"I\n\020FileCompletedRes\022!\n\tinfo_has"
+    "h\030\001 \001(\0132\016.prpc.InfoHash\022\022\n\nfile_index\030\002 "
+    "\001(\005*\216\001\n\013BtStateEnum\022\013\n\007unknown\020\000\022\022\n\016chec"
+    "king_files\020\001\022\030\n\024downloading_metadata\020\002\022\017"
+    "\n\013downloading\020\003\022\014\n\010finished\020\004\022\013\n\007seeding"
+    "\020\005\022\030\n\024checking_resume_data\020\0072\302\004\n\tBtServi"
+    "ce\0225\n\005Parse\022\025.prpc.DownloadRequest\032\025.prp"
+    "c.DownloadRespone\0228\n\010Download\022\025.prpc.Dow"
+    "nloadRequest\032\025.prpc.DownloadRespone\022\?\n\rR"
+    "emoveTorrent\022\026.prpc.RemoveTorrentReq\032\026.p"
+    "rpc.RemoveTorrentRes\022<\n\014GetMagnetUri\022\025.p"
+    "rpc.GetMagnetUriReq\032\025.prpc.GetMagnetUriR"
+    "sp\022\?\n\rGetResumeData\022\026.prpc.GetResumeData"
+    "Req\032\026.prpc.GetResumeDataRsp\022B\n\016GetTorren"
+    "tInfo\022\027.prpc.GetTorrentInfoReq\032\027.prpc.Ge"
+    "tTorrentInfoRsp\0229\n\013GetBtStatus\022\024.prpc.Ge"
+    "tBtStatusReq\032\024.prpc.GetBtStatusRsp\022>\n\nOn"
+    "BtStatus\022\025.prpc.BtStatusRequest\032\025.prpc.B"
+    "tStatusRespone(\0010\001\022E\n\017OnFileCompleted\022\026."
+    "prpc.FileCompletedReq\032\026.prpc.FileComplet"
+    "edRes(\0010\001B\010Z\006./prpcb\006proto3"
 };
 static ::absl::once_flag descriptor_table_bt_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_bt_2eproto = {
     false,
     false,
-    2619,
+    2627,
     descriptor_table_protodef_bt_2eproto,
     "bt.proto",
     &descriptor_table_bt_2eproto_once,
@@ -4469,17 +4469,17 @@ void GetBtStatusRsp::InternalSwap(GetBtStatusRsp* other) {
 }
 // ===================================================================
 
-class StatusRequest::_Internal {
+class BtStatusRequest::_Internal {
  public:
 };
 
-StatusRequest::StatusRequest(::google::protobuf::Arena* arena)
+BtStatusRequest::BtStatusRequest(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.StatusRequest)
+  // @@protoc_insertion_point(arena_constructor:prpc.BtStatusRequest)
 }
-StatusRequest::StatusRequest(const StatusRequest& from) : ::google::protobuf::Message() {
-  StatusRequest* const _this = this;
+BtStatusRequest::BtStatusRequest(const BtStatusRequest& from) : ::google::protobuf::Message() {
+  BtStatusRequest* const _this = this;
   (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.info_hash_){from._impl_.info_hash_},
@@ -4488,30 +4488,30 @@ StatusRequest::StatusRequest(const StatusRequest& from) : ::google::protobuf::Me
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
 
-  // @@protoc_insertion_point(copy_constructor:prpc.StatusRequest)
+  // @@protoc_insertion_point(copy_constructor:prpc.BtStatusRequest)
 }
-inline void StatusRequest::SharedCtor(::_pb::Arena* arena) {
+inline void BtStatusRequest::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
       decltype(_impl_.info_hash_){arena},
       /*decltype(_impl_._cached_size_)*/ {},
   };
 }
-StatusRequest::~StatusRequest() {
-  // @@protoc_insertion_point(destructor:prpc.StatusRequest)
+BtStatusRequest::~BtStatusRequest() {
+  // @@protoc_insertion_point(destructor:prpc.BtStatusRequest)
   _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-inline void StatusRequest::SharedDtor() {
+inline void BtStatusRequest::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.info_hash_.~RepeatedPtrField();
 }
-void StatusRequest::SetCachedSize(int size) const {
+void BtStatusRequest::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-PROTOBUF_NOINLINE void StatusRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.StatusRequest)
+PROTOBUF_NOINLINE void BtStatusRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.BtStatusRequest)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -4520,7 +4520,7 @@ PROTOBUF_NOINLINE void StatusRequest::Clear() {
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* StatusRequest::_InternalParse(
+const char* BtStatusRequest::_InternalParse(
     const char* ptr, ::_pbi::ParseContext* ctx) {
   ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
@@ -4528,7 +4528,7 @@ const char* StatusRequest::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRequest::_table_ = {
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> BtStatusRequest::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
@@ -4539,17 +4539,17 @@ const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRequest::_table_ = {
     1,  // num_field_entries
     1,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
-    &_StatusRequest_default_instance_._instance,
+    &_BtStatusRequest_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
   }, {{
     // repeated .prpc.InfoHash info_hash = 1;
     {::_pbi::TcParser::FastMtR1,
-     {10, 63, 0, PROTOBUF_FIELD_OFFSET(StatusRequest, _impl_.info_hash_)}},
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(BtStatusRequest, _impl_.info_hash_)}},
   }}, {{
     65535, 65535
   }}, {{
     // repeated .prpc.InfoHash info_hash = 1;
-    {PROTOBUF_FIELD_OFFSET(StatusRequest, _impl_.info_hash_), 0, 0,
+    {PROTOBUF_FIELD_OFFSET(BtStatusRequest, _impl_.info_hash_), 0, 0,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
     {::_pbi::TcParser::GetTable<::prpc::InfoHash>()},
@@ -4557,10 +4557,10 @@ const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRequest::_table_ = {
   }},
 };
 
-::uint8_t* StatusRequest::_InternalSerialize(
+::uint8_t* BtStatusRequest::_InternalSerialize(
     ::uint8_t* target,
     ::google::protobuf::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.StatusRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.BtStatusRequest)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
@@ -4577,12 +4577,12 @@ const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRequest::_table_ = {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.StatusRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.BtStatusRequest)
   return target;
 }
 
-::size_t StatusRequest::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.StatusRequest)
+::size_t BtStatusRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.BtStatusRequest)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
@@ -4598,17 +4598,17 @@ const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRequest::_table_ = {
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::google::protobuf::Message::ClassData StatusRequest::_class_data_ = {
+const ::google::protobuf::Message::ClassData BtStatusRequest::_class_data_ = {
     ::google::protobuf::Message::CopyWithSourceCheck,
-    StatusRequest::MergeImpl
+    BtStatusRequest::MergeImpl
 };
-const ::google::protobuf::Message::ClassData*StatusRequest::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*BtStatusRequest::GetClassData() const { return &_class_data_; }
 
 
-void StatusRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
-  auto* const _this = static_cast<StatusRequest*>(&to_msg);
-  auto& from = static_cast<const StatusRequest&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.StatusRequest)
+void BtStatusRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<BtStatusRequest*>(&to_msg);
+  auto& from = static_cast<const BtStatusRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.BtStatusRequest)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -4617,41 +4617,41 @@ void StatusRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::googl
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void StatusRequest::CopyFrom(const StatusRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.StatusRequest)
+void BtStatusRequest::CopyFrom(const BtStatusRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.BtStatusRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-PROTOBUF_NOINLINE bool StatusRequest::IsInitialized() const {
+PROTOBUF_NOINLINE bool BtStatusRequest::IsInitialized() const {
   return true;
 }
 
-void StatusRequest::InternalSwap(StatusRequest* other) {
+void BtStatusRequest::InternalSwap(BtStatusRequest* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   _impl_.info_hash_.InternalSwap(&other->_impl_.info_hash_);
 }
 
-::google::protobuf::Metadata StatusRequest::GetMetadata() const {
+::google::protobuf::Metadata BtStatusRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[14]);
 }
 // ===================================================================
 
-class StatusRespone::_Internal {
+class BtStatusRespone::_Internal {
  public:
 };
 
-StatusRespone::StatusRespone(::google::protobuf::Arena* arena)
+BtStatusRespone::BtStatusRespone(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.StatusRespone)
+  // @@protoc_insertion_point(arena_constructor:prpc.BtStatusRespone)
 }
-StatusRespone::StatusRespone(const StatusRespone& from) : ::google::protobuf::Message() {
-  StatusRespone* const _this = this;
+BtStatusRespone::BtStatusRespone(const BtStatusRespone& from) : ::google::protobuf::Message() {
+  BtStatusRespone* const _this = this;
   (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.status_array_){from._impl_.status_array_},
@@ -4660,30 +4660,30 @@ StatusRespone::StatusRespone(const StatusRespone& from) : ::google::protobuf::Me
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
 
-  // @@protoc_insertion_point(copy_constructor:prpc.StatusRespone)
+  // @@protoc_insertion_point(copy_constructor:prpc.BtStatusRespone)
 }
-inline void StatusRespone::SharedCtor(::_pb::Arena* arena) {
+inline void BtStatusRespone::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
       decltype(_impl_.status_array_){arena},
       /*decltype(_impl_._cached_size_)*/ {},
   };
 }
-StatusRespone::~StatusRespone() {
-  // @@protoc_insertion_point(destructor:prpc.StatusRespone)
+BtStatusRespone::~BtStatusRespone() {
+  // @@protoc_insertion_point(destructor:prpc.BtStatusRespone)
   _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-inline void StatusRespone::SharedDtor() {
+inline void BtStatusRespone::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.status_array_.~RepeatedPtrField();
 }
-void StatusRespone::SetCachedSize(int size) const {
+void BtStatusRespone::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-PROTOBUF_NOINLINE void StatusRespone::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.StatusRespone)
+PROTOBUF_NOINLINE void BtStatusRespone::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.BtStatusRespone)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -4692,7 +4692,7 @@ PROTOBUF_NOINLINE void StatusRespone::Clear() {
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* StatusRespone::_InternalParse(
+const char* BtStatusRespone::_InternalParse(
     const char* ptr, ::_pbi::ParseContext* ctx) {
   ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
@@ -4700,7 +4700,7 @@ const char* StatusRespone::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRespone::_table_ = {
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> BtStatusRespone::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
@@ -4711,17 +4711,17 @@ const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRespone::_table_ = {
     1,  // num_field_entries
     1,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
-    &_StatusRespone_default_instance_._instance,
+    &_BtStatusRespone_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
   }, {{
     // repeated .prpc.TorrentStatus status_array = 1;
     {::_pbi::TcParser::FastMtR1,
-     {10, 63, 0, PROTOBUF_FIELD_OFFSET(StatusRespone, _impl_.status_array_)}},
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(BtStatusRespone, _impl_.status_array_)}},
   }}, {{
     65535, 65535
   }}, {{
     // repeated .prpc.TorrentStatus status_array = 1;
-    {PROTOBUF_FIELD_OFFSET(StatusRespone, _impl_.status_array_), 0, 0,
+    {PROTOBUF_FIELD_OFFSET(BtStatusRespone, _impl_.status_array_), 0, 0,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
     {::_pbi::TcParser::GetTable<::prpc::TorrentStatus>()},
@@ -4729,10 +4729,10 @@ const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRespone::_table_ = {
   }},
 };
 
-::uint8_t* StatusRespone::_InternalSerialize(
+::uint8_t* BtStatusRespone::_InternalSerialize(
     ::uint8_t* target,
     ::google::protobuf::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.StatusRespone)
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.BtStatusRespone)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
@@ -4749,12 +4749,12 @@ const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRespone::_table_ = {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.StatusRespone)
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.BtStatusRespone)
   return target;
 }
 
-::size_t StatusRespone::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.StatusRespone)
+::size_t BtStatusRespone::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.BtStatusRespone)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
@@ -4770,17 +4770,17 @@ const ::_pbi::TcParseTable<0, 1, 1, 0, 2> StatusRespone::_table_ = {
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::google::protobuf::Message::ClassData StatusRespone::_class_data_ = {
+const ::google::protobuf::Message::ClassData BtStatusRespone::_class_data_ = {
     ::google::protobuf::Message::CopyWithSourceCheck,
-    StatusRespone::MergeImpl
+    BtStatusRespone::MergeImpl
 };
-const ::google::protobuf::Message::ClassData*StatusRespone::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*BtStatusRespone::GetClassData() const { return &_class_data_; }
 
 
-void StatusRespone::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
-  auto* const _this = static_cast<StatusRespone*>(&to_msg);
-  auto& from = static_cast<const StatusRespone&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.StatusRespone)
+void BtStatusRespone::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<BtStatusRespone*>(&to_msg);
+  auto& from = static_cast<const BtStatusRespone&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.BtStatusRespone)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -4789,24 +4789,24 @@ void StatusRespone::MergeImpl(::google::protobuf::Message& to_msg, const ::googl
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void StatusRespone::CopyFrom(const StatusRespone& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.StatusRespone)
+void BtStatusRespone::CopyFrom(const BtStatusRespone& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.BtStatusRespone)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-PROTOBUF_NOINLINE bool StatusRespone::IsInitialized() const {
+PROTOBUF_NOINLINE bool BtStatusRespone::IsInitialized() const {
   return true;
 }
 
-void StatusRespone::InternalSwap(StatusRespone* other) {
+void BtStatusRespone::InternalSwap(BtStatusRespone* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   _impl_.status_array_.InternalSwap(&other->_impl_.status_array_);
 }
 
-::google::protobuf::Metadata StatusRespone::GetMetadata() const {
+::google::protobuf::Metadata BtStatusRespone::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_bt_2eproto_getter, &descriptor_table_bt_2eproto_once,
       file_level_metadata_bt_2eproto[15]);

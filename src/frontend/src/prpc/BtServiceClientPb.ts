@@ -211,5 +211,134 @@ export class BtServiceClient {
     this.methodDescriptorGetMagnetUri);
   }
 
+  methodDescriptorGetResumeData = new grpcWeb.MethodDescriptor(
+    '/prpc.BtService/GetResumeData',
+    grpcWeb.MethodType.UNARY,
+    bt_pb.GetResumeDataReq,
+    bt_pb.GetResumeDataRsp,
+    (request: bt_pb.GetResumeDataReq) => {
+      return request.serializeBinary();
+    },
+    bt_pb.GetResumeDataRsp.deserializeBinary
+  );
+
+  getResumeData(
+    request: bt_pb.GetResumeDataReq,
+    metadata: grpcWeb.Metadata | null): Promise<bt_pb.GetResumeDataRsp>;
+
+  getResumeData(
+    request: bt_pb.GetResumeDataReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: bt_pb.GetResumeDataRsp) => void): grpcWeb.ClientReadableStream<bt_pb.GetResumeDataRsp>;
+
+  getResumeData(
+    request: bt_pb.GetResumeDataReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: bt_pb.GetResumeDataRsp) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.BtService/GetResumeData',
+        request,
+        metadata || {},
+        this.methodDescriptorGetResumeData,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.BtService/GetResumeData',
+    request,
+    metadata || {},
+    this.methodDescriptorGetResumeData);
+  }
+
+  methodDescriptorGetTorrentInfo = new grpcWeb.MethodDescriptor(
+    '/prpc.BtService/GetTorrentInfo',
+    grpcWeb.MethodType.UNARY,
+    bt_pb.GetTorrentInfoReq,
+    bt_pb.GetTorrentInfoRsp,
+    (request: bt_pb.GetTorrentInfoReq) => {
+      return request.serializeBinary();
+    },
+    bt_pb.GetTorrentInfoRsp.deserializeBinary
+  );
+
+  getTorrentInfo(
+    request: bt_pb.GetTorrentInfoReq,
+    metadata: grpcWeb.Metadata | null): Promise<bt_pb.GetTorrentInfoRsp>;
+
+  getTorrentInfo(
+    request: bt_pb.GetTorrentInfoReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: bt_pb.GetTorrentInfoRsp) => void): grpcWeb.ClientReadableStream<bt_pb.GetTorrentInfoRsp>;
+
+  getTorrentInfo(
+    request: bt_pb.GetTorrentInfoReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: bt_pb.GetTorrentInfoRsp) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.BtService/GetTorrentInfo',
+        request,
+        metadata || {},
+        this.methodDescriptorGetTorrentInfo,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.BtService/GetTorrentInfo',
+    request,
+    metadata || {},
+    this.methodDescriptorGetTorrentInfo);
+  }
+
+  methodDescriptorGetBtStatus = new grpcWeb.MethodDescriptor(
+    '/prpc.BtService/GetBtStatus',
+    grpcWeb.MethodType.UNARY,
+    bt_pb.GetBtStatusReq,
+    bt_pb.GetBtStatusRsp,
+    (request: bt_pb.GetBtStatusReq) => {
+      return request.serializeBinary();
+    },
+    bt_pb.GetBtStatusRsp.deserializeBinary
+  );
+
+  getBtStatus(
+    request: bt_pb.GetBtStatusReq,
+    metadata: grpcWeb.Metadata | null): Promise<bt_pb.GetBtStatusRsp>;
+
+  getBtStatus(
+    request: bt_pb.GetBtStatusReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: bt_pb.GetBtStatusRsp) => void): grpcWeb.ClientReadableStream<bt_pb.GetBtStatusRsp>;
+
+  getBtStatus(
+    request: bt_pb.GetBtStatusReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: bt_pb.GetBtStatusRsp) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.BtService/GetBtStatus',
+        request,
+        metadata || {},
+        this.methodDescriptorGetBtStatus,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.BtService/GetBtStatus',
+    request,
+    metadata || {},
+    this.methodDescriptorGetBtStatus);
+  }
+
 }
 

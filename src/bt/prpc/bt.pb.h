@@ -59,6 +59,12 @@ namespace prpc {
 class BtFile;
 struct BtFileDefaultTypeInternal;
 extern BtFileDefaultTypeInternal _BtFile_default_instance_;
+class BtStatusRequest;
+struct BtStatusRequestDefaultTypeInternal;
+extern BtStatusRequestDefaultTypeInternal _BtStatusRequest_default_instance_;
+class BtStatusRespone;
+struct BtStatusResponeDefaultTypeInternal;
+extern BtStatusResponeDefaultTypeInternal _BtStatusRespone_default_instance_;
 class DownloadRequest;
 struct DownloadRequestDefaultTypeInternal;
 extern DownloadRequestDefaultTypeInternal _DownloadRequest_default_instance_;
@@ -110,12 +116,6 @@ extern RemoveTorrentReqDefaultTypeInternal _RemoveTorrentReq_default_instance_;
 class RemoveTorrentRes;
 struct RemoveTorrentResDefaultTypeInternal;
 extern RemoveTorrentResDefaultTypeInternal _RemoveTorrentRes_default_instance_;
-class StatusRequest;
-struct StatusRequestDefaultTypeInternal;
-extern StatusRequestDefaultTypeInternal _StatusRequest_default_instance_;
-class StatusRespone;
-struct StatusResponeDefaultTypeInternal;
-extern StatusResponeDefaultTypeInternal _StatusRespone_default_instance_;
 class TorrentInfo;
 struct TorrentInfoDefaultTypeInternal;
 extern TorrentInfoDefaultTypeInternal _TorrentInfo_default_instance_;
@@ -2954,25 +2954,25 @@ class GetBtStatusRsp final :
   friend struct ::TableStruct_bt_2eproto;
 };// -------------------------------------------------------------------
 
-class StatusRequest final :
-    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.StatusRequest) */ {
+class BtStatusRequest final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.BtStatusRequest) */ {
  public:
-  inline StatusRequest() : StatusRequest(nullptr) {}
-  ~StatusRequest() override;
+  inline BtStatusRequest() : BtStatusRequest(nullptr) {}
+  ~BtStatusRequest() override;
   template<typename = void>
-  explicit PROTOBUF_CONSTEXPR StatusRequest(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR BtStatusRequest(::google::protobuf::internal::ConstantInitialized);
 
-  StatusRequest(const StatusRequest& from);
-  StatusRequest(StatusRequest&& from) noexcept
-    : StatusRequest() {
+  BtStatusRequest(const BtStatusRequest& from);
+  BtStatusRequest(BtStatusRequest&& from) noexcept
+    : BtStatusRequest() {
     *this = ::std::move(from);
   }
 
-  inline StatusRequest& operator=(const StatusRequest& from) {
+  inline BtStatusRequest& operator=(const BtStatusRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline StatusRequest& operator=(StatusRequest&& from) noexcept {
+  inline BtStatusRequest& operator=(BtStatusRequest&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -3002,20 +3002,20 @@ class StatusRequest final :
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const StatusRequest& default_instance() {
+  static const BtStatusRequest& default_instance() {
     return *internal_default_instance();
   }
-  static inline const StatusRequest* internal_default_instance() {
-    return reinterpret_cast<const StatusRequest*>(
-               &_StatusRequest_default_instance_);
+  static inline const BtStatusRequest* internal_default_instance() {
+    return reinterpret_cast<const BtStatusRequest*>(
+               &_BtStatusRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     14;
 
-  friend void swap(StatusRequest& a, StatusRequest& b) {
+  friend void swap(BtStatusRequest& a, BtStatusRequest& b) {
     a.Swap(&b);
   }
-  inline void Swap(StatusRequest* other) {
+  inline void Swap(BtStatusRequest* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -3028,7 +3028,7 @@ class StatusRequest final :
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(StatusRequest* other) {
+  void UnsafeArenaSwap(BtStatusRequest* other) {
     if (other == this) return;
     ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -3036,14 +3036,14 @@ class StatusRequest final :
 
   // implements Message ----------------------------------------------
 
-  StatusRequest* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<StatusRequest>(arena);
+  BtStatusRequest* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<BtStatusRequest>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const StatusRequest& from);
+  void CopyFrom(const BtStatusRequest& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom( const StatusRequest& from) {
-    StatusRequest::MergeImpl(*this, from);
+  void MergeFrom( const BtStatusRequest& from) {
+    BtStatusRequest::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
@@ -3061,15 +3061,15 @@ class StatusRequest final :
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(StatusRequest* other);
+  void InternalSwap(BtStatusRequest* other);
 
   private:
   friend class ::google::protobuf::internal::AnyMetadata;
   static ::absl::string_view FullMessageName() {
-    return "prpc.StatusRequest";
+    return "prpc.BtStatusRequest";
   }
   protected:
-  explicit StatusRequest(::google::protobuf::Arena* arena);
+  explicit BtStatusRequest(::google::protobuf::Arena* arena);
   public:
 
   static const ClassData _class_data_;
@@ -3102,7 +3102,7 @@ class StatusRequest final :
   ::prpc::InfoHash* add_info_hash();
   const ::google::protobuf::RepeatedPtrField< ::prpc::InfoHash >&
       info_hash() const;
-  // @@protoc_insertion_point(class_scope:prpc.StatusRequest)
+  // @@protoc_insertion_point(class_scope:prpc.BtStatusRequest)
  private:
   class _Internal;
 
@@ -3120,25 +3120,25 @@ class StatusRequest final :
   friend struct ::TableStruct_bt_2eproto;
 };// -------------------------------------------------------------------
 
-class StatusRespone final :
-    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.StatusRespone) */ {
+class BtStatusRespone final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.BtStatusRespone) */ {
  public:
-  inline StatusRespone() : StatusRespone(nullptr) {}
-  ~StatusRespone() override;
+  inline BtStatusRespone() : BtStatusRespone(nullptr) {}
+  ~BtStatusRespone() override;
   template<typename = void>
-  explicit PROTOBUF_CONSTEXPR StatusRespone(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR BtStatusRespone(::google::protobuf::internal::ConstantInitialized);
 
-  StatusRespone(const StatusRespone& from);
-  StatusRespone(StatusRespone&& from) noexcept
-    : StatusRespone() {
+  BtStatusRespone(const BtStatusRespone& from);
+  BtStatusRespone(BtStatusRespone&& from) noexcept
+    : BtStatusRespone() {
     *this = ::std::move(from);
   }
 
-  inline StatusRespone& operator=(const StatusRespone& from) {
+  inline BtStatusRespone& operator=(const BtStatusRespone& from) {
     CopyFrom(from);
     return *this;
   }
-  inline StatusRespone& operator=(StatusRespone&& from) noexcept {
+  inline BtStatusRespone& operator=(BtStatusRespone&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -3168,20 +3168,20 @@ class StatusRespone final :
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const StatusRespone& default_instance() {
+  static const BtStatusRespone& default_instance() {
     return *internal_default_instance();
   }
-  static inline const StatusRespone* internal_default_instance() {
-    return reinterpret_cast<const StatusRespone*>(
-               &_StatusRespone_default_instance_);
+  static inline const BtStatusRespone* internal_default_instance() {
+    return reinterpret_cast<const BtStatusRespone*>(
+               &_BtStatusRespone_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     15;
 
-  friend void swap(StatusRespone& a, StatusRespone& b) {
+  friend void swap(BtStatusRespone& a, BtStatusRespone& b) {
     a.Swap(&b);
   }
-  inline void Swap(StatusRespone* other) {
+  inline void Swap(BtStatusRespone* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -3194,7 +3194,7 @@ class StatusRespone final :
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(StatusRespone* other) {
+  void UnsafeArenaSwap(BtStatusRespone* other) {
     if (other == this) return;
     ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -3202,14 +3202,14 @@ class StatusRespone final :
 
   // implements Message ----------------------------------------------
 
-  StatusRespone* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<StatusRespone>(arena);
+  BtStatusRespone* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<BtStatusRespone>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const StatusRespone& from);
+  void CopyFrom(const BtStatusRespone& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom( const StatusRespone& from) {
-    StatusRespone::MergeImpl(*this, from);
+  void MergeFrom( const BtStatusRespone& from) {
+    BtStatusRespone::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
@@ -3227,15 +3227,15 @@ class StatusRespone final :
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(StatusRespone* other);
+  void InternalSwap(BtStatusRespone* other);
 
   private:
   friend class ::google::protobuf::internal::AnyMetadata;
   static ::absl::string_view FullMessageName() {
-    return "prpc.StatusRespone";
+    return "prpc.BtStatusRespone";
   }
   protected:
-  explicit StatusRespone(::google::protobuf::Arena* arena);
+  explicit BtStatusRespone(::google::protobuf::Arena* arena);
   public:
 
   static const ClassData _class_data_;
@@ -3268,7 +3268,7 @@ class StatusRespone final :
   ::prpc::TorrentStatus* add_status_array();
   const ::google::protobuf::RepeatedPtrField< ::prpc::TorrentStatus >&
       status_array() const;
-  // @@protoc_insertion_point(class_scope:prpc.StatusRespone)
+  // @@protoc_insertion_point(class_scope:prpc.BtStatusRespone)
  private:
   class _Internal;
 
@@ -6492,100 +6492,100 @@ inline void GetBtStatusRsp::set_allocated_status(::prpc::TorrentStatus* value) {
 
 // -------------------------------------------------------------------
 
-// StatusRequest
+// BtStatusRequest
 
 // repeated .prpc.InfoHash info_hash = 1;
-inline int StatusRequest::_internal_info_hash_size() const {
+inline int BtStatusRequest::_internal_info_hash_size() const {
   return _internal_info_hash().size();
 }
-inline int StatusRequest::info_hash_size() const {
+inline int BtStatusRequest::info_hash_size() const {
   return _internal_info_hash_size();
 }
-inline void StatusRequest::clear_info_hash() {
+inline void BtStatusRequest::clear_info_hash() {
   _internal_mutable_info_hash()->Clear();
 }
-inline ::prpc::InfoHash* StatusRequest::mutable_info_hash(int index) {
-  // @@protoc_insertion_point(field_mutable:prpc.StatusRequest.info_hash)
+inline ::prpc::InfoHash* BtStatusRequest::mutable_info_hash(int index) {
+  // @@protoc_insertion_point(field_mutable:prpc.BtStatusRequest.info_hash)
   return _internal_mutable_info_hash()->Mutable(index);
 }
 inline ::google::protobuf::RepeatedPtrField< ::prpc::InfoHash >*
-StatusRequest::mutable_info_hash() {
-  // @@protoc_insertion_point(field_mutable_list:prpc.StatusRequest.info_hash)
+BtStatusRequest::mutable_info_hash() {
+  // @@protoc_insertion_point(field_mutable_list:prpc.BtStatusRequest.info_hash)
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   return _internal_mutable_info_hash();
 }
-inline const ::prpc::InfoHash& StatusRequest::info_hash(int index) const {
-  // @@protoc_insertion_point(field_get:prpc.StatusRequest.info_hash)
+inline const ::prpc::InfoHash& BtStatusRequest::info_hash(int index) const {
+  // @@protoc_insertion_point(field_get:prpc.BtStatusRequest.info_hash)
     return _internal_info_hash().Get(index);
 }
-inline ::prpc::InfoHash* StatusRequest::add_info_hash() {
+inline ::prpc::InfoHash* BtStatusRequest::add_info_hash() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ::prpc::InfoHash* _add = _internal_mutable_info_hash()->Add();
-  // @@protoc_insertion_point(field_add:prpc.StatusRequest.info_hash)
+  // @@protoc_insertion_point(field_add:prpc.BtStatusRequest.info_hash)
   return _add;
 }
 inline const ::google::protobuf::RepeatedPtrField< ::prpc::InfoHash >&
-StatusRequest::info_hash() const {
-  // @@protoc_insertion_point(field_list:prpc.StatusRequest.info_hash)
+BtStatusRequest::info_hash() const {
+  // @@protoc_insertion_point(field_list:prpc.BtStatusRequest.info_hash)
   return _internal_info_hash();
 }
 inline const ::google::protobuf::RepeatedPtrField<::prpc::InfoHash>&
-StatusRequest::_internal_info_hash() const {
+BtStatusRequest::_internal_info_hash() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.info_hash_;
 }
 inline ::google::protobuf::RepeatedPtrField<::prpc::InfoHash>*
-StatusRequest::_internal_mutable_info_hash() {
+BtStatusRequest::_internal_mutable_info_hash() {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return &_impl_.info_hash_;
 }
 
 // -------------------------------------------------------------------
 
-// StatusRespone
+// BtStatusRespone
 
 // repeated .prpc.TorrentStatus status_array = 1;
-inline int StatusRespone::_internal_status_array_size() const {
+inline int BtStatusRespone::_internal_status_array_size() const {
   return _internal_status_array().size();
 }
-inline int StatusRespone::status_array_size() const {
+inline int BtStatusRespone::status_array_size() const {
   return _internal_status_array_size();
 }
-inline void StatusRespone::clear_status_array() {
+inline void BtStatusRespone::clear_status_array() {
   _internal_mutable_status_array()->Clear();
 }
-inline ::prpc::TorrentStatus* StatusRespone::mutable_status_array(int index) {
-  // @@protoc_insertion_point(field_mutable:prpc.StatusRespone.status_array)
+inline ::prpc::TorrentStatus* BtStatusRespone::mutable_status_array(int index) {
+  // @@protoc_insertion_point(field_mutable:prpc.BtStatusRespone.status_array)
   return _internal_mutable_status_array()->Mutable(index);
 }
 inline ::google::protobuf::RepeatedPtrField< ::prpc::TorrentStatus >*
-StatusRespone::mutable_status_array() {
-  // @@protoc_insertion_point(field_mutable_list:prpc.StatusRespone.status_array)
+BtStatusRespone::mutable_status_array() {
+  // @@protoc_insertion_point(field_mutable_list:prpc.BtStatusRespone.status_array)
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   return _internal_mutable_status_array();
 }
-inline const ::prpc::TorrentStatus& StatusRespone::status_array(int index) const {
-  // @@protoc_insertion_point(field_get:prpc.StatusRespone.status_array)
+inline const ::prpc::TorrentStatus& BtStatusRespone::status_array(int index) const {
+  // @@protoc_insertion_point(field_get:prpc.BtStatusRespone.status_array)
     return _internal_status_array().Get(index);
 }
-inline ::prpc::TorrentStatus* StatusRespone::add_status_array() {
+inline ::prpc::TorrentStatus* BtStatusRespone::add_status_array() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ::prpc::TorrentStatus* _add = _internal_mutable_status_array()->Add();
-  // @@protoc_insertion_point(field_add:prpc.StatusRespone.status_array)
+  // @@protoc_insertion_point(field_add:prpc.BtStatusRespone.status_array)
   return _add;
 }
 inline const ::google::protobuf::RepeatedPtrField< ::prpc::TorrentStatus >&
-StatusRespone::status_array() const {
-  // @@protoc_insertion_point(field_list:prpc.StatusRespone.status_array)
+BtStatusRespone::status_array() const {
+  // @@protoc_insertion_point(field_list:prpc.BtStatusRespone.status_array)
   return _internal_status_array();
 }
 inline const ::google::protobuf::RepeatedPtrField<::prpc::TorrentStatus>&
-StatusRespone::_internal_status_array() const {
+BtStatusRespone::_internal_status_array() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.status_array_;
 }
 inline ::google::protobuf::RepeatedPtrField<::prpc::TorrentStatus>*
-StatusRespone::_internal_mutable_status_array() {
+BtStatusRespone::_internal_mutable_status_array() {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return &_impl_.status_array_;
 }

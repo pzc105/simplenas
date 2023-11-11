@@ -153,7 +153,7 @@ func (um *UserManger) HasVideo(userId ptype.UserID, vid ptype.VideoID) bool {
 	return c > 0
 }
 
-func (um *UserManger) QueryBtVideoMetadata(userId ptype.UserID, infoHash bt.InfoHash) (map[int]*video.Metadata, error) {
+func (um *UserManger) QueryBtVideoMetadata(userId ptype.UserID, infoHash *bt.InfoHash) (map[int]*video.Metadata, error) {
 	if !um.HasTorrent(userId, infoHash) {
 		return nil, errors.New("not found bt")
 	}
@@ -208,11 +208,11 @@ func (um *UserManger) DelCategoryItem(userId ptype.UserID, itemId ptype.Category
 type AddBtVideosParams struct {
 	UserId         ptype.UserID
 	CategoryItemId ptype.CategoryID
-	InfoHash       bt.InfoHash
+	InfoHash       *bt.InfoHash
 	FileIndexes    []int32
 }
 
-func (um *UserManger) findSubtitle(infoHash bt.InfoHash, videoFileIndex int32) int32 {
+func (um *UserManger) findSubtitle(infoHash *bt.InfoHash, videoFileIndex int32) int32 {
 	t, err := um.GetTorrent(infoHash)
 	if err != nil {
 		return -1
@@ -234,7 +234,7 @@ func (um *UserManger) findSubtitle(infoHash bt.InfoHash, videoFileIndex int32) i
 	return -1
 }
 
-func (um *UserManger) findAudioTrack(infoHash bt.InfoHash, videoFileIndex int32) []string {
+func (um *UserManger) findAudioTrack(infoHash *bt.InfoHash, videoFileIndex int32) []string {
 	t, err := um.GetTorrent(infoHash)
 	if err != nil {
 		return []string{}

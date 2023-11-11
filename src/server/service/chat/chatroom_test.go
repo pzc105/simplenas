@@ -24,7 +24,7 @@ func TestChatRoom(t *testing.T) {
 	}
 	var i1 atomic.Int32
 	go func() {
-		sid := int64(1)
+		sid := ptype.SessionID(1)
 
 		params := &JoinParams{
 			SessionId: sid,
@@ -41,7 +41,7 @@ func TestChatRoom(t *testing.T) {
 	}()
 	var i2 atomic.Int32
 	go func() {
-		sid := int64(2)
+		sid := ptype.SessionID(2)
 
 		i2.Store(0)
 		params := &JoinParams{
