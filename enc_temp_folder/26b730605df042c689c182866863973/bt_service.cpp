@@ -124,7 +124,7 @@ namespace prpc
     };
 
     lt::settings_pack sp;
-    string const proxy_host = request->proxy_host();
+    string const proxy_host = request->proxy_hostname();
     int proxy_port = request->proxy_port();
     string const proxy_type = request->proxy_type();
     int download_rate_limit = request->download_rate_limit();
