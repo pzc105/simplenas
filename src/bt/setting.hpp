@@ -3,8 +3,22 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <boost/program_options.hpp>
 #include "yaml-cpp/yaml.h"
+
+inline char* getCmdOption(char** begin, char** end, const std::string& option)
+{
+  char** itr = std::find(begin, end, option);
+  if (itr != end && ++itr != end)
+  {
+    return *itr;
+  }
+  return 0;
+}
+
+inline bool cmdOptionExists(char** begin, char** end, const std::string& option)
+{
+  return std::find(begin, end, option) != end;
+}
 
 namespace bt
 {
@@ -13,20 +27,9 @@ namespace bt
   public:
     static void init(int argc, char *argv[])
     {
-      boost::program_options::options_description opts("all options");
-      boost::program_options::variables_map vm;
-      opts.add_options()("c", boost::program_options::value<std::string>(), "config path");
-      try {
-        boost::program_options::store(boost::program_options::parse_command_line(argc, argv, opts), vm);
-      }
-      catch (...) {
-        std::cout << "输入参数有问题" << std::endl;
-        exit(-1);
-      }
-
       m_file_name = "./bt.yml";
-      if(vm.count("c")) {
-        m_file_name = vm["c"].as<std::string>();
+      if(cmdOptionExists(argv, argv + argc, "-c")) {
+        m_file_name = getCmdOption(argv, argv + argc, "-c");
         std::ifstream f(m_file_name);
         if(!f.good()) {
           m_file_name = "./bt.yml";

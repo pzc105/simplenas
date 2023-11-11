@@ -10,7 +10,7 @@ if(Boost_DEBUG)
     endif()
   endforeach()
 endif()
-find_package(Boost COMPONENTS program_options REQUIRED)
+find_package(Boost COMPONENTS REQUIRED)
 
 include_directories(./)
 include_directories(./prpc)
@@ -57,3 +57,6 @@ target_compile_features(bt
     cxx_relaxed_constexpr
     cxx_variable_templates
 )
+
+set_property(TARGET bt PROPERTY
+             MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")

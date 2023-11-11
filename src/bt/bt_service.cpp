@@ -70,6 +70,11 @@ namespace prpc
     }
     _last_push_time = n;
 
+    if (_ses == nullptr)
+    {
+      return;
+    }
+
     _ses->post_torrent_updates();
     auto tss = _ses->get_torrents();
     for (auto const &t : tss)
@@ -135,7 +140,13 @@ namespace prpc
     sp.set_int(lt::settings_pack::upload_rate_limit, upload_rate_limit);
     sp.set_int(lt::settings_pack::hashing_threads, hashing_threads);
     sp.set_int(lt::settings_pack::alert_mask, lt::file_completed_alert::static_category);
-    lt::session_params sps = lt::read_session_params(request->resume_data());
+    lt::session_params sps;
+    try {
+      sps = lt::read_session_params(request->resume_data());
+    }
+    catch (...) {
+      std::cout << "failed to load session resume data" << std::endl;
+    }
     sps.settings = sp;
     _ses = std::make_unique<lt::session>(sps);
     return ::grpc::Status::OK;
@@ -425,7 +436,10 @@ namespace prpc
     {
       return ::grpc::Status(grpc::UNAVAILABLE, "");
     }
-    auto sparams = _ses->session_state(lt::session_handle::save_dht_settings | lt::session::save_dht_state | lt::session::save_extension_state);
+    auto sparams = _ses->session_state(lt::session_handle::save_dht_settings
+      | lt::session::save_dht_state
+      | lt::session::save_extension_state
+      | lt::session::save_ip_filter);
     auto buf = lt::write_session_params_buf(sparams);
     *response->mutable_resume_data() = std::string(buf.data(), buf.size());
     return ::grpc::Status::OK;

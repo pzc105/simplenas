@@ -44,21 +44,17 @@ endif()
 
 if(static_runtime)
   if (MSVC)
-    add_compile_options(/MTd)
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-    message("CMAKE_MSVC_RUNTIME_LIBRARY: ${CMAKE_MSVC_RUNTIME_LIBRARY}")
     set(OPENSSL_MSVC_STATIC_RT ON)
   else()
     include(ucm_flags)
     ucm_set_runtime(STATIC)
   endif()
   set(Boost_USE_MULTITHREADED ON)
-  set(Boost_USE_STATIC_LIBS ON)
+  set(Boost_USE_STATIC_RUNTIME ON)
   set(OPENSSL_USE_STATIC_LIBS ON)
   set(BUILD_SHARED_LIBS OFF)
 endif()
-
-set(CMAKE_CXX_STANDARD 20)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
