@@ -1,6 +1,7 @@
 package bt
 
 import (
+	"context"
 	"encoding/hex"
 	"errors"
 	"pnas/db"
@@ -146,13 +147,13 @@ func (t *Torrent) updateStatus(s *prpc.TorrentStatus) {
 		old != prpc.BtStateEnum_finished && t.state == prpc.BtStateEnum_finished {
 		now := time.Now()
 		if now.Sub(t.lastSave) > time.Second*10 {
-			// req := &prpc.GetResumeDataReq{
-			// 	InfoHash: GetInfoHash(&t.base.InfoHash),
-			// }
-			// rd, err := t.btClient.GetResumeData(context.Background(), req)
-			// if err == nil {
-			// 	saveResumeData(&t.base.InfoHash, rd.ResumeData)
-			// }
+			req := &prpc.GetResumeDataReq{
+				InfoHash: GetInfoHash(&t.base.InfoHash),
+			}
+			rd, err := t.btClient.GetResumeData(context.Background(), req)
+			if err == nil {
+				saveResumeData(&t.base.InfoHash, rd.ResumeData)
+			}
 			t.lastSave = now
 		}
 	}

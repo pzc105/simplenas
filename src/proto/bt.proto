@@ -30,7 +30,7 @@ message InitedSessionRsp {
 }
 
 message InitSessionReq {
-  string proxy_hostname = 1;
+  string proxy_host = 1;
   int32 proxy_port =2; 
   string proxy_type = 3;
   int32 upload_rate_limit = 4;

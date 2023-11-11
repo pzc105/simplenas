@@ -209,7 +209,7 @@ func (ut *UserTorrentsImpl) handleBtClientConnected() {
 	if !rsp.Inited {
 		resume, _ := loadBtSessionParams()
 		req := &prpc.InitSessionReq{
-			ProxyHostname:     setting.GS().Bt.ProxyHostname,
+			ProxyHost:     setting.GS().Bt.ProxyHost,
 			ProxyPort:         setting.GS().Bt.ProxyPort,
 			ProxyType:         setting.GS().Bt.ProxyType,
 			UploadRateLimit:   setting.GS().Bt.UploadRateLimit,
@@ -263,15 +263,15 @@ func (ut *UserTorrentsImpl) handleBtStatus(s *prpc.TorrentStatus) {
 		return
 	}
 	ut.mtx.Unlock()
-	// if !t.hasBaseInfo() {
-	// 	req := &prpc.GetTorrentInfoReq{
-	// 		InfoHash: s.InfoHash,
-	// 	}
-	// 	res, err := ut.btClient.GetTorrentInfo(context.Background(), req)
-	// 	if err == nil {
-	// 		t.updateTorrentInfo(res.TorrentInfo)
-	// 	}
-	// }
+	if !t.hasBaseInfo() {
+		req := &prpc.GetTorrentInfoReq{
+			InfoHash: s.InfoHash,
+		}
+		res, err := ut.btClient.GetTorrentInfo(context.Background(), req)
+		if err == nil {
+			t.updateTorrentInfo(res.TorrentInfo)
+		}
+	}
 	t.updateStatus(s)
 	uids := t.getAllUser()
 	for _, uid := range uids {

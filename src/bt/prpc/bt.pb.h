@@ -705,7 +705,7 @@ class InitSessionReq final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kProxyHostnameFieldNumber = 1,
+    kProxyHostFieldNumber = 1,
     kProxyTypeFieldNumber = 3,
     kResumeDataFieldNumber = 7,
     kProxyPortFieldNumber = 2,
@@ -713,20 +713,20 @@ class InitSessionReq final :
     kDownloadRateLimitFieldNumber = 5,
     kHashingThreadsFieldNumber = 6,
   };
-  // string proxy_hostname = 1;
-  void clear_proxy_hostname() ;
-  const std::string& proxy_hostname() const;
+  // string proxy_host = 1;
+  void clear_proxy_host() ;
+  const std::string& proxy_host() const;
   template <typename Arg_ = const std::string&, typename... Args_>
-  void set_proxy_hostname(Arg_&& arg, Args_... args);
-  std::string* mutable_proxy_hostname();
-  PROTOBUF_NODISCARD std::string* release_proxy_hostname();
-  void set_allocated_proxy_hostname(std::string* ptr);
+  void set_proxy_host(Arg_&& arg, Args_... args);
+  std::string* mutable_proxy_host();
+  PROTOBUF_NODISCARD std::string* release_proxy_host();
+  void set_allocated_proxy_host(std::string* ptr);
 
   private:
-  const std::string& _internal_proxy_hostname() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_proxy_hostname(
+  const std::string& _internal_proxy_host() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_proxy_host(
       const std::string& value);
-  std::string* _internal_mutable_proxy_hostname();
+  std::string* _internal_mutable_proxy_host();
 
   public:
   // string proxy_type = 3;
@@ -806,12 +806,12 @@ class InitSessionReq final :
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 7, 0, 52, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<3, 7, 0, 48, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::google::protobuf::internal::ArenaStringPtr proxy_hostname_;
+    ::google::protobuf::internal::ArenaStringPtr proxy_host_;
     ::google::protobuf::internal::ArenaStringPtr proxy_type_;
     ::google::protobuf::internal::ArenaStringPtr resume_data_;
     ::int32_t proxy_port_;
@@ -5563,55 +5563,55 @@ inline void InitedSessionRsp::_internal_set_inited(bool value) {
 
 // InitSessionReq
 
-// string proxy_hostname = 1;
-inline void InitSessionReq::clear_proxy_hostname() {
-  _impl_.proxy_hostname_.ClearToEmpty();
+// string proxy_host = 1;
+inline void InitSessionReq::clear_proxy_host() {
+  _impl_.proxy_host_.ClearToEmpty();
 }
-inline const std::string& InitSessionReq::proxy_hostname() const {
-  // @@protoc_insertion_point(field_get:prpc.InitSessionReq.proxy_hostname)
-  return _internal_proxy_hostname();
+inline const std::string& InitSessionReq::proxy_host() const {
+  // @@protoc_insertion_point(field_get:prpc.InitSessionReq.proxy_host)
+  return _internal_proxy_host();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void InitSessionReq::set_proxy_hostname(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void InitSessionReq::set_proxy_host(Arg_&& arg,
                                                      Args_... args) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
-  _impl_.proxy_hostname_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:prpc.InitSessionReq.proxy_hostname)
+  _impl_.proxy_host_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.InitSessionReq.proxy_host)
 }
-inline std::string* InitSessionReq::mutable_proxy_hostname() {
-  std::string* _s = _internal_mutable_proxy_hostname();
-  // @@protoc_insertion_point(field_mutable:prpc.InitSessionReq.proxy_hostname)
+inline std::string* InitSessionReq::mutable_proxy_host() {
+  std::string* _s = _internal_mutable_proxy_host();
+  // @@protoc_insertion_point(field_mutable:prpc.InitSessionReq.proxy_host)
   return _s;
 }
-inline const std::string& InitSessionReq::_internal_proxy_hostname() const {
+inline const std::string& InitSessionReq::_internal_proxy_host() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.proxy_hostname_.Get();
+  return _impl_.proxy_host_.Get();
 }
-inline void InitSessionReq::_internal_set_proxy_hostname(const std::string& value) {
+inline void InitSessionReq::_internal_set_proxy_host(const std::string& value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
-  _impl_.proxy_hostname_.Set(value, GetArenaForAllocation());
+  _impl_.proxy_host_.Set(value, GetArenaForAllocation());
 }
-inline std::string* InitSessionReq::_internal_mutable_proxy_hostname() {
+inline std::string* InitSessionReq::_internal_mutable_proxy_host() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
-  return _impl_.proxy_hostname_.Mutable( GetArenaForAllocation());
+  return _impl_.proxy_host_.Mutable( GetArenaForAllocation());
 }
-inline std::string* InitSessionReq::release_proxy_hostname() {
+inline std::string* InitSessionReq::release_proxy_host() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:prpc.InitSessionReq.proxy_hostname)
-  return _impl_.proxy_hostname_.Release();
+  // @@protoc_insertion_point(field_release:prpc.InitSessionReq.proxy_host)
+  return _impl_.proxy_host_.Release();
 }
-inline void InitSessionReq::set_allocated_proxy_hostname(std::string* value) {
+inline void InitSessionReq::set_allocated_proxy_host(std::string* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  _impl_.proxy_hostname_.SetAllocated(value, GetArenaForAllocation());
+  _impl_.proxy_host_.SetAllocated(value, GetArenaForAllocation());
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        if (_impl_.proxy_hostname_.IsDefault()) {
-          _impl_.proxy_hostname_.Set("", GetArenaForAllocation());
+        if (_impl_.proxy_host_.IsDefault()) {
+          _impl_.proxy_host_.Set("", GetArenaForAllocation());
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:prpc.InitSessionReq.proxy_hostname)
+  // @@protoc_insertion_point(field_set_allocated:prpc.InitSessionReq.proxy_host)
 }
 
 // int32 proxy_port = 2;

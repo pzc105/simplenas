@@ -36,7 +36,7 @@ type ServerSetting struct {
 type BtServerSetting struct {
 	BtClientAddress   string `yaml:"btClientAddress"`
 	SavePath          string `yaml:"savePath"`
-	ProxyHostname     string `yaml:"proxyHostname"`
+	ProxyHost         string `yaml:"proxyHost"`
 	ProxyPort         int32  `yaml:"proxyPort"`
 	ProxyType         string `yaml:"proxyType"`
 	UploadRateLimit   int32  `yaml:"uploadRateLimit"`
