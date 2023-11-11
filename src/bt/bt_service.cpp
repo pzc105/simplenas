@@ -130,21 +130,28 @@ namespace prpc
     int download_rate_limit = request->download_rate_limit();
     int upload_rate_limit = request->upload_rate_limit();
     int hashing_threads = request->hashing_threads();
+    string listen_interfaces = request->listen_interfaces();
     if (!proxy_host.empty() && proxy_port > 0 && !proxy_type.empty() && type_map.find(proxy_type) != type_map.end())
     {
       sp.set_str(lt::settings_pack::proxy_hostname, proxy_host);
       sp.set_int(lt::settings_pack::proxy_type, type_map[proxy_type]);
       sp.set_int(lt::settings_pack::proxy_port, proxy_port);
     }
+    if (listen_interfaces.size() > 0)
+    {
+      sp.set_str(lt::settings_pack::listen_interfaces, listen_interfaces);
+    }
     sp.set_int(lt::settings_pack::download_rate_limit, download_rate_limit);
     sp.set_int(lt::settings_pack::upload_rate_limit, upload_rate_limit);
     sp.set_int(lt::settings_pack::hashing_threads, hashing_threads);
     sp.set_int(lt::settings_pack::alert_mask, lt::file_completed_alert::static_category);
     lt::session_params sps;
-    try {
+    try
+    {
       sps = lt::read_session_params(request->resume_data());
     }
-    catch (...) {
+    catch (...)
+    {
       std::cout << "failed to load session resume data" << std::endl;
     }
     sps.settings = sp;
@@ -436,10 +443,7 @@ namespace prpc
     {
       return ::grpc::Status(grpc::UNAVAILABLE, "");
     }
-    auto sparams = _ses->session_state(lt::session_handle::save_dht_settings
-      | lt::session::save_dht_state
-      | lt::session::save_extension_state
-      | lt::session::save_ip_filter);
+    auto sparams = _ses->session_state(lt::session_handle::save_dht_settings | lt::session::save_dht_state | lt::session::save_extension_state | lt::session::save_ip_filter);
     auto buf = lt::write_session_params_buf(sparams);
     *response->mutable_resume_data() = std::string(buf.data(), buf.size());
     return ::grpc::Status::OK;

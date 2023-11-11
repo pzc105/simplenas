@@ -708,6 +708,7 @@ class InitSessionReq final :
     kProxyHostFieldNumber = 1,
     kProxyTypeFieldNumber = 3,
     kResumeDataFieldNumber = 7,
+    kListenInterfacesFieldNumber = 8,
     kProxyPortFieldNumber = 2,
     kUploadRateLimitFieldNumber = 4,
     kDownloadRateLimitFieldNumber = 5,
@@ -761,6 +762,22 @@ class InitSessionReq final :
   std::string* _internal_mutable_resume_data();
 
   public:
+  // string listen_interfaces = 8;
+  void clear_listen_interfaces() ;
+  const std::string& listen_interfaces() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_listen_interfaces(Arg_&& arg, Args_... args);
+  std::string* mutable_listen_interfaces();
+  PROTOBUF_NODISCARD std::string* release_listen_interfaces();
+  void set_allocated_listen_interfaces(std::string* ptr);
+
+  private:
+  const std::string& _internal_listen_interfaces() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_listen_interfaces(
+      const std::string& value);
+  std::string* _internal_mutable_listen_interfaces();
+
+  public:
   // int32 proxy_port = 2;
   void clear_proxy_port() ;
   ::int32_t proxy_port() const;
@@ -806,7 +823,7 @@ class InitSessionReq final :
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 7, 0, 48, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<3, 8, 0, 73, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
@@ -814,6 +831,7 @@ class InitSessionReq final :
     ::google::protobuf::internal::ArenaStringPtr proxy_host_;
     ::google::protobuf::internal::ArenaStringPtr proxy_type_;
     ::google::protobuf::internal::ArenaStringPtr resume_data_;
+    ::google::protobuf::internal::ArenaStringPtr listen_interfaces_;
     ::int32_t proxy_port_;
     ::int32_t upload_rate_limit_;
     ::int32_t download_rate_limit_;
@@ -5802,6 +5820,57 @@ inline void InitSessionReq::set_allocated_resume_data(std::string* value) {
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:prpc.InitSessionReq.resume_data)
+}
+
+// string listen_interfaces = 8;
+inline void InitSessionReq::clear_listen_interfaces() {
+  _impl_.listen_interfaces_.ClearToEmpty();
+}
+inline const std::string& InitSessionReq::listen_interfaces() const {
+  // @@protoc_insertion_point(field_get:prpc.InitSessionReq.listen_interfaces)
+  return _internal_listen_interfaces();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void InitSessionReq::set_listen_interfaces(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.listen_interfaces_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.InitSessionReq.listen_interfaces)
+}
+inline std::string* InitSessionReq::mutable_listen_interfaces() {
+  std::string* _s = _internal_mutable_listen_interfaces();
+  // @@protoc_insertion_point(field_mutable:prpc.InitSessionReq.listen_interfaces)
+  return _s;
+}
+inline const std::string& InitSessionReq::_internal_listen_interfaces() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.listen_interfaces_.Get();
+}
+inline void InitSessionReq::_internal_set_listen_interfaces(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.listen_interfaces_.Set(value, GetArenaForAllocation());
+}
+inline std::string* InitSessionReq::_internal_mutable_listen_interfaces() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.listen_interfaces_.Mutable( GetArenaForAllocation());
+}
+inline std::string* InitSessionReq::release_listen_interfaces() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.InitSessionReq.listen_interfaces)
+  return _impl_.listen_interfaces_.Release();
+}
+inline void InitSessionReq::set_allocated_listen_interfaces(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.listen_interfaces_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.listen_interfaces_.IsDefault()) {
+          _impl_.listen_interfaces_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.InitSessionReq.listen_interfaces)
 }
 
 // -------------------------------------------------------------------
