@@ -143,9 +143,8 @@ namespace prpc
     sp.set_int(lt::settings_pack::download_rate_limit, download_rate_limit);
     sp.set_int(lt::settings_pack::upload_rate_limit, upload_rate_limit);
     sp.set_int(lt::settings_pack::hashing_threads, hashing_threads);
-    sp.set_int(lt::settings_pack::alert_mask, 
-      lt::file_completed_alert::static_category
-    | lt::log_alert::static_category);
+    sp.set_int(lt::settings_pack::alert_mask,
+               lt::file_completed_alert::static_category | lt::log_alert::static_category);
     lt::session_params sps;
     try
     {
@@ -205,7 +204,11 @@ namespace prpc
         std::cout << e.what() << endl;
         return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
       }
-      *response->mutable_info_hash() = get_respone_info_hash(params.info_hashes);
+      if (params.ti == nullptr)
+      {
+        return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+      }
+      *response->mutable_info_hash() = get_respone_info_hash(params.ti->info_hashes());
       return ::grpc::Status::OK;
     }
     default:

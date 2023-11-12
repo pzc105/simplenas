@@ -71,7 +71,7 @@ func (h *HlsProcess) Init() {
 		for {
 			select {
 			case <-ticker.C:
-				if h.soQueue.Idle() {
+				if h.soQueue.Idle() && h.cudaQueue.Len() > 20 {
 					task := h.cudaQueue.Steal()
 					if task != nil {
 						htask, _ := task.Identity.(*hlsTask)

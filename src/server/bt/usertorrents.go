@@ -384,6 +384,9 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 	if err != nil {
 		return nil, err
 	}
+	if len(res.InfoHash.Hash) == 0 {
+		return nil, errors.New("invalid torrent")
+	}
 
 	infoHash := TranInfoHash(res.InfoHash)
 
@@ -414,6 +417,12 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 			t.addUser(params.UserId)
 			ut.saveUserTorrent(t, params.UserId)
 		}
+
+		if params.UserId != ptype.AdminId {
+			t.addUser(ptype.AdminId)
+			ut.saveUserTorrent(t, ptype.AdminId)
+		}
+
 		if len(magnetUri) > 0 {
 			saveMagnetUri(&t.base.InfoHash, magnetUri)
 		}
@@ -478,4 +487,8 @@ func (ut *UserTorrentsImpl) GetTorrents(userId ptype.UserID) []*Torrent {
 		return ret
 	}
 	return ut.getUserData(userId).getTorrents()
+}
+
+func (ut *UserTorrentsImpl) GetBtClient() *BtClient {
+	return &ut.btClient
 }

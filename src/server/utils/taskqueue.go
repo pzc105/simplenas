@@ -198,6 +198,13 @@ func (tq *TaskQueue) Idle() bool {
 	return ret
 }
 
+func (tq *TaskQueue) Len() int32 {
+	tq.mtx.Lock()
+	ret := tq.tNum.Load()
+	tq.mtx.Unlock()
+	return ret
+}
+
 func (tq *TaskQueue) Steal() *Task {
 	tq.mtx.Lock()
 	if tq.tasks.Len() == 0 {

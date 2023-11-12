@@ -9,10 +9,10 @@ import (
 	"pnas/ptype"
 	"pnas/user"
 	"regexp"
-	"strconv"
 	"strings"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/gocolly/colly"
 )
@@ -48,13 +48,15 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, btClient *bt.BtClie
 
 	c := colly.NewCollector(
 		colly.Async(true),
+		colly.MaxDepth(2),
 		colly.URLFilters(
-			regexp.MustCompile(`https://www\.36dm\.org.*`),
+			regexp.MustCompile(`https://www\.36dm\.org/forum-1.*`),
+			regexp.MustCompile(`https://www\.36dm\.org/thread.*`),
 		),
 	)
 
 	var flagMtx sync.Mutex
-	flag := make(map[int]bool)
+	flag := make(map[string]bool)
 
 	c.OnHTML("body", func(e *colly.HTMLElement) {
 		var Name string
@@ -73,25 +75,14 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, btClient *bt.BtClie
 			} else if strings.Contains(e.Request.URL.Path, "thread") {
 				return
 			}
-			pi := strings.Index(link, "thread-")
-			if pi != -1 {
-				ns := link[pi+len("thread-"):]
-				ns, f := strings.CutSuffix(ns, ".htm")
-				if f {
-					num, err := strconv.Atoi(ns)
-					if err == nil {
-						flagMtx.Lock()
-						if _, ok := flag[num]; ok {
-							flagMtx.Unlock()
-							return
-						}
-						flag[num] = true
-						flagMtx.Unlock()
-						c.Visit(e.Request.AbsoluteURL(link))
-					}
-				}
+
+			flagMtx.Lock()
+			if _, ok := flag[link]; ok {
+				flagMtx.Unlock()
 				return
 			}
+			flag[link] = true
+			flagMtx.Unlock()
 			c.Visit(e.Request.AbsoluteURL(link))
 		})
 		if len(Uri) == 0 {
@@ -126,9 +117,15 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, btClient *bt.BtClie
 		})
 	})
 
-	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: 3})
+	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: 10})
 
-	c.Visit("https://www.36dm.org")
+	c.Visit("https://www.36dm.org/forum-1.htm")
 
 	c.Wait()
+
+	log.Info("Go36dmBackgroup done. restart...")
+
+	timer := time.NewTimer(time.Hour * 3)
+	<-timer.C
+	go Go36dmBackgroup(magnetShares, btClient)
 }

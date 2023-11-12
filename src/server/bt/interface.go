@@ -17,6 +17,8 @@ type UserTorrents interface {
 
 	GetTorrents(userId ptype.UserID) []*Torrent
 
+	GetBtClient() *BtClient
+
 	Close()
 }
 

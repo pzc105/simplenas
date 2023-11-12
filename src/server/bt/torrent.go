@@ -45,7 +45,6 @@ type Torrent struct {
 
 func (t *Torrent) init() {
 	t.whoHas = make(map[ptype.UserID]bool)
-	t.whoHas[ptype.AdminId] = true
 }
 
 func (t *Torrent) addUser(uid ptype.UserID) {
@@ -138,6 +137,7 @@ func (t *Torrent) updateStatus(s *prpc.TorrentStatus) {
 	t.state = s.State
 
 	if old != s.State && (s.State == prpc.BtStateEnum_seeding) {
+		log.Infof("[bt] torrent: [%s] %s completed", hex.EncodeToString([]byte(t.base.InfoHash.Hash)), t.base.Name)
 		for i := range t.files {
 			t.updateFileTypeLocked(i)
 		}
@@ -160,7 +160,7 @@ func (t *Torrent) updateStatus(s *prpc.TorrentStatus) {
 }
 
 func (t *Torrent) updateFileTypeLocked(index int) {
-	log.Infof("[bt] torrent: %s file: %s completed", hex.EncodeToString([]byte(t.base.InfoHash.Hash)), t.files[index].Name)
+	log.Infof("[bt] torrent: [%s] file: %s completed", hex.EncodeToString([]byte(t.base.InfoHash.Hash)), t.files[index].Name)
 	fileName := t.files[index].Name
 	absFileName := t.base.SavePath + "/" + fileName
 	meta, err := video.GetMetadata(absFileName)

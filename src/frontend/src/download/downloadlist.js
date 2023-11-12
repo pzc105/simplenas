@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, MenuItem, List, Paper, Button, Box, Typography, Dialog } from '@mui/material';
 import { styled } from "@mui/material/styles";
 import LinearProgress from '@mui/material/LinearProgress';
@@ -129,14 +129,50 @@ function ProgressBar(props) {
 }
 
 export function ProgressLists() {
-  const infoHashs = useSelector(state => store.selectInfoHashs(state))
+  const torrents = useSelector(state => store.selectTorrents(state))
+  const [sortedTorrents, setSortedTorrents] = useState([])
+
+  useEffect(() => {
+    if (!torrents) {
+      return
+    }
+    let tmp = []
+    let emptyNameTs = []
+    for (let t of Object.values(torrents)) {
+      if (t.name.length === 0) {
+        emptyNameTs.push(t)
+      } else {
+        tmp.push(t)
+      }
+    }
+    tmp.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    })
+    emptyNameTs.sort((a, b) => {
+      if (a.infoHash.hash < b.infoHash.hash) {
+        return -1;
+      }
+      if (a.infoHash.hash > b.infoHash.hash) {
+        return 1;
+      }
+      return 0;
+    })
+    tmp.push(...emptyNameTs)
+    setSortedTorrents(tmp)
+  }, [torrents])
 
   return (
     <Paper style={{ maxHeight: '90vh', overflow: 'auto' }}>
       {
-        infoHashs.map((infoHash) =>
-          <List key={infoHash.hash}>
-            <ProgressBar infoHash={infoHash} key={infoHash.hash} />
+        sortedTorrents.map((t) =>
+          <List key={t.infoHash.hash}>
+            <ProgressBar infoHash={t.infoHash} key={t.infoHash.hash} />
           </List>
         )
       }

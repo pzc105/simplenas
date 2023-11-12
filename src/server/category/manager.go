@@ -153,6 +153,9 @@ func (m *Manager) GetItemsByParent(params *GetItemsByParentParams) ([]*CategoryI
 	}
 	if params.PageNum >= 0 && params.Rows > 0 {
 		subIds := item.GetSubItemIds()
+		if len(subIds) == 0 {
+			return []*CategoryItem{}, nil
+		}
 		offset := params.PageNum * params.Rows
 		if int(offset) >= len(subIds) {
 			return nil, errors.New("out of range")
@@ -313,18 +316,41 @@ func (m *Manager) IsRelationOf(itemId ptype.CategoryID, parentId ptype.CategoryI
 }
 
 type SearchParams struct {
-	Querier      ptype.UserID
-	RootId       ptype.CategoryID
-	ExistedWords string
-	PageNum      int32
-	Rows         int32
+	Querier         ptype.UserID
+	RootId          ptype.CategoryID
+	ExistedWords    []string
+	NotExistedWords []string
+	PageNum         int32
+	Rows            int32
 }
 
 func (m *Manager) SearchRows(params *SearchParams) (int, error) {
 	if params.PageNum < 0 || params.Rows <= 0 {
 		return -1, errors.New("invalid params")
 	}
-	sql := fmt.Sprintf("select id from category_items where match (name, introduce) against ('%s')", params.ExistedWords)
+	var condBuild strings.Builder
+	for _, word := range params.ExistedWords {
+		if len(word) == 0 {
+			continue
+		}
+		if condBuild.Len() > 0 {
+			condBuild.WriteString(" ")
+		}
+		condBuild.WriteString("+")
+		condBuild.WriteString(word)
+	}
+	for _, word := range params.NotExistedWords {
+		if condBuild.Len() > 0 {
+			condBuild.WriteString(" ")
+		}
+		condBuild.WriteString("-")
+		condBuild.WriteString(word)
+	}
+	if condBuild.Len() == 0 {
+		return -1, errors.New("invalid params")
+	}
+	sql := fmt.Sprintf("select id from category_items where match (name, introduce) against ('%s' in boolean mode)",
+		condBuild.String())
 	rows, err := db.Query(sql)
 	if err != nil {
 		return -1, err
@@ -348,7 +374,29 @@ func (m *Manager) Search(params *SearchParams) ([]*CategoryItem, error) {
 	if params.PageNum < 0 || params.Rows <= 0 {
 		return nil, errors.New("invalid params")
 	}
-	sql := fmt.Sprintf("select id from category_items where match (name, introduce) against ('%s') limit ?, ?", params.ExistedWords)
+	var condBuild strings.Builder
+	for _, word := range params.ExistedWords {
+		if len(word) == 0 {
+			continue
+		}
+		if condBuild.Len() > 0 {
+			condBuild.WriteString(" ")
+		}
+		condBuild.WriteString("+")
+		condBuild.WriteString(word)
+	}
+	for _, word := range params.NotExistedWords {
+		if condBuild.Len() > 0 {
+			condBuild.WriteString(" ")
+		}
+		condBuild.WriteString("-")
+		condBuild.WriteString(word)
+	}
+	if condBuild.Len() == 0 {
+		return nil, errors.New("invalid params")
+	}
+	sql := fmt.Sprintf("select id from category_items where match (name, introduce) against ('%s' in boolean mode) limit ?, ?",
+		condBuild.String())
 	rows, err := db.Query(sql, params.PageNum*params.Rows, params.Rows)
 	if err != nil {
 		return nil, err

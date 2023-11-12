@@ -21,7 +21,25 @@ import { serverAddress } from './rpcClient.js'
 const CategoryItems = ({ parentId, shareid }) => {
   const navigate = useNavigate()
   const items = useSelector((state) => store.selectCategorySubItems(state, parentId))
+  const [sortedItems, setSortedItems] = useState([])
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!items) {
+      return
+    }
+    let tmp = items
+    tmp.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    })
+    setSortedItems(tmp)
+  }, [items])
 
   const onClick = (item) => {
     if (item.typeId === Category.CategoryItem.Type.VIDEO) {
@@ -87,8 +105,8 @@ const CategoryItems = ({ parentId, shareid }) => {
       <Grid container spacing={2} sx={{ display: "flex" }}>
         <Grid item xs={12}>
           <Grid container spacing={2}>
-            {items ?
-              items.map((item) => (
+            {sortedItems ?
+              sortedItems.map((item) => (
                 <Grid key={item.id} item xs={10} sm={5} lg={2} sx={{ ml: "0.5em", mt: "0.5em" }}>
                   <Tooltip title={<div>{"Name:" + item.name}<br />{"介绍:" + item.introduce}</div>} >
                     <Card onContextMenu={(e) => handleContextMenu(e, item.id)}>

@@ -44,7 +44,15 @@ export default function MagnetSharesPage() {
   }, [itemId])
 
   const refresh = () => {
-    queryMagnet(dispatch, itemId, searchCond.current, pageNum.current, pageRows, (rsp) => {
+    let cond = ""
+    if (searchCond.current.length > 0) {
+      let existedWords = searchCond.current.split(" ")
+      cond = JSON.stringify({
+        "ExistedWords": existedWords,
+      })
+    }
+
+    queryMagnet(dispatch, itemId, cond, pageNum.current, pageRows, (rsp) => {
       setTotalRows(rsp.getTotalRowCount())
     })
   }
@@ -66,7 +74,7 @@ export default function MagnetSharesPage() {
         </Grid>
         <Grid item xs={12}>
           <Container>
-            <UnifiedPage PageTotalCount={parseInt(totalRows / pageRows + 0.5)} PageNum={parseInt(pageNumState + 1)} onPage={(n) => { pageNum.current = n - 1; setPageNumState(pageNum.current);refresh() }} />
+            <UnifiedPage PageTotalCount={parseInt(totalRows / pageRows + 0.5)} PageNum={parseInt(pageNumState + 1)} onPage={(n) => { pageNum.current = n - 1; setPageNumState(pageNum.current); refresh() }} />
           </Container>
         </Grid>
       </Grid>
@@ -257,7 +265,7 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
       <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
         <Grid item>
           <TextField
-            label="搜索关键字"
+            label="关键字搜索,空格作为分隔符"
             variant="outlined"
             margin="normal"
             onChange={onSearchText}

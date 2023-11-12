@@ -3,11 +3,13 @@
 import (
 	"context"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"net"
 	"net/http"
 	"pnas/bt"
 	"pnas/category"
+	"pnas/crawler"
 	"pnas/log"
 	"pnas/phttp"
 	"pnas/prpc"
@@ -70,6 +72,8 @@ func (ser *CoreService) Init() {
 	sm := &ShareManager{}
 	sm.Init()
 	ser.shares = sm
+
+	go crawler.Go36dmBackgroup(&ser.um, ser.um.GetBtClient())
 }
 
 func (ser *CoreService) Serve() {
@@ -864,12 +868,22 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 		if !ser.um.CategoryService().IsRelationOf(ptype.CategoryID(req.ParentId), ser.um.GetMagnetRootId()) {
 			return nil, status.Error(codes.PermissionDenied, "not found parent id")
 		}
+		type searCond struct {
+			ExistedWords    []string `json:"ExistedWords"`
+			NotExistedWords []string `json:"NotExistedWords"`
+		}
+		var cond searCond
+		err := json.Unmarshal([]byte(req.SearchCond), &cond)
+		if err != nil {
+			return nil, status.Error(codes.InvalidArgument, "")
+		}
 		params := &category.SearchParams{
-			Querier:      ptype.AdminId,
-			RootId:       ptype.CategoryID(req.ParentId),
-			ExistedWords: req.SearchCond,
-			PageNum:      req.PageNum,
-			Rows:         req.Rows,
+			Querier:         ptype.AdminId,
+			RootId:          ptype.CategoryID(req.ParentId),
+			ExistedWords:    cond.ExistedWords,
+			NotExistedWords: cond.NotExistedWords,
+			PageNum:         req.PageNum,
+			Rows:            req.Rows,
 		}
 		totalRows, err = ser.um.CategoryService().SearchRows(params)
 		if err != nil {
