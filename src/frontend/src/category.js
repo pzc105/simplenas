@@ -21,11 +21,11 @@ import { serverAddress } from './rpcClient.js'
 const CategoryItems = ({ parentId, shareid }) => {
   const navigate = useNavigate()
   const items = useSelector((state) => store.selectCategorySubItems(state, parentId))
-  const [sortedItems, setSortedItems] = useState([])
+  let sortedItems = []
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    if (!items) {
+  const sortitems = () => {
+    if (!items || items.length === 0) {
       return
     }
     let tmp = items
@@ -38,8 +38,9 @@ const CategoryItems = ({ parentId, shareid }) => {
       }
       return 0;
     })
-    setSortedItems(tmp)
-  }, [items])
+    sortedItems = tmp
+  }
+  sortitems()
 
   const onClick = (item) => {
     if (item.typeId === Category.CategoryItem.Type.VIDEO) {
@@ -105,7 +106,7 @@ const CategoryItems = ({ parentId, shareid }) => {
       <Grid container spacing={2} sx={{ display: "flex" }}>
         <Grid item xs={12}>
           <Grid container spacing={2}>
-            {sortedItems ?
+            {
               sortedItems.map((item) => (
                 <Grid key={item.id} item xs={10} sm={5} lg={2} sx={{ ml: "0.5em", mt: "0.5em" }}>
                   <Tooltip title={<div>{"Name:" + item.name}<br />{"介绍:" + item.introduce}</div>} >
@@ -137,7 +138,7 @@ const CategoryItems = ({ parentId, shareid }) => {
                     </Card>
                   </Tooltip>
                 </Grid>
-              )) : null
+              ))
             }
           </Grid>
         </Grid>
