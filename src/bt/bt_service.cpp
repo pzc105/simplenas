@@ -5,6 +5,7 @@
 #include "libtorrent/write_resume_data.hpp"
 #include "libtorrent/magnet_uri.hpp"
 #include "translate.hpp"
+#include "bt_plugin.hpp"
 
 using namespace std;
 using namespace grpc;
@@ -99,6 +100,18 @@ namespace prpc
         std::cout << la->message() << std::endl;
       }
     }
+  }
+
+  std::vector<lt::torrent_status> bt_service::get_all_bt_status()
+  {
+    std::vector<lt::torrent_status> ret;
+    auto ths = _ses->get_torrents();
+    ret.reserve(ths.size());
+    for (size_t i = 0; i < ths.size(); i++)
+    {
+      ret.push_back(ths[i].status());
+    }
+    return ret;
   }
 
   ::grpc::Status bt_service::InitedSession(::grpc::ServerContext *context, const ::prpc::InitedSessionReq *request, ::prpc::InitedSessionRsp *response)
@@ -275,6 +288,8 @@ namespace prpc
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
     }
 
+    params.extensions.push_back(torrent_plugin::build_torrent_plugin);
+    params.userdata = lt::client_data_t(_ses.get());
     try
     {
       auto handle = _ses->add_torrent(std::move(params));
@@ -490,6 +505,7 @@ namespace prpc
     if (t == &_new_tag && ok)
     {
       _owner->accepted_status_pusher(this);
+      push(_ser->get_all_bt_status());
     }
     pusher::completed(t, ok);
   }

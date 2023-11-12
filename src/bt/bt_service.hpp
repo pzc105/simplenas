@@ -128,8 +128,10 @@ namespace prpc
     void push_bt();
     grpc::ServerCompletionQueue *get_cq() const { return _cq.get(); }
 
+    std::vector<lt::torrent_status> get_all_bt_status();
+
   private:
-    ::grpc::Status InitedSession(::grpc::ServerContext* context, const ::prpc::InitedSessionReq* request, ::prpc::InitedSessionRsp* response) override;
+    ::grpc::Status InitedSession(::grpc::ServerContext *context, const ::prpc::InitedSessionReq *request, ::prpc::InitedSessionRsp *response) override;
     ::grpc::Status InitSession(::grpc::ServerContext *context, const ::prpc::InitSessionReq *request, ::prpc::InitSessionRsp *response) override;
     ::grpc::Status Parse(::grpc::ServerContext *context, const ::prpc::DownloadRequest *request, ::prpc::DownloadRespone *response) override;
     ::grpc::Status Download(::grpc::ServerContext *context, const ::prpc::DownloadRequest *request, ::prpc::DownloadRespone *response) override;

@@ -20,6 +20,7 @@ add_executable(bt
     setting.cpp
     translate.cpp
     bt_service.cpp
+    bt_plugin.cpp
     main.cpp)
 
 set(src-pattern "prpc/*.cc" "prpc/google/api/*.cc")
