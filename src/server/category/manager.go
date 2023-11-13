@@ -95,8 +95,8 @@ func (m *Manager) AddItem(params *NewCategoryParams) (*CategoryItem, error) {
 	defer dbmtx.Unlock()
 
 	item, err := addItem(params)
-	item.base.Other = params.Other
 	if err == nil {
+		item.base.Other = params.Other
 		parentItem.addedSubItem(item.base.Id)
 		m.addItem(item)
 	}

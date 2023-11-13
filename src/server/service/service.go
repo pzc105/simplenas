@@ -533,7 +533,7 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 		if err != nil {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		if !ser.um.IsRelationOf(ptype.CategoryID(req.ParentId), si.ShareItemInfo.ItemId) {
+		if !ser.um.CategoryService().IsRelationOf(ptype.CategoryID(req.ParentId), si.ShareItemInfo.ItemId) {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
 		userId = si.UserId
@@ -593,7 +593,7 @@ func (ser *CoreService) QueryItemInfo(ctx context.Context, req *prpc.QueryItemIn
 		if err != nil {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
-		if !ser.um.IsRelationOf(ptype.CategoryID(req.ItemId), si.ShareItemInfo.ItemId) {
+		if !ser.um.CategoryService().IsRelationOf(ptype.CategoryID(req.ItemId), si.ShareItemInfo.ItemId) {
 			return nil, status.Error(codes.PermissionDenied, "not found item")
 		}
 		userId = si.UserId

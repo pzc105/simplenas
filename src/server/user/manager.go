@@ -381,10 +381,6 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 	return nil
 }
 
-func (um *UserManger) IsRelationOf(itemId ptype.CategoryID, parentId ptype.CategoryID) bool {
-	return um.categorySer.IsRelationOf(itemId, parentId)
-}
-
 func writeSubtitle2Item(item *category.CategoryItem, rpcSubtitle *prpc.SubtitleFile) error {
 	if item.GetType() != prpc.CategoryItem_Video {
 		return errors.New("error type")

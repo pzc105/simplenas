@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os/exec"
 	"pnas/log"
+	"pnas/ptype"
 	"pnas/utils"
 	"sync"
 	"time"
@@ -22,11 +23,10 @@ const (
 	SoftwareType = 3
 )
 
-type HlsTaskId int64
 type HlsCallback func(error)
 
 type hlsTask struct {
-	id        HlsTaskId
+	id        ptype.HlsTaskId
 	queueType int
 	qtaskId   utils.TaskId
 	params    *HlsGenParams
@@ -42,7 +42,7 @@ type HlsProcess struct {
 	soQueue   utils.TaskQueue
 
 	mtx   sync.Mutex
-	tasks map[HlsTaskId]*hlsTask
+	tasks map[ptype.HlsTaskId]*hlsTask
 
 	idPool utils.IdPool
 
@@ -59,7 +59,7 @@ func (h *HlsProcess) Init() {
 	h.soQueue.Init(utils.WithMaxQueue(1024))
 
 	h.idPool.Init()
-	h.tasks = make(map[HlsTaskId]*hlsTask)
+	h.tasks = make(map[ptype.HlsTaskId]*hlsTask)
 
 	h.shutDownCtx, h.closeFunc = context.WithCancel(context.Background())
 
@@ -133,7 +133,7 @@ func (h *HlsProcess) onHlsProcess(task *hlsTask, pid int) {
 	task.mtx.Unlock()
 }
 
-func (h *HlsProcess) Stop(id HlsTaskId) {
+func (h *HlsProcess) Stop(id ptype.HlsTaskId) {
 	h.mtx.Lock()
 	task, ok := h.tasks[id]
 	if ok {
@@ -159,9 +159,9 @@ func (h *HlsProcess) Stop(id HlsTaskId) {
 	}
 }
 
-func (h *HlsProcess) Gen(params *HlsGenParams) (HlsTaskId, error) {
+func (h *HlsProcess) Gen(params *HlsGenParams) (ptype.HlsTaskId, error) {
 	task := &hlsTask{
-		id:        HlsTaskId(h.idPool.NewId()),
+		id:        ptype.HlsTaskId(h.idPool.NewId()),
 		queueType: CudaType,
 		params:    params,
 		cancel:    false,

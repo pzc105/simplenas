@@ -247,7 +247,7 @@ func (t *Torrent) UpdateMagnetUri(magnetUri string) bool {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
 	sql := `update torrent set magnet_uri=? where id=?`
-	r, err := db.Exec(sql, t.base.Id, magnetUri)
+	r, err := db.Exec(sql, magnetUri, t.base.Id)
 	if err != nil {
 		log.Warnf("[bt] failed to update magnet uri err: %v", err)
 		return false
