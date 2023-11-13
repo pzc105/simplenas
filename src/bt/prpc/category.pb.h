@@ -58,6 +58,9 @@ namespace prpc {
 class CategoryItem;
 struct CategoryItemDefaultTypeInternal;
 extern CategoryItemDefaultTypeInternal _CategoryItem_default_instance_;
+class ItemOtherInfo;
+struct ItemOtherInfoDefaultTypeInternal;
+extern ItemOtherInfoDefaultTypeInternal _ItemOtherInfo_default_instance_;
 class SharedItem;
 struct SharedItemDefaultTypeInternal;
 extern SharedItemDefaultTypeInternal _SharedItem_default_instance_;
@@ -110,6 +113,170 @@ inline bool CategoryItem_Type_Parse(absl::string_view name, CategoryItem_Type* v
 
 
 // -------------------------------------------------------------------
+
+class ItemOtherInfo final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.ItemOtherInfo) */ {
+ public:
+  inline ItemOtherInfo() : ItemOtherInfo(nullptr) {}
+  ~ItemOtherInfo() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR ItemOtherInfo(::google::protobuf::internal::ConstantInitialized);
+
+  ItemOtherInfo(const ItemOtherInfo& from);
+  ItemOtherInfo(ItemOtherInfo&& from) noexcept
+    : ItemOtherInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline ItemOtherInfo& operator=(const ItemOtherInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ItemOtherInfo& operator=(ItemOtherInfo&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ItemOtherInfo& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ItemOtherInfo* internal_default_instance() {
+    return reinterpret_cast<const ItemOtherInfo*>(
+               &_ItemOtherInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    0;
+
+  friend void swap(ItemOtherInfo& a, ItemOtherInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ItemOtherInfo* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ItemOtherInfo* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ItemOtherInfo* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ItemOtherInfo>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const ItemOtherInfo& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const ItemOtherInfo& from) {
+    ItemOtherInfo::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ItemOtherInfo* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.ItemOtherInfo";
+  }
+  protected:
+  explicit ItemOtherInfo(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMagnetUriFieldNumber = 1,
+  };
+  // string magnet_uri = 1;
+  void clear_magnet_uri() ;
+  const std::string& magnet_uri() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_magnet_uri(Arg_&& arg, Args_... args);
+  std::string* mutable_magnet_uri();
+  PROTOBUF_NODISCARD std::string* release_magnet_uri();
+  void set_allocated_magnet_uri(std::string* ptr);
+
+  private:
+  const std::string& _internal_magnet_uri() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_magnet_uri(
+      const std::string& value);
+  std::string* _internal_mutable_magnet_uri();
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.ItemOtherInfo)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<0, 1, 0, 37, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr magnet_uri_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_category_2eproto;
+};// -------------------------------------------------------------------
 
 class CategoryItem final :
     public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.CategoryItem) */ {
@@ -167,7 +334,7 @@ class CategoryItem final :
                &_CategoryItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    0;
+    1;
 
   friend void swap(CategoryItem& a, CategoryItem& b) {
     a.Swap(&b);
@@ -357,20 +524,19 @@ class CategoryItem final :
   std::string* _internal_mutable_introduce();
 
   public:
-  // string other = 8;
+  // .prpc.ItemOtherInfo other = 8;
+  bool has_other() const;
   void clear_other() ;
-  const std::string& other() const;
-  template <typename Arg_ = const std::string&, typename... Args_>
-  void set_other(Arg_&& arg, Args_... args);
-  std::string* mutable_other();
-  PROTOBUF_NODISCARD std::string* release_other();
-  void set_allocated_other(std::string* ptr);
+  const ::prpc::ItemOtherInfo& other() const;
+  PROTOBUF_NODISCARD ::prpc::ItemOtherInfo* release_other();
+  ::prpc::ItemOtherInfo* mutable_other();
+  void set_allocated_other(::prpc::ItemOtherInfo* value);
+  void unsafe_arena_set_allocated_other(::prpc::ItemOtherInfo* value);
+  ::prpc::ItemOtherInfo* unsafe_arena_release_other();
 
   private:
-  const std::string& _internal_other() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_other(
-      const std::string& value);
-  std::string* _internal_mutable_other();
+  const ::prpc::ItemOtherInfo& _internal_other() const;
+  ::prpc::ItemOtherInfo* _internal_mutable_other();
 
   public:
   // int64 id = 1;
@@ -418,23 +584,24 @@ class CategoryItem final :
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<4, 10, 0, 76, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<4, 10, 1, 71, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::RepeatedField<::int64_t> sub_item_ids_;
     mutable ::google::protobuf::internal::CachedSize _sub_item_ids_cached_byte_size_;
     ::google::protobuf::internal::ArenaStringPtr name_;
     ::google::protobuf::internal::ArenaStringPtr resource_path_;
     ::google::protobuf::internal::ArenaStringPtr poster_path_;
     ::google::protobuf::internal::ArenaStringPtr introduce_;
-    ::google::protobuf::internal::ArenaStringPtr other_;
+    ::prpc::ItemOtherInfo* other_;
     ::int64_t id_;
     ::int64_t creator_;
     ::int64_t parent_id_;
     int type_id_;
-    mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -497,7 +664,7 @@ class SharedItem final :
                &_SharedItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
   friend void swap(SharedItem& a, SharedItem& b) {
     a.Swap(&b);
@@ -629,6 +796,61 @@ class SharedItem final :
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// ItemOtherInfo
+
+// string magnet_uri = 1;
+inline void ItemOtherInfo::clear_magnet_uri() {
+  _impl_.magnet_uri_.ClearToEmpty();
+}
+inline const std::string& ItemOtherInfo::magnet_uri() const {
+  // @@protoc_insertion_point(field_get:prpc.ItemOtherInfo.magnet_uri)
+  return _internal_magnet_uri();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void ItemOtherInfo::set_magnet_uri(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.magnet_uri_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.ItemOtherInfo.magnet_uri)
+}
+inline std::string* ItemOtherInfo::mutable_magnet_uri() {
+  std::string* _s = _internal_mutable_magnet_uri();
+  // @@protoc_insertion_point(field_mutable:prpc.ItemOtherInfo.magnet_uri)
+  return _s;
+}
+inline const std::string& ItemOtherInfo::_internal_magnet_uri() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.magnet_uri_.Get();
+}
+inline void ItemOtherInfo::_internal_set_magnet_uri(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.magnet_uri_.Set(value, GetArenaForAllocation());
+}
+inline std::string* ItemOtherInfo::_internal_mutable_magnet_uri() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.magnet_uri_.Mutable( GetArenaForAllocation());
+}
+inline std::string* ItemOtherInfo::release_magnet_uri() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.ItemOtherInfo.magnet_uri)
+  return _impl_.magnet_uri_.Release();
+}
+inline void ItemOtherInfo::set_allocated_magnet_uri(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.magnet_uri_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.magnet_uri_.IsDefault()) {
+          _impl_.magnet_uri_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.ItemOtherInfo.magnet_uri)
+}
+
 // -------------------------------------------------------------------
 
 // CategoryItem
@@ -903,54 +1125,99 @@ inline void CategoryItem::set_allocated_introduce(std::string* value) {
   // @@protoc_insertion_point(field_set_allocated:prpc.CategoryItem.introduce)
 }
 
-// string other = 8;
-inline void CategoryItem::clear_other() {
-  _impl_.other_.ClearToEmpty();
+// .prpc.ItemOtherInfo other = 8;
+inline bool CategoryItem::has_other() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.other_ != nullptr);
+  return value;
 }
-inline const std::string& CategoryItem::other() const {
+inline void CategoryItem::clear_other() {
+  if (_impl_.other_ != nullptr) _impl_.other_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::prpc::ItemOtherInfo& CategoryItem::_internal_other() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::ItemOtherInfo* p = _impl_.other_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::ItemOtherInfo&>(::prpc::_ItemOtherInfo_default_instance_);
+}
+inline const ::prpc::ItemOtherInfo& CategoryItem::other() const {
   // @@protoc_insertion_point(field_get:prpc.CategoryItem.other)
   return _internal_other();
 }
-template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void CategoryItem::set_other(Arg_&& arg,
-                                                     Args_... args) {
+inline void CategoryItem::unsafe_arena_set_allocated_other(::prpc::ItemOtherInfo* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ;
-  _impl_.other_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:prpc.CategoryItem.other)
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.other_);
+  }
+  _impl_.other_ = reinterpret_cast<::prpc::ItemOtherInfo*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.CategoryItem.other)
 }
-inline std::string* CategoryItem::mutable_other() {
-  std::string* _s = _internal_mutable_other();
-  // @@protoc_insertion_point(field_mutable:prpc.CategoryItem.other)
-  return _s;
-}
-inline const std::string& CategoryItem::_internal_other() const {
-  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.other_.Get();
-}
-inline void CategoryItem::_internal_set_other(const std::string& value) {
+inline ::prpc::ItemOtherInfo* CategoryItem::release_other() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ;
-  _impl_.other_.Set(value, GetArenaForAllocation());
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::ItemOtherInfo* released = _impl_.other_;
+  _impl_.other_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
 }
-inline std::string* CategoryItem::_internal_mutable_other() {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ;
-  return _impl_.other_.Mutable( GetArenaForAllocation());
-}
-inline std::string* CategoryItem::release_other() {
+inline ::prpc::ItemOtherInfo* CategoryItem::unsafe_arena_release_other() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   // @@protoc_insertion_point(field_release:prpc.CategoryItem.other)
-  return _impl_.other_.Release();
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::ItemOtherInfo* temp = _impl_.other_;
+  _impl_.other_ = nullptr;
+  return temp;
 }
-inline void CategoryItem::set_allocated_other(std::string* value) {
+inline ::prpc::ItemOtherInfo* CategoryItem::_internal_mutable_other() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  _impl_.other_.SetAllocated(value, GetArenaForAllocation());
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        if (_impl_.other_.IsDefault()) {
-          _impl_.other_.Set("", GetArenaForAllocation());
-        }
-  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_._has_bits_[0] |= 0x00000001u;
+  if (_impl_.other_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::ItemOtherInfo>(GetArenaForAllocation());
+    _impl_.other_ = reinterpret_cast<::prpc::ItemOtherInfo*>(p);
+  }
+  return _impl_.other_;
+}
+inline ::prpc::ItemOtherInfo* CategoryItem::mutable_other() {
+  ::prpc::ItemOtherInfo* _msg = _internal_mutable_other();
+  // @@protoc_insertion_point(field_mutable:prpc.CategoryItem.other)
+  return _msg;
+}
+inline void CategoryItem::set_allocated_other(::prpc::ItemOtherInfo* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::ItemOtherInfo*>(_impl_.other_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::ItemOtherInfo*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.other_ = reinterpret_cast<::prpc::ItemOtherInfo*>(value);
   // @@protoc_insertion_point(field_set_allocated:prpc.CategoryItem.other)
 }
 

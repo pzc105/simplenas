@@ -1,6 +1,8 @@
 package user
 
 import (
+	"fmt"
+	"pnas/bt"
 	"pnas/category"
 	"pnas/log"
 	"pnas/prpc"
@@ -43,7 +45,7 @@ func (m *MagnetSharesService) Init(ser category.IService) {
 		}
 	}
 
-	m.rootId = item.GetItemInfo().Id
+	m.rootId = item.GetItemBaseInfo().Id
 }
 
 func (m *MagnetSharesService) GetMagnetRootId() ptype.CategoryID {
@@ -78,11 +80,11 @@ func (m *MagnetSharesService) AddMagnetCategory(params *AddMagnetCategoryParams)
 	if err != nil {
 		return -1, nil
 	}
-	return item.GetItemInfo().Id, err
+	return item.GetItemBaseInfo().Id, err
 }
 
 type AddMagnetUriParams struct {
-	Uri        string
+	T          *bt.Torrent
 	CategoryId ptype.CategoryID
 	Name       string
 	Introduce  string
@@ -91,11 +93,14 @@ type AddMagnetUriParams struct {
 
 func (m *MagnetSharesService) AddMagnetUri(params *AddMagnetUriParams) error {
 	_, err := m.categoryService.AddItem(&category.NewCategoryParams{
-		ParentId:  params.CategoryId,
-		Creator:   params.Creator,
-		TypeId:    prpc.CategoryItem_Other,
+		ParentId:     params.CategoryId,
+		Creator:      params.Creator,
+		TypeId:       prpc.CategoryItem_MagnetUri,
+		ResourcePath: fmt.Sprint(params.T.GetBaseInfo().Id),
+		Other: category.OtherInfo{
+			MagnetUri: params.T.GetMagnetUri(),
+		},
 		Name:      params.Name,
-		Other:     params.Uri,
 		Introduce: params.Introduce,
 		Auth:      utils.NewBitSet(category.AuthMax, category.AuthOtherRead),
 	})

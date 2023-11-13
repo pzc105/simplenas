@@ -21,6 +21,10 @@ const (
 	NotExisted = -2
 )
 
+type OtherInfo struct {
+	MagnetUri string
+}
+
 type BaseItem struct {
 	Id           ptype.CategoryID
 	Creator      ptype.UserID
@@ -30,7 +34,7 @@ type BaseItem struct {
 	ResourcePath string
 	PosterPath   string
 	Introduce    string
-	Other        string
+	Other        OtherInfo
 	UpdatedAt    time.Time
 	ParentId     ptype.CategoryID
 }
@@ -63,16 +67,31 @@ func _initSubItemIds(item *CategoryItem) error {
 	return nil
 }
 
+func _initMagnet(item *CategoryItem) error {
+	if item.base.TypeId == prpc.CategoryItem_MagnetUri {
+		sql := `select magnet_uri from torrent where id=?`
+		err := db.QueryRow(sql, item.base.ResourcePath).Scan(
+			&item.base.Other.MagnetUri,
+		)
+		if err != nil {
+			log.Warnf("[category] fialed to load magnet uri err: %v", err)
+			return err
+		}
+		return nil
+	}
+	return errors.New("isn't magnet uri")
+}
+
 func _loadItem(itemId ptype.CategoryID) (*CategoryItem, error) {
 	var item CategoryItem
 	item.base.Id = itemId
 	var byteAuth []byte
-	sql := `select type_id, name, creator, auth, resource_path, poster_path, introduce, other, created_at, updated_at, parent_id
+	sql := `select type_id, name, creator, auth, resource_path, poster_path, introduce, created_at, updated_at, parent_id
 				from pnas.category_items
 				where id=?`
 	err := db.QueryRow(sql, itemId).Scan(
 		&item.base.TypeId, &item.base.Name, &item.base.Creator, &byteAuth, &item.base.ResourcePath, &item.base.PosterPath,
-		&item.base.Introduce, &item.base.Other, &item.base.CreatedAt, &item.base.UpdatedAt, &item.base.ParentId,
+		&item.base.Introduce, &item.base.CreatedAt, &item.base.UpdatedAt, &item.base.ParentId,
 	)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -84,6 +103,7 @@ func _loadItem(itemId ptype.CategoryID) (*CategoryItem, error) {
 	if err != nil {
 		return nil, err
 	}
+	_initMagnet(&item)
 	return &item, nil
 }
 
@@ -103,7 +123,7 @@ func _loadItems(itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
 		conds = append(conds, fmt.Sprintf("id=%d", id))
 	}
 	cond := strings.Join(conds, " or ")
-	sql := `select id, type_id, name, creator, auth, resource_path, poster_path, introduce, other, created_at, updated_at, parent_id
+	sql := `select id, type_id, name, creator, auth, resource_path, poster_path, introduce, created_at, updated_at, parent_id
 					from pnas.category_items where ` + cond
 	rows, err := db.Query(sql)
 	if err != nil {
@@ -117,7 +137,7 @@ func _loadItems(itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
 		err = rows.Scan(
 			&item.base.Id, &item.base.TypeId, &item.base.Name, &item.base.Creator, &byteAuth,
 			&item.base.ResourcePath, &item.base.PosterPath,
-			&item.base.Introduce, &item.base.Other, &item.base.CreatedAt, &item.base.UpdatedAt, &item.base.ParentId,
+			&item.base.Introduce, &item.base.CreatedAt, &item.base.UpdatedAt, &item.base.ParentId,
 		)
 		if err != nil {
 			return nil, errors.WithStack(err)
@@ -127,7 +147,7 @@ func _loadItems(itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
-
+		_initMagnet(&item)
 		items = append(items, &item)
 	}
 	return items, nil
@@ -141,7 +161,7 @@ type NewCategoryParams struct {
 	ResourcePath string
 	PosterPath   string
 	Introduce    string
-	Other        string
+	Other        OtherInfo
 	Auth         utils.AuthBitSet
 	CompareName  bool
 	Sudo         bool
@@ -168,7 +188,7 @@ func addItem(params *NewCategoryParams) (*CategoryItem, error) {
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	err = db.QueryRow("call new_category(?, ?, ?, ?, ?, ?, ?, ?, ?, @new_item_id)",
+	err = db.QueryRow("call new_category(?, ?, ?, ?, ?, ?, ?, ?, @new_item_id)",
 		params.TypeId,
 		params.Name,
 		params.Creator,
@@ -176,7 +196,6 @@ func addItem(params *NewCategoryParams) (*CategoryItem, error) {
 		params.ResourcePath,
 		params.PosterPath,
 		params.Introduce,
-		params.Other,
 		params.ParentId).Scan(&newId)
 	if err != nil {
 		log.Warn(err)
@@ -209,7 +228,7 @@ func (c *CategoryItem) deletedSubItem(subItemId ptype.CategoryID) {
 	c.subItemIds = append(c.subItemIds[:index], c.subItemIds[index+1:]...)
 }
 
-func (c *CategoryItem) GetItemInfo() BaseItem {
+func (c *CategoryItem) GetItemBaseInfo() BaseItem {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
 	return c.base
@@ -321,8 +340,14 @@ func (c *CategoryItem) GetVideoId() ptype.VideoID {
 	return ptype.VideoID(vid)
 }
 
-func (c *CategoryItem) GetOther() string {
+func (c *CategoryItem) GetOther() OtherInfo {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
 	return c.base.Other
+}
+
+func (c *CategoryItem) UpdateMagnetUri(magnetUri string) {
+	c.mtx.Lock()
+	defer c.mtx.Unlock()
+	c.base.Other.MagnetUri = magnetUri
 }

@@ -275,6 +275,10 @@ namespace prpc
         int err_pos;
         auto e = lt::bdecode(lt::span<const char>(data), ec, &err_pos, cfg.max_decode_depth, cfg.max_decode_tokens);
         params.ti = std::make_shared<lt::torrent_info>(e);
+        if (params.ti != nullptr)
+        {
+          params.info_hashes = params.ti->info_hashes();
+        }
       }
       catch (std::exception const &e)
       {
@@ -288,12 +292,28 @@ namespace prpc
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
     }
 
+    auto th = _ses->find_torrent(params.info_hashes.get_best());
+    if (th.is_valid())
+    {
+      if (th.is_paused())
+      {
+        th.resume();
+      }
+      return ::grpc::Status::OK;
+    }
+
     params.extensions.push_back(torrent_plugin::build_torrent_plugin);
-    params.userdata = lt::client_data_t(_ses.get());
+    auto ud = new bt_user_data{};
+    ud->_ses = _ses.get();
+    ud->_stop_after_got_meta = request->stop_after_got_meta();
+    params.userdata = lt::client_data_t(ud);
     try
     {
       auto handle = _ses->add_torrent(std::move(params));
-      *response->mutable_info_hash() = get_respone_info_hash(handle.info_hashes());
+      if (handle.is_valid())
+      {
+        *response->mutable_info_hash() = get_respone_info_hash(handle.info_hashes());
+      }
     }
     catch (std::exception const &)
     {

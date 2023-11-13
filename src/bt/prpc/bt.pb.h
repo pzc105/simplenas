@@ -1863,6 +1863,7 @@ class DownloadRequest final :
     kContentFieldNumber = 2,
     kSavePathFieldNumber = 3,
     kTypeFieldNumber = 1,
+    kStopAfterGotMetaFieldNumber = 4,
   };
   // bytes content = 2;
   void clear_content() ;
@@ -1906,12 +1907,22 @@ class DownloadRequest final :
   void _internal_set_type(::prpc::DownloadRequest_ReqType value);
 
   public:
+  // bool stop_after_got_meta = 4;
+  void clear_stop_after_got_meta() ;
+  bool stop_after_got_meta() const;
+  void set_stop_after_got_meta(bool value);
+
+  private:
+  bool _internal_stop_after_got_meta() const;
+  void _internal_set_stop_after_got_meta(bool value);
+
+  public:
   // @@protoc_insertion_point(class_scope:prpc.DownloadRequest)
  private:
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3, 0, 38, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<2, 4, 0, 38, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
@@ -1919,6 +1930,7 @@ class DownloadRequest final :
     ::google::protobuf::internal::ArenaStringPtr content_;
     ::google::protobuf::internal::ArenaStringPtr save_path_;
     int type_;
+    bool stop_after_got_meta_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -6743,6 +6755,28 @@ inline void DownloadRequest::set_allocated_save_path(std::string* value) {
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:prpc.DownloadRequest.save_path)
+}
+
+// bool stop_after_got_meta = 4;
+inline void DownloadRequest::clear_stop_after_got_meta() {
+  _impl_.stop_after_got_meta_ = false;
+}
+inline bool DownloadRequest::stop_after_got_meta() const {
+  // @@protoc_insertion_point(field_get:prpc.DownloadRequest.stop_after_got_meta)
+  return _internal_stop_after_got_meta();
+}
+inline void DownloadRequest::set_stop_after_got_meta(bool value) {
+  _internal_set_stop_after_got_meta(value);
+  // @@protoc_insertion_point(field_set:prpc.DownloadRequest.stop_after_got_meta)
+}
+inline bool DownloadRequest::_internal_stop_after_got_meta() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.stop_after_got_meta_;
+}
+inline void DownloadRequest::_internal_set_stop_after_got_meta(bool value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.stop_after_got_meta_ = value;
 }
 
 // -------------------------------------------------------------------

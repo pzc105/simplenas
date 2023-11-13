@@ -25,10 +25,10 @@ func GetInfoHash(infoHash *InfoHash) *prpc.InfoHash {
 }
 
 func loadTorrent(btClient *BtClient, id ptype.TorrentID) *Torrent {
-	sql := `select name, version, info_hash, state, total_size, piece_length, num_pieces, introduce from torrent where id=?`
+	sql := `select id, name, version, info_hash, state, total_size, piece_length, num_pieces, introduce, magnet_uri from torrent where id=?`
 	var t Torrent
-	t.base.Id = id
 	err := db.QueryRow(sql, id).Scan(
+		&t.base.Id,
 		&t.base.Name,
 		&t.base.InfoHash.Version,
 		&t.base.InfoHash.Hash,
@@ -37,6 +37,7 @@ func loadTorrent(btClient *BtClient, id ptype.TorrentID) *Torrent {
 		&t.base.PieceLength,
 		&t.base.NumPieces,
 		&t.base.Introduce,
+		&t.base.MagnetUri,
 	)
 	if err != nil {
 		return nil
@@ -47,7 +48,7 @@ func loadTorrent(btClient *BtClient, id ptype.TorrentID) *Torrent {
 }
 
 func loadTorrentByInfoHash(btClient *BtClient, infoHash *InfoHash) *Torrent {
-	sql := `select id, name, version, info_hash, state, total_size, piece_length, num_pieces, introduce 
+	sql := `select id, name, version, info_hash, state, total_size, piece_length, num_pieces, introduce, magnet_uri
 					from torrent where version=? and info_hash=?`
 	var t Torrent
 	err := db.QueryRow(sql, infoHash.Version, infoHash.Hash).Scan(
@@ -60,6 +61,7 @@ func loadTorrentByInfoHash(btClient *BtClient, infoHash *InfoHash) *Torrent {
 		&t.base.PieceLength,
 		&t.base.NumPieces,
 		&t.base.Introduce,
+		&t.base.MagnetUri,
 	)
 	if err != nil {
 		return nil
@@ -69,9 +71,9 @@ func loadTorrentByInfoHash(btClient *BtClient, infoHash *InfoHash) *Torrent {
 	return &t
 }
 
-func newTorrent(btClient *BtClient, infoHash *InfoHash) *Torrent {
-	sql := `insert into torrent(version, info_hash, introduce) values(?, ?, "")`
-	r, err := db.Exec(sql, infoHash.Version, infoHash.Hash)
+func newTorrent(btClient *BtClient, infoHash *InfoHash, magnetUri string) *Torrent {
+	sql := `insert into torrent(version, info_hash, introduce, magnet_uri) values(?, ?, "", ?)`
+	r, err := db.Exec(sql, infoHash.Version, infoHash.Hash, magnetUri)
 	if err != nil {
 		return nil
 	}
@@ -81,8 +83,9 @@ func newTorrent(btClient *BtClient, infoHash *InfoHash) *Torrent {
 	}
 	t := &Torrent{
 		base: TorrentBase{
-			Id:       ptype.TorrentID(id),
-			InfoHash: *infoHash,
+			Id:        ptype.TorrentID(id),
+			InfoHash:  *infoHash,
+			MagnetUri: magnetUri,
 		},
 	}
 	t.btClient = btClient
@@ -149,4 +152,8 @@ func saveMagnetUri(infoHash *InfoHash, uri string) {
 	if err != nil {
 		log.Debugf("failed to save err: %v", err)
 	}
+}
+
+func IsDownloadAll(st prpc.BtStateEnum) bool {
+	return st == prpc.BtStateEnum_seeding
 }

@@ -95,6 +95,7 @@ func (m *Manager) AddItem(params *NewCategoryParams) (*CategoryItem, error) {
 	defer dbmtx.Unlock()
 
 	item, err := addItem(params)
+	item.base.Other = params.Other
 	if err == nil {
 		parentItem.addedSubItem(item.base.Id)
 		m.addItem(item)
@@ -304,7 +305,7 @@ func (m *Manager) IsRelationOf(itemId ptype.CategoryID, parentId ptype.CategoryI
 		if err != nil {
 			return false
 		}
-		ii := item.GetItemInfo()
+		ii := item.GetItemBaseInfo()
 		if ii.Id == parentId {
 			return true
 		}

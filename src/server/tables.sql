@@ -63,7 +63,6 @@ create table category_items (
   resource_path varchar(256) not null default "",
   poster_path varchar(256) not null default "",
   introduce text not null,
-  other text not null,
   created_at datetime default current_timestamp not null,
   updated_at timestamp default current_timestamp on update current_timestamp not null,
   primary key(id),
@@ -73,14 +72,14 @@ create table category_items (
   fulltext fulltext_ni(name, introduce) with parser ngram
 ) auto_increment=2;
 
-insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other) values 
-  (1, 0, 1, "root", 1, "", "", "", "", "");
-insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other) values 
-  (2, 1, 2, "tmp", 1, "", "", "", "", "");
-insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other) values 
-  (3, 1, 1, "users", 1, "", "", "", "", "");
-insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other) values 
-  (4, 1, 2, "magnet-shares", 1, "", "", "", "", "");
+insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+  (1, 0, 1, "root", 1, "", "", "", "");
+insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+  (2, 1, 2, "tmp", 1, "", "", "", "");
+insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+  (3, 1, 1, "users", 1, "", "", "", "");
+insert into category_items (id, parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+  (4, 1, 2, "magnet-shares", 1, "", "", "", "");
 
 insert into user(id, name, email, passwd, auth, directory_id) values
   (1, "admin", "admin@admin.cn", "202cb962ac59075b964b07152d234b70", "", 1);
@@ -94,7 +93,6 @@ create procedure new_category(in type_id int,
                               in resource_path varchar(256),
                               in poster_path varchar(256),
                               in introduce text,
-                              in other text,
                               in parent_id bigint,
                               out new_item_id bigint)
 begin
@@ -102,8 +100,8 @@ begin
   start transaction;
   select count(*) into parent_count from pnas.category_items where id = parent_id for update;
   if parent_count = 1 then
-    insert into pnas.category_items (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other) values 
-      (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other);
+    insert into pnas.category_items (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+      (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce);
     select last_insert_id() into new_item_id;
   else
     set new_item_id = -2;
@@ -126,8 +124,8 @@ begin
   start transaction;
   insert into pnas.user (name, email, passwd, auth, directory_id) values(name, email, passwd, auth, 0);
   select last_insert_id() into new_user_id;
-  insert into pnas.category_items (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce, other) values 
-      (3, 1, name, new_user_id, homeAuth, "", "", "", "");
+  insert into pnas.category_items (parent_id, type_id, name, creator, auth, resource_path, poster_path, introduce) values 
+      (3, 1, name, new_user_id, homeAuth, "", "", "");
   select last_insert_id() into new_home_id;
   update pnas.user set directory_id=new_home_id where id=new_user_id;
   select new_user_id, new_home_id;
@@ -152,6 +150,7 @@ create table torrent (
   piece_length int default 0  not null default 0,
   num_pieces int default 0  not null default 0,
   introduce text not null,
+  magnet_uri text not null,
   created_at datetime default current_timestamp not null,
   updated_at timestamp default current_timestamp on update current_timestamp not null,
 
@@ -167,16 +166,4 @@ create table user_torrent (
 
   primary key(user_id, torrent_id),
   key torrent_id(torrent_id)
-);
-
-create table magnet (
-  id bigint not null auto_increment,
-  version int not null,
-  info_hash varbinary(64) not null,
-  magnet_uri text not null,
-  created_at datetime default current_timestamp not null,
-  updated_at timestamp default current_timestamp on update current_timestamp not null,
-
-  primary key(id),
-  unique key info_hash (info_hash, version)
 );

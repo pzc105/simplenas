@@ -73,7 +73,7 @@ func (ser *CoreService) Init() {
 	sm.Init()
 	ser.shares = sm
 
-	go crawler.Go36dmBackgroup(&ser.um, ser.um.GetBtClient())
+	go crawler.Go36dmBackgroup(&ser.um, &ser.um)
 }
 
 func (ser *CoreService) Serve() {
@@ -440,11 +440,14 @@ func (ser *CoreService) OnBtStatus(statusReq *prpc.BtStatusRequest, stream prpc.
 		c()
 	}
 
-	ser.um.SetCallback(ses.UserId, ses.Id, func(s *prpc.TorrentStatus) {
+	ser.um.SetSessionCallback(ses.UserId, ses.Id, func(err error, s *prpc.TorrentStatus) {
+		if err != nil {
+			return
+		}
 		ret := &prpc.BtStatusRespone{
 			StatusArray: []*prpc.TorrentStatus{s},
 		}
-		err := stream.Send(ret)
+		err = stream.Send(ret)
 		if err != nil {
 			onError()
 		}
@@ -455,7 +458,7 @@ func (ser *CoreService) OnBtStatus(statusReq *prpc.BtStatusRequest, stream prpc.
 	case <-done.Done():
 	}
 
-	ser.um.SetCallback(ses.UserId, ses.Id, nil)
+	ser.um.SetSessionCallback(ses.UserId, ses.Id, nil)
 
 	return nil
 }
@@ -559,7 +562,7 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 	}
 
 	var resParentItem prpc.CategoryItem
-	itemInfo := parentItem.GetItemInfo()
+	itemInfo := parentItem.GetItemBaseInfo()
 	copier.Copy(&resParentItem, &itemInfo)
 	sudItemIds := parentItem.GetSubItemIds()
 	for _, id := range sudItemIds {
@@ -572,7 +575,7 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 
 	for _, item := range items {
 		var resItem prpc.CategoryItem
-		itemInfo := item.GetItemInfo()
+		itemInfo := item.GetItemBaseInfo()
 		copier.Copy(&resItem, &itemInfo)
 		sudItemIds := item.GetSubItemIds()
 		for _, id := range sudItemIds {
@@ -608,7 +611,7 @@ func (ser *CoreService) QueryItemInfo(ctx context.Context, req *prpc.QueryItemIn
 	}
 	res := &prpc.QueryItemInfoRes{}
 	res.ItemInfo = &prpc.CategoryItem{}
-	itemInfo := item.GetItemInfo()
+	itemInfo := item.GetItemBaseInfo()
 	copier.Copy(&res.ItemInfo, &itemInfo)
 	subItemIds := item.GetSubItemIds()
 	if len(subItemIds) > 0 {
@@ -836,15 +839,19 @@ func (ser *CoreService) AddMagnetUri(ctx context.Context, req *prpc.AddMagnetUri
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
 
-	err := ser.um.AddMagnetUri(&user.AddMagnetUriParams{
-		CategoryId: ptype.CategoryID(req.CategoryId),
-		Uri:        req.MagnetUri,
-		Introduce:  req.Introduce,
-		Creator:    ses.UserId,
-	})
-	if err != nil {
-		return nil, err
+	t, _ := ser.um.NewTorrentByMagnet(req.MagnetUri)
+	if t != nil {
+		err := ser.um.AddMagnetUri(&user.AddMagnetUriParams{
+			CategoryId: ptype.CategoryID(req.CategoryId),
+			T:          t,
+			Introduce:  req.Introduce,
+			Creator:    ses.UserId,
+		})
+		if err != nil {
+			return nil, err
+		}
 	}
+
 	return &prpc.AddMagnetUriRsp{}, nil
 }
 
@@ -909,7 +916,7 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 		TotalRowCount: int32(totalRows),
 	}
 	var resItem prpc.CategoryItem
-	itemInfo := item.GetItemInfo()
+	itemInfo := item.GetItemBaseInfo()
 	copier.Copy(&resItem, &itemInfo)
 
 	for _, id := range sudItemIds {
@@ -918,7 +925,7 @@ func (ser *CoreService) QueryMagnet(ctx context.Context, req *prpc.QueryMagnetRe
 	res.Items = append(res.Items, &resItem)
 	for _, item := range items {
 		var resItem prpc.CategoryItem
-		itemInfo := item.GetItemInfo()
+		itemInfo := item.GetItemBaseInfo()
 		copier.Copy(&resItem, &itemInfo)
 		sudItemIds := item.GetSubItemIds()
 		for _, id := range sudItemIds {

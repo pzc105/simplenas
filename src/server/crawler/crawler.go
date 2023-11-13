@@ -1,11 +1,8 @@
 package crawler
 
 import (
-	"context"
 	"pnas/bt"
-	"pnas/db"
 	"pnas/log"
-	"pnas/prpc"
 	"pnas/ptype"
 	"pnas/user"
 	"regexp"
@@ -21,7 +18,7 @@ const (
 	CategoryName = "36dm"
 )
 
-func Go36dmBackgroup(magnetShares user.IMagnetSharesService, btClient *bt.BtClient) {
+func Go36dmBackgroup(magnetShares user.IMagnetSharesService, ut bt.UserTorrents) {
 	items, _ := magnetShares.QueryMagnetCategorys(&user.QueryCategoryParams{
 		ParentId:     magnetShares.GetMagnetRootId(),
 		CategoryName: CategoryName,
@@ -43,7 +40,7 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, btClient *bt.BtClie
 			log.Errorf("failed to create crawler category: %v", err)
 		}
 	} else {
-		rid = items[0].GetItemInfo().Id
+		rid = items[0].GetItemBaseInfo().Id
 	}
 
 	c := colly.NewCollector(
@@ -89,32 +86,17 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, btClient *bt.BtClie
 			return
 		}
 
-		rsp, err := btClient.Parse(context.Background(), &prpc.DownloadRequest{
-			Type:    prpc.DownloadRequest_MagnetUri,
-			Content: []byte(Uri),
-		})
+		t, err := ut.NewTorrentByMagnet(Uri)
 
-		if err != nil {
-			return
+		if err == nil {
+			magnetShares.AddMagnetUri(&user.AddMagnetUriParams{
+				T:          t,
+				CategoryId: rid,
+				Name:       "",
+				Introduce:  Name,
+				Creator:    ptype.AdminId,
+			})
 		}
-
-		sql := "insert into magnet(version, info_hash, magnet_uri) values(?, ?, ?)"
-		dr, err := db.Exec(sql, rsp.InfoHash.Version, rsp.InfoHash.Hash, Uri)
-		if err != nil {
-			return
-		}
-		af, err := dr.RowsAffected()
-		if err != nil || af == 0 {
-			return
-		}
-
-		magnetShares.AddMagnetUri(&user.AddMagnetUriParams{
-			Uri:        Uri,
-			CategoryId: rid,
-			Name:       "",
-			Introduce:  Name,
-			Creator:    ptype.AdminId,
-		})
 	})
 
 	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: 10})
@@ -127,5 +109,5 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, btClient *bt.BtClie
 
 	timer := time.NewTimer(time.Hour * 3)
 	<-timer.C
-	go Go36dmBackgroup(magnetShares, btClient)
+	go Go36dmBackgroup(magnetShares, ut)
 }

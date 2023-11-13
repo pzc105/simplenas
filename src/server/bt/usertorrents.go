@@ -25,18 +25,35 @@ type FileCompleted struct {
 }
 
 type userData struct {
-	mtx       sync.Mutex
-	userId    ptype.UserID
-	torrents  map[ptype.TorrentID]*Torrent
-	callbacks map[ptype.SessionID]UserOnBtStatusCallback
+	mtx        sync.Mutex
+	userId     ptype.UserID
+	torrents   map[ptype.TorrentID]*Torrent
+	callbacks  map[ptype.SessionID]UserOnBtStatusCallback
+	callbacks2 map[ptype.TorrentID]map[ptype.TaskId]UserOnBtStatusCallback
 }
 
 func (ud *userData) init() {
 	ud.torrents = make(map[ptype.TorrentID]*Torrent)
 	ud.callbacks = make(map[ptype.SessionID]UserOnBtStatusCallback)
+	ud.callbacks2 = make(map[ptype.TorrentID]map[ptype.TaskId]UserOnBtStatusCallback)
 }
 
-func (ud *userData) setCallback(sid ptype.SessionID, callback UserOnBtStatusCallback) {
+func (ud *userData) setTaskCallback(params *SetTaskCallbackParams) {
+	ud.mtx.Lock()
+	cbs, ok := ud.callbacks2[params.TorrentId]
+	if !ok {
+		return
+	}
+	if params.Callback == nil {
+		delete(cbs, params.TaskId)
+	} else {
+		cbs[params.TaskId] = params.Callback
+	}
+
+	ud.mtx.Unlock()
+}
+
+func (ud *userData) setSessionCallback(sid ptype.SessionID, callback UserOnBtStatusCallback) {
 	ud.mtx.Lock()
 	if callback == nil {
 		delete(ud.callbacks, sid)
@@ -46,24 +63,27 @@ func (ud *userData) setCallback(sid ptype.SessionID, callback UserOnBtStatusCall
 	ud.mtx.Unlock()
 }
 
-func (ud *userData) getCallbackLocked() []UserOnBtStatusCallback {
+func (ud *userData) getCallbackLocked(tid ptype.TorrentID) []UserOnBtStatusCallback {
 	var ret []UserOnBtStatusCallback
 	for _, v := range ud.callbacks {
+		ret = append(ret, v)
+	}
+	for _, v := range ud.callbacks2[tid] {
 		ret = append(ret, v)
 	}
 	return ret
 }
 
-func (ud *userData) onBtStatus(id ptype.TorrentID, s *prpc.TorrentStatus) {
-	if !ud.hasTorrent(id) {
+func (ud *userData) onBtStatus(tid ptype.TorrentID, s *prpc.TorrentStatus) {
+	if !ud.hasTorrent(tid) {
 		return
 	}
 	ud.mtx.Lock()
-	callbacks := ud.getCallbackLocked()
+	callbacks := ud.getCallbackLocked(tid)
 	ud.mtx.Unlock()
 	for _, callback := range callbacks {
 		if callback != nil {
-			callback(s)
+			callback(nil, s)
 		}
 	}
 }
@@ -78,9 +98,14 @@ func (ud *userData) hasTorrent(id ptype.TorrentID) bool {
 	return ok
 }
 
+func (ud *userData) initTorrentLocked(t *Torrent) {
+	ud.torrents[t.base.Id] = t
+	ud.callbacks2[t.base.Id] = make(map[ptype.TaskId]UserOnBtStatusCallback)
+}
+
 func (ud *userData) initTorrent(t *Torrent) {
 	ud.mtx.Lock()
-	ud.torrents[t.base.Id] = t
+	ud.initTorrentLocked(t)
 	ud.mtx.Unlock()
 }
 
@@ -93,23 +118,36 @@ func (ud *userData) addTorrent(t *Torrent) error {
 	sql := "insert into user_torrent (user_id, torrent_id) values(?, ?)"
 	_, err := db.Exec(sql, ud.userId, t.base.Id)
 	if err == nil {
-		ud.torrents[t.base.Id] = t
+		ud.initTorrentLocked(t)
 	}
 	return err
 }
 
 func (ud *userData) removeTorrent(id ptype.TorrentID, dodb bool) error {
+	taskCallbacks := []UserOnBtStatusCallback{}
 	ud.mtx.Lock()
-	defer ud.mtx.Unlock()
 	_, ok := ud.torrents[id]
 	if !ok {
+		ud.mtx.Unlock()
 		return errors.New("not found torrent")
 	}
+
+	for _, c := range ud.callbacks2[id] {
+		taskCallbacks = append(taskCallbacks, c)
+	}
+	delete(ud.callbacks2, id)
 	delete(ud.torrents, id)
 	if dodb {
 		sql := "delete from user_torrent where user_id=? and torrent_id=?"
 		_, err := db.Exec(sql, ud.userId, id)
-		return err
+		if err != nil {
+			log.Warnf("[bt] failed delete user_torrent er:%v", err)
+		}
+	}
+	ud.mtx.Unlock()
+	err := errors.New("removing torrent")
+	for _, c := range taskCallbacks {
+		c(err, nil)
 	}
 	return nil
 }
@@ -257,8 +295,12 @@ func (ut *UserTorrentsImpl) handleBtClientConnected() {
 	}
 }
 
-func (ut *UserTorrentsImpl) SetCallback(userId ptype.UserID, sid ptype.SessionID, callback UserOnBtStatusCallback) {
-	ut.getUserData(userId).setCallback(sid, callback)
+func (ut *UserTorrentsImpl) SetTaskCallback(params *SetTaskCallbackParams) {
+	ut.getUserData(params.UserId).setTaskCallback(params)
+}
+
+func (ut *UserTorrentsImpl) SetSessionCallback(userId ptype.UserID, sid ptype.SessionID, callback UserOnBtStatusCallback) {
+	ut.getUserData(userId).setSessionCallback(sid, callback)
 }
 
 func (ut *UserTorrentsImpl) onBtStatus(sr *prpc.BtStatusRespone) {
@@ -279,11 +321,22 @@ func (ut *UserTorrentsImpl) handleBtStatus(s *prpc.TorrentStatus) {
 		req := &prpc.GetTorrentInfoReq{
 			InfoHash: s.InfoHash,
 		}
-		res, err := ut.btClient.GetTorrentInfo(context.Background(), req)
-		if err == nil {
-			t.updateTorrentInfo(res.TorrentInfo)
+		tRes, err := ut.btClient.GetTorrentInfo(context.Background(), req)
+		if len(t.GetMagnetUri()) == 0 {
+			mRes, err := ut.btClient.GetMagnetUri(context.Background(), &prpc.GetMagnetUriReq{
+				Type:     prpc.GetMagnetUriReq_InfoHash,
+				InfoHash: s.InfoHash,
+			})
+			if err == nil && len(mRes.MagnetUri) > 0 {
+				t.UpdateMagnetUri(mRes.MagnetUri)
+			}
 		}
+		if err != nil {
+			goto updateSt
+		}
+		t.updateTorrentInfo(tRes.TorrentInfo)
 	}
+updateSt:
 	t.updateStatus(s)
 	uids := t.getAllUser()
 	for _, uid := range uids {
@@ -324,7 +377,32 @@ func (ut *UserTorrentsImpl) getUserData(uid ptype.UserID) *userData {
 	return ud
 }
 
-func (ut *UserTorrentsImpl) initTorrent(infoHash *InfoHash) *Torrent {
+func (ut *UserTorrentsImpl) NewTorrentByMagnet(magnetUri string) (*Torrent, error) {
+	res, err := ut.btClient.Parse(context.Background(), &prpc.DownloadRequest{
+		Type:    prpc.DownloadRequest_MagnetUri,
+		Content: []byte(magnetUri),
+	})
+	if err != nil || len(res.InfoHash.Hash) == 0 {
+		return nil, errors.New("failed to parse magnet uri")
+	}
+
+	infoHash := TranInfoHash(res.InfoHash)
+
+	ut.mtx.Lock()
+	defer ut.mtx.Unlock()
+
+	if t, ok := ut.torrents[*infoHash]; ok {
+		return t, errors.New("existed torrent")
+	}
+	t := loadTorrentByInfoHash(&ut.btClient, infoHash)
+	if t != nil {
+		return t, errors.New("existed torrent")
+	}
+	t = newTorrent(&ut.btClient, infoHash, magnetUri)
+	return t, nil
+}
+
+func (ut *UserTorrentsImpl) initTorrent(infoHash *InfoHash, magnetUri string) *Torrent {
 	ut.mtx.Lock()
 	defer ut.mtx.Unlock()
 
@@ -335,7 +413,7 @@ func (ut *UserTorrentsImpl) initTorrent(infoHash *InfoHash) *Torrent {
 	// TODO: handle mysql error
 	t := loadTorrentByInfoHash(&ut.btClient, infoHash)
 	if t == nil {
-		t = newTorrent(&ut.btClient, infoHash)
+		t = newTorrent(&ut.btClient, infoHash, magnetUri)
 	}
 	if t == nil {
 		return nil
@@ -412,7 +490,7 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 	req.SavePath = setting.GS().Bt.SavePath
 	res, err = ut.btClient.Download(context.Background(), req)
 	if err == nil {
-		t := ut.initTorrent(infoHash)
+		t := ut.initTorrent(infoHash, magnetUri)
 		if t != nil {
 			t.addUser(params.UserId)
 			ut.saveUserTorrent(t, params.UserId)

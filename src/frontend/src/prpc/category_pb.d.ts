@@ -2,6 +2,24 @@ import * as jspb from 'google-protobuf'
 
 
 
+export class ItemOtherInfo extends jspb.Message {
+  getMagnetUri(): string;
+  setMagnetUri(value: string): ItemOtherInfo;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ItemOtherInfo.AsObject;
+  static toObject(includeInstance: boolean, msg: ItemOtherInfo): ItemOtherInfo.AsObject;
+  static serializeBinaryToWriter(message: ItemOtherInfo, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ItemOtherInfo;
+  static deserializeBinaryFromReader(message: ItemOtherInfo, reader: jspb.BinaryReader): ItemOtherInfo;
+}
+
+export namespace ItemOtherInfo {
+  export type AsObject = {
+    magnetUri: string,
+  }
+}
+
 export class CategoryItem extends jspb.Message {
   getId(): number;
   setId(value: number): CategoryItem;
@@ -24,8 +42,10 @@ export class CategoryItem extends jspb.Message {
   getIntroduce(): string;
   setIntroduce(value: string): CategoryItem;
 
-  getOther(): string;
-  setOther(value: string): CategoryItem;
+  getOther(): ItemOtherInfo | undefined;
+  setOther(value?: ItemOtherInfo): CategoryItem;
+  hasOther(): boolean;
+  clearOther(): CategoryItem;
 
   getParentId(): number;
   setParentId(value: number): CategoryItem;
@@ -52,7 +72,7 @@ export namespace CategoryItem {
     resourcePath: string,
     posterPath: string,
     introduce: string,
-    other: string,
+    other?: ItemOtherInfo.AsObject,
     parentId: number,
     subItemIdsList: Array<number>,
   }

@@ -824,8 +824,36 @@ struct DelMagnetCategoryRspDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DelMagnetCategoryRspDefaultTypeInternal _DelMagnetCategoryRsp_default_instance_;
+      template <typename>
+PROTOBUF_CONSTEXPR GetTorrentsReq::GetTorrentsReq(::_pbi::ConstantInitialized) {}
+struct GetTorrentsReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetTorrentsReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetTorrentsReqDefaultTypeInternal() {}
+  union {
+    GetTorrentsReq _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetTorrentsReqDefaultTypeInternal _GetTorrentsReq_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR GetTorrentsRsp::GetTorrentsRsp(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.torrent_info_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
+struct GetTorrentsRspDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetTorrentsRspDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetTorrentsRspDefaultTypeInternal() {}
+  union {
+    GetTorrentsRsp _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetTorrentsRspDefaultTypeInternal _GetTorrentsRsp_default_instance_;
 }  // namespace prpc
-static ::_pb::Metadata file_level_metadata_user_2eproto[45];
+static ::_pb::Metadata file_level_metadata_user_2eproto[47];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_user_2eproto[1];
 static constexpr const ::_pb::ServiceDescriptor**
     file_level_service_descriptors_user_2eproto = nullptr;
@@ -1286,6 +1314,23 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::GetTorrentsReq, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::prpc::GetTorrentsRsp, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::prpc::GetTorrentsRsp, _impl_.torrent_info_),
 };
 
 static const ::_pbi::MigrationSchema
@@ -1335,6 +1380,8 @@ static const ::_pbi::MigrationSchema
         {428, -1, -1, sizeof(::prpc::QueryMagnetRsp)},
         {438, -1, -1, sizeof(::prpc::DelMagnetCategoryReq)},
         {447, -1, -1, sizeof(::prpc::DelMagnetCategoryRsp)},
+        {455, -1, -1, sizeof(::prpc::GetTorrentsReq)},
+        {463, -1, -1, sizeof(::prpc::GetTorrentsRsp)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -1383,6 +1430,8 @@ static const ::_pb::Message* const file_default_instances[] = {
     &::prpc::_QueryMagnetRsp_default_instance_._instance,
     &::prpc::_DelMagnetCategoryReq_default_instance_._instance,
     &::prpc::_DelMagnetCategoryRsp_default_instance_._instance,
+    &::prpc::_GetTorrentsReq_default_instance_._instance,
+    &::prpc::_GetTorrentsRsp_default_instance_._instance,
 };
 const char descriptor_table_protodef_user_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
     "\n\nuser.proto\022\004prpc\032\016category.proto\032\013vide"
@@ -1451,48 +1500,52 @@ const char descriptor_table_protodef_user_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
     "\001(\005\"L\n\016QueryMagnetRsp\022!\n\005items\030\001 \003(\0132\022.p"
     "rpc.CategoryItem\022\027\n\017total_row_count\030\002 \001("
     "\005\"\"\n\024DelMagnetCategoryReq\022\n\n\002id\030\001 \001(\003\"\026\n"
-    "\024DelMagnetCategoryRsp2\344\014\n\013UserService\0221\n"
-    "\010Register\022\022.prpc.RegisterInfo\032\021.prpc.Reg"
-    "isterRet\0224\n\013IsUsedEmail\022\017.prpc.EmailInfo"
-    "\032\024.prpc.IsUsedEmailRet\022(\n\005Login\022\017.prpc.L"
-    "oginInfo\032\016.prpc.LoginRet\022,\n\tFastLogin\022\017."
-    "prpc.LoginInfo\032\016.prpc.LoginRet\022,\n\tIsLogi"
-    "ned\022\017.prpc.LoginInfo\032\016.prpc.LoginRet\022B\n\016"
-    "ChangePassword\022\027.prpc.ChangePasswordReq\032"
-    "\027.prpc.ChangePasswordRsp\0228\n\010Download\022\025.p"
-    "rpc.DownloadRequest\032\025.prpc.DownloadRespo"
-    "ne\022\?\n\rRemoveTorrent\022\026.prpc.RemoveTorrent"
-    "Req\032\026.prpc.RemoveTorrentRes\022<\n\014GetMagnet"
-    "Uri\022\025.prpc.GetMagnetUriReq\032\025.prpc.GetMag"
-    "netUriRsp\022<\n\nOnBtStatus\022\025.prpc.BtStatusR"
-    "equest\032\025.prpc.BtStatusRespone0\001\022\?\n\rQuery"
-    "BtVideos\022\026.prpc.QueryBtVideosReq\032\026.prpc."
-    "QueryBtVideosRes\022E\n\017NewCategoryItem\022\030.pr"
-    "pc.NewCategoryItemReq\032\030.prpc.NewCategory"
-    "ItemRes\022E\n\017DelCategoryItem\022\030.prpc.DelCat"
-    "egoryItemReq\032\030.prpc.DelCategoryItemRes\0229"
-    "\n\013AddBtVideos\022\024.prpc.AddBtVideosReq\032\024.pr"
-    "pc.AddBtVideosRes\0223\n\tShareItem\022\022.prpc.Sh"
-    "areItemReq\032\022.prpc.ShareItemRes\022H\n\020QueryS"
-    "haredItems\022\031.prpc.QuerySharedItemsReq\032\031."
-    "prpc.QuerySharedItemsRes\022\?\n\rDelSharedIte"
-    "m\022\026.prpc.DelSharedItemReq\032\026.prpc.DelShar"
-    "edItemRes\022\?\n\rQuerySubItems\022\026.prpc.QueryS"
-    "ubItemsReq\032\026.prpc.QuerySubItemsRes\022\?\n\rQu"
-    "eryItemInfo\022\026.prpc.QueryItemInfoReq\032\026.pr"
-    "pc.QueryItemInfoRes\022B\n\016UploadSubtitle\022\027."
-    "prpc.UploadSubtitleReq\032\027.prpc.UploadSubt"
-    "itleRes\022>\n\014JoinChatRoom\022\025.prpc.JoinChatR"
-    "oomReq\032\025.prpc.JoinChatRoomRes0\001\022H\n\020SendM"
-    "sg2ChatRoom\022\031.prpc.SendMsg2ChatRoomReq\032\031"
-    ".prpc.SendMsg2ChatRoomRes\022K\n\021AddMagnetCa"
-    "tegory\022\032.prpc.AddMagnetCategoryReq\032\032.prp"
-    "c.AddMagnetCategoryRsp\022<\n\014AddMagnetUri\022\025"
-    ".prpc.AddMagnetUriReq\032\025.prpc.AddMagnetUr"
-    "iRsp\0229\n\013QueryMagnet\022\024.prpc.QueryMagnetRe"
-    "q\032\024.prpc.QueryMagnetRsp\022K\n\021DelMagnetCate"
-    "gory\022\032.prpc.DelMagnetCategoryReq\032\032.prpc."
-    "DelMagnetCategoryRspB\010Z\006./prpcb\006proto3"
+    "\024DelMagnetCategoryRsp\"\020\n\016GetTorrentsReq\""
+    "9\n\016GetTorrentsRsp\022\'\n\014torrent_info\030\001 \003(\0132"
+    "\021.prpc.TorrentInfo2\237\r\n\013UserService\0221\n\010Re"
+    "gister\022\022.prpc.RegisterInfo\032\021.prpc.Regist"
+    "erRet\0224\n\013IsUsedEmail\022\017.prpc.EmailInfo\032\024."
+    "prpc.IsUsedEmailRet\022(\n\005Login\022\017.prpc.Logi"
+    "nInfo\032\016.prpc.LoginRet\022,\n\tFastLogin\022\017.prp"
+    "c.LoginInfo\032\016.prpc.LoginRet\022,\n\tIsLogined"
+    "\022\017.prpc.LoginInfo\032\016.prpc.LoginRet\022B\n\016Cha"
+    "ngePassword\022\027.prpc.ChangePasswordReq\032\027.p"
+    "rpc.ChangePasswordRsp\0228\n\010Download\022\025.prpc"
+    ".DownloadRequest\032\025.prpc.DownloadRespone\022"
+    "\?\n\rRemoveTorrent\022\026.prpc.RemoveTorrentReq"
+    "\032\026.prpc.RemoveTorrentRes\022<\n\014GetMagnetUri"
+    "\022\025.prpc.GetMagnetUriReq\032\025.prpc.GetMagnet"
+    "UriRsp\0229\n\013GetTorrents\022\024.prpc.GetTorrents"
+    "Req\032\024.prpc.GetTorrentsRsp\022<\n\nOnBtStatus\022"
+    "\025.prpc.BtStatusRequest\032\025.prpc.BtStatusRe"
+    "spone0\001\022\?\n\rQueryBtVideos\022\026.prpc.QueryBtV"
+    "ideosReq\032\026.prpc.QueryBtVideosRes\022E\n\017NewC"
+    "ategoryItem\022\030.prpc.NewCategoryItemReq\032\030."
+    "prpc.NewCategoryItemRes\022E\n\017DelCategoryIt"
+    "em\022\030.prpc.DelCategoryItemReq\032\030.prpc.DelC"
+    "ategoryItemRes\0229\n\013AddBtVideos\022\024.prpc.Add"
+    "BtVideosReq\032\024.prpc.AddBtVideosRes\0223\n\tSha"
+    "reItem\022\022.prpc.ShareItemReq\032\022.prpc.ShareI"
+    "temRes\022H\n\020QuerySharedItems\022\031.prpc.QueryS"
+    "haredItemsReq\032\031.prpc.QuerySharedItemsRes"
+    "\022\?\n\rDelSharedItem\022\026.prpc.DelSharedItemRe"
+    "q\032\026.prpc.DelSharedItemRes\022\?\n\rQuerySubIte"
+    "ms\022\026.prpc.QuerySubItemsReq\032\026.prpc.QueryS"
+    "ubItemsRes\022\?\n\rQueryItemInfo\022\026.prpc.Query"
+    "ItemInfoReq\032\026.prpc.QueryItemInfoRes\022B\n\016U"
+    "ploadSubtitle\022\027.prpc.UploadSubtitleReq\032\027"
+    ".prpc.UploadSubtitleRes\022>\n\014JoinChatRoom\022"
+    "\025.prpc.JoinChatRoomReq\032\025.prpc.JoinChatRo"
+    "omRes0\001\022H\n\020SendMsg2ChatRoom\022\031.prpc.SendM"
+    "sg2ChatRoomReq\032\031.prpc.SendMsg2ChatRoomRe"
+    "s\022K\n\021AddMagnetCategory\022\032.prpc.AddMagnetC"
+    "ategoryReq\032\032.prpc.AddMagnetCategoryRsp\022<"
+    "\n\014AddMagnetUri\022\025.prpc.AddMagnetUriReq\032\025."
+    "prpc.AddMagnetUriRsp\0229\n\013QueryMagnet\022\024.pr"
+    "pc.QueryMagnetReq\032\024.prpc.QueryMagnetRsp\022"
+    "K\n\021DelMagnetCategory\022\032.prpc.DelMagnetCat"
+    "egoryReq\032\032.prpc.DelMagnetCategoryRspB\010Z\006"
+    "./prpcb\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_user_2eproto_deps[3] =
     {
@@ -1504,13 +1557,13 @@ static ::absl::once_flag descriptor_table_user_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_user_2eproto = {
     false,
     false,
-    4318,
+    4454,
     descriptor_table_protodef_user_2eproto,
     "user.proto",
     &descriptor_table_user_2eproto_once,
     descriptor_table_user_2eproto_deps,
     3,
-    45,
+    47,
     schemas,
     file_default_instances,
     TableStruct_user_2eproto::offsets,
@@ -9651,6 +9704,220 @@ const ::google::protobuf::Message::ClassData*DelMagnetCategoryRsp::GetClassData(
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
       file_level_metadata_user_2eproto[44]);
+}
+// ===================================================================
+
+class GetTorrentsReq::_Internal {
+ public:
+};
+
+GetTorrentsReq::GetTorrentsReq(::google::protobuf::Arena* arena)
+    : ::google::protobuf::internal::ZeroFieldsBase(arena) {
+  // @@protoc_insertion_point(arena_constructor:prpc.GetTorrentsReq)
+}
+GetTorrentsReq::GetTorrentsReq(const GetTorrentsReq& from) : ::google::protobuf::internal::ZeroFieldsBase() {
+  GetTorrentsReq* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
+  // @@protoc_insertion_point(copy_constructor:prpc.GetTorrentsReq)
+}
+
+
+
+
+const ::google::protobuf::Message::ClassData GetTorrentsReq::_class_data_ = {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl,
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl,
+};
+const ::google::protobuf::Message::ClassData*GetTorrentsReq::GetClassData() const { return &_class_data_; }
+
+
+
+
+
+
+
+::google::protobuf::Metadata GetTorrentsReq::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[45]);
+}
+// ===================================================================
+
+class GetTorrentsRsp::_Internal {
+ public:
+};
+
+void GetTorrentsRsp::clear_torrent_info() {
+  _internal_mutable_torrent_info()->Clear();
+}
+GetTorrentsRsp::GetTorrentsRsp(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:prpc.GetTorrentsRsp)
+}
+GetTorrentsRsp::GetTorrentsRsp(const GetTorrentsRsp& from) : ::google::protobuf::Message() {
+  GetTorrentsRsp* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.torrent_info_){from._impl_.torrent_info_},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
+  // @@protoc_insertion_point(copy_constructor:prpc.GetTorrentsRsp)
+}
+inline void GetTorrentsRsp::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.torrent_info_){arena},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+}
+GetTorrentsRsp::~GetTorrentsRsp() {
+  // @@protoc_insertion_point(destructor:prpc.GetTorrentsRsp)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void GetTorrentsRsp::SharedDtor() {
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.torrent_info_.~RepeatedPtrField();
+}
+void GetTorrentsRsp::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+PROTOBUF_NOINLINE void GetTorrentsRsp::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.GetTorrentsRsp)
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _internal_mutable_torrent_info()->Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* GetTorrentsRsp::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> GetTorrentsRsp::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_GetTorrentsRsp_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // repeated .prpc.TorrentInfo torrent_info = 1;
+    {::_pbi::TcParser::FastMtR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(GetTorrentsRsp, _impl_.torrent_info_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // repeated .prpc.TorrentInfo torrent_info = 1;
+    {PROTOBUF_FIELD_OFFSET(GetTorrentsRsp, _impl_.torrent_info_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::prpc::TorrentInfo>()},
+  }}, {{
+  }},
+};
+
+::uint8_t* GetTorrentsRsp::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.GetTorrentsRsp)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // repeated .prpc.TorrentInfo torrent_info = 1;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_torrent_info_size()); i < n; i++) {
+    const auto& repfield = this->_internal_torrent_info().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
+        InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.GetTorrentsRsp)
+  return target;
+}
+
+::size_t GetTorrentsRsp::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.GetTorrentsRsp)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .prpc.TorrentInfo torrent_info = 1;
+  total_size += 1UL * this->_internal_torrent_info_size();
+  for (const auto& msg : this->_internal_torrent_info()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+  }
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData GetTorrentsRsp::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
+    GetTorrentsRsp::MergeImpl
+};
+const ::google::protobuf::Message::ClassData*GetTorrentsRsp::GetClassData() const { return &_class_data_; }
+
+
+void GetTorrentsRsp::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GetTorrentsRsp*>(&to_msg);
+  auto& from = static_cast<const GetTorrentsRsp&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.GetTorrentsRsp)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_internal_mutable_torrent_info()->MergeFrom(from._internal_torrent_info());
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GetTorrentsRsp::CopyFrom(const GetTorrentsRsp& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.GetTorrentsRsp)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool GetTorrentsRsp::IsInitialized() const {
+  return true;
+}
+
+void GetTorrentsRsp::InternalSwap(GetTorrentsRsp* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.torrent_info_.InternalSwap(&other->_impl_.torrent_info_);
+}
+
+::google::protobuf::Metadata GetTorrentsRsp::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
+      file_level_metadata_user_2eproto[46]);
 }
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace prpc

@@ -4,6 +4,10 @@ package prpc;
 
 option go_package = "./prpc";
 
+message ItemOtherInfo {
+  string magnet_uri = 1;
+}
+
 message CategoryItem {
   enum Type {
     Unknown = 0;
@@ -21,7 +25,7 @@ message CategoryItem {
   string resource_path = 5;
   string poster_path = 6;
   string introduce = 7;
-  string other = 8;
+  ItemOtherInfo other = 8;
   int64 parent_id = 9;
   repeated int64 sub_item_ids = 10;
 }

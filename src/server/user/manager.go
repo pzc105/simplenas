@@ -93,13 +93,7 @@ func (um *UserManger) addUser(user *User) error {
 }
 
 func (um *UserManger) getUser(id ptype.UserID) *User {
-	um.mtx.Lock()
-	u, ok := um.users[id]
-	if !ok {
-		um.mtx.Unlock()
-		return nil
-	}
-	um.mtx.Unlock()
+	u, _ := um.LoadUser(id)
 	return u
 }
 
@@ -438,7 +432,7 @@ func (um *UserManger) UploadSubtitle(userId ptype.UserID, req *prpc.UploadSubtit
 		}
 		var itemNames []string
 		for _, item := range subItems {
-			itemNames = append(itemNames, item.GetItemInfo().Name)
+			itemNames = append(itemNames, item.GetItemBaseInfo().Name)
 		}
 		itemEpisodeMap := utils.ParseEpisode(itemNames)
 		var subtitleName []string

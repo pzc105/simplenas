@@ -6,20 +6,28 @@ import (
 )
 
 type UserTorrents interface {
+	NewTorrentByMagnet(magnetUri string) (*Torrent, error)
 	HasTorrent(userId ptype.UserID, infoHash *InfoHash) bool
 	GetTorrent(infoHash *InfoHash) (*Torrent, error)
-
-	SetCallback(userId ptype.UserID, sid ptype.SessionID, callback UserOnBtStatusCallback)
+	GetTorrents(userId ptype.UserID) []*Torrent
+	
+	SetTaskCallback(params *SetTaskCallbackParams)
+	SetSessionCallback(userId ptype.UserID, sid ptype.SessionID, callback UserOnBtStatusCallback)
 
 	Download(*DownloadParams) (*prpc.DownloadRespone, error)
 	RemoveTorrent(*RemoveTorrentParams) (*prpc.RemoveTorrentRes, error)
 	GetMagnetUri(*GetMagnetUriParams) (*prpc.GetMagnetUriRsp, error)
 
-	GetTorrents(userId ptype.UserID) []*Torrent
-
 	GetBtClient() *BtClient
 
 	Close()
+}
+
+type SetTaskCallbackParams struct {
+	UserId    ptype.UserID
+	TaskId    ptype.TaskId
+	TorrentId ptype.TorrentID
+	Callback  UserOnBtStatusCallback
 }
 
 type DownloadParams struct {
@@ -37,4 +45,4 @@ type GetMagnetUriParams struct {
 	Req    *prpc.GetMagnetUriReq
 }
 
-type UserOnBtStatusCallback func(*prpc.TorrentStatus)
+type UserOnBtStatusCallback func(error, *prpc.TorrentStatus)

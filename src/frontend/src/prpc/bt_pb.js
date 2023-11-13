@@ -13,13 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
+var global = (function() {
+  if (this) { return this; }
+  if (typeof window !== 'undefined') { return window; }
+  if (typeof global !== 'undefined') { return global; }
+  if (typeof self !== 'undefined') { return self; }
+  return Function('return this')();
+}.call(null));
 
 goog.exportSymbol('proto.prpc.BtFile', null, global);
 goog.exportSymbol('proto.prpc.BtFile.State', null, global);
@@ -2396,7 +2396,8 @@ proto.prpc.DownloadRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     type: jspb.Message.getFieldWithDefault(msg, 1, 0),
     content: msg.getContent_asB64(),
-    savePath: jspb.Message.getFieldWithDefault(msg, 3, "")
+    savePath: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    stopAfterGotMeta: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
   };
 
   if (includeInstance) {
@@ -2445,6 +2446,10 @@ proto.prpc.DownloadRequest.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setSavePath(value);
       break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setStopAfterGotMeta(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -2492,6 +2497,13 @@ proto.prpc.DownloadRequest.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       3,
+      f
+    );
+  }
+  f = message.getStopAfterGotMeta();
+  if (f) {
+    writer.writeBool(
+      4,
       f
     );
   }
@@ -2582,6 +2594,24 @@ proto.prpc.DownloadRequest.prototype.getSavePath = function() {
  */
 proto.prpc.DownloadRequest.prototype.setSavePath = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional bool stop_after_got_meta = 4;
+ * @return {boolean}
+ */
+proto.prpc.DownloadRequest.prototype.getStopAfterGotMeta = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.prpc.DownloadRequest} returns this
+ */
+proto.prpc.DownloadRequest.prototype.setStopAfterGotMeta = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 

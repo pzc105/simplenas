@@ -27,14 +27,14 @@ type TorrentBase struct {
 	PieceLength int32
 	NumPieces   int32
 	Introduce   string
+	Files       []File
+	MagnetUri   string
 }
 
 type Torrent struct {
-	base TorrentBase
-
 	mtx        sync.Mutex
+	base       TorrentBase
 	hasBase    bool
-	files      []File
 	state      prpc.BtStateEnum
 	updateTime time.Time
 	whoHas     map[ptype.UserID]bool
@@ -96,8 +96,8 @@ func (t *Torrent) GetInfoHash() InfoHash {
 func (t *Torrent) GetFiles() []File {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
-	ret := make([]File, len(t.files))
-	copy(ret, t.files)
+	ret := make([]File, len(t.base.Files))
+	copy(ret, t.base.Files)
 	return ret
 }
 
@@ -120,12 +120,12 @@ func (t *Torrent) updateTorrentInfo(ti *prpc.TorrentInfo) {
 	t.base.PieceLength = ti.PieceLength
 	t.base.SavePath = ti.SavePath
 	t.base.TotalSize = ti.TotalSize
-	t.files = make([]File, len(ti.Files))
+	t.base.Files = make([]File, len(ti.Files))
 	for i, f := range ti.Files {
-		t.files[i].Name = f.Name
-		t.files[i].Index = f.Index
-		t.files[i].St = f.St
-		t.files[i].TotalSize = f.TotalSize
+		t.base.Files[i].Name = f.Name
+		t.base.Files[i].Index = f.Index
+		t.base.Files[i].St = f.St
+		t.base.Files[i].TotalSize = f.TotalSize
 	}
 	t.hasBase = true
 }
@@ -136,15 +136,15 @@ func (t *Torrent) updateStatus(s *prpc.TorrentStatus) {
 	old := t.state
 	t.state = s.State
 
-	if old != s.State && (s.State == prpc.BtStateEnum_seeding) {
+	if !IsDownloadAll(old) && IsDownloadAll(s.State) {
 		log.Infof("[bt] torrent: [%s] %s completed", hex.EncodeToString([]byte(t.base.InfoHash.Hash)), t.base.Name)
-		for i := range t.files {
+		for i := range t.base.Files {
 			t.updateFileTypeLocked(i)
 		}
 	}
 
-	if t.state == prpc.BtStateEnum_downloading ||
-		old != prpc.BtStateEnum_seeding && t.state == prpc.BtStateEnum_seeding {
+	if s.State == prpc.BtStateEnum_downloading ||
+		old != prpc.BtStateEnum_seeding && s.State == prpc.BtStateEnum_seeding {
 		now := time.Now()
 		if now.Sub(t.lastSave) > time.Second*10 {
 			req := &prpc.GetResumeDataReq{
@@ -160,30 +160,30 @@ func (t *Torrent) updateStatus(s *prpc.TorrentStatus) {
 }
 
 func (t *Torrent) updateFileTypeLocked(index int) {
-	log.Infof("[bt] torrent: [%s] file: %s completed", hex.EncodeToString([]byte(t.base.InfoHash.Hash)), t.files[index].Name)
-	fileName := t.files[index].Name
+	log.Infof("[bt] torrent: [%s] file: %s completed", hex.EncodeToString([]byte(t.base.InfoHash.Hash)), t.base.Files[index].Name)
+	fileName := t.base.Files[index].Name
 	absFileName := t.base.SavePath + "/" + fileName
 	meta, err := video.GetMetadata(absFileName)
 	if err == nil {
 		if video.IsVideo(meta) {
-			t.files[index].FileType |= FileVideoType
-			t.files[index].Meta = meta
+			t.base.Files[index].FileType |= FileVideoType
+			t.base.Files[index].Meta = meta
 		}
 		if video.IsSubTitle(meta) {
-			t.files[index].FileType |= FileSubtitleType
+			t.base.Files[index].FileType |= FileSubtitleType
 		}
 		if video.IsAudio(meta) {
-			t.files[index].FileType |= FileAudioType
+			t.base.Files[index].FileType |= FileAudioType
 		}
 		log.Debugf("[bt] torrent:%s file: %s type: %d", hex.EncodeToString([]byte(t.base.InfoHash.Hash)),
-			absFileName, t.files[index].FileType)
+			absFileName, t.base.Files[index].FileType)
 	}
 }
 
 func (t *Torrent) UpdateFileState(index int, st prpc.BtFile_State) error {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
-	if int(index) >= len(t.files) {
+	if int(index) >= len(t.base.Files) {
 		return errors.New("file index out of range")
 	}
 	t.updateFileTypeLocked(index)
@@ -193,52 +193,74 @@ func (t *Torrent) UpdateFileState(index int, st prpc.BtFile_State) error {
 func (t *Torrent) GetFileType(fileIndex int) (FileType, error) {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
-	if fileIndex >= len(t.files) {
+	if fileIndex >= len(t.base.Files) {
 		return 0, errors.New("file index out of range")
 	}
-	return t.files[fileIndex].FileType, nil
+	return t.base.Files[fileIndex].FileType, nil
 }
 
 func (t *Torrent) UpdateFileType(fileIndex int, ft FileType) error {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
-	if fileIndex >= len(t.files) {
+	if fileIndex >= len(t.base.Files) {
 		return errors.New("file index out of range")
 	}
-	t.files[fileIndex].FileType |= ft
+	t.base.Files[fileIndex].FileType |= ft
 	return nil
 }
 
 func (t *Torrent) UpdateVideoFileMeta(fileIndex int, meta *video.Metadata) error {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
-	if fileIndex >= len(t.files) {
+	if fileIndex >= len(t.base.Files) {
 		return errors.New("file index out of range")
 	}
-	t.files[fileIndex].Meta = meta
+	t.base.Files[fileIndex].Meta = meta
 	return nil
 }
 
 func (t *Torrent) GetVideoFileMeta(fileIndex int) (*video.Metadata, error) {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
-	if fileIndex >= len(t.files) {
+	if fileIndex >= len(t.base.Files) {
 		return nil, errors.New("file index out of range")
 	}
-	return t.files[fileIndex].Meta, nil
+	return t.base.Files[fileIndex].Meta, nil
 }
 
 func (t *Torrent) GetFileState(fileIndex int) (prpc.BtFile_State, error) {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
-	if int(fileIndex) >= len(t.files) {
+	if int(fileIndex) >= len(t.base.Files) {
 		return 0, errors.New("file index out of range")
 	}
-	return t.files[fileIndex].St, nil
+	return t.base.Files[fileIndex].St, nil
 }
 
 func (t *Torrent) GetUpdateTime() time.Time {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
 	return t.updateTime
+}
+
+func (t *Torrent) UpdateMagnetUri(magnetUri string) bool {
+	t.mtx.Lock()
+	defer t.mtx.Unlock()
+	sql := `update torrent set magnet_uri=? where id=?`
+	r, err := db.Exec(sql, t.base.Id, magnetUri)
+	if err != nil {
+		log.Warnf("[bt] failed to update magnet uri err: %v", err)
+		return false
+	}
+	af, err := r.RowsAffected()
+	if err != nil || af == 0 {
+		return false
+	}
+	return true
+}
+
+func (t *Torrent) GetMagnetUri() string {
+	t.mtx.Lock()
+	defer t.mtx.Unlock()
+	return t.base.MagnetUri
 }
