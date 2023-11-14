@@ -32,12 +32,13 @@ type TorrentBase struct {
 }
 
 type Torrent struct {
-	mtx        sync.Mutex
-	base       TorrentBase
-	hasBase    bool
-	state      prpc.BtStateEnum
-	updateTime time.Time
-	whoHas     map[ptype.UserID]bool
+	mtx             sync.Mutex
+	base            TorrentBase
+	hasBase         bool
+	updatedFileType bool
+	state           prpc.BtStateEnum
+	updateTime      time.Time
+	whoHas          map[ptype.UserID]bool
 
 	btClient *BtClient
 	lastSave time.Time
@@ -128,6 +129,14 @@ func (t *Torrent) updateTorrentInfo(ti *prpc.TorrentInfo) {
 		t.base.Files[i].TotalSize = f.TotalSize
 	}
 	t.hasBase = true
+
+	if IsDownloadAll(t.state) && !t.updatedFileType {
+		log.Infof("[bt] torrent: [%s] %s completed", hex.EncodeToString([]byte(t.base.InfoHash.Hash)), t.base.Name)
+		for i := range t.base.Files {
+			t.updateFileTypeLocked(i)
+		}
+		t.updatedFileType = true
+	}
 }
 
 func (t *Torrent) updateStatus(s *prpc.TorrentStatus) {
@@ -136,11 +145,12 @@ func (t *Torrent) updateStatus(s *prpc.TorrentStatus) {
 	old := t.state
 	t.state = s.State
 
-	if !IsDownloadAll(old) && IsDownloadAll(s.State) {
+	if IsDownloadAll(s.State) && !t.updatedFileType {
 		log.Infof("[bt] torrent: [%s] %s completed", hex.EncodeToString([]byte(t.base.InfoHash.Hash)), t.base.Name)
 		for i := range t.base.Files {
 			t.updateFileTypeLocked(i)
 		}
+		t.updatedFileType = true
 	}
 
 	if s.State == prpc.BtStateEnum_downloading ||

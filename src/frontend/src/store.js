@@ -12,6 +12,8 @@ const userSlice = createSlice({
     shownChatPanel: false,
     openGlobalChat: false,
     globalChatPosition: { 0: { x: null, y: null } },
+    lastUsedParentDirId: -1,
+    lastUsedDirId: -1,
   },
   reducers: {
     setUserInfo: (state, action) => {
@@ -26,6 +28,12 @@ const userSlice = createSlice({
     },
     setGlobalChatPosition: (state, action) => {
       state.globalChatPosition[action.payload["itemId"]] = action.payload
+    },
+    setlastUsedDirId: (state, action) => {
+      state.lastUsedDirId = action.payload
+    },
+    setlastUsedParentDirId: (state, action) => {
+      state.lastUsedParentDirId = action.payload
     },
   },
 })
@@ -181,6 +189,14 @@ const selectGlobalChatPosition = (state, itemId) => {
   }
 }
 
+const selectlastUsedDirId = (state) => {
+  return state.user.lastUsedDirId
+}
+
+const selectlastUsedParentDirId = (state) => {
+  return state.user.lastUsedParentDirId
+}
+
 const selectTorrent = (state, infoHash) => {
   if (state.bt.torrents) {
     return state.bt.torrents[infoHash.hash]
@@ -301,7 +317,8 @@ const selectAutoPlayVideo = (state) => {
 
 export {
   store, userSlice, btSlice, categorySlice, eventSlice, playerSlice, magnetShares,
-  selectUserInfo, selectShownChatPanel, selectOpenGlobalChat, selectGlobalChatPosition,
+  selectUserInfo, selectShownChatPanel, selectOpenGlobalChat, selectGlobalChatPosition, selectlastUsedDirId,
+  selectlastUsedParentDirId,
   selectTorrent, selectInfoHashs, selectBtVideoFiles, selectTorrentStatus, selectTorrents,
   selectCategoryItem, selectCategoryItems, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo,
   selectMagnetSharesItems,

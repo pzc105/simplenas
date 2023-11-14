@@ -42,6 +42,7 @@ func (ud *userData) setTaskCallback(params *SetTaskCallbackParams) {
 	ud.mtx.Lock()
 	cbs, ok := ud.callbacks2[params.TorrentId]
 	if !ok {
+		ud.mtx.Unlock()
 		return
 	}
 	if params.Callback == nil {
@@ -396,6 +397,9 @@ func (ut *UserTorrentsImpl) NewTorrentByMagnet(magnetUri string) (*Torrent, erro
 	}
 	t := loadTorrentByInfoHash(&ut.btClient, infoHash)
 	if t != nil {
+		if len(t.GetMagnetUri()) == 0 {
+			t.UpdateMagnetUri(magnetUri)
+		}
 		return t, errors.New("existed torrent")
 	}
 	t = newTorrent(&ut.btClient, infoHash, magnetUri)
@@ -469,10 +473,13 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 	infoHash := TranInfoHash(res.InfoHash)
 
 	t, err := ut.GetTorrent(infoHash)
-	ud := ut.getUserData(params.UserId)
 	if err == nil {
-		if ud.hasTorrent(t.base.Id) {
-			return nil, errors.New("duplicated")
+		if t.GetState() == prpc.BtStateEnum_seeding {
+			t.addUser(params.UserId)
+			ut.saveUserTorrent(t, params.UserId)
+			return &prpc.DownloadRespone{
+				InfoHash: res.InfoHash,
+			}, ErrDownloaded
 		}
 	}
 

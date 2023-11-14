@@ -5,6 +5,7 @@ import (
 	"pnas/category"
 	"pnas/prpc"
 	"pnas/ptype"
+	"sort"
 	"sync/atomic"
 )
 
@@ -22,7 +23,7 @@ type btHlsTask struct {
 	videoTaskCount   atomic.Int32
 	categorySer      category.IService
 	recursiveNewPath bool
-	videoTasks        map[ptype.TaskId]ITask
+	videoTasks       []ITask
 }
 
 type newBtHlsTaskParams struct {
@@ -49,7 +50,6 @@ func newBtHlsTask(params *newBtHlsTaskParams) ITask {
 	bd.mgr = params.mgr
 	bd.callback = params.callback
 	bd.recursiveNewPath = params.recursiveNewPath
-	bd.videoTasks = make(map[ptype.TaskId]ITask)
 	return &bd
 }
 
@@ -67,6 +67,11 @@ func (bd *btHlsTask) Start() {
 		Req:    bd.downloadReq,
 	})
 	if err != nil {
+		if err == bt.ErrDownloaded {
+			bd.infoHash = bt.TranInfoHash(res.InfoHash)
+			bd.downloaded()
+			return
+		}
 		bd.into(TaskStatusFailed, err)
 		return
 	}
@@ -98,6 +103,9 @@ func (bd *btHlsTask) downloaded() {
 		return
 	}
 	files := t.GetFiles()
+	sort.Slice(files, func(a, b int) bool {
+		return files[a].Name < files[b].Name
+	})
 	for _, f := range files {
 		if f.FileType&bt.FileVideoType != 0 {
 			task := newVideoTask(&NewVideoTaskParams{
@@ -112,8 +120,11 @@ func (bd *btHlsTask) downloaded() {
 				BtFileIndex: int(f.Index),
 			})
 			bd.videoTaskCount.Add(1)
-			bd.videoTasks[task.GetId()] = task
+			bd.videoTasks = append(bd.videoTasks, task)
 		}
+	}
+	if len(bd.videoTasks) == 0 {
+		bd.into(TaskStatusFinished, nil)
 	}
 	for _, task := range bd.videoTasks {
 		task.Start()

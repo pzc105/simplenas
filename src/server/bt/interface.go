@@ -1,8 +1,13 @@
 package bt
 
 import (
+	"errors"
 	"pnas/prpc"
 	"pnas/ptype"
+)
+
+var (
+	ErrDownloaded = errors.New("downloaded")
 )
 
 type UserTorrents interface {
@@ -10,7 +15,7 @@ type UserTorrents interface {
 	HasTorrent(userId ptype.UserID, infoHash *InfoHash) bool
 	GetTorrent(infoHash *InfoHash) (*Torrent, error)
 	GetTorrents(userId ptype.UserID) []*Torrent
-	
+
 	SetTaskCallback(params *SetTaskCallbackParams)
 	SetSessionCallback(userId ptype.UserID, sid ptype.SessionID, callback UserOnBtStatusCallback)
 

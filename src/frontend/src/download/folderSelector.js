@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, Checkbox }
   from "@mui/material";
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as store from '../store.js'
 
 import * as category from '../prpc/category_pb.js'
@@ -11,12 +11,15 @@ import userService from '../rpcClient.js'
 
 export default function FolderSelector({ select }) {
   const userInfo = useSelector((state) => store.selectUserInfo(state))
-  const [nowPathItemId, setNowPathItemId] = useState(userInfo.homeDirectoryId)
+  const lastUsedParentDirId = useSelector((state) => store.selectlastUsedParentDirId(state))
+  const lastUsedDirId = useSelector((state) => store.selectlastUsedDirId(state))
+  const [nowPathItemId, setNowPathItemId] = useState(lastUsedParentDirId > 0 ? lastUsedParentDirId : userInfo.homeDirectoryId)
   const [subDirectories, setSubDirectories] = useState([])
   const [pathItem, setPathItem] = useState(null)
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState(lastUsedDirId);
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const selectRef = useRef(null);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     let req = new User.QuerySubItemsReq()
@@ -41,6 +44,8 @@ export default function FolderSelector({ select }) {
 
   const boxOnClick = (id) => {
     setSelectedValue(id)
+    dispatch(store.userSlice.actions.setlastUsedParentDirId(nowPathItemId))
+    dispatch(store.userSlice.actions.setlastUsedDirId(id))
     select(id)
   }
 
@@ -83,7 +88,7 @@ export default function FolderSelector({ select }) {
               }
             }>
             <Checkbox
-              checked={selectedValue === dir.id}
+              checked={selectedValue == dir.id}
               onClick={
                 (e) => {
                   boxOnClick(dir.id)
