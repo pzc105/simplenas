@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"pnas/db"
-	"pnas/log"
 	"pnas/prpc"
 	"pnas/ptype"
 	"strings"
@@ -26,7 +25,7 @@ func GetInfoHash(infoHash *InfoHash) *prpc.InfoHash {
 
 func loadTorrent(btClient *BtClient, id ptype.TorrentID) *Torrent {
 	sql := `select id, name, version, info_hash, state, total_size, piece_length, num_pieces, introduce, magnet_uri from torrent where id=?`
-	var t Torrent
+	t := &Torrent{}
 	err := db.QueryRow(sql, id).Scan(
 		&t.base.Id,
 		&t.base.Name,
@@ -44,13 +43,13 @@ func loadTorrent(btClient *BtClient, id ptype.TorrentID) *Torrent {
 	}
 	t.btClient = btClient
 	t.init()
-	return &t
+	return t
 }
 
 func loadTorrentByInfoHash(btClient *BtClient, infoHash *InfoHash) *Torrent {
 	sql := `select id, name, version, info_hash, state, total_size, piece_length, num_pieces, introduce, magnet_uri
 					from torrent where version=? and info_hash=?`
-	var t Torrent
+	t := &Torrent{}
 	err := db.QueryRow(sql, infoHash.Version, infoHash.Hash).Scan(
 		&t.base.Id,
 		&t.base.Name,
@@ -68,7 +67,7 @@ func loadTorrentByInfoHash(btClient *BtClient, infoHash *InfoHash) *Torrent {
 	}
 	t.btClient = btClient
 	t.init()
-	return &t
+	return t
 }
 
 func newTorrent(btClient *BtClient, infoHash *InfoHash, magnetUri string) *Torrent {
@@ -130,7 +129,7 @@ func loadResumeData(infoHash *InfoHash) ([]byte, error) {
 }
 
 func getMagnetByInfoHash(infoHash *InfoHash) (string, error) {
-	sql := `select magnet_uri from magnet where info_hash=? and version=?`
+	sql := `select magnet_uri from torrent where info_hash=? and version=?`
 	var ret string
 	err := db.QueryRow(sql, infoHash.Hash, infoHash.Version).Scan(&ret)
 	return ret, err
@@ -144,14 +143,6 @@ func saveBtSessionParams(data []byte) error {
 func loadBtSessionParams() ([]byte, error) {
 	d, err := db.GREDIS.Get(context.Background(), RedisKeyBtSessionParams).Result()
 	return []byte(d), err
-}
-
-func saveMagnetUri(infoHash *InfoHash, uri string) {
-	sql := "insert into magnet(version, info_hash, magnet_uri) values(?, ?, ?) on duplicate key update magnet_uri=values(magnet_uri)"
-	_, err := db.Exec(sql, infoHash.Version, infoHash.Hash, uri)
-	if err != nil {
-		log.Debugf("failed to save err: %v", err)
-	}
 }
 
 func IsDownloadAll(st prpc.BtStateEnum) bool {

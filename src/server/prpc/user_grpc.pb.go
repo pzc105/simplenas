@@ -40,6 +40,8 @@ const (
 	UserService_QuerySubItems_FullMethodName     = "/prpc.UserService/QuerySubItems"
 	UserService_QueryItemInfo_FullMethodName     = "/prpc.UserService/QueryItemInfo"
 	UserService_UploadSubtitle_FullMethodName    = "/prpc.UserService/UploadSubtitle"
+	UserService_GetBtMeta_FullMethodName         = "/prpc.UserService/GetBtMeta"
+	UserService_NewBtHlsTask_FullMethodName      = "/prpc.UserService/NewBtHlsTask"
 	UserService_JoinChatRoom_FullMethodName      = "/prpc.UserService/JoinChatRoom"
 	UserService_SendMsg2ChatRoom_FullMethodName  = "/prpc.UserService/SendMsg2ChatRoom"
 	UserService_AddMagnetCategory_FullMethodName = "/prpc.UserService/AddMagnetCategory"
@@ -73,6 +75,8 @@ type UserServiceClient interface {
 	QuerySubItems(ctx context.Context, in *QuerySubItemsReq, opts ...grpc.CallOption) (*QuerySubItemsRes, error)
 	QueryItemInfo(ctx context.Context, in *QueryItemInfoReq, opts ...grpc.CallOption) (*QueryItemInfoRes, error)
 	UploadSubtitle(ctx context.Context, in *UploadSubtitleReq, opts ...grpc.CallOption) (*UploadSubtitleRes, error)
+	GetBtMeta(ctx context.Context, in *GetBtMetaReq, opts ...grpc.CallOption) (*GetBtMetaRsp, error)
+	NewBtHlsTask(ctx context.Context, in *NewBtHlsTaskReq, opts ...grpc.CallOption) (*NewBtHlsTaskRsp, error)
 	JoinChatRoom(ctx context.Context, in *JoinChatRoomReq, opts ...grpc.CallOption) (UserService_JoinChatRoomClient, error)
 	SendMsg2ChatRoom(ctx context.Context, in *SendMsg2ChatRoomReq, opts ...grpc.CallOption) (*SendMsg2ChatRoomRes, error)
 	AddMagnetCategory(ctx context.Context, in *AddMagnetCategoryReq, opts ...grpc.CallOption) (*AddMagnetCategoryRsp, error)
@@ -301,6 +305,24 @@ func (c *userServiceClient) UploadSubtitle(ctx context.Context, in *UploadSubtit
 	return out, nil
 }
 
+func (c *userServiceClient) GetBtMeta(ctx context.Context, in *GetBtMetaReq, opts ...grpc.CallOption) (*GetBtMetaRsp, error) {
+	out := new(GetBtMetaRsp)
+	err := c.cc.Invoke(ctx, UserService_GetBtMeta_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) NewBtHlsTask(ctx context.Context, in *NewBtHlsTaskReq, opts ...grpc.CallOption) (*NewBtHlsTaskRsp, error) {
+	out := new(NewBtHlsTaskRsp)
+	err := c.cc.Invoke(ctx, UserService_NewBtHlsTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userServiceClient) JoinChatRoom(ctx context.Context, in *JoinChatRoomReq, opts ...grpc.CallOption) (UserService_JoinChatRoomClient, error) {
 	stream, err := c.cc.NewStream(ctx, &UserService_ServiceDesc.Streams[1], UserService_JoinChatRoom_FullMethodName, opts...)
 	if err != nil {
@@ -403,6 +425,8 @@ type UserServiceServer interface {
 	QuerySubItems(context.Context, *QuerySubItemsReq) (*QuerySubItemsRes, error)
 	QueryItemInfo(context.Context, *QueryItemInfoReq) (*QueryItemInfoRes, error)
 	UploadSubtitle(context.Context, *UploadSubtitleReq) (*UploadSubtitleRes, error)
+	GetBtMeta(context.Context, *GetBtMetaReq) (*GetBtMetaRsp, error)
+	NewBtHlsTask(context.Context, *NewBtHlsTaskReq) (*NewBtHlsTaskRsp, error)
 	JoinChatRoom(*JoinChatRoomReq, UserService_JoinChatRoomServer) error
 	SendMsg2ChatRoom(context.Context, *SendMsg2ChatRoomReq) (*SendMsg2ChatRoomRes, error)
 	AddMagnetCategory(context.Context, *AddMagnetCategoryReq) (*AddMagnetCategoryRsp, error)
@@ -478,6 +502,12 @@ func (UnimplementedUserServiceServer) QueryItemInfo(context.Context, *QueryItemI
 }
 func (UnimplementedUserServiceServer) UploadSubtitle(context.Context, *UploadSubtitleReq) (*UploadSubtitleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadSubtitle not implemented")
+}
+func (UnimplementedUserServiceServer) GetBtMeta(context.Context, *GetBtMetaReq) (*GetBtMetaRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBtMeta not implemented")
+}
+func (UnimplementedUserServiceServer) NewBtHlsTask(context.Context, *NewBtHlsTaskReq) (*NewBtHlsTaskRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NewBtHlsTask not implemented")
 }
 func (UnimplementedUserServiceServer) JoinChatRoom(*JoinChatRoomReq, UserService_JoinChatRoomServer) error {
 	return status.Errorf(codes.Unimplemented, "method JoinChatRoom not implemented")
@@ -891,6 +921,42 @@ func _UserService_UploadSubtitle_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_GetBtMeta_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBtMetaReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).GetBtMeta(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_GetBtMeta_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).GetBtMeta(ctx, req.(*GetBtMetaReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_NewBtHlsTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NewBtHlsTaskReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).NewBtHlsTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_NewBtHlsTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).NewBtHlsTask(ctx, req.(*NewBtHlsTaskReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserService_JoinChatRoom_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(JoinChatRoomReq)
 	if err := stream.RecvMsg(m); err != nil {
@@ -1088,6 +1154,14 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UploadSubtitle",
 			Handler:    _UserService_UploadSubtitle_Handler,
+		},
+		{
+			MethodName: "GetBtMeta",
+			Handler:    _UserService_GetBtMeta_Handler,
+		},
+		{
+			MethodName: "NewBtHlsTask",
+			Handler:    _UserService_NewBtHlsTask_Handler,
 		},
 		{
 			MethodName: "SendMsg2ChatRoom",

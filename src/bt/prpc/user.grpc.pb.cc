@@ -43,6 +43,8 @@ static const char* UserService_method_names[] = {
   "/prpc.UserService/QuerySubItems",
   "/prpc.UserService/QueryItemInfo",
   "/prpc.UserService/UploadSubtitle",
+  "/prpc.UserService/GetBtMeta",
+  "/prpc.UserService/NewBtHlsTask",
   "/prpc.UserService/JoinChatRoom",
   "/prpc.UserService/SendMsg2ChatRoom",
   "/prpc.UserService/AddMagnetCategory",
@@ -79,12 +81,14 @@ UserService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channe
   , rpcmethod_QuerySubItems_(UserService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_QueryItemInfo_(UserService_method_names[19], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_UploadSubtitle_(UserService_method_names[20], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_JoinChatRoom_(UserService_method_names[21], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
-  , rpcmethod_SendMsg2ChatRoom_(UserService_method_names[22], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_AddMagnetCategory_(UserService_method_names[23], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_AddMagnetUri_(UserService_method_names[24], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QueryMagnet_(UserService_method_names[25], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_DelMagnetCategory_(UserService_method_names[26], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBtMeta_(UserService_method_names[21], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_NewBtHlsTask_(UserService_method_names[22], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_JoinChatRoom_(UserService_method_names[23], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SendMsg2ChatRoom_(UserService_method_names[24], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AddMagnetCategory_(UserService_method_names[25], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AddMagnetUri_(UserService_method_names[26], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QueryMagnet_(UserService_method_names[27], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DelMagnetCategory_(UserService_method_names[28], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status UserService::Stub::Register(::grpc::ClientContext* context, const ::prpc::RegisterInfo& request, ::prpc::RegisterRet* response) {
@@ -563,6 +567,52 @@ void UserService::Stub::async::UploadSubtitle(::grpc::ClientContext* context, co
   return result;
 }
 
+::grpc::Status UserService::Stub::GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::prpc::GetBtMetaRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::GetBtMetaReq, ::prpc::GetBtMetaRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetBtMeta_, context, request, response);
+}
+
+void UserService::Stub::async::GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::GetBtMetaReq, ::prpc::GetBtMetaRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBtMeta_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBtMeta_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::GetBtMetaRsp>* UserService::Stub::PrepareAsyncGetBtMetaRaw(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::GetBtMetaRsp, ::prpc::GetBtMetaReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetBtMeta_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::GetBtMetaRsp>* UserService::Stub::AsyncGetBtMetaRaw(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetBtMetaRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status UserService::Stub::NewBtHlsTask(::grpc::ClientContext* context, const ::prpc::NewBtHlsTaskReq& request, ::prpc::NewBtHlsTaskRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::NewBtHlsTaskReq, ::prpc::NewBtHlsTaskRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_NewBtHlsTask_, context, request, response);
+}
+
+void UserService::Stub::async::NewBtHlsTask(::grpc::ClientContext* context, const ::prpc::NewBtHlsTaskReq* request, ::prpc::NewBtHlsTaskRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::NewBtHlsTaskReq, ::prpc::NewBtHlsTaskRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_NewBtHlsTask_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::NewBtHlsTask(::grpc::ClientContext* context, const ::prpc::NewBtHlsTaskReq* request, ::prpc::NewBtHlsTaskRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_NewBtHlsTask_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::NewBtHlsTaskRsp>* UserService::Stub::PrepareAsyncNewBtHlsTaskRaw(::grpc::ClientContext* context, const ::prpc::NewBtHlsTaskReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::NewBtHlsTaskRsp, ::prpc::NewBtHlsTaskReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_NewBtHlsTask_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::NewBtHlsTaskRsp>* UserService::Stub::AsyncNewBtHlsTaskRaw(::grpc::ClientContext* context, const ::prpc::NewBtHlsTaskReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncNewBtHlsTaskRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ::grpc::ClientReader< ::prpc::JoinChatRoomRes>* UserService::Stub::JoinChatRoomRaw(::grpc::ClientContext* context, const ::prpc::JoinChatRoomReq& request) {
   return ::grpc::internal::ClientReaderFactory< ::prpc::JoinChatRoomRes>::Create(channel_.get(), rpcmethod_JoinChatRoom_, context, request);
 }
@@ -907,6 +957,26 @@ UserService::Service::Service() {
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[21],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::GetBtMetaReq, ::prpc::GetBtMetaRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::GetBtMetaReq* req,
+             ::prpc::GetBtMetaRsp* resp) {
+               return service->GetBtMeta(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[22],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::NewBtHlsTaskReq, ::prpc::NewBtHlsTaskRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::NewBtHlsTaskReq* req,
+             ::prpc::NewBtHlsTaskRsp* resp) {
+               return service->NewBtHlsTask(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[23],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< UserService::Service, ::prpc::JoinChatRoomReq, ::prpc::JoinChatRoomRes>(
           [](UserService::Service* service,
@@ -916,7 +986,7 @@ UserService::Service::Service() {
                return service->JoinChatRoom(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[22],
+      UserService_method_names[24],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -926,7 +996,7 @@ UserService::Service::Service() {
                return service->SendMsg2ChatRoom(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[23],
+      UserService_method_names[25],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::AddMagnetCategoryReq, ::prpc::AddMagnetCategoryRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -936,7 +1006,7 @@ UserService::Service::Service() {
                return service->AddMagnetCategory(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[24],
+      UserService_method_names[26],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::AddMagnetUriReq, ::prpc::AddMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -946,7 +1016,7 @@ UserService::Service::Service() {
                return service->AddMagnetUri(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[25],
+      UserService_method_names[27],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QueryMagnetReq, ::prpc::QueryMagnetRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -956,7 +1026,7 @@ UserService::Service::Service() {
                return service->QueryMagnet(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[26],
+      UserService_method_names[28],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::DelMagnetCategoryReq, ::prpc::DelMagnetCategoryRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -1111,6 +1181,20 @@ UserService::Service::~Service() {
 }
 
 ::grpc::Status UserService::Service::UploadSubtitle(::grpc::ServerContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::GetBtMeta(::grpc::ServerContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::NewBtHlsTask(::grpc::ServerContext* context, const ::prpc::NewBtHlsTaskReq* request, ::prpc::NewBtHlsTaskRsp* response) {
   (void) context;
   (void) request;
   (void) response;

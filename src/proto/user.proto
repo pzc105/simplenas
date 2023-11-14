@@ -44,6 +44,9 @@ service UserService {
   rpc QueryItemInfo(QueryItemInfoReq) returns (QueryItemInfoRes);
   rpc UploadSubtitle(UploadSubtitleReq) returns (UploadSubtitleRes);
 
+  rpc GetBtMeta(GetBtMetaReq) returns (GetBtMetaRsp);
+  rpc NewBtHlsTask(NewBtHlsTaskReq) returns (NewBtHlsTaskRsp);
+
   rpc JoinChatRoom(JoinChatRoomReq) returns (stream JoinChatRoomRes);
   rpc SendMsg2ChatRoom(SendMsg2ChatRoomReq) returns (SendMsg2ChatRoomRes);
 
@@ -203,6 +206,24 @@ message UploadSubtitleReq {
 }
 
 message UploadSubtitleRes {
+
+}
+
+message GetBtMetaReq {
+  DownloadRequest req = 1;
+}
+
+message GetBtMetaRsp {
+  TorrentInfo torrent_info = 1;
+}
+
+message NewBtHlsTaskReq {
+  DownloadRequest req = 1;
+  int64 category_parent_id = 2;
+  bool recursive_new_path = 3;
+}
+
+message NewBtHlsTaskRsp {
 
 }
 

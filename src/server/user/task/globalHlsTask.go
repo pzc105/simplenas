@@ -2,7 +2,9 @@ package task
 
 import (
 	"errors"
+	"fmt"
 	"pnas/ptype"
+	"pnas/setting"
 	"pnas/video"
 	"sync"
 )
@@ -14,18 +16,18 @@ var (
 
 type htask struct {
 	hid       ptype.HlsTaskId
-	callbacks []TaskCallback
+	callbacks map[ptype.TaskId]TaskCallback
 }
 
 type gHlsTask struct {
-	hlsProcess video.HlsProcess
+	HlsProcess video.HlsProcess
 
 	mtx        sync.Mutex
 	genHslTask map[ptype.VideoID]*htask
 }
 
 func (h *gHlsTask) init() {
-	h.hlsProcess.Init()
+	h.HlsProcess.Init()
 	h.genHslTask = make(map[ptype.VideoID]*htask)
 }
 
@@ -46,30 +48,35 @@ func (h *gHlsTask) callback(vid ptype.VideoID, err error) {
 	}
 }
 
-type addHlsTaskParams struct {
-	videoFullName string
-	callback      TaskCallback
-	audioTracksFN []string
-	outDir        string
+type AddHlsTaskParams struct {
+	VideoFullName string
+	AudioTracksFN []string
+	MyTaskId      ptype.TaskId
+	Callback      TaskCallback
 }
 
-func (h *gHlsTask) add(params *addHlsTaskParams) (ptype.VideoID, error) {
+func (h *gHlsTask) add(params *AddHlsTaskParams) (ptype.VideoID, error) {
 	h.mtx.Lock()
 	defer h.mtx.Unlock()
 
-	v, err := video.GetVideoByFileName(params.videoFullName)
+	v, err := video.GetVideoByFileName(params.VideoFullName)
 	if err != nil {
-		vid, err := video.New(params.videoFullName)
+		vid, err := video.New(params.VideoFullName)
 		if err != nil {
 			return -1, ErrFailed2NewVideo
 		}
 		v.Id = vid
 	} else if v.HlsCreated {
-		return -1, ErrExistedVideo
+		return v.Id, ErrExistedVideo
 	}
 
 	if r, ok := h.genHslTask[v.Id]; ok {
-		r.callbacks = append(r.callbacks, params.callback)
+		if _, ok := r.callbacks[params.MyTaskId]; ok {
+			panic("duplicate")
+		}
+		if params.Callback != nil {
+			r.callbacks[params.MyTaskId] = params.Callback
+		}
 		return v.Id, nil
 	}
 
@@ -77,18 +84,24 @@ func (h *gHlsTask) add(params *addHlsTaskParams) (ptype.VideoID, error) {
 		h.callback(v.Id, err)
 	}
 
-	hid, err := h.hlsProcess.Gen(&video.HlsGenParams{
-		FullVideoFileName: params.videoFullName,
-		FullAudioFileName: params.audioTracksFN,
-		OutDir:            params.outDir,
+	outDir := setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%d", v.Id)
+
+	hid, err := h.HlsProcess.Gen(&video.HlsGenParams{
+		FullVideoFileName: params.VideoFullName,
+		FullAudioFileName: params.AudioTracksFN,
+		OutDir:            outDir,
 		Callback:          hlsCallback,
 	})
 	if err != nil {
 		return -1, errors.New("failed to create hls process")
 	}
-	h.genHslTask[v.Id] = &htask{
-		hid:       hid,
-		callbacks: []TaskCallback{params.callback},
+	ht := &htask{
+		hid: hid,
 	}
+	ht.callbacks = make(map[ptype.TaskId]TaskCallback)
+	if params.Callback != nil {
+		ht.callbacks[params.MyTaskId] = params.Callback
+	}
+	h.genHslTask[v.Id] = ht
 	return v.Id, nil
 }

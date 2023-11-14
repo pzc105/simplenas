@@ -18,6 +18,7 @@ import (
 	"pnas/service/session"
 	"pnas/setting"
 	"pnas/user"
+	"pnas/user/task"
 	"pnas/utils"
 	"sort"
 	"sync"
@@ -73,7 +74,9 @@ func (ser *CoreService) Init() {
 	sm.Init()
 	ser.shares = sm
 
-	go crawler.Go36dmBackgroup(&ser.um, &ser.um)
+	if setting.GS().Server.EnableCrawler {
+		go crawler.Go36dmBackgroup(&ser.um, &ser.um)
+	}
 }
 
 func (ser *CoreService) Serve() {
@@ -950,4 +953,50 @@ func (ser *CoreService) DelMagnetCategory(ctx context.Context, req *prpc.DelMagn
 		return nil, err
 	}
 	return &prpc.DelMagnetCategoryRsp{}, nil
+}
+
+func (ser *CoreService) GetBtMeta(ctx context.Context, req *prpc.GetBtMetaReq) (*prpc.GetBtMetaRsp, error) {
+	if req == nil {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "not found session")
+	}
+	if req == nil || req.Req == nil {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	req.Req.StopAfterGotMeta = true
+	_, err := ser.um.Download(&bt.DownloadParams{
+		UserId: ses.UserId,
+		Req:    req.Req,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &prpc.GetBtMetaRsp{}, nil
+}
+func (ser *CoreService) NewBtHlsTask(ctx context.Context, req *prpc.NewBtHlsTaskReq) (*prpc.NewBtHlsTaskRsp, error) {
+	if req == nil {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "not found session")
+	}
+	if req == nil || req.Req == nil {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	err := ser.um.GetTasks().NewBtHlsTask(&task.NewBtHlsParams{
+		UserId:           ses.UserId,
+		ParentId:         ptype.CategoryID(req.CategoryParentId),
+		Bt:               &ser.um,
+		DownloadReq:      req.Req,
+		CategorySer:      ser.um.CategoryService(),
+		RecursiveNewPath: req.RecursiveNewPath,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &prpc.NewBtHlsTaskRsp{}, nil
 }

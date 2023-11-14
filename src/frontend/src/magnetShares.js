@@ -20,10 +20,12 @@ import * as category from './category.js'
 import * as router from './router.js'
 import { FloatingChat } from './chat/chat.js';
 import * as User from './prpc/user_pb.js'
+import * as Bt from './prpc/bt_pb.js'
 import * as Category from './prpc/category_pb.js'
 import userService from './rpcClient.js'
 import { serverAddress } from './rpcClient.js'
 import UnifiedPage from './page.js'
+import BtHlsTaskPanel from './newBtHlsTask.js'
 
 
 export default function MagnetSharesPage() {
@@ -260,6 +262,28 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
     onRefresh()
   }
 
+  const [MenuAnchorPosition, setMenuAnchorPosition] = useState({ left: 0, top: 0 });
+  const [menuOpen, setMenuOpen] = useState({});
+  const handleContextMenu = (event, itemId) => {
+    event.preventDefault();
+    setMenuAnchorPosition({ left: event.clientX, top: event.clientY });
+    setMenuOpen({ ...menuOpen, [itemId]: true });
+  };
+  const handleMenuClose = (itemId) => {
+    setMenuOpen({ ...menuOpen, [itemId]: false });
+  };
+  const [sNewBtHlsPanel, setSNewBtHlsPanel] = useState(false)
+  const downloadReq = useRef(null)
+  const showNewBtHlsPanel = (item) => {
+    let req = new Bt.DownloadRequest()
+    req.setType(Bt.DownloadRequest.ReqType.MAGNETURI)
+    const encoder = new TextEncoder()
+    req.setContent(encoder.encode(item.other.magnetUri))
+    setMenuOpen({ ...menuOpen, [item.id]: false });
+    downloadReq.current = req
+    setSNewBtHlsPanel(true)
+  }
+
   return (
     <Container>
       <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
@@ -316,7 +340,7 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
                     </Grid>
                   </Container> :
                   <Container>
-                    <Grid container sx={{ display: 'flex' }} >
+                    <Grid container sx={{ display: 'flex' }} onContextMenu={(e) => handleContextMenu(e, item.id)}>
                       <Grid item xs={12}>
                         <Grid container spacing={2}>
                           <Grid item xs={4}>
@@ -325,7 +349,7 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
                             </Typography>
                           </Grid>
                           <Grid item xs={6}>
-                            <CopyToClipboard text={item.other}>
+                            <CopyToClipboard text={item.other.magnetUri}>
                               <Tooltip title={item.introduce}>
                                 <Typography variant="button" component="div" noWrap>
                                   <Button onClick={() => setCopyDialogOpen(true)}>{item.other.magnetUri}</Button>
@@ -344,6 +368,16 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
                         </Grid>
                       </Grid>
                     </Grid>
+                    <Dialog open={sNewBtHlsPanel} onClose={() => setSNewBtHlsPanel(false)}>
+                      <BtHlsTaskPanel downloadReq={downloadReq.current} />
+                    </Dialog>
+                    <Menu
+                      anchorReference="anchorPosition"
+                      anchorPosition={MenuAnchorPosition}
+                      open={menuOpen[item.id] ? menuOpen[item.id] : false}
+                      onClose={() => handleMenuClose(item.id)} >
+                      <MenuItem onClick={(e) => showNewBtHlsPanel(item)}>创建任务</MenuItem>
+                    </Menu>
                   </Container>
               }
             </ListItem>

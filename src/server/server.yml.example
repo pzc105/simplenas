@@ -6,6 +6,7 @@ server:
   crtFile: ../../tls/rpc.crt
   keyFile: ../../tls/rpc.key
   mediaPath: E:/media
+  enableCrawler: false
 
 bt:
   btClientAddress: 127.0.0.1:22345

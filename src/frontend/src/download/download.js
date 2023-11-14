@@ -10,8 +10,8 @@ import SideUtils from '../sideManager.js';
 import * as store from '../store.js'
 import * as Bt from '../prpc/bt_pb.js'
 import * as User from '../prpc/user_pb.js'
-import * as router from '../router.js'
 import userService from '../rpcClient.js'
+import * as router from '../router.js'
 import FileUpload from '../uploadTorrent.js'
 import { ProgressLists } from './downloadlist.js'
 import { FloatingChat, DraggableDialog } from '../chat/chat.js';

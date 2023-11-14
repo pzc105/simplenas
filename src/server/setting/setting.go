@@ -20,14 +20,15 @@ type Setting struct {
 }
 
 type ServerSetting struct {
-	Domain    string `yaml:"domain"`
-	BoundIp   string `yaml:"boundIp"`
-	Port      int
-	RestPort  int    `yaml:"restPort"`
-	WebPort   int    `yaml:"webPort"`
-	CrtFile   string `yaml:"crtFile"`
-	KeyFile   string `yaml:"keyFile"`
-	MediaPath string `yaml:"mediaPath"`
+	Domain        string `yaml:"domain"`
+	BoundIp       string `yaml:"boundIp"`
+	Port          int
+	RestPort      int    `yaml:"restPort"`
+	WebPort       int    `yaml:"webPort"`
+	CrtFile       string `yaml:"crtFile"`
+	KeyFile       string `yaml:"keyFile"`
+	MediaPath     string `yaml:"mediaPath"`
+	EnableCrawler bool   `yaml:"enableCrawler"`
 
 	HlsPath    string
 	PosterPath string

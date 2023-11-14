@@ -501,9 +501,6 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 			ut.saveUserTorrent(t, ptype.AdminId)
 		}
 
-		if len(magnetUri) > 0 {
-			saveMagnetUri(&t.base.InfoHash, magnetUri)
-		}
 		return res, nil
 	} else {
 		return res, status.Error(codes.InvalidArgument, "")

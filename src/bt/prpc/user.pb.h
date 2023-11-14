@@ -110,6 +110,12 @@ extern DelSharedItemResDefaultTypeInternal _DelSharedItemRes_default_instance_;
 class EmailInfo;
 struct EmailInfoDefaultTypeInternal;
 extern EmailInfoDefaultTypeInternal _EmailInfo_default_instance_;
+class GetBtMetaReq;
+struct GetBtMetaReqDefaultTypeInternal;
+extern GetBtMetaReqDefaultTypeInternal _GetBtMetaReq_default_instance_;
+class GetBtMetaRsp;
+struct GetBtMetaRspDefaultTypeInternal;
+extern GetBtMetaRspDefaultTypeInternal _GetBtMetaRsp_default_instance_;
 class GetTorrentsReq;
 struct GetTorrentsReqDefaultTypeInternal;
 extern GetTorrentsReqDefaultTypeInternal _GetTorrentsReq_default_instance_;
@@ -131,6 +137,12 @@ extern LoginInfoDefaultTypeInternal _LoginInfo_default_instance_;
 class LoginRet;
 struct LoginRetDefaultTypeInternal;
 extern LoginRetDefaultTypeInternal _LoginRet_default_instance_;
+class NewBtHlsTaskReq;
+struct NewBtHlsTaskReqDefaultTypeInternal;
+extern NewBtHlsTaskReqDefaultTypeInternal _NewBtHlsTaskReq_default_instance_;
+class NewBtHlsTaskRsp;
+struct NewBtHlsTaskRspDefaultTypeInternal;
+extern NewBtHlsTaskRspDefaultTypeInternal _NewBtHlsTaskRsp_default_instance_;
 class NewCategoryItemReq;
 struct NewCategoryItemReqDefaultTypeInternal;
 extern NewCategoryItemReqDefaultTypeInternal _NewCategoryItemReq_default_instance_;
@@ -5418,6 +5430,647 @@ class UploadSubtitleRes final :
   friend struct ::TableStruct_user_2eproto;
 };// -------------------------------------------------------------------
 
+class GetBtMetaReq final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.GetBtMetaReq) */ {
+ public:
+  inline GetBtMetaReq() : GetBtMetaReq(nullptr) {}
+  ~GetBtMetaReq() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR GetBtMetaReq(::google::protobuf::internal::ConstantInitialized);
+
+  GetBtMetaReq(const GetBtMetaReq& from);
+  GetBtMetaReq(GetBtMetaReq&& from) noexcept
+    : GetBtMetaReq() {
+    *this = ::std::move(from);
+  }
+
+  inline GetBtMetaReq& operator=(const GetBtMetaReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetBtMetaReq& operator=(GetBtMetaReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetBtMetaReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetBtMetaReq* internal_default_instance() {
+    return reinterpret_cast<const GetBtMetaReq*>(
+               &_GetBtMetaReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    31;
+
+  friend void swap(GetBtMetaReq& a, GetBtMetaReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetBtMetaReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetBtMetaReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetBtMetaReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetBtMetaReq>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const GetBtMetaReq& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const GetBtMetaReq& from) {
+    GetBtMetaReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetBtMetaReq* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.GetBtMetaReq";
+  }
+  protected:
+  explicit GetBtMetaReq(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kReqFieldNumber = 1,
+  };
+  // .prpc.DownloadRequest req = 1;
+  bool has_req() const;
+  void clear_req() ;
+  const ::prpc::DownloadRequest& req() const;
+  PROTOBUF_NODISCARD ::prpc::DownloadRequest* release_req();
+  ::prpc::DownloadRequest* mutable_req();
+  void set_allocated_req(::prpc::DownloadRequest* value);
+  void unsafe_arena_set_allocated_req(::prpc::DownloadRequest* value);
+  ::prpc::DownloadRequest* unsafe_arena_release_req();
+
+  private:
+  const ::prpc::DownloadRequest& _internal_req() const;
+  ::prpc::DownloadRequest* _internal_mutable_req();
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.GetBtMetaReq)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<0, 1, 1, 0, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    ::prpc::DownloadRequest* req_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class GetBtMetaRsp final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.GetBtMetaRsp) */ {
+ public:
+  inline GetBtMetaRsp() : GetBtMetaRsp(nullptr) {}
+  ~GetBtMetaRsp() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR GetBtMetaRsp(::google::protobuf::internal::ConstantInitialized);
+
+  GetBtMetaRsp(const GetBtMetaRsp& from);
+  GetBtMetaRsp(GetBtMetaRsp&& from) noexcept
+    : GetBtMetaRsp() {
+    *this = ::std::move(from);
+  }
+
+  inline GetBtMetaRsp& operator=(const GetBtMetaRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetBtMetaRsp& operator=(GetBtMetaRsp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetBtMetaRsp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetBtMetaRsp* internal_default_instance() {
+    return reinterpret_cast<const GetBtMetaRsp*>(
+               &_GetBtMetaRsp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    32;
+
+  friend void swap(GetBtMetaRsp& a, GetBtMetaRsp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetBtMetaRsp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetBtMetaRsp* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetBtMetaRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetBtMetaRsp>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const GetBtMetaRsp& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const GetBtMetaRsp& from) {
+    GetBtMetaRsp::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetBtMetaRsp* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.GetBtMetaRsp";
+  }
+  protected:
+  explicit GetBtMetaRsp(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kTorrentInfoFieldNumber = 1,
+  };
+  // .prpc.TorrentInfo torrent_info = 1;
+  bool has_torrent_info() const;
+  void clear_torrent_info() ;
+  const ::prpc::TorrentInfo& torrent_info() const;
+  PROTOBUF_NODISCARD ::prpc::TorrentInfo* release_torrent_info();
+  ::prpc::TorrentInfo* mutable_torrent_info();
+  void set_allocated_torrent_info(::prpc::TorrentInfo* value);
+  void unsafe_arena_set_allocated_torrent_info(::prpc::TorrentInfo* value);
+  ::prpc::TorrentInfo* unsafe_arena_release_torrent_info();
+
+  private:
+  const ::prpc::TorrentInfo& _internal_torrent_info() const;
+  ::prpc::TorrentInfo* _internal_mutable_torrent_info();
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.GetBtMetaRsp)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<0, 1, 1, 0, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    ::prpc::TorrentInfo* torrent_info_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class NewBtHlsTaskReq final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.NewBtHlsTaskReq) */ {
+ public:
+  inline NewBtHlsTaskReq() : NewBtHlsTaskReq(nullptr) {}
+  ~NewBtHlsTaskReq() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR NewBtHlsTaskReq(::google::protobuf::internal::ConstantInitialized);
+
+  NewBtHlsTaskReq(const NewBtHlsTaskReq& from);
+  NewBtHlsTaskReq(NewBtHlsTaskReq&& from) noexcept
+    : NewBtHlsTaskReq() {
+    *this = ::std::move(from);
+  }
+
+  inline NewBtHlsTaskReq& operator=(const NewBtHlsTaskReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline NewBtHlsTaskReq& operator=(NewBtHlsTaskReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const NewBtHlsTaskReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const NewBtHlsTaskReq* internal_default_instance() {
+    return reinterpret_cast<const NewBtHlsTaskReq*>(
+               &_NewBtHlsTaskReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    33;
+
+  friend void swap(NewBtHlsTaskReq& a, NewBtHlsTaskReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(NewBtHlsTaskReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(NewBtHlsTaskReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  NewBtHlsTaskReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<NewBtHlsTaskReq>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const NewBtHlsTaskReq& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const NewBtHlsTaskReq& from) {
+    NewBtHlsTaskReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(NewBtHlsTaskReq* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.NewBtHlsTaskReq";
+  }
+  protected:
+  explicit NewBtHlsTaskReq(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kReqFieldNumber = 1,
+    kCategoryParentIdFieldNumber = 2,
+    kRecursiveNewPathFieldNumber = 3,
+  };
+  // .prpc.DownloadRequest req = 1;
+  bool has_req() const;
+  void clear_req() ;
+  const ::prpc::DownloadRequest& req() const;
+  PROTOBUF_NODISCARD ::prpc::DownloadRequest* release_req();
+  ::prpc::DownloadRequest* mutable_req();
+  void set_allocated_req(::prpc::DownloadRequest* value);
+  void unsafe_arena_set_allocated_req(::prpc::DownloadRequest* value);
+  ::prpc::DownloadRequest* unsafe_arena_release_req();
+
+  private:
+  const ::prpc::DownloadRequest& _internal_req() const;
+  ::prpc::DownloadRequest* _internal_mutable_req();
+
+  public:
+  // int64 category_parent_id = 2;
+  void clear_category_parent_id() ;
+  ::int64_t category_parent_id() const;
+  void set_category_parent_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_category_parent_id() const;
+  void _internal_set_category_parent_id(::int64_t value);
+
+  public:
+  // bool recursive_new_path = 3;
+  void clear_recursive_new_path() ;
+  bool recursive_new_path() const;
+  void set_recursive_new_path(bool value);
+
+  private:
+  bool _internal_recursive_new_path() const;
+  void _internal_set_recursive_new_path(bool value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.NewBtHlsTaskReq)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 3, 1, 0, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    ::prpc::DownloadRequest* req_;
+    ::int64_t category_parent_id_;
+    bool recursive_new_path_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class NewBtHlsTaskRsp final :
+    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.NewBtHlsTaskRsp) */ {
+ public:
+  inline NewBtHlsTaskRsp() : NewBtHlsTaskRsp(nullptr) {}
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR NewBtHlsTaskRsp(::google::protobuf::internal::ConstantInitialized);
+
+  NewBtHlsTaskRsp(const NewBtHlsTaskRsp& from);
+  NewBtHlsTaskRsp(NewBtHlsTaskRsp&& from) noexcept
+    : NewBtHlsTaskRsp() {
+    *this = ::std::move(from);
+  }
+
+  inline NewBtHlsTaskRsp& operator=(const NewBtHlsTaskRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline NewBtHlsTaskRsp& operator=(NewBtHlsTaskRsp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const NewBtHlsTaskRsp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const NewBtHlsTaskRsp* internal_default_instance() {
+    return reinterpret_cast<const NewBtHlsTaskRsp*>(
+               &_NewBtHlsTaskRsp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    34;
+
+  friend void swap(NewBtHlsTaskRsp& a, NewBtHlsTaskRsp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(NewBtHlsTaskRsp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(NewBtHlsTaskRsp* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  NewBtHlsTaskRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<NewBtHlsTaskRsp>(arena);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const NewBtHlsTaskRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const NewBtHlsTaskRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.NewBtHlsTaskRsp";
+  }
+  protected:
+  explicit NewBtHlsTaskRsp(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:prpc.NewBtHlsTaskRsp)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
 class Room final :
     public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.Room) */ {
  public:
@@ -5474,7 +6127,7 @@ class Room final :
                &_Room_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    35;
 
   friend void swap(Room& a, Room& b) {
     a.Swap(&b);
@@ -5665,7 +6318,7 @@ class JoinChatRoomReq final :
                &_JoinChatRoomReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    36;
 
   friend void swap(JoinChatRoomReq& a, JoinChatRoomReq& b) {
     a.Swap(&b);
@@ -5829,7 +6482,7 @@ class ChatMessage final :
                &_ChatMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    37;
 
   friend void swap(ChatMessage& a, ChatMessage& b) {
     a.Swap(&b);
@@ -6035,7 +6688,7 @@ class JoinChatRoomRes final :
                &_JoinChatRoomRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    38;
 
   friend void swap(JoinChatRoomRes& a, JoinChatRoomRes& b) {
     a.Swap(&b);
@@ -6219,7 +6872,7 @@ class SendMsg2ChatRoomReq final :
                &_SendMsg2ChatRoomReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    39;
 
   friend void swap(SendMsg2ChatRoomReq& a, SendMsg2ChatRoomReq& b) {
     a.Swap(&b);
@@ -6399,7 +7052,7 @@ class SendMsg2ChatRoomRes final :
                &_SendMsg2ChatRoomRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    36;
+    40;
 
   friend void swap(SendMsg2ChatRoomRes& a, SendMsg2ChatRoomRes& b) {
     a.Swap(&b);
@@ -6525,7 +7178,7 @@ class AddMagnetCategoryReq final :
                &_AddMagnetCategoryReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    37;
+    41;
 
   friend void swap(AddMagnetCategoryReq& a, AddMagnetCategoryReq& b) {
     a.Swap(&b);
@@ -6718,7 +7371,7 @@ class AddMagnetCategoryRsp final :
                &_AddMagnetCategoryRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    38;
+    42;
 
   friend void swap(AddMagnetCategoryRsp& a, AddMagnetCategoryRsp& b) {
     a.Swap(&b);
@@ -6844,7 +7497,7 @@ class AddMagnetUriReq final :
                &_AddMagnetUriReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    39;
+    43;
 
   friend void swap(AddMagnetUriReq& a, AddMagnetUriReq& b) {
     a.Swap(&b);
@@ -7037,7 +7690,7 @@ class AddMagnetUriRsp final :
                &_AddMagnetUriRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    40;
+    44;
 
   friend void swap(AddMagnetUriRsp& a, AddMagnetUriRsp& b) {
     a.Swap(&b);
@@ -7163,7 +7816,7 @@ class QueryMagnetReq final :
                &_QueryMagnetReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    41;
+    45;
 
   friend void swap(QueryMagnetReq& a, QueryMagnetReq& b) {
     a.Swap(&b);
@@ -7363,7 +8016,7 @@ class QueryMagnetRsp final :
                &_QueryMagnetRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    42;
+    46;
 
   friend void swap(QueryMagnetRsp& a, QueryMagnetRsp& b) {
     a.Swap(&b);
@@ -7541,7 +8194,7 @@ class DelMagnetCategoryReq final :
                &_DelMagnetCategoryReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    43;
+    47;
 
   friend void swap(DelMagnetCategoryReq& a, DelMagnetCategoryReq& b) {
     a.Swap(&b);
@@ -7698,7 +8351,7 @@ class DelMagnetCategoryRsp final :
                &_DelMagnetCategoryRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    44;
+    48;
 
   friend void swap(DelMagnetCategoryRsp& a, DelMagnetCategoryRsp& b) {
     a.Swap(&b);
@@ -7823,7 +8476,7 @@ class GetTorrentsReq final :
                &_GetTorrentsReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    45;
+    49;
 
   friend void swap(GetTorrentsReq& a, GetTorrentsReq& b) {
     a.Swap(&b);
@@ -7949,7 +8602,7 @@ class GetTorrentsRsp final :
                &_GetTorrentsRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    46;
+    50;
 
   friend void swap(GetTorrentsRsp& a, GetTorrentsRsp& b) {
     a.Swap(&b);
@@ -10545,6 +11198,342 @@ UploadSubtitleReq::_internal_mutable_subtitles() {
 // -------------------------------------------------------------------
 
 // UploadSubtitleRes
+
+// -------------------------------------------------------------------
+
+// GetBtMetaReq
+
+// .prpc.DownloadRequest req = 1;
+inline bool GetBtMetaReq::has_req() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.req_ != nullptr);
+  return value;
+}
+inline const ::prpc::DownloadRequest& GetBtMetaReq::_internal_req() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::DownloadRequest* p = _impl_.req_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::DownloadRequest&>(::prpc::_DownloadRequest_default_instance_);
+}
+inline const ::prpc::DownloadRequest& GetBtMetaReq::req() const {
+  // @@protoc_insertion_point(field_get:prpc.GetBtMetaReq.req)
+  return _internal_req();
+}
+inline void GetBtMetaReq::unsafe_arena_set_allocated_req(::prpc::DownloadRequest* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.req_);
+  }
+  _impl_.req_ = reinterpret_cast<::prpc::DownloadRequest*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.GetBtMetaReq.req)
+}
+inline ::prpc::DownloadRequest* GetBtMetaReq::release_req() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::DownloadRequest* released = _impl_.req_;
+  _impl_.req_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::DownloadRequest* GetBtMetaReq::unsafe_arena_release_req() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.GetBtMetaReq.req)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::DownloadRequest* temp = _impl_.req_;
+  _impl_.req_ = nullptr;
+  return temp;
+}
+inline ::prpc::DownloadRequest* GetBtMetaReq::_internal_mutable_req() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  if (_impl_.req_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::DownloadRequest>(GetArenaForAllocation());
+    _impl_.req_ = reinterpret_cast<::prpc::DownloadRequest*>(p);
+  }
+  return _impl_.req_;
+}
+inline ::prpc::DownloadRequest* GetBtMetaReq::mutable_req() {
+  ::prpc::DownloadRequest* _msg = _internal_mutable_req();
+  // @@protoc_insertion_point(field_mutable:prpc.GetBtMetaReq.req)
+  return _msg;
+}
+inline void GetBtMetaReq::set_allocated_req(::prpc::DownloadRequest* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.req_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::google::protobuf::MessageLite*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.req_ = reinterpret_cast<::prpc::DownloadRequest*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.GetBtMetaReq.req)
+}
+
+// -------------------------------------------------------------------
+
+// GetBtMetaRsp
+
+// .prpc.TorrentInfo torrent_info = 1;
+inline bool GetBtMetaRsp::has_torrent_info() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.torrent_info_ != nullptr);
+  return value;
+}
+inline const ::prpc::TorrentInfo& GetBtMetaRsp::_internal_torrent_info() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::TorrentInfo* p = _impl_.torrent_info_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::TorrentInfo&>(::prpc::_TorrentInfo_default_instance_);
+}
+inline const ::prpc::TorrentInfo& GetBtMetaRsp::torrent_info() const {
+  // @@protoc_insertion_point(field_get:prpc.GetBtMetaRsp.torrent_info)
+  return _internal_torrent_info();
+}
+inline void GetBtMetaRsp::unsafe_arena_set_allocated_torrent_info(::prpc::TorrentInfo* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.torrent_info_);
+  }
+  _impl_.torrent_info_ = reinterpret_cast<::prpc::TorrentInfo*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.GetBtMetaRsp.torrent_info)
+}
+inline ::prpc::TorrentInfo* GetBtMetaRsp::release_torrent_info() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::TorrentInfo* released = _impl_.torrent_info_;
+  _impl_.torrent_info_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::TorrentInfo* GetBtMetaRsp::unsafe_arena_release_torrent_info() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.GetBtMetaRsp.torrent_info)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::TorrentInfo* temp = _impl_.torrent_info_;
+  _impl_.torrent_info_ = nullptr;
+  return temp;
+}
+inline ::prpc::TorrentInfo* GetBtMetaRsp::_internal_mutable_torrent_info() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  if (_impl_.torrent_info_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::TorrentInfo>(GetArenaForAllocation());
+    _impl_.torrent_info_ = reinterpret_cast<::prpc::TorrentInfo*>(p);
+  }
+  return _impl_.torrent_info_;
+}
+inline ::prpc::TorrentInfo* GetBtMetaRsp::mutable_torrent_info() {
+  ::prpc::TorrentInfo* _msg = _internal_mutable_torrent_info();
+  // @@protoc_insertion_point(field_mutable:prpc.GetBtMetaRsp.torrent_info)
+  return _msg;
+}
+inline void GetBtMetaRsp::set_allocated_torrent_info(::prpc::TorrentInfo* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.torrent_info_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::google::protobuf::MessageLite*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.torrent_info_ = reinterpret_cast<::prpc::TorrentInfo*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.GetBtMetaRsp.torrent_info)
+}
+
+// -------------------------------------------------------------------
+
+// NewBtHlsTaskReq
+
+// .prpc.DownloadRequest req = 1;
+inline bool NewBtHlsTaskReq::has_req() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.req_ != nullptr);
+  return value;
+}
+inline const ::prpc::DownloadRequest& NewBtHlsTaskReq::_internal_req() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::DownloadRequest* p = _impl_.req_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::DownloadRequest&>(::prpc::_DownloadRequest_default_instance_);
+}
+inline const ::prpc::DownloadRequest& NewBtHlsTaskReq::req() const {
+  // @@protoc_insertion_point(field_get:prpc.NewBtHlsTaskReq.req)
+  return _internal_req();
+}
+inline void NewBtHlsTaskReq::unsafe_arena_set_allocated_req(::prpc::DownloadRequest* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.req_);
+  }
+  _impl_.req_ = reinterpret_cast<::prpc::DownloadRequest*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.NewBtHlsTaskReq.req)
+}
+inline ::prpc::DownloadRequest* NewBtHlsTaskReq::release_req() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::DownloadRequest* released = _impl_.req_;
+  _impl_.req_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::DownloadRequest* NewBtHlsTaskReq::unsafe_arena_release_req() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.NewBtHlsTaskReq.req)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::DownloadRequest* temp = _impl_.req_;
+  _impl_.req_ = nullptr;
+  return temp;
+}
+inline ::prpc::DownloadRequest* NewBtHlsTaskReq::_internal_mutable_req() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  if (_impl_.req_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::DownloadRequest>(GetArenaForAllocation());
+    _impl_.req_ = reinterpret_cast<::prpc::DownloadRequest*>(p);
+  }
+  return _impl_.req_;
+}
+inline ::prpc::DownloadRequest* NewBtHlsTaskReq::mutable_req() {
+  ::prpc::DownloadRequest* _msg = _internal_mutable_req();
+  // @@protoc_insertion_point(field_mutable:prpc.NewBtHlsTaskReq.req)
+  return _msg;
+}
+inline void NewBtHlsTaskReq::set_allocated_req(::prpc::DownloadRequest* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.req_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::google::protobuf::MessageLite*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.req_ = reinterpret_cast<::prpc::DownloadRequest*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.NewBtHlsTaskReq.req)
+}
+
+// int64 category_parent_id = 2;
+inline void NewBtHlsTaskReq::clear_category_parent_id() {
+  _impl_.category_parent_id_ = ::int64_t{0};
+}
+inline ::int64_t NewBtHlsTaskReq::category_parent_id() const {
+  // @@protoc_insertion_point(field_get:prpc.NewBtHlsTaskReq.category_parent_id)
+  return _internal_category_parent_id();
+}
+inline void NewBtHlsTaskReq::set_category_parent_id(::int64_t value) {
+  _internal_set_category_parent_id(value);
+  // @@protoc_insertion_point(field_set:prpc.NewBtHlsTaskReq.category_parent_id)
+}
+inline ::int64_t NewBtHlsTaskReq::_internal_category_parent_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.category_parent_id_;
+}
+inline void NewBtHlsTaskReq::_internal_set_category_parent_id(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.category_parent_id_ = value;
+}
+
+// bool recursive_new_path = 3;
+inline void NewBtHlsTaskReq::clear_recursive_new_path() {
+  _impl_.recursive_new_path_ = false;
+}
+inline bool NewBtHlsTaskReq::recursive_new_path() const {
+  // @@protoc_insertion_point(field_get:prpc.NewBtHlsTaskReq.recursive_new_path)
+  return _internal_recursive_new_path();
+}
+inline void NewBtHlsTaskReq::set_recursive_new_path(bool value) {
+  _internal_set_recursive_new_path(value);
+  // @@protoc_insertion_point(field_set:prpc.NewBtHlsTaskReq.recursive_new_path)
+}
+inline bool NewBtHlsTaskReq::_internal_recursive_new_path() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.recursive_new_path_;
+}
+inline void NewBtHlsTaskReq::_internal_set_recursive_new_path(bool value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.recursive_new_path_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// NewBtHlsTaskRsp
 
 // -------------------------------------------------------------------
 

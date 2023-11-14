@@ -922,6 +922,92 @@ export class UserServiceClient {
     this.methodDescriptorUploadSubtitle);
   }
 
+  methodDescriptorGetBtMeta = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/GetBtMeta',
+    grpcWeb.MethodType.UNARY,
+    user_pb.GetBtMetaReq,
+    user_pb.GetBtMetaRsp,
+    (request: user_pb.GetBtMetaReq) => {
+      return request.serializeBinary();
+    },
+    user_pb.GetBtMetaRsp.deserializeBinary
+  );
+
+  getBtMeta(
+    request: user_pb.GetBtMetaReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.GetBtMetaRsp>;
+
+  getBtMeta(
+    request: user_pb.GetBtMetaReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: user_pb.GetBtMetaRsp) => void): grpcWeb.ClientReadableStream<user_pb.GetBtMetaRsp>;
+
+  getBtMeta(
+    request: user_pb.GetBtMetaReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: user_pb.GetBtMetaRsp) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.UserService/GetBtMeta',
+        request,
+        metadata || {},
+        this.methodDescriptorGetBtMeta,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.UserService/GetBtMeta',
+    request,
+    metadata || {},
+    this.methodDescriptorGetBtMeta);
+  }
+
+  methodDescriptorNewBtHlsTask = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/NewBtHlsTask',
+    grpcWeb.MethodType.UNARY,
+    user_pb.NewBtHlsTaskReq,
+    user_pb.NewBtHlsTaskRsp,
+    (request: user_pb.NewBtHlsTaskReq) => {
+      return request.serializeBinary();
+    },
+    user_pb.NewBtHlsTaskRsp.deserializeBinary
+  );
+
+  newBtHlsTask(
+    request: user_pb.NewBtHlsTaskReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.NewBtHlsTaskRsp>;
+
+  newBtHlsTask(
+    request: user_pb.NewBtHlsTaskReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: user_pb.NewBtHlsTaskRsp) => void): grpcWeb.ClientReadableStream<user_pb.NewBtHlsTaskRsp>;
+
+  newBtHlsTask(
+    request: user_pb.NewBtHlsTaskReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: user_pb.NewBtHlsTaskRsp) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.UserService/NewBtHlsTask',
+        request,
+        metadata || {},
+        this.methodDescriptorNewBtHlsTask,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.UserService/NewBtHlsTask',
+    request,
+    metadata || {},
+    this.methodDescriptorNewBtHlsTask);
+  }
+
   methodDescriptorJoinChatRoom = new grpcWeb.MethodDescriptor(
     '/prpc.UserService/JoinChatRoom',
     grpcWeb.MethodType.SERVER_STREAMING,

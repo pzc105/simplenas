@@ -108,8 +108,8 @@ func (t *Torrent) updateTorrentInfo(ti *prpc.TorrentInfo) {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
 
-	sql := `update torrent set name=?, total_size=?, piece_length=?, num_pieces=?`
-	_, err := db.Exec(sql, ti.Name, ti.TotalSize, ti.PieceLength, ti.NumPieces)
+	sql := `update torrent set name=?, total_size=?, piece_length=?, num_pieces=? where version=? and info_hash=?`
+	_, err := db.Exec(sql, ti.Name, ti.TotalSize, ti.PieceLength, ti.NumPieces, t.base.InfoHash.Version, t.base.InfoHash.Hash)
 	if err != nil {
 		log.Warnf("failed to update torrent err: %v", err)
 		return

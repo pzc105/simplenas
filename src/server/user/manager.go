@@ -1,20 +1,17 @@
 package user
 
 import (
-	"fmt"
 	"os"
 	"path"
 	"pnas/bt"
 	"pnas/category"
 	"pnas/db"
-	"pnas/log"
 	"pnas/phttp"
 	"pnas/prpc"
 	"pnas/ptype"
-	"pnas/setting"
+	"pnas/user/task"
 	"pnas/utils"
 	"pnas/video"
-	"strconv"
 	"sync"
 
 	"github.com/pkg/errors"
@@ -23,12 +20,11 @@ import (
 type UserManger struct {
 	IMagnetSharesService
 	bt.UserTorrents
-	mtx          sync.Mutex
-	users        map[ptype.UserID]*User
-	genHslRecord map[ptype.VideoID]bool
-	categorySer  category.IService
+	mtx         sync.Mutex
+	users       map[ptype.UserID]*User
+	categorySer category.IService
 
-	hlsProcess video.HlsProcess
+	tasks task.ITasks
 }
 
 func (um *UserManger) Init() {
@@ -39,7 +35,6 @@ func (um *UserManger) Init() {
 	defer um.mtx.Unlock()
 
 	um.users = make(map[ptype.UserID]*User)
-	um.genHslRecord = make(map[ptype.VideoID]bool)
 
 	um.categorySer = &category.Manager{}
 	um.categorySer.Init()
@@ -48,7 +43,9 @@ func (um *UserManger) Init() {
 	magnetShares.Init(um.categorySer)
 	um.IMagnetSharesService = &magnetShares
 
-	um.hlsProcess.Init()
+	ts := &task.TasksIml{}
+	ts.Init()
+	um.tasks = ts
 }
 
 func (um *UserManger) Close() {
@@ -206,52 +203,6 @@ type AddBtVideosParams struct {
 	FileIndexes    []int32
 }
 
-func (um *UserManger) findSubtitle(infoHash *bt.InfoHash, videoFileIndex int32) int32 {
-	t, err := um.GetTorrent(infoHash)
-	if err != nil {
-		return -1
-	}
-
-	files := t.GetFiles()
-	videoFileName := utils.GetFileName(files[videoFileIndex].Name)
-	for i, f := range files {
-		if int32(i) == videoFileIndex {
-			continue
-		}
-		if videoFileName != utils.GetFileName(f.Name) {
-			continue
-		}
-		if (f.FileType & bt.FileSubtitleType) != 0 {
-			return int32(i)
-		}
-	}
-	return -1
-}
-
-func (um *UserManger) findAudioTrack(infoHash *bt.InfoHash, videoFileIndex int32) []string {
-	t, err := um.GetTorrent(infoHash)
-	if err != nil {
-		return []string{}
-	}
-
-	baseInfo := t.GetBaseInfo()
-	files := t.GetFiles()
-	var r []string
-	videoFileName := utils.GetFileName(files[videoFileIndex].Name)
-	for i, f := range files {
-		if int32(i) == videoFileIndex {
-			continue
-		}
-		if videoFileName != utils.GetFileName(f.Name) {
-			continue
-		}
-		if (f.FileType & bt.FileAudioType) != 0 {
-			r = append(r, baseInfo.SavePath+"/"+files[i].Name)
-		}
-	}
-	return r
-}
-
 func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 
 	user, err := um.LoadUser(params.UserId)
@@ -272,111 +223,25 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 	if err != nil {
 		return err
 	}
-
-	baseInfo := t.GetBaseInfo()
 	files := t.GetFiles()
 	for _, i := range params.FileIndexes {
 		if int(i) >= len(files) {
 			return errors.New("invaild params")
 		}
 	}
+
 	for _, i := range params.FileIndexes {
-
-		absVideoFN := setting.GS().Bt.SavePath + "/" + files[i].Name
-
 		if (files[i].FileType & bt.FileVideoType) == 0 {
 			continue
 		}
-
-		v, err := video.GetVideoByFileName(files[i].Name)
-		needTryGenHls := false
-		if err != nil {
-			vid, err := video.New(files[i].Name)
-			if err != nil {
-				log.Warnf("[user] %d add videos err: %v", params.UserId, err)
-				continue
-			}
-			v.Id = vid
-			needTryGenHls = true
-		} else {
-			needTryGenHls = !v.HlsCreated
-		}
-
-		newCParams := &category.NewCategoryParams{
-			ParentId:     params.CategoryItemId,
-			Creator:      params.UserId,
-			TypeId:       prpc.CategoryItem_Video,
-			Name:         utils.GetFileName(files[i].Name),
-			ResourcePath: strconv.FormatInt(int64(v.Id), 10),
-			PosterPath:   "",
-			Introduce:    "",
-			Auth:         utils.NewBitSet(category.AuthMax),
-		}
-		item, err := um.categorySer.AddItem(newCParams)
-		if err != nil {
-			return err
-		}
-
-		needGenHls := false
-		if needTryGenHls {
-			um.mtx.Lock()
-			_, ok := um.genHslRecord[v.Id]
-			if !ok {
-				um.genHslRecord[v.Id] = true
-				needGenHls = true
-			}
-			um.mtx.Unlock()
-		}
-
-		if needGenHls {
-			outDir := setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%d", v.Id)
-			audioTracksFN := um.findAudioTrack(params.InfoHash, i)
-
-			hlsCallback := func(err error) {
-				if err != nil {
-					um.mtx.Lock()
-					delete(um.genHslRecord, v.Id)
-					um.mtx.Unlock()
-				}
-			}
-
-			um.hlsProcess.Gen(&video.HlsGenParams{
-				FullVideoFileName: absVideoFN,
-				FullAudioFileName: audioTracksFN,
-				OutDir:            outDir,
-				Callback:          hlsCallback,
-			})
-
-			subtitleFileIndex := um.findSubtitle(params.InfoHash, i)
-			if subtitleFileIndex != -1 {
-				video.GenSubtitle(&video.GenSubtitleOpts{
-					InputFileName: baseInfo.SavePath + "/" + files[subtitleFileIndex].Name,
-					OutDir:        outDir,
-					SubtitleName:  utils.GetFileName(absVideoFN),
-					Format:        "webvtt",
-					Suffix:        "vtt",
-				})
-			}
-
-			go func() {
-				rfileName := fmt.Sprintf("vid_%d.jpg", v.Id)
-				posterFileName := setting.GS().Server.PosterPath + "/" + rfileName
-				err := video.GenPoster(&video.GenPosterParams{
-					InputFileName:  absVideoFN,
-					OutputFileName: posterFileName,
-				})
-				if err == nil {
-					item.UpdatePosterPath(fmt.Sprintf("/vid_%d.jpg", v.Id))
-				}
-			}()
-		} else {
-			rfileName := fmt.Sprintf("vid_%d.jpg", v.Id)
-			posterFileName := setting.GS().Server.PosterPath + "/" + rfileName
-			fstate, err := os.Stat(posterFileName)
-			if err == nil && !fstate.IsDir() {
-				item.UpdatePosterPath(rfileName)
-			}
-		}
+		um.tasks.NewVideoTask(&task.NewVideoTaskParams{
+			UserId:      params.UserId,
+			ParentId:    params.CategoryItemId,
+			CategorySer: um.categorySer,
+			Bt:          um,
+			InfoHash:    params.InfoHash,
+			BtFileIndex: int(i),
+		})
 	}
 	return nil
 }
@@ -446,4 +311,8 @@ func (um *UserManger) UploadSubtitle(userId ptype.UserID, req *prpc.UploadSubtit
 		}
 	}
 	return nil
+}
+
+func (um *UserManger) GetTasks() task.ITasks {
+	return um.tasks
 }

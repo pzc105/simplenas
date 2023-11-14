@@ -671,6 +671,88 @@ export namespace UploadSubtitleRes {
   }
 }
 
+export class GetBtMetaReq extends jspb.Message {
+  getReq(): bt_pb.DownloadRequest | undefined;
+  setReq(value?: bt_pb.DownloadRequest): GetBtMetaReq;
+  hasReq(): boolean;
+  clearReq(): GetBtMetaReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetBtMetaReq.AsObject;
+  static toObject(includeInstance: boolean, msg: GetBtMetaReq): GetBtMetaReq.AsObject;
+  static serializeBinaryToWriter(message: GetBtMetaReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetBtMetaReq;
+  static deserializeBinaryFromReader(message: GetBtMetaReq, reader: jspb.BinaryReader): GetBtMetaReq;
+}
+
+export namespace GetBtMetaReq {
+  export type AsObject = {
+    req?: bt_pb.DownloadRequest.AsObject,
+  }
+}
+
+export class GetBtMetaRsp extends jspb.Message {
+  getTorrentInfo(): bt_pb.TorrentInfo | undefined;
+  setTorrentInfo(value?: bt_pb.TorrentInfo): GetBtMetaRsp;
+  hasTorrentInfo(): boolean;
+  clearTorrentInfo(): GetBtMetaRsp;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetBtMetaRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: GetBtMetaRsp): GetBtMetaRsp.AsObject;
+  static serializeBinaryToWriter(message: GetBtMetaRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetBtMetaRsp;
+  static deserializeBinaryFromReader(message: GetBtMetaRsp, reader: jspb.BinaryReader): GetBtMetaRsp;
+}
+
+export namespace GetBtMetaRsp {
+  export type AsObject = {
+    torrentInfo?: bt_pb.TorrentInfo.AsObject,
+  }
+}
+
+export class NewBtHlsTaskReq extends jspb.Message {
+  getReq(): bt_pb.DownloadRequest | undefined;
+  setReq(value?: bt_pb.DownloadRequest): NewBtHlsTaskReq;
+  hasReq(): boolean;
+  clearReq(): NewBtHlsTaskReq;
+
+  getCategoryParentId(): number;
+  setCategoryParentId(value: number): NewBtHlsTaskReq;
+
+  getRecursiveNewPath(): boolean;
+  setRecursiveNewPath(value: boolean): NewBtHlsTaskReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): NewBtHlsTaskReq.AsObject;
+  static toObject(includeInstance: boolean, msg: NewBtHlsTaskReq): NewBtHlsTaskReq.AsObject;
+  static serializeBinaryToWriter(message: NewBtHlsTaskReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): NewBtHlsTaskReq;
+  static deserializeBinaryFromReader(message: NewBtHlsTaskReq, reader: jspb.BinaryReader): NewBtHlsTaskReq;
+}
+
+export namespace NewBtHlsTaskReq {
+  export type AsObject = {
+    req?: bt_pb.DownloadRequest.AsObject,
+    categoryParentId: number,
+    recursiveNewPath: boolean,
+  }
+}
+
+export class NewBtHlsTaskRsp extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): NewBtHlsTaskRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: NewBtHlsTaskRsp): NewBtHlsTaskRsp.AsObject;
+  static serializeBinaryToWriter(message: NewBtHlsTaskRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): NewBtHlsTaskRsp;
+  static deserializeBinaryFromReader(message: NewBtHlsTaskRsp, reader: jspb.BinaryReader): NewBtHlsTaskRsp;
+}
+
+export namespace NewBtHlsTaskRsp {
+  export type AsObject = {
+  }
+}
+
 export class Room extends jspb.Message {
   getType(): Room.Type;
   setType(value: Room.Type): Room;
