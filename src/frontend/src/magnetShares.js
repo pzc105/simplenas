@@ -352,7 +352,7 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
                             <CopyToClipboard text={item.other.magnetUri}>
                               <Tooltip title={item.introduce}>
                                 <Typography variant="button" component="div" noWrap>
-                                  <Button onClick={() => setCopyDialogOpen(true)}>{item.other.magnetUri}</Button>
+                                  <Button onClick={() => setCopyDialogOpen(true)}>{item.introduce}</Button>
                                 </Typography>
                               </Tooltip>
                             </CopyToClipboard>
