@@ -210,6 +210,11 @@ func (m *Manager) GetItems(querier ptype.UserID, itemIds ...ptype.CategoryID) ([
 	}()
 
 	items, err := _loadItems(realNeedQueryIds...)
+	m.itemsMtx.Lock()
+	for _, item := range items {
+		m.items[item.base.Id] = item
+	}
+	m.itemsMtx.Unlock()
 	if err == nil {
 		for _, item := range items {
 			if item.HasReadAuth(querier) {
@@ -285,7 +290,6 @@ func (m *Manager) DelItem(deleter ptype.UserID, itemId ptype.CategoryID) (err er
 	}
 	for _, mtx := range toDelItemsDbMtx {
 		mtx.Unlock()
-
 	}
 	for _, id := range lockedIds {
 		m.delDbMtx(id)
