@@ -75,7 +75,7 @@ func (ser *CoreService) Init() {
 	ser.shares = sm
 
 	if setting.GS().Server.EnableCrawler {
-		go crawler.Go36dmBackgroup(&ser.um, &ser.um)
+		go crawler.Go36dmBackgroup(&ser.um, &ser.um, -1)
 	}
 }
 

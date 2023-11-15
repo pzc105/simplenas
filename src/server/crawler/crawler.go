@@ -18,7 +18,7 @@ const (
 	CategoryName = "36dm"
 )
 
-func Go36dmBackgroup(magnetShares user.IMagnetSharesService, ut bt.UserTorrents) {
+func Go36dmBackgroup(magnetShares user.IMagnetSharesService, ut bt.UserTorrents, maxDepth int) {
 	items, _ := magnetShares.QueryMagnetCategorys(&user.QueryCategoryParams{
 		ParentId:     magnetShares.GetMagnetRootId(),
 		CategoryName: CategoryName,
@@ -43,8 +43,11 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, ut bt.UserTorrents)
 		rid = items[0].GetItemBaseInfo().Id
 	}
 
+
+
 	c := colly.NewCollector(
 		colly.Async(true),
+		colly.MaxDepth(maxDepth),
 		colly.URLFilters(
 			regexp.MustCompile(`https://www\.36dm\.org/forum-1.*`),
 			regexp.MustCompile(`https://www\.36dm\.org/thread.*`),
@@ -57,10 +60,10 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, ut bt.UserTorrents)
 	c.OnHTML("body", func(e *colly.HTMLElement) {
 		var Name string
 		var Uri string
-		e.ForEach("div.media-body h4", func(i int, e *colly.HTMLElement) {
+		e.ForEach("div.media-body h4", func(_ int, e *colly.HTMLElement) {
 			Name = strings.Trim(e.Text, " \t\n")
 		})
-		e.ForEach("a[href]", func(i int, e *colly.HTMLElement) {
+		e.ForEach("a[href]", func(_ int, e *colly.HTMLElement) {
 			link := e.Attr("href")
 			if len(link) == 0 {
 				return
@@ -108,5 +111,5 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, ut bt.UserTorrents)
 
 	timer := time.NewTimer(time.Hour * 3)
 	<-timer.C
-	go Go36dmBackgroup(magnetShares, ut)
+	go Go36dmBackgroup(magnetShares, ut, 2)
 }
