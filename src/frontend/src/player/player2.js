@@ -276,9 +276,14 @@ export default function Player() {
     })
 
     dp.on('fullscreen', () => {
+      localStorage.setItem("fullscreen", "true")
       if (window.screen.orientation.lock) {
         window.screen.orientation.lock('landscape')
       }
+    })
+
+    dp.on('fullscreen_cancel', () => {
+      localStorage.setItem("fullscreen", "false")
     })
 
     dp.on("ended", () => {
@@ -287,6 +292,10 @@ export default function Player() {
         playNext()
       }
     })
+
+    if (localStorage.getItem("fullscreen") === "true") {
+      dp.fullScreen.request("browser")
+    }
 
     dplayerRef.current = dp
 
