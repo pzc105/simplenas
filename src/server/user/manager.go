@@ -207,11 +207,11 @@ func (um *UserManger) AddBtVideos(params *AddBtVideosParams) error {
 
 	user, err := um.LoadUser(params.UserId)
 	if err != nil {
-		return errors.WithStack(err)
+		return err
 	}
 	parentItem, err := um.categorySer.GetItem(params.UserId, ptype.CategoryID(params.CategoryItemId))
 	if err != nil {
-		return errors.WithStack(err)
+		return err
 	}
 	if !parentItem.IsDirectory() ||
 		!parentItem.HasWriteAuth(user.userInfo.Id) ||

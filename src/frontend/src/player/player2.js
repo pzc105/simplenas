@@ -81,6 +81,14 @@ export default function Player() {
     })
   }
 
+  const playNext = () => {
+    for (let i = 0; i < videoItemListRef.current.length; i++) {
+      if (videoItemListRef.current[i].id === itemId && i < videoItemListRef.current.length - 1) {
+        navigateToItem(navigate, {}, videoItemListRef.current[i + 1].id, shareid)
+      }
+    }
+  }
+
   const getDanmakuApi = () => {
     return serverAddress + "/video/" + vidRef.current + "/danmaku/"
   }
@@ -228,6 +236,10 @@ export default function Player() {
         maximum: 10000,
         withCredentials: true,
       },
+      nextButton: {
+        show: true,
+        callback: playNext,
+      },
     }
 
     if (subtitlesRef.current.length > 0) {
@@ -272,11 +284,7 @@ export default function Player() {
     dp.on("ended", () => {
       saveVideoTimeOffset(0, true)
       if (autoContinuedPlay) {
-        for (let i = 0; i < videoItemListRef.current.length; i++) {
-          if (videoItemListRef.current[i].id === itemId && i < videoItemListRef.current.length - 1) {
-            navigateToItem(navigate, {}, videoItemListRef.current[i + 1].id, shareid)
-          }
-        }
+        playNext()
       }
     })
 

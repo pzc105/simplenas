@@ -20,6 +20,7 @@ export default function FolderSelector({ select }) {
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const selectRef = useRef(null);
   const dispatch = useDispatch()
+  select(lastUsedDirId)
 
   useEffect(() => {
     let req = new User.QuerySubItemsReq()
