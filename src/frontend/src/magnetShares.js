@@ -76,7 +76,7 @@ export default function MagnetSharesPage() {
         </Grid>
         <Grid item xs={12}>
           <Container>
-            <UnifiedPage PageTotalCount={parseInt(totalRows / pageRows + 0.5)} PageNum={parseInt(pageNumState + 1)} onPage={(n) => { pageNum.current = n - 1; setPageNumState(pageNum.current); refresh() }} />
+            <UnifiedPage PageTotalCount={Math.ceil(totalRows / pageRows)} PageNum={parseInt(pageNumState + 1)} onPage={(n) => { pageNum.current = n - 1; setPageNumState(pageNum.current); refresh() }} />
           </Container>
         </Grid>
       </Grid>

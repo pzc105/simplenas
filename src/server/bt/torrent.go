@@ -170,7 +170,6 @@ func (t *Torrent) updateStatus(s *prpc.TorrentStatus) {
 }
 
 func (t *Torrent) updateFileTypeLocked(index int) {
-	log.Infof("[bt] torrent: [%s] file: %s completed", hex.EncodeToString([]byte(t.base.InfoHash.Hash)), t.base.Files[index].Name)
 	fileName := t.base.Files[index].Name
 	absFileName := t.base.SavePath + "/" + fileName
 	meta, err := video.GetMetadata(absFileName)
@@ -187,6 +186,9 @@ func (t *Torrent) updateFileTypeLocked(index int) {
 		}
 		log.Debugf("[bt] torrent:%s file: %s type: %d", hex.EncodeToString([]byte(t.base.InfoHash.Hash)),
 			absFileName, t.base.Files[index].FileType)
+	} else {
+		log.Debugf("[bt] torrent:%s file: %s unkonwn type", hex.EncodeToString([]byte(t.base.InfoHash.Hash)),
+			absFileName)
 	}
 }
 

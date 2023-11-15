@@ -404,9 +404,9 @@ func (m *Manager) Search(params *SearchParams) ([]*CategoryItem, error) {
 	if condBuild.Len() == 0 {
 		return nil, errors.New("invalid params")
 	}
-	sql := fmt.Sprintf("select id from category_items where match (name, introduce) against ('%s' in boolean mode) limit ?, ?",
+	sql := fmt.Sprintf("select id from category_items where match (name, introduce) against ('%s' in boolean mode)",
 		condBuild.String())
-	rows, err := db.Query(sql, params.PageNum*params.Rows, params.Rows)
+	rows, err := db.Query(sql)
 	if err != nil {
 		return nil, err
 	}
@@ -421,15 +421,21 @@ func (m *Manager) Search(params *SearchParams) ([]*CategoryItem, error) {
 		}
 		ids = append(ids, id)
 	}
+	offset := int32(0)
 	for _, id := range ids {
 		if params.RootId <= 0 || m.IsRelationOf(id, params.RootId) {
-			if params.RootId <= 0 || m.IsRelationOf(id, params.RootId) {
-				item, err := m.GetItem(params.Querier, id)
-				if err != nil {
-					log.Warnf("[category] %v", err)
-					continue
-				}
-				ret = append(ret, item)
+			offset += 1
+			if offset <= params.PageNum*params.Rows {
+				continue
+			}
+			item, err := m.GetItem(params.Querier, id)
+			if err != nil {
+				log.Warnf("[category] %v", err)
+				continue
+			}
+			ret = append(ret, item)
+			if len(ret) >= int(params.Rows) {
+				break
 			}
 		}
 	}

@@ -45,7 +45,6 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, ut bt.UserTorrents)
 
 	c := colly.NewCollector(
 		colly.Async(true),
-		colly.MaxDepth(2),
 		colly.URLFilters(
 			regexp.MustCompile(`https://www\.36dm\.org/forum-1.*`),
 			regexp.MustCompile(`https://www\.36dm\.org/thread.*`),
