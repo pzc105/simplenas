@@ -112,9 +112,6 @@ func (ud *userData) initTorrent(t *Torrent) {
 }
 
 func (ud *userData) addTorrent(t *Torrent) error {
-	if ud.hasTorrent(t.base.Id) {
-		return errors.New(("duplicated"))
-	}
 	ud.mtx.Lock()
 	defer ud.mtx.Unlock()
 	sql := "insert into user_torrent (user_id, torrent_id) values(?, ?)"
