@@ -96,6 +96,7 @@ func (m *Manager) AddItem(params *NewCategoryParams) (*CategoryItem, error) {
 
 	item, err := addItem(params)
 	if err == nil {
+		log.Debugf("[category] user %d add item %d type: %d name: %s", params.Creator, item.base.Id, params.TypeId, params.Name)
 		item.base.Other = params.Other
 		parentItem.addedSubItem(item.base.Id)
 		m.addItem(item)
@@ -271,6 +272,8 @@ func (m *Manager) DelItem(deleter ptype.UserID, itemId ptype.CategoryID) (err er
 		}
 	}
 
+	log.Debugf("[category] user %d del item %s", deleter, sb.String())
+
 	sql := fmt.Sprintf("delete from category_items where id in (%s)", sb.String())
 	_, err = db.Exec(sql)
 	if err != nil {
@@ -358,12 +361,17 @@ func (m *Manager) SearchRows(params *SearchParams) (int, error) {
 	}
 	defer rows.Close()
 	ret := 0
+	ids := []ptype.CategoryID{}
 	for rows.Next() {
 		var id ptype.CategoryID
 		err := rows.Scan(&id)
 		if err != nil {
 			return -1, err
 		}
+		ids = append(ids, id)
+	}
+	m.GetItems(ptype.AdminId, ids...)
+	for _, id := range ids {
 		if params.RootId <= 0 || m.IsRelationOf(id, params.RootId) {
 			ret += 1
 		}
@@ -404,19 +412,25 @@ func (m *Manager) Search(params *SearchParams) ([]*CategoryItem, error) {
 	}
 	defer rows.Close()
 	var ret []*CategoryItem
+	ids := []ptype.CategoryID{}
 	for rows.Next() {
 		var id ptype.CategoryID
 		err := rows.Scan(&id)
 		if err != nil {
 			return nil, err
 		}
+		ids = append(ids, id)
+	}
+	for _, id := range ids {
 		if params.RootId <= 0 || m.IsRelationOf(id, params.RootId) {
-			item, err := m.GetItem(params.Querier, id)
-			if err != nil {
-				log.Warnf("[category] %v", err)
-				continue
+			if params.RootId <= 0 || m.IsRelationOf(id, params.RootId) {
+				item, err := m.GetItem(params.Querier, id)
+				if err != nil {
+					log.Warnf("[category] %v", err)
+					continue
+				}
+				ret = append(ret, item)
 			}
-			ret = append(ret, item)
 		}
 	}
 	return ret, nil

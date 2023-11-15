@@ -2,6 +2,7 @@ package bt
 
 import (
 	"context"
+	"encoding/hex"
 	"pnas/db"
 	"pnas/log"
 	"pnas/prpc"
@@ -475,6 +476,7 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 	t, err := ut.GetTorrent(infoHash)
 	if err == nil {
 		if t.GetState() == prpc.BtStateEnum_seeding {
+			log.Debugf("[bt] user %d add %s", params.UserId, hex.EncodeToString([]byte(infoHash.Hash)))
 			t.addUser(params.UserId)
 			ut.saveUserTorrent(t, params.UserId)
 			return &prpc.DownloadRespone{
@@ -497,6 +499,7 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 	req.SavePath = setting.GS().Bt.SavePath
 	res, err = ut.btClient.Download(context.Background(), req)
 	if err == nil {
+		log.Debugf("[bt] user %d downloading %s", params.UserId, hex.EncodeToString([]byte(infoHash.Hash)))
 		t := ut.initTorrent(infoHash, magnetUri)
 		if t != nil {
 			t.addUser(params.UserId)
@@ -510,6 +513,7 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 
 		return res, nil
 	} else {
+		log.Infof("[bt] user %d failed to download %s err: %v", params.UserId, hex.EncodeToString([]byte(infoHash.Hash)), err)
 		return res, status.Error(codes.InvalidArgument, "")
 	}
 }
@@ -517,7 +521,7 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 func (ut *UserTorrentsImpl) RemoveTorrent(params *RemoveTorrentParams) (*prpc.RemoveTorrentRes, error) {
 
 	infoHash := *TranInfoHash(params.Req.InfoHash)
-
+	log.Infof("[bt] user %d removing %s", params.UserId, hex.EncodeToString([]byte(infoHash.Hash)))
 	if params.UserId == ptype.AdminId {
 		res, err := ut.btClient.RemoveTorrent(context.Background(), params.Req)
 		if err != nil {

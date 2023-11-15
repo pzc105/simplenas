@@ -242,6 +242,7 @@ func (ser *CoreService) Register(
 		Passwd: userInfo.GetPasswd(),
 		Auth:   utils.NewBitSet(user.AuthMax, user.AuthAdmin),
 	}
+	log.Debugf("[user] %s %s register", params.Name, params.Email)
 	err := user.NewUser(params)
 	if err != nil {
 		log.Errorf("[user] %s failed to register, err: %+v", userInfo.GetName(), err)

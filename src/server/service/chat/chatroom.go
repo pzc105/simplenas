@@ -139,7 +139,7 @@ func (cr *ChatRoomImpl) Join(params *JoinParams) int64 {
 	}
 	ud.nextReadPos.Store(nr)
 
-	log.Debugf("[chatroom] sid:%d id:%d", params.SessionId, ud.id)
+	log.Debugf("[chatroom] sid:%d uid:%d joining %s", params.SessionId, ud.id, params.RoomKey)
 
 	cr.mtx.Lock()
 	cr.usersData[ud.id] = ud
@@ -159,7 +159,7 @@ func (cr *ChatRoomImpl) Leave(id int64) {
 	defer cr.mtx.Unlock()
 	ud, ok := cr.usersData[id]
 	if ok {
-		log.Debugf("[chatroom] sid:%d id:%d", ud.sessionId, ud.id)
+		log.Debugf("[chatroom] sid:%d id:%d leaving %s", ud.sessionId, ud.id, cr.roomKey)
 		delete(cr.usersData, ud.id)
 	}
 }

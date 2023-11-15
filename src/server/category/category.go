@@ -83,6 +83,7 @@ func _initMagnet(item *CategoryItem) error {
 }
 
 func _loadItem(itemId ptype.CategoryID) (*CategoryItem, error) {
+	log.Debug("[category] loading item: ", itemId)
 	var item CategoryItem
 	item.base.Id = itemId
 	var byteAuth []byte
@@ -104,6 +105,7 @@ func _loadItem(itemId ptype.CategoryID) (*CategoryItem, error) {
 		return nil, err
 	}
 	_initMagnet(&item)
+	log.Debug("[category] loaded item: ", itemId)
 	return &item, nil
 }
 
@@ -118,6 +120,7 @@ func _loadItems(itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
 	if len(itemIds) == 0 {
 		return []*CategoryItem{}, nil
 	}
+	log.Debug("[category] load items: ", itemIds)
 	var conds []string
 	for _, id := range itemIds {
 		conds = append(conds, fmt.Sprintf("id=%d", id))
@@ -149,6 +152,13 @@ func _loadItems(itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
 		}
 		_initMagnet(&item)
 		items = append(items, &item)
+	}
+	if log.EnabledDebug() {
+		ids := []ptype.CategoryID{}
+		for _, item := range items {
+			ids = append(ids, item.base.Id)
+		}
+		log.Debug("[category] load items: ", ids)
 	}
 	return items, nil
 }
