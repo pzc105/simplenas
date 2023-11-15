@@ -120,7 +120,7 @@ func _loadItems(itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
 	if len(itemIds) == 0 {
 		return []*CategoryItem{}, nil
 	}
-	log.Debug("[category] load items: ", itemIds)
+	log.Debug("[category] loading items: ", itemIds)
 	var conds []string
 	for _, id := range itemIds {
 		conds = append(conds, fmt.Sprintf("id=%d", id))
@@ -158,7 +158,7 @@ func _loadItems(itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
 		for _, item := range items {
 			ids = append(ids, item.base.Id)
 		}
-		log.Debug("[category] load items: ", ids)
+		log.Debug("[category] loaded items: ", ids)
 	}
 	return items, nil
 }
