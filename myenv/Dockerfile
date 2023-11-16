@@ -54,7 +54,7 @@ RUN mkdir -p /tmp/src/cmake && cd /tmp/src/cmake && \
 RUN apt-fast install mysql-server redis-server -y && \
   sed -i "s/^bind-address/#bind-address/" /etc/mysql/mysql.conf.d/mysqld.cnf && \
   sed -i "/\[mysqld\]/a\bind-address = 0.0.0.0" /etc/mysql/mysql.conf.d/mysqld.cnf && \
-  sed -i "/\[mysqld\]/a\ngram_token_size = 1" /etc/mysql/mysql.conf.d/mysqld.cnf && \
+  sed -i "/\[mysqld\]/a\ngram_token_size = 2" /etc/mysql/mysql.conf.d/mysqld.cnf && \
   service mysql start && \
   echo "alter user 'root'@'localhost' identified with mysql_native_password by '123'; \
   use mysql; \
