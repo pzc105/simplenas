@@ -393,14 +393,17 @@ func (ut *UserTorrentsImpl) NewTorrentByMagnet(magnetUri string) (*Torrent, erro
 	if t, ok := ut.torrents[*infoHash]; ok {
 		return t, errors.New("existed torrent")
 	}
-	t := loadTorrentByInfoHash(&ut.btClient, infoHash)
-	if t != nil {
+	t, err := loadTorrentByInfoHash(&ut.btClient, infoHash)
+	if err == nil {
 		if len(t.GetMagnetUri()) == 0 {
 			t.UpdateMagnetUri(magnetUri)
 		}
 		return t, errors.New("existed torrent")
 	}
-	t = newTorrent(&ut.btClient, infoHash, magnetUri)
+	t, err = newTorrent(&ut.btClient, infoHash, magnetUri)
+	if err != nil {
+		return nil, err
+	}
 	return t, nil
 }
 
@@ -413,9 +416,12 @@ func (ut *UserTorrentsImpl) initTorrent(infoHash *InfoHash, magnetUri string) *T
 	}
 
 	// TODO: handle mysql error
-	t := loadTorrentByInfoHash(&ut.btClient, infoHash)
-	if t == nil {
-		t = newTorrent(&ut.btClient, infoHash, magnetUri)
+	t, err := loadTorrentByInfoHash(&ut.btClient, infoHash)
+	if err != nil {
+		t, err = newTorrent(&ut.btClient, infoHash, magnetUri)
+		if err != nil {
+			return nil
+		}
 	}
 	if t == nil {
 		return nil

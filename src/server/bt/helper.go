@@ -46,7 +46,7 @@ func loadTorrent(btClient *BtClient, id ptype.TorrentID) *Torrent {
 	return t
 }
 
-func loadTorrentByInfoHash(btClient *BtClient, infoHash *InfoHash) *Torrent {
+func loadTorrentByInfoHash(btClient *BtClient, infoHash *InfoHash) (*Torrent, error) {
 	sql := `select id, name, version, info_hash, state, total_size, piece_length, num_pieces, introduce, magnet_uri
 					from torrent where version=? and info_hash=?`
 	t := &Torrent{}
@@ -63,22 +63,22 @@ func loadTorrentByInfoHash(btClient *BtClient, infoHash *InfoHash) *Torrent {
 		&t.base.MagnetUri,
 	)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 	t.btClient = btClient
 	t.init()
-	return t
+	return t, nil
 }
 
-func newTorrent(btClient *BtClient, infoHash *InfoHash, magnetUri string) *Torrent {
+func newTorrent(btClient *BtClient, infoHash *InfoHash, magnetUri string) (*Torrent, error) {
 	sql := `insert into torrent(version, info_hash, introduce, magnet_uri) values(?, ?, "", ?)`
 	r, err := db.Exec(sql, infoHash.Version, infoHash.Hash, magnetUri)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 	id, err := r.LastInsertId()
 	if err != nil {
-		return nil
+		return nil, err
 	}
 	t := &Torrent{
 		base: TorrentBase{
@@ -89,7 +89,7 @@ func newTorrent(btClient *BtClient, infoHash *InfoHash, magnetUri string) *Torre
 	}
 	t.btClient = btClient
 	t.init()
-	return t
+	return t, nil
 }
 
 func deleteUserTorrentids(tid ptype.TorrentID, ids ...ptype.UserID) error {
