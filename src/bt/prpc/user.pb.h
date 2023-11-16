@@ -185,6 +185,12 @@ extern RegisterInfoDefaultTypeInternal _RegisterInfo_default_instance_;
 class RegisterRet;
 struct RegisterRetDefaultTypeInternal;
 extern RegisterRetDefaultTypeInternal _RegisterRet_default_instance_;
+class RenameItemsReq;
+struct RenameItemsReqDefaultTypeInternal;
+extern RenameItemsReqDefaultTypeInternal _RenameItemsReq_default_instance_;
+class RenameItemsRsp;
+struct RenameItemsRspDefaultTypeInternal;
+extern RenameItemsRspDefaultTypeInternal _RenameItemsRsp_default_instance_;
 class Room;
 struct RoomDefaultTypeInternal;
 extern RoomDefaultTypeInternal _Room_default_instance_;
@@ -8710,6 +8716,319 @@ class GetTorrentsRsp final :
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class RenameItemsReq final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.RenameItemsReq) */ {
+ public:
+  inline RenameItemsReq() : RenameItemsReq(nullptr) {}
+  ~RenameItemsReq() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR RenameItemsReq(::google::protobuf::internal::ConstantInitialized);
+
+  RenameItemsReq(const RenameItemsReq& from);
+  RenameItemsReq(RenameItemsReq&& from) noexcept
+    : RenameItemsReq() {
+    *this = ::std::move(from);
+  }
+
+  inline RenameItemsReq& operator=(const RenameItemsReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RenameItemsReq& operator=(RenameItemsReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RenameItemsReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RenameItemsReq* internal_default_instance() {
+    return reinterpret_cast<const RenameItemsReq*>(
+               &_RenameItemsReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    51;
+
+  friend void swap(RenameItemsReq& a, RenameItemsReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RenameItemsReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RenameItemsReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RenameItemsReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RenameItemsReq>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const RenameItemsReq& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const RenameItemsReq& from) {
+    RenameItemsReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RenameItemsReq* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.RenameItemsReq";
+  }
+  protected:
+  explicit RenameItemsReq(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kRefNameFieldNumber = 3,
+    kParentIdFieldNumber = 1,
+    kTypeFieldNumber = 2,
+  };
+  // string ref_name = 3;
+  void clear_ref_name() ;
+  const std::string& ref_name() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_ref_name(Arg_&& arg, Args_... args);
+  std::string* mutable_ref_name();
+  PROTOBUF_NODISCARD std::string* release_ref_name();
+  void set_allocated_ref_name(std::string* ptr);
+
+  private:
+  const std::string& _internal_ref_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_ref_name(
+      const std::string& value);
+  std::string* _internal_mutable_ref_name();
+
+  public:
+  // int64 parent_id = 1;
+  void clear_parent_id() ;
+  ::int64_t parent_id() const;
+  void set_parent_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_parent_id() const;
+  void _internal_set_parent_id(::int64_t value);
+
+  public:
+  // .prpc.CategoryItem.Type type = 2;
+  void clear_type() ;
+  ::prpc::CategoryItem_Type type() const;
+  void set_type(::prpc::CategoryItem_Type value);
+
+  private:
+  ::prpc::CategoryItem_Type _internal_type() const;
+  void _internal_set_type(::prpc::CategoryItem_Type value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.RenameItemsReq)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 3, 0, 36, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr ref_name_;
+    ::int64_t parent_id_;
+    int type_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class RenameItemsRsp final :
+    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.RenameItemsRsp) */ {
+ public:
+  inline RenameItemsRsp() : RenameItemsRsp(nullptr) {}
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR RenameItemsRsp(::google::protobuf::internal::ConstantInitialized);
+
+  RenameItemsRsp(const RenameItemsRsp& from);
+  RenameItemsRsp(RenameItemsRsp&& from) noexcept
+    : RenameItemsRsp() {
+    *this = ::std::move(from);
+  }
+
+  inline RenameItemsRsp& operator=(const RenameItemsRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RenameItemsRsp& operator=(RenameItemsRsp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RenameItemsRsp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RenameItemsRsp* internal_default_instance() {
+    return reinterpret_cast<const RenameItemsRsp*>(
+               &_RenameItemsRsp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    52;
+
+  friend void swap(RenameItemsRsp& a, RenameItemsRsp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RenameItemsRsp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RenameItemsRsp* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RenameItemsRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RenameItemsRsp>(arena);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const RenameItemsRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const RenameItemsRsp& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.RenameItemsRsp";
+  }
+  protected:
+  explicit RenameItemsRsp(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:prpc.RenameItemsRsp)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  friend struct ::TableStruct_user_2eproto;
 };
 
 // ===================================================================
@@ -12713,6 +13032,109 @@ GetTorrentsRsp::_internal_mutable_torrent_info() {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return &_impl_.torrent_info_;
 }
+
+// -------------------------------------------------------------------
+
+// RenameItemsReq
+
+// int64 parent_id = 1;
+inline void RenameItemsReq::clear_parent_id() {
+  _impl_.parent_id_ = ::int64_t{0};
+}
+inline ::int64_t RenameItemsReq::parent_id() const {
+  // @@protoc_insertion_point(field_get:prpc.RenameItemsReq.parent_id)
+  return _internal_parent_id();
+}
+inline void RenameItemsReq::set_parent_id(::int64_t value) {
+  _internal_set_parent_id(value);
+  // @@protoc_insertion_point(field_set:prpc.RenameItemsReq.parent_id)
+}
+inline ::int64_t RenameItemsReq::_internal_parent_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.parent_id_;
+}
+inline void RenameItemsReq::_internal_set_parent_id(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.parent_id_ = value;
+}
+
+// .prpc.CategoryItem.Type type = 2;
+inline void RenameItemsReq::clear_type() {
+  _impl_.type_ = 0;
+}
+inline ::prpc::CategoryItem_Type RenameItemsReq::type() const {
+  // @@protoc_insertion_point(field_get:prpc.RenameItemsReq.type)
+  return _internal_type();
+}
+inline void RenameItemsReq::set_type(::prpc::CategoryItem_Type value) {
+  _internal_set_type(value);
+  // @@protoc_insertion_point(field_set:prpc.RenameItemsReq.type)
+}
+inline ::prpc::CategoryItem_Type RenameItemsReq::_internal_type() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return static_cast<::prpc::CategoryItem_Type>(_impl_.type_);
+}
+inline void RenameItemsReq::_internal_set_type(::prpc::CategoryItem_Type value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.type_ = value;
+}
+
+// string ref_name = 3;
+inline void RenameItemsReq::clear_ref_name() {
+  _impl_.ref_name_.ClearToEmpty();
+}
+inline const std::string& RenameItemsReq::ref_name() const {
+  // @@protoc_insertion_point(field_get:prpc.RenameItemsReq.ref_name)
+  return _internal_ref_name();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void RenameItemsReq::set_ref_name(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.ref_name_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.RenameItemsReq.ref_name)
+}
+inline std::string* RenameItemsReq::mutable_ref_name() {
+  std::string* _s = _internal_mutable_ref_name();
+  // @@protoc_insertion_point(field_mutable:prpc.RenameItemsReq.ref_name)
+  return _s;
+}
+inline const std::string& RenameItemsReq::_internal_ref_name() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.ref_name_.Get();
+}
+inline void RenameItemsReq::_internal_set_ref_name(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.ref_name_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RenameItemsReq::_internal_mutable_ref_name() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.ref_name_.Mutable( GetArenaForAllocation());
+}
+inline std::string* RenameItemsReq::release_ref_name() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RenameItemsReq.ref_name)
+  return _impl_.ref_name_.Release();
+}
+inline void RenameItemsReq::set_allocated_ref_name(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.ref_name_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.ref_name_.IsDefault()) {
+          _impl_.ref_name_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.RenameItemsReq.ref_name)
+}
+
+// -------------------------------------------------------------------
+
+// RenameItemsRsp
 
 #ifdef __GNUC__
 #pragma GCC diagnostic pop

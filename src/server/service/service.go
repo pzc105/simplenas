@@ -977,6 +977,7 @@ func (ser *CoreService) GetBtMeta(ctx context.Context, req *prpc.GetBtMetaReq) (
 	}
 	return &prpc.GetBtMetaRsp{}, nil
 }
+
 func (ser *CoreService) NewBtHlsTask(ctx context.Context, req *prpc.NewBtHlsTaskReq) (*prpc.NewBtHlsTaskRsp, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "")
@@ -1000,4 +1001,28 @@ func (ser *CoreService) NewBtHlsTask(ctx context.Context, req *prpc.NewBtHlsTask
 		return nil, err
 	}
 	return &prpc.NewBtHlsTaskRsp{}, nil
+}
+
+func (ser *CoreService) RenameItems(ctx context.Context, req *prpc.RenameItemsReq) (*prpc.RenameItemsRsp, error) {
+	if req == nil {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "not found session")
+	}
+	if req == nil {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	err := ser.um.CategoryService().RenameItems(&category.RenameItemsParams{
+		Who:      ses.UserId,
+		ParentId: ptype.CategoryID(req.ParentId),
+		ItemType: req.Type,
+		RefName:  req.RefName,
+		NumWidth: 2,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &prpc.RenameItemsRsp{}, nil
 }

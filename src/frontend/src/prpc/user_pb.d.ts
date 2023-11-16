@@ -1097,3 +1097,43 @@ export namespace GetTorrentsRsp {
   }
 }
 
+export class RenameItemsReq extends jspb.Message {
+  getParentId(): number;
+  setParentId(value: number): RenameItemsReq;
+
+  getType(): category_pb.CategoryItem.Type;
+  setType(value: category_pb.CategoryItem.Type): RenameItemsReq;
+
+  getRefName(): string;
+  setRefName(value: string): RenameItemsReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): RenameItemsReq.AsObject;
+  static toObject(includeInstance: boolean, msg: RenameItemsReq): RenameItemsReq.AsObject;
+  static serializeBinaryToWriter(message: RenameItemsReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): RenameItemsReq;
+  static deserializeBinaryFromReader(message: RenameItemsReq, reader: jspb.BinaryReader): RenameItemsReq;
+}
+
+export namespace RenameItemsReq {
+  export type AsObject = {
+    parentId: number,
+    type: category_pb.CategoryItem.Type,
+    refName: string,
+  }
+}
+
+export class RenameItemsRsp extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): RenameItemsRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: RenameItemsRsp): RenameItemsRsp.AsObject;
+  static serializeBinaryToWriter(message: RenameItemsRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): RenameItemsRsp;
+  static deserializeBinaryFromReader(message: RenameItemsRsp, reader: jspb.BinaryReader): RenameItemsRsp;
+}
+
+export namespace RenameItemsRsp {
+  export type AsObject = {
+  }
+}
+

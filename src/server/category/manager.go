@@ -5,6 +5,7 @@ import (
 	"pnas/db"
 	"pnas/log"
 	"pnas/ptype"
+	"pnas/utils"
 	"strings"
 	"sync"
 
@@ -444,4 +445,39 @@ func (m *Manager) Search(params *SearchParams) ([]*CategoryItem, error) {
 		}
 	}
 	return ret, nil
+}
+
+func (m *Manager) RenameItems(params *RenameItemsParams) error {
+	pitem, err := m.GetItem(params.Who, params.ParentId)
+	if err != nil {
+		return err
+	}
+	sudIds := pitem.GetSubItemIds()
+
+	srcNames := []string{}
+	ids := []ptype.CategoryID{}
+	for _, id := range sudIds {
+		item, err := m.GetItem(params.Who, id)
+		if err != nil {
+			continue
+		}
+		srcNames = append(srcNames, item.GetName())
+		ids = append(ids, id)
+	}
+	var refname string
+	if len(params.RefName) > 0 {
+		refname = params.RefName
+	} else {
+		refname = pitem.GetName()
+	}
+	nm := utils.ParseEpisode(srcNames)
+	for ep, i := range nm {
+		item, err := m.GetItem(params.Who, ids[i])
+		if err != nil {
+			continue
+		}
+		newName := fmt.Sprintf("%s %0*d", refname, params.NumWidth, ep)
+		item.Rename(newName)
+	}
+	return nil
 }

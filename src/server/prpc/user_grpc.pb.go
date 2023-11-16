@@ -40,6 +40,7 @@ const (
 	UserService_QuerySubItems_FullMethodName     = "/prpc.UserService/QuerySubItems"
 	UserService_QueryItemInfo_FullMethodName     = "/prpc.UserService/QueryItemInfo"
 	UserService_UploadSubtitle_FullMethodName    = "/prpc.UserService/UploadSubtitle"
+	UserService_RenameItems_FullMethodName       = "/prpc.UserService/RenameItems"
 	UserService_GetBtMeta_FullMethodName         = "/prpc.UserService/GetBtMeta"
 	UserService_NewBtHlsTask_FullMethodName      = "/prpc.UserService/NewBtHlsTask"
 	UserService_JoinChatRoom_FullMethodName      = "/prpc.UserService/JoinChatRoom"
@@ -75,6 +76,7 @@ type UserServiceClient interface {
 	QuerySubItems(ctx context.Context, in *QuerySubItemsReq, opts ...grpc.CallOption) (*QuerySubItemsRes, error)
 	QueryItemInfo(ctx context.Context, in *QueryItemInfoReq, opts ...grpc.CallOption) (*QueryItemInfoRes, error)
 	UploadSubtitle(ctx context.Context, in *UploadSubtitleReq, opts ...grpc.CallOption) (*UploadSubtitleRes, error)
+	RenameItems(ctx context.Context, in *RenameItemsReq, opts ...grpc.CallOption) (*RenameItemsRsp, error)
 	GetBtMeta(ctx context.Context, in *GetBtMetaReq, opts ...grpc.CallOption) (*GetBtMetaRsp, error)
 	NewBtHlsTask(ctx context.Context, in *NewBtHlsTaskReq, opts ...grpc.CallOption) (*NewBtHlsTaskRsp, error)
 	JoinChatRoom(ctx context.Context, in *JoinChatRoomReq, opts ...grpc.CallOption) (UserService_JoinChatRoomClient, error)
@@ -305,6 +307,15 @@ func (c *userServiceClient) UploadSubtitle(ctx context.Context, in *UploadSubtit
 	return out, nil
 }
 
+func (c *userServiceClient) RenameItems(ctx context.Context, in *RenameItemsReq, opts ...grpc.CallOption) (*RenameItemsRsp, error) {
+	out := new(RenameItemsRsp)
+	err := c.cc.Invoke(ctx, UserService_RenameItems_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userServiceClient) GetBtMeta(ctx context.Context, in *GetBtMetaReq, opts ...grpc.CallOption) (*GetBtMetaRsp, error) {
 	out := new(GetBtMetaRsp)
 	err := c.cc.Invoke(ctx, UserService_GetBtMeta_FullMethodName, in, out, opts...)
@@ -425,6 +436,7 @@ type UserServiceServer interface {
 	QuerySubItems(context.Context, *QuerySubItemsReq) (*QuerySubItemsRes, error)
 	QueryItemInfo(context.Context, *QueryItemInfoReq) (*QueryItemInfoRes, error)
 	UploadSubtitle(context.Context, *UploadSubtitleReq) (*UploadSubtitleRes, error)
+	RenameItems(context.Context, *RenameItemsReq) (*RenameItemsRsp, error)
 	GetBtMeta(context.Context, *GetBtMetaReq) (*GetBtMetaRsp, error)
 	NewBtHlsTask(context.Context, *NewBtHlsTaskReq) (*NewBtHlsTaskRsp, error)
 	JoinChatRoom(*JoinChatRoomReq, UserService_JoinChatRoomServer) error
@@ -502,6 +514,9 @@ func (UnimplementedUserServiceServer) QueryItemInfo(context.Context, *QueryItemI
 }
 func (UnimplementedUserServiceServer) UploadSubtitle(context.Context, *UploadSubtitleReq) (*UploadSubtitleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadSubtitle not implemented")
+}
+func (UnimplementedUserServiceServer) RenameItems(context.Context, *RenameItemsReq) (*RenameItemsRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RenameItems not implemented")
 }
 func (UnimplementedUserServiceServer) GetBtMeta(context.Context, *GetBtMetaReq) (*GetBtMetaRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBtMeta not implemented")
@@ -921,6 +936,24 @@ func _UserService_UploadSubtitle_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_RenameItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RenameItemsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).RenameItems(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_RenameItems_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).RenameItems(ctx, req.(*RenameItemsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserService_GetBtMeta_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetBtMetaReq)
 	if err := dec(in); err != nil {
@@ -1154,6 +1187,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UploadSubtitle",
 			Handler:    _UserService_UploadSubtitle_Handler,
+		},
+		{
+			MethodName: "RenameItems",
+			Handler:    _UserService_RenameItems_Handler,
 		},
 		{
 			MethodName: "GetBtMeta",

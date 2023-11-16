@@ -244,6 +244,12 @@ func (c *CategoryItem) GetItemBaseInfo() BaseItem {
 	return c.base
 }
 
+func (c *CategoryItem) GetName() string {
+	c.mtx.Lock()
+	defer c.mtx.Unlock()
+	return c.base.Name
+}
+
 func (c *CategoryItem) Rename(newName string) error {
 	sql := "update pnas.category_items set name=? where id=?"
 	_, err := db.Exec(sql, newName, c.base.Id)

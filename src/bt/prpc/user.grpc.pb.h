@@ -184,6 +184,13 @@ class UserService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>> PrepareAsyncUploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>>(PrepareAsyncUploadSubtitleRaw(context, request, cq));
     }
+    virtual ::grpc::Status RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::prpc::RenameItemsRsp* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameItemsRsp>> AsyncRenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameItemsRsp>>(AsyncRenameItemsRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameItemsRsp>> PrepareAsyncRenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameItemsRsp>>(PrepareAsyncRenameItemsRaw(context, request, cq));
+    }
     virtual ::grpc::Status GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::prpc::GetBtMetaRsp* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetBtMetaRsp>> AsyncGetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetBtMetaRsp>>(AsyncGetBtMetaRaw(context, request, cq));
@@ -286,6 +293,8 @@ class UserService final {
       virtual void QueryItemInfo(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, std::function<void(::grpc::Status)>) = 0;
       virtual void UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void NewBtHlsTask(::grpc::ClientContext* context, const ::prpc::NewBtHlsTaskReq* request, ::prpc::NewBtHlsTaskRsp* response, std::function<void(::grpc::Status)>) = 0;
@@ -349,6 +358,8 @@ class UserService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QueryItemInfoRes>* PrepareAsyncQueryItemInfoRaw(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>* AsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>* PrepareAsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameItemsRsp>* AsyncRenameItemsRaw(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameItemsRsp>* PrepareAsyncRenameItemsRaw(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetBtMetaRsp>* AsyncGetBtMetaRaw(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetBtMetaRsp>* PrepareAsyncGetBtMetaRaw(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::NewBtHlsTaskRsp>* AsyncNewBtHlsTaskRaw(::grpc::ClientContext* context, const ::prpc::NewBtHlsTaskReq& request, ::grpc::CompletionQueue* cq) = 0;
@@ -519,6 +530,13 @@ class UserService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>> PrepareAsyncUploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>>(PrepareAsyncUploadSubtitleRaw(context, request, cq));
     }
+    ::grpc::Status RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::prpc::RenameItemsRsp* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>> AsyncRenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>>(AsyncRenameItemsRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>> PrepareAsyncRenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>>(PrepareAsyncRenameItemsRaw(context, request, cq));
+    }
     ::grpc::Status GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::prpc::GetBtMetaRsp* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GetBtMetaRsp>> AsyncGetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GetBtMetaRsp>>(AsyncGetBtMetaRaw(context, request, cq));
@@ -621,6 +639,8 @@ class UserService final {
       void QueryItemInfo(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response, ::grpc::ClientUnaryReactor* reactor) override;
       void UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, std::function<void(::grpc::Status)>) override;
       void UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response, std::function<void(::grpc::Status)>) override;
+      void RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response, std::function<void(::grpc::Status)>) override;
       void GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response, ::grpc::ClientUnaryReactor* reactor) override;
       void NewBtHlsTask(::grpc::ClientContext* context, const ::prpc::NewBtHlsTaskReq* request, ::prpc::NewBtHlsTaskRsp* response, std::function<void(::grpc::Status)>) override;
@@ -690,6 +710,8 @@ class UserService final {
     ::grpc::ClientAsyncResponseReader< ::prpc::QueryItemInfoRes>* PrepareAsyncQueryItemInfoRaw(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>* AsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>* PrepareAsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>* AsyncRenameItemsRaw(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>* PrepareAsyncRenameItemsRaw(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::GetBtMetaRsp>* AsyncGetBtMetaRaw(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::GetBtMetaRsp>* PrepareAsyncGetBtMetaRaw(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::NewBtHlsTaskRsp>* AsyncNewBtHlsTaskRaw(::grpc::ClientContext* context, const ::prpc::NewBtHlsTaskReq& request, ::grpc::CompletionQueue* cq) override;
@@ -728,6 +750,7 @@ class UserService final {
     const ::grpc::internal::RpcMethod rpcmethod_QuerySubItems_;
     const ::grpc::internal::RpcMethod rpcmethod_QueryItemInfo_;
     const ::grpc::internal::RpcMethod rpcmethod_UploadSubtitle_;
+    const ::grpc::internal::RpcMethod rpcmethod_RenameItems_;
     const ::grpc::internal::RpcMethod rpcmethod_GetBtMeta_;
     const ::grpc::internal::RpcMethod rpcmethod_NewBtHlsTask_;
     const ::grpc::internal::RpcMethod rpcmethod_JoinChatRoom_;
@@ -764,6 +787,7 @@ class UserService final {
     virtual ::grpc::Status QuerySubItems(::grpc::ServerContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response);
     virtual ::grpc::Status QueryItemInfo(::grpc::ServerContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response);
     virtual ::grpc::Status UploadSubtitle(::grpc::ServerContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response);
+    virtual ::grpc::Status RenameItems(::grpc::ServerContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response);
     virtual ::grpc::Status GetBtMeta(::grpc::ServerContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response);
     virtual ::grpc::Status NewBtHlsTask(::grpc::ServerContext* context, const ::prpc::NewBtHlsTaskReq* request, ::prpc::NewBtHlsTaskRsp* response);
     virtual ::grpc::Status JoinChatRoom(::grpc::ServerContext* context, const ::prpc::JoinChatRoomReq* request, ::grpc::ServerWriter< ::prpc::JoinChatRoomRes>* writer);
@@ -1194,12 +1218,32 @@ class UserService final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_RenameItems : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_RenameItems() {
+      ::grpc::Service::MarkMethodAsync(21);
+    }
+    ~WithAsyncMethod_RenameItems() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status RenameItems(::grpc::ServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestRenameItems(::grpc::ServerContext* context, ::prpc::RenameItemsReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::RenameItemsRsp>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(21, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_GetBtMeta : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_GetBtMeta() {
-      ::grpc::Service::MarkMethodAsync(21);
+      ::grpc::Service::MarkMethodAsync(22);
     }
     ~WithAsyncMethod_GetBtMeta() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1210,7 +1254,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetBtMeta(::grpc::ServerContext* context, ::prpc::GetBtMetaReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::GetBtMetaRsp>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(21, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(22, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1219,7 +1263,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_NewBtHlsTask() {
-      ::grpc::Service::MarkMethodAsync(22);
+      ::grpc::Service::MarkMethodAsync(23);
     }
     ~WithAsyncMethod_NewBtHlsTask() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1230,7 +1274,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestNewBtHlsTask(::grpc::ServerContext* context, ::prpc::NewBtHlsTaskReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::NewBtHlsTaskRsp>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(22, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(23, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1239,7 +1283,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_JoinChatRoom() {
-      ::grpc::Service::MarkMethodAsync(23);
+      ::grpc::Service::MarkMethodAsync(24);
     }
     ~WithAsyncMethod_JoinChatRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1250,7 +1294,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestJoinChatRoom(::grpc::ServerContext* context, ::prpc::JoinChatRoomReq* request, ::grpc::ServerAsyncWriter< ::prpc::JoinChatRoomRes>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(23, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(24, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1259,7 +1303,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_SendMsg2ChatRoom() {
-      ::grpc::Service::MarkMethodAsync(24);
+      ::grpc::Service::MarkMethodAsync(25);
     }
     ~WithAsyncMethod_SendMsg2ChatRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1270,7 +1314,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSendMsg2ChatRoom(::grpc::ServerContext* context, ::prpc::SendMsg2ChatRoomReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::SendMsg2ChatRoomRes>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(24, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(25, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1279,7 +1323,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_AddMagnetCategory() {
-      ::grpc::Service::MarkMethodAsync(25);
+      ::grpc::Service::MarkMethodAsync(26);
     }
     ~WithAsyncMethod_AddMagnetCategory() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1290,7 +1334,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestAddMagnetCategory(::grpc::ServerContext* context, ::prpc::AddMagnetCategoryReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::AddMagnetCategoryRsp>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(25, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(26, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1299,7 +1343,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_AddMagnetUri() {
-      ::grpc::Service::MarkMethodAsync(26);
+      ::grpc::Service::MarkMethodAsync(27);
     }
     ~WithAsyncMethod_AddMagnetUri() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1310,7 +1354,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestAddMagnetUri(::grpc::ServerContext* context, ::prpc::AddMagnetUriReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::AddMagnetUriRsp>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(26, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(27, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1319,7 +1363,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_QueryMagnet() {
-      ::grpc::Service::MarkMethodAsync(27);
+      ::grpc::Service::MarkMethodAsync(28);
     }
     ~WithAsyncMethod_QueryMagnet() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1330,7 +1374,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestQueryMagnet(::grpc::ServerContext* context, ::prpc::QueryMagnetReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::QueryMagnetRsp>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(27, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(28, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1339,7 +1383,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_DelMagnetCategory() {
-      ::grpc::Service::MarkMethodAsync(28);
+      ::grpc::Service::MarkMethodAsync(29);
     }
     ~WithAsyncMethod_DelMagnetCategory() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1350,10 +1394,10 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestDelMagnetCategory(::grpc::ServerContext* context, ::prpc::DelMagnetCategoryReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::DelMagnetCategoryRsp>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(28, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(29, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_Register<WithAsyncMethod_IsUsedEmail<WithAsyncMethod_Login<WithAsyncMethod_FastLogin<WithAsyncMethod_IsLogined<WithAsyncMethod_ChangePassword<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_GetMagnetUri<WithAsyncMethod_GetTorrents<WithAsyncMethod_OnBtStatus<WithAsyncMethod_QueryBtVideos<WithAsyncMethod_NewCategoryItem<WithAsyncMethod_DelCategoryItem<WithAsyncMethod_AddBtVideos<WithAsyncMethod_ShareItem<WithAsyncMethod_QuerySharedItems<WithAsyncMethod_DelSharedItem<WithAsyncMethod_QuerySubItems<WithAsyncMethod_QueryItemInfo<WithAsyncMethod_UploadSubtitle<WithAsyncMethod_GetBtMeta<WithAsyncMethod_NewBtHlsTask<WithAsyncMethod_JoinChatRoom<WithAsyncMethod_SendMsg2ChatRoom<WithAsyncMethod_AddMagnetCategory<WithAsyncMethod_AddMagnetUri<WithAsyncMethod_QueryMagnet<WithAsyncMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > AsyncService;
+  typedef WithAsyncMethod_Register<WithAsyncMethod_IsUsedEmail<WithAsyncMethod_Login<WithAsyncMethod_FastLogin<WithAsyncMethod_IsLogined<WithAsyncMethod_ChangePassword<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_GetMagnetUri<WithAsyncMethod_GetTorrents<WithAsyncMethod_OnBtStatus<WithAsyncMethod_QueryBtVideos<WithAsyncMethod_NewCategoryItem<WithAsyncMethod_DelCategoryItem<WithAsyncMethod_AddBtVideos<WithAsyncMethod_ShareItem<WithAsyncMethod_QuerySharedItems<WithAsyncMethod_DelSharedItem<WithAsyncMethod_QuerySubItems<WithAsyncMethod_QueryItemInfo<WithAsyncMethod_UploadSubtitle<WithAsyncMethod_RenameItems<WithAsyncMethod_GetBtMeta<WithAsyncMethod_NewBtHlsTask<WithAsyncMethod_JoinChatRoom<WithAsyncMethod_SendMsg2ChatRoom<WithAsyncMethod_AddMagnetCategory<WithAsyncMethod_AddMagnetUri<WithAsyncMethod_QueryMagnet<WithAsyncMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_Register : public BaseClass {
    private:
@@ -1917,18 +1961,45 @@ class UserService final {
       ::grpc::CallbackServerContext* /*context*/, const ::prpc::UploadSubtitleReq* /*request*/, ::prpc::UploadSubtitleRes* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithCallbackMethod_RenameItems : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_RenameItems() {
+      ::grpc::Service::MarkMethodCallback(21,
+          new ::grpc::internal::CallbackUnaryHandler< ::prpc::RenameItemsReq, ::prpc::RenameItemsRsp>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response) { return this->RenameItems(context, request, response); }));}
+    void SetMessageAllocatorFor_RenameItems(
+        ::grpc::MessageAllocator< ::prpc::RenameItemsReq, ::prpc::RenameItemsRsp>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(21);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::RenameItemsReq, ::prpc::RenameItemsRsp>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_RenameItems() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status RenameItems(::grpc::ServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* RenameItems(
+      ::grpc::CallbackServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithCallbackMethod_GetBtMeta : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_GetBtMeta() {
-      ::grpc::Service::MarkMethodCallback(21,
+      ::grpc::Service::MarkMethodCallback(22,
           new ::grpc::internal::CallbackUnaryHandler< ::prpc::GetBtMetaReq, ::prpc::GetBtMetaRsp>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response) { return this->GetBtMeta(context, request, response); }));}
     void SetMessageAllocatorFor_GetBtMeta(
         ::grpc::MessageAllocator< ::prpc::GetBtMetaReq, ::prpc::GetBtMetaRsp>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(21);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(22);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::GetBtMetaReq, ::prpc::GetBtMetaRsp>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -1949,13 +2020,13 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_NewBtHlsTask() {
-      ::grpc::Service::MarkMethodCallback(22,
+      ::grpc::Service::MarkMethodCallback(23,
           new ::grpc::internal::CallbackUnaryHandler< ::prpc::NewBtHlsTaskReq, ::prpc::NewBtHlsTaskRsp>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::prpc::NewBtHlsTaskReq* request, ::prpc::NewBtHlsTaskRsp* response) { return this->NewBtHlsTask(context, request, response); }));}
     void SetMessageAllocatorFor_NewBtHlsTask(
         ::grpc::MessageAllocator< ::prpc::NewBtHlsTaskReq, ::prpc::NewBtHlsTaskRsp>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(22);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(23);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::NewBtHlsTaskReq, ::prpc::NewBtHlsTaskRsp>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -1976,7 +2047,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_JoinChatRoom() {
-      ::grpc::Service::MarkMethodCallback(23,
+      ::grpc::Service::MarkMethodCallback(24,
           new ::grpc::internal::CallbackServerStreamingHandler< ::prpc::JoinChatRoomReq, ::prpc::JoinChatRoomRes>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::prpc::JoinChatRoomReq* request) { return this->JoinChatRoom(context, request); }));
@@ -1998,13 +2069,13 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_SendMsg2ChatRoom() {
-      ::grpc::Service::MarkMethodCallback(24,
+      ::grpc::Service::MarkMethodCallback(25,
           new ::grpc::internal::CallbackUnaryHandler< ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::prpc::SendMsg2ChatRoomReq* request, ::prpc::SendMsg2ChatRoomRes* response) { return this->SendMsg2ChatRoom(context, request, response); }));}
     void SetMessageAllocatorFor_SendMsg2ChatRoom(
         ::grpc::MessageAllocator< ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(24);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(25);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -2025,13 +2096,13 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_AddMagnetCategory() {
-      ::grpc::Service::MarkMethodCallback(25,
+      ::grpc::Service::MarkMethodCallback(26,
           new ::grpc::internal::CallbackUnaryHandler< ::prpc::AddMagnetCategoryReq, ::prpc::AddMagnetCategoryRsp>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::prpc::AddMagnetCategoryReq* request, ::prpc::AddMagnetCategoryRsp* response) { return this->AddMagnetCategory(context, request, response); }));}
     void SetMessageAllocatorFor_AddMagnetCategory(
         ::grpc::MessageAllocator< ::prpc::AddMagnetCategoryReq, ::prpc::AddMagnetCategoryRsp>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(25);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(26);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::AddMagnetCategoryReq, ::prpc::AddMagnetCategoryRsp>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -2052,13 +2123,13 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_AddMagnetUri() {
-      ::grpc::Service::MarkMethodCallback(26,
+      ::grpc::Service::MarkMethodCallback(27,
           new ::grpc::internal::CallbackUnaryHandler< ::prpc::AddMagnetUriReq, ::prpc::AddMagnetUriRsp>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::prpc::AddMagnetUriReq* request, ::prpc::AddMagnetUriRsp* response) { return this->AddMagnetUri(context, request, response); }));}
     void SetMessageAllocatorFor_AddMagnetUri(
         ::grpc::MessageAllocator< ::prpc::AddMagnetUriReq, ::prpc::AddMagnetUriRsp>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(26);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(27);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::AddMagnetUriReq, ::prpc::AddMagnetUriRsp>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -2079,13 +2150,13 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_QueryMagnet() {
-      ::grpc::Service::MarkMethodCallback(27,
+      ::grpc::Service::MarkMethodCallback(28,
           new ::grpc::internal::CallbackUnaryHandler< ::prpc::QueryMagnetReq, ::prpc::QueryMagnetRsp>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::prpc::QueryMagnetReq* request, ::prpc::QueryMagnetRsp* response) { return this->QueryMagnet(context, request, response); }));}
     void SetMessageAllocatorFor_QueryMagnet(
         ::grpc::MessageAllocator< ::prpc::QueryMagnetReq, ::prpc::QueryMagnetRsp>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(27);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(28);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::QueryMagnetReq, ::prpc::QueryMagnetRsp>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -2106,13 +2177,13 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_DelMagnetCategory() {
-      ::grpc::Service::MarkMethodCallback(28,
+      ::grpc::Service::MarkMethodCallback(29,
           new ::grpc::internal::CallbackUnaryHandler< ::prpc::DelMagnetCategoryReq, ::prpc::DelMagnetCategoryRsp>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::prpc::DelMagnetCategoryReq* request, ::prpc::DelMagnetCategoryRsp* response) { return this->DelMagnetCategory(context, request, response); }));}
     void SetMessageAllocatorFor_DelMagnetCategory(
         ::grpc::MessageAllocator< ::prpc::DelMagnetCategoryReq, ::prpc::DelMagnetCategoryRsp>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(28);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(29);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::DelMagnetCategoryReq, ::prpc::DelMagnetCategoryRsp>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -2127,7 +2198,7 @@ class UserService final {
     virtual ::grpc::ServerUnaryReactor* DelMagnetCategory(
       ::grpc::CallbackServerContext* /*context*/, const ::prpc::DelMagnetCategoryReq* /*request*/, ::prpc::DelMagnetCategoryRsp* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_Register<WithCallbackMethod_IsUsedEmail<WithCallbackMethod_Login<WithCallbackMethod_FastLogin<WithCallbackMethod_IsLogined<WithCallbackMethod_ChangePassword<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_GetMagnetUri<WithCallbackMethod_GetTorrents<WithCallbackMethod_OnBtStatus<WithCallbackMethod_QueryBtVideos<WithCallbackMethod_NewCategoryItem<WithCallbackMethod_DelCategoryItem<WithCallbackMethod_AddBtVideos<WithCallbackMethod_ShareItem<WithCallbackMethod_QuerySharedItems<WithCallbackMethod_DelSharedItem<WithCallbackMethod_QuerySubItems<WithCallbackMethod_QueryItemInfo<WithCallbackMethod_UploadSubtitle<WithCallbackMethod_GetBtMeta<WithCallbackMethod_NewBtHlsTask<WithCallbackMethod_JoinChatRoom<WithCallbackMethod_SendMsg2ChatRoom<WithCallbackMethod_AddMagnetCategory<WithCallbackMethod_AddMagnetUri<WithCallbackMethod_QueryMagnet<WithCallbackMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > CallbackService;
+  typedef WithCallbackMethod_Register<WithCallbackMethod_IsUsedEmail<WithCallbackMethod_Login<WithCallbackMethod_FastLogin<WithCallbackMethod_IsLogined<WithCallbackMethod_ChangePassword<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_GetMagnetUri<WithCallbackMethod_GetTorrents<WithCallbackMethod_OnBtStatus<WithCallbackMethod_QueryBtVideos<WithCallbackMethod_NewCategoryItem<WithCallbackMethod_DelCategoryItem<WithCallbackMethod_AddBtVideos<WithCallbackMethod_ShareItem<WithCallbackMethod_QuerySharedItems<WithCallbackMethod_DelSharedItem<WithCallbackMethod_QuerySubItems<WithCallbackMethod_QueryItemInfo<WithCallbackMethod_UploadSubtitle<WithCallbackMethod_RenameItems<WithCallbackMethod_GetBtMeta<WithCallbackMethod_NewBtHlsTask<WithCallbackMethod_JoinChatRoom<WithCallbackMethod_SendMsg2ChatRoom<WithCallbackMethod_AddMagnetCategory<WithCallbackMethod_AddMagnetUri<WithCallbackMethod_QueryMagnet<WithCallbackMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_Register : public BaseClass {
@@ -2487,12 +2558,29 @@ class UserService final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_RenameItems : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_RenameItems() {
+      ::grpc::Service::MarkMethodGeneric(21);
+    }
+    ~WithGenericMethod_RenameItems() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status RenameItems(::grpc::ServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_GetBtMeta : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_GetBtMeta() {
-      ::grpc::Service::MarkMethodGeneric(21);
+      ::grpc::Service::MarkMethodGeneric(22);
     }
     ~WithGenericMethod_GetBtMeta() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2509,7 +2597,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_NewBtHlsTask() {
-      ::grpc::Service::MarkMethodGeneric(22);
+      ::grpc::Service::MarkMethodGeneric(23);
     }
     ~WithGenericMethod_NewBtHlsTask() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2526,7 +2614,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_JoinChatRoom() {
-      ::grpc::Service::MarkMethodGeneric(23);
+      ::grpc::Service::MarkMethodGeneric(24);
     }
     ~WithGenericMethod_JoinChatRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2543,7 +2631,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_SendMsg2ChatRoom() {
-      ::grpc::Service::MarkMethodGeneric(24);
+      ::grpc::Service::MarkMethodGeneric(25);
     }
     ~WithGenericMethod_SendMsg2ChatRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2560,7 +2648,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_AddMagnetCategory() {
-      ::grpc::Service::MarkMethodGeneric(25);
+      ::grpc::Service::MarkMethodGeneric(26);
     }
     ~WithGenericMethod_AddMagnetCategory() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2577,7 +2665,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_AddMagnetUri() {
-      ::grpc::Service::MarkMethodGeneric(26);
+      ::grpc::Service::MarkMethodGeneric(27);
     }
     ~WithGenericMethod_AddMagnetUri() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2594,7 +2682,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_QueryMagnet() {
-      ::grpc::Service::MarkMethodGeneric(27);
+      ::grpc::Service::MarkMethodGeneric(28);
     }
     ~WithGenericMethod_QueryMagnet() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2611,7 +2699,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_DelMagnetCategory() {
-      ::grpc::Service::MarkMethodGeneric(28);
+      ::grpc::Service::MarkMethodGeneric(29);
     }
     ~WithGenericMethod_DelMagnetCategory() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3043,12 +3131,32 @@ class UserService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_RenameItems : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_RenameItems() {
+      ::grpc::Service::MarkMethodRaw(21);
+    }
+    ~WithRawMethod_RenameItems() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status RenameItems(::grpc::ServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestRenameItems(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(21, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_GetBtMeta : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_GetBtMeta() {
-      ::grpc::Service::MarkMethodRaw(21);
+      ::grpc::Service::MarkMethodRaw(22);
     }
     ~WithRawMethod_GetBtMeta() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3059,7 +3167,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetBtMeta(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(21, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(22, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -3068,7 +3176,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_NewBtHlsTask() {
-      ::grpc::Service::MarkMethodRaw(22);
+      ::grpc::Service::MarkMethodRaw(23);
     }
     ~WithRawMethod_NewBtHlsTask() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3079,7 +3187,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestNewBtHlsTask(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(22, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(23, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -3088,7 +3196,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_JoinChatRoom() {
-      ::grpc::Service::MarkMethodRaw(23);
+      ::grpc::Service::MarkMethodRaw(24);
     }
     ~WithRawMethod_JoinChatRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3099,7 +3207,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestJoinChatRoom(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(23, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(24, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -3108,7 +3216,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_SendMsg2ChatRoom() {
-      ::grpc::Service::MarkMethodRaw(24);
+      ::grpc::Service::MarkMethodRaw(25);
     }
     ~WithRawMethod_SendMsg2ChatRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3119,7 +3227,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSendMsg2ChatRoom(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(24, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(25, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -3128,7 +3236,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_AddMagnetCategory() {
-      ::grpc::Service::MarkMethodRaw(25);
+      ::grpc::Service::MarkMethodRaw(26);
     }
     ~WithRawMethod_AddMagnetCategory() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3139,7 +3247,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestAddMagnetCategory(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(25, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(26, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -3148,7 +3256,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_AddMagnetUri() {
-      ::grpc::Service::MarkMethodRaw(26);
+      ::grpc::Service::MarkMethodRaw(27);
     }
     ~WithRawMethod_AddMagnetUri() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3159,7 +3267,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestAddMagnetUri(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(26, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(27, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -3168,7 +3276,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_QueryMagnet() {
-      ::grpc::Service::MarkMethodRaw(27);
+      ::grpc::Service::MarkMethodRaw(28);
     }
     ~WithRawMethod_QueryMagnet() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3179,7 +3287,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestQueryMagnet(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(27, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(28, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -3188,7 +3296,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_DelMagnetCategory() {
-      ::grpc::Service::MarkMethodRaw(28);
+      ::grpc::Service::MarkMethodRaw(29);
     }
     ~WithRawMethod_DelMagnetCategory() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3199,7 +3307,7 @@ class UserService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestDelMagnetCategory(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(28, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(29, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -3665,12 +3773,34 @@ class UserService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_RenameItems : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_RenameItems() {
+      ::grpc::Service::MarkMethodRawCallback(21,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RenameItems(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_RenameItems() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status RenameItems(::grpc::ServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* RenameItems(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_GetBtMeta : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_GetBtMeta() {
-      ::grpc::Service::MarkMethodRawCallback(21,
+      ::grpc::Service::MarkMethodRawCallback(22,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetBtMeta(context, request, response); }));
@@ -3692,7 +3822,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_NewBtHlsTask() {
-      ::grpc::Service::MarkMethodRawCallback(22,
+      ::grpc::Service::MarkMethodRawCallback(23,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->NewBtHlsTask(context, request, response); }));
@@ -3714,7 +3844,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_JoinChatRoom() {
-      ::grpc::Service::MarkMethodRawCallback(23,
+      ::grpc::Service::MarkMethodRawCallback(24,
           new ::grpc::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->JoinChatRoom(context, request); }));
@@ -3736,7 +3866,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_SendMsg2ChatRoom() {
-      ::grpc::Service::MarkMethodRawCallback(24,
+      ::grpc::Service::MarkMethodRawCallback(25,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SendMsg2ChatRoom(context, request, response); }));
@@ -3758,7 +3888,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_AddMagnetCategory() {
-      ::grpc::Service::MarkMethodRawCallback(25,
+      ::grpc::Service::MarkMethodRawCallback(26,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->AddMagnetCategory(context, request, response); }));
@@ -3780,7 +3910,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_AddMagnetUri() {
-      ::grpc::Service::MarkMethodRawCallback(26,
+      ::grpc::Service::MarkMethodRawCallback(27,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->AddMagnetUri(context, request, response); }));
@@ -3802,7 +3932,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_QueryMagnet() {
-      ::grpc::Service::MarkMethodRawCallback(27,
+      ::grpc::Service::MarkMethodRawCallback(28,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->QueryMagnet(context, request, response); }));
@@ -3824,7 +3954,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_DelMagnetCategory() {
-      ::grpc::Service::MarkMethodRawCallback(28,
+      ::grpc::Service::MarkMethodRawCallback(29,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->DelMagnetCategory(context, request, response); }));
@@ -4381,12 +4511,39 @@ class UserService final {
     virtual ::grpc::Status StreamedUploadSubtitle(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::UploadSubtitleReq,::prpc::UploadSubtitleRes>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
+  class WithStreamedUnaryMethod_RenameItems : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_RenameItems() {
+      ::grpc::Service::MarkMethodStreamed(21,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::prpc::RenameItemsReq, ::prpc::RenameItemsRsp>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::prpc::RenameItemsReq, ::prpc::RenameItemsRsp>* streamer) {
+                       return this->StreamedRenameItems(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_RenameItems() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status RenameItems(::grpc::ServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedRenameItems(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::RenameItemsReq,::prpc::RenameItemsRsp>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_GetBtMeta : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_GetBtMeta() {
-      ::grpc::Service::MarkMethodStreamed(21,
+      ::grpc::Service::MarkMethodStreamed(22,
         new ::grpc::internal::StreamedUnaryHandler<
           ::prpc::GetBtMetaReq, ::prpc::GetBtMetaRsp>(
             [this](::grpc::ServerContext* context,
@@ -4413,7 +4570,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_NewBtHlsTask() {
-      ::grpc::Service::MarkMethodStreamed(22,
+      ::grpc::Service::MarkMethodStreamed(23,
         new ::grpc::internal::StreamedUnaryHandler<
           ::prpc::NewBtHlsTaskReq, ::prpc::NewBtHlsTaskRsp>(
             [this](::grpc::ServerContext* context,
@@ -4440,7 +4597,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_SendMsg2ChatRoom() {
-      ::grpc::Service::MarkMethodStreamed(24,
+      ::grpc::Service::MarkMethodStreamed(25,
         new ::grpc::internal::StreamedUnaryHandler<
           ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes>(
             [this](::grpc::ServerContext* context,
@@ -4467,7 +4624,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_AddMagnetCategory() {
-      ::grpc::Service::MarkMethodStreamed(25,
+      ::grpc::Service::MarkMethodStreamed(26,
         new ::grpc::internal::StreamedUnaryHandler<
           ::prpc::AddMagnetCategoryReq, ::prpc::AddMagnetCategoryRsp>(
             [this](::grpc::ServerContext* context,
@@ -4494,7 +4651,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_AddMagnetUri() {
-      ::grpc::Service::MarkMethodStreamed(26,
+      ::grpc::Service::MarkMethodStreamed(27,
         new ::grpc::internal::StreamedUnaryHandler<
           ::prpc::AddMagnetUriReq, ::prpc::AddMagnetUriRsp>(
             [this](::grpc::ServerContext* context,
@@ -4521,7 +4678,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_QueryMagnet() {
-      ::grpc::Service::MarkMethodStreamed(27,
+      ::grpc::Service::MarkMethodStreamed(28,
         new ::grpc::internal::StreamedUnaryHandler<
           ::prpc::QueryMagnetReq, ::prpc::QueryMagnetRsp>(
             [this](::grpc::ServerContext* context,
@@ -4548,7 +4705,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_DelMagnetCategory() {
-      ::grpc::Service::MarkMethodStreamed(28,
+      ::grpc::Service::MarkMethodStreamed(29,
         new ::grpc::internal::StreamedUnaryHandler<
           ::prpc::DelMagnetCategoryReq, ::prpc::DelMagnetCategoryRsp>(
             [this](::grpc::ServerContext* context,
@@ -4569,7 +4726,7 @@ class UserService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedDelMagnetCategory(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::DelMagnetCategoryReq,::prpc::DelMagnetCategoryRsp>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_ChangePassword<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithStreamedUnaryMethod_GetTorrents<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_UploadSubtitle<WithStreamedUnaryMethod_GetBtMeta<WithStreamedUnaryMethod_NewBtHlsTask<WithStreamedUnaryMethod_SendMsg2ChatRoom<WithStreamedUnaryMethod_AddMagnetCategory<WithStreamedUnaryMethod_AddMagnetUri<WithStreamedUnaryMethod_QueryMagnet<WithStreamedUnaryMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_ChangePassword<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithStreamedUnaryMethod_GetTorrents<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_UploadSubtitle<WithStreamedUnaryMethod_RenameItems<WithStreamedUnaryMethod_GetBtMeta<WithStreamedUnaryMethod_NewBtHlsTask<WithStreamedUnaryMethod_SendMsg2ChatRoom<WithStreamedUnaryMethod_AddMagnetCategory<WithStreamedUnaryMethod_AddMagnetUri<WithStreamedUnaryMethod_QueryMagnet<WithStreamedUnaryMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedUnaryService;
   template <class BaseClass>
   class WithSplitStreamingMethod_OnBtStatus : public BaseClass {
    private:
@@ -4603,7 +4760,7 @@ class UserService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithSplitStreamingMethod_JoinChatRoom() {
-      ::grpc::Service::MarkMethodStreamed(23,
+      ::grpc::Service::MarkMethodStreamed(24,
         new ::grpc::internal::SplitServerStreamingHandler<
           ::prpc::JoinChatRoomReq, ::prpc::JoinChatRoomRes>(
             [this](::grpc::ServerContext* context,
@@ -4625,7 +4782,7 @@ class UserService final {
     virtual ::grpc::Status StreamedJoinChatRoom(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::prpc::JoinChatRoomReq,::prpc::JoinChatRoomRes>* server_split_streamer) = 0;
   };
   typedef WithSplitStreamingMethod_OnBtStatus<WithSplitStreamingMethod_JoinChatRoom<Service > > SplitStreamedService;
-  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_ChangePassword<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithStreamedUnaryMethod_GetTorrents<WithSplitStreamingMethod_OnBtStatus<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_UploadSubtitle<WithStreamedUnaryMethod_GetBtMeta<WithStreamedUnaryMethod_NewBtHlsTask<WithSplitStreamingMethod_JoinChatRoom<WithStreamedUnaryMethod_SendMsg2ChatRoom<WithStreamedUnaryMethod_AddMagnetCategory<WithStreamedUnaryMethod_AddMagnetUri<WithStreamedUnaryMethod_QueryMagnet<WithStreamedUnaryMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_ChangePassword<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithStreamedUnaryMethod_GetTorrents<WithSplitStreamingMethod_OnBtStatus<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_UploadSubtitle<WithStreamedUnaryMethod_RenameItems<WithStreamedUnaryMethod_GetBtMeta<WithStreamedUnaryMethod_NewBtHlsTask<WithSplitStreamingMethod_JoinChatRoom<WithStreamedUnaryMethod_SendMsg2ChatRoom<WithStreamedUnaryMethod_AddMagnetCategory<WithStreamedUnaryMethod_AddMagnetUri<WithStreamedUnaryMethod_QueryMagnet<WithStreamedUnaryMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace prpc

@@ -101,6 +101,18 @@ const CategoryItems = ({ parentId, shareid }) => {
     handleClose(item.id)
   }
 
+  const RenameItems = (parentItem) => {
+    let req = new User.RenameItemsReq()
+    req.setParentId(parentItem.id)
+    req.setType(Category.CategoryItem.Type.VIDEO)
+    userService.renameItems(req, {}, (err, res) => {
+      if (err != null) {
+        return
+      }
+    })
+    handleClose(parentItem.id)
+  }
+
   return (
     <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }} ref={uploadSubtitleAnchorElRef}>
       <Grid container spacing={2} sx={{ display: "flex" }}>
@@ -134,6 +146,7 @@ const CategoryItems = ({ parentId, shareid }) => {
                         <MenuItem onClick={(e) => DelCategoryItem(item)}>删除</MenuItem>
                         <MenuItem onClick={(e) => ShareCategoryItem(item)}>分享</MenuItem>
                         <MenuItem onClick={(e) => UploadSubtitle(item)}>上传字幕</MenuItem>
+                        <MenuItem onClick={(e) => RenameItems(item)}>整理名字</MenuItem>
                       </Menu>
                     </Card>
                   </Tooltip>

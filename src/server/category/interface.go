@@ -1,6 +1,9 @@
 package category
 
-import "pnas/ptype"
+import (
+	"pnas/prpc"
+	"pnas/ptype"
+)
 
 type IService interface {
 	Init()
@@ -13,6 +16,8 @@ type IService interface {
 	IsRelationOf(itemId ptype.CategoryID, parentId ptype.CategoryID) bool
 	Search(params *SearchParams) ([]*CategoryItem, error)
 	SearchRows(params *SearchParams) (int, error)
+
+	RenameItems(params *RenameItemsParams) error
 }
 
 type GetItemsByParentParams struct {
@@ -20,4 +25,12 @@ type GetItemsByParentParams struct {
 	ParentId ptype.CategoryID
 	PageNum  int32
 	Rows     int32
+}
+
+type RenameItemsParams struct {
+	Who      ptype.UserID
+	ParentId ptype.CategoryID
+	ItemType prpc.CategoryItem_Type
+	RefName  string
+	NumWidth int
 }
