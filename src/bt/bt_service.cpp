@@ -105,6 +105,10 @@ namespace prpc
   std::vector<lt::torrent_status> bt_service::get_all_bt_status()
   {
     std::vector<lt::torrent_status> ret;
+    if (_ses == nullptr)
+    {
+      return ret;
+    }
     auto ths = _ses->get_torrents();
     ret.reserve(ths.size());
     for (size_t i = 0; i < ths.size(); i++)
