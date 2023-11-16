@@ -10,7 +10,7 @@ type IdPool struct {
 }
 
 func (p *IdPool) Init() {
-	p.idIndex = 0
+	p.idIndex = 1
 	p.allocatedIds = make(map[int64]bool)
 }
 

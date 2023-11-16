@@ -71,6 +71,9 @@ func (h *gHlsTask) add(params *AddHlsTaskParams) (ptype.VideoID, error) {
 	}
 
 	if r, ok := h.genHslTask[v.Id]; ok {
+		if params.MyTaskId <= 0 {
+			return v.Id, nil
+		}
 		if _, ok := r.callbacks[params.MyTaskId]; ok {
 			panic("duplicate")
 		}
