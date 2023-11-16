@@ -94,8 +94,7 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, ut bt.UserTorrents,
 			magnetShares.AddMagnetUri(&user.AddMagnetUriParams{
 				T:          t,
 				CategoryId: rid,
-				Name:       "",
-				Introduce:  Name,
+				Name:       Name,
 				Creator:    ptype.AdminId,
 			})
 		}
