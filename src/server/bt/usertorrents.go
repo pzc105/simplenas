@@ -415,7 +415,6 @@ func (ut *UserTorrentsImpl) initTorrent(infoHash *InfoHash, magnetUri string) *T
 		return t
 	}
 
-	// TODO: handle mysql error
 	t, err := loadTorrentByInfoHash(&ut.btClient, infoHash)
 	if err != nil {
 		t, err = newTorrent(&ut.btClient, infoHash, magnetUri)
