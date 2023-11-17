@@ -185,12 +185,12 @@ extern RegisterInfoDefaultTypeInternal _RegisterInfo_default_instance_;
 class RegisterRet;
 struct RegisterRetDefaultTypeInternal;
 extern RegisterRetDefaultTypeInternal _RegisterRet_default_instance_;
-class RenameItemsReq;
-struct RenameItemsReqDefaultTypeInternal;
-extern RenameItemsReqDefaultTypeInternal _RenameItemsReq_default_instance_;
-class RenameItemsRsp;
-struct RenameItemsRspDefaultTypeInternal;
-extern RenameItemsRspDefaultTypeInternal _RenameItemsRsp_default_instance_;
+class RenameBtVideoNameReq;
+struct RenameBtVideoNameReqDefaultTypeInternal;
+extern RenameBtVideoNameReqDefaultTypeInternal _RenameBtVideoNameReq_default_instance_;
+class RenameBtVideoNameRsp;
+struct RenameBtVideoNameRspDefaultTypeInternal;
+extern RenameBtVideoNameRspDefaultTypeInternal _RenameBtVideoNameRsp_default_instance_;
 class Room;
 struct RoomDefaultTypeInternal;
 extern RoomDefaultTypeInternal _Room_default_instance_;
@@ -8718,25 +8718,25 @@ class GetTorrentsRsp final :
   friend struct ::TableStruct_user_2eproto;
 };// -------------------------------------------------------------------
 
-class RenameItemsReq final :
-    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.RenameItemsReq) */ {
+class RenameBtVideoNameReq final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.RenameBtVideoNameReq) */ {
  public:
-  inline RenameItemsReq() : RenameItemsReq(nullptr) {}
-  ~RenameItemsReq() override;
+  inline RenameBtVideoNameReq() : RenameBtVideoNameReq(nullptr) {}
+  ~RenameBtVideoNameReq() override;
   template<typename = void>
-  explicit PROTOBUF_CONSTEXPR RenameItemsReq(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR RenameBtVideoNameReq(::google::protobuf::internal::ConstantInitialized);
 
-  RenameItemsReq(const RenameItemsReq& from);
-  RenameItemsReq(RenameItemsReq&& from) noexcept
-    : RenameItemsReq() {
+  RenameBtVideoNameReq(const RenameBtVideoNameReq& from);
+  RenameBtVideoNameReq(RenameBtVideoNameReq&& from) noexcept
+    : RenameBtVideoNameReq() {
     *this = ::std::move(from);
   }
 
-  inline RenameItemsReq& operator=(const RenameItemsReq& from) {
+  inline RenameBtVideoNameReq& operator=(const RenameBtVideoNameReq& from) {
     CopyFrom(from);
     return *this;
   }
-  inline RenameItemsReq& operator=(RenameItemsReq&& from) noexcept {
+  inline RenameBtVideoNameReq& operator=(RenameBtVideoNameReq&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -8766,20 +8766,20 @@ class RenameItemsReq final :
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const RenameItemsReq& default_instance() {
+  static const RenameBtVideoNameReq& default_instance() {
     return *internal_default_instance();
   }
-  static inline const RenameItemsReq* internal_default_instance() {
-    return reinterpret_cast<const RenameItemsReq*>(
-               &_RenameItemsReq_default_instance_);
+  static inline const RenameBtVideoNameReq* internal_default_instance() {
+    return reinterpret_cast<const RenameBtVideoNameReq*>(
+               &_RenameBtVideoNameReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     51;
 
-  friend void swap(RenameItemsReq& a, RenameItemsReq& b) {
+  friend void swap(RenameBtVideoNameReq& a, RenameBtVideoNameReq& b) {
     a.Swap(&b);
   }
-  inline void Swap(RenameItemsReq* other) {
+  inline void Swap(RenameBtVideoNameReq* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -8792,7 +8792,7 @@ class RenameItemsReq final :
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(RenameItemsReq* other) {
+  void UnsafeArenaSwap(RenameBtVideoNameReq* other) {
     if (other == this) return;
     ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -8800,14 +8800,14 @@ class RenameItemsReq final :
 
   // implements Message ----------------------------------------------
 
-  RenameItemsReq* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<RenameItemsReq>(arena);
+  RenameBtVideoNameReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RenameBtVideoNameReq>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const RenameItemsReq& from);
+  void CopyFrom(const RenameBtVideoNameReq& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom( const RenameItemsReq& from) {
-    RenameItemsReq::MergeImpl(*this, from);
+  void MergeFrom( const RenameBtVideoNameReq& from) {
+    RenameBtVideoNameReq::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
@@ -8825,15 +8825,15 @@ class RenameItemsReq final :
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(RenameItemsReq* other);
+  void InternalSwap(RenameBtVideoNameReq* other);
 
   private:
   friend class ::google::protobuf::internal::AnyMetadata;
   static ::absl::string_view FullMessageName() {
-    return "prpc.RenameItemsReq";
+    return "prpc.RenameBtVideoNameReq";
   }
   protected:
-  explicit RenameItemsReq(::google::protobuf::Arena* arena);
+  explicit RenameBtVideoNameReq(::google::protobuf::Arena* arena);
   public:
 
   static const ClassData _class_data_;
@@ -8846,11 +8846,10 @@ class RenameItemsReq final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kRefNameFieldNumber = 3,
-    kParentIdFieldNumber = 1,
-    kTypeFieldNumber = 2,
+    kRefNameFieldNumber = 2,
+    kItemIdFieldNumber = 1,
   };
-  // string ref_name = 3;
+  // string ref_name = 2;
   void clear_ref_name() ;
   const std::string& ref_name() const;
   template <typename Arg_ = const std::string&, typename... Args_>
@@ -8866,39 +8865,28 @@ class RenameItemsReq final :
   std::string* _internal_mutable_ref_name();
 
   public:
-  // int64 parent_id = 1;
-  void clear_parent_id() ;
-  ::int64_t parent_id() const;
-  void set_parent_id(::int64_t value);
+  // int64 item_id = 1;
+  void clear_item_id() ;
+  ::int64_t item_id() const;
+  void set_item_id(::int64_t value);
 
   private:
-  ::int64_t _internal_parent_id() const;
-  void _internal_set_parent_id(::int64_t value);
+  ::int64_t _internal_item_id() const;
+  void _internal_set_item_id(::int64_t value);
 
   public:
-  // .prpc.CategoryItem.Type type = 2;
-  void clear_type() ;
-  ::prpc::CategoryItem_Type type() const;
-  void set_type(::prpc::CategoryItem_Type value);
-
-  private:
-  ::prpc::CategoryItem_Type _internal_type() const;
-  void _internal_set_type(::prpc::CategoryItem_Type value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:prpc.RenameItemsReq)
+  // @@protoc_insertion_point(class_scope:prpc.RenameBtVideoNameReq)
  private:
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3, 0, 36, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<1, 2, 0, 42, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::google::protobuf::internal::ArenaStringPtr ref_name_;
-    ::int64_t parent_id_;
-    int type_;
+    ::int64_t item_id_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -8906,24 +8894,24 @@ class RenameItemsReq final :
   friend struct ::TableStruct_user_2eproto;
 };// -------------------------------------------------------------------
 
-class RenameItemsRsp final :
-    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.RenameItemsRsp) */ {
+class RenameBtVideoNameRsp final :
+    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.RenameBtVideoNameRsp) */ {
  public:
-  inline RenameItemsRsp() : RenameItemsRsp(nullptr) {}
+  inline RenameBtVideoNameRsp() : RenameBtVideoNameRsp(nullptr) {}
   template<typename = void>
-  explicit PROTOBUF_CONSTEXPR RenameItemsRsp(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR RenameBtVideoNameRsp(::google::protobuf::internal::ConstantInitialized);
 
-  RenameItemsRsp(const RenameItemsRsp& from);
-  RenameItemsRsp(RenameItemsRsp&& from) noexcept
-    : RenameItemsRsp() {
+  RenameBtVideoNameRsp(const RenameBtVideoNameRsp& from);
+  RenameBtVideoNameRsp(RenameBtVideoNameRsp&& from) noexcept
+    : RenameBtVideoNameRsp() {
     *this = ::std::move(from);
   }
 
-  inline RenameItemsRsp& operator=(const RenameItemsRsp& from) {
+  inline RenameBtVideoNameRsp& operator=(const RenameBtVideoNameRsp& from) {
     CopyFrom(from);
     return *this;
   }
-  inline RenameItemsRsp& operator=(RenameItemsRsp&& from) noexcept {
+  inline RenameBtVideoNameRsp& operator=(RenameBtVideoNameRsp&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -8953,20 +8941,20 @@ class RenameItemsRsp final :
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const RenameItemsRsp& default_instance() {
+  static const RenameBtVideoNameRsp& default_instance() {
     return *internal_default_instance();
   }
-  static inline const RenameItemsRsp* internal_default_instance() {
-    return reinterpret_cast<const RenameItemsRsp*>(
-               &_RenameItemsRsp_default_instance_);
+  static inline const RenameBtVideoNameRsp* internal_default_instance() {
+    return reinterpret_cast<const RenameBtVideoNameRsp*>(
+               &_RenameBtVideoNameRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     52;
 
-  friend void swap(RenameItemsRsp& a, RenameItemsRsp& b) {
+  friend void swap(RenameBtVideoNameRsp& a, RenameBtVideoNameRsp& b) {
     a.Swap(&b);
   }
-  inline void Swap(RenameItemsRsp* other) {
+  inline void Swap(RenameBtVideoNameRsp* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -8979,7 +8967,7 @@ class RenameItemsRsp final :
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(RenameItemsRsp* other) {
+  void UnsafeArenaSwap(RenameBtVideoNameRsp* other) {
     if (other == this) return;
     ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -8987,15 +8975,15 @@ class RenameItemsRsp final :
 
   // implements Message ----------------------------------------------
 
-  RenameItemsRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<RenameItemsRsp>(arena);
+  RenameBtVideoNameRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RenameBtVideoNameRsp>(arena);
   }
   using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const RenameItemsRsp& from) {
+  inline void CopyFrom(const RenameBtVideoNameRsp& from) {
     ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
   }
   using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const RenameItemsRsp& from) {
+  void MergeFrom(const RenameBtVideoNameRsp& from) {
     ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
   }
   public:
@@ -9003,10 +8991,10 @@ class RenameItemsRsp final :
   private:
   friend class ::google::protobuf::internal::AnyMetadata;
   static ::absl::string_view FullMessageName() {
-    return "prpc.RenameItemsRsp";
+    return "prpc.RenameBtVideoNameRsp";
   }
   protected:
-  explicit RenameItemsRsp(::google::protobuf::Arena* arena);
+  explicit RenameBtVideoNameRsp(::google::protobuf::Arena* arena);
   public:
 
   static const ClassData _class_data_;
@@ -9018,7 +9006,7 @@ class RenameItemsRsp final :
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:prpc.RenameItemsRsp)
+  // @@protoc_insertion_point(class_scope:prpc.RenameBtVideoNameRsp)
  private:
   class _Internal;
 
@@ -13035,93 +13023,71 @@ GetTorrentsRsp::_internal_mutable_torrent_info() {
 
 // -------------------------------------------------------------------
 
-// RenameItemsReq
+// RenameBtVideoNameReq
 
-// int64 parent_id = 1;
-inline void RenameItemsReq::clear_parent_id() {
-  _impl_.parent_id_ = ::int64_t{0};
+// int64 item_id = 1;
+inline void RenameBtVideoNameReq::clear_item_id() {
+  _impl_.item_id_ = ::int64_t{0};
 }
-inline ::int64_t RenameItemsReq::parent_id() const {
-  // @@protoc_insertion_point(field_get:prpc.RenameItemsReq.parent_id)
-  return _internal_parent_id();
+inline ::int64_t RenameBtVideoNameReq::item_id() const {
+  // @@protoc_insertion_point(field_get:prpc.RenameBtVideoNameReq.item_id)
+  return _internal_item_id();
 }
-inline void RenameItemsReq::set_parent_id(::int64_t value) {
-  _internal_set_parent_id(value);
-  // @@protoc_insertion_point(field_set:prpc.RenameItemsReq.parent_id)
+inline void RenameBtVideoNameReq::set_item_id(::int64_t value) {
+  _internal_set_item_id(value);
+  // @@protoc_insertion_point(field_set:prpc.RenameBtVideoNameReq.item_id)
 }
-inline ::int64_t RenameItemsReq::_internal_parent_id() const {
+inline ::int64_t RenameBtVideoNameReq::_internal_item_id() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.parent_id_;
+  return _impl_.item_id_;
 }
-inline void RenameItemsReq::_internal_set_parent_id(::int64_t value) {
+inline void RenameBtVideoNameReq::_internal_set_item_id(::int64_t value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
-  _impl_.parent_id_ = value;
+  _impl_.item_id_ = value;
 }
 
-// .prpc.CategoryItem.Type type = 2;
-inline void RenameItemsReq::clear_type() {
-  _impl_.type_ = 0;
-}
-inline ::prpc::CategoryItem_Type RenameItemsReq::type() const {
-  // @@protoc_insertion_point(field_get:prpc.RenameItemsReq.type)
-  return _internal_type();
-}
-inline void RenameItemsReq::set_type(::prpc::CategoryItem_Type value) {
-  _internal_set_type(value);
-  // @@protoc_insertion_point(field_set:prpc.RenameItemsReq.type)
-}
-inline ::prpc::CategoryItem_Type RenameItemsReq::_internal_type() const {
-  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::prpc::CategoryItem_Type>(_impl_.type_);
-}
-inline void RenameItemsReq::_internal_set_type(::prpc::CategoryItem_Type value) {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ;
-  _impl_.type_ = value;
-}
-
-// string ref_name = 3;
-inline void RenameItemsReq::clear_ref_name() {
+// string ref_name = 2;
+inline void RenameBtVideoNameReq::clear_ref_name() {
   _impl_.ref_name_.ClearToEmpty();
 }
-inline const std::string& RenameItemsReq::ref_name() const {
-  // @@protoc_insertion_point(field_get:prpc.RenameItemsReq.ref_name)
+inline const std::string& RenameBtVideoNameReq::ref_name() const {
+  // @@protoc_insertion_point(field_get:prpc.RenameBtVideoNameReq.ref_name)
   return _internal_ref_name();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void RenameItemsReq::set_ref_name(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void RenameBtVideoNameReq::set_ref_name(Arg_&& arg,
                                                      Args_... args) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   _impl_.ref_name_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:prpc.RenameItemsReq.ref_name)
+  // @@protoc_insertion_point(field_set:prpc.RenameBtVideoNameReq.ref_name)
 }
-inline std::string* RenameItemsReq::mutable_ref_name() {
+inline std::string* RenameBtVideoNameReq::mutable_ref_name() {
   std::string* _s = _internal_mutable_ref_name();
-  // @@protoc_insertion_point(field_mutable:prpc.RenameItemsReq.ref_name)
+  // @@protoc_insertion_point(field_mutable:prpc.RenameBtVideoNameReq.ref_name)
   return _s;
 }
-inline const std::string& RenameItemsReq::_internal_ref_name() const {
+inline const std::string& RenameBtVideoNameReq::_internal_ref_name() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.ref_name_.Get();
 }
-inline void RenameItemsReq::_internal_set_ref_name(const std::string& value) {
+inline void RenameBtVideoNameReq::_internal_set_ref_name(const std::string& value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   _impl_.ref_name_.Set(value, GetArenaForAllocation());
 }
-inline std::string* RenameItemsReq::_internal_mutable_ref_name() {
+inline std::string* RenameBtVideoNameReq::_internal_mutable_ref_name() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   return _impl_.ref_name_.Mutable( GetArenaForAllocation());
 }
-inline std::string* RenameItemsReq::release_ref_name() {
+inline std::string* RenameBtVideoNameReq::release_ref_name() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:prpc.RenameItemsReq.ref_name)
+  // @@protoc_insertion_point(field_release:prpc.RenameBtVideoNameReq.ref_name)
   return _impl_.ref_name_.Release();
 }
-inline void RenameItemsReq::set_allocated_ref_name(std::string* value) {
+inline void RenameBtVideoNameReq::set_allocated_ref_name(std::string* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.ref_name_.SetAllocated(value, GetArenaForAllocation());
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -13129,12 +13095,12 @@ inline void RenameItemsReq::set_allocated_ref_name(std::string* value) {
           _impl_.ref_name_.Set("", GetArenaForAllocation());
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:prpc.RenameItemsReq.ref_name)
+  // @@protoc_insertion_point(field_set_allocated:prpc.RenameBtVideoNameReq.ref_name)
 }
 
 // -------------------------------------------------------------------
 
-// RenameItemsRsp
+// RenameBtVideoNameRsp
 
 #ifdef __GNUC__
 #pragma GCC diagnostic pop

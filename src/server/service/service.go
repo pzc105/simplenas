@@ -1003,7 +1003,7 @@ func (ser *CoreService) NewBtHlsTask(ctx context.Context, req *prpc.NewBtHlsTask
 	return &prpc.NewBtHlsTaskRsp{}, nil
 }
 
-func (ser *CoreService) RenameItems(ctx context.Context, req *prpc.RenameItemsReq) (*prpc.RenameItemsRsp, error) {
+func (ser *CoreService) RenameBtVideoName(ctx context.Context, req *prpc.RenameBtVideoNameReq) (*prpc.RenameBtVideoNameRsp, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "")
 	}
@@ -1014,15 +1014,14 @@ func (ser *CoreService) RenameItems(ctx context.Context, req *prpc.RenameItemsRe
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "")
 	}
-	err := ser.um.CategoryService().RenameItems(&category.RenameItemsParams{
+	err := ser.um.RenameBtVideoName(&user.RenameBtVideoNameParams{
 		Who:      ses.UserId,
-		ParentId: ptype.CategoryID(req.ParentId),
-		ItemType: req.Type,
+		ParentId: ptype.CategoryID(req.ItemId),
 		RefName:  req.RefName,
 		NumWidth: 2,
 	})
 	if err != nil {
 		return nil, err
 	}
-	return &prpc.RenameItemsRsp{}, nil
+	return &prpc.RenameBtVideoNameRsp{}, nil
 }

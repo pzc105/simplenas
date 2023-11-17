@@ -43,7 +43,7 @@ static const char* UserService_method_names[] = {
   "/prpc.UserService/QuerySubItems",
   "/prpc.UserService/QueryItemInfo",
   "/prpc.UserService/UploadSubtitle",
-  "/prpc.UserService/RenameItems",
+  "/prpc.UserService/RenameBtVideoName",
   "/prpc.UserService/GetBtMeta",
   "/prpc.UserService/NewBtHlsTask",
   "/prpc.UserService/JoinChatRoom",
@@ -82,7 +82,7 @@ UserService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channe
   , rpcmethod_QuerySubItems_(UserService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_QueryItemInfo_(UserService_method_names[19], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_UploadSubtitle_(UserService_method_names[20], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RenameItems_(UserService_method_names[21], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RenameBtVideoName_(UserService_method_names[21], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetBtMeta_(UserService_method_names[22], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_NewBtHlsTask_(UserService_method_names[23], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_JoinChatRoom_(UserService_method_names[24], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
@@ -569,25 +569,25 @@ void UserService::Stub::async::UploadSubtitle(::grpc::ClientContext* context, co
   return result;
 }
 
-::grpc::Status UserService::Stub::RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::prpc::RenameItemsRsp* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::prpc::RenameItemsReq, ::prpc::RenameItemsRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RenameItems_, context, request, response);
+::grpc::Status UserService::Stub::RenameBtVideoName(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq& request, ::prpc::RenameBtVideoNameRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::RenameBtVideoNameReq, ::prpc::RenameBtVideoNameRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RenameBtVideoName_, context, request, response);
 }
 
-void UserService::Stub::async::RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::prpc::RenameItemsReq, ::prpc::RenameItemsRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RenameItems_, context, request, response, std::move(f));
+void UserService::Stub::async::RenameBtVideoName(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq* request, ::prpc::RenameBtVideoNameRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::RenameBtVideoNameReq, ::prpc::RenameBtVideoNameRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RenameBtVideoName_, context, request, response, std::move(f));
 }
 
-void UserService::Stub::async::RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RenameItems_, context, request, response, reactor);
+void UserService::Stub::async::RenameBtVideoName(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq* request, ::prpc::RenameBtVideoNameRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RenameBtVideoName_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>* UserService::Stub::PrepareAsyncRenameItemsRaw(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::RenameItemsRsp, ::prpc::RenameItemsReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RenameItems_, context, request);
+::grpc::ClientAsyncResponseReader< ::prpc::RenameBtVideoNameRsp>* UserService::Stub::PrepareAsyncRenameBtVideoNameRaw(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::RenameBtVideoNameRsp, ::prpc::RenameBtVideoNameReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RenameBtVideoName_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>* UserService::Stub::AsyncRenameItemsRaw(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::prpc::RenameBtVideoNameRsp>* UserService::Stub::AsyncRenameBtVideoNameRaw(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncRenameItemsRaw(context, request, cq);
+    this->PrepareAsyncRenameBtVideoNameRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -983,12 +983,12 @@ UserService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[21],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::RenameItemsReq, ::prpc::RenameItemsRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::RenameBtVideoNameReq, ::prpc::RenameBtVideoNameRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::prpc::RenameItemsReq* req,
-             ::prpc::RenameItemsRsp* resp) {
-               return service->RenameItems(ctx, req, resp);
+             const ::prpc::RenameBtVideoNameReq* req,
+             ::prpc::RenameBtVideoNameRsp* resp) {
+               return service->RenameBtVideoName(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[22],
@@ -1222,7 +1222,7 @@ UserService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status UserService::Service::RenameItems(::grpc::ServerContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response) {
+::grpc::Status UserService::Service::RenameBtVideoName(::grpc::ServerContext* context, const ::prpc::RenameBtVideoNameReq* request, ::prpc::RenameBtVideoNameRsp* response) {
   (void) context;
   (void) request;
   (void) response;

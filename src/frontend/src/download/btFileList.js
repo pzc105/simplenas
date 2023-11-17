@@ -13,10 +13,29 @@ import userService from '../rpcClient.js'
 
 
 const FileListHandler = ({ infoHash }) => {
-  const btViodeFiles = useSelector((state) => store.selectBtVideoFiles(state, infoHash))
+  let btViodeFiles = useSelector((state) => store.selectBtVideoFiles(state, infoHash))
   const [selectedVideoFiles, selectVideoFiles] = useState({})
-  const [selectedDirId, selectDir] = useState(-1)
+  const selectedDirId = useRef(-1)
   const isMouseDown = useSelector((state) => store.isDownloadPageMouseDown(state))
+  let sortedVideos = []
+
+  const sortVideos = () => {
+    if (!btViodeFiles) {
+      return
+    }
+    let tmp = Object.values(btViodeFiles)
+    tmp.sort((a, b) => {
+      if (a.meta.format.filename < b.meta.format.filename) {
+        return -1;
+      }
+      if (a.meta.format.filename > b.meta.format.filename) {
+        return 1;
+      }
+      return 0;
+    })
+    sortedVideos = tmp
+  }
+  sortVideos()
 
   const handleChange = (e, index) => {
     selectVideoFiles({ ...selectedVideoFiles, [index]: e.target.checked })
@@ -28,7 +47,7 @@ const FileListHandler = ({ infoHash }) => {
     i.setVersion(infoHash.version)
     i.setHash(infoHash.hash)
     req.setInfoHash(i)
-    req.setCategoryItemId(selectedDirId)
+    req.setCategoryItemId(selectedDirId.current)
     for (let fileIndex in selectedVideoFiles) {
       if (selectedVideoFiles[fileIndex]) {
         req.addFileIndexes(fileIndex)
@@ -55,8 +74,7 @@ const FileListHandler = ({ infoHash }) => {
 
   return (
     <Container>
-      <FolderSelector
-        select={(id) => selectDir(id)} />
+      <FolderSelector select={(id) => selectedDirId.current = id} />
       <Button
         variant="contained"
         onClick={saveVideos}
@@ -64,19 +82,18 @@ const FileListHandler = ({ infoHash }) => {
         保存
       </Button>
       <FormGroup>{
-        btViodeFiles ?
-          btViodeFiles.map((f) => {
-            return (
-              <FormControlLabel
-                onMouseEnter={(e) => onMouseEnter(e, f.fileIndex)}
-                key={f.fileIndex}
-                control={<Checkbox
-                  checked={selectedIndexes[f.fileIndex] ? true : false}
-                  onClick={(e) => onCheckBoxClick(e, f.fileIndex)}
-                  onChange={(e) => handleChange(e, f.fileIndex)} name="gilad" />}
-                label={"[" + utils.secondsToHHMMSS(f.meta.format.duration) + "] " + f.meta.format.filename} />
-            )
-          }) : null
+        sortedVideos.map((f) => {
+          return (
+            <FormControlLabel
+              onMouseEnter={(e) => onMouseEnter(e, f.fileIndex)}
+              key={f.fileIndex}
+              control={<Checkbox
+                checked={selectedIndexes[f.fileIndex] ? true : false}
+                onClick={(e) => onCheckBoxClick(e, f.fileIndex)}
+                onChange={(e) => handleChange(e, f.fileIndex)} name="gilad" />}
+              label={"[" + utils.secondsToHHMMSS(f.meta.format.duration) + "] " + f.meta.format.filename} />
+          )
+        })
       }
       </FormGroup>
     </Container>

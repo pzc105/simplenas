@@ -15,12 +15,12 @@ import FolderSelector from './download/folderSelector.js'
 export default function BtHlsTaskPanel({ downloadReq }) {
 
   const [btInfo, setBtInfo] = useState(null)
-  const [parentId, setParentId] = useState(-1)
+  const parentIdRef = useRef(-1)
 
   const newBtHlsTask = () => {
     var req = new User.NewBtHlsTaskReq()
     req.setReq(downloadReq)
-    req.setCategoryParentId(parentId)
+    req.setCategoryParentId(parentIdRef.current)
     userService.newBtHlsTask(req, {}, (err, respone) => {
       if (err != null) {
         console.log(err)
@@ -41,7 +41,7 @@ export default function BtHlsTaskPanel({ downloadReq }) {
           </Grid>
         </Grid>
         <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
-          <FolderSelector select={(id) => setParentId(id)} />
+          <FolderSelector select={(id) => parentIdRef.current = id} />
           <Button variant="outlined" color="primary" onClick={newBtHlsTask}>创建任务</Button>
         </Grid>
       </Paper>

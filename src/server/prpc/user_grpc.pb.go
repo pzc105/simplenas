@@ -40,7 +40,7 @@ const (
 	UserService_QuerySubItems_FullMethodName     = "/prpc.UserService/QuerySubItems"
 	UserService_QueryItemInfo_FullMethodName     = "/prpc.UserService/QueryItemInfo"
 	UserService_UploadSubtitle_FullMethodName    = "/prpc.UserService/UploadSubtitle"
-	UserService_RenameItems_FullMethodName       = "/prpc.UserService/RenameItems"
+	UserService_RenameBtVideoName_FullMethodName = "/prpc.UserService/RenameBtVideoName"
 	UserService_GetBtMeta_FullMethodName         = "/prpc.UserService/GetBtMeta"
 	UserService_NewBtHlsTask_FullMethodName      = "/prpc.UserService/NewBtHlsTask"
 	UserService_JoinChatRoom_FullMethodName      = "/prpc.UserService/JoinChatRoom"
@@ -76,7 +76,7 @@ type UserServiceClient interface {
 	QuerySubItems(ctx context.Context, in *QuerySubItemsReq, opts ...grpc.CallOption) (*QuerySubItemsRes, error)
 	QueryItemInfo(ctx context.Context, in *QueryItemInfoReq, opts ...grpc.CallOption) (*QueryItemInfoRes, error)
 	UploadSubtitle(ctx context.Context, in *UploadSubtitleReq, opts ...grpc.CallOption) (*UploadSubtitleRes, error)
-	RenameItems(ctx context.Context, in *RenameItemsReq, opts ...grpc.CallOption) (*RenameItemsRsp, error)
+	RenameBtVideoName(ctx context.Context, in *RenameBtVideoNameReq, opts ...grpc.CallOption) (*RenameBtVideoNameRsp, error)
 	GetBtMeta(ctx context.Context, in *GetBtMetaReq, opts ...grpc.CallOption) (*GetBtMetaRsp, error)
 	NewBtHlsTask(ctx context.Context, in *NewBtHlsTaskReq, opts ...grpc.CallOption) (*NewBtHlsTaskRsp, error)
 	JoinChatRoom(ctx context.Context, in *JoinChatRoomReq, opts ...grpc.CallOption) (UserService_JoinChatRoomClient, error)
@@ -307,9 +307,9 @@ func (c *userServiceClient) UploadSubtitle(ctx context.Context, in *UploadSubtit
 	return out, nil
 }
 
-func (c *userServiceClient) RenameItems(ctx context.Context, in *RenameItemsReq, opts ...grpc.CallOption) (*RenameItemsRsp, error) {
-	out := new(RenameItemsRsp)
-	err := c.cc.Invoke(ctx, UserService_RenameItems_FullMethodName, in, out, opts...)
+func (c *userServiceClient) RenameBtVideoName(ctx context.Context, in *RenameBtVideoNameReq, opts ...grpc.CallOption) (*RenameBtVideoNameRsp, error) {
+	out := new(RenameBtVideoNameRsp)
+	err := c.cc.Invoke(ctx, UserService_RenameBtVideoName_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -436,7 +436,7 @@ type UserServiceServer interface {
 	QuerySubItems(context.Context, *QuerySubItemsReq) (*QuerySubItemsRes, error)
 	QueryItemInfo(context.Context, *QueryItemInfoReq) (*QueryItemInfoRes, error)
 	UploadSubtitle(context.Context, *UploadSubtitleReq) (*UploadSubtitleRes, error)
-	RenameItems(context.Context, *RenameItemsReq) (*RenameItemsRsp, error)
+	RenameBtVideoName(context.Context, *RenameBtVideoNameReq) (*RenameBtVideoNameRsp, error)
 	GetBtMeta(context.Context, *GetBtMetaReq) (*GetBtMetaRsp, error)
 	NewBtHlsTask(context.Context, *NewBtHlsTaskReq) (*NewBtHlsTaskRsp, error)
 	JoinChatRoom(*JoinChatRoomReq, UserService_JoinChatRoomServer) error
@@ -515,8 +515,8 @@ func (UnimplementedUserServiceServer) QueryItemInfo(context.Context, *QueryItemI
 func (UnimplementedUserServiceServer) UploadSubtitle(context.Context, *UploadSubtitleReq) (*UploadSubtitleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadSubtitle not implemented")
 }
-func (UnimplementedUserServiceServer) RenameItems(context.Context, *RenameItemsReq) (*RenameItemsRsp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RenameItems not implemented")
+func (UnimplementedUserServiceServer) RenameBtVideoName(context.Context, *RenameBtVideoNameReq) (*RenameBtVideoNameRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RenameBtVideoName not implemented")
 }
 func (UnimplementedUserServiceServer) GetBtMeta(context.Context, *GetBtMetaReq) (*GetBtMetaRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBtMeta not implemented")
@@ -936,20 +936,20 @@ func _UserService_UploadSubtitle_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_RenameItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RenameItemsReq)
+func _UserService_RenameBtVideoName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RenameBtVideoNameReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).RenameItems(ctx, in)
+		return srv.(UserServiceServer).RenameBtVideoName(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserService_RenameItems_FullMethodName,
+		FullMethod: UserService_RenameBtVideoName_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).RenameItems(ctx, req.(*RenameItemsReq))
+		return srv.(UserServiceServer).RenameBtVideoName(ctx, req.(*RenameBtVideoNameReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1189,8 +1189,8 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UserService_UploadSubtitle_Handler,
 		},
 		{
-			MethodName: "RenameItems",
-			Handler:    _UserService_RenameItems_Handler,
+			MethodName: "RenameBtVideoName",
+			Handler:    _UserService_RenameBtVideoName_Handler,
 		},
 		{
 			MethodName: "GetBtMeta",

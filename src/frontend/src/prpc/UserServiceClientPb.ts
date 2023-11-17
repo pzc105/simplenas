@@ -922,47 +922,47 @@ export class UserServiceClient {
     this.methodDescriptorUploadSubtitle);
   }
 
-  methodDescriptorRenameItems = new grpcWeb.MethodDescriptor(
-    '/prpc.UserService/RenameItems',
+  methodDescriptorRenameBtVideoName = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/RenameBtVideoName',
     grpcWeb.MethodType.UNARY,
-    user_pb.RenameItemsReq,
-    user_pb.RenameItemsRsp,
-    (request: user_pb.RenameItemsReq) => {
+    user_pb.RenameBtVideoNameReq,
+    user_pb.RenameBtVideoNameRsp,
+    (request: user_pb.RenameBtVideoNameReq) => {
       return request.serializeBinary();
     },
-    user_pb.RenameItemsRsp.deserializeBinary
+    user_pb.RenameBtVideoNameRsp.deserializeBinary
   );
 
-  renameItems(
-    request: user_pb.RenameItemsReq,
-    metadata: grpcWeb.Metadata | null): Promise<user_pb.RenameItemsRsp>;
+  renameBtVideoName(
+    request: user_pb.RenameBtVideoNameReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.RenameBtVideoNameRsp>;
 
-  renameItems(
-    request: user_pb.RenameItemsReq,
+  renameBtVideoName(
+    request: user_pb.RenameBtVideoNameReq,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: user_pb.RenameItemsRsp) => void): grpcWeb.ClientReadableStream<user_pb.RenameItemsRsp>;
+               response: user_pb.RenameBtVideoNameRsp) => void): grpcWeb.ClientReadableStream<user_pb.RenameBtVideoNameRsp>;
 
-  renameItems(
-    request: user_pb.RenameItemsReq,
+  renameBtVideoName(
+    request: user_pb.RenameBtVideoNameReq,
     metadata: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: user_pb.RenameItemsRsp) => void) {
+               response: user_pb.RenameBtVideoNameRsp) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
-          '/prpc.UserService/RenameItems',
+          '/prpc.UserService/RenameBtVideoName',
         request,
         metadata || {},
-        this.methodDescriptorRenameItems,
+        this.methodDescriptorRenameBtVideoName,
         callback);
     }
     return this.client_.unaryCall(
     this.hostname_ +
-      '/prpc.UserService/RenameItems',
+      '/prpc.UserService/RenameBtVideoName',
     request,
     metadata || {},
-    this.methodDescriptorRenameItems);
+    this.methodDescriptorRenameBtVideoName);
   }
 
   methodDescriptorGetBtMeta = new grpcWeb.MethodDescriptor(

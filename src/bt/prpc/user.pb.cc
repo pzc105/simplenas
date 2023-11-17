@@ -918,38 +918,37 @@ struct GetTorrentsRspDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetTorrentsRspDefaultTypeInternal _GetTorrentsRsp_default_instance_;
         template <typename>
-PROTOBUF_CONSTEXPR RenameItemsReq::RenameItemsReq(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR RenameBtVideoNameReq::RenameBtVideoNameReq(::_pbi::ConstantInitialized)
     : _impl_{
       /*decltype(_impl_.ref_name_)*/ {
           &::_pbi::fixed_address_empty_string,
           ::_pbi::ConstantInitialized{},
       },
-      /*decltype(_impl_.parent_id_)*/ ::int64_t{0},
-      /*decltype(_impl_.type_)*/ 0,
+      /*decltype(_impl_.item_id_)*/ ::int64_t{0},
       /*decltype(_impl_._cached_size_)*/ {},
     } {}
-struct RenameItemsReqDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RenameItemsReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~RenameItemsReqDefaultTypeInternal() {}
+struct RenameBtVideoNameReqDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR RenameBtVideoNameReqDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~RenameBtVideoNameReqDefaultTypeInternal() {}
   union {
-    RenameItemsReq _instance;
+    RenameBtVideoNameReq _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RenameItemsReqDefaultTypeInternal _RenameItemsReq_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RenameBtVideoNameReqDefaultTypeInternal _RenameBtVideoNameReq_default_instance_;
       template <typename>
-PROTOBUF_CONSTEXPR RenameItemsRsp::RenameItemsRsp(::_pbi::ConstantInitialized) {}
-struct RenameItemsRspDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RenameItemsRspDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~RenameItemsRspDefaultTypeInternal() {}
+PROTOBUF_CONSTEXPR RenameBtVideoNameRsp::RenameBtVideoNameRsp(::_pbi::ConstantInitialized) {}
+struct RenameBtVideoNameRspDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR RenameBtVideoNameRspDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~RenameBtVideoNameRspDefaultTypeInternal() {}
   union {
-    RenameItemsRsp _instance;
+    RenameBtVideoNameRsp _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RenameItemsRspDefaultTypeInternal _RenameItemsRsp_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RenameBtVideoNameRspDefaultTypeInternal _RenameBtVideoNameRsp_default_instance_;
 }  // namespace prpc
 static ::_pb::Metadata file_level_metadata_user_2eproto[53];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_user_2eproto[1];
@@ -1472,18 +1471,17 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::prpc::GetTorrentsRsp, _impl_.torrent_info_),
     ~0u,  // no _has_bits_
-    PROTOBUF_FIELD_OFFSET(::prpc::RenameItemsReq, _internal_metadata_),
+    PROTOBUF_FIELD_OFFSET(::prpc::RenameBtVideoNameReq, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
     ~0u,  // no _weak_field_map_
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::prpc::RenameItemsReq, _impl_.parent_id_),
-    PROTOBUF_FIELD_OFFSET(::prpc::RenameItemsReq, _impl_.type_),
-    PROTOBUF_FIELD_OFFSET(::prpc::RenameItemsReq, _impl_.ref_name_),
+    PROTOBUF_FIELD_OFFSET(::prpc::RenameBtVideoNameReq, _impl_.item_id_),
+    PROTOBUF_FIELD_OFFSET(::prpc::RenameBtVideoNameReq, _impl_.ref_name_),
     ~0u,  // no _has_bits_
-    PROTOBUF_FIELD_OFFSET(::prpc::RenameItemsRsp, _internal_metadata_),
+    PROTOBUF_FIELD_OFFSET(::prpc::RenameBtVideoNameRsp, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
     ~0u,  // no _weak_field_map_
@@ -1545,8 +1543,8 @@ static const ::_pbi::MigrationSchema
         {489, -1, -1, sizeof(::prpc::DelMagnetCategoryRsp)},
         {497, -1, -1, sizeof(::prpc::GetTorrentsReq)},
         {505, -1, -1, sizeof(::prpc::GetTorrentsRsp)},
-        {514, -1, -1, sizeof(::prpc::RenameItemsReq)},
-        {525, -1, -1, sizeof(::prpc::RenameItemsRsp)},
+        {514, -1, -1, sizeof(::prpc::RenameBtVideoNameReq)},
+        {524, -1, -1, sizeof(::prpc::RenameBtVideoNameRsp)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -1601,8 +1599,8 @@ static const ::_pb::Message* const file_default_instances[] = {
     &::prpc::_DelMagnetCategoryRsp_default_instance_._instance,
     &::prpc::_GetTorrentsReq_default_instance_._instance,
     &::prpc::_GetTorrentsRsp_default_instance_._instance,
-    &::prpc::_RenameItemsReq_default_instance_._instance,
-    &::prpc::_RenameItemsRsp_default_instance_._instance,
+    &::prpc::_RenameBtVideoNameReq_default_instance_._instance,
+    &::prpc::_RenameBtVideoNameRsp_default_instance_._instance,
 };
 const char descriptor_table_protodef_user_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
     "\n\nuser.proto\022\004prpc\032\016category.proto\032\013vide"
@@ -1679,57 +1677,57 @@ const char descriptor_table_protodef_user_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
     "\"\"\n\024DelMagnetCategoryReq\022\n\n\002id\030\001 \001(\003\"\026\n\024"
     "DelMagnetCategoryRsp\"\020\n\016GetTorrentsReq\"9"
     "\n\016GetTorrentsRsp\022\'\n\014torrent_info\030\001 \003(\0132\021"
-    ".prpc.TorrentInfo\"\\\n\016RenameItemsReq\022\021\n\tp"
-    "arent_id\030\001 \001(\003\022%\n\004type\030\002 \001(\0162\027.prpc.Cate"
-    "goryItem.Type\022\020\n\010ref_name\030\003 \001(\t\"\020\n\016Renam"
-    "eItemsRsp2\315\016\n\013UserService\0221\n\010Register\022\022."
-    "prpc.RegisterInfo\032\021.prpc.RegisterRet\0224\n\013"
-    "IsUsedEmail\022\017.prpc.EmailInfo\032\024.prpc.IsUs"
-    "edEmailRet\022(\n\005Login\022\017.prpc.LoginInfo\032\016.p"
-    "rpc.LoginRet\022,\n\tFastLogin\022\017.prpc.LoginIn"
-    "fo\032\016.prpc.LoginRet\022,\n\tIsLogined\022\017.prpc.L"
-    "oginInfo\032\016.prpc.LoginRet\022B\n\016ChangePasswo"
-    "rd\022\027.prpc.ChangePasswordReq\032\027.prpc.Chang"
-    "ePasswordRsp\0228\n\010Download\022\025.prpc.Download"
-    "Request\032\025.prpc.DownloadRespone\022\?\n\rRemove"
-    "Torrent\022\026.prpc.RemoveTorrentReq\032\026.prpc.R"
-    "emoveTorrentRes\022<\n\014GetMagnetUri\022\025.prpc.G"
-    "etMagnetUriReq\032\025.prpc.GetMagnetUriRsp\0229\n"
-    "\013GetTorrents\022\024.prpc.GetTorrentsReq\032\024.prp"
-    "c.GetTorrentsRsp\022<\n\nOnBtStatus\022\025.prpc.Bt"
-    "StatusRequest\032\025.prpc.BtStatusRespone0\001\022\?"
-    "\n\rQueryBtVideos\022\026.prpc.QueryBtVideosReq\032"
-    "\026.prpc.QueryBtVideosRes\022E\n\017NewCategoryIt"
-    "em\022\030.prpc.NewCategoryItemReq\032\030.prpc.NewC"
-    "ategoryItemRes\022E\n\017DelCategoryItem\022\030.prpc"
-    ".DelCategoryItemReq\032\030.prpc.DelCategoryIt"
-    "emRes\0229\n\013AddBtVideos\022\024.prpc.AddBtVideosR"
-    "eq\032\024.prpc.AddBtVideosRes\0223\n\tShareItem\022\022."
-    "prpc.ShareItemReq\032\022.prpc.ShareItemRes\022H\n"
-    "\020QuerySharedItems\022\031.prpc.QuerySharedItem"
-    "sReq\032\031.prpc.QuerySharedItemsRes\022\?\n\rDelSh"
-    "aredItem\022\026.prpc.DelSharedItemReq\032\026.prpc."
-    "DelSharedItemRes\022\?\n\rQuerySubItems\022\026.prpc"
-    ".QuerySubItemsReq\032\026.prpc.QuerySubItemsRe"
-    "s\022\?\n\rQueryItemInfo\022\026.prpc.QueryItemInfoR"
-    "eq\032\026.prpc.QueryItemInfoRes\022B\n\016UploadSubt"
-    "itle\022\027.prpc.UploadSubtitleReq\032\027.prpc.Upl"
-    "oadSubtitleRes\0229\n\013RenameItems\022\024.prpc.Ren"
-    "ameItemsReq\032\024.prpc.RenameItemsRsp\0223\n\tGet"
-    "BtMeta\022\022.prpc.GetBtMetaReq\032\022.prpc.GetBtM"
-    "etaRsp\022<\n\014NewBtHlsTask\022\025.prpc.NewBtHlsTa"
-    "skReq\032\025.prpc.NewBtHlsTaskRsp\022>\n\014JoinChat"
-    "Room\022\025.prpc.JoinChatRoomReq\032\025.prpc.JoinC"
-    "hatRoomRes0\001\022H\n\020SendMsg2ChatRoom\022\031.prpc."
-    "SendMsg2ChatRoomReq\032\031.prpc.SendMsg2ChatR"
-    "oomRes\022K\n\021AddMagnetCategory\022\032.prpc.AddMa"
-    "gnetCategoryReq\032\032.prpc.AddMagnetCategory"
-    "Rsp\022<\n\014AddMagnetUri\022\025.prpc.AddMagnetUriR"
-    "eq\032\025.prpc.AddMagnetUriRsp\0229\n\013QueryMagnet"
-    "\022\024.prpc.QueryMagnetReq\032\024.prpc.QueryMagne"
-    "tRsp\022K\n\021DelMagnetCategory\022\032.prpc.DelMagn"
-    "etCategoryReq\032\032.prpc.DelMagnetCategoryRs"
-    "pB\010Z\006./prpcb\006proto3"
+    ".prpc.TorrentInfo\"9\n\024RenameBtVideoNameRe"
+    "q\022\017\n\007item_id\030\001 \001(\003\022\020\n\010ref_name\030\002 \001(\t\"\026\n\024"
+    "RenameBtVideoNameRsp2\337\016\n\013UserService\0221\n\010"
+    "Register\022\022.prpc.RegisterInfo\032\021.prpc.Regi"
+    "sterRet\0224\n\013IsUsedEmail\022\017.prpc.EmailInfo\032"
+    "\024.prpc.IsUsedEmailRet\022(\n\005Login\022\017.prpc.Lo"
+    "ginInfo\032\016.prpc.LoginRet\022,\n\tFastLogin\022\017.p"
+    "rpc.LoginInfo\032\016.prpc.LoginRet\022,\n\tIsLogin"
+    "ed\022\017.prpc.LoginInfo\032\016.prpc.LoginRet\022B\n\016C"
+    "hangePassword\022\027.prpc.ChangePasswordReq\032\027"
+    ".prpc.ChangePasswordRsp\0228\n\010Download\022\025.pr"
+    "pc.DownloadRequest\032\025.prpc.DownloadRespon"
+    "e\022\?\n\rRemoveTorrent\022\026.prpc.RemoveTorrentR"
+    "eq\032\026.prpc.RemoveTorrentRes\022<\n\014GetMagnetU"
+    "ri\022\025.prpc.GetMagnetUriReq\032\025.prpc.GetMagn"
+    "etUriRsp\0229\n\013GetTorrents\022\024.prpc.GetTorren"
+    "tsReq\032\024.prpc.GetTorrentsRsp\022<\n\nOnBtStatu"
+    "s\022\025.prpc.BtStatusRequest\032\025.prpc.BtStatus"
+    "Respone0\001\022\?\n\rQueryBtVideos\022\026.prpc.QueryB"
+    "tVideosReq\032\026.prpc.QueryBtVideosRes\022E\n\017Ne"
+    "wCategoryItem\022\030.prpc.NewCategoryItemReq\032"
+    "\030.prpc.NewCategoryItemRes\022E\n\017DelCategory"
+    "Item\022\030.prpc.DelCategoryItemReq\032\030.prpc.De"
+    "lCategoryItemRes\0229\n\013AddBtVideos\022\024.prpc.A"
+    "ddBtVideosReq\032\024.prpc.AddBtVideosRes\0223\n\tS"
+    "hareItem\022\022.prpc.ShareItemReq\032\022.prpc.Shar"
+    "eItemRes\022H\n\020QuerySharedItems\022\031.prpc.Quer"
+    "ySharedItemsReq\032\031.prpc.QuerySharedItemsR"
+    "es\022\?\n\rDelSharedItem\022\026.prpc.DelSharedItem"
+    "Req\032\026.prpc.DelSharedItemRes\022\?\n\rQuerySubI"
+    "tems\022\026.prpc.QuerySubItemsReq\032\026.prpc.Quer"
+    "ySubItemsRes\022\?\n\rQueryItemInfo\022\026.prpc.Que"
+    "ryItemInfoReq\032\026.prpc.QueryItemInfoRes\022B\n"
+    "\016UploadSubtitle\022\027.prpc.UploadSubtitleReq"
+    "\032\027.prpc.UploadSubtitleRes\022K\n\021RenameBtVid"
+    "eoName\022\032.prpc.RenameBtVideoNameReq\032\032.prp"
+    "c.RenameBtVideoNameRsp\0223\n\tGetBtMeta\022\022.pr"
+    "pc.GetBtMetaReq\032\022.prpc.GetBtMetaRsp\022<\n\014N"
+    "ewBtHlsTask\022\025.prpc.NewBtHlsTaskReq\032\025.prp"
+    "c.NewBtHlsTaskRsp\022>\n\014JoinChatRoom\022\025.prpc"
+    ".JoinChatRoomReq\032\025.prpc.JoinChatRoomRes0"
+    "\001\022H\n\020SendMsg2ChatRoom\022\031.prpc.SendMsg2Cha"
+    "tRoomReq\032\031.prpc.SendMsg2ChatRoomRes\022K\n\021A"
+    "ddMagnetCategory\022\032.prpc.AddMagnetCategor"
+    "yReq\032\032.prpc.AddMagnetCategoryRsp\022<\n\014AddM"
+    "agnetUri\022\025.prpc.AddMagnetUriReq\032\025.prpc.A"
+    "ddMagnetUriRsp\0229\n\013QueryMagnet\022\024.prpc.Que"
+    "ryMagnetReq\032\024.prpc.QueryMagnetRsp\022K\n\021Del"
+    "MagnetCategory\022\032.prpc.DelMagnetCategoryR"
+    "eq\032\032.prpc.DelMagnetCategoryRspB\010Z\006./prpc"
+    "b\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_user_2eproto_deps[3] =
     {
@@ -1741,7 +1739,7 @@ static ::absl::once_flag descriptor_table_user_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_user_2eproto = {
     false,
     false,
-    4979,
+    4968,
     descriptor_table_protodef_user_2eproto,
     "user.proto",
     &descriptor_table_user_2eproto_once,
@@ -10809,22 +10807,21 @@ void GetTorrentsRsp::InternalSwap(GetTorrentsRsp* other) {
 }
 // ===================================================================
 
-class RenameItemsReq::_Internal {
+class RenameBtVideoNameReq::_Internal {
  public:
 };
 
-RenameItemsReq::RenameItemsReq(::google::protobuf::Arena* arena)
+RenameBtVideoNameReq::RenameBtVideoNameReq(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:prpc.RenameItemsReq)
+  // @@protoc_insertion_point(arena_constructor:prpc.RenameBtVideoNameReq)
 }
-RenameItemsReq::RenameItemsReq(const RenameItemsReq& from) : ::google::protobuf::Message() {
-  RenameItemsReq* const _this = this;
+RenameBtVideoNameReq::RenameBtVideoNameReq(const RenameBtVideoNameReq& from) : ::google::protobuf::Message() {
+  RenameBtVideoNameReq* const _this = this;
   (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.ref_name_){},
-      decltype(_impl_.parent_id_){},
-      decltype(_impl_.type_){},
+      decltype(_impl_.item_id_){},
       /*decltype(_impl_._cached_size_)*/ {},
   };
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
@@ -10836,18 +10833,15 @@ RenameItemsReq::RenameItemsReq(const RenameItemsReq& from) : ::google::protobuf:
   if (!from._internal_ref_name().empty()) {
     _this->_impl_.ref_name_.Set(from._internal_ref_name(), _this->GetArenaForAllocation());
   }
-  ::memcpy(&_impl_.parent_id_, &from._impl_.parent_id_,
-    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.type_) -
-    reinterpret_cast<char*>(&_impl_.parent_id_)) + sizeof(_impl_.type_));
+  _this->_impl_.item_id_ = from._impl_.item_id_;
 
-  // @@protoc_insertion_point(copy_constructor:prpc.RenameItemsReq)
+  // @@protoc_insertion_point(copy_constructor:prpc.RenameBtVideoNameReq)
 }
-inline void RenameItemsReq::SharedCtor(::_pb::Arena* arena) {
+inline void RenameBtVideoNameReq::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
       decltype(_impl_.ref_name_){},
-      decltype(_impl_.parent_id_){::int64_t{0}},
-      decltype(_impl_.type_){0},
+      decltype(_impl_.item_id_){::int64_t{0}},
       /*decltype(_impl_._cached_size_)*/ {},
   };
   _impl_.ref_name_.InitDefault();
@@ -10855,33 +10849,31 @@ inline void RenameItemsReq::SharedCtor(::_pb::Arena* arena) {
         _impl_.ref_name_.Set("", GetArenaForAllocation());
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-RenameItemsReq::~RenameItemsReq() {
-  // @@protoc_insertion_point(destructor:prpc.RenameItemsReq)
+RenameBtVideoNameReq::~RenameBtVideoNameReq() {
+  // @@protoc_insertion_point(destructor:prpc.RenameBtVideoNameReq)
   _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-inline void RenameItemsReq::SharedDtor() {
+inline void RenameBtVideoNameReq::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.ref_name_.Destroy();
 }
-void RenameItemsReq::SetCachedSize(int size) const {
+void RenameBtVideoNameReq::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-PROTOBUF_NOINLINE void RenameItemsReq::Clear() {
-// @@protoc_insertion_point(message_clear_start:prpc.RenameItemsReq)
+PROTOBUF_NOINLINE void RenameBtVideoNameReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:prpc.RenameBtVideoNameReq)
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   _impl_.ref_name_.ClearToEmpty();
-  ::memset(&_impl_.parent_id_, 0, static_cast<::size_t>(
-      reinterpret_cast<char*>(&_impl_.type_) -
-      reinterpret_cast<char*>(&_impl_.parent_id_)) + sizeof(_impl_.type_));
+  _impl_.item_id_ = ::int64_t{0};
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* RenameItemsReq::_InternalParse(
+const char* RenameBtVideoNameReq::_InternalParse(
     const char* ptr, ::_pbi::ParseContext* ctx) {
   ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
@@ -10889,78 +10881,64 @@ const char* RenameItemsReq::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 3, 0, 36, 2> RenameItemsReq::_table_ = {
+const ::_pbi::TcParseTable<1, 2, 0, 42, 2> RenameBtVideoNameReq::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    3, 24,  // max_field_number, fast_idx_mask
+    2, 8,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967288,  // skipmap
+    4294967292,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    3,  // num_field_entries
+    2,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
-    &_RenameItemsReq_default_instance_._instance,
+    &_RenameBtVideoNameReq_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
   }, {{
-    {::_pbi::TcParser::MiniParse, {}},
-    // int64 parent_id = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(RenameItemsReq, _impl_.parent_id_), 63>(),
-     {8, 63, 0, PROTOBUF_FIELD_OFFSET(RenameItemsReq, _impl_.parent_id_)}},
-    // .prpc.CategoryItem.Type type = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RenameItemsReq, _impl_.type_), 63>(),
-     {16, 63, 0, PROTOBUF_FIELD_OFFSET(RenameItemsReq, _impl_.type_)}},
-    // string ref_name = 3;
+    // string ref_name = 2;
     {::_pbi::TcParser::FastUS1,
-     {26, 63, 0, PROTOBUF_FIELD_OFFSET(RenameItemsReq, _impl_.ref_name_)}},
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(RenameBtVideoNameReq, _impl_.ref_name_)}},
+    // int64 item_id = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(RenameBtVideoNameReq, _impl_.item_id_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(RenameBtVideoNameReq, _impl_.item_id_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // int64 parent_id = 1;
-    {PROTOBUF_FIELD_OFFSET(RenameItemsReq, _impl_.parent_id_), 0, 0,
+    // int64 item_id = 1;
+    {PROTOBUF_FIELD_OFFSET(RenameBtVideoNameReq, _impl_.item_id_), 0, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
-    // .prpc.CategoryItem.Type type = 2;
-    {PROTOBUF_FIELD_OFFSET(RenameItemsReq, _impl_.type_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
-    // string ref_name = 3;
-    {PROTOBUF_FIELD_OFFSET(RenameItemsReq, _impl_.ref_name_), 0, 0,
+    // string ref_name = 2;
+    {PROTOBUF_FIELD_OFFSET(RenameBtVideoNameReq, _impl_.ref_name_), 0, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
   // no aux_entries
   {{
-    "\23\0\0\10\0\0\0\0"
-    "prpc.RenameItemsReq"
+    "\31\0\10\0\0\0\0\0"
+    "prpc.RenameBtVideoNameReq"
     "ref_name"
   }},
 };
 
-::uint8_t* RenameItemsReq::_InternalSerialize(
+::uint8_t* RenameBtVideoNameReq::_InternalSerialize(
     ::uint8_t* target,
     ::google::protobuf::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:prpc.RenameItemsReq)
+  // @@protoc_insertion_point(serialize_to_array_start:prpc.RenameBtVideoNameReq)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // int64 parent_id = 1;
-  if (this->_internal_parent_id() != 0) {
+  // int64 item_id = 1;
+  if (this->_internal_item_id() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::
         WriteInt64ToArrayWithField<1>(
-            stream, this->_internal_parent_id(), target);
+            stream, this->_internal_item_id(), target);
   }
 
-  // .prpc.CategoryItem.Type type = 2;
-  if (this->_internal_type() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteEnumToArray(
-        2, this->_internal_type(), target);
-  }
-
-  // string ref_name = 3;
+  // string ref_name = 2;
   if (!this->_internal_ref_name().empty()) {
     const std::string& _s = this->_internal_ref_name();
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.RenameItemsReq.ref_name");
-    target = stream->WriteStringMaybeAliased(3, _s, target);
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.RenameBtVideoNameReq.ref_name");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -10968,50 +10946,44 @@ const ::_pbi::TcParseTable<2, 3, 0, 36, 2> RenameItemsReq::_table_ = {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:prpc.RenameItemsReq)
+  // @@protoc_insertion_point(serialize_to_array_end:prpc.RenameBtVideoNameReq)
   return target;
 }
 
-::size_t RenameItemsReq::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:prpc.RenameItemsReq)
+::size_t RenameBtVideoNameReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:prpc.RenameBtVideoNameReq)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string ref_name = 3;
+  // string ref_name = 2;
   if (!this->_internal_ref_name().empty()) {
     total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                     this->_internal_ref_name());
   }
 
-  // int64 parent_id = 1;
-  if (this->_internal_parent_id() != 0) {
+  // int64 item_id = 1;
+  if (this->_internal_item_id() != 0) {
     total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
-        this->_internal_parent_id());
-  }
-
-  // .prpc.CategoryItem.Type type = 2;
-  if (this->_internal_type() != 0) {
-    total_size += 1 +
-                  ::_pbi::WireFormatLite::EnumSize(this->_internal_type());
+        this->_internal_item_id());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::google::protobuf::Message::ClassData RenameItemsReq::_class_data_ = {
+const ::google::protobuf::Message::ClassData RenameBtVideoNameReq::_class_data_ = {
     ::google::protobuf::Message::CopyWithSourceCheck,
-    RenameItemsReq::MergeImpl
+    RenameBtVideoNameReq::MergeImpl
 };
-const ::google::protobuf::Message::ClassData*RenameItemsReq::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*RenameBtVideoNameReq::GetClassData() const { return &_class_data_; }
 
 
-void RenameItemsReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
-  auto* const _this = static_cast<RenameItemsReq*>(&to_msg);
-  auto& from = static_cast<const RenameItemsReq&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.RenameItemsReq)
+void RenameBtVideoNameReq::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<RenameBtVideoNameReq*>(&to_msg);
+  auto& from = static_cast<const RenameBtVideoNameReq&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:prpc.RenameBtVideoNameReq)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -11019,73 +10991,65 @@ void RenameItemsReq::MergeImpl(::google::protobuf::Message& to_msg, const ::goog
   if (!from._internal_ref_name().empty()) {
     _this->_internal_set_ref_name(from._internal_ref_name());
   }
-  if (from._internal_parent_id() != 0) {
-    _this->_internal_set_parent_id(from._internal_parent_id());
-  }
-  if (from._internal_type() != 0) {
-    _this->_internal_set_type(from._internal_type());
+  if (from._internal_item_id() != 0) {
+    _this->_internal_set_item_id(from._internal_item_id());
   }
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void RenameItemsReq::CopyFrom(const RenameItemsReq& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:prpc.RenameItemsReq)
+void RenameBtVideoNameReq::CopyFrom(const RenameBtVideoNameReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:prpc.RenameBtVideoNameReq)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-PROTOBUF_NOINLINE bool RenameItemsReq::IsInitialized() const {
+PROTOBUF_NOINLINE bool RenameBtVideoNameReq::IsInitialized() const {
   return true;
 }
 
-void RenameItemsReq::InternalSwap(RenameItemsReq* other) {
+void RenameBtVideoNameReq::InternalSwap(RenameBtVideoNameReq* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.ref_name_, lhs_arena,
                                        &other->_impl_.ref_name_, rhs_arena);
-  ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(RenameItemsReq, _impl_.type_)
-      + sizeof(RenameItemsReq::_impl_.type_)
-      - PROTOBUF_FIELD_OFFSET(RenameItemsReq, _impl_.parent_id_)>(
-          reinterpret_cast<char*>(&_impl_.parent_id_),
-          reinterpret_cast<char*>(&other->_impl_.parent_id_));
+        swap(_impl_.item_id_, other->_impl_.item_id_);
 }
 
-::google::protobuf::Metadata RenameItemsReq::GetMetadata() const {
+::google::protobuf::Metadata RenameBtVideoNameReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
       file_level_metadata_user_2eproto[51]);
 }
 // ===================================================================
 
-class RenameItemsRsp::_Internal {
+class RenameBtVideoNameRsp::_Internal {
  public:
 };
 
-RenameItemsRsp::RenameItemsRsp(::google::protobuf::Arena* arena)
+RenameBtVideoNameRsp::RenameBtVideoNameRsp(::google::protobuf::Arena* arena)
     : ::google::protobuf::internal::ZeroFieldsBase(arena) {
-  // @@protoc_insertion_point(arena_constructor:prpc.RenameItemsRsp)
+  // @@protoc_insertion_point(arena_constructor:prpc.RenameBtVideoNameRsp)
 }
-RenameItemsRsp::RenameItemsRsp(const RenameItemsRsp& from) : ::google::protobuf::internal::ZeroFieldsBase() {
-  RenameItemsRsp* const _this = this;
+RenameBtVideoNameRsp::RenameBtVideoNameRsp(const RenameBtVideoNameRsp& from) : ::google::protobuf::internal::ZeroFieldsBase() {
+  RenameBtVideoNameRsp* const _this = this;
   (void)_this;
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
 
-  // @@protoc_insertion_point(copy_constructor:prpc.RenameItemsRsp)
+  // @@protoc_insertion_point(copy_constructor:prpc.RenameBtVideoNameRsp)
 }
 
 
 
 
-const ::google::protobuf::Message::ClassData RenameItemsRsp::_class_data_ = {
+const ::google::protobuf::Message::ClassData RenameBtVideoNameRsp::_class_data_ = {
     ::google::protobuf::internal::ZeroFieldsBase::CopyImpl,
     ::google::protobuf::internal::ZeroFieldsBase::MergeImpl,
 };
-const ::google::protobuf::Message::ClassData*RenameItemsRsp::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*RenameBtVideoNameRsp::GetClassData() const { return &_class_data_; }
 
 
 
@@ -11093,7 +11057,7 @@ const ::google::protobuf::Message::ClassData*RenameItemsRsp::GetClassData() cons
 
 
 
-::google::protobuf::Metadata RenameItemsRsp::GetMetadata() const {
+::google::protobuf::Metadata RenameBtVideoNameRsp::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_user_2eproto_getter, &descriptor_table_user_2eproto_once,
       file_level_metadata_user_2eproto[52]);

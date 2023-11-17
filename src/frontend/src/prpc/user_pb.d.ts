@@ -1097,42 +1097,38 @@ export namespace GetTorrentsRsp {
   }
 }
 
-export class RenameItemsReq extends jspb.Message {
-  getParentId(): number;
-  setParentId(value: number): RenameItemsReq;
-
-  getType(): category_pb.CategoryItem.Type;
-  setType(value: category_pb.CategoryItem.Type): RenameItemsReq;
+export class RenameBtVideoNameReq extends jspb.Message {
+  getItemId(): number;
+  setItemId(value: number): RenameBtVideoNameReq;
 
   getRefName(): string;
-  setRefName(value: string): RenameItemsReq;
+  setRefName(value: string): RenameBtVideoNameReq;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): RenameItemsReq.AsObject;
-  static toObject(includeInstance: boolean, msg: RenameItemsReq): RenameItemsReq.AsObject;
-  static serializeBinaryToWriter(message: RenameItemsReq, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): RenameItemsReq;
-  static deserializeBinaryFromReader(message: RenameItemsReq, reader: jspb.BinaryReader): RenameItemsReq;
+  toObject(includeInstance?: boolean): RenameBtVideoNameReq.AsObject;
+  static toObject(includeInstance: boolean, msg: RenameBtVideoNameReq): RenameBtVideoNameReq.AsObject;
+  static serializeBinaryToWriter(message: RenameBtVideoNameReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): RenameBtVideoNameReq;
+  static deserializeBinaryFromReader(message: RenameBtVideoNameReq, reader: jspb.BinaryReader): RenameBtVideoNameReq;
 }
 
-export namespace RenameItemsReq {
+export namespace RenameBtVideoNameReq {
   export type AsObject = {
-    parentId: number,
-    type: category_pb.CategoryItem.Type,
+    itemId: number,
     refName: string,
   }
 }
 
-export class RenameItemsRsp extends jspb.Message {
+export class RenameBtVideoNameRsp extends jspb.Message {
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): RenameItemsRsp.AsObject;
-  static toObject(includeInstance: boolean, msg: RenameItemsRsp): RenameItemsRsp.AsObject;
-  static serializeBinaryToWriter(message: RenameItemsRsp, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): RenameItemsRsp;
-  static deserializeBinaryFromReader(message: RenameItemsRsp, reader: jspb.BinaryReader): RenameItemsRsp;
+  toObject(includeInstance?: boolean): RenameBtVideoNameRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: RenameBtVideoNameRsp): RenameBtVideoNameRsp.AsObject;
+  static serializeBinaryToWriter(message: RenameBtVideoNameRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): RenameBtVideoNameRsp;
+  static deserializeBinaryFromReader(message: RenameBtVideoNameRsp, reader: jspb.BinaryReader): RenameBtVideoNameRsp;
 }
 
-export namespace RenameItemsRsp {
+export namespace RenameBtVideoNameRsp {
   export type AsObject = {
   }
 }

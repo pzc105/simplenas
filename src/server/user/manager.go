@@ -1,6 +1,7 @@
 package user
 
 import (
+	"fmt"
 	"os"
 	"path"
 	"pnas/bt"
@@ -315,4 +316,55 @@ func (um *UserManger) UploadSubtitle(userId ptype.UserID, req *prpc.UploadSubtit
 
 func (um *UserManger) GetTasks() task.ITasks {
 	return um.tasks
+}
+
+type RenameBtVideoNameParams struct {
+	Who      ptype.UserID
+	ParentId ptype.CategoryID
+	RefName  string
+	NumWidth int
+}
+
+func (um *UserManger) RenameBtVideoName(params *RenameBtVideoNameParams) error {
+	cate := um.categorySer
+	pitem, err := cate.GetItem(params.Who, params.ParentId)
+
+	if err != nil {
+		return err
+	}
+
+	var refname string
+	if len(params.RefName) > 0 {
+		refname = params.RefName
+	} else {
+		refname = pitem.GetName()
+	}
+
+	if !pitem.IsDirectory() {
+		if pitem.GetType() != prpc.CategoryItem_Video {
+			return errors.New("not a video")
+		}
+		sname := pitem.GetName()
+		ep, err := utils.ParseEpisode2(sname)
+		if err != nil {
+			return err
+		}
+		pitem.Rename(fmt.Sprintf("%s %0*d", refname, params.NumWidth, ep))
+		return nil
+	}
+
+	sudIds := pitem.GetSubItemIds()
+	for _, id := range sudIds {
+		item, err := cate.GetItem(params.Who, id)
+		if err != nil || item.GetType() != prpc.CategoryItem_Video {
+			continue
+		}
+		sname := item.GetName()
+		ep, err := utils.ParseEpisode2(sname)
+		if err != nil {
+			continue
+		}
+		item.Rename(fmt.Sprintf("%s %0*d", refname, params.NumWidth, ep))
+	}
+	return nil
 }

@@ -43,7 +43,7 @@ service UserService {
   rpc QuerySubItems(QuerySubItemsReq) returns (QuerySubItemsRes);
   rpc QueryItemInfo(QueryItemInfoReq) returns (QueryItemInfoRes);
   rpc UploadSubtitle(UploadSubtitleReq) returns (UploadSubtitleRes);
-  rpc RenameItems(RenameItemsReq) returns (RenameItemsRsp);
+  rpc RenameBtVideoName(RenameBtVideoNameReq) returns (RenameBtVideoNameRsp);
 
   rpc GetBtMeta(GetBtMetaReq) returns (GetBtMetaRsp);
   rpc NewBtHlsTask(NewBtHlsTaskReq) returns (NewBtHlsTaskRsp);
@@ -311,12 +311,11 @@ message GetTorrentsRsp {
   repeated TorrentInfo torrent_info = 1;
 }
 
-message RenameItemsReq {
-  int64 parent_id = 1;
-  CategoryItem.Type type = 2;
-  string ref_name = 3;
+message RenameBtVideoNameReq {
+  int64 item_id = 1;
+  string ref_name = 2;
 }
 
-message RenameItemsRsp {
+message RenameBtVideoNameRsp {
 
 }

@@ -184,12 +184,12 @@ class UserService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>> PrepareAsyncUploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>>(PrepareAsyncUploadSubtitleRaw(context, request, cq));
     }
-    virtual ::grpc::Status RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::prpc::RenameItemsRsp* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameItemsRsp>> AsyncRenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameItemsRsp>>(AsyncRenameItemsRaw(context, request, cq));
+    virtual ::grpc::Status RenameBtVideoName(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq& request, ::prpc::RenameBtVideoNameRsp* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameBtVideoNameRsp>> AsyncRenameBtVideoName(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameBtVideoNameRsp>>(AsyncRenameBtVideoNameRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameItemsRsp>> PrepareAsyncRenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameItemsRsp>>(PrepareAsyncRenameItemsRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameBtVideoNameRsp>> PrepareAsyncRenameBtVideoName(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameBtVideoNameRsp>>(PrepareAsyncRenameBtVideoNameRaw(context, request, cq));
     }
     virtual ::grpc::Status GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::prpc::GetBtMetaRsp* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetBtMetaRsp>> AsyncGetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) {
@@ -293,8 +293,8 @@ class UserService final {
       virtual void QueryItemInfo(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, std::function<void(::grpc::Status)>) = 0;
       virtual void UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void RenameBtVideoName(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq* request, ::prpc::RenameBtVideoNameRsp* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void RenameBtVideoName(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq* request, ::prpc::RenameBtVideoNameRsp* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void NewBtHlsTask(::grpc::ClientContext* context, const ::prpc::NewBtHlsTaskReq* request, ::prpc::NewBtHlsTaskRsp* response, std::function<void(::grpc::Status)>) = 0;
@@ -358,8 +358,8 @@ class UserService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::QueryItemInfoRes>* PrepareAsyncQueryItemInfoRaw(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>* AsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::UploadSubtitleRes>* PrepareAsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameItemsRsp>* AsyncRenameItemsRaw(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameItemsRsp>* PrepareAsyncRenameItemsRaw(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameBtVideoNameRsp>* AsyncRenameBtVideoNameRaw(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::RenameBtVideoNameRsp>* PrepareAsyncRenameBtVideoNameRaw(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetBtMetaRsp>* AsyncGetBtMetaRaw(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetBtMetaRsp>* PrepareAsyncGetBtMetaRaw(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::NewBtHlsTaskRsp>* AsyncNewBtHlsTaskRaw(::grpc::ClientContext* context, const ::prpc::NewBtHlsTaskReq& request, ::grpc::CompletionQueue* cq) = 0;
@@ -530,12 +530,12 @@ class UserService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>> PrepareAsyncUploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>>(PrepareAsyncUploadSubtitleRaw(context, request, cq));
     }
-    ::grpc::Status RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::prpc::RenameItemsRsp* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>> AsyncRenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>>(AsyncRenameItemsRaw(context, request, cq));
+    ::grpc::Status RenameBtVideoName(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq& request, ::prpc::RenameBtVideoNameRsp* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RenameBtVideoNameRsp>> AsyncRenameBtVideoName(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RenameBtVideoNameRsp>>(AsyncRenameBtVideoNameRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>> PrepareAsyncRenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>>(PrepareAsyncRenameItemsRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RenameBtVideoNameRsp>> PrepareAsyncRenameBtVideoName(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::RenameBtVideoNameRsp>>(PrepareAsyncRenameBtVideoNameRaw(context, request, cq));
     }
     ::grpc::Status GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::prpc::GetBtMetaRsp* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GetBtMetaRsp>> AsyncGetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) {
@@ -639,8 +639,8 @@ class UserService final {
       void QueryItemInfo(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response, ::grpc::ClientUnaryReactor* reactor) override;
       void UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, std::function<void(::grpc::Status)>) override;
       void UploadSubtitle(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response, std::function<void(::grpc::Status)>) override;
-      void RenameItems(::grpc::ClientContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void RenameBtVideoName(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq* request, ::prpc::RenameBtVideoNameRsp* response, std::function<void(::grpc::Status)>) override;
+      void RenameBtVideoName(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq* request, ::prpc::RenameBtVideoNameRsp* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response, std::function<void(::grpc::Status)>) override;
       void GetBtMeta(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response, ::grpc::ClientUnaryReactor* reactor) override;
       void NewBtHlsTask(::grpc::ClientContext* context, const ::prpc::NewBtHlsTaskReq* request, ::prpc::NewBtHlsTaskRsp* response, std::function<void(::grpc::Status)>) override;
@@ -710,8 +710,8 @@ class UserService final {
     ::grpc::ClientAsyncResponseReader< ::prpc::QueryItemInfoRes>* PrepareAsyncQueryItemInfoRaw(::grpc::ClientContext* context, const ::prpc::QueryItemInfoReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>* AsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::UploadSubtitleRes>* PrepareAsyncUploadSubtitleRaw(::grpc::ClientContext* context, const ::prpc::UploadSubtitleReq& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>* AsyncRenameItemsRaw(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::prpc::RenameItemsRsp>* PrepareAsyncRenameItemsRaw(::grpc::ClientContext* context, const ::prpc::RenameItemsReq& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::prpc::RenameBtVideoNameRsp>* AsyncRenameBtVideoNameRaw(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::prpc::RenameBtVideoNameRsp>* PrepareAsyncRenameBtVideoNameRaw(::grpc::ClientContext* context, const ::prpc::RenameBtVideoNameReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::GetBtMetaRsp>* AsyncGetBtMetaRaw(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::GetBtMetaRsp>* PrepareAsyncGetBtMetaRaw(::grpc::ClientContext* context, const ::prpc::GetBtMetaReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::NewBtHlsTaskRsp>* AsyncNewBtHlsTaskRaw(::grpc::ClientContext* context, const ::prpc::NewBtHlsTaskReq& request, ::grpc::CompletionQueue* cq) override;
@@ -750,7 +750,7 @@ class UserService final {
     const ::grpc::internal::RpcMethod rpcmethod_QuerySubItems_;
     const ::grpc::internal::RpcMethod rpcmethod_QueryItemInfo_;
     const ::grpc::internal::RpcMethod rpcmethod_UploadSubtitle_;
-    const ::grpc::internal::RpcMethod rpcmethod_RenameItems_;
+    const ::grpc::internal::RpcMethod rpcmethod_RenameBtVideoName_;
     const ::grpc::internal::RpcMethod rpcmethod_GetBtMeta_;
     const ::grpc::internal::RpcMethod rpcmethod_NewBtHlsTask_;
     const ::grpc::internal::RpcMethod rpcmethod_JoinChatRoom_;
@@ -787,7 +787,7 @@ class UserService final {
     virtual ::grpc::Status QuerySubItems(::grpc::ServerContext* context, const ::prpc::QuerySubItemsReq* request, ::prpc::QuerySubItemsRes* response);
     virtual ::grpc::Status QueryItemInfo(::grpc::ServerContext* context, const ::prpc::QueryItemInfoReq* request, ::prpc::QueryItemInfoRes* response);
     virtual ::grpc::Status UploadSubtitle(::grpc::ServerContext* context, const ::prpc::UploadSubtitleReq* request, ::prpc::UploadSubtitleRes* response);
-    virtual ::grpc::Status RenameItems(::grpc::ServerContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response);
+    virtual ::grpc::Status RenameBtVideoName(::grpc::ServerContext* context, const ::prpc::RenameBtVideoNameReq* request, ::prpc::RenameBtVideoNameRsp* response);
     virtual ::grpc::Status GetBtMeta(::grpc::ServerContext* context, const ::prpc::GetBtMetaReq* request, ::prpc::GetBtMetaRsp* response);
     virtual ::grpc::Status NewBtHlsTask(::grpc::ServerContext* context, const ::prpc::NewBtHlsTaskReq* request, ::prpc::NewBtHlsTaskRsp* response);
     virtual ::grpc::Status JoinChatRoom(::grpc::ServerContext* context, const ::prpc::JoinChatRoomReq* request, ::grpc::ServerWriter< ::prpc::JoinChatRoomRes>* writer);
@@ -1218,22 +1218,22 @@ class UserService final {
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_RenameItems : public BaseClass {
+  class WithAsyncMethod_RenameBtVideoName : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_RenameItems() {
+    WithAsyncMethod_RenameBtVideoName() {
       ::grpc::Service::MarkMethodAsync(21);
     }
-    ~WithAsyncMethod_RenameItems() override {
+    ~WithAsyncMethod_RenameBtVideoName() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RenameItems(::grpc::ServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/) override {
+    ::grpc::Status RenameBtVideoName(::grpc::ServerContext* /*context*/, const ::prpc::RenameBtVideoNameReq* /*request*/, ::prpc::RenameBtVideoNameRsp* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestRenameItems(::grpc::ServerContext* context, ::prpc::RenameItemsReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::RenameItemsRsp>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestRenameBtVideoName(::grpc::ServerContext* context, ::prpc::RenameBtVideoNameReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::RenameBtVideoNameRsp>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(21, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -1397,7 +1397,7 @@ class UserService final {
       ::grpc::Service::RequestAsyncUnary(29, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_Register<WithAsyncMethod_IsUsedEmail<WithAsyncMethod_Login<WithAsyncMethod_FastLogin<WithAsyncMethod_IsLogined<WithAsyncMethod_ChangePassword<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_GetMagnetUri<WithAsyncMethod_GetTorrents<WithAsyncMethod_OnBtStatus<WithAsyncMethod_QueryBtVideos<WithAsyncMethod_NewCategoryItem<WithAsyncMethod_DelCategoryItem<WithAsyncMethod_AddBtVideos<WithAsyncMethod_ShareItem<WithAsyncMethod_QuerySharedItems<WithAsyncMethod_DelSharedItem<WithAsyncMethod_QuerySubItems<WithAsyncMethod_QueryItemInfo<WithAsyncMethod_UploadSubtitle<WithAsyncMethod_RenameItems<WithAsyncMethod_GetBtMeta<WithAsyncMethod_NewBtHlsTask<WithAsyncMethod_JoinChatRoom<WithAsyncMethod_SendMsg2ChatRoom<WithAsyncMethod_AddMagnetCategory<WithAsyncMethod_AddMagnetUri<WithAsyncMethod_QueryMagnet<WithAsyncMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > AsyncService;
+  typedef WithAsyncMethod_Register<WithAsyncMethod_IsUsedEmail<WithAsyncMethod_Login<WithAsyncMethod_FastLogin<WithAsyncMethod_IsLogined<WithAsyncMethod_ChangePassword<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_GetMagnetUri<WithAsyncMethod_GetTorrents<WithAsyncMethod_OnBtStatus<WithAsyncMethod_QueryBtVideos<WithAsyncMethod_NewCategoryItem<WithAsyncMethod_DelCategoryItem<WithAsyncMethod_AddBtVideos<WithAsyncMethod_ShareItem<WithAsyncMethod_QuerySharedItems<WithAsyncMethod_DelSharedItem<WithAsyncMethod_QuerySubItems<WithAsyncMethod_QueryItemInfo<WithAsyncMethod_UploadSubtitle<WithAsyncMethod_RenameBtVideoName<WithAsyncMethod_GetBtMeta<WithAsyncMethod_NewBtHlsTask<WithAsyncMethod_JoinChatRoom<WithAsyncMethod_SendMsg2ChatRoom<WithAsyncMethod_AddMagnetCategory<WithAsyncMethod_AddMagnetUri<WithAsyncMethod_QueryMagnet<WithAsyncMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_Register : public BaseClass {
    private:
@@ -1961,31 +1961,31 @@ class UserService final {
       ::grpc::CallbackServerContext* /*context*/, const ::prpc::UploadSubtitleReq* /*request*/, ::prpc::UploadSubtitleRes* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_RenameItems : public BaseClass {
+  class WithCallbackMethod_RenameBtVideoName : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_RenameItems() {
+    WithCallbackMethod_RenameBtVideoName() {
       ::grpc::Service::MarkMethodCallback(21,
-          new ::grpc::internal::CallbackUnaryHandler< ::prpc::RenameItemsReq, ::prpc::RenameItemsRsp>(
+          new ::grpc::internal::CallbackUnaryHandler< ::prpc::RenameBtVideoNameReq, ::prpc::RenameBtVideoNameRsp>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::prpc::RenameItemsReq* request, ::prpc::RenameItemsRsp* response) { return this->RenameItems(context, request, response); }));}
-    void SetMessageAllocatorFor_RenameItems(
-        ::grpc::MessageAllocator< ::prpc::RenameItemsReq, ::prpc::RenameItemsRsp>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::prpc::RenameBtVideoNameReq* request, ::prpc::RenameBtVideoNameRsp* response) { return this->RenameBtVideoName(context, request, response); }));}
+    void SetMessageAllocatorFor_RenameBtVideoName(
+        ::grpc::MessageAllocator< ::prpc::RenameBtVideoNameReq, ::prpc::RenameBtVideoNameRsp>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(21);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::RenameItemsReq, ::prpc::RenameItemsRsp>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::RenameBtVideoNameReq, ::prpc::RenameBtVideoNameRsp>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_RenameItems() override {
+    ~WithCallbackMethod_RenameBtVideoName() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RenameItems(::grpc::ServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/) override {
+    ::grpc::Status RenameBtVideoName(::grpc::ServerContext* /*context*/, const ::prpc::RenameBtVideoNameReq* /*request*/, ::prpc::RenameBtVideoNameRsp* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* RenameItems(
-      ::grpc::CallbackServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* RenameBtVideoName(
+      ::grpc::CallbackServerContext* /*context*/, const ::prpc::RenameBtVideoNameReq* /*request*/, ::prpc::RenameBtVideoNameRsp* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_GetBtMeta : public BaseClass {
@@ -2198,7 +2198,7 @@ class UserService final {
     virtual ::grpc::ServerUnaryReactor* DelMagnetCategory(
       ::grpc::CallbackServerContext* /*context*/, const ::prpc::DelMagnetCategoryReq* /*request*/, ::prpc::DelMagnetCategoryRsp* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_Register<WithCallbackMethod_IsUsedEmail<WithCallbackMethod_Login<WithCallbackMethod_FastLogin<WithCallbackMethod_IsLogined<WithCallbackMethod_ChangePassword<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_GetMagnetUri<WithCallbackMethod_GetTorrents<WithCallbackMethod_OnBtStatus<WithCallbackMethod_QueryBtVideos<WithCallbackMethod_NewCategoryItem<WithCallbackMethod_DelCategoryItem<WithCallbackMethod_AddBtVideos<WithCallbackMethod_ShareItem<WithCallbackMethod_QuerySharedItems<WithCallbackMethod_DelSharedItem<WithCallbackMethod_QuerySubItems<WithCallbackMethod_QueryItemInfo<WithCallbackMethod_UploadSubtitle<WithCallbackMethod_RenameItems<WithCallbackMethod_GetBtMeta<WithCallbackMethod_NewBtHlsTask<WithCallbackMethod_JoinChatRoom<WithCallbackMethod_SendMsg2ChatRoom<WithCallbackMethod_AddMagnetCategory<WithCallbackMethod_AddMagnetUri<WithCallbackMethod_QueryMagnet<WithCallbackMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > CallbackService;
+  typedef WithCallbackMethod_Register<WithCallbackMethod_IsUsedEmail<WithCallbackMethod_Login<WithCallbackMethod_FastLogin<WithCallbackMethod_IsLogined<WithCallbackMethod_ChangePassword<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_GetMagnetUri<WithCallbackMethod_GetTorrents<WithCallbackMethod_OnBtStatus<WithCallbackMethod_QueryBtVideos<WithCallbackMethod_NewCategoryItem<WithCallbackMethod_DelCategoryItem<WithCallbackMethod_AddBtVideos<WithCallbackMethod_ShareItem<WithCallbackMethod_QuerySharedItems<WithCallbackMethod_DelSharedItem<WithCallbackMethod_QuerySubItems<WithCallbackMethod_QueryItemInfo<WithCallbackMethod_UploadSubtitle<WithCallbackMethod_RenameBtVideoName<WithCallbackMethod_GetBtMeta<WithCallbackMethod_NewBtHlsTask<WithCallbackMethod_JoinChatRoom<WithCallbackMethod_SendMsg2ChatRoom<WithCallbackMethod_AddMagnetCategory<WithCallbackMethod_AddMagnetUri<WithCallbackMethod_QueryMagnet<WithCallbackMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_Register : public BaseClass {
@@ -2558,18 +2558,18 @@ class UserService final {
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_RenameItems : public BaseClass {
+  class WithGenericMethod_RenameBtVideoName : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_RenameItems() {
+    WithGenericMethod_RenameBtVideoName() {
       ::grpc::Service::MarkMethodGeneric(21);
     }
-    ~WithGenericMethod_RenameItems() override {
+    ~WithGenericMethod_RenameBtVideoName() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RenameItems(::grpc::ServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/) override {
+    ::grpc::Status RenameBtVideoName(::grpc::ServerContext* /*context*/, const ::prpc::RenameBtVideoNameReq* /*request*/, ::prpc::RenameBtVideoNameRsp* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -3131,22 +3131,22 @@ class UserService final {
     }
   };
   template <class BaseClass>
-  class WithRawMethod_RenameItems : public BaseClass {
+  class WithRawMethod_RenameBtVideoName : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_RenameItems() {
+    WithRawMethod_RenameBtVideoName() {
       ::grpc::Service::MarkMethodRaw(21);
     }
-    ~WithRawMethod_RenameItems() override {
+    ~WithRawMethod_RenameBtVideoName() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RenameItems(::grpc::ServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/) override {
+    ::grpc::Status RenameBtVideoName(::grpc::ServerContext* /*context*/, const ::prpc::RenameBtVideoNameReq* /*request*/, ::prpc::RenameBtVideoNameRsp* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestRenameItems(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestRenameBtVideoName(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(21, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -3773,25 +3773,25 @@ class UserService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_RenameItems : public BaseClass {
+  class WithRawCallbackMethod_RenameBtVideoName : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_RenameItems() {
+    WithRawCallbackMethod_RenameBtVideoName() {
       ::grpc::Service::MarkMethodRawCallback(21,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RenameItems(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RenameBtVideoName(context, request, response); }));
     }
-    ~WithRawCallbackMethod_RenameItems() override {
+    ~WithRawCallbackMethod_RenameBtVideoName() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RenameItems(::grpc::ServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/) override {
+    ::grpc::Status RenameBtVideoName(::grpc::ServerContext* /*context*/, const ::prpc::RenameBtVideoNameReq* /*request*/, ::prpc::RenameBtVideoNameRsp* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* RenameItems(
+    virtual ::grpc::ServerUnaryReactor* RenameBtVideoName(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -4511,31 +4511,31 @@ class UserService final {
     virtual ::grpc::Status StreamedUploadSubtitle(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::UploadSubtitleReq,::prpc::UploadSubtitleRes>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_RenameItems : public BaseClass {
+  class WithStreamedUnaryMethod_RenameBtVideoName : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_RenameItems() {
+    WithStreamedUnaryMethod_RenameBtVideoName() {
       ::grpc::Service::MarkMethodStreamed(21,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::prpc::RenameItemsReq, ::prpc::RenameItemsRsp>(
+          ::prpc::RenameBtVideoNameReq, ::prpc::RenameBtVideoNameRsp>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::prpc::RenameItemsReq, ::prpc::RenameItemsRsp>* streamer) {
-                       return this->StreamedRenameItems(context,
+                     ::prpc::RenameBtVideoNameReq, ::prpc::RenameBtVideoNameRsp>* streamer) {
+                       return this->StreamedRenameBtVideoName(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_RenameItems() override {
+    ~WithStreamedUnaryMethod_RenameBtVideoName() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status RenameItems(::grpc::ServerContext* /*context*/, const ::prpc::RenameItemsReq* /*request*/, ::prpc::RenameItemsRsp* /*response*/) override {
+    ::grpc::Status RenameBtVideoName(::grpc::ServerContext* /*context*/, const ::prpc::RenameBtVideoNameReq* /*request*/, ::prpc::RenameBtVideoNameRsp* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedRenameItems(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::RenameItemsReq,::prpc::RenameItemsRsp>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedRenameBtVideoName(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::RenameBtVideoNameReq,::prpc::RenameBtVideoNameRsp>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_GetBtMeta : public BaseClass {
@@ -4726,7 +4726,7 @@ class UserService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedDelMagnetCategory(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::DelMagnetCategoryReq,::prpc::DelMagnetCategoryRsp>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_ChangePassword<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithStreamedUnaryMethod_GetTorrents<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_UploadSubtitle<WithStreamedUnaryMethod_RenameItems<WithStreamedUnaryMethod_GetBtMeta<WithStreamedUnaryMethod_NewBtHlsTask<WithStreamedUnaryMethod_SendMsg2ChatRoom<WithStreamedUnaryMethod_AddMagnetCategory<WithStreamedUnaryMethod_AddMagnetUri<WithStreamedUnaryMethod_QueryMagnet<WithStreamedUnaryMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_ChangePassword<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithStreamedUnaryMethod_GetTorrents<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_UploadSubtitle<WithStreamedUnaryMethod_RenameBtVideoName<WithStreamedUnaryMethod_GetBtMeta<WithStreamedUnaryMethod_NewBtHlsTask<WithStreamedUnaryMethod_SendMsg2ChatRoom<WithStreamedUnaryMethod_AddMagnetCategory<WithStreamedUnaryMethod_AddMagnetUri<WithStreamedUnaryMethod_QueryMagnet<WithStreamedUnaryMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedUnaryService;
   template <class BaseClass>
   class WithSplitStreamingMethod_OnBtStatus : public BaseClass {
    private:
@@ -4782,7 +4782,7 @@ class UserService final {
     virtual ::grpc::Status StreamedJoinChatRoom(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::prpc::JoinChatRoomReq,::prpc::JoinChatRoomRes>* server_split_streamer) = 0;
   };
   typedef WithSplitStreamingMethod_OnBtStatus<WithSplitStreamingMethod_JoinChatRoom<Service > > SplitStreamedService;
-  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_ChangePassword<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithStreamedUnaryMethod_GetTorrents<WithSplitStreamingMethod_OnBtStatus<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_UploadSubtitle<WithStreamedUnaryMethod_RenameItems<WithStreamedUnaryMethod_GetBtMeta<WithStreamedUnaryMethod_NewBtHlsTask<WithSplitStreamingMethod_JoinChatRoom<WithStreamedUnaryMethod_SendMsg2ChatRoom<WithStreamedUnaryMethod_AddMagnetCategory<WithStreamedUnaryMethod_AddMagnetUri<WithStreamedUnaryMethod_QueryMagnet<WithStreamedUnaryMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_Register<WithStreamedUnaryMethod_IsUsedEmail<WithStreamedUnaryMethod_Login<WithStreamedUnaryMethod_FastLogin<WithStreamedUnaryMethod_IsLogined<WithStreamedUnaryMethod_ChangePassword<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithStreamedUnaryMethod_GetTorrents<WithSplitStreamingMethod_OnBtStatus<WithStreamedUnaryMethod_QueryBtVideos<WithStreamedUnaryMethod_NewCategoryItem<WithStreamedUnaryMethod_DelCategoryItem<WithStreamedUnaryMethod_AddBtVideos<WithStreamedUnaryMethod_ShareItem<WithStreamedUnaryMethod_QuerySharedItems<WithStreamedUnaryMethod_DelSharedItem<WithStreamedUnaryMethod_QuerySubItems<WithStreamedUnaryMethod_QueryItemInfo<WithStreamedUnaryMethod_UploadSubtitle<WithStreamedUnaryMethod_RenameBtVideoName<WithStreamedUnaryMethod_GetBtMeta<WithStreamedUnaryMethod_NewBtHlsTask<WithSplitStreamingMethod_JoinChatRoom<WithStreamedUnaryMethod_SendMsg2ChatRoom<WithStreamedUnaryMethod_AddMagnetCategory<WithStreamedUnaryMethod_AddMagnetUri<WithStreamedUnaryMethod_QueryMagnet<WithStreamedUnaryMethod_DelMagnetCategory<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace prpc

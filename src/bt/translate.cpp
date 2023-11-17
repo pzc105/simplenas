@@ -65,7 +65,7 @@ namespace prpc
     {
       auto file = ret->add_files();
       file->set_index(i);
-      file->set_name(storage.file_name(i).to_string());
+      file->set_name(storage.file_path(i));
       file->set_total_size(storage.file_size(i));
     }
     ret->set_total_size(tf->total_size());

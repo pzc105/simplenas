@@ -101,16 +101,15 @@ const CategoryItems = ({ parentId, shareid }) => {
     handleClose(item.id)
   }
 
-  const RenameItems = (parentItem) => {
-    let req = new User.RenameItemsReq()
-    req.setParentId(parentItem.id)
-    req.setType(Category.CategoryItem.Type.VIDEO)
-    userService.renameItems(req, {}, (err, res) => {
+  const RenameBtVideoName = (item) => {
+    let req = new User.RenameBtVideoNameReq()
+    req.setItemId(item.id)
+    userService.renameBtVideoName(req, {}, (err, res) => {
       if (err != null) {
         return
       }
     })
-    handleClose(parentItem.id)
+    handleClose(item.id)
   }
 
   return (
@@ -146,7 +145,7 @@ const CategoryItems = ({ parentId, shareid }) => {
                         <MenuItem onClick={(e) => DelCategoryItem(item)}>删除</MenuItem>
                         <MenuItem onClick={(e) => ShareCategoryItem(item)}>分享</MenuItem>
                         <MenuItem onClick={(e) => UploadSubtitle(item)}>上传字幕</MenuItem>
-                        <MenuItem onClick={(e) => RenameItems(item)}>整理名字</MenuItem>
+                        <MenuItem onClick={(e) => RenameBtVideoName(item)}>更新BT视频名字</MenuItem>
                       </Menu>
                     </Card>
                   </Tooltip>
