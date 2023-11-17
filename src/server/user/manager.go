@@ -333,14 +333,17 @@ func (um *UserManger) RenameBtVideoName(params *RenameBtVideoNameParams) error {
 		return err
 	}
 
-	var refname string
-	if len(params.RefName) > 0 {
-		refname = params.RefName
-	} else {
-		refname = pitem.GetName()
-	}
-
 	if !pitem.IsDirectory() {
+		var refname string
+		if len(params.RefName) > 0 {
+			refname = params.RefName
+		} else {
+			ppitem, err := cate.GetItem(params.Who, pitem.GetItemBaseInfo().Id)
+			if err == nil {
+				refname = ppitem.GetName()
+			}
+		}
+
 		if pitem.GetType() != prpc.CategoryItem_Video {
 			return errors.New("not a video")
 		}
@@ -351,6 +354,13 @@ func (um *UserManger) RenameBtVideoName(params *RenameBtVideoNameParams) error {
 		}
 		pitem.Rename(fmt.Sprintf("%s %0*d", refname, params.NumWidth, ep))
 		return nil
+	}
+
+	var refname string
+	if len(params.RefName) > 0 {
+		refname = params.RefName
+	} else {
+		refname = pitem.GetName()
 	}
 
 	sudIds := pitem.GetSubItemIds()
