@@ -120,6 +120,8 @@ namespace prpc
 
   ::grpc::Status bt_service::InitedSession(::grpc::ServerContext *context, const ::prpc::InitedSessionReq *request, ::prpc::InitedSessionRsp *response)
   {
+    (void)(context);
+    (void)(request);
     response->set_inited(_ses != nullptr);
     return ::grpc::Status::OK;
   }
@@ -127,6 +129,7 @@ namespace prpc
   ::grpc::Status bt_service::InitSession(::grpc::ServerContext *context, const ::prpc::InitSessionReq *request, ::prpc::InitSessionRsp *response)
   {
     (void)(context);
+    (void)(response);
     if (request == nullptr)
     {
       return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
@@ -139,7 +142,16 @@ namespace prpc
         {"http_pw", lt::settings_pack::proxy_type_t::http_pw},
     };
 
-    lt::settings_pack sp;
+    lt::session_params sps;
+    try
+    {
+      sps = lt::read_session_params(request->resume_data());
+    }
+    catch (...)
+    {
+      std::cout << "failed to load session resume data" << std::endl;
+    }
+    lt::settings_pack &sp = sps.settings;
     string const proxy_host = request->proxy_host();
     int proxy_port = request->proxy_port();
     string const proxy_type = request->proxy_type();
@@ -162,18 +174,17 @@ namespace prpc
     sp.set_int(lt::settings_pack::hashing_threads, hashing_threads);
     sp.set_int(lt::settings_pack::alert_mask,
                lt::file_completed_alert::static_category | lt::log_alert::static_category);
-    lt::session_params sps;
-    try
+    auto nodes = sp.get_str(lt::settings_pack::dht_bootstrap_nodes);
+    if (!nodes.empty())
     {
-      sps = lt::read_session_params(request->resume_data());
+      nodes += ", router.utorrent.com:6881";
     }
-    catch (...)
+    else
     {
-      std::cout << "failed to load session resume data" << std::endl;
+      nodes = "router.utorrent.com:6881";
     }
-    sps.settings = sp;
+    sp.set_str(lt::settings_pack::dht_bootstrap_nodes, nodes);
     _ses = std::make_unique<lt::session>(sps);
-    _ses->add_dht_router(std::make_pair(std::string("router.utorrent.com"), 6881));
     return ::grpc::Status::OK;
   }
 
@@ -299,7 +310,7 @@ namespace prpc
     auto th = _ses->find_torrent(params.info_hashes.get_best());
     if (th.is_valid())
     {
-      if (th.is_paused())
+      if (th.flags() & lt::torrent_flags::paused)
       {
         th.resume();
       }
@@ -487,7 +498,7 @@ namespace prpc
     {
       return ::grpc::Status(grpc::UNAVAILABLE, "");
     }
-    auto sparams = _ses->session_state(lt::session_handle::save_dht_settings | lt::session::save_dht_state | lt::session::save_extension_state | lt::session::save_ip_filter);
+    auto sparams = _ses->session_state(lt::session_handle::save_settings | lt::session::save_dht_state | lt::session::save_extension_state | lt::session::save_ip_filter);
     auto buf = lt::write_session_params_buf(sparams);
     *response->mutable_resume_data() = std::string(buf.data(), buf.size());
     return ::grpc::Status::OK;

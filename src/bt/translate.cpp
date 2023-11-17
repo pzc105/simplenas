@@ -56,16 +56,17 @@ namespace prpc
     auto ret = std::make_unique<TorrentInfo>();
     *ret->mutable_info_hash() = get_respone_info_hash(th.info_hashes());
     ret->set_name(tf->name());
-    ret->set_save_path(th.save_path());
+    auto st = th.status(lt::torrent_handle::query_save_path);
+    ret->set_save_path(st.save_path);
 
     auto const &storage = tf->files();
-    int32_t index = 0;
-    for (auto const &f : storage)
+    auto range = storage.file_range();
+    for (auto const i : range)
     {
       auto file = ret->add_files();
-      file->set_index(index++);
-      file->set_name(storage.file_path(f));
-      file->set_total_size(storage.file_size(f));
+      file->set_index(i);
+      file->set_name(storage.file_name(i).to_string());
+      file->set_total_size(storage.file_size(i));
     }
     ret->set_total_size(tf->total_size());
     ret->set_piece_length(tf->piece_length());

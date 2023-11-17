@@ -23,6 +23,16 @@ func GetInfoHash(infoHash *InfoHash) *prpc.InfoHash {
 	}
 }
 
+func loadInfoHash(id ptype.TorrentID) (*InfoHash, error) {
+	sql := `select version, info_hash from torrent where id=?`
+	ret := &InfoHash{}
+	err := db.QueryRow(sql, id).Scan(&ret.Version, &ret.Hash)
+	if err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 func loadTorrent(btClient *BtClient, id ptype.TorrentID) *Torrent {
 	sql := `select id, name, version, info_hash, state, total_size, piece_length, num_pieces, introduce, magnet_uri from torrent where id=?`
 	t := &Torrent{}

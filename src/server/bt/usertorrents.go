@@ -212,7 +212,6 @@ func (ut *UserTorrentsImpl) load() {
 		return
 	}
 	defer rows.Close()
-	flag := make(map[ptype.TorrentID]bool)
 	for rows.Next() {
 		var uid ptype.UserID
 		var tid ptype.TorrentID
@@ -224,20 +223,22 @@ func (ut *UserTorrentsImpl) load() {
 		var t *Torrent
 		var ok bool
 		ut.mtx.Lock()
-		if _, ok = flag[tid]; !ok {
-			flag[tid] = true
+		infoHash, err := loadInfoHash(tid)
+		if err != nil {
+			continue
+		}
+		t, ok = ut.torrents[*infoHash]
+		if !ok {
 			t = loadTorrent(&ut.btClient, tid)
 			if t == nil {
 				ut.mtx.Unlock()
 				continue
 			}
 			ut.torrents[t.base.InfoHash] = t
-			ut.mtx.Unlock()
-			t.addUser(uid)
-			ut.initUserTorrent(t, uid)
-		} else {
-			ut.mtx.Unlock()
 		}
+		ut.mtx.Unlock()
+		t.addUser(uid)
+		ut.initUserTorrent(t, uid)
 	}
 }
 
