@@ -338,7 +338,7 @@ func (um *UserManger) RenameBtVideoName(params *RenameBtVideoNameParams) error {
 		if len(params.RefName) > 0 {
 			refname = params.RefName
 		} else {
-			ppitem, err := cate.GetItem(params.Who, pitem.GetItemBaseInfo().Id)
+			ppitem, err := cate.GetItem(params.Who, pitem.GetItemBaseInfo().ParentId)
 			if err == nil {
 				refname = ppitem.GetName()
 			}
