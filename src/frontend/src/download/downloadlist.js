@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, MenuItem, List, Paper, Button, Box, Typography, Dialog } from '@mui/material';
+import { Menu, MenuItem, List, Paper, Button, Box, Typography, Dialog, Grid, TextField, InputAdornment } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import { styled } from "@mui/material/styles";
 import LinearProgress from '@mui/material/LinearProgress';
 import { useSelector, useDispatch } from 'react-redux';
@@ -130,22 +131,55 @@ function ProgressBar(props) {
 
 export function ProgressLists() {
   const torrents = useSelector(state => store.selectTorrents(state))
+  const btstatus = useSelector(state => store.selectAllBtStatus(state))
   const [sortedTorrents, setSortedTorrents] = useState([])
+  const [searchText, setSearchText] = useState('')
+
+  const onSearchText = (e) => {
+    setSearchText(e.target.value)
+  }
 
   useEffect(() => {
     if (!torrents) {
       return
     }
-    let tmp = []
+    let downloading = []
+    let notdownadloading = []
     let emptyNameTs = []
     for (let t of Object.values(torrents)) {
+      if (searchText.length > 0) {
+        let existedWords = searchText.split(" ")
+        let notfound = false
+        for (const text of existedWords) {
+          if (t.name.indexOf(text) == -1) {
+            notfound = true
+          }
+        }
+        if (notfound) {
+          continue
+        }
+      }
       if (t.name.length === 0) {
         emptyNameTs.push(t)
       } else {
-        tmp.push(t)
+        let status = btstatus[t.infoHash.hash]
+        if (status && status.state == Bt.BtStateEnum.DOWNLOADING) {
+          downloading.push(t)
+          continue
+        }
+        notdownadloading.push(t)
       }
     }
-    tmp.sort((a, b) => {
+    downloading.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    })
+    notdownadloading.sort((a, b) => {
       if (a.name < b.name) {
         return -1;
       }
@@ -163,12 +197,20 @@ export function ProgressLists() {
       }
       return 0;
     })
-    tmp.push(...emptyNameTs)
-    setSortedTorrents(tmp)
-  }, [torrents])
+    setSortedTorrents([...downloading, ...notdownadloading, ...emptyNameTs])
+  }, [torrents, btstatus, searchText])
 
   return (
     <Paper style={{ maxHeight: '90vh', overflow: 'auto' }}>
+      <TextField
+        onChange={onSearchText}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }} />
       {
         sortedTorrents.map((t) =>
           <List key={t.infoHash.hash}>

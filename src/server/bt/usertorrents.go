@@ -8,6 +8,7 @@ import (
 	"pnas/prpc"
 	"pnas/ptype"
 	"pnas/setting"
+	"pnas/utils"
 	"sync"
 	"time"
 
@@ -31,12 +32,15 @@ type userData struct {
 	torrents   map[ptype.TorrentID]*Torrent
 	callbacks  map[ptype.SessionID]UserOnBtStatusCallback
 	callbacks2 map[ptype.TorrentID]map[ptype.TaskId]UserOnBtStatusCallback
+
+	callbackTaskQueue *utils.TaskQueue
 }
 
-func (ud *userData) init() {
+func (ud *userData) init(taskQueue *utils.TaskQueue) {
 	ud.torrents = make(map[ptype.TorrentID]*Torrent)
 	ud.callbacks = make(map[ptype.SessionID]UserOnBtStatusCallback)
 	ud.callbacks2 = make(map[ptype.TorrentID]map[ptype.TaskId]UserOnBtStatusCallback)
+	ud.callbackTaskQueue = taskQueue
 }
 
 func (ud *userData) setTaskCallback(params *SetTaskCallbackParams) {
@@ -82,8 +86,11 @@ func (ud *userData) onBtStatus(tid ptype.TorrentID, s *prpc.TorrentStatus) {
 	callbacks := ud.getCallbackLocked(tid)
 	ud.mtx.Unlock()
 	for _, callback := range callbacks {
-		if callback != nil {
-			callback(nil, s)
+		c := callback
+		if c != nil {
+			ud.callbackTaskQueue.Put(func() {
+				c(nil, s)
+			})
 		}
 	}
 }
@@ -143,8 +150,13 @@ func (ud *userData) removeTorrent(id ptype.TorrentID, dodb bool) error {
 	}
 	ud.mtx.Unlock()
 	err := errors.New("removing torrent")
-	for _, c := range taskCallbacks {
-		c(err, nil)
+	for _, callback := range taskCallbacks {
+		c := callback
+		if c != nil {
+			ud.callbackTaskQueue.Put(func() {
+				c(err, nil)
+			})
+		}
 	}
 	return nil
 }
@@ -169,6 +181,8 @@ type UserTorrentsImpl struct {
 	wg          sync.WaitGroup
 
 	btClient BtClient
+
+	callbackTaskQueue utils.TaskQueue
 }
 
 func (ut *UserTorrentsImpl) Init() {
@@ -182,6 +196,8 @@ func (ut *UserTorrentsImpl) Init() {
 	ut.btClient.Init(WithOnStatus(ut.onBtStatus),
 		WithOnConnect(ut.handleBtClientConnected),
 		WithOnFileCompleted(ut.handleBtFileCompleted))
+
+	ut.callbackTaskQueue.Init()
 
 	ut.wg.Add(1)
 	go func() {
@@ -243,6 +259,7 @@ func (ut *UserTorrentsImpl) load() {
 
 func (ut *UserTorrentsImpl) Close() {
 	ut.btClient.Close()
+	ut.callbackTaskQueue.Close(utils.CloseWayDrained)
 	ut.wg.Wait()
 }
 
@@ -369,7 +386,7 @@ func (ut *UserTorrentsImpl) getUserDataLocked(uid ptype.UserID) *userData {
 	ud = &userData{
 		userId: uid,
 	}
-	ud.init()
+	ud.init(&ut.callbackTaskQueue)
 	ut.users[uid] = ud
 	return ud
 }

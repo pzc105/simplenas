@@ -203,6 +203,10 @@ const selectTorrent = (state, infoHash) => {
   }
 }
 
+const selectAllBtStatus = (state) => {
+  return state.bt.torrentStatus ? state.bt.torrentStatus : {}
+}
+
 const selectTorrentStatus = (state, infoHash) => {
   let ret
   if (state.bt.torrentStatus) {
@@ -319,7 +323,7 @@ export {
   store, userSlice, btSlice, categorySlice, eventSlice, playerSlice, magnetShares,
   selectUserInfo, selectShownChatPanel, selectOpenGlobalChat, selectGlobalChatPosition, selectlastUsedDirId,
   selectlastUsedParentDirId,
-  selectTorrent, selectInfoHashs, selectBtVideoFiles, selectTorrentStatus, selectTorrents,
+  selectTorrent, selectInfoHashs, selectBtVideoFiles, selectTorrentStatus, selectTorrents, selectAllBtStatus,
   selectCategoryItem, selectCategoryItems, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo,
   selectMagnetSharesItems,
   getSelectedAudio, selectAutoPlayVideo,
