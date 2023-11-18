@@ -1,6 +1,7 @@
 package category
 
 import (
+	"database/sql"
 	"fmt"
 	"pnas/db"
 	"pnas/log"
@@ -9,6 +10,10 @@ import (
 	"sync"
 
 	"github.com/pkg/errors"
+)
+
+var (
+	ErrNotFound = errors.New("not found")
 )
 
 type Manager struct {
@@ -143,6 +148,9 @@ func (m *Manager) GetItemByName(querier ptype.UserID, parentId ptype.CategoryID,
 	}
 	id, err := _loadItemIdByName(parentId, name)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, ErrNotFound
+		}
 		return nil, err
 	}
 	return m.GetItem(querier, id)

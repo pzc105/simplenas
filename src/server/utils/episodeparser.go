@@ -110,6 +110,9 @@ func getTokens(s string) (tokens []string, err error) {
 			token += string(r)
 		}
 	}
+	if len(token) > 0 {
+		addToken()
+	}
 	return
 }
 
@@ -170,27 +173,37 @@ func chinese2Num(s string) (int, error) {
 	return ret, nil
 }
 
+func checkEp(ep int) bool {
+	if ep < 0 || ep > 1900 {
+		return false
+	}
+	return true
+}
+
 func ParseEpisode2(name string) (int, error) {
 	tokens, err := getTokens(name)
 	if err != nil {
 		return -1, err
 	}
 	for _, t := range tokens {
-		n, err := getNum(t)
-		if err == nil {
-			return n, nil
-		}
-		if strings.HasPrefix(t, "第") && strings.HasSuffix(t, "集") {
+		if strings.HasPrefix(t, "第") &&
+			(strings.HasSuffix(t, "集") || strings.HasSuffix(t, "话") || strings.HasSuffix(t, "話")) {
 			t = t[len("第"):]
 			t = t[:len(t)-len("集")]
 			n, err := getNum(t)
-			if err == nil {
+			if err == nil && checkEp(n) {
 				return n, nil
 			}
 			n, err = chinese2Num(t)
-			if err == nil {
+			if err == nil && checkEp(n) {
 				return n, nil
 			}
+		}
+	}
+	for _, t := range tokens {
+		n, err := getNum(t)
+		if err == nil && checkEp(n) {
+			return n, nil
 		}
 	}
 	return -1, nil

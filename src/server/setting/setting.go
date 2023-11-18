@@ -23,7 +23,6 @@ type ServerSetting struct {
 	Domain        string `yaml:"domain"`
 	BoundIp       string `yaml:"boundIp"`
 	Port          int
-	RestPort      int    `yaml:"restPort"`
 	WebPort       int    `yaml:"webPort"`
 	CrtFile       string `yaml:"crtFile"`
 	KeyFile       string `yaml:"keyFile"`
@@ -116,6 +115,7 @@ func Init(config_file_full_path string) {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+	initPath(&s)
 	setting.Store(&s)
 	watcher, err := fsnotify.NewWatcher()
 	if err == nil {
@@ -142,6 +142,7 @@ func Init(config_file_full_path string) {
 						if err != nil {
 							continue
 						}
+						initPath(&s)
 						setting.Store(&s)
 						funs := []OnConfigChange{}
 						onFunsMtx.Lock()
@@ -161,18 +162,17 @@ func Init(config_file_full_path string) {
 			}
 		}()
 	}
-
-	s.Server.MediaPath = path.Clean(s.Server.MediaPath)
-	s.Bt.SavePath = path.Clean(s.Bt.SavePath)
-
-	s.Server.HlsPath = s.Server.MediaPath + "/hls"
-	s.Server.PosterPath = s.Server.MediaPath + "/poster"
 }
 
-func InitDir() {
-	os.MkdirAll(GS().Server.HlsPath, 0755)
-	os.MkdirAll(GS().Server.PosterPath, 0755)
-	os.MkdirAll(GS().Bt.SavePath, 0755)
+func initPath(s *Setting) {
+	s.Server.MediaPath = path.Clean(s.Server.MediaPath)
+	s.Bt.SavePath = path.Clean(s.Bt.SavePath)
+	s.Server.HlsPath = s.Server.MediaPath + "/hls"
+	s.Server.PosterPath = s.Server.MediaPath + "/poster"
+
+	os.MkdirAll(s.Server.HlsPath, 0755)
+	os.MkdirAll(s.Server.PosterPath, 0755)
+	os.MkdirAll(s.Bt.SavePath, 0755)
 }
 
 func GetMysqlConnectStr() string {

@@ -11,7 +11,6 @@ import (
 func main() {
 	var configPath = flag.String("c", "", "path of config file")
 	setting.Init(*configPath)
-	setting.InitDir()
 	log.Init()
 	db.Init()
 

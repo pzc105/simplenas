@@ -12,7 +12,7 @@ import * as User from './prpc/user_pb.js'
 import userService from './rpcClient.js'
 import FolderSelector from './download/folderSelector.js'
 
-export default function BtHlsTaskPanel({ downloadReq }) {
+export default function BtHlsTaskPanel({ downloadReq, onCreate }) {
 
   const [btInfo, setBtInfo] = useState(null)
   const parentIdRef = useRef(-1)
@@ -22,6 +22,9 @@ export default function BtHlsTaskPanel({ downloadReq }) {
     req.setReq(downloadReq)
     req.setCategoryParentId(parentIdRef.current)
     userService.newBtHlsTask(req, {}, (err, respone) => {
+      if (onCreate) {
+        onCreate()
+      }
       if (err != null) {
         console.log(err)
         return
