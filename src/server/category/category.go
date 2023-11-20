@@ -145,7 +145,8 @@ func _loadItems(itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
-
+		item.auth = utils.NewBitSet(AuthMax)
+		item.auth.UnmarshalBinary(byteAuth)
 		err = _initSubItemIds(&item)
 		if err != nil {
 			return nil, errors.WithStack(err)

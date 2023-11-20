@@ -72,7 +72,7 @@ export default function MagnetSharesPage() {
       />
       <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
         <Grid item xs={12}>
-          <MagnetItems onRefresh={refresh} setSearchCond={(v) => { searchCond.current = v }} />
+          <MagnetItems onRefresh={refresh} setSearchCond={(v) => { searchCond.current = v; }} />
         </Grid>
         <Grid item xs={12}>
           <Container>
@@ -369,7 +369,9 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
                       </Grid>
                     </Grid>
                     <Dialog open={sNewBtHlsPanel} onClose={() => setSNewBtHlsPanel(false)}>
-                      <BtHlsTaskPanel downloadReq={downloadReq.current} onCreate={() => setSNewBtHlsPanel(false)} />
+                      <Paper>
+                        <BtHlsTaskPanel downloadReq={downloadReq.current} onCreate={() => setSNewBtHlsPanel(false)} />
+                      </Paper>
                     </Dialog>
                     <Menu
                       anchorReference="anchorPosition"

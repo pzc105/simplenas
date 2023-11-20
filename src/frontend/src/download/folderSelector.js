@@ -55,7 +55,7 @@ export default function FolderSelector({ select }) {
   };
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }}>
+    pathItem ? <FormControl sx={{ m: 1, minWidth: 120 }}>
       <InputLabel id="select-directory">Select</InputLabel>
       <Select
         labelId="select-directory"
@@ -102,6 +102,6 @@ export default function FolderSelector({ select }) {
           </MenuItem>
         ))}
       </Select>
-    </FormControl>
+    </FormControl> : null
   )
 }

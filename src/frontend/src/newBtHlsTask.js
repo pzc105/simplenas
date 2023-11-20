@@ -13,11 +13,13 @@ import userService from './rpcClient.js'
 import FolderSelector from './download/folderSelector.js'
 
 export default function BtHlsTaskPanel({ downloadReq, onCreate }) {
-
-  const [btInfo, setBtInfo] = useState(null)
   const parentIdRef = useRef(-1)
 
   const newBtHlsTask = () => {
+    if (!downloadReq) {
+      return
+    }
+    console.log(downloadReq)
     var req = new User.NewBtHlsTaskReq()
     req.setReq(downloadReq)
     req.setCategoryParentId(parentIdRef.current)
@@ -34,20 +36,17 @@ export default function BtHlsTaskPanel({ downloadReq, onCreate }) {
 
   return (
     <>
-      <CssBaseline />
-      <Paper style={{}}>
-        <Grid container >
-          <Grid item xs={10} className='draggableWindow'>
-            <Typography sx={{ userSelect: 'none', ml: "1em" }}>
-              {"选择保存目录"}
-            </Typography>
-          </Grid>
+      <Grid container >
+        <Grid item xs={10} className='draggableWindow'>
+          <Typography sx={{ userSelect: 'none', ml: "1em" }}>
+            {"选择保存目录"}
+          </Typography>
         </Grid>
-        <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
-          <FolderSelector select={(id) => parentIdRef.current = id} />
-          <Button variant="outlined" color="primary" onClick={newBtHlsTask}>创建任务</Button>
-        </Grid>
-      </Paper>
+      </Grid>
+      <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
+        <FolderSelector select={(id) => parentIdRef.current = id} />
+        <Button variant="outlined" color="primary" onClick={newBtHlsTask}>创建任务</Button>
+      </Grid>
     </>
   )
 }

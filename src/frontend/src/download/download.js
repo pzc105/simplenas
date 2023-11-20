@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Container, Grid, Link, TextField, Button, InputAdornment, CssBaseline } from '@mui/material';
+import {
+  Container, Grid, Link, TextField, Button, InputAdornment,
+  CssBaseline, Input, FormControl, FormLabel, FormHelperText, InputLabel
+} from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import { styled } from "@mui/material/styles";
 import Typography from '@mui/material/Typography';
@@ -15,6 +18,7 @@ import * as router from '../router.js'
 import FileUpload from '../uploadTorrent.js'
 import { ProgressLists } from './downloadlist.js'
 import { FloatingChat, DraggableDialog } from '../chat/chat.js';
+import BtHlsTaskPanel from '../newBtHlsTask.js'
 
 const DownloadContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -172,37 +176,39 @@ const TorrentNavigation = () => {
 
 function DownloadRequest(props) {
   const [magnetUri, setMagnetUri] = useState('')
-  function handleChange(e) {
-    setMagnetUri(e.target.value)
-  }
+  const [downloadReq, setDownloadReq] = useState(null)
 
-  function requestDownload(e) {
-    e.preventDefault()
+  function handleChange(e) {
+    let uri = e.target.value
+    setMagnetUri(uri)
+    if (uri.length === 0) {
+      return
+    }
+    const fileInput = document.getElementById('fileInput')
+    if (fileInput) {
+      fileInput.value = ''
+    }
     var dr = new Bt.DownloadRequest()
     dr.setType(Bt.DownloadRequest.ReqType.MagnetUri)
     const encoder = new TextEncoder();
-    dr.setContent(encoder.encode(magnetUri))
-    userService.download(dr, {}, (err, dRespone) => {
-      if (err != null) {
-        console.log(err)
-        return
-      }
-      console.log(dRespone)
-    })
+    dr.setContent(encoder.encode(uri))
+    setDownloadReq(dr)
   }
 
-  const onUploadFile = (fileData) => {
-    var dr = new Bt.DownloadRequest()
-    dr.setType(Bt.DownloadRequest.ReqType.TORRENT)
-    dr.setContent(fileData)
-    userService.download(dr, {}, (err, dRespone) => {
-      if (err != null) {
-        console.log(err)
-        return
-      }
-      console.log(dRespone)
-    })
-  }
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setMagnetUri('')
+        var dr = new Bt.DownloadRequest()
+        dr.setType(Bt.DownloadRequest.ReqType.TORRENT)
+        dr.setContent(new Uint8Array(reader.result))
+        setDownloadReq(dr)
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  };
 
   return (
     <Container sx={{ width: "30vw" }}>
@@ -214,8 +220,9 @@ function DownloadRequest(props) {
             required
             fullWidth
             id="uri"
-            label="address"
+            label="magnet uri"
             name="address"
+            value={magnetUri}
             onChange={handleChange}
             InputProps={{
               startAdornment: (
@@ -225,20 +232,15 @@ function DownloadRequest(props) {
               ),
             }}
             autoFocus />
-          <Grid >
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              disabled={magnetUri === ""}
-              onClick={requestDownload}>
-              通过磁力下载
-            </Button>
-          </Grid>
         </Grid>
+        或者选择种子文件
         <Grid item sx={{ marginTop: "1em" }}>
-          <FileUpload title={"选择种子文件"} onUpload={onUploadFile} />
+          <FormControl fullWidth>
+            <Input id="fileInput" type="file" onChange={handleFileSelect} accept="image/*" />
+          </FormControl>
+        </Grid>
+        <Grid item mt={'1em'}>
+          <BtHlsTaskPanel downloadReq={downloadReq} />
         </Grid>
       </Grid>
     </Container >

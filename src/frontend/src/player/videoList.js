@@ -21,26 +21,32 @@ export default function PlayList({ videoItemList, shareid }) {
 
   return (
     <Container>
-      <Typography variant="button" component="div" noWrap>
-        播放列表
-      </Typography>
-      <FormControlLabel
-        control={
-          <Switch
-            checked={autoContinuedPlay}
-            onClick={
-              (e) => {
-                let v = !autoContinuedPlay
-                setAutoContinuedPlay(v)
-                dispatch(store.playerSlice.actions.setAutoContinuedPlayVideo(v))
-              }
+      <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
+        <Grid item xs={5}>
+          <Typography variant="button" component="div" noWrap>
+            播放列表
+          </Typography>
+        </Grid>
+        <Grid item xs={7} sx={{ display: 'flex', justifyContent: 'flex-end', pr: 1 }}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={autoContinuedPlay}
+                onClick={
+                  (e) => {
+                    let v = !autoContinuedPlay
+                    setAutoContinuedPlay(v)
+                    dispatch(store.playerSlice.actions.setAutoContinuedPlayVideo(v))
+                  }
+                }
+                color="primary"
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
             }
-            color="primary"
-            inputProps={{ 'aria-label': 'controlled' }}
+            label={'自动连播'}
           />
-        }
-        label={'自动连播'}
-      />
+        </Grid>
+      </Grid>
       <Paper style={{ maxHeight: '50vh', overflow: 'auto' }}>
         <List>
           {
