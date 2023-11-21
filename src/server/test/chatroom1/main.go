@@ -42,7 +42,7 @@ func getCookie(header metadata.MD, key string) string {
 	return ""
 }
 
-func newSession() {
+func newSession(first bool) {
 	defer wg.Add(-1)
 
 	creds, err := credentials.NewClientTLSFromFile(setting.GS().Server.CrtFile, "")
@@ -83,8 +83,11 @@ func newSession() {
 		fm := make(map[int64]bool)
 		for {
 			r, _ := s.Recv()
-			rc.Add(int64(len(r.GetChatMsgs())))
+			if first {
+				rc.Add(int64(len(r.GetChatMsgs())))
+			}
 			for i := range r.GetChatMsgs() {
+
 				m := r.GetChatMsgs()[i]
 				c, _ := strconv.ParseInt(m.GetMsg(), 10, 64)
 				if _, b := fm[c]; b {
@@ -115,7 +118,9 @@ func newSession() {
 func main() {
 	setting.Init("../../server.yml")
 
-	go newSession()
+	go newSession(true)
+	go newSession(false)
+	go newSession(false)
 
 	wg.Add(1)
 	go func() {
