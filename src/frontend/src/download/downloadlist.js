@@ -11,9 +11,10 @@ import userService from '../rpcClient.js'
 import BtVideosHandler from './btFileList.js'
 
 
-const Name = styled(Button)({
+const Name = styled(Typography)({
   marginRight: (props) => props.theme.spacing(1),
   textOverflow: 'ellipsis',
+  cursor: 'pointer',
 });
 
 const DownloadedSize = styled(Typography)({
