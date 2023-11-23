@@ -82,6 +82,12 @@ func (t *Torrent) GetBaseInfo() TorrentBase {
 	return t.base
 }
 
+func (t *Torrent) GetId() ptype.TorrentID {
+	t.mtx.Lock()
+	defer t.mtx.Unlock()
+	return t.base.Id
+}
+
 func (t *Torrent) GetState() prpc.BtStateEnum {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()

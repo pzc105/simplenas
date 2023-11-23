@@ -213,15 +213,13 @@ function DownloadRequest(props) {
   return (
     <Container sx={{ width: "30vw" }}>
       <Grid >
+        输入MagnetUri
         <Grid item>
           <TextField
-            variant="outlined"
             margin="normal"
-            required
             fullWidth
             id="uri"
             label="magnet uri"
-            name="address"
             value={magnetUri}
             onChange={handleChange}
             InputProps={{
@@ -239,7 +237,7 @@ function DownloadRequest(props) {
             <Input id="fileInput" type="file" onChange={handleFileSelect} accept="image/*" />
           </FormControl>
         </Grid>
-        <Grid item mt={'1em'}>
+        <Grid item mt={'3em'}>
           <BtHlsTaskPanel downloadReq={downloadReq} />
         </Grid>
       </Grid>

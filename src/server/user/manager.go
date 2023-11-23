@@ -41,7 +41,7 @@ func (um *UserManger) Init() {
 	um.categorySer.Init()
 
 	var magnetShares MagnetSharesService
-	magnetShares.Init(um.categorySer)
+	magnetShares.Init(um.categorySer, um.UserTorrents)
 	um.IMagnetSharesService = &magnetShares
 
 	ts := &task.TasksIml{}

@@ -45,7 +45,7 @@ export default function BtHlsTaskPanel({ downloadReq, onCreate }) {
       </Grid>
       <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
         <FolderSelector select={(id) => parentIdRef.current = id} />
-        <Button variant="outlined" color="primary" onClick={newBtHlsTask}>创建任务</Button>
+        <Button variant="contained" color="primary" onClick={newBtHlsTask}>创建任务</Button>
       </Grid>
     </>
   )

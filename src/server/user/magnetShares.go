@@ -27,13 +27,15 @@ type IMagnetSharesService interface {
 type MagnetSharesService struct {
 	rootId          ptype.CategoryID
 	categoryService category.IService
+	userTorrents    bt.UserTorrents
 }
 
-func (m *MagnetSharesService) Init(ser category.IService) {
-	m.categoryService = ser
-	item, err := ser.GetItemByName(ptype.AdminId, category.RootId, rootDirectoryName)
+func (m *MagnetSharesService) Init(cser category.IService, ubts bt.UserTorrents) {
+	m.categoryService = cser
+	m.userTorrents = ubts
+	item, err := cser.GetItemByName(ptype.AdminId, category.RootId, rootDirectoryName)
 	if err != nil {
-		item, err = ser.AddItem(&category.NewCategoryParams{
+		item, err = cser.AddItem(&category.NewCategoryParams{
 			ParentId: category.RootId,
 			Creator:  ptype.AdminId,
 			TypeId:   prpc.CategoryItem_Directory,
@@ -84,25 +86,30 @@ func (m *MagnetSharesService) AddMagnetCategory(params *AddMagnetCategoryParams)
 }
 
 type AddMagnetUriParams struct {
-	T          *bt.Torrent
 	CategoryId ptype.CategoryID
 	Name       string
 	Introduce  string
 	Creator    ptype.UserID
+	Uri        string
 }
 
 func (m *MagnetSharesService) AddMagnetUri(params *AddMagnetUriParams) error {
+	t, _ := m.userTorrents.NewTorrentByMagnet(params.Uri)
+	if t == nil {
+		return errors.New("failed to new torrent")
+	}
 	_, err := m.categoryService.AddItem(&category.NewCategoryParams{
 		ParentId:     params.CategoryId,
 		Creator:      params.Creator,
 		TypeId:       prpc.CategoryItem_MagnetUri,
-		ResourcePath: fmt.Sprint(params.T.GetBaseInfo().Id),
+		ResourcePath: fmt.Sprint(t.GetId()),
 		Other: category.OtherInfo{
-			MagnetUri: params.T.GetMagnetUri(),
+			MagnetUri: params.Uri,
 		},
-		Name:      params.Name,
-		Introduce: params.Introduce,
-		Auth:      utils.NewBitSet(category.AuthMax, category.AuthOtherRead),
+		Name:        params.Name,
+		Introduce:   params.Introduce,
+		CompareName: true,
+		Auth:        utils.NewBitSet(category.AuthMax, category.AuthOtherRead),
 	})
 	return err
 }

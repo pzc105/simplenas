@@ -75,7 +75,7 @@ func (ser *CoreService) Init() {
 	ser.shares = sm
 
 	if setting.GS().Server.EnableCrawler {
-		go crawler.Go36dmBackgroup(&ser.um, &ser.um, -1)
+		go crawler.Go36dmBackgroup(&ser.um, -1)
 	}
 }
 
@@ -843,17 +843,14 @@ func (ser *CoreService) AddMagnetUri(ctx context.Context, req *prpc.AddMagnetUri
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
 
-	t, _ := ser.um.NewTorrentByMagnet(req.MagnetUri)
-	if t != nil {
-		err := ser.um.AddMagnetUri(&user.AddMagnetUriParams{
-			CategoryId: ptype.CategoryID(req.CategoryId),
-			T:          t,
-			Introduce:  req.Introduce,
-			Creator:    ses.UserId,
-		})
-		if err != nil {
-			return nil, err
-		}
+	err := ser.um.AddMagnetUri(&user.AddMagnetUriParams{
+		CategoryId: ptype.CategoryID(req.CategoryId),
+		Introduce:  req.Introduce,
+		Creator:    ses.UserId,
+		Uri:        req.MagnetUri,
+	})
+	if err != nil {
+		return nil, err
 	}
 
 	return &prpc.AddMagnetUriRsp{}, nil

@@ -145,7 +145,7 @@ const CategoryItems = ({ parentId, shareid }) => {
                         <MenuItem onClick={(e) => DelCategoryItem(item)}>删除</MenuItem>
                         <MenuItem onClick={(e) => ShareCategoryItem(item)}>分享</MenuItem>
                         <MenuItem onClick={(e) => UploadSubtitle(item)}>上传字幕</MenuItem>
-                        <MenuItem onClick={(e) => RenameBtVideoName(item)}>更新BT视频名字</MenuItem>
+                        <MenuItem onClick={(e) => RenameBtVideoName(item)}>智能整理BT视频名字</MenuItem>
                       </Menu>
                     </Card>
                   </Tooltip>

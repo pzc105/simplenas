@@ -1,7 +1,6 @@
 package crawler
 
 import (
-	"pnas/bt"
 	"pnas/log"
 	"pnas/ptype"
 	"pnas/user"
@@ -15,13 +14,13 @@ import (
 )
 
 const (
-	CategoryName = "36dm"
+	categoryName = "36dm"
 )
 
-func Go36dmBackgroup(magnetShares user.IMagnetSharesService, ut bt.UserTorrents, maxDepth int) {
+func Go36dmBackgroup(magnetShares user.IMagnetSharesService, maxDepth int) {
 	items, _ := magnetShares.QueryMagnetCategorys(&user.QueryCategoryParams{
 		ParentId:     magnetShares.GetMagnetRootId(),
-		CategoryName: CategoryName,
+		CategoryName: categoryName,
 	})
 
 	var rid ptype.CategoryID
@@ -32,7 +31,7 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, ut bt.UserTorrents,
 		var err error
 		rid, err = magnetShares.AddMagnetCategory(&user.AddMagnetCategoryParams{
 			ParentId:  magnetShares.GetMagnetRootId(),
-			Name:      CategoryName,
+			Name:      categoryName,
 			Introduce: "from crawler",
 			Creator:   ptype.AdminId,
 		})
@@ -42,8 +41,6 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, ut bt.UserTorrents,
 	} else {
 		rid = items[0].GetItemBaseInfo().Id
 	}
-
-
 
 	c := colly.NewCollector(
 		colly.Async(true),
@@ -84,20 +81,17 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, ut bt.UserTorrents,
 			flagMtx.Unlock()
 			c.Visit(e.Request.AbsoluteURL(link))
 		})
+
 		if len(Uri) == 0 {
 			return
 		}
 
-		t, err := ut.NewTorrentByMagnet(Uri)
-
-		if err == nil {
-			magnetShares.AddMagnetUri(&user.AddMagnetUriParams{
-				T:          t,
-				CategoryId: rid,
-				Name:       Name,
-				Creator:    ptype.AdminId,
-			})
-		}
+		magnetShares.AddMagnetUri(&user.AddMagnetUriParams{
+			CategoryId: rid,
+			Name:       Name,
+			Creator:    ptype.AdminId,
+			Uri:        Uri,
+		})
 	})
 
 	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: 10})
@@ -110,5 +104,5 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, ut bt.UserTorrents,
 
 	timer := time.NewTimer(time.Hour * 3)
 	<-timer.C
-	go Go36dmBackgroup(magnetShares, ut, 2)
+	go Go36dmBackgroup(magnetShares, 2)
 }
