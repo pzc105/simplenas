@@ -480,6 +480,25 @@ func (ser *CoreService) DelCategoryItem(ctx context.Context, req *prpc.DelCatego
 	return &prpc.DelCategoryItemRes{}, nil
 }
 
+func (ser *CoreService) RenameItem(ctx context.Context, req *prpc.RenameItemReq) (*prpc.RenameItemRes, error) {
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "")
+	}
+	if req == nil {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	item, err := ser.um.CategoryService().GetItem(ses.UserId, ptype.CategoryID(req.ItemId))
+	if err != nil {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+	err = item.Rename(req.NewName)
+	if err != nil {
+		return nil, err
+	}
+	return &prpc.RenameItemRes{}, nil
+}
+
 func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubItemsReq) (*prpc.QuerySubItemsRes, error) {
 	var userId ptype.UserID
 	if len(req.ShareId) > 0 {

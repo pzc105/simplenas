@@ -78,7 +78,6 @@ const CategoryItems = ({ parentId, shareid }) => {
 
   const [anchorPosition, setAnchorPosition] = useState({ left: 0, top: 0 });
   const [open, setOpen] = useState({});
-
   const handleContextMenu = (event, itemId) => {
     event.preventDefault();
     setAnchorPosition({ left: event.clientX, top: event.clientY });
@@ -112,45 +111,91 @@ const CategoryItems = ({ parentId, shareid }) => {
     handleClose(item.id)
   }
 
+  const [renameEnabled, EnableRename] = useState({})
+  const [renameInputFocus, setRenameInputFocus] = useState({})
+  const showRenameImput = (item) => {
+    EnableRename({ ...renameEnabled, [item.id]: true })
+    handleClose(item.id)
+  }
+  const onFocusRenameInput = (e, item) => {
+    e.target.select()
+    setRenameInputFocus({ ...renameInputFocus, [item.id]: true })
+  }
+  const onBlurRenameInput = (e, item) => {
+    if (!renameInputFocus[item.id]) {
+      return
+    }
+    renameItem(item, e.target.value);
+    EnableRename({ ...renameEnabled, [item.id]: false })
+    setRenameInputFocus({ ...renameInputFocus, [item.id]: false })
+  }
+  const renameItem = (item, newName) => {
+    if (item.name === newName) {
+      return
+    }
+    let req = new User.RenameItemReq()
+    req.setItemId(item.id)
+    req.setNewName(newName)
+    userService.renameItem(req, {}, (err, res) => {
+      if (err != null) {
+        return
+      }
+      queryItem(item.id, "", dispatch)
+    })
+  }
+
   return (
     <Paper style={{ width: "100%", maxHeight: '90vh', overflow: 'auto' }} ref={uploadSubtitleAnchorElRef}>
       <Grid container spacing={2} sx={{ display: "flex" }}>
         <Grid item xs={12}>
           <Grid container spacing={2}>
             {
-              sortedItems.map((item) => (
-                <Grid key={item.id} item xs={10} sm={5} lg={2} sx={{ ml: "0.5em", mt: "0.5em" }}>
-                  <Tooltip title={<div>{"Name:" + item.name}<br />{"介绍:" + item.introduce}</div>} >
-                    <Card onContextMenu={(e) => handleContextMenu(e, item.id)}>
-                      <Box sx={{ display: "flex", justifyContent: "center", height: "4.3em" }}>
-                        <img style={{ maxHeight: "5em" }} alt="Movie Poster"
-                          src={serverAddress + "/poster/item?itemid=" + item.id + (shareid ? "&shareid=" + shareid : "")} />
-                      </Box>
-                      <CardContent sx={{ display: "flex", justifyContent: "center" }}>
-                        <Typography variant="button" component="div" noWrap>
-                          <Button onClick={() => onClick(item)}>
-                            {item.name}
-                          </Button>
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                        </Typography>
-                      </CardContent>
-                      <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                      </CardActions>
-                      <Menu
-                        anchorReference="anchorPosition"
-                        anchorPosition={anchorPosition}
-                        open={open[item.id] ? open[item.id] : false}
-                        onClose={() => handleClose(item.id)} >
-                        <MenuItem onClick={(e) => DelCategoryItem(item)}>删除</MenuItem>
-                        <MenuItem onClick={(e) => ShareCategoryItem(item)}>分享</MenuItem>
-                        <MenuItem onClick={(e) => UploadSubtitle(item)}>上传字幕</MenuItem>
-                        <MenuItem onClick={(e) => RenameBtVideoName(item)}>智能整理BT视频名字</MenuItem>
-                      </Menu>
-                    </Card>
-                  </Tooltip>
-                </Grid>
-              ))
+              sortedItems.map((item) => {
+                return (
+                  <Grid key={item.id} item xs={10} sm={5} lg={2} sx={{ ml: "0.5em", mt: "0.5em" }}>
+                    <Tooltip title={<div>{"Name:" + item.name}<br />{"介绍:" + item.introduce}</div>} >
+                      <Card onContextMenu={(e) => handleContextMenu(e, item.id)}>
+                        <Box sx={{ display: "flex", justifyContent: "center", height: "4.3em" }}>
+                          <img style={{ maxHeight: "5em" }} alt="Movie Poster"
+                            src={serverAddress + "/poster/item?itemid=" + item.id + (shareid ? "&shareid=" + shareid : "")} />
+                        </Box>
+                        <CardContent sx={{ display: "flex", justifyContent: "center" }}>
+                          {
+                            !renameEnabled[item.id] ?
+                              <Typography
+                                onClick={() => onClick(item)}
+                                noWrap
+                                style={{ cursor: "pointer" }}>
+                                {item.name}
+                              </Typography> :
+                              <TextField
+                                autoFocus
+                                defaultValue={item.name}
+                                onFocus={(e) => onFocusRenameInput(e, item)}
+                                onBlur={(e) => onBlurRenameInput(e, item)}
+                              />
+                          }
+                          <Typography variant="body2" color="text.secondary">
+                          </Typography>
+                        </CardContent>
+                        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+                        </CardActions>
+                        <Menu
+                          anchorReference="anchorPosition"
+                          anchorPosition={anchorPosition}
+                          open={open[item.id] ? open[item.id] : false}
+                          onClose={() => handleClose(item.id)} >
+                          <MenuItem onClick={(e) => showRenameImput(item)}>重命名</MenuItem>
+                          <MenuItem onClick={(e) => DelCategoryItem(item)}>删除</MenuItem>
+                          <MenuItem onClick={(e) => ShareCategoryItem(item)}>分享</MenuItem>
+                          <MenuItem onClick={(e) => UploadSubtitle(item)}>上传字幕</MenuItem>
+                          <MenuItem onClick={(e) => RenameBtVideoName(item)}>智能整理BT视频名字</MenuItem>
+                        </Menu>
+                      </Card>
+                    </Tooltip>
+                  </Grid>
+                )
+              })
             }
           </Grid>
         </Grid>

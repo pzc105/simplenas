@@ -36,6 +36,7 @@ static const char* UserService_method_names[] = {
   "/prpc.UserService/QueryBtVideos",
   "/prpc.UserService/NewCategoryItem",
   "/prpc.UserService/DelCategoryItem",
+  "/prpc.UserService/RenameItem",
   "/prpc.UserService/AddBtVideos",
   "/prpc.UserService/ShareItem",
   "/prpc.UserService/QuerySharedItems",
@@ -75,22 +76,23 @@ UserService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channe
   , rpcmethod_QueryBtVideos_(UserService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_NewCategoryItem_(UserService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_DelCategoryItem_(UserService_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_AddBtVideos_(UserService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ShareItem_(UserService_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QuerySharedItems_(UserService_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_DelSharedItem_(UserService_method_names[17], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QuerySubItems_(UserService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QueryItemInfo_(UserService_method_names[19], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_UploadSubtitle_(UserService_method_names[20], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RenameBtVideoName_(UserService_method_names[21], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBtMeta_(UserService_method_names[22], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_NewBtHlsTask_(UserService_method_names[23], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_JoinChatRoom_(UserService_method_names[24], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
-  , rpcmethod_SendMsg2ChatRoom_(UserService_method_names[25], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_AddMagnetCategory_(UserService_method_names[26], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_AddMagnetUri_(UserService_method_names[27], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QueryMagnet_(UserService_method_names[28], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_DelMagnetCategory_(UserService_method_names[29], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RenameItem_(UserService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AddBtVideos_(UserService_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ShareItem_(UserService_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QuerySharedItems_(UserService_method_names[17], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DelSharedItem_(UserService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QuerySubItems_(UserService_method_names[19], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QueryItemInfo_(UserService_method_names[20], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_UploadSubtitle_(UserService_method_names[21], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RenameBtVideoName_(UserService_method_names[22], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBtMeta_(UserService_method_names[23], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_NewBtHlsTask_(UserService_method_names[24], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_JoinChatRoom_(UserService_method_names[25], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SendMsg2ChatRoom_(UserService_method_names[26], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AddMagnetCategory_(UserService_method_names[27], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AddMagnetUri_(UserService_method_names[28], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QueryMagnet_(UserService_method_names[29], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DelMagnetCategory_(UserService_method_names[30], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status UserService::Stub::Register(::grpc::ClientContext* context, const ::prpc::RegisterInfo& request, ::prpc::RegisterRet* response) {
@@ -404,6 +406,29 @@ void UserService::Stub::async::DelCategoryItem(::grpc::ClientContext* context, c
 ::grpc::ClientAsyncResponseReader< ::prpc::DelCategoryItemRes>* UserService::Stub::AsyncDelCategoryItemRaw(::grpc::ClientContext* context, const ::prpc::DelCategoryItemReq& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncDelCategoryItemRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status UserService::Stub::RenameItem(::grpc::ClientContext* context, const ::prpc::RenameItemReq& request, ::prpc::RenameItemRes* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::RenameItemReq, ::prpc::RenameItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RenameItem_, context, request, response);
+}
+
+void UserService::Stub::async::RenameItem(::grpc::ClientContext* context, const ::prpc::RenameItemReq* request, ::prpc::RenameItemRes* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::RenameItemReq, ::prpc::RenameItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RenameItem_, context, request, response, std::move(f));
+}
+
+void UserService::Stub::async::RenameItem(::grpc::ClientContext* context, const ::prpc::RenameItemReq* request, ::prpc::RenameItemRes* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RenameItem_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::RenameItemRes>* UserService::Stub::PrepareAsyncRenameItemRaw(::grpc::ClientContext* context, const ::prpc::RenameItemReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::RenameItemRes, ::prpc::RenameItemReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RenameItem_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::RenameItemRes>* UserService::Stub::AsyncRenameItemRaw(::grpc::ClientContext* context, const ::prpc::RenameItemReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncRenameItemRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -913,6 +938,16 @@ UserService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[14],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::RenameItemReq, ::prpc::RenameItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UserService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::RenameItemReq* req,
+             ::prpc::RenameItemRes* resp) {
+               return service->RenameItem(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UserService_method_names[15],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::AddBtVideosReq, ::prpc::AddBtVideosRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
              ::grpc::ServerContext* ctx,
@@ -921,7 +956,7 @@ UserService::Service::Service() {
                return service->AddBtVideos(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[15],
+      UserService_method_names[16],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::ShareItemReq, ::prpc::ShareItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -931,7 +966,7 @@ UserService::Service::Service() {
                return service->ShareItem(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[16],
+      UserService_method_names[17],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QuerySharedItemsReq, ::prpc::QuerySharedItemsRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -941,7 +976,7 @@ UserService::Service::Service() {
                return service->QuerySharedItems(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[17],
+      UserService_method_names[18],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::DelSharedItemReq, ::prpc::DelSharedItemRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -951,7 +986,7 @@ UserService::Service::Service() {
                return service->DelSharedItem(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[18],
+      UserService_method_names[19],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QuerySubItemsReq, ::prpc::QuerySubItemsRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -961,7 +996,7 @@ UserService::Service::Service() {
                return service->QuerySubItems(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[19],
+      UserService_method_names[20],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QueryItemInfoReq, ::prpc::QueryItemInfoRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -971,7 +1006,7 @@ UserService::Service::Service() {
                return service->QueryItemInfo(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[20],
+      UserService_method_names[21],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::UploadSubtitleReq, ::prpc::UploadSubtitleRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -981,7 +1016,7 @@ UserService::Service::Service() {
                return service->UploadSubtitle(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[21],
+      UserService_method_names[22],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::RenameBtVideoNameReq, ::prpc::RenameBtVideoNameRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -991,7 +1026,7 @@ UserService::Service::Service() {
                return service->RenameBtVideoName(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[22],
+      UserService_method_names[23],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::GetBtMetaReq, ::prpc::GetBtMetaRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -1001,7 +1036,7 @@ UserService::Service::Service() {
                return service->GetBtMeta(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[23],
+      UserService_method_names[24],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::NewBtHlsTaskReq, ::prpc::NewBtHlsTaskRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -1011,7 +1046,7 @@ UserService::Service::Service() {
                return service->NewBtHlsTask(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[24],
+      UserService_method_names[25],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< UserService::Service, ::prpc::JoinChatRoomReq, ::prpc::JoinChatRoomRes>(
           [](UserService::Service* service,
@@ -1021,7 +1056,7 @@ UserService::Service::Service() {
                return service->JoinChatRoom(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[25],
+      UserService_method_names[26],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::SendMsg2ChatRoomReq, ::prpc::SendMsg2ChatRoomRes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -1031,7 +1066,7 @@ UserService::Service::Service() {
                return service->SendMsg2ChatRoom(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[26],
+      UserService_method_names[27],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::AddMagnetCategoryReq, ::prpc::AddMagnetCategoryRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -1041,7 +1076,7 @@ UserService::Service::Service() {
                return service->AddMagnetCategory(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[27],
+      UserService_method_names[28],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::AddMagnetUriReq, ::prpc::AddMagnetUriRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -1051,7 +1086,7 @@ UserService::Service::Service() {
                return service->AddMagnetUri(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[28],
+      UserService_method_names[29],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::QueryMagnetReq, ::prpc::QueryMagnetRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -1061,7 +1096,7 @@ UserService::Service::Service() {
                return service->QueryMagnet(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      UserService_method_names[29],
+      UserService_method_names[30],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, ::prpc::DelMagnetCategoryReq, ::prpc::DelMagnetCategoryRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UserService::Service* service,
@@ -1167,6 +1202,13 @@ UserService::Service::~Service() {
 }
 
 ::grpc::Status UserService::Service::DelCategoryItem(::grpc::ServerContext* context, const ::prpc::DelCategoryItemReq* request, ::prpc::DelCategoryItemRes* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UserService::Service::RenameItem(::grpc::ServerContext* context, const ::prpc::RenameItemReq* request, ::prpc::RenameItemRes* response) {
   (void) context;
   (void) request;
   (void) response;

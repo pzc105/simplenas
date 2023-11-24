@@ -33,6 +33,7 @@ const (
 	UserService_QueryBtVideos_FullMethodName     = "/prpc.UserService/QueryBtVideos"
 	UserService_NewCategoryItem_FullMethodName   = "/prpc.UserService/NewCategoryItem"
 	UserService_DelCategoryItem_FullMethodName   = "/prpc.UserService/DelCategoryItem"
+	UserService_RenameItem_FullMethodName        = "/prpc.UserService/RenameItem"
 	UserService_AddBtVideos_FullMethodName       = "/prpc.UserService/AddBtVideos"
 	UserService_ShareItem_FullMethodName         = "/prpc.UserService/ShareItem"
 	UserService_QuerySharedItems_FullMethodName  = "/prpc.UserService/QuerySharedItems"
@@ -69,6 +70,7 @@ type UserServiceClient interface {
 	QueryBtVideos(ctx context.Context, in *QueryBtVideosReq, opts ...grpc.CallOption) (*QueryBtVideosRes, error)
 	NewCategoryItem(ctx context.Context, in *NewCategoryItemReq, opts ...grpc.CallOption) (*NewCategoryItemRes, error)
 	DelCategoryItem(ctx context.Context, in *DelCategoryItemReq, opts ...grpc.CallOption) (*DelCategoryItemRes, error)
+	RenameItem(ctx context.Context, in *RenameItemReq, opts ...grpc.CallOption) (*RenameItemRes, error)
 	AddBtVideos(ctx context.Context, in *AddBtVideosReq, opts ...grpc.CallOption) (*AddBtVideosRes, error)
 	ShareItem(ctx context.Context, in *ShareItemReq, opts ...grpc.CallOption) (*ShareItemRes, error)
 	QuerySharedItems(ctx context.Context, in *QuerySharedItemsReq, opts ...grpc.CallOption) (*QuerySharedItemsRes, error)
@@ -238,6 +240,15 @@ func (c *userServiceClient) NewCategoryItem(ctx context.Context, in *NewCategory
 func (c *userServiceClient) DelCategoryItem(ctx context.Context, in *DelCategoryItemReq, opts ...grpc.CallOption) (*DelCategoryItemRes, error) {
 	out := new(DelCategoryItemRes)
 	err := c.cc.Invoke(ctx, UserService_DelCategoryItem_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) RenameItem(ctx context.Context, in *RenameItemReq, opts ...grpc.CallOption) (*RenameItemRes, error) {
+	out := new(RenameItemRes)
+	err := c.cc.Invoke(ctx, UserService_RenameItem_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -429,6 +440,7 @@ type UserServiceServer interface {
 	QueryBtVideos(context.Context, *QueryBtVideosReq) (*QueryBtVideosRes, error)
 	NewCategoryItem(context.Context, *NewCategoryItemReq) (*NewCategoryItemRes, error)
 	DelCategoryItem(context.Context, *DelCategoryItemReq) (*DelCategoryItemRes, error)
+	RenameItem(context.Context, *RenameItemReq) (*RenameItemRes, error)
 	AddBtVideos(context.Context, *AddBtVideosReq) (*AddBtVideosRes, error)
 	ShareItem(context.Context, *ShareItemReq) (*ShareItemRes, error)
 	QuerySharedItems(context.Context, *QuerySharedItemsReq) (*QuerySharedItemsRes, error)
@@ -493,6 +505,9 @@ func (UnimplementedUserServiceServer) NewCategoryItem(context.Context, *NewCateg
 }
 func (UnimplementedUserServiceServer) DelCategoryItem(context.Context, *DelCategoryItemReq) (*DelCategoryItemRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DelCategoryItem not implemented")
+}
+func (UnimplementedUserServiceServer) RenameItem(context.Context, *RenameItemReq) (*RenameItemRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RenameItem not implemented")
 }
 func (UnimplementedUserServiceServer) AddBtVideos(context.Context, *AddBtVideosReq) (*AddBtVideosRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddBtVideos not implemented")
@@ -806,6 +821,24 @@ func _UserService_DelCategoryItem_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).DelCategoryItem(ctx, req.(*DelCategoryItemReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_RenameItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RenameItemReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).RenameItem(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_RenameItem_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).RenameItem(ctx, req.(*RenameItemReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1159,6 +1192,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DelCategoryItem",
 			Handler:    _UserService_DelCategoryItem_Handler,
+		},
+		{
+			MethodName: "RenameItem",
+			Handler:    _UserService_RenameItem_Handler,
 		},
 		{
 			MethodName: "AddBtVideos",

@@ -191,6 +191,12 @@ extern RenameBtVideoNameReqDefaultTypeInternal _RenameBtVideoNameReq_default_ins
 class RenameBtVideoNameRsp;
 struct RenameBtVideoNameRspDefaultTypeInternal;
 extern RenameBtVideoNameRspDefaultTypeInternal _RenameBtVideoNameRsp_default_instance_;
+class RenameItemReq;
+struct RenameItemReqDefaultTypeInternal;
+extern RenameItemReqDefaultTypeInternal _RenameItemReq_default_instance_;
+class RenameItemRes;
+struct RenameItemResDefaultTypeInternal;
+extern RenameItemResDefaultTypeInternal _RenameItemRes_default_instance_;
 class Room;
 struct RoomDefaultTypeInternal;
 extern RoomDefaultTypeInternal _Room_default_instance_;
@@ -2423,6 +2429,307 @@ class DelCategoryItemRes final :
   friend struct ::TableStruct_user_2eproto;
 };// -------------------------------------------------------------------
 
+class RenameItemReq final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.RenameItemReq) */ {
+ public:
+  inline RenameItemReq() : RenameItemReq(nullptr) {}
+  ~RenameItemReq() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR RenameItemReq(::google::protobuf::internal::ConstantInitialized);
+
+  RenameItemReq(const RenameItemReq& from);
+  RenameItemReq(RenameItemReq&& from) noexcept
+    : RenameItemReq() {
+    *this = ::std::move(from);
+  }
+
+  inline RenameItemReq& operator=(const RenameItemReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RenameItemReq& operator=(RenameItemReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RenameItemReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RenameItemReq* internal_default_instance() {
+    return reinterpret_cast<const RenameItemReq*>(
+               &_RenameItemReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    13;
+
+  friend void swap(RenameItemReq& a, RenameItemReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RenameItemReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RenameItemReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RenameItemReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RenameItemReq>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const RenameItemReq& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const RenameItemReq& from) {
+    RenameItemReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RenameItemReq* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.RenameItemReq";
+  }
+  protected:
+  explicit RenameItemReq(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNewNameFieldNumber = 2,
+    kItemIdFieldNumber = 1,
+  };
+  // string new_name = 2;
+  void clear_new_name() ;
+  const std::string& new_name() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_new_name(Arg_&& arg, Args_... args);
+  std::string* mutable_new_name();
+  PROTOBUF_NODISCARD std::string* release_new_name();
+  void set_allocated_new_name(std::string* ptr);
+
+  private:
+  const std::string& _internal_new_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_new_name(
+      const std::string& value);
+  std::string* _internal_mutable_new_name();
+
+  public:
+  // int64 item_id = 1;
+  void clear_item_id() ;
+  ::int64_t item_id() const;
+  void set_item_id(::int64_t value);
+
+  private:
+  ::int64_t _internal_item_id() const;
+  void _internal_set_item_id(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.RenameItemReq)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<1, 2, 0, 35, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr new_name_;
+    ::int64_t item_id_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
+class RenameItemRes final :
+    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.RenameItemRes) */ {
+ public:
+  inline RenameItemRes() : RenameItemRes(nullptr) {}
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR RenameItemRes(::google::protobuf::internal::ConstantInitialized);
+
+  RenameItemRes(const RenameItemRes& from);
+  RenameItemRes(RenameItemRes&& from) noexcept
+    : RenameItemRes() {
+    *this = ::std::move(from);
+  }
+
+  inline RenameItemRes& operator=(const RenameItemRes& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RenameItemRes& operator=(RenameItemRes&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RenameItemRes& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RenameItemRes* internal_default_instance() {
+    return reinterpret_cast<const RenameItemRes*>(
+               &_RenameItemRes_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
+
+  friend void swap(RenameItemRes& a, RenameItemRes& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RenameItemRes* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RenameItemRes* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RenameItemRes* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RenameItemRes>(arena);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const RenameItemRes& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const RenameItemRes& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.RenameItemRes";
+  }
+  protected:
+  explicit RenameItemRes(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:prpc.RenameItemRes)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  friend struct ::TableStruct_user_2eproto;
+};// -------------------------------------------------------------------
+
 class QuerySubItemsReq final :
     public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.QuerySubItemsReq) */ {
  public:
@@ -2479,7 +2786,7 @@ class QuerySubItemsReq final :
                &_QuerySubItemsReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    15;
 
   friend void swap(QuerySubItemsReq& a, QuerySubItemsReq& b) {
     a.Swap(&b);
@@ -2679,7 +2986,7 @@ class QuerySubItemsRes final :
                &_QuerySubItemsRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    16;
 
   friend void swap(QuerySubItemsRes& a, QuerySubItemsRes& b) {
     a.Swap(&b);
@@ -2875,7 +3182,7 @@ class QueryBtVideosReq final :
                &_QueryBtVideosReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    17;
 
   friend void swap(QueryBtVideosReq& a, QueryBtVideosReq& b) {
     a.Swap(&b);
@@ -3039,7 +3346,7 @@ class BtFileMetadata final :
                &_BtFileMetadata_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    18;
 
   friend void swap(BtFileMetadata& a, BtFileMetadata& b) {
     a.Swap(&b);
@@ -3215,7 +3522,7 @@ class QueryBtVideosRes final :
                &_QueryBtVideosRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    19;
 
   friend void swap(QueryBtVideosRes& a, QueryBtVideosRes& b) {
     a.Swap(&b);
@@ -3381,7 +3688,7 @@ class AddBtVideosReq final :
                &_AddBtVideosReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    20;
 
   friend void swap(AddBtVideosReq& a, AddBtVideosReq& b) {
     a.Swap(&b);
@@ -3577,7 +3884,7 @@ class AddBtVideosRes final :
                &_AddBtVideosRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    21;
 
   friend void swap(AddBtVideosRes& a, AddBtVideosRes& b) {
     a.Swap(&b);
@@ -3703,7 +4010,7 @@ class QueryItemInfoReq final :
                &_QueryItemInfoReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    22;
 
   friend void swap(QueryItemInfoReq& a, QueryItemInfoReq& b) {
     a.Swap(&b);
@@ -3879,7 +4186,7 @@ class QueryItemInfoRes final :
                &_QueryItemInfoRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    23;
 
   friend void swap(QueryItemInfoRes& a, QueryItemInfoRes& b) {
     a.Swap(&b);
@@ -4060,7 +4367,7 @@ class ShareItemReq final :
                &_ShareItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    24;
 
   friend void swap(ShareItemReq& a, ShareItemReq& b) {
     a.Swap(&b);
@@ -4218,7 +4525,7 @@ class ShareItemRes final :
                &_ShareItemRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    25;
 
   friend void swap(ShareItemRes& a, ShareItemRes& b) {
     a.Swap(&b);
@@ -4394,7 +4701,7 @@ class QuerySharedItemsReq final :
                &_QuerySharedItemsReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    26;
 
   friend void swap(QuerySharedItemsReq& a, QuerySharedItemsReq& b) {
     a.Swap(&b);
@@ -4552,7 +4859,7 @@ class QuerySharedItemsRes final :
                &_QuerySharedItemsRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    27;
 
   friend void swap(QuerySharedItemsRes& a, QuerySharedItemsRes& b) {
     a.Swap(&b);
@@ -4718,7 +5025,7 @@ class DelSharedItemReq final :
                &_DelSharedItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    26;
+    28;
 
   friend void swap(DelSharedItemReq& a, DelSharedItemReq& b) {
     a.Swap(&b);
@@ -4881,7 +5188,7 @@ class DelSharedItemRes final :
                &_DelSharedItemRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    27;
+    29;
 
   friend void swap(DelSharedItemRes& a, DelSharedItemRes& b) {
     a.Swap(&b);
@@ -5007,7 +5314,7 @@ class SubtitleFile final :
                &_SubtitleFile_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    28;
+    30;
 
   friend void swap(SubtitleFile& a, SubtitleFile& b) {
     a.Swap(&b);
@@ -5189,7 +5496,7 @@ class UploadSubtitleReq final :
                &_UploadSubtitleReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    29;
+    31;
 
   friend void swap(UploadSubtitleReq& a, UploadSubtitleReq& b) {
     a.Swap(&b);
@@ -5366,7 +5673,7 @@ class UploadSubtitleRes final :
                &_UploadSubtitleRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    30;
+    32;
 
   friend void swap(UploadSubtitleRes& a, UploadSubtitleRes& b) {
     a.Swap(&b);
@@ -5492,7 +5799,7 @@ class GetBtMetaReq final :
                &_GetBtMetaReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    33;
 
   friend void swap(GetBtMetaReq& a, GetBtMetaReq& b) {
     a.Swap(&b);
@@ -5656,7 +5963,7 @@ class GetBtMetaRsp final :
                &_GetBtMetaRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    34;
 
   friend void swap(GetBtMetaRsp& a, GetBtMetaRsp& b) {
     a.Swap(&b);
@@ -5820,7 +6127,7 @@ class NewBtHlsTaskReq final :
                &_NewBtHlsTaskReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    35;
 
   friend void swap(NewBtHlsTaskReq& a, NewBtHlsTaskReq& b) {
     a.Swap(&b);
@@ -6007,7 +6314,7 @@ class NewBtHlsTaskRsp final :
                &_NewBtHlsTaskRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    36;
 
   friend void swap(NewBtHlsTaskRsp& a, NewBtHlsTaskRsp& b) {
     a.Swap(&b);
@@ -6133,7 +6440,7 @@ class Room final :
                &_Room_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    37;
 
   friend void swap(Room& a, Room& b) {
     a.Swap(&b);
@@ -6324,7 +6631,7 @@ class JoinChatRoomReq final :
                &_JoinChatRoomReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    36;
+    38;
 
   friend void swap(JoinChatRoomReq& a, JoinChatRoomReq& b) {
     a.Swap(&b);
@@ -6488,7 +6795,7 @@ class ChatMessage final :
                &_ChatMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    37;
+    39;
 
   friend void swap(ChatMessage& a, ChatMessage& b) {
     a.Swap(&b);
@@ -6694,7 +7001,7 @@ class JoinChatRoomRes final :
                &_JoinChatRoomRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    38;
+    40;
 
   friend void swap(JoinChatRoomRes& a, JoinChatRoomRes& b) {
     a.Swap(&b);
@@ -6878,7 +7185,7 @@ class SendMsg2ChatRoomReq final :
                &_SendMsg2ChatRoomReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    39;
+    41;
 
   friend void swap(SendMsg2ChatRoomReq& a, SendMsg2ChatRoomReq& b) {
     a.Swap(&b);
@@ -7058,7 +7365,7 @@ class SendMsg2ChatRoomRes final :
                &_SendMsg2ChatRoomRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    40;
+    42;
 
   friend void swap(SendMsg2ChatRoomRes& a, SendMsg2ChatRoomRes& b) {
     a.Swap(&b);
@@ -7184,7 +7491,7 @@ class AddMagnetCategoryReq final :
                &_AddMagnetCategoryReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    41;
+    43;
 
   friend void swap(AddMagnetCategoryReq& a, AddMagnetCategoryReq& b) {
     a.Swap(&b);
@@ -7377,7 +7684,7 @@ class AddMagnetCategoryRsp final :
                &_AddMagnetCategoryRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    42;
+    44;
 
   friend void swap(AddMagnetCategoryRsp& a, AddMagnetCategoryRsp& b) {
     a.Swap(&b);
@@ -7503,7 +7810,7 @@ class AddMagnetUriReq final :
                &_AddMagnetUriReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    43;
+    45;
 
   friend void swap(AddMagnetUriReq& a, AddMagnetUriReq& b) {
     a.Swap(&b);
@@ -7696,7 +8003,7 @@ class AddMagnetUriRsp final :
                &_AddMagnetUriRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    44;
+    46;
 
   friend void swap(AddMagnetUriRsp& a, AddMagnetUriRsp& b) {
     a.Swap(&b);
@@ -7822,7 +8129,7 @@ class QueryMagnetReq final :
                &_QueryMagnetReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    45;
+    47;
 
   friend void swap(QueryMagnetReq& a, QueryMagnetReq& b) {
     a.Swap(&b);
@@ -8022,7 +8329,7 @@ class QueryMagnetRsp final :
                &_QueryMagnetRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    46;
+    48;
 
   friend void swap(QueryMagnetRsp& a, QueryMagnetRsp& b) {
     a.Swap(&b);
@@ -8200,7 +8507,7 @@ class DelMagnetCategoryReq final :
                &_DelMagnetCategoryReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    47;
+    49;
 
   friend void swap(DelMagnetCategoryReq& a, DelMagnetCategoryReq& b) {
     a.Swap(&b);
@@ -8357,7 +8664,7 @@ class DelMagnetCategoryRsp final :
                &_DelMagnetCategoryRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    48;
+    50;
 
   friend void swap(DelMagnetCategoryRsp& a, DelMagnetCategoryRsp& b) {
     a.Swap(&b);
@@ -8482,7 +8789,7 @@ class GetTorrentsReq final :
                &_GetTorrentsReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    49;
+    51;
 
   friend void swap(GetTorrentsReq& a, GetTorrentsReq& b) {
     a.Swap(&b);
@@ -8608,7 +8915,7 @@ class GetTorrentsRsp final :
                &_GetTorrentsRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    50;
+    52;
 
   friend void swap(GetTorrentsRsp& a, GetTorrentsRsp& b) {
     a.Swap(&b);
@@ -8774,7 +9081,7 @@ class RenameBtVideoNameReq final :
                &_RenameBtVideoNameReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    51;
+    53;
 
   friend void swap(RenameBtVideoNameReq& a, RenameBtVideoNameReq& b) {
     a.Swap(&b);
@@ -8949,7 +9256,7 @@ class RenameBtVideoNameRsp final :
                &_RenameBtVideoNameRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    52;
+    54;
 
   friend void swap(RenameBtVideoNameRsp& a, RenameBtVideoNameRsp& b) {
     a.Swap(&b);
@@ -10113,6 +10420,87 @@ inline void DelCategoryItemReq::_internal_set_item_id(::int64_t value) {
 // -------------------------------------------------------------------
 
 // DelCategoryItemRes
+
+// -------------------------------------------------------------------
+
+// RenameItemReq
+
+// int64 item_id = 1;
+inline void RenameItemReq::clear_item_id() {
+  _impl_.item_id_ = ::int64_t{0};
+}
+inline ::int64_t RenameItemReq::item_id() const {
+  // @@protoc_insertion_point(field_get:prpc.RenameItemReq.item_id)
+  return _internal_item_id();
+}
+inline void RenameItemReq::set_item_id(::int64_t value) {
+  _internal_set_item_id(value);
+  // @@protoc_insertion_point(field_set:prpc.RenameItemReq.item_id)
+}
+inline ::int64_t RenameItemReq::_internal_item_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.item_id_;
+}
+inline void RenameItemReq::_internal_set_item_id(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.item_id_ = value;
+}
+
+// string new_name = 2;
+inline void RenameItemReq::clear_new_name() {
+  _impl_.new_name_.ClearToEmpty();
+}
+inline const std::string& RenameItemReq::new_name() const {
+  // @@protoc_insertion_point(field_get:prpc.RenameItemReq.new_name)
+  return _internal_new_name();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void RenameItemReq::set_new_name(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.new_name_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.RenameItemReq.new_name)
+}
+inline std::string* RenameItemReq::mutable_new_name() {
+  std::string* _s = _internal_mutable_new_name();
+  // @@protoc_insertion_point(field_mutable:prpc.RenameItemReq.new_name)
+  return _s;
+}
+inline const std::string& RenameItemReq::_internal_new_name() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.new_name_.Get();
+}
+inline void RenameItemReq::_internal_set_new_name(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.new_name_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RenameItemReq::_internal_mutable_new_name() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.new_name_.Mutable( GetArenaForAllocation());
+}
+inline std::string* RenameItemReq::release_new_name() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RenameItemReq.new_name)
+  return _impl_.new_name_.Release();
+}
+inline void RenameItemReq::set_allocated_new_name(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.new_name_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.new_name_.IsDefault()) {
+          _impl_.new_name_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.RenameItemReq.new_name)
+}
+
+// -------------------------------------------------------------------
+
+// RenameItemRes
 
 // -------------------------------------------------------------------
 

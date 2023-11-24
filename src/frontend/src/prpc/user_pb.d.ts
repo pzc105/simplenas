@@ -283,6 +283,42 @@ export namespace DelCategoryItemRes {
   }
 }
 
+export class RenameItemReq extends jspb.Message {
+  getItemId(): number;
+  setItemId(value: number): RenameItemReq;
+
+  getNewName(): string;
+  setNewName(value: string): RenameItemReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): RenameItemReq.AsObject;
+  static toObject(includeInstance: boolean, msg: RenameItemReq): RenameItemReq.AsObject;
+  static serializeBinaryToWriter(message: RenameItemReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): RenameItemReq;
+  static deserializeBinaryFromReader(message: RenameItemReq, reader: jspb.BinaryReader): RenameItemReq;
+}
+
+export namespace RenameItemReq {
+  export type AsObject = {
+    itemId: number,
+    newName: string,
+  }
+}
+
+export class RenameItemRes extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): RenameItemRes.AsObject;
+  static toObject(includeInstance: boolean, msg: RenameItemRes): RenameItemRes.AsObject;
+  static serializeBinaryToWriter(message: RenameItemRes, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): RenameItemRes;
+  static deserializeBinaryFromReader(message: RenameItemRes, reader: jspb.BinaryReader): RenameItemRes;
+}
+
+export namespace RenameItemRes {
+  export type AsObject = {
+  }
+}
+
 export class QuerySubItemsReq extends jspb.Message {
   getParentId(): number;
   setParentId(value: number): QuerySubItemsReq;

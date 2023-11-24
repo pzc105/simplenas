@@ -621,6 +621,49 @@ export class UserServiceClient {
     this.methodDescriptorDelCategoryItem);
   }
 
+  methodDescriptorRenameItem = new grpcWeb.MethodDescriptor(
+    '/prpc.UserService/RenameItem',
+    grpcWeb.MethodType.UNARY,
+    user_pb.RenameItemReq,
+    user_pb.RenameItemRes,
+    (request: user_pb.RenameItemReq) => {
+      return request.serializeBinary();
+    },
+    user_pb.RenameItemRes.deserializeBinary
+  );
+
+  renameItem(
+    request: user_pb.RenameItemReq,
+    metadata: grpcWeb.Metadata | null): Promise<user_pb.RenameItemRes>;
+
+  renameItem(
+    request: user_pb.RenameItemReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: user_pb.RenameItemRes) => void): grpcWeb.ClientReadableStream<user_pb.RenameItemRes>;
+
+  renameItem(
+    request: user_pb.RenameItemReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: user_pb.RenameItemRes) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.UserService/RenameItem',
+        request,
+        metadata || {},
+        this.methodDescriptorRenameItem,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.UserService/RenameItem',
+    request,
+    metadata || {},
+    this.methodDescriptorRenameItem);
+  }
+
   methodDescriptorAddBtVideos = new grpcWeb.MethodDescriptor(
     '/prpc.UserService/AddBtVideos',
     grpcWeb.MethodType.UNARY,

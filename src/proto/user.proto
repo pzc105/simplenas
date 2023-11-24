@@ -36,6 +36,7 @@ service UserService {
 
   rpc NewCategoryItem(NewCategoryItemReq) returns (NewCategoryItemRes);
   rpc DelCategoryItem(DelCategoryItemReq) returns (DelCategoryItemRes);
+  rpc RenameItem(RenameItemReq) returns (RenameItemRes);
   rpc AddBtVideos(AddBtVideosReq) returns (AddBtVideosRes);
   rpc ShareItem(ShareItemReq) returns (ShareItemRes);
   rpc QuerySharedItems(QuerySharedItemsReq) returns (QuerySharedItemsRes);
@@ -123,6 +124,15 @@ message DelCategoryItemReq {
 
 message DelCategoryItemRes {
   
+}
+
+message RenameItemReq {
+  int64 item_id = 1;
+  string new_name = 2;
+}
+
+message RenameItemRes {
+
 }
 
 message QuerySubItemsReq {
