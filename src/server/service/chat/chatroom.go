@@ -144,14 +144,14 @@ func (cr *ChatRoomImpl) Join(params *JoinParams) int64 {
 	}
 	ud.nextReadPos.Store(nr)
 
-	log.Infof("[chatroom] sid:%d uid:%d joining %s", params.SessionId, ud.id, params.RoomKey)
+	log.Infof("[chatroom] sid:%d id:%d joining %s", params.SessionId, ud.id, params.RoomKey)
 
 	cr.mtx.Lock()
 	cr.usersData[ud.id] = ud
 	cr.mtx.Unlock()
 
 	if params.NeedRecent {
-		log.Debugf("[chatroom] room: %s, wpos:%d, pushing: sid:%d rpos:%d", cr.roomKey, cr.nextWritePos.Load(), ud.sessionId, ud.nextReadPos.Load())
+		log.Debugf("[chatroom] room: %s, wpos:%d, pushing: sid:%d id:%d rpos:%d", cr.roomKey, cr.nextWritePos.Load(), ud.sessionId, ud.id, ud.nextReadPos.Load())
 		cr.taskqueue.Put(func() {
 			cr.send2Session(ud)
 		})
@@ -215,7 +215,7 @@ loop:
 			if log.EnabledDebug() && len(udtmp) > 0 {
 				var sb strings.Builder
 				for _, ud := range udtmp {
-					sb.WriteString(fmt.Sprintf("sid:%d rpos:%d, ", ud.sessionId, ud.nextReadPos.Load()))
+					sb.WriteString(fmt.Sprintf("sid:%d id:%d rpos:%d, ", ud.sessionId, ud.id, ud.nextReadPos.Load()))
 				}
 				log.Debugf("[chatroom] room: %s, wpos:%d, pushing: %s", cr.roomKey, cr.nextWritePos.Load(), sb.String())
 			}

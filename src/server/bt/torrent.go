@@ -151,6 +151,14 @@ func (t *Torrent) updateStatus(s *prpc.TorrentStatus) {
 	old := t.state
 	t.state = s.State
 
+	if old != s.State {
+		sql := `update torrent set state=? where version=? and info_hash=?`
+		_, err := db.Exec(sql, s.State, t.base.InfoHash.Version, t.base.InfoHash.Hash)
+		if err != nil {
+			log.Warnf("failed to update torrent err: %v", err)
+		}
+	}
+
 	if IsDownloadAll(s.State) && !t.updatedFileType {
 		log.Infof("[bt] torrent: [%s] %s completed", hex.EncodeToString([]byte(t.base.InfoHash.Hash)), t.base.Name)
 		for i := range t.base.Files {
