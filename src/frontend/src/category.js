@@ -111,10 +111,10 @@ const CategoryItems = ({ parentId, shareid }) => {
     handleClose(item.id)
   }
 
-  const [renameEnabled, EnableRename] = useState({})
+  const [shownRenameInput, setShownRenameInput] = useState({})
   const [renameInputFocus, setRenameInputFocus] = useState({})
   const showRenameImput = (item) => {
-    EnableRename({ ...renameEnabled, [item.id]: true })
+    setShownRenameInput({ ...shownRenameInput, [item.id]: true })
     handleClose(item.id)
   }
   const onFocusRenameInput = (e, item) => {
@@ -126,7 +126,7 @@ const CategoryItems = ({ parentId, shareid }) => {
       return
     }
     renameItem(item, e.target.value);
-    EnableRename({ ...renameEnabled, [item.id]: false })
+    setShownRenameInput({ ...shownRenameInput, [item.id]: false })
     setRenameInputFocus({ ...renameInputFocus, [item.id]: false })
   }
   const renameItem = (item, newName) => {
@@ -161,7 +161,7 @@ const CategoryItems = ({ parentId, shareid }) => {
                         </Box>
                         <CardContent sx={{ display: "flex", justifyContent: "center" }}>
                           {
-                            !renameEnabled[item.id] ?
+                            !shownRenameInput[item.id] ?
                               <Typography
                                 onClick={() => onClick(item)}
                                 noWrap
