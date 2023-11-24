@@ -2,9 +2,11 @@ package chat
 
 import (
 	"context"
+	"fmt"
 	"pnas/log"
 	"pnas/ptype"
 	"pnas/utils"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -142,13 +144,14 @@ func (cr *ChatRoomImpl) Join(params *JoinParams) int64 {
 	}
 	ud.nextReadPos.Store(nr)
 
-	log.Debugf("[chatroom] sid:%d uid:%d joining %s", params.SessionId, ud.id, params.RoomKey)
+	log.Infof("[chatroom] sid:%d uid:%d joining %s", params.SessionId, ud.id, params.RoomKey)
 
 	cr.mtx.Lock()
 	cr.usersData[ud.id] = ud
 	cr.mtx.Unlock()
 
 	if params.NeedRecent {
+		log.Debugf("[chatroom] room: %s, wpos:%d, pushing: sid:%d rpos:%d", cr.roomKey, cr.nextWritePos.Load(), ud.sessionId, ud.nextReadPos.Load())
 		cr.taskqueue.Put(func() {
 			cr.send2Session(ud)
 		})
@@ -162,7 +165,7 @@ func (cr *ChatRoomImpl) Leave(id int64) {
 	defer cr.mtx.Unlock()
 	ud, ok := cr.usersData[id]
 	if ok {
-		log.Debugf("[chatroom] sid:%d id:%d leaving %s", ud.sessionId, ud.id, cr.roomKey)
+		log.Infof("[chatroom] sid:%d id:%d leaving %s", ud.sessionId, ud.id, cr.roomKey)
 		delete(cr.usersData, ud.id)
 	}
 }
@@ -209,6 +212,13 @@ loop:
 				}
 			}
 			cr.mtx.Unlock()
+			if log.EnabledDebug() && len(udtmp) > 0 {
+				var sb strings.Builder
+				for _, ud := range udtmp {
+					sb.WriteString(fmt.Sprintf("sid:%d rpos:%d, ", ud.sessionId, ud.nextReadPos.Load()))
+				}
+				log.Debugf("[chatroom] room: %s, wpos:%d, pushing: %s", cr.roomKey, cr.nextWritePos.Load(), sb.String())
+			}
 			cr.taskqueue.Put(func() {
 				for _, ud := range udtmp {
 					cr.send2Session(ud)

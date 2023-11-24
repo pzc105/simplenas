@@ -123,6 +123,7 @@ func (ss *Sessions) NewSession(params *NewSessionParams) *Session {
 	} else {
 		session.ExpiresAt = time.Now().Add(time.Hour * 1)
 	}
+	log.Infof("[user] [session] uid:%d, sid:%d", session.UserId, session.Id)
 	saveSession(&session)
 	return &session
 }
