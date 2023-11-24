@@ -2,11 +2,13 @@ package bt
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"pnas/log"
 	"pnas/prpc"
 	"pnas/setting"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"google.golang.org/grpc"
@@ -15,10 +17,16 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
+var (
+	client_inc atomic.Int64
+)
+
 type BtClient struct {
 	prpc.BtServiceClient
 	conn *grpc.ClientConn
 	opts btClientOpts
+
+	identify string
 
 	closeCtx  context.Context
 	closeFunc context.CancelFunc
@@ -68,7 +76,6 @@ func WithOnFileCompleted(onFileCompleted func(*prpc.FileCompletedRes)) *funcBtCl
 }
 
 func (bt *BtClient) Init(opts ...BtClientOpt) {
-
 	for _, opt := range opts {
 		opt.apply(&bt.opts)
 	}
@@ -78,7 +85,7 @@ func (bt *BtClient) Init(opts ...BtClientOpt) {
 			log.Error("[bt] empty address")
 			return
 		}
-		if bt.conn!=nil && setting.GS().Bt.BtClientAddress == bt.conn.Target(){
+		if bt.conn != nil && setting.GS().Bt.BtClientAddress == bt.conn.Target() {
 			return
 		}
 		bc := backoff.DefaultConfig
@@ -98,26 +105,32 @@ func (bt *BtClient) Init(opts ...BtClientOpt) {
 		}
 		bt.conn = conn
 		bt.BtServiceClient = prpc.NewBtServiceClient(conn)
+
+		bt.wg.Add(1)
 		go bt.handleStatus(conn)
+		bt.wg.Add(1)
 		go bt.handleConState(conn)
+		bt.wg.Add(1)
 		go bt.handleFileCompleted(conn)
 	}
 
 	initClient()
 
-	setting.AddOnCfgChangeFun("bt_client", initClient)
+	client_inc.Add(1)
+	bt.identify = fmt.Sprintf("bt_client_%d", client_inc.Load())
+	setting.AddOnCfgChangeFun(bt.identify, initClient)
 
 	bt.closeCtx, bt.closeFunc = context.WithCancel(context.Background())
 }
 
 func (bt *BtClient) Close() {
+	setting.DelOnCfgChangeFun(bt.identify)
 	bt.closeFunc()
 	bt.conn.Close()
 	bt.wg.Wait()
 }
 
 func (bt *BtClient) handleConState(conn *grpc.ClientConn) {
-	bt.wg.Add(1)
 	defer bt.wg.Done()
 
 	for {
@@ -137,7 +150,6 @@ func (bt *BtClient) handleConState(conn *grpc.ClientConn) {
 }
 
 func (bt *BtClient) handleStatus(conn *grpc.ClientConn) {
-	bt.wg.Add(1)
 	defer bt.wg.Done()
 
 	defer func() {
@@ -145,6 +157,7 @@ func (bt *BtClient) handleStatus(conn *grpc.ClientConn) {
 			return
 		}
 		time.Sleep(1 * time.Second)
+		bt.wg.Add(1)
 		go bt.handleStatus(conn)
 	}()
 
@@ -171,7 +184,6 @@ func (bt *BtClient) handleStatus(conn *grpc.ClientConn) {
 }
 
 func (bt *BtClient) handleFileCompleted(conn *grpc.ClientConn) {
-	bt.wg.Add(1)
 	defer bt.wg.Done()
 
 	defer func() {
@@ -179,6 +191,7 @@ func (bt *BtClient) handleFileCompleted(conn *grpc.ClientConn) {
 			return
 		}
 		time.Sleep(1 * time.Second)
+		bt.wg.Add(1)
 		go bt.handleFileCompleted(conn)
 	}()
 

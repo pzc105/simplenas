@@ -164,20 +164,6 @@ func _loadItems(itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
 	return items, nil
 }
 
-type NewCategoryParams struct {
-	ParentId     ptype.CategoryID
-	Creator      ptype.UserID
-	TypeId       prpc.CategoryItem_Type
-	Name         string
-	ResourcePath string
-	PosterPath   string
-	Introduce    string
-	Other        OtherInfo
-	Auth         utils.AuthBitSet
-	CompareName  bool
-	Sudo         bool
-}
-
 func addItem(params *NewCategoryParams) (*CategoryItem, error) {
 	var newId ptype.CategoryID
 

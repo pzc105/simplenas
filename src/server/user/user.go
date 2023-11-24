@@ -71,7 +71,7 @@ func NewUser(params *NewUserParams) error {
 	return nil
 }
 
-func IsUsedEmail(email string) bool {
+func UsedEmail(email string) bool {
 	sql := "select count(*) from pnas.user where email=?"
 	var c int
 	err := db.QueryRow(sql, email).Scan(&c)

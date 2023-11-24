@@ -23,10 +23,10 @@ type UserTorrents interface {
 	RemoveTorrent(*RemoveTorrentParams) (*prpc.RemoveTorrentRes, error)
 	GetMagnetUri(*GetMagnetUriParams) (*prpc.GetMagnetUriRsp, error)
 
-	GetBtClient() *BtClient
-
 	Close()
 }
+
+type UserOnBtStatusCallback func(error, *prpc.TorrentStatus)
 
 type SetTaskCallbackParams struct {
 	UserId    ptype.UserID
@@ -49,5 +49,3 @@ type GetMagnetUriParams struct {
 	UserId ptype.UserID
 	Req    *prpc.GetMagnetUriReq
 }
-
-type UserOnBtStatusCallback func(error, *prpc.TorrentStatus)

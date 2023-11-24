@@ -594,7 +594,3 @@ func (ut *UserTorrentsImpl) GetTorrents(userId ptype.UserID) []*Torrent {
 	}
 	return ut.getUserData(userId).getTorrents()
 }
-
-func (ut *UserTorrentsImpl) GetBtClient() *BtClient {
-	return &ut.btClient
-}

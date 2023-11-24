@@ -12,6 +12,8 @@ import (
 	"pnas/ptype"
 	"pnas/utils"
 	"strconv"
+	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/redis/go-redis/v9"
@@ -19,7 +21,7 @@ import (
 )
 
 const (
-	letterBytes    = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.abcdefghijk"
+	letterBytes    = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.0123456789?"
 	letterBytesLen = len(letterBytes)
 	letterIdxBits  = 6
 	letterIdxMask  = 1<<letterIdxBits - 1
@@ -38,14 +40,24 @@ type Session struct {
 	ExpiresAt time.Time
 }
 
+var (
+	session_rand *rand.Rand
+	randMtx      sync.Mutex
+
+	oneChecker atomic.Bool
+)
+
 func init() {
-	rand.Seed(time.Now().UnixNano())
+	session_rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 }
 
 func NewToken() string {
 	ret := make([]byte, token_len)
 	for i := range ret {
-		ret[i] = letterBytes[rand.Int63()&int64(letterIdxMask)]
+		randMtx.Lock()
+		rv := session_rand.Int63()
+		randMtx.Unlock()
+		ret[i] = letterBytes[rv&int64(letterIdxMask)]
 	}
 	return string(ret)
 }
@@ -56,8 +68,11 @@ type Sessions struct {
 }
 
 func (ss *Sessions) Init() {
-	ss.idPool.Init()
+	if !oneChecker.CompareAndSwap(false, true) {
+		panic("only one sessions")
+	}
 
+	ss.idPool.Init()
 	result, err := db.GREDIS.Keys(context.Background(), SessionRedisKey+"*").Result()
 	if err != nil {
 		log.Errorf("failed to init id pool, err: %v", err)

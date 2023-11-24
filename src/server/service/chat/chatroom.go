@@ -68,6 +68,7 @@ type ChatRoomImpl struct {
 
 	shutDownCtx context.Context
 	closeFunc   context.CancelFunc
+	wg          sync.WaitGroup
 }
 
 func (cr *ChatRoomImpl) Init(params *CreateRoomParams) {
@@ -82,12 +83,14 @@ func (cr *ChatRoomImpl) Init(params *CreateRoomParams) {
 	cr.immediatePush = params.ImmediatePush
 	cr.interval = params.Interval
 
+	cr.wg.Add(1)
 	go cr.tick()
 }
 
 func (cr *ChatRoomImpl) Close() {
 	cr.closeFunc()
 	cr.taskqueue.Close(utils.CloseWayImmediate)
+	cr.wg.Wait()
 }
 
 func (cr *ChatRoomImpl) Context() context.Context {
@@ -187,6 +190,8 @@ func (cr *ChatRoomImpl) Broadcast(m *ChatMessage) {
 }
 
 func (cr *ChatRoomImpl) tick() {
+	defer cr.wg.Done()
+
 	ticker := time.NewTicker(cr.interval)
 
 loop:

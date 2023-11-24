@@ -20,7 +20,6 @@ import (
 	"pnas/user"
 	"pnas/user/task"
 	"pnas/utils"
-	"sort"
 	"sync"
 	"time"
 
@@ -37,7 +36,6 @@ import (
 
 type CoreService struct {
 	prpc.UnimplementedUserServiceServer
-	notCheckTokenMethods []string
 
 	sessions session.ISessions
 
@@ -61,9 +59,6 @@ func (ser *CoreService) Init() {
 	ser.sessions = ss
 	ss.Init()
 
-	ser.notCheckTokenMethods = []string{"Register", "IsUsedEmail", "Login", "FastLogin", "QueryItemInfo", "QuerySubItems"}
-	sort.Strings(ser.notCheckTokenMethods)
-
 	ser.um.Init()
 
 	var rooms chat.Rooms
@@ -85,9 +80,7 @@ func (ser *CoreService) Serve() {
 		log.Panic(err)
 	}
 
-	ser.grpcSer = grpc.NewServer(grpc.Creds(creds),
-		grpc.UnaryInterceptor(ser.CheckToken),
-		grpc.StreamInterceptor(ser.StreamCheckToken))
+	ser.grpcSer = grpc.NewServer(grpc.Creds(creds))
 	prpc.RegisterUserServiceServer(ser.grpcSer, ser)
 
 	lis, err := net.Listen("tcp", fmt.Sprintf("%s:%d",
@@ -181,46 +174,6 @@ func (ser *CoreService) getSession(ctx context.Context) *session.Session {
 	return s
 }
 
-func (ser *CoreService) CheckToken(ctx context.Context,
-	req interface{}, info *grpc.UnaryServerInfo,
-	handler grpc.UnaryHandler,
-) (resp interface{}, err error) {
-	if req == nil {
-		return nil, status.Error(codes.InvalidArgument, "")
-	}
-	methodName := info.FullMethod[len(prpc.UserService_ServiceDesc.ServiceName)+2:]
-	i := sort.SearchStrings(ser.notCheckTokenMethods, methodName)
-	if i == len(ser.notCheckTokenMethods) || ser.notCheckTokenMethods[i] != methodName {
-		_, err := ser.sessions.GetSession2(ctx)
-		if err != nil {
-			return nil, status.Error(codes.InvalidArgument, "")
-		}
-	}
-	return handler(ctx, req)
-}
-
-func (ser *CoreService) StreamCheckToken(
-	srv interface{},
-	ss grpc.ServerStream,
-	info *grpc.StreamServerInfo,
-	handler grpc.StreamHandler) error {
-	if srv == nil {
-		return status.Error(codes.InvalidArgument, "")
-	}
-	methodName := info.FullMethod[len(prpc.UserService_ServiceDesc.ServiceName)+2:]
-	for _, m := range ser.notCheckTokenMethods {
-		if m == methodName {
-			continue
-		}
-		_, err := ser.sessions.GetSession2(ss.Context())
-		if err != nil {
-			return status.Error(codes.InvalidArgument, "")
-		}
-		break
-	}
-	return handler(srv, ss)
-}
-
 func (ser *CoreService) Register(
 	ctx context.Context,
 	registerInfo *prpc.RegisterInfo) (*prpc.RegisterRet, error) {
@@ -255,16 +208,13 @@ func (ser *CoreService) IsUsedEmail(
 	ctx context.Context,
 	emailInfo *prpc.EmailInfo) (ret *prpc.IsUsedEmailRet, err error) {
 
-	if user.IsUsedEmail(emailInfo.GetEmail()) {
+	if user.UsedEmail(emailInfo.GetEmail()) {
 		return nil, status.Error(codes.AlreadyExists, "existed email")
 	}
 	return &prpc.IsUsedEmailRet{}, nil
 }
 
-func (ser *CoreService) Login(
-	ctx context.Context,
-	loginInfo *prpc.LoginInfo) (*prpc.LoginRet, error) {
-
+func (ser *CoreService) Login(ctx context.Context, loginInfo *prpc.LoginInfo) (*prpc.LoginRet, error) {
 	user, err := ser.um.Login(loginInfo.GetEmail(), loginInfo.GetPasswd())
 	if err != nil {
 		log.Warnf("[user] email %s failed to load user err: %v", loginInfo.GetEmail(), err)

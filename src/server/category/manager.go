@@ -18,6 +18,7 @@ var (
 
 type Manager struct {
 	itemsMtx sync.Mutex
+	// TODO: support LFU
 	items    map[ptype.CategoryID]*CategoryItem
 
 	dbMapMtx    sync.Mutex
@@ -329,15 +330,6 @@ func (m *Manager) IsRelationOf(itemId ptype.CategoryID, parentId ptype.CategoryI
 			return false
 		}
 	}
-}
-
-type SearchParams struct {
-	Querier         ptype.UserID
-	RootId          ptype.CategoryID
-	ExistedWords    []string
-	NotExistedWords []string
-	PageNum         int32
-	Rows            int32
 }
 
 func (m *Manager) SearchRows(params *SearchParams) (int, error) {

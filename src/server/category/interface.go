@@ -1,7 +1,9 @@
 package category
 
 import (
+	"pnas/prpc"
 	"pnas/ptype"
+	"pnas/utils"
 )
 
 type IService interface {
@@ -17,9 +19,32 @@ type IService interface {
 	SearchRows(params *SearchParams) (int, error)
 }
 
+type NewCategoryParams struct {
+	ParentId     ptype.CategoryID
+	Creator      ptype.UserID
+	TypeId       prpc.CategoryItem_Type
+	Name         string
+	ResourcePath string
+	PosterPath   string
+	Introduce    string
+	Other        OtherInfo
+	Auth         utils.AuthBitSet
+	CompareName  bool
+	Sudo         bool
+}
+
 type GetItemsByParentParams struct {
 	Querier  ptype.UserID
 	ParentId ptype.CategoryID
 	PageNum  int32
 	Rows     int32
+}
+
+type SearchParams struct {
+	Querier         ptype.UserID
+	RootId          ptype.CategoryID
+	ExistedWords    []string
+	NotExistedWords []string
+	PageNum         int32
+	Rows            int32
 }
