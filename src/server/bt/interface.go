@@ -46,6 +46,5 @@ type RemoveTorrentParams struct {
 }
 
 type GetMagnetUriParams struct {
-	UserId ptype.UserID
 	Req    *prpc.GetMagnetUriReq
 }

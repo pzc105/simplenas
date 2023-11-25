@@ -13,13 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = (function() {
-  if (this) { return this; }
-  if (typeof window !== 'undefined') { return window; }
-  if (typeof global !== 'undefined') { return global; }
-  if (typeof self !== 'undefined') { return self; }
-  return Function('return this')();
-}.call(null));
+var global =
+    (typeof globalThis !== 'undefined' && globalThis) ||
+    (typeof window !== 'undefined' && window) ||
+    (typeof global !== 'undefined' && global) ||
+    (typeof self !== 'undefined' && self) ||
+    (function () { return this; }).call(null) ||
+    Function('return this')();
 
 goog.exportSymbol('proto.prpc.BtFile', null, global);
 goog.exportSymbol('proto.prpc.BtFile.State', null, global);
@@ -213,7 +213,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.prpc.DownloadRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.prpc.DownloadRequest.repeatedFields_, null);
 };
 goog.inherits(proto.prpc.DownloadRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -2363,6 +2363,13 @@ proto.prpc.TorrentStatus.prototype.setState = function(value) {
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.prpc.DownloadRequest.repeatedFields_ = [5];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -2397,7 +2404,8 @@ proto.prpc.DownloadRequest.toObject = function(includeInstance, msg) {
     type: jspb.Message.getFieldWithDefault(msg, 1, 0),
     content: msg.getContent_asB64(),
     savePath: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    stopAfterGotMeta: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
+    stopAfterGotMeta: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
+    trackersList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -2449,6 +2457,10 @@ proto.prpc.DownloadRequest.deserializeBinaryFromReader = function(msg, reader) {
     case 4:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setStopAfterGotMeta(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addTrackers(value);
       break;
     default:
       reader.skipField();
@@ -2504,6 +2516,13 @@ proto.prpc.DownloadRequest.serializeBinaryToWriter = function(message, writer) {
   if (f) {
     writer.writeBool(
       4,
+      f
+    );
+  }
+  f = message.getTrackersList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      5,
       f
     );
   }
@@ -2612,6 +2631,43 @@ proto.prpc.DownloadRequest.prototype.getStopAfterGotMeta = function() {
  */
 proto.prpc.DownloadRequest.prototype.setStopAfterGotMeta = function(value) {
   return jspb.Message.setProto3BooleanField(this, 4, value);
+};
+
+
+/**
+ * repeated string trackers = 5;
+ * @return {!Array<string>}
+ */
+proto.prpc.DownloadRequest.prototype.getTrackersList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 5));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.prpc.DownloadRequest} returns this
+ */
+proto.prpc.DownloadRequest.prototype.setTrackersList = function(value) {
+  return jspb.Message.setField(this, 5, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.prpc.DownloadRequest} returns this
+ */
+proto.prpc.DownloadRequest.prototype.addTrackers = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 5, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.prpc.DownloadRequest} returns this
+ */
+proto.prpc.DownloadRequest.prototype.clearTrackersList = function() {
+  return this.setTrackersList([]);
 };
 
 

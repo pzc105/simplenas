@@ -178,6 +178,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
         template <typename>
 PROTOBUF_CONSTEXPR DownloadRequest::DownloadRequest(::_pbi::ConstantInitialized)
     : _impl_{
+      /*decltype(_impl_.trackers_)*/ {},
       /*decltype(_impl_.content_)*/ {
           &::_pbi::fixed_address_empty_string,
           ::_pbi::ConstantInitialized{},
@@ -693,6 +694,7 @@ const ::uint32_t TableStruct_bt_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     PROTOBUF_FIELD_OFFSET(::prpc::DownloadRequest, _impl_.content_),
     PROTOBUF_FIELD_OFFSET(::prpc::DownloadRequest, _impl_.save_path_),
     PROTOBUF_FIELD_OFFSET(::prpc::DownloadRequest, _impl_.stop_after_got_meta_),
+    PROTOBUF_FIELD_OFFSET(::prpc::DownloadRequest, _impl_.trackers_),
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::prpc::InfoHash, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -924,28 +926,28 @@ static const ::_pbi::MigrationSchema
         {54, 69, -1, sizeof(::prpc::TorrentInfo)},
         {76, 92, -1, sizeof(::prpc::TorrentStatus)},
         {100, -1, -1, sizeof(::prpc::DownloadRequest)},
-        {112, -1, -1, sizeof(::prpc::InfoHash)},
-        {122, 131, -1, sizeof(::prpc::DownloadRespone)},
-        {132, 143, -1, sizeof(::prpc::GetMagnetUriReq)},
-        {146, 156, -1, sizeof(::prpc::GetMagnetUriRsp)},
-        {158, 167, -1, sizeof(::prpc::GetResumeDataReq)},
-        {168, -1, -1, sizeof(::prpc::GetResumeDataRsp)},
-        {177, 186, -1, sizeof(::prpc::GetTorrentInfoReq)},
-        {187, 196, -1, sizeof(::prpc::GetTorrentInfoRsp)},
-        {197, -1, -1, sizeof(::prpc::GetSessionParamsReq)},
-        {205, -1, -1, sizeof(::prpc::GetSessionParamsRsp)},
-        {214, 223, -1, sizeof(::prpc::GetBtStatusReq)},
-        {224, 233, -1, sizeof(::prpc::GetBtStatusRsp)},
-        {234, -1, -1, sizeof(::prpc::BtStatusRequest)},
-        {243, -1, -1, sizeof(::prpc::BtStatusRespone)},
-        {252, -1, -1, sizeof(::prpc::TorrentInfoReq)},
-        {261, 270, -1, sizeof(::prpc::TorrentInfoRes)},
-        {271, 280, -1, sizeof(::prpc::RemoveTorrentReq)},
-        {281, -1, -1, sizeof(::prpc::RemoveTorrentRes)},
-        {289, 298, -1, sizeof(::prpc::FileProgressReq)},
-        {299, 309, -1, sizeof(::prpc::FileProgressRes)},
-        {311, -1, -1, sizeof(::prpc::FileCompletedReq)},
-        {319, 329, -1, sizeof(::prpc::FileCompletedRes)},
+        {113, -1, -1, sizeof(::prpc::InfoHash)},
+        {123, 132, -1, sizeof(::prpc::DownloadRespone)},
+        {133, 144, -1, sizeof(::prpc::GetMagnetUriReq)},
+        {147, 157, -1, sizeof(::prpc::GetMagnetUriRsp)},
+        {159, 168, -1, sizeof(::prpc::GetResumeDataReq)},
+        {169, -1, -1, sizeof(::prpc::GetResumeDataRsp)},
+        {178, 187, -1, sizeof(::prpc::GetTorrentInfoReq)},
+        {188, 197, -1, sizeof(::prpc::GetTorrentInfoRsp)},
+        {198, -1, -1, sizeof(::prpc::GetSessionParamsReq)},
+        {206, -1, -1, sizeof(::prpc::GetSessionParamsRsp)},
+        {215, 224, -1, sizeof(::prpc::GetBtStatusReq)},
+        {225, 234, -1, sizeof(::prpc::GetBtStatusRsp)},
+        {235, -1, -1, sizeof(::prpc::BtStatusRequest)},
+        {244, -1, -1, sizeof(::prpc::BtStatusRespone)},
+        {253, -1, -1, sizeof(::prpc::TorrentInfoReq)},
+        {262, 271, -1, sizeof(::prpc::TorrentInfoRes)},
+        {272, 281, -1, sizeof(::prpc::RemoveTorrentReq)},
+        {282, -1, -1, sizeof(::prpc::RemoveTorrentRes)},
+        {290, 299, -1, sizeof(::prpc::FileProgressReq)},
+        {300, 310, -1, sizeof(::prpc::FileProgressRes)},
+        {312, -1, -1, sizeof(::prpc::FileCompletedReq)},
+        {320, 330, -1, sizeof(::prpc::FileCompletedRes)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -1002,72 +1004,72 @@ const char descriptor_table_protodef_bt_2eproto[] PROTOBUF_SECTION_VARIABLE(prot
     "oad_rate\030\003 \001(\005\022\022\n\ntotal_done\030\004 \001(\003\022\r\n\005to"
     "tal\030\005 \001(\003\022\020\n\010progress\030\006 \001(\002\022\021\n\tnum_peers"
     "\030\007 \001(\005\022 \n\005state\030\010 \001(\0162\021.prpc.BtStateEnum"
-    "\"\262\001\n\017DownloadRequest\022+\n\004type\030\001 \001(\0162\035.prp"
+    "\"\304\001\n\017DownloadRequest\022+\n\004type\030\001 \001(\0162\035.prp"
     "c.DownloadRequest.ReqType\022\017\n\007content\030\002 \001"
     "(\014\022\021\n\tsave_path\030\003 \001(\t\022\033\n\023stop_after_got_"
-    "meta\030\004 \001(\010\"1\n\007ReqType\022\r\n\tMagnetUri\020\000\022\013\n\007"
-    "Torrent\020\001\022\n\n\006Resume\020\002\")\n\010InfoHash\022\017\n\007ver"
-    "sion\030\001 \001(\005\022\014\n\004hash\030\002 \001(\014\"4\n\017DownloadResp"
-    "one\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\"\230"
-    "\001\n\017GetMagnetUriReq\022+\n\004type\030\001 \001(\0162\035.prpc."
-    "GetMagnetUriReq.ReqType\022\017\n\007content\030\002 \001(\014"
-    "\022!\n\tinfo_hash\030\003 \001(\0132\016.prpc.InfoHash\"$\n\007R"
-    "eqType\022\013\n\007Torrent\020\000\022\014\n\010InfoHash\020\001\"H\n\017Get"
-    "MagnetUriRsp\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.I"
-    "nfoHash\022\022\n\nmagnet_uri\030\002 \001(\t\"5\n\020GetResume"
-    "DataReq\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHa"
-    "sh\"\'\n\020GetResumeDataRsp\022\023\n\013resume_data\030\001 "
-    "\001(\014\"6\n\021GetTorrentInfoReq\022!\n\tinfo_hash\030\001 "
-    "\001(\0132\016.prpc.InfoHash\"<\n\021GetTorrentInfoRsp"
-    "\022\'\n\014torrent_info\030\001 \001(\0132\021.prpc.TorrentInf"
-    "o\"\025\n\023GetSessionParamsReq\"*\n\023GetSessionPa"
-    "ramsRsp\022\023\n\013resume_data\030\001 \001(\014\"3\n\016GetBtSta"
-    "tusReq\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHas"
-    "h\"5\n\016GetBtStatusRsp\022#\n\006status\030\001 \001(\0132\023.pr"
-    "pc.TorrentStatus\"4\n\017BtStatusRequest\022!\n\ti"
-    "nfo_hash\030\001 \003(\0132\016.prpc.InfoHash\"<\n\017BtStat"
-    "usRespone\022)\n\014status_array\030\001 \003(\0132\023.prpc.T"
-    "orrentStatus\"3\n\016TorrentInfoReq\022!\n\tinfo_h"
-    "ash\030\001 \003(\0132\016.prpc.InfoHash\"/\n\016TorrentInfo"
-    "Res\022\035\n\002ti\030\001 \001(\0132\021.prpc.TorrentInfo\"5\n\020Re"
-    "moveTorrentReq\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc"
-    ".InfoHash\"\022\n\020RemoveTorrentRes\"4\n\017FilePro"
-    "gressReq\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoH"
-    "ash\"Q\n\017FileProgressRes\022!\n\tinfo_hash\030\001 \001("
-    "\0132\016.prpc.InfoHash\022\033\n\005files\030\002 \003(\0132\014.prpc."
-    "BtFile\"\022\n\020FileCompletedReq\"I\n\020FileComple"
-    "tedRes\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHas"
-    "h\022\022\n\nfile_index\030\002 \001(\005*\216\001\n\013BtStateEnum\022\013\n"
-    "\007unknown\020\000\022\022\n\016checking_files\020\001\022\030\n\024downlo"
-    "ading_metadata\020\002\022\017\n\013downloading\020\003\022\014\n\010fin"
-    "ished\020\004\022\013\n\007seeding\020\005\022\030\n\024checking_resume_"
-    "data\020\0072\210\006\n\tBtService\022\?\n\rInitedSession\022\026."
-    "prpc.InitedSessionReq\032\026.prpc.InitedSessi"
-    "onRsp\0229\n\013InitSession\022\024.prpc.InitSessionR"
-    "eq\032\024.prpc.InitSessionRsp\0225\n\005Parse\022\025.prpc"
-    ".DownloadRequest\032\025.prpc.DownloadRespone\022"
-    "8\n\010Download\022\025.prpc.DownloadRequest\032\025.prp"
-    "c.DownloadRespone\022\?\n\rRemoveTorrent\022\026.prp"
-    "c.RemoveTorrentReq\032\026.prpc.RemoveTorrentR"
-    "es\022<\n\014GetMagnetUri\022\025.prpc.GetMagnetUriRe"
-    "q\032\025.prpc.GetMagnetUriRsp\022\?\n\rGetResumeDat"
-    "a\022\026.prpc.GetResumeDataReq\032\026.prpc.GetResu"
-    "meDataRsp\022B\n\016GetTorrentInfo\022\027.prpc.GetTo"
-    "rrentInfoReq\032\027.prpc.GetTorrentInfoRsp\0229\n"
-    "\013GetBtStatus\022\024.prpc.GetBtStatusReq\032\024.prp"
-    "c.GetBtStatusRsp\022H\n\020GetSessionParams\022\031.p"
-    "rpc.GetSessionParamsReq\032\031.prpc.GetSessio"
-    "nParamsRsp\022>\n\nOnBtStatus\022\025.prpc.BtStatus"
-    "Request\032\025.prpc.BtStatusRespone(\0010\001\022E\n\017On"
-    "FileCompleted\022\026.prpc.FileCompletedReq\032\026."
-    "prpc.FileCompletedRes(\0010\001B\010Z\006./prpcb\006pro"
-    "to3"
+    "meta\030\004 \001(\010\022\020\n\010trackers\030\005 \003(\t\"1\n\007ReqType\022"
+    "\r\n\tMagnetUri\020\000\022\013\n\007Torrent\020\001\022\n\n\006Resume\020\002\""
+    ")\n\010InfoHash\022\017\n\007version\030\001 \001(\005\022\014\n\004hash\030\002 \001"
+    "(\014\"4\n\017DownloadRespone\022!\n\tinfo_hash\030\001 \001(\013"
+    "2\016.prpc.InfoHash\"\230\001\n\017GetMagnetUriReq\022+\n\004"
+    "type\030\001 \001(\0162\035.prpc.GetMagnetUriReq.ReqTyp"
+    "e\022\017\n\007content\030\002 \001(\014\022!\n\tinfo_hash\030\003 \001(\0132\016."
+    "prpc.InfoHash\"$\n\007ReqType\022\013\n\007Torrent\020\000\022\014\n"
+    "\010InfoHash\020\001\"H\n\017GetMagnetUriRsp\022!\n\tinfo_h"
+    "ash\030\001 \001(\0132\016.prpc.InfoHash\022\022\n\nmagnet_uri\030"
+    "\002 \001(\t\"5\n\020GetResumeDataReq\022!\n\tinfo_hash\030\001"
+    " \001(\0132\016.prpc.InfoHash\"\'\n\020GetResumeDataRsp"
+    "\022\023\n\013resume_data\030\001 \001(\014\"6\n\021GetTorrentInfoR"
+    "eq\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\"<\n"
+    "\021GetTorrentInfoRsp\022\'\n\014torrent_info\030\001 \001(\013"
+    "2\021.prpc.TorrentInfo\"\025\n\023GetSessionParamsR"
+    "eq\"*\n\023GetSessionParamsRsp\022\023\n\013resume_data"
+    "\030\001 \001(\014\"3\n\016GetBtStatusReq\022!\n\tinfo_hash\030\001 "
+    "\001(\0132\016.prpc.InfoHash\"5\n\016GetBtStatusRsp\022#\n"
+    "\006status\030\001 \001(\0132\023.prpc.TorrentStatus\"4\n\017Bt"
+    "StatusRequest\022!\n\tinfo_hash\030\001 \003(\0132\016.prpc."
+    "InfoHash\"<\n\017BtStatusRespone\022)\n\014status_ar"
+    "ray\030\001 \003(\0132\023.prpc.TorrentStatus\"3\n\016Torren"
+    "tInfoReq\022!\n\tinfo_hash\030\001 \003(\0132\016.prpc.InfoH"
+    "ash\"/\n\016TorrentInfoRes\022\035\n\002ti\030\001 \001(\0132\021.prpc"
+    ".TorrentInfo\"5\n\020RemoveTorrentReq\022!\n\tinfo"
+    "_hash\030\001 \001(\0132\016.prpc.InfoHash\"\022\n\020RemoveTor"
+    "rentRes\"4\n\017FileProgressReq\022!\n\tinfo_hash\030"
+    "\001 \001(\0132\016.prpc.InfoHash\"Q\n\017FileProgressRes"
+    "\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.InfoHash\022\033\n\005f"
+    "iles\030\002 \003(\0132\014.prpc.BtFile\"\022\n\020FileComplete"
+    "dReq\"I\n\020FileCompletedRes\022!\n\tinfo_hash\030\001 "
+    "\001(\0132\016.prpc.InfoHash\022\022\n\nfile_index\030\002 \001(\005*"
+    "\216\001\n\013BtStateEnum\022\013\n\007unknown\020\000\022\022\n\016checking"
+    "_files\020\001\022\030\n\024downloading_metadata\020\002\022\017\n\013do"
+    "wnloading\020\003\022\014\n\010finished\020\004\022\013\n\007seeding\020\005\022\030"
+    "\n\024checking_resume_data\020\0072\210\006\n\tBtService\022\?"
+    "\n\rInitedSession\022\026.prpc.InitedSessionReq\032"
+    "\026.prpc.InitedSessionRsp\0229\n\013InitSession\022\024"
+    ".prpc.InitSessionReq\032\024.prpc.InitSessionR"
+    "sp\0225\n\005Parse\022\025.prpc.DownloadRequest\032\025.prp"
+    "c.DownloadRespone\0228\n\010Download\022\025.prpc.Dow"
+    "nloadRequest\032\025.prpc.DownloadRespone\022\?\n\rR"
+    "emoveTorrent\022\026.prpc.RemoveTorrentReq\032\026.p"
+    "rpc.RemoveTorrentRes\022<\n\014GetMagnetUri\022\025.p"
+    "rpc.GetMagnetUriReq\032\025.prpc.GetMagnetUriR"
+    "sp\022\?\n\rGetResumeData\022\026.prpc.GetResumeData"
+    "Req\032\026.prpc.GetResumeDataRsp\022B\n\016GetTorren"
+    "tInfo\022\027.prpc.GetTorrentInfoReq\032\027.prpc.Ge"
+    "tTorrentInfoRsp\0229\n\013GetBtStatus\022\024.prpc.Ge"
+    "tBtStatusReq\032\024.prpc.GetBtStatusRsp\022H\n\020Ge"
+    "tSessionParams\022\031.prpc.GetSessionParamsRe"
+    "q\032\031.prpc.GetSessionParamsRsp\022>\n\nOnBtStat"
+    "us\022\025.prpc.BtStatusRequest\032\025.prpc.BtStatu"
+    "sRespone(\0010\001\022E\n\017OnFileCompleted\022\026.prpc.F"
+    "ileCompletedReq\032\026.prpc.FileCompletedRes("
+    "\0010\001B\010Z\006./prpcb\006proto3"
 };
 static ::absl::once_flag descriptor_table_bt_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_bt_2eproto = {
     false,
     false,
-    3203,
+    3221,
     descriptor_table_protodef_bt_2eproto,
     "bt.proto",
     &descriptor_table_bt_2eproto_once,
@@ -2980,6 +2982,7 @@ DownloadRequest::DownloadRequest(const DownloadRequest& from) : ::google::protob
   DownloadRequest* const _this = this;
   (void)_this;
   new (&_impl_) Impl_{
+      decltype(_impl_.trackers_){from._impl_.trackers_},
       decltype(_impl_.content_){},
       decltype(_impl_.save_path_){},
       decltype(_impl_.type_){},
@@ -3011,6 +3014,7 @@ DownloadRequest::DownloadRequest(const DownloadRequest& from) : ::google::protob
 inline void DownloadRequest::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
+      decltype(_impl_.trackers_){arena},
       decltype(_impl_.content_){},
       decltype(_impl_.save_path_){},
       decltype(_impl_.type_){0},
@@ -3033,6 +3037,7 @@ DownloadRequest::~DownloadRequest() {
 }
 inline void DownloadRequest::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _internal_mutable_trackers()->~RepeatedPtrField();
   _impl_.content_.Destroy();
   _impl_.save_path_.Destroy();
 }
@@ -3046,6 +3051,7 @@ PROTOBUF_NOINLINE void DownloadRequest::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  _internal_mutable_trackers()->Clear();
   _impl_.content_.ClearToEmpty();
   _impl_.save_path_.ClearToEmpty();
   ::memset(&_impl_.type_, 0, static_cast<::size_t>(
@@ -3062,23 +3068,21 @@ const char* DownloadRequest::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 4, 0, 38, 2> DownloadRequest::_table_ = {
+const ::_pbi::TcParseTable<3, 5, 0, 46, 2> DownloadRequest::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    4, 24,  // max_field_number, fast_idx_mask
+    5, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967280,  // skipmap
+    4294967264,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    4,  // num_field_entries
+    5,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     &_DownloadRequest_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
   }, {{
-    // bool stop_after_got_meta = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(DownloadRequest, _impl_.stop_after_got_meta_), 63>(),
-     {32, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.stop_after_got_meta_)}},
+    {::_pbi::TcParser::MiniParse, {}},
     // .prpc.DownloadRequest.ReqType type = 1;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DownloadRequest, _impl_.type_), 63>(),
      {8, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.type_)}},
@@ -3088,6 +3092,14 @@ const ::_pbi::TcParseTable<2, 4, 0, 38, 2> DownloadRequest::_table_ = {
     // string save_path = 3;
     {::_pbi::TcParser::FastUS1,
      {26, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.save_path_)}},
+    // bool stop_after_got_meta = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(DownloadRequest, _impl_.stop_after_got_meta_), 63>(),
+     {32, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.stop_after_got_meta_)}},
+    // repeated string trackers = 5;
+    {::_pbi::TcParser::FastUR1,
+     {42, 63, 0, PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.trackers_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
@@ -3103,12 +3115,16 @@ const ::_pbi::TcParseTable<2, 4, 0, 38, 2> DownloadRequest::_table_ = {
     // bool stop_after_got_meta = 4;
     {PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.stop_after_got_meta_), 0, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kBool)},
+    // repeated string trackers = 5;
+    {PROTOBUF_FIELD_OFFSET(DownloadRequest, _impl_.trackers_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kUtf8String | ::_fl::kRepSString)},
   }},
   // no aux_entries
   {{
-    "\24\0\0\11\0\0\0\0"
+    "\24\0\0\11\0\10\0\0"
     "prpc.DownloadRequest"
     "save_path"
+    "trackers"
   }},
 };
 
@@ -3147,6 +3163,14 @@ const ::_pbi::TcParseTable<2, 4, 0, 38, 2> DownloadRequest::_table_ = {
         4, this->_internal_stop_after_got_meta(), target);
   }
 
+  // repeated string trackers = 5;
+  for (int i = 0, n = this->_internal_trackers_size(); i < n; ++i) {
+    const auto& s = this->_internal_trackers().Get(i);
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "prpc.DownloadRequest.trackers");
+    target = stream->WriteString(5, s, target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -3164,6 +3188,12 @@ const ::_pbi::TcParseTable<2, 4, 0, 38, 2> DownloadRequest::_table_ = {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  // repeated string trackers = 5;
+  total_size += 1 * ::google::protobuf::internal::FromIntSize(_internal_trackers().size());
+  for (int i = 0, n = _internal_trackers().size(); i < n; ++i) {
+    total_size += ::google::protobuf::internal::WireFormatLite::StringSize(
+        _internal_trackers().Get(i));
+  }
   // bytes content = 2;
   if (!this->_internal_content().empty()) {
     total_size += 1 + ::google::protobuf::internal::WireFormatLite::BytesSize(
@@ -3205,6 +3235,7 @@ void DownloadRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::goo
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  _this->_internal_mutable_trackers()->MergeFrom(from._internal_trackers());
   if (!from._internal_content().empty()) {
     _this->_internal_set_content(from._internal_content());
   }
@@ -3236,6 +3267,7 @@ void DownloadRequest::InternalSwap(DownloadRequest* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.trackers_.InternalSwap(&other->_impl_.trackers_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.content_, lhs_arena,
                                        &other->_impl_.content_, rhs_arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.save_path_, lhs_arena,

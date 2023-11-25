@@ -7,6 +7,7 @@ server:
   keyFile: ../../tls/rpc.key
   mediaPath: E:/media
   enableCrawler: false
+  crawlerProxy: socks5://192.168.2.77:10808
 
 bt:
   btClientAddress: 127.0.0.1:22345
@@ -17,6 +18,7 @@ bt:
   downloadRateLimit: 0
   hashingThreads: 8
   savePath: D:/bt
+  trackers: http://t.acg.rip:6699/announce, http://1337.abcvg.info:80/announce
 
 log:
   fileName: ./pnas.log

@@ -245,6 +245,11 @@ export class DownloadRequest extends jspb.Message {
   getStopAfterGotMeta(): boolean;
   setStopAfterGotMeta(value: boolean): DownloadRequest;
 
+  getTrackersList(): Array<string>;
+  setTrackersList(value: Array<string>): DownloadRequest;
+  clearTrackersList(): DownloadRequest;
+  addTrackers(value: string, index?: number): DownloadRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DownloadRequest.AsObject;
   static toObject(includeInstance: boolean, msg: DownloadRequest): DownloadRequest.AsObject;
@@ -259,6 +264,7 @@ export namespace DownloadRequest {
     content: Uint8Array | string,
     savePath: string,
     stopAfterGotMeta: boolean,
+    trackersList: Array<string>,
   }
 
   export enum ReqType { 

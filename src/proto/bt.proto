@@ -98,6 +98,7 @@ message DownloadRequest {
   bytes content = 2;
   string save_path = 3;
   bool stop_after_got_meta = 4;
+  repeated string trackers = 5;
 }
 
 message InfoHash {

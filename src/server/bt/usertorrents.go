@@ -9,6 +9,7 @@ import (
 	"pnas/ptype"
 	"pnas/setting"
 	"pnas/utils"
+	"strings"
 	"sync"
 	"time"
 
@@ -303,12 +304,30 @@ func (ut *UserTorrentsImpl) handleBtClientConnected() {
 			req.Type = prpc.DownloadRequest_MagnetUri
 			req.Content = []byte(uri)
 		}
-		req.SavePath = setting.GS().Bt.SavePath
-		_, err = ut.btClient.Download(context.Background(), req)
+		_, err = ut.download(&t.base.InfoHash, req)
 		if err != nil {
 			log.Warnf("failed download err: %v", err)
 		}
 	}
+}
+
+func (ut *UserTorrentsImpl) download(infoHash *InfoHash, req *prpc.DownloadRequest) (*prpc.DownloadRespone, error) {
+	req.SavePath = setting.GS().Bt.SavePath
+	if req.Type != prpc.DownloadRequest_Resume {
+		resumeData, err := loadResumeData(infoHash)
+		if err == nil {
+			req.Type = prpc.DownloadRequest_Resume
+			req.Content = resumeData
+		}
+	}
+	trackersstr := setting.GS().Bt.Trackers
+	if len(trackersstr) > 0 {
+		trackers := strings.Split(trackersstr, ",")
+		for i := range trackers {
+			req.Trackers = append(req.Trackers, strings.Trim(trackers[i], " "))
+		}
+	}
+	return ut.btClient.Download(context.Background(), req)
 }
 
 func (ut *UserTorrentsImpl) SetTaskCallback(params *SetTaskCallbackParams) {
@@ -502,13 +521,6 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 		magnetUri = string(params.Req.Content)
 	}
 
-	resumeData, err := loadResumeData(infoHash)
-	if err == nil {
-		req.Type = prpc.DownloadRequest_Resume
-		req.Content = resumeData
-	}
-	req.SavePath = setting.GS().Bt.SavePath
-
 	ut.mtx.Lock()
 	defer ut.mtx.Unlock()
 	t, err := ut.getTorrentLocked(infoHash)
@@ -523,7 +535,7 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 		}
 	}
 
-	res, err = ut.btClient.Download(context.Background(), req)
+	res, err = ut.download(infoHash, req)
 	if err == nil {
 		log.Debugf("[bt] user %d downloading %s", params.UserId, hex.EncodeToString([]byte(infoHash.Hash)))
 		t := ut.initTorrentLocked(infoHash, magnetUri)

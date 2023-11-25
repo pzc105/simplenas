@@ -20,6 +20,7 @@ type IMagnetSharesService interface {
 	GetMagnetRootId() ptype.CategoryID
 	AddMagnetCategory(params *AddMagnetCategoryParams) (ptype.CategoryID, error)
 	AddMagnetUri(params *AddMagnetUriParams) error
+	AddMagnetUriByTorrent(params *AddMagnetUriParams) error
 	QueryMagnetCategorys(params *QueryCategoryParams) ([]*category.CategoryItem, error)
 	DelMagnetCategory(ptype.UserID, ptype.CategoryID) error
 }
@@ -91,6 +92,7 @@ type AddMagnetUriParams struct {
 	Introduce  string
 	Creator    ptype.UserID
 	Uri        string
+	Torrent    []byte
 }
 
 func (m *MagnetSharesService) AddMagnetUri(params *AddMagnetUriParams) error {
@@ -112,6 +114,20 @@ func (m *MagnetSharesService) AddMagnetUri(params *AddMagnetUriParams) error {
 		Auth:        utils.NewBitSet(category.AuthMax, category.AuthOtherRead),
 	})
 	return err
+}
+
+func (m *MagnetSharesService) AddMagnetUriByTorrent(params *AddMagnetUriParams) error {
+	rsp, err := m.userTorrents.GetMagnetUri(&bt.GetMagnetUriParams{
+		Req: &prpc.GetMagnetUriReq{
+			Type:    prpc.GetMagnetUriReq_Torrent,
+			Content: params.Torrent,
+		},
+	})
+	if err != nil {
+		return err
+	}
+	params.Uri = rsp.MagnetUri
+	return m.AddMagnetUri(params)
 }
 
 type QueryCategoryParams struct {

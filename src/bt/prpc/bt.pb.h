@@ -1860,11 +1860,40 @@ class DownloadRequest final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kTrackersFieldNumber = 5,
     kContentFieldNumber = 2,
     kSavePathFieldNumber = 3,
     kTypeFieldNumber = 1,
     kStopAfterGotMetaFieldNumber = 4,
   };
+  // repeated string trackers = 5;
+  int trackers_size() const;
+  private:
+  int _internal_trackers_size() const;
+
+  public:
+  void clear_trackers() ;
+  const std::string& trackers(int index) const;
+  std::string* mutable_trackers(int index);
+  void set_trackers(int index, const std::string& value);
+  void set_trackers(int index, std::string&& value);
+  void set_trackers(int index, const char* value);
+  void set_trackers(int index, const char* value, std::size_t size);
+  void set_trackers(int index, absl::string_view value);
+  std::string* add_trackers();
+  void add_trackers(const std::string& value);
+  void add_trackers(std::string&& value);
+  void add_trackers(const char* value);
+  void add_trackers(const char* value, std::size_t size);
+  void add_trackers(absl::string_view value);
+  const ::google::protobuf::RepeatedPtrField<std::string>& trackers() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* mutable_trackers();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<std::string>& _internal_trackers() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* _internal_mutable_trackers();
+
+  public:
   // bytes content = 2;
   void clear_content() ;
   const std::string& content() const;
@@ -1922,11 +1951,12 @@ class DownloadRequest final :
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 4, 0, 38, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<3, 5, 0, 46, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::google::protobuf::RepeatedPtrField<std::string> trackers_;
     ::google::protobuf::internal::ArenaStringPtr content_;
     ::google::protobuf::internal::ArenaStringPtr save_path_;
     int type_;
@@ -6777,6 +6807,102 @@ inline void DownloadRequest::_internal_set_stop_after_got_meta(bool value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   _impl_.stop_after_got_meta_ = value;
+}
+
+// repeated string trackers = 5;
+inline int DownloadRequest::_internal_trackers_size() const {
+  return _internal_trackers().size();
+}
+inline int DownloadRequest::trackers_size() const {
+  return _internal_trackers_size();
+}
+inline void DownloadRequest::clear_trackers() {
+  _internal_mutable_trackers()->Clear();
+}
+inline std::string* DownloadRequest::add_trackers() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  std::string* _s = _internal_mutable_trackers()->Add();
+  // @@protoc_insertion_point(field_add_mutable:prpc.DownloadRequest.trackers)
+  return _s;
+}
+inline const std::string& DownloadRequest::trackers(int index) const {
+  // @@protoc_insertion_point(field_get:prpc.DownloadRequest.trackers)
+  return _internal_trackers().Get(index);
+}
+inline std::string* DownloadRequest::mutable_trackers(int index) {
+  // @@protoc_insertion_point(field_mutable:prpc.DownloadRequest.trackers)
+  return _internal_mutable_trackers()->Mutable(index);
+}
+inline void DownloadRequest::set_trackers(int index, const std::string& value) {
+  _internal_mutable_trackers()->Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:prpc.DownloadRequest.trackers)
+}
+inline void DownloadRequest::set_trackers(int index, std::string&& value) {
+  _internal_mutable_trackers()->Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:prpc.DownloadRequest.trackers)
+}
+inline void DownloadRequest::set_trackers(int index, const char* value) {
+  ABSL_DCHECK(value != nullptr);
+  _internal_mutable_trackers()->Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:prpc.DownloadRequest.trackers)
+}
+inline void DownloadRequest::set_trackers(int index, const char* value,
+                              std::size_t size) {
+  _internal_mutable_trackers()->Mutable(index)->assign(
+      reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:prpc.DownloadRequest.trackers)
+}
+inline void DownloadRequest::set_trackers(int index, absl::string_view value) {
+  _internal_mutable_trackers()->Mutable(index)->assign(value.data(),
+                                                     value.size());
+  // @@protoc_insertion_point(field_set_string_piece:prpc.DownloadRequest.trackers)
+}
+inline void DownloadRequest::add_trackers(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_trackers()->Add()->assign(value);
+  // @@protoc_insertion_point(field_add:prpc.DownloadRequest.trackers)
+}
+inline void DownloadRequest::add_trackers(std::string&& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_trackers()->Add(std::move(value));
+  // @@protoc_insertion_point(field_add:prpc.DownloadRequest.trackers)
+}
+inline void DownloadRequest::add_trackers(const char* value) {
+  ABSL_DCHECK(value != nullptr);
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_trackers()->Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:prpc.DownloadRequest.trackers)
+}
+inline void DownloadRequest::add_trackers(const char* value, std::size_t size) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_trackers()->Add()->assign(
+      reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:prpc.DownloadRequest.trackers)
+}
+inline void DownloadRequest::add_trackers(absl::string_view value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_trackers()->Add()->assign(value.data(), value.size());
+  // @@protoc_insertion_point(field_add_string_piece:prpc.DownloadRequest.trackers)
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+DownloadRequest::trackers() const {
+  // @@protoc_insertion_point(field_list:prpc.DownloadRequest.trackers)
+  return _internal_trackers();
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>* DownloadRequest::mutable_trackers() {
+  // @@protoc_insertion_point(field_mutable_list:prpc.DownloadRequest.trackers)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  return _internal_mutable_trackers();
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+DownloadRequest::_internal_trackers() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.trackers_;
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+DownloadRequest::_internal_mutable_trackers() {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return &_impl_.trackers_;
 }
 
 // -------------------------------------------------------------------

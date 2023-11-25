@@ -71,6 +71,11 @@ func (ser *CoreService) Init() {
 
 	if setting.GS().Server.EnableCrawler {
 		go crawler.Go36dmBackgroup(&ser.um, -1)
+		go crawler.GoAcgBackgroup(&crawler.GoAcgBackgroupParams{
+			MagnetShares: &ser.um,
+			MaxDepth:     -1,
+			ProxyUrl:     setting.GS().Server.CrawlerProxy,
+		})
 	}
 }
 
@@ -353,8 +358,7 @@ func (ser *CoreService) GetMagnetUri(ctx context.Context, req *prpc.GetMagnetUri
 		return nil, status.Error(codes.PermissionDenied, "")
 	}
 	params := &bt.GetMagnetUriParams{
-		UserId: ses.UserId,
-		Req:    req,
+		Req: req,
 	}
 	return ser.um.GetMagnetUri(params)
 }

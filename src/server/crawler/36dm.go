@@ -7,39 +7,20 @@ import (
 	"regexp"
 	"strings"
 	"sync"
-	"sync/atomic"
 	"time"
 
 	"github.com/gocolly/colly"
 )
 
 const (
-	categoryName = "36dm"
+	categoryName36dm = "36dm"
 )
 
 func Go36dmBackgroup(magnetShares user.IMagnetSharesService, maxDepth int) {
-	items, _ := magnetShares.QueryMagnetCategorys(&user.QueryCategoryParams{
-		ParentId:     magnetShares.GetMagnetRootId(),
-		CategoryName: categoryName,
-	})
-
-	var rid ptype.CategoryID
-	var stop atomic.Bool
-	stop.Store(false)
-
-	if len(items) == 0 {
-		var err error
-		rid, err = magnetShares.AddMagnetCategory(&user.AddMagnetCategoryParams{
-			ParentId:  magnetShares.GetMagnetRootId(),
-			Name:      categoryName,
-			Introduce: "from crawler",
-			Creator:   ptype.AdminId,
-		})
-		if err != nil {
-			log.Errorf("failed to create crawler category: %v", err)
-		}
-	} else {
-		rid = items[0].GetItemBaseInfo().Id
+	rid, err := fetchCategoryId(categoryName36dm, magnetShares)
+	if err != nil {
+		log.Warnf("can't fetch 36dm category err:%v", err)
+		return
 	}
 
 	c := colly.NewCollector(
@@ -102,7 +83,9 @@ func Go36dmBackgroup(magnetShares user.IMagnetSharesService, maxDepth int) {
 
 	log.Info("Go36dmBackgroup done. restart...")
 
-	timer := time.NewTimer(time.Hour * 3)
-	<-timer.C
+	if maxDepth > 0 {
+		timer := time.NewTimer(time.Hour * 3)
+		<-timer.C
+	}
 	go Go36dmBackgroup(magnetShares, 2)
 }

@@ -323,6 +323,8 @@ namespace prpc
     ud->_ses = _ses.get();
     ud->_stop_after_got_meta = request->stop_after_got_meta();
     params.userdata = lt::client_data_t(ud);
+    params.trackers.insert(params.trackers.end(), request->trackers().begin(), request->trackers().end());
+
     try
     {
       auto handle = _ses->add_torrent(std::move(params));

@@ -28,6 +28,7 @@ type ServerSetting struct {
 	KeyFile       string `yaml:"keyFile"`
 	MediaPath     string `yaml:"mediaPath"`
 	EnableCrawler bool   `yaml:"enableCrawler"`
+	CrawlerProxy  string `yaml:"crawlerProxy"`
 
 	HlsPath    string
 	PosterPath string
@@ -36,6 +37,7 @@ type ServerSetting struct {
 type BtServerSetting struct {
 	BtClientAddress   string `yaml:"btClientAddress"`
 	ListenInterfaces  string `yaml:"listenInterfaces"`
+	Trackers          string `yaml:"trackers"`
 	SavePath          string `yaml:"savePath"`
 	ProxyHost         string `yaml:"proxyHost"`
 	ProxyPort         int32  `yaml:"proxyPort"`
