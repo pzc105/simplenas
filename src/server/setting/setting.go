@@ -37,6 +37,7 @@ type ServerSetting struct {
 type BtServerSetting struct {
 	BtClientAddress   string `yaml:"btClientAddress"`
 	ListenInterfaces  string `yaml:"listenInterfaces"`
+	TrackerSub        string `yaml:"trackerSub"`
 	Trackers          string `yaml:"trackers"`
 	SavePath          string `yaml:"savePath"`
 	ProxyHost         string `yaml:"proxyHost"`

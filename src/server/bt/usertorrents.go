@@ -183,11 +183,12 @@ type UserTorrentsImpl struct {
 
 	btClient BtClient
 
+	trackerSub trackerSub
+
 	callbackTaskQueue utils.TaskQueue
 }
 
 func (ut *UserTorrentsImpl) Init() {
-
 	ut.shutDownCtx, ut.closeFunc = context.WithCancel(context.Background())
 
 	ut.torrents = make(map[InfoHash]*Torrent)
@@ -199,6 +200,8 @@ func (ut *UserTorrentsImpl) Init() {
 		WithOnFileCompleted(ut.handleBtFileCompleted))
 
 	ut.callbackTaskQueue.Init()
+
+	ut.trackerSub.Init()
 
 	ut.wg.Add(1)
 	go func() {
@@ -327,6 +330,8 @@ func (ut *UserTorrentsImpl) download(infoHash *InfoHash, req *prpc.DownloadReque
 			req.Trackers = append(req.Trackers, strings.Trim(trackers[i], " "))
 		}
 	}
+	trackers := ut.trackerSub.GetTrackers()
+	req.Trackers = append(req.Trackers, trackers...)
 	return ut.btClient.Download(context.Background(), req)
 }
 

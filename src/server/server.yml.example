@@ -18,6 +18,7 @@ bt:
   downloadRateLimit: 0
   hashingThreads: 8
   savePath: D:/bt
+  trackerSub: https://trackerslist.com/best.txt
   trackers: http://t.acg.rip:6699/announce, http://1337.abcvg.info:80/announce
 
 log:

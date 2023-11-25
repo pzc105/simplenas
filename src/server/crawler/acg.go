@@ -77,6 +77,10 @@ func GoAcgBackgroup(params *GoAcgBackgroupParams) {
 		}
 	})
 
+	c.OnError(func(rsp *colly.Response, err error) {
+		
+	})
+
 	c.OnHTML("body", func(e *colly.HTMLElement) {
 		if strings.HasPrefix(e.Request.URL.Path, prefix) && !strings.HasSuffix(e.Request.URL.Path, suffix) {
 			numstr := e.Request.URL.Path[len(prefix):]
