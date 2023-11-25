@@ -79,6 +79,7 @@ func (bd *btHlsTask) Start() {
 	t, err := bd.bt.GetTorrent(infoHash)
 	if err != nil {
 		bd.into(TaskStatusFailed, err)
+		return
 	}
 	bd.infoHash = infoHash
 	bd.tid = t.GetBaseInfo().Id

@@ -310,6 +310,7 @@ namespace prpc
     auto th = _ses->find_torrent(params.info_hashes.get_best());
     if (th.is_valid())
     {
+      *response->mutable_info_hash() = get_respone_info_hash(th.info_hashes());
       if (th.flags() & lt::torrent_flags::paused)
       {
         th.resume();
@@ -328,6 +329,10 @@ namespace prpc
       if (handle.is_valid())
       {
         *response->mutable_info_hash() = get_respone_info_hash(handle.info_hashes());
+      }
+      else
+      {
+        return ::grpc::Status(grpc::INTERNAL, "");
       }
     }
     catch (std::exception const &)
