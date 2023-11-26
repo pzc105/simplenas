@@ -60,8 +60,8 @@ func GoAcgBackgroup(params *GoAcgBackgroupParams) {
 			if err == nil {
 				flagMtx.Lock()
 				name, ok := names[num]
-				flagMtx.Unlock()
 				if ok {
+					flagMtx.Unlock()
 					params.MagnetShares.AddMagnetUriByTorrent(&user.AddMagnetUriParams{
 						CategoryId: rid,
 						Name:       name,
@@ -69,16 +69,16 @@ func GoAcgBackgroup(params *GoAcgBackgroupParams) {
 						Torrent:    rsp.Body,
 					})
 				} else {
-					flagMtx.Lock()
 					cacheTorrent[num] = rsp.Body
 					flagMtx.Unlock()
 				}
+
 			}
 		}
 	})
 
 	c.OnError(func(rsp *colly.Response, err error) {
-		
+		log.Warnf("[acg] err:%v", err)
 	})
 
 	c.OnHTML("body", func(e *colly.HTMLElement) {
@@ -93,9 +93,7 @@ func GoAcgBackgroup(params *GoAcgBackgroupParams) {
 				if len(Name) > 0 {
 					flagMtx.Lock()
 					torrentBytes, ok := cacheTorrent[num]
-					flagMtx.Unlock()
 					if ok {
-						flagMtx.Lock()
 						delete(cacheTorrent, num)
 						flagMtx.Unlock()
 						params.MagnetShares.AddMagnetUriByTorrent(&user.AddMagnetUriParams{
@@ -105,7 +103,6 @@ func GoAcgBackgroup(params *GoAcgBackgroupParams) {
 							Torrent:    torrentBytes,
 						})
 					} else {
-						flagMtx.Lock()
 						names[num] = Name
 						flagMtx.Unlock()
 					}
