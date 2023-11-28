@@ -99,6 +99,10 @@ namespace prpc
       {
         std::cout << la->message() << std::endl;
       }
+      else if (auto la = lt::alert_cast<lt::peer_log_alert>(as[i]))
+      {
+        std::cout << la->message() << std::endl;
+      }
     }
   }
 
@@ -178,7 +182,7 @@ namespace prpc
     sp.set_int(lt::settings_pack::upload_rate_limit, upload_rate_limit);
     sp.set_int(lt::settings_pack::hashing_threads, hashing_threads);
     sp.set_int(lt::settings_pack::alert_mask,
-               lt::file_completed_alert::static_category | lt::log_alert::static_category);
+               lt::file_completed_alert::static_category | lt::log_alert::static_category | lt::peer_log_alert::static_category);
     auto nodes = sp.get_str(lt::settings_pack::dht_bootstrap_nodes);
     if (!nodes.empty())
     {
