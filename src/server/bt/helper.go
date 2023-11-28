@@ -133,6 +133,11 @@ func saveResumeData(infoHash *InfoHash, data []byte) error {
 	return err
 }
 
+func delResumeData(infoHash *InfoHash) error {
+	_, err := db.GREDIS.HDel(context.Background(), RedisKeyResumeData, getHKey(infoHash)).Result()
+	return err
+}
+
 func loadResumeData(infoHash *InfoHash) ([]byte, error) {
 	d, err := db.GREDIS.HGet(context.Background(), RedisKeyResumeData, getHKey(infoHash)).Result()
 	return []byte(d), err

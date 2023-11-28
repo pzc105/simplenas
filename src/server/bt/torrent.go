@@ -183,6 +183,12 @@ func (t *Torrent) updateStatus(s *prpc.TorrentStatus) {
 	}
 }
 
+func (t *Torrent) delResumeData() {
+	t.mtx.Lock()
+	defer t.mtx.Unlock()
+	delResumeData(&t.base.InfoHash)
+}
+
 func (t *Torrent) updateFileTypeLocked(index int) {
 	fileName := t.base.Files[index].Name
 	absFileName := t.base.SavePath + "/" + fileName

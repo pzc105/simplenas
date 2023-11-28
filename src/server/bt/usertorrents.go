@@ -575,6 +575,8 @@ func (ut *UserTorrentsImpl) RemoveTorrent(params *RemoveTorrentParams) (*prpc.Re
 			return nil, errors.New("not found torrent")
 		}
 		delete(ut.torrents, infoHash)
+		// TODO: fix concurrency issues
+		t.delResumeData()
 		uids := t.getAllUser()
 		err = deleteUserTorrentids(t.base.Id, uids...)
 		for _, uid := range uids {
