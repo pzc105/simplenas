@@ -165,6 +165,11 @@ namespace prpc
       sp.set_int(lt::settings_pack::proxy_type, type_map[proxy_type]);
       sp.set_int(lt::settings_pack::proxy_port, proxy_port);
     }
+    else
+    {
+      sp.set_str(lt::settings_pack::proxy_hostname, "");
+      sp.set_int(lt::settings_pack::proxy_type, lt::settings_pack::proxy_type_t::none);
+    }
     if (listen_interfaces.size() > 0)
     {
       sp.set_str(lt::settings_pack::listen_interfaces, listen_interfaces);
