@@ -23,6 +23,8 @@ type UserTorrents interface {
 	RemoveTorrent(*RemoveTorrentParams) (*prpc.RemoveTorrentRes, error)
 	GetMagnetUri(*GetMagnetUriParams) (*prpc.GetMagnetUriRsp, error)
 
+	NewDownloadTask(*DownloadTaskParams) (*prpc.DownloadRespone, error)
+
 	Close()
 }
 
@@ -46,5 +48,12 @@ type RemoveTorrentParams struct {
 }
 
 type GetMagnetUriParams struct {
-	Req    *prpc.GetMagnetUriReq
+	Req *prpc.GetMagnetUriReq
+}
+
+type DownloadTaskParams struct {
+	UserId   ptype.UserID
+	TaskId   ptype.TaskId
+	Req      *prpc.DownloadRequest
+	Callback UserOnBtStatusCallback
 }

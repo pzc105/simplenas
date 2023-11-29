@@ -2,7 +2,6 @@ package bt
 
 import (
 	"context"
-	"encoding/hex"
 	"errors"
 	"pnas/db"
 	"pnas/log"
@@ -38,36 +37,100 @@ type Torrent struct {
 	updatedFileType bool
 	state           prpc.BtStateEnum
 	updateTime      time.Time
-	whoHas          map[ptype.UserID]bool
+	whoHas          map[ptype.UserID]*userData
+	removed         bool
+	lastSt          *prpc.TorrentStatus
 
 	btClient *BtClient
 	lastSave time.Time
 }
 
 func (t *Torrent) init() {
-	t.whoHas = make(map[ptype.UserID]bool)
-}
-
-func (t *Torrent) addUser(uid ptype.UserID) {
-	t.mtx.Lock()
-	defer t.mtx.Unlock()
-	t.whoHas[uid] = true
-}
-
-func (t *Torrent) removeUser(uid ptype.UserID) {
-	t.mtx.Lock()
-	defer t.mtx.Unlock()
-	delete(t.whoHas, uid)
-}
-
-func (t *Torrent) getAllUser() []ptype.UserID {
-	t.mtx.Lock()
-	defer t.mtx.Unlock()
-	var ret []ptype.UserID
-	for uid := range t.whoHas {
-		ret = append(ret, uid)
+	t.whoHas = make(map[ptype.UserID]*userData)
+	t.removed = false
+	t.lastSt = &prpc.TorrentStatus{
+		InfoHash: GetInfoHash(&t.base.InfoHash),
+		Name:     t.base.Name,
+		Total:    t.base.TotalSize,
+		State:    t.state,
 	}
-	return ret
+	if t.state == prpc.BtStateEnum_seeding {
+		t.lastSt.TotalDone = t.lastSt.Total
+	}
+}
+
+// must with UserTorrentsImpl.mtx
+func (t *Torrent) addTask(ud *userData, params *DownloadTaskParams) error {
+	ud.addTorrent(t)
+	ud.setTaskCallback(&SetTaskCallbackParams{
+		TaskId:    params.TaskId,
+		TorrentId: t.base.Id,
+		Callback:  params.Callback,
+	})
+	t.mtx.Lock()
+	if t.removed {
+		ud.removeTorrent(t.base.Id, true)
+		t.mtx.Unlock()
+		return errors.New("removed torrent")
+	}
+	t.whoHas[ud.userId] = ud
+	lastSt := t.lastSt
+	t.mtx.Unlock()
+	log.Debugf("[bt] uid:%d add torrent:%d", ud.userId, t.base.Id)
+
+	if params.Callback != nil {
+		ud.callbackTaskQueue.Put(func() {
+			params.Callback(nil, lastSt)
+		})
+	}
+	return nil
+}
+
+// must with UserTorrentsImpl.mtx
+func (t *Torrent) addUser(ud *userData) error {
+	t.mtx.Lock()
+	if t.removed {
+		t.mtx.Unlock()
+		return errors.New("removed torrent")
+	}
+	t.whoHas[ud.userId] = ud
+	t.mtx.Unlock()
+	log.Debugf("[bt] uid:%d add torrent:%d", ud.userId, t.base.Id)
+	ud.addTorrent(t)
+	return nil
+}
+
+// must with UserTorrentsImpl.mtx
+func (t *Torrent) removeUser(uid ptype.UserID) error {
+	t.mtx.Lock()
+	ud, ok := t.whoHas[uid]
+	delete(t.whoHas, uid)
+	t.mtx.Unlock()
+	if !ok {
+		return errors.New("not found user")
+	}
+	log.Debugf("[bt] torrent:%d remove uid:%v", t.base.Id, uid)
+	return ud.removeTorrent(t.base.Id, true)
+}
+
+// must with UserTorrentsImpl.mtx
+func (t *Torrent) remove() error {
+	t.mtx.Lock()
+	delResumeData(&t.base.InfoHash)
+	t.removed = true
+	var uids []ptype.UserID
+	uds := []*userData{}
+	for uid, ud := range t.whoHas {
+		uids = append(uids, uid)
+		uds = append(uds, ud)
+	}
+	t.whoHas = make(map[ptype.UserID]*userData)
+	t.mtx.Unlock()
+	for _, ud := range uds {
+		ud.removeTorrent(t.base.Id, false)
+	}
+	log.Debugf("[bt] torrent:%d remove uids:%v", t.base.Id, uids)
+	return deleteUserTorrentids(t.base.Id, uids...)
 }
 
 func (t *Torrent) hasBaseInfo() bool {
@@ -137,7 +200,7 @@ func (t *Torrent) updateTorrentInfo(ti *prpc.TorrentInfo) {
 	t.hasBase = true
 
 	if IsDownloadAll(t.state) && !t.updatedFileType {
-		log.Infof("[bt] torrent: [%s] %s completed", hex.EncodeToString([]byte(t.base.InfoHash.Hash)), t.base.Name)
+		log.Infof("[bt] torrent: %d %s completed", t.base.Id, t.base.Name)
 		for i := range t.base.Files {
 			t.updateFileTypeLocked(i)
 		}
@@ -147,46 +210,58 @@ func (t *Torrent) updateTorrentInfo(ti *prpc.TorrentInfo) {
 
 func (t *Torrent) updateStatus(s *prpc.TorrentStatus) {
 	t.mtx.Lock()
-	defer t.mtx.Unlock()
 	old := t.state
 	t.state = s.State
+	t.lastSt = s
 
 	if old != s.State {
 		sql := `update torrent set state=? where version=? and info_hash=?`
 		_, err := db.Exec(sql, s.State, t.base.InfoHash.Version, t.base.InfoHash.Hash)
 		if err != nil {
-			log.Warnf("failed to update torrent err: %v", err)
+			log.Warnf("failed to update torrent:%d err:%v", t.base.Id, err)
 		}
 	}
 
 	if IsDownloadAll(s.State) && !t.updatedFileType {
-		log.Infof("[bt] torrent: [%s] %s completed", hex.EncodeToString([]byte(t.base.InfoHash.Hash)), t.base.Name)
+		log.Infof("[bt] torrent: %d %s completed", t.base.Id, t.base.Name)
 		for i := range t.base.Files {
 			t.updateFileTypeLocked(i)
 		}
 		t.updatedFileType = true
 	}
 
-	if s.State == prpc.BtStateEnum_downloading ||
-		old != prpc.BtStateEnum_seeding && s.State == prpc.BtStateEnum_seeding {
-		now := time.Now()
-		if now.Sub(t.lastSave) > time.Second*10 {
-			req := &prpc.GetResumeDataReq{
-				InfoHash: GetInfoHash(&t.base.InfoHash),
-			}
-			rd, err := t.btClient.GetResumeData(context.Background(), req)
-			if err == nil {
-				saveResumeData(&t.base.InfoHash, rd.ResumeData)
-			}
-			t.lastSave = now
+	now := time.Now()
+	needSaveResuem := func() bool {
+		if t.removed {
+			return false
 		}
+		if old != prpc.BtStateEnum_seeding {
+			return true
+		}
+		if t.state == prpc.BtStateEnum_downloading && now.Sub(t.lastSave) > time.Second*10 {
+			return true
+		}
+		return false
 	}
-}
+	if needSaveResuem() {
+		req := &prpc.GetResumeDataReq{
+			InfoHash: GetInfoHash(&t.base.InfoHash),
+		}
+		rd, err := t.btClient.GetResumeData(context.Background(), req)
+		if err == nil {
+			saveResumeData(&t.base.InfoHash, rd.ResumeData)
+		}
+		t.lastSave = now
+	}
+	uds := []*userData{}
+	for _, ud := range t.whoHas {
+		uds = append(uds, ud)
+	}
+	t.mtx.Unlock()
 
-func (t *Torrent) delResumeData() {
-	t.mtx.Lock()
-	defer t.mtx.Unlock()
-	delResumeData(&t.base.InfoHash)
+	for _, ud := range uds {
+		ud.onBtStatus(t.base.Id, s)
+	}
 }
 
 func (t *Torrent) updateFileTypeLocked(index int) {
@@ -204,11 +279,9 @@ func (t *Torrent) updateFileTypeLocked(index int) {
 		if video.IsAudio(meta) {
 			t.base.Files[index].FileType |= FileAudioType
 		}
-		log.Debugf("[bt] torrent:%s file: %s type: %d", hex.EncodeToString([]byte(t.base.InfoHash.Hash)),
-			absFileName, t.base.Files[index].FileType)
+		log.Debugf("[bt] torrent:%d file:%s type:%d", t.base.Id, absFileName, t.base.Files[index].FileType)
 	} else {
-		log.Debugf("[bt] torrent:%s file: %s unkonwn type", hex.EncodeToString([]byte(t.base.InfoHash.Hash)),
-			absFileName)
+		log.Debugf("[bt] torrent:%d file:%s unkonwn type", t.base.Id, absFileName)
 	}
 }
 

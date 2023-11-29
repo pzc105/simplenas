@@ -62,16 +62,13 @@ func (bd *btHlsTask) videoTaskCallback(err error) {
 
 func (bd *btHlsTask) Start() {
 	bd.downloadReq.StopAfterGotMeta = false
-	res, err := bd.bt.Download(&bt.DownloadParams{
-		UserId: bd.userId,
-		Req:    bd.downloadReq,
+	res, err := bd.bt.NewDownloadTask(&bt.DownloadTaskParams{
+		UserId:   bd.userId,
+		Req:      bd.downloadReq,
+		TaskId:   bd.id,
+		Callback: bd.onBtStatus,
 	})
 	if err != nil {
-		if err == bt.ErrDownloaded {
-			bd.infoHash = bt.TranInfoHash(res.InfoHash)
-			bd.downloaded()
-			return
-		}
 		bd.into(TaskStatusFailed, err)
 		return
 	}
@@ -83,12 +80,6 @@ func (bd *btHlsTask) Start() {
 	}
 	bd.infoHash = infoHash
 	bd.tid = t.GetBaseInfo().Id
-	bd.bt.SetTaskCallback(&bt.SetTaskCallbackParams{
-		UserId:    bd.userId,
-		TaskId:    bd.id,
-		TorrentId: bd.tid,
-		Callback:  bd.onBtStatus,
-	})
 }
 
 func (bd *btHlsTask) downloaded() {
