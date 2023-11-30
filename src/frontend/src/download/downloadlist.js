@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, MenuItem, List, Paper, Button, Box, Typography, Dialog, Grid, TextField, InputAdornment } from '@mui/material';
+import {
+  Menu, MenuItem, List, Paper, Button, Box, Typography, Dialog, Grid, TextField, InputAdornment,
+  FormControl, FormLabel, RadioGroup, FormControlLabel, Radio
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled } from "@mui/material/styles";
 import LinearProgress from '@mui/material/LinearProgress';
 import { useSelector, useDispatch } from 'react-redux';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import * as store from '../store.js'
 import * as Bt from '../prpc/bt_pb.js'
@@ -115,6 +119,9 @@ function ProgressBar(props) {
         <div style={{ padding: '16px' }}>
           {magnetUri}
         </div>
+        <CopyToClipboard text={magnetUri}>
+          <Button>复制</Button>
+        </CopyToClipboard>
       </Dialog>
 
       <Menu
@@ -135,17 +142,31 @@ export function ProgressLists() {
   const btstatus = useSelector(state => store.selectAllBtStatus(state))
   const [sortedTorrents, setSortedTorrents] = useState([])
   const [searchText, setSearchText] = useState('')
+  const downloadingTag = "1"
+  const downloadedTag = "2"
+  const [selectedTagValue, setSelectedTagValue] = useState(downloadingTag);
 
   const onSearchText = (e) => {
     setSearchText(e.target.value)
+  }
+
+  const isDownloading = (st) => {
+    if (!st) {
+      return false
+    }
+    if (st.state == Bt.BtStateEnum.DOWNLOADING
+      || st.state == Bt.BtStateEnum.DOWNLOADING_METADATA
+      || st.state == Bt.BtStateEnum.CHECKING_FILES) {
+      return true
+    }
+    return false
   }
 
   useEffect(() => {
     if (!torrents) {
       return
     }
-    let downloading = []
-    let notdownadloading = []
+    let tmp = []
     let emptyNameTs = []
     for (let t of Object.values(torrents)) {
       if (searchText.length > 0) {
@@ -164,23 +185,14 @@ export function ProgressLists() {
         emptyNameTs.push(t)
       } else {
         let status = btstatus[t.infoHash.hash]
-        if (status && status.state == Bt.BtStateEnum.DOWNLOADING) {
-          downloading.push(t)
-          continue
+        if (selectedTagValue == downloadingTag && isDownloading(status)) {
+          tmp.push(t)
+        } else if (selectedTagValue == downloadedTag && !isDownloading(status)) {
+          tmp.push(t)
         }
-        notdownadloading.push(t)
       }
     }
-    downloading.sort((a, b) => {
-      if (a.name < b.name) {
-        return -1;
-      }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
-    })
-    notdownadloading.sort((a, b) => {
+    tmp.sort((a, b) => {
       if (a.name < b.name) {
         return -1;
       }
@@ -198,8 +210,11 @@ export function ProgressLists() {
       }
       return 0;
     })
-    setSortedTorrents([...downloading, ...notdownadloading, ...emptyNameTs])
-  }, [torrents, btstatus, searchText])
+    if (selectedTagValue == downloadingTag) {
+      tmp.push(...emptyNameTs)
+    }
+    setSortedTorrents(tmp)
+  }, [torrents, btstatus, searchText, selectedTagValue])
 
   return (
     <Paper style={{ maxHeight: '90vh', overflow: 'auto' }}>
@@ -212,6 +227,15 @@ export function ProgressLists() {
             </InputAdornment>
           ),
         }} />
+      <FormControl component="fieldset">
+        <RadioGroup
+          style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}
+          value={selectedTagValue}
+          onChange={(e) => setSelectedTagValue(e.target.value)}>
+          <FormControlLabel value={downloadingTag} control={<Radio />} label="下载中" />
+          <FormControlLabel value={downloadedTag} control={<Radio />} label="已下载" />
+        </RadioGroup>
+      </FormControl>
       {
         sortedTorrents.map((t) =>
           <List key={t.infoHash.hash}>
@@ -219,6 +243,6 @@ export function ProgressLists() {
           </List>
         )
       }
-    </Paper>
+    </Paper >
   )
 }
