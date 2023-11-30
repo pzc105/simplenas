@@ -350,7 +350,7 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
                           </Grid>
                           <Grid item xs={6}>
                             <CopyToClipboard text={item.other.magnetUri}>
-                              <Tooltip title={item.introduce}>
+                              <Tooltip title={<div>{"Name:" + item.name}<br />{"介绍:" + item.introduce}</div>}>
                                 <Typography variant="button" component="div" noWrap>
                                   <Button onClick={() => setCopyDialogOpen(true)}>{item.name}</Button>
                                 </Typography>
