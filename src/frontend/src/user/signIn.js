@@ -290,6 +290,7 @@ const ChangePassword = ({ back2Login }) => {
           fullWidth
           id="oldpwd"
           label="旧密码"
+          type="password"
           name="oldpwd"
           onChange={handleOldChange} />
         <TextField
