@@ -168,6 +168,9 @@ func Init(config_file_full_path string) {
 }
 
 func initPath(s *Setting) {
+	if len(s.Server.MediaPath) == 0 || len(s.Bt.SavePath) == 0 {
+		return
+	}
 	s.Server.MediaPath = path.Clean(s.Server.MediaPath)
 	s.Bt.SavePath = path.Clean(s.Bt.SavePath)
 	s.Server.HlsPath = s.Server.MediaPath + "/hls"
