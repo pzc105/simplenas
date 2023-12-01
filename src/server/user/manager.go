@@ -353,6 +353,7 @@ func (um *UserManger) RenameBtVideoName(params *RenameBtVideoNameParams) error {
 			return err
 		}
 		pitem.Rename(fmt.Sprintf("%s %0*d", refname, params.NumWidth, ep))
+		cate.RefreshItem(pitem.GetParentId())
 		return nil
 	}
 
@@ -376,5 +377,6 @@ func (um *UserManger) RenameBtVideoName(params *RenameBtVideoNameParams) error {
 		}
 		item.Rename(fmt.Sprintf("%s %0*d", refname, params.NumWidth, ep))
 	}
+	cate.RefreshItem(pitem.GetId())
 	return nil
 }

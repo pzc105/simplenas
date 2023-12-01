@@ -144,7 +144,9 @@ const CategoryItems = ({ shareid, onRefresh }) => {
       if (err != null) {
         return
       }
-      queryItem(item.id, "", dispatch)
+      if (onRefresh) {
+        onRefresh()
+      }
     })
   }
 

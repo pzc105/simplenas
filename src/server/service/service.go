@@ -497,7 +497,13 @@ func (ser *CoreService) RenameItem(ctx context.Context, req *prpc.RenameItemReq)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "")
 	}
+	if item.GetName() == req.NewName {
+		return nil, status.Error(codes.InvalidArgument, "same name")
+	}
 	err = item.Rename(req.NewName)
+	if item.GetId() != category.RootId {
+		ser.um.CategoryService().RefreshItem(item.GetParentId())
+	}
 	if err != nil {
 		return nil, err
 	}

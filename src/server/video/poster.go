@@ -1,6 +1,8 @@
 package video
 
 import (
+	"fmt"
+	"math/rand"
 	"os"
 	"os/exec"
 	"path"
@@ -22,7 +24,7 @@ func GenPoster(params *GenPosterParams) error {
 	cmdParams = append(cmdParams, params.InputFileName)
 	cmdParams = append(cmdParams, "-y")
 	cmdParams = append(cmdParams, "-vf")
-	cmdParams = append(cmdParams, "select=gt(scene\\,0.5)")
+	cmdParams = append(cmdParams, fmt.Sprintf("select=gt(scene\\,%f)", rand.Float32()/3.0+0.2))
 	cmdParams = append(cmdParams, "-frames:v")
 	cmdParams = append(cmdParams, "1")
 	cmdParams = append(cmdParams, "-vsync")

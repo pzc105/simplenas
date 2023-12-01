@@ -48,7 +48,7 @@ type CategoryItem struct {
 }
 
 func _initSubItemIds(item *CategoryItem) error {
-	sql := `select id from pnas.category_items where parent_id=?`
+	sql := `select id from pnas.category_items where parent_id=? order by name`
 	rows, err := db.Query(sql, item.base.Id)
 	if err != nil {
 		return errors.WithStack(err)
@@ -230,6 +230,16 @@ func (c *CategoryItem) GetItemBaseInfo() BaseItem {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
 	return c.base
+}
+
+func (c *CategoryItem) GetId() ptype.CategoryID {
+	return c.base.Id
+}
+
+func (c *CategoryItem) GetParentId() ptype.CategoryID {
+	c.mtx.Lock()
+	defer c.mtx.Unlock()
+	return c.base.ParentId
 }
 
 func (c *CategoryItem) GetName() string {
