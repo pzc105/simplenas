@@ -63,7 +63,7 @@ export default function GlobalSidebar() {
     }
     dispatch(store.categorySlice.actions.clear())
     queryItem(userInfo.homeDirectoryId, "", dispatch)
-    querySubItems(userInfo.homeDirectoryId, "", dispatch)
+    querySubItems({ itemId: userInfo.homeDirectoryId, shareid: "", dispatch })
   }, [userInfo, dispatch])
 
   const UserItem = userInfo ? {

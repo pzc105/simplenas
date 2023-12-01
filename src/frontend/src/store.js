@@ -86,6 +86,7 @@ const categorySlice = createSlice({
   initialState: {
     items: {},
     videoInfos: {},
+    displayItems: [],
   },
   reducers: {
     clear: (state) => {
@@ -102,6 +103,10 @@ const categorySlice = createSlice({
     },
     updateVideoInfo: (state, action) => {
       state.videoInfos[action.payload.itemId] = action.payload.videoInfo
+    },
+    updateDisplayItems: (state, action) => {
+      let items = action.payload
+      state.displayItems = items
     },
   }
 })
@@ -300,6 +305,10 @@ const selectSubDirectory = (state, parentId) => {
   return ds
 }
 
+const selectDisplayItems = (state) => {
+  return state.category.displayItems
+}
+
 const selectItemVideoInfo = (state, itemId) => {
   return state.category.videoInfos[itemId]
 }
@@ -322,7 +331,7 @@ const selectAutoPlayVideo = (state) => {
 export {
   store, userSlice, btSlice, categorySlice, eventSlice, playerSlice, magnetShares,
   selectUserInfo, selectShownChatPanel, selectOpenGlobalChat, selectGlobalChatPosition, selectlastUsedDirId,
-  selectlastUsedParentDirId,
+  selectlastUsedParentDirId, selectDisplayItems,
   selectTorrent, selectInfoHashs, selectBtVideoFiles, selectTorrentStatus, selectTorrents, selectAllBtStatus,
   selectCategoryItem, selectCategoryItems, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo,
   selectMagnetSharesItems,

@@ -154,9 +154,9 @@ export function ProgressLists() {
     if (!st) {
       return false
     }
-    if (st.state == Bt.BtStateEnum.DOWNLOADING
-      || st.state == Bt.BtStateEnum.DOWNLOADING_METADATA
-      || st.state == Bt.BtStateEnum.CHECKING_FILES) {
+    if (st.state === Bt.BtStateEnum.DOWNLOADING
+      || st.state === Bt.BtStateEnum.DOWNLOADING_METADATA
+      || st.state === Bt.BtStateEnum.CHECKING_FILES) {
       return true
     }
     return false

@@ -43,8 +43,10 @@ export default function PlyrWrap() {
 
   useEffect(() => {
     if (parentItemId) {
-      querySubItems(parentItemId, shareid, dispatch, (subItems) => {
-        setItems(subItems)
+      querySubItems({
+        itemId: parentItemId, shareid, dispatch, callback: (subItems) => {
+          setItems(subItems)
+        }
       })
     }
   }, [parentItemId, shareid, dispatch])

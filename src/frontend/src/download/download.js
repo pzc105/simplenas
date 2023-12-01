@@ -71,9 +71,10 @@ export default function Download() {
     stream.on('data', function (sResponse) {
       const trs = sResponse.getStatusArrayList()
       let needQueryTorrents = false
-      trs.map((t) => {
-        let status = t.toObject()
-        if (!torrents[status.infoHash.hash]) {
+      trs.map((st) => {
+        let status = st.toObject()
+        let t = torrents[status.infoHash.hash]
+        if (!t || status.state === Bt.BtStateEnum.DOWNLOADING && t.name.length === 0) {
           needQueryTorrents = true
         }
         dispatch(store.btSlice.actions.updateTorrentStatus(status))

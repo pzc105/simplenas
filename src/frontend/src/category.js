@@ -12,15 +12,16 @@ import * as store from './store.js'
 import SideUtils from './sideManager.js';
 import { FloatingChat } from './chat/chat.js';
 import SubtitleUploader from './uploadSubtitle.js';
+import UnifiedPage from './page.js'
 
 import * as User from './prpc/user_pb.js'
 import * as Category from './prpc/category_pb.js'
 import userService from './rpcClient.js'
 import { serverAddress } from './rpcClient.js'
 
-const CategoryItems = ({ parentId, shareid }) => {
+const CategoryItems = ({ shareid, onRefresh }) => {
   const navigate = useNavigate()
-  const items = useSelector((state) => store.selectCategorySubItems(state, parentId))
+  const items = useSelector((state) => store.selectDisplayItems(state))
   let sortedItems = []
   const dispatch = useDispatch()
 
@@ -28,7 +29,7 @@ const CategoryItems = ({ parentId, shareid }) => {
     if (!items || items.length === 0) {
       return
     }
-    let tmp = items
+    let tmp = [...items]
     tmp.sort((a, b) => {
       if (a.name < b.name) {
         return -1;
@@ -59,6 +60,9 @@ const CategoryItems = ({ parentId, shareid }) => {
         return
       }
       dispatch(store.categorySlice.actions.deleteItem(item.id))
+      if (onRefresh) {
+        onRefresh()
+      }
     })
     handleClose(item.id)
   }
@@ -220,7 +224,7 @@ const CategoryItems = ({ parentId, shareid }) => {
   )
 }
 
-const CategoryItemCreator = ({ parentId }) => {
+const CategoryItemCreator = ({ parentId, onRefresh }) => {
   const dispatch = useDispatch()
   const [itemName, setItemName] = useState('')
   function handleChange(e) {
@@ -240,8 +244,9 @@ const CategoryItemCreator = ({ parentId }) => {
         console.log(err)
         return
       }
-      queryItem(parentId, "", dispatch)
-      querySubItems(parentId, "", dispatch)
+      if (onRefresh) {
+        onRefresh()
+      }
     })
   }
 
@@ -301,6 +306,22 @@ export default function CategoryItemPage() {
   const showGlobalChat = useSelector((state) => store.selectOpenGlobalChat(state))
   const thisItem = useSelector((state) => store.selectCategoryItem(state, itemId))
 
+  const pageRows = 20
+  const [totalRows, setTotalRows] = useState(0)
+  const pageNum = useRef(0)
+  const [pageNumState, setPageNumState] = useState(0)
+  const refresh = () => {
+    queryItem(itemId, shareid, dispatch, (item) => {
+      setTotalRows(item.subItemIdsList.length)
+    })
+    querySubItems({
+      itemId, shareid, dispatch, pageNum: pageNum.current, pageRows: pageRows, callback: (items) => {
+        console.log(items)
+        dispatch(store.categorySlice.actions.updateDisplayItems(items))
+      }
+    })
+  }
+
   const closeChatPanel = () => {
     dispatch(store.userSlice.actions.setShowChatPanel(false))
   }
@@ -323,8 +344,7 @@ export default function CategoryItemPage() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    queryItem(itemId, shareid, dispatch)
-    querySubItems(itemId, shareid, dispatch)
+    refresh()
   }, [itemId, dispatch, navigate, shareid])
 
   return (
@@ -332,9 +352,17 @@ export default function CategoryItemPage() {
       <CssBaseline />
       <SideUtils
         name="管理"
-        child={CategoryItemCreator({ parentId: itemId })}
+        child={CategoryItemCreator({ parentId: itemId, onRefresh: refresh })}
       />
-      <CategoryItems parentId={itemId} shareid={shareid} />
+      <Container style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <Paper style={{ height: "85vh" }}>
+          <CategoryItems shareid={shareid} onRefresh={refresh} />
+        </Paper>
+        <UnifiedPage
+          PageTotalCount={Math.ceil(totalRows / pageRows)}
+          PageNum={parseInt(pageNumState + 1)}
+          onPage={(n) => { pageNum.current = n - 1; setPageNumState(pageNum.current); refresh() }} />
+      </Container>
       {shownChatPanel && !showGlobalChat ? <FloatingChat itemId={itemId} onClose={closeChatPanel} /> : null}
       {showGlobalChat ? <FloatingChat itemId={1} onClose={closeGlobalChat} /> : null}
     </CategoryContainer>
@@ -357,9 +385,11 @@ export function navigateToVideo(navigate, navigateParams, itemId, shareid) {
   navigate(path, navigateParams)
 }
 
-export const querySubItems = (itemId, shareid, dispatch, callback) => {
+export const querySubItems = ({ itemId, shareid, dispatch, callback, pageNum, pageRows }) => {
   var req = new User.QuerySubItemsReq()
   req.setParentId(itemId)
+  req.setPageNum(pageNum)
+  req.setRows(pageRows)
   if (shareid) {
     req.setShareId(shareid)
   }
