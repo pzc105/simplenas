@@ -10,6 +10,7 @@ type IService interface {
 	Init()
 	AddItem(params *NewCategoryParams) (*CategoryItem, error)
 	GetItem(querier ptype.UserID, itemId ptype.CategoryID) (*CategoryItem, error)
+	RefreshItem(itemId ptype.CategoryID) error
 	GetItemsByParent(*GetItemsByParentParams) ([]*CategoryItem, error)
 	GetItems(querier ptype.UserID, itemIds ...ptype.CategoryID) ([]*CategoryItem, error)
 	GetItemByName(querier ptype.UserID, parentId ptype.CategoryID, name string) (*CategoryItem, error)

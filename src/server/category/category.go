@@ -18,6 +18,7 @@ import (
 
 const (
 	RootId     = 1
+	UsersId    = 3
 	NotExisted = -2
 )
 

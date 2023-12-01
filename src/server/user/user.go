@@ -38,10 +38,11 @@ type User struct {
 }
 
 type NewUserParams struct {
-	Email  string
-	Name   string
-	Passwd string
-	Auth   utils.AuthBitSet
+	Email           string
+	Name            string
+	Passwd          string
+	Auth            utils.AuthBitSet
+	CategoryService category.IService
 }
 
 func NewUser(params *NewUserParams) error {
@@ -68,6 +69,7 @@ func NewUser(params *NewUserParams) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
+	params.CategoryService.RefreshItem(category.UsersId)
 	return nil
 }
 

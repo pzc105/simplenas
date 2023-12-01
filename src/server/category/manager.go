@@ -19,7 +19,7 @@ var (
 type Manager struct {
 	itemsMtx sync.Mutex
 	// TODO: support LFU
-	items    map[ptype.CategoryID]*CategoryItem
+	items map[ptype.CategoryID]*CategoryItem
 
 	dbMapMtx    sync.Mutex
 	dbItemMtxes map[ptype.CategoryID]*sync.Mutex
@@ -141,6 +141,21 @@ func (m *Manager) GetItem(querier ptype.UserID, itemId ptype.CategoryID) (*Categ
 		return nil, errors.New("no auth")
 	}
 	return item, err
+}
+
+func (m *Manager) RefreshItem(itemId ptype.CategoryID) error {
+	dbmtx := m.requireDbMtx(itemId)
+	dbmtx.Lock()
+	defer dbmtx.Unlock()
+	item, err := _loadItem(itemId)
+	if err != nil {
+		m.delDbMtx(itemId)
+		return err
+	}
+	m.itemsMtx.Lock()
+	m.items[itemId] = item
+	m.itemsMtx.Unlock()
+	return nil
 }
 
 func (m *Manager) GetItemByName(querier ptype.UserID, parentId ptype.CategoryID, name string) (*CategoryItem, error) {

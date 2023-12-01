@@ -195,10 +195,11 @@ func (ser *CoreService) Register(
 	}
 
 	params := &user.NewUserParams{
-		Email:  userInfo.GetEmail(),
-		Name:   userInfo.GetName(),
-		Passwd: userInfo.GetPasswd(),
-		Auth:   utils.NewBitSet(user.AuthMax, user.AuthAdmin),
+		Email:           userInfo.GetEmail(),
+		Name:            userInfo.GetName(),
+		Passwd:          userInfo.GetPasswd(),
+		Auth:            utils.NewBitSet(user.AuthMax, user.AuthAdmin),
+		CategoryService: ser.um.CategoryService(),
 	}
 	log.Debugf("[user] %s %s register", params.Name, params.Email)
 	err := user.NewUser(params)
