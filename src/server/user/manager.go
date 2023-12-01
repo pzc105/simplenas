@@ -13,6 +13,7 @@ import (
 	"pnas/user/task"
 	"pnas/utils"
 	"pnas/video"
+	"strconv"
 	"sync"
 
 	"github.com/pkg/errors"
@@ -194,7 +195,15 @@ func (um *UserManger) DelCategoryItem(userId ptype.UserID, itemId ptype.Category
 	if item.GetType() == prpc.CategoryItem_Home {
 		return errors.New("can't delete home")
 	}
-	return um.categorySer.DelItem(userId, itemId)
+	err = um.categorySer.DelItem(userId, itemId)
+	if userId == ptype.AdminId && item.GetType() == prpc.CategoryItem_Video && err == nil {
+		vidStr := item.GetItemBaseInfo().ResourcePath
+		vid, err := strconv.ParseInt(vidStr, 10, 64)
+		if err == nil {
+			video.RemoveVideo(ptype.VideoID(vid))
+		}
+	}
+	return err
 }
 
 type AddBtVideosParams struct {

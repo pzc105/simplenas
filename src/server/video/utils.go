@@ -1,8 +1,11 @@
 package video
 
 import (
+	"fmt"
+	"os"
 	"pnas/db"
 	"pnas/ptype"
+	"pnas/setting"
 )
 
 type Video struct {
@@ -44,4 +47,14 @@ func GetVideoFileName(vid ptype.VideoID) (string, error) {
 		return "", err
 	}
 	return fileName, nil
+}
+
+func RemoveVideo(vid ptype.VideoID) error {
+	videoPath := setting.GS().Server.HlsPath + fmt.Sprintf("/vid_%d", vid)
+	os.RemoveAll(videoPath)
+	posterPath := setting.GS().Server.PosterPath + fmt.Sprintf("/vid_%d.jpg", vid)
+	os.RemoveAll(posterPath)
+	sqlStr := "delete from video where id=?"
+	_, err := db.Exec(sqlStr, vid)
+	return err
 }
