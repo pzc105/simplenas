@@ -370,14 +370,6 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 
 	ut.mtx.Lock()
 	defer ut.mtx.Unlock()
-	t, err := ut.getTorrentLocked(infoHash)
-	if err == nil {
-		t.addUser(ut.getUserDataLocked(params.UserId))
-		rsp := &prpc.DownloadRespone{
-				InfoHash: res.InfoHash,
-		}
-		return rsp, nil
-	}
 
 	res, err = ut.download(infoHash, req)
 	if err == nil {
@@ -415,14 +407,6 @@ func (ut *UserTorrentsImpl) NewDownloadTask(params *DownloadTaskParams) (*prpc.D
 
 	ut.mtx.Lock()
 	defer ut.mtx.Unlock()
-	t, err := ut.getTorrentLocked(infoHash)
-	if err == nil {
-		t.addTask(ut.getUserDataLocked(params.UserId), params)
-		rsp := &prpc.DownloadRespone{
-			InfoHash: res.InfoHash,
-		}
-		return rsp, nil
-	}
 
 	res, err = ut.download(infoHash, req)
 	if err == nil {
