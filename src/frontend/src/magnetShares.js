@@ -40,11 +40,6 @@ export default function MagnetSharesPage() {
   const [pageNumState, setPageNumState] = useState(0)
   const searchCond = useRef("")
 
-  useEffect(() => {
-    pageNum.current = 0
-    refresh()
-  }, [itemId])
-
   const refresh = () => {
     let cond = ""
     if (searchCond.current.length > 0) {
@@ -58,6 +53,12 @@ export default function MagnetSharesPage() {
       setTotalRows(rsp.getTotalRowCount())
     })
   }
+
+  useEffect(() => {
+    pageNum.current = 0
+    setPageNumState(0)
+    refresh()
+  }, [itemId])
 
   const closeGlobalChat = () => {
     dispatch(store.userSlice.actions.setOpenGlobalChat(false))
@@ -407,7 +408,6 @@ const queryMagnet = (dispatch, id, searchWords, pageNum, rows, callback) => {
       if (obj.id != id) {
         objs.push(obj)
       }
-      dispatch(store.categorySlice.actions.updateItem(obj))
       return null
     })
     if (callback) {

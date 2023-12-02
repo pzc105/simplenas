@@ -321,7 +321,6 @@ export default function CategoryItemPage() {
     })
     querySubItems({
       itemId, shareid, dispatch, pageNum: pageNum.current, pageRows: pageRows, callback: (items) => {
-        console.log(items)
         dispatch(store.categorySlice.actions.updateDisplayItems(items))
       }
     })
@@ -333,6 +332,11 @@ export default function CategoryItemPage() {
   const closeGlobalChat = () => {
     dispatch(store.userSlice.actions.setOpenGlobalChat(false))
   }
+
+  useEffect(() => {
+    pageNum.current = 0
+    setPageNumState(0)
+  }, [itemId])
 
   useEffect(() => {
     if (thisItem && thisItem.typeId === Category.CategoryItem.Type.VIDEO) {
