@@ -206,5 +206,5 @@ func ParseEpisode2(name string) (int, error) {
 			return n, nil
 		}
 	}
-	return -1, nil
+	return -1, errors.New("unsupport")
 }
