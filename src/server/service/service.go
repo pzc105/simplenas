@@ -995,7 +995,6 @@ func (ser *CoreService) RenameBtVideoName(ctx context.Context, req *prpc.RenameB
 		Who:      ses.UserId,
 		ParentId: ptype.CategoryID(req.ItemId),
 		RefName:  req.RefName,
-		NumWidth: 2,
 	})
 	if err != nil {
 		return nil, err

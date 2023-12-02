@@ -2,6 +2,7 @@ package user
 
 import (
 	"fmt"
+	"math"
 	"os"
 	"path"
 	"pnas/bt"
@@ -334,6 +335,31 @@ type RenameBtVideoNameParams struct {
 	NumWidth int
 }
 
+func (um *UserManger) getEpNumWidth(who ptype.UserID, pitem *category.CategoryItem) int {
+	cate := um.categorySer
+	sudIds := pitem.GetSubItemIds()
+	maxWidth := 2
+	for _, id := range sudIds {
+		item, err := cate.GetItem(who, id)
+		if err != nil || item.GetType() != prpc.CategoryItem_Video {
+			continue
+		}
+		ep, err := utils.ParseEpisode2(item.GetName())
+		if err != nil {
+			continue
+		}
+		f := math.Log10(float64(ep))
+		if math.IsNaN(f) {
+			continue
+		}
+		w := int(f) + 1
+		if w > maxWidth {
+			maxWidth = w
+		}
+	}
+	return maxWidth
+}
+
 func (um *UserManger) RenameBtVideoName(params *RenameBtVideoNameParams) error {
 	cate := um.categorySer
 	pitem, err := cate.GetItem(params.Who, params.ParentId)
@@ -344,10 +370,10 @@ func (um *UserManger) RenameBtVideoName(params *RenameBtVideoNameParams) error {
 
 	if !pitem.IsDirectory() {
 		var refname string
+		ppitem, err := cate.GetItem(params.Who, pitem.GetItemBaseInfo().ParentId)
 		if len(params.RefName) > 0 {
 			refname = params.RefName
 		} else {
-			ppitem, err := cate.GetItem(params.Who, pitem.GetItemBaseInfo().ParentId)
 			if err == nil {
 				refname = ppitem.GetName()
 			}
@@ -361,6 +387,9 @@ func (um *UserManger) RenameBtVideoName(params *RenameBtVideoNameParams) error {
 		if err != nil {
 			return err
 		}
+		if params.NumWidth <= 0 {
+			params.NumWidth = um.getEpNumWidth(params.Who, ppitem)
+		}
 		pitem.Rename(fmt.Sprintf("%s %0*d", refname, params.NumWidth, ep))
 		cate.RefreshItem(pitem.GetParentId())
 		return nil
@@ -372,7 +401,9 @@ func (um *UserManger) RenameBtVideoName(params *RenameBtVideoNameParams) error {
 	} else {
 		refname = pitem.GetName()
 	}
-
+	if params.NumWidth <= 0 {
+		params.NumWidth = um.getEpNumWidth(params.Who, pitem)
+	}
 	sudIds := pitem.GetSubItemIds()
 	for _, id := range sudIds {
 		item, err := cate.GetItem(params.Who, id)

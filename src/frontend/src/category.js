@@ -111,6 +111,9 @@ const CategoryItems = ({ shareid, onRefresh }) => {
       if (err != null) {
         return
       }
+      if (onRefresh) {
+        onRefresh()
+      }
     })
     handleClose(item.id)
   }
