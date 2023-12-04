@@ -341,7 +341,7 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
                     </Grid>
                   </Container> :
                   <Container>
-                    <Grid container sx={{ display: 'flex' }} onContextMenu={(e) => handleContextMenu(e, item.id)}>
+                    <Grid container sx={{ display: 'flex' }}>
                       <Grid item xs={12}>
                         <Grid container spacing={2}>
                           <Grid item xs={4}>
@@ -349,19 +349,46 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
                               {"magnet uri: "}
                             </Typography>
                           </Grid>
-                          <Grid item xs={6}>
-                            <CopyToClipboard text={item.other.magnetUri}>
-                              <Tooltip title={<div>{"Name:" + item.name}<br />{"介绍:" + item.introduce}</div>}>
-                                <Typography variant="button" component="div" noWrap>
-                                  <Button onClick={() => setCopyDialogOpen(true)}>{item.name}</Button>
-                                </Typography>
-                              </Tooltip>
-                            </CopyToClipboard>
-                            <Dialog open={copyDialogOpen} onClose={() => setCopyDialogOpen(false)}>
-                              <div style={{ padding: '16px' }}>
-                                已复制到剪贴板
-                              </div>
-                            </Dialog>
+                          <Grid item xs={6} onContextMenu={(e) => handleContextMenu(e, item.id)}>
+                            <div>
+                              <CopyToClipboard text={item.other.magnetUri}>
+                                <Tooltip
+                                  title={
+                                    <div>
+                                      {"[Name]:" + item.name}
+                                      {item.introduce.length > 0 ? <div><br /> {"[介绍]:" + item.introduce}</div> : null}
+                                      <br />
+                                      {"[Uri]:" + item.other.magnetUri}
+                                    </div>
+                                  }>
+                                  <Typography
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => setCopyDialogOpen(true)}
+                                    variant="button"
+                                    component="div"
+                                    noWrap>
+                                    {item.name}
+                                  </Typography>
+                                </Tooltip>
+                              </CopyToClipboard>
+                              <Dialog open={copyDialogOpen} onClose={() => setCopyDialogOpen(false)}>
+                                <div style={{ padding: '16px' }}>
+                                  已复制到剪贴板
+                                </div>
+                              </Dialog>
+                              <Dialog open={sNewBtHlsPanel} onClose={() => setSNewBtHlsPanel(false)}>
+                                <Paper>
+                                  <BtHlsTaskPanel downloadReq={downloadReq.current} onCreate={() => setSNewBtHlsPanel(false)} />
+                                </Paper>
+                              </Dialog>
+                              <Menu
+                                anchorReference="anchorPosition"
+                                anchorPosition={MenuAnchorPosition}
+                                open={menuOpen[item.id] ? menuOpen[item.id] : false}
+                                onClose={() => handleMenuClose(item.id)} >
+                                <MenuItem onClick={(e) => showNewBtHlsPanel(item)}>创建任务</MenuItem>
+                              </Menu>
+                            </div>
                           </Grid>
                           <Grid item xs={2}>
                             <Button onClick={() => delItem(item.id)}>删除</Button>
@@ -369,24 +396,12 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Dialog open={sNewBtHlsPanel} onClose={() => setSNewBtHlsPanel(false)}>
-                      <Paper>
-                        <BtHlsTaskPanel downloadReq={downloadReq.current} onCreate={() => setSNewBtHlsPanel(false)} />
-                      </Paper>
-                    </Dialog>
-                    <Menu
-                      anchorReference="anchorPosition"
-                      anchorPosition={MenuAnchorPosition}
-                      open={menuOpen[item.id] ? menuOpen[item.id] : false}
-                      onClose={() => handleMenuClose(item.id)} >
-                      <MenuItem onClick={(e) => showNewBtHlsPanel(item)}>创建任务</MenuItem>
-                    </Menu>
                   </Container>
               }
-            </ListItem>
+            </ListItem >
           )) : null
         }
-      </List>
+      </List >
     </Container >
   )
 }
