@@ -103,7 +103,7 @@ func getTokens(s string) (tokens []string, err error) {
 				addToken()
 			}
 		} else {
-			if r == ' ' && len(stack) == 0 {
+			if (r == ' ' || r == '.') && len(stack) == 0 {
 				addToken()
 				continue
 			}
