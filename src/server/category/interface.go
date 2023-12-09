@@ -39,6 +39,7 @@ type GetItemsByParentParams struct {
 	ParentId ptype.CategoryID
 	PageNum  int32
 	Rows     int32
+	Desc     bool
 }
 
 type SearchParams struct {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   CssBaseline, Button, TextField, Menu, MenuItem, Container, Grid, Paper, Box,
-  Typography, Tooltip, Card, CardContent, CardActions, InputAdornment, Popover, Popper
+  Typography, Tooltip, Card, CardContent, CardActions, InputAdornment, Popover, Popper, FormControlLabel, Switch
 } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import { styled } from "@mui/material/styles";
@@ -159,7 +159,7 @@ const CategoryItems = ({ shareid, onRefresh }) => {
         <Grid item xs={12}>
           <Grid container spacing={2}>
             {
-              sortedItems.map((item) => {
+              items.map((item) => {
                 return (
                   <Grid key={item.id} item xs={10} sm={5} lg={2} sx={{ ml: "0.5em", mt: "0.5em" }}>
                     <Tooltip title={<div>{"Name:" + item.name}<br />{"介绍:" + item.introduce}</div>} >
@@ -255,9 +255,28 @@ const CategoryItemCreator = ({ parentId, onRefresh }) => {
     })
   }
 
+  const [desc, setDesc] = useState(useSelector((state) => store.selectCategoryDesc(state)))
+
   return (
     <Container maxWidth="xs">
       <Container>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={desc}
+              onClick={
+                (e) => {
+                  let v = !desc
+                  setDesc(v)
+                  dispatch(store.categorySlice.actions.setDesc(v))
+                }
+              }
+              color="primary"
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
+          }
+          label={'逆序'}
+        />
         <Grid container>
           <Grid item xs={12}>
             <TextField
@@ -310,6 +329,7 @@ export default function CategoryItemPage() {
   const shownChatPanel = useSelector((state) => store.selectShownChatPanel(state))
   const showGlobalChat = useSelector((state) => store.selectOpenGlobalChat(state))
   const thisItem = useSelector((state) => store.selectCategoryItem(state, itemId))
+  const categoryDesc = useSelector((state) => store.selectCategoryDesc(state))
 
   const pageRows = 20
   const [totalRows, setTotalRows] = useState(0)
@@ -320,7 +340,7 @@ export default function CategoryItemPage() {
       setTotalRows(item.subItemIdsList.length)
     })
     querySubItems({
-      itemId, shareid, dispatch, pageNum: pageNum.current, pageRows: pageRows, callback: (items) => {
+      itemId, shareid, dispatch, pageNum: pageNum.current, pageRows: pageRows, desc: categoryDesc, callback: (items) => {
         dispatch(store.categorySlice.actions.updateDisplayItems(items))
       }
     })
@@ -354,7 +374,7 @@ export default function CategoryItemPage() {
 
   useEffect(() => {
     refresh()
-  }, [itemId, dispatch, navigate, shareid])
+  }, [itemId, dispatch, navigate, shareid, categoryDesc])
 
   return (
     <CategoryContainer>
@@ -394,11 +414,12 @@ export function navigateToVideo(navigate, navigateParams, itemId, shareid) {
   navigate(path, navigateParams)
 }
 
-export const querySubItems = ({ itemId, shareid, dispatch, callback, pageNum, pageRows }) => {
+export const querySubItems = ({ itemId, shareid, dispatch, callback, pageNum, pageRows, desc }) => {
   var req = new User.QuerySubItemsReq()
   req.setParentId(itemId)
   req.setPageNum(pageNum)
   req.setRows(pageRows)
+  req.setDesc(desc)
   if (shareid) {
     req.setShareId(shareid)
   }

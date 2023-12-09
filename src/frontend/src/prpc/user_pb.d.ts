@@ -332,6 +332,9 @@ export class QuerySubItemsReq extends jspb.Message {
   getRows(): number;
   setRows(value: number): QuerySubItemsReq;
 
+  getDesc(): boolean;
+  setDesc(value: boolean): QuerySubItemsReq;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): QuerySubItemsReq.AsObject;
   static toObject(includeInstance: boolean, msg: QuerySubItemsReq): QuerySubItemsReq.AsObject;
@@ -346,6 +349,7 @@ export namespace QuerySubItemsReq {
     shareId: string,
     pageNum: number,
     rows: number,
+    desc: boolean,
   }
 }
 

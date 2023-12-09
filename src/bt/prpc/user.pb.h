@@ -2862,6 +2862,7 @@ class QuerySubItemsReq final :
     kParentIdFieldNumber = 1,
     kPageNumFieldNumber = 3,
     kRowsFieldNumber = 4,
+    kDescFieldNumber = 5,
   };
   // string share_id = 2;
   void clear_share_id() ;
@@ -2909,12 +2910,22 @@ class QuerySubItemsReq final :
   void _internal_set_rows(::int32_t value);
 
   public:
+  // bool desc = 5;
+  void clear_desc() ;
+  bool desc() const;
+  void set_desc(bool value);
+
+  private:
+  bool _internal_desc() const;
+  void _internal_set_desc(bool value);
+
+  public:
   // @@protoc_insertion_point(class_scope:prpc.QuerySubItemsReq)
  private:
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 4, 0, 38, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<3, 5, 0, 38, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
@@ -2923,6 +2934,7 @@ class QuerySubItemsReq final :
     ::int64_t parent_id_;
     ::int32_t page_num_;
     ::int32_t rows_;
+    bool desc_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -10621,6 +10633,28 @@ inline void QuerySubItemsReq::_internal_set_rows(::int32_t value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   _impl_.rows_ = value;
+}
+
+// bool desc = 5;
+inline void QuerySubItemsReq::clear_desc() {
+  _impl_.desc_ = false;
+}
+inline bool QuerySubItemsReq::desc() const {
+  // @@protoc_insertion_point(field_get:prpc.QuerySubItemsReq.desc)
+  return _internal_desc();
+}
+inline void QuerySubItemsReq::set_desc(bool value) {
+  _internal_set_desc(value);
+  // @@protoc_insertion_point(field_set:prpc.QuerySubItemsReq.desc)
+}
+inline bool QuerySubItemsReq::_internal_desc() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.desc_;
+}
+inline void QuerySubItemsReq::_internal_set_desc(bool value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.desc_ = value;
 }
 
 // -------------------------------------------------------------------

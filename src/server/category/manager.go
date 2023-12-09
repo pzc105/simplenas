@@ -190,7 +190,17 @@ func (m *Manager) GetItemsByParent(params *GetItemsByParentParams) ([]*CategoryI
 		if rows > int32(len(subIds))-offset {
 			rows = int32(len(subIds)) - offset
 		}
-		ids := subIds[offset : offset+rows]
+		var ids []ptype.CategoryID
+		if params.Desc {
+			for i := len(subIds) - 1 - int(offset); i >= 0; i-- {
+				ids = append(ids, subIds[i])
+				if len(ids) >= int(rows) {
+					break
+				}
+			}
+		} else {
+			ids = subIds[offset : offset+rows]
+		}
 		return m.GetItems(params.Querier, ids...)
 	}
 	return m.GetItems(params.Querier, item.subItemIds...)

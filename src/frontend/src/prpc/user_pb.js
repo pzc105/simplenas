@@ -3571,7 +3571,8 @@ proto.prpc.QuerySubItemsReq.toObject = function(includeInstance, msg) {
     parentId: jspb.Message.getFieldWithDefault(msg, 1, 0),
     shareId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     pageNum: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    rows: jspb.Message.getFieldWithDefault(msg, 4, 0)
+    rows: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    desc: jspb.Message.getBooleanFieldWithDefault(msg, 5, false)
   };
 
   if (includeInstance) {
@@ -3623,6 +3624,10 @@ proto.prpc.QuerySubItemsReq.deserializeBinaryFromReader = function(msg, reader) 
     case 4:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setRows(value);
+      break;
+    case 5:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setDesc(value);
       break;
     default:
       reader.skipField();
@@ -3678,6 +3683,13 @@ proto.prpc.QuerySubItemsReq.serializeBinaryToWriter = function(message, writer) 
   if (f !== 0) {
     writer.writeInt32(
       4,
+      f
+    );
+  }
+  f = message.getDesc();
+  if (f) {
+    writer.writeBool(
+      5,
       f
     );
   }
@@ -3753,6 +3765,24 @@ proto.prpc.QuerySubItemsReq.prototype.getRows = function() {
  */
 proto.prpc.QuerySubItemsReq.prototype.setRows = function(value) {
   return jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional bool desc = 5;
+ * @return {boolean}
+ */
+proto.prpc.QuerySubItemsReq.prototype.getDesc = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 5, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.prpc.QuerySubItemsReq} returns this
+ */
+proto.prpc.QuerySubItemsReq.prototype.setDesc = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 

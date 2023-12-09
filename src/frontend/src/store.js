@@ -87,11 +87,15 @@ const categorySlice = createSlice({
     items: {},
     videoInfos: {},
     displayItems: [],
+    desc: true,
   },
   reducers: {
     clear: (state) => {
       state.items = {}
       state.videoInfos = {}
+    },
+    setDesc: (state, action) => {
+      state.desc = action.payload
     },
     updateItem: (state, action) => {
       let item = action.payload
@@ -250,6 +254,10 @@ const selectBtVideoFiles = (state, infoHash) => {
   return state.bt.viodeFiles[infoHash.hash]
 }
 
+const selectCategoryDesc = (state) => {
+  return state.category.desc
+}
+
 const selectCategoryItem = (state, itemId) => {
   return state.category.items[itemId]
 }
@@ -334,7 +342,7 @@ export {
   selectlastUsedParentDirId, selectDisplayItems,
   selectTorrent, selectInfoHashs, selectBtVideoFiles, selectTorrentStatus, selectTorrents, selectAllBtStatus,
   selectCategoryItem, selectCategoryItems, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo,
-  selectMagnetSharesItems,
+  selectMagnetSharesItems, selectCategoryDesc,
   getSelectedAudio, selectAutoPlayVideo,
   isDownloadPageMouseDown
 }

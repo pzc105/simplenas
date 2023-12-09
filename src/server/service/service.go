@@ -540,6 +540,7 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 			ParentId: ptype.CategoryID(req.ParentId),
 			PageNum:  req.PageNum,
 			Rows:     req.Rows,
+			Desc:     req.Desc,
 		})
 	if err != nil {
 		return nil, err
