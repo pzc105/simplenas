@@ -6,6 +6,7 @@ import (
 	"pnas/db"
 	"pnas/log"
 	"pnas/ptype"
+	"pnas/utils"
 	"strings"
 	"sync"
 
@@ -201,6 +202,12 @@ func (m *Manager) GetItemsByParent(params *GetItemsByParentParams) ([]*CategoryI
 		} else {
 			ids = subIds[offset : offset+rows]
 		}
+		return m.GetItems(params.Querier, ids...)
+	}
+	if params.Desc {
+		ids := make([]ptype.CategoryID, len(item.subItemIds))
+		copy(ids, item.subItemIds)
+		utils.Reverse[[]ptype.CategoryID](ids)
 		return m.GetItems(params.Querier, ids...)
 	}
 	return m.GetItems(params.Querier, item.subItemIds...)

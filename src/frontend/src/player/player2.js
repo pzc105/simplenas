@@ -24,6 +24,7 @@ export default function Player() {
   const videoInfo = useSelector((state) => store.selectItemVideoInfo(state, itemId))
   const item = useSelector((state) => store.selectCategoryItem(state, itemId))
   const parentItemId = item ? item.parentId : null
+  const categoryDesc = useSelector((state) => store.selectCategoryDesc(state))
   const [items, setItems] = useState([])
   const [videoItemList, setVideoItemList] = useState([])
   const videoItemListRef = useRef([])
@@ -100,12 +101,12 @@ export default function Player() {
   useEffect(() => {
     if (parentItemId) {
       querySubItems({
-        itemId: parentItemId, shareid, dispatch, callback: (subItems) => {
+        itemId: parentItemId, shareid, desc: categoryDesc, dispatch, callback: (subItems) => {
           setItems(subItems)
         }
       })
     }
-  }, [parentItemId, shareid, dispatch])
+  }, [parentItemId, shareid, dispatch, categoryDesc])
 
   useEffect(() => {
     if (!items) {
@@ -117,15 +118,6 @@ export default function Player() {
         vl.push(item)
       }
       return null
-    })
-    vl.sort((a, b) => {
-      if (a.name < b.name) {
-        return -1;
-      }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
     })
     setVideoItemList(vl)
     videoItemListRef.current = vl;
