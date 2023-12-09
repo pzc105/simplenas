@@ -300,7 +300,7 @@ const PeerInfoList = () => {
               sortedPeerInfos.map((p, i) => {
                 return (
                   <ListItem key={i}>
-                    {"name:" + p.client + ", dr:" + String(p.downSpeed) + ", ur:" + String(p.upSpeed) + ", addr:" + p.peerAddr}
+                    {"name:" + p.client + ", dr:" + `${(p.downSpeed / 1024 / 1024).toFixed(2)} MB` + ", ur:" + `${(p.upSpeed / 1024 / 1024).toFixed(2)} MB` + ", addr:" + p.peerAddr}
                   </ListItem>
                 )
               })
