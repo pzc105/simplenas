@@ -24,12 +24,10 @@ service UserService {
   rpc ChangePassword(ChangePasswordReq) returns (ChangePasswordRsp);
 
   rpc Download(DownloadRequest) returns (DownloadRespone);
-
   rpc RemoveTorrent(RemoveTorrentReq) returns (RemoveTorrentRes);
-
   rpc GetMagnetUri(GetMagnetUriReq) returns (GetMagnetUriRsp);
-  
   rpc GetTorrents(GetTorrentsReq) returns (GetTorrentsRsp);
+  rpc GetPeerInfo(GetPeerInfoReq) returns (GetPeerInfoRsp);
   rpc OnBtStatus(BtStatusRequest) returns (stream BtStatusRespone);
 
   rpc QueryBtVideos(QueryBtVideosReq) returns (QueryBtVideosRes);

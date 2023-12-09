@@ -82,4 +82,38 @@ namespace prpc
     res.set_file_index(params.index);
     return res;
   }
+
+  static std::string print_endpoint(lt::tcp::endpoint const &ep)
+  {
+    using namespace lt;
+    char buf[200];
+    address const &addr = ep.address();
+    if (addr.is_v6())
+      std::snprintf(buf, sizeof(buf), "[%s]:%d", addr.to_string().c_str(), ep.port());
+    else
+      std::snprintf(buf, sizeof(buf), "%s:%d", addr.to_string().c_str(), ep.port());
+    return buf;
+  }
+
+  PeerInfo get_rsp(lt::peer_info const &p)
+  {
+    PeerInfo res;
+    res.set_client(p.client);
+    res.set_total_download(p.total_download);
+    res.set_total_upload(p.total_upload);
+    res.set_flags(p.flags);
+    res.set_source(p.source);
+    res.set_up_speed(p.up_speed);
+    res.set_down_speed(p.down_speed);
+    res.set_payload_up_speed(p.payload_up_speed);
+    res.set_payload_down_speed(p.payload_down_speed);
+    res.set_pid(p.pid.to_string());
+    res.set_queue_bytes(p.queue_bytes);
+    res.set_connection_type(p.connection_type);
+    res.set_download_rate_peak(p.download_rate_peak);
+    res.set_upload_rate_peak(p.upload_rate_peak);
+    res.set_peer_addr(print_endpoint(p.ip));
+    res.set_num_pieces(p.num_pieces);
+    return res;
+  }
 }

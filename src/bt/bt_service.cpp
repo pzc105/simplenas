@@ -182,7 +182,7 @@ namespace prpc
     sp.set_int(lt::settings_pack::upload_rate_limit, upload_rate_limit);
     sp.set_int(lt::settings_pack::hashing_threads, hashing_threads);
     sp.set_int(lt::settings_pack::alert_mask,
-               lt::file_completed_alert::static_category | lt::log_alert::static_category | lt::peer_log_alert::static_category);
+               lt::file_completed_alert::static_category | lt::log_alert::static_category);
     auto nodes = sp.get_str(lt::settings_pack::dht_bootstrap_nodes);
     if (!nodes.empty())
     {
@@ -517,6 +517,42 @@ namespace prpc
     auto sparams = _ses->session_state(lt::session_handle::save_settings | lt::session::save_dht_state | lt::session::save_extension_state | lt::session::save_ip_filter);
     auto buf = lt::write_session_params_buf(sparams);
     *response->mutable_resume_data() = std::string(buf.data(), buf.size());
+    return ::grpc::Status::OK;
+  }
+
+  ::grpc::Status bt_service::GetPeerInfo(::grpc::ServerContext *context, const ::prpc::GetPeerInfoReq *request, ::prpc::GetPeerInfoRsp *response)
+  {
+    (void)(context);
+    if (request == nullptr)
+    {
+      return ::grpc::Status(grpc::INVALID_ARGUMENT, "");
+    }
+    if (_ses == nullptr)
+    {
+      return ::grpc::Status(grpc::UNAVAILABLE, "");
+    }
+    std::vector<lt::peer_info> v;
+    if (!request->has_info_hash())
+    {
+      std::vector<lt::torrent_handle> ts = _ses->get_torrents();
+      for (size_t i = 0; i < ts.size(); i++)
+      {
+        ts[i].get_peer_info(v);
+      }
+    }
+    else
+    {
+      auto th = _ses->find_torrent(get_info_hash(request->info_hash()).get_best());
+      if (!th.is_valid())
+      {
+        return ::grpc::Status(grpc::INVALID_ARGUMENT, "can't find torrent");
+      }
+      th.get_peer_info(v);
+    }
+    for (size_t i = 0; i < v.size(); i++)
+    {
+      *response->add_peer_infos() = get_rsp(v[i]);
+    }
     return ::grpc::Status::OK;
   }
 

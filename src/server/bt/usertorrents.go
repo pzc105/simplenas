@@ -468,3 +468,13 @@ func (ut *UserTorrentsImpl) GetTorrents(userId ptype.UserID) []*Torrent {
 	}
 	return ut.getUserData(userId).getTorrents()
 }
+
+func (ut *UserTorrentsImpl) GetPeerInfo(params *GetPeerInfoParams) (*prpc.GetPeerInfoRsp, error) {
+	if params.Req.InfoHash == nil && params.UserId != ptype.AdminId {
+		return nil, errors.New("null infohash")
+	}
+	if !ut.HasTorrent(params.UserId, TranInfoHash(params.Req.InfoHash)) {
+		return nil, errors.New("no auth")
+	}
+	return ut.btClient.GetPeerInfo(context.Background(), params.Req)
+}

@@ -29,6 +29,7 @@ const (
 	BtService_GetTorrentInfo_FullMethodName   = "/prpc.BtService/GetTorrentInfo"
 	BtService_GetBtStatus_FullMethodName      = "/prpc.BtService/GetBtStatus"
 	BtService_GetSessionParams_FullMethodName = "/prpc.BtService/GetSessionParams"
+	BtService_GetPeerInfo_FullMethodName      = "/prpc.BtService/GetPeerInfo"
 	BtService_OnBtStatus_FullMethodName       = "/prpc.BtService/OnBtStatus"
 	BtService_OnFileCompleted_FullMethodName  = "/prpc.BtService/OnFileCompleted"
 )
@@ -47,6 +48,7 @@ type BtServiceClient interface {
 	GetTorrentInfo(ctx context.Context, in *GetTorrentInfoReq, opts ...grpc.CallOption) (*GetTorrentInfoRsp, error)
 	GetBtStatus(ctx context.Context, in *GetBtStatusReq, opts ...grpc.CallOption) (*GetBtStatusRsp, error)
 	GetSessionParams(ctx context.Context, in *GetSessionParamsReq, opts ...grpc.CallOption) (*GetSessionParamsRsp, error)
+	GetPeerInfo(ctx context.Context, in *GetPeerInfoReq, opts ...grpc.CallOption) (*GetPeerInfoRsp, error)
 	OnBtStatus(ctx context.Context, opts ...grpc.CallOption) (BtService_OnBtStatusClient, error)
 	OnFileCompleted(ctx context.Context, opts ...grpc.CallOption) (BtService_OnFileCompletedClient, error)
 }
@@ -149,6 +151,15 @@ func (c *btServiceClient) GetSessionParams(ctx context.Context, in *GetSessionPa
 	return out, nil
 }
 
+func (c *btServiceClient) GetPeerInfo(ctx context.Context, in *GetPeerInfoReq, opts ...grpc.CallOption) (*GetPeerInfoRsp, error) {
+	out := new(GetPeerInfoRsp)
+	err := c.cc.Invoke(ctx, BtService_GetPeerInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *btServiceClient) OnBtStatus(ctx context.Context, opts ...grpc.CallOption) (BtService_OnBtStatusClient, error) {
 	stream, err := c.cc.NewStream(ctx, &BtService_ServiceDesc.Streams[0], BtService_OnBtStatus_FullMethodName, opts...)
 	if err != nil {
@@ -225,6 +236,7 @@ type BtServiceServer interface {
 	GetTorrentInfo(context.Context, *GetTorrentInfoReq) (*GetTorrentInfoRsp, error)
 	GetBtStatus(context.Context, *GetBtStatusReq) (*GetBtStatusRsp, error)
 	GetSessionParams(context.Context, *GetSessionParamsReq) (*GetSessionParamsRsp, error)
+	GetPeerInfo(context.Context, *GetPeerInfoReq) (*GetPeerInfoRsp, error)
 	OnBtStatus(BtService_OnBtStatusServer) error
 	OnFileCompleted(BtService_OnFileCompletedServer) error
 	mustEmbedUnimplementedBtServiceServer()
@@ -263,6 +275,9 @@ func (UnimplementedBtServiceServer) GetBtStatus(context.Context, *GetBtStatusReq
 }
 func (UnimplementedBtServiceServer) GetSessionParams(context.Context, *GetSessionParamsReq) (*GetSessionParamsRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSessionParams not implemented")
+}
+func (UnimplementedBtServiceServer) GetPeerInfo(context.Context, *GetPeerInfoReq) (*GetPeerInfoRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPeerInfo not implemented")
 }
 func (UnimplementedBtServiceServer) OnBtStatus(BtService_OnBtStatusServer) error {
 	return status.Errorf(codes.Unimplemented, "method OnBtStatus not implemented")
@@ -463,6 +478,24 @@ func _BtService_GetSessionParams_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BtService_GetPeerInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPeerInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BtServiceServer).GetPeerInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BtService_GetPeerInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BtServiceServer).GetPeerInfo(ctx, req.(*GetPeerInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _BtService_OnBtStatus_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(BtServiceServer).OnBtStatus(&btServiceOnBtStatusServer{stream})
 }
@@ -561,6 +594,10 @@ var BtService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSessionParams",
 			Handler:    _BtService_GetSessionParams_Handler,
+		},
+		{
+			MethodName: "GetPeerInfo",
+			Handler:    _BtService_GetPeerInfo_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

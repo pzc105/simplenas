@@ -9,5 +9,5 @@ type TaskId int64
 type HlsTaskId int64
 
 const (
-	AdminId = 1
+	AdminId UserID = 1
 )

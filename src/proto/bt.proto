@@ -16,6 +16,7 @@ service BtService {
   rpc GetTorrentInfo(GetTorrentInfoReq) returns (GetTorrentInfoRsp);
   rpc GetBtStatus(GetBtStatusReq) returns (GetBtStatusRsp);
   rpc GetSessionParams(GetSessionParamsReq) returns (GetSessionParamsRsp);
+  rpc GetPeerInfo(GetPeerInfoReq) returns (GetPeerInfoRsp);
 
   rpc OnBtStatus(stream BtStatusRequest) returns (stream BtStatusRespone);
   rpc OnFileCompleted(stream FileCompletedReq) returns (stream FileCompletedRes);
@@ -65,6 +66,25 @@ message TorrentInfo {
   int64 total_size = 5;
   int32 piece_length = 6;
   int32 num_pieces = 7;
+}
+
+message PeerInfo {
+  string client = 1;
+  int64 total_download = 2;
+  int64 total_upload = 3;
+  uint64 flags = 4;
+  uint32 source = 5;
+  int32 up_speed = 6;
+  int32 down_speed = 7;
+  int32 payload_up_speed = 8;
+	int32 payload_down_speed = 9;
+  bytes pid = 10;
+  int32 queue_bytes = 11;
+  uint32 connection_type = 12;
+  int32 download_rate_peak = 13;
+	int32 upload_rate_peak = 14;
+  string peer_addr = 15;
+  int32 num_pieces = 16;
 }
 
 enum BtStateEnum {
@@ -197,4 +217,12 @@ message FileCompletedReq {
 message FileCompletedRes {
   InfoHash info_hash = 1;
   int32 file_index = 2;
+}
+
+message GetPeerInfoReq {
+  InfoHash info_hash = 1;
+}
+
+message GetPeerInfoRsp {
+  repeated PeerInfo peer_infos = 1;
 }

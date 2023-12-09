@@ -388,6 +388,20 @@ func (ser *CoreService) GetTorrents(ctx context.Context, req *prpc.GetTorrentsRe
 	return rsp, nil
 }
 
+func (ser *CoreService) GetPeerInfo(ctx context.Context, req *prpc.GetPeerInfoReq) (*prpc.GetPeerInfoRsp, error) {
+	ses := ser.getSession(ctx)
+	if ses == nil {
+		return nil, status.Error(codes.PermissionDenied, "")
+	}
+	if req == nil {
+		return nil, status.Error(codes.InvalidArgument, "req == nil")
+	}
+	return ser.um.GetPeerInfo(&bt.GetPeerInfoParams{
+		UserId: ses.UserId,
+		Req:    req,
+	})
+}
+
 func (ser *CoreService) OnBtStatus(statusReq *prpc.BtStatusRequest, stream prpc.UserService_OnBtStatusServer) error {
 	ses := ser.getSession(stream.Context())
 	if ses == nil {

@@ -44,6 +44,7 @@ const btSlice = createSlice({
     torrents: {},
     torrentStatus: {},
     viodeFiles: {},
+    displayPeerInfos: [],
   },
   reducers: {
     updateTorrents: (state, action) => {
@@ -78,6 +79,9 @@ const btSlice = createSlice({
       var payload = action.payload
       state.viodeFiles[payload.infoHash.hash] = payload.btVideoMetadat
     },
+    updateDisplayPeerInfos: (state, action) => {
+      state.displayPeerInfos = action.payload
+    }
   },
 })
 
@@ -254,6 +258,13 @@ const selectBtVideoFiles = (state, infoHash) => {
   return state.bt.viodeFiles[infoHash.hash]
 }
 
+const selectDisplayPeerInfos = (state) => {
+  if (state.bt.displayPeerInfos === undefined) {
+    return []
+  }
+  return state.bt.displayPeerInfos
+}
+
 const selectCategoryDesc = (state) => {
   return state.category.desc
 }
@@ -341,6 +352,7 @@ export {
   selectUserInfo, selectShownChatPanel, selectOpenGlobalChat, selectGlobalChatPosition, selectlastUsedDirId,
   selectlastUsedParentDirId, selectDisplayItems,
   selectTorrent, selectInfoHashs, selectBtVideoFiles, selectTorrentStatus, selectTorrents, selectAllBtStatus,
+  selectDisplayPeerInfos,
   selectCategoryItem, selectCategoryItems, selectCategorySubItems, selectSubDirectory, selectItemVideoInfo,
   selectMagnetSharesItems, selectCategoryDesc,
   getSelectedAudio, selectAutoPlayVideo,

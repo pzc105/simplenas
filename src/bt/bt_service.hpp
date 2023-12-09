@@ -141,7 +141,8 @@ namespace prpc
     ::grpc::Status GetTorrentInfo(::grpc::ServerContext *context, const ::prpc::GetTorrentInfoReq *request, ::prpc::GetTorrentInfoRsp *response) override;
     ::grpc::Status GetBtStatus(::grpc::ServerContext *context, const ::prpc::GetBtStatusReq *request, ::prpc::GetBtStatusRsp *response) override;
     ::grpc::Status GetSessionParams(::grpc::ServerContext *context, const ::prpc::GetSessionParamsReq *request, ::prpc::GetSessionParamsRsp *response) override;
-
+    ::grpc::Status GetPeerInfo(::grpc::ServerContext* context, const ::prpc::GetPeerInfoReq* request, ::prpc::GetPeerInfoRsp* response) override;
+    
   private:
     std::unique_ptr<lt::session> _ses;
     lt::time_point _last_push_time;

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Container, Grid, Link, TextField, Button, InputAdornment,
-  CssBaseline, Input, FormControl, FormLabel, FormHelperText, InputLabel
+  CssBaseline, Input, FormControl, FormLabel, FormHelperText, InputLabel, Box, Paper, List, ListItem
 } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import { styled } from "@mui/material/styles";
@@ -13,6 +13,7 @@ import SideUtils from '../sideManager.js';
 import * as store from '../store.js'
 import * as Bt from '../prpc/bt_pb.js'
 import * as User from '../prpc/user_pb.js'
+import * as utils from '../utils.js'
 import userService from '../rpcClient.js'
 import * as router from '../router.js'
 import FileUpload from '../uploadTorrent.js'
@@ -115,6 +116,7 @@ export default function Download() {
       <LeftColumn>
         <TopLeftArea sx={{ backgroundColor: 'background.default' }}>
           <TorrentNavigation />
+          <PeerInfoList />
         </TopLeftArea>
       </LeftColumn>
       <RightColumn sx={{ backgroundColor: 'background.default' }}>
@@ -243,5 +245,69 @@ function DownloadRequest(props) {
         </Grid>
       </Grid>
     </Container >
+  )
+}
+
+const PeerInfoList = () => {
+  const dispatch = useDispatch()
+  const userInfo = useSelector((state) => store.selectUserInfo(state))
+  const [peerInfos, setPeerInfo] = useState([])
+  const [sortedPeerInfos, setSortedPeerInfos] = useState([])
+
+  useEffect(() => {
+    if (!utils.isAdmin(userInfo)) {
+      return
+    }
+    const request = () => {
+      const req = new Bt.GetPeerInfoReq()
+      userService.getPeerInfo(req, {}, (err, rsp) => {
+        if (err != null) {
+          return
+        }
+        let peerInfos = []
+        rsp.getPeerInfosList().map((p) => {
+          peerInfos.push(p.toObject())
+          return null
+        })
+        dispatch(store.btSlice.actions.updateDisplayPeerInfos(peerInfos))
+        setPeerInfo(peerInfos)
+      })
+    }
+
+    let myInterval = setInterval(request, 3000)
+    return () => {
+      clearInterval(myInterval);
+    };
+  }, [userInfo])
+
+  useEffect(() => {
+    let tmp = [...peerInfos]
+    tmp.sort((a, b) => {
+      if (a.upSpeed != b.upSpeed) {
+        return b.upSpeed - a.upSpeed
+      }
+      return b.peerAddr < a.peerAddr ? -1 : 1
+    })
+    setSortedPeerInfos(tmp)
+  }, [peerInfos])
+
+  return (
+    <Container>
+      {
+        sortedPeerInfos.length > 0 ? <Paper style={{ maxHeight: "30vh", overflow: 'auto' }}>
+          <List>
+            {
+              sortedPeerInfos.map((p, i) => {
+                return (
+                  <ListItem key={i}>
+                    {"name:" + p.client + ", dr:" + String(p.downSpeed) + ", ur:" + String(p.upSpeed) + ", addr:" + p.peerAddr}
+                  </ListItem>
+                )
+              })
+            }
+          </List>
+        </Paper> : null
+      }
+    </Container>
   )
 }

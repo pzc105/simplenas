@@ -95,6 +95,12 @@ extern GetMagnetUriReqDefaultTypeInternal _GetMagnetUriReq_default_instance_;
 class GetMagnetUriRsp;
 struct GetMagnetUriRspDefaultTypeInternal;
 extern GetMagnetUriRspDefaultTypeInternal _GetMagnetUriRsp_default_instance_;
+class GetPeerInfoReq;
+struct GetPeerInfoReqDefaultTypeInternal;
+extern GetPeerInfoReqDefaultTypeInternal _GetPeerInfoReq_default_instance_;
+class GetPeerInfoRsp;
+struct GetPeerInfoRspDefaultTypeInternal;
+extern GetPeerInfoRspDefaultTypeInternal _GetPeerInfoRsp_default_instance_;
 class GetResumeDataReq;
 struct GetResumeDataReqDefaultTypeInternal;
 extern GetResumeDataReqDefaultTypeInternal _GetResumeDataReq_default_instance_;
@@ -128,6 +134,9 @@ extern InitedSessionReqDefaultTypeInternal _InitedSessionReq_default_instance_;
 class InitedSessionRsp;
 struct InitedSessionRspDefaultTypeInternal;
 extern InitedSessionRspDefaultTypeInternal _InitedSessionRsp_default_instance_;
+class PeerInfo;
+struct PeerInfoDefaultTypeInternal;
+extern PeerInfoDefaultTypeInternal _PeerInfo_default_instance_;
 class RemoveTorrentReq;
 struct RemoveTorrentReqDefaultTypeInternal;
 extern RemoveTorrentReqDefaultTypeInternal _RemoveTorrentReq_default_instance_;
@@ -1457,6 +1466,362 @@ class TorrentInfo final :
   friend struct ::TableStruct_bt_2eproto;
 };// -------------------------------------------------------------------
 
+class PeerInfo final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.PeerInfo) */ {
+ public:
+  inline PeerInfo() : PeerInfo(nullptr) {}
+  ~PeerInfo() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR PeerInfo(::google::protobuf::internal::ConstantInitialized);
+
+  PeerInfo(const PeerInfo& from);
+  PeerInfo(PeerInfo&& from) noexcept
+    : PeerInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline PeerInfo& operator=(const PeerInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PeerInfo& operator=(PeerInfo&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PeerInfo& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PeerInfo* internal_default_instance() {
+    return reinterpret_cast<const PeerInfo*>(
+               &_PeerInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  friend void swap(PeerInfo& a, PeerInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PeerInfo* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PeerInfo* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PeerInfo* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PeerInfo>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const PeerInfo& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const PeerInfo& from) {
+    PeerInfo::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PeerInfo* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.PeerInfo";
+  }
+  protected:
+  explicit PeerInfo(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kClientFieldNumber = 1,
+    kPidFieldNumber = 10,
+    kPeerAddrFieldNumber = 15,
+    kTotalDownloadFieldNumber = 2,
+    kTotalUploadFieldNumber = 3,
+    kFlagsFieldNumber = 4,
+    kSourceFieldNumber = 5,
+    kUpSpeedFieldNumber = 6,
+    kDownSpeedFieldNumber = 7,
+    kPayloadUpSpeedFieldNumber = 8,
+    kPayloadDownSpeedFieldNumber = 9,
+    kQueueBytesFieldNumber = 11,
+    kConnectionTypeFieldNumber = 12,
+    kDownloadRatePeakFieldNumber = 13,
+    kUploadRatePeakFieldNumber = 14,
+    kNumPiecesFieldNumber = 16,
+  };
+  // string client = 1;
+  void clear_client() ;
+  const std::string& client() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_client(Arg_&& arg, Args_... args);
+  std::string* mutable_client();
+  PROTOBUF_NODISCARD std::string* release_client();
+  void set_allocated_client(std::string* ptr);
+
+  private:
+  const std::string& _internal_client() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_client(
+      const std::string& value);
+  std::string* _internal_mutable_client();
+
+  public:
+  // bytes pid = 10;
+  void clear_pid() ;
+  const std::string& pid() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_pid(Arg_&& arg, Args_... args);
+  std::string* mutable_pid();
+  PROTOBUF_NODISCARD std::string* release_pid();
+  void set_allocated_pid(std::string* ptr);
+
+  private:
+  const std::string& _internal_pid() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_pid(
+      const std::string& value);
+  std::string* _internal_mutable_pid();
+
+  public:
+  // string peer_addr = 15;
+  void clear_peer_addr() ;
+  const std::string& peer_addr() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_peer_addr(Arg_&& arg, Args_... args);
+  std::string* mutable_peer_addr();
+  PROTOBUF_NODISCARD std::string* release_peer_addr();
+  void set_allocated_peer_addr(std::string* ptr);
+
+  private:
+  const std::string& _internal_peer_addr() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_peer_addr(
+      const std::string& value);
+  std::string* _internal_mutable_peer_addr();
+
+  public:
+  // int64 total_download = 2;
+  void clear_total_download() ;
+  ::int64_t total_download() const;
+  void set_total_download(::int64_t value);
+
+  private:
+  ::int64_t _internal_total_download() const;
+  void _internal_set_total_download(::int64_t value);
+
+  public:
+  // int64 total_upload = 3;
+  void clear_total_upload() ;
+  ::int64_t total_upload() const;
+  void set_total_upload(::int64_t value);
+
+  private:
+  ::int64_t _internal_total_upload() const;
+  void _internal_set_total_upload(::int64_t value);
+
+  public:
+  // uint64 flags = 4;
+  void clear_flags() ;
+  ::uint64_t flags() const;
+  void set_flags(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_flags() const;
+  void _internal_set_flags(::uint64_t value);
+
+  public:
+  // uint32 source = 5;
+  void clear_source() ;
+  ::uint32_t source() const;
+  void set_source(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_source() const;
+  void _internal_set_source(::uint32_t value);
+
+  public:
+  // int32 up_speed = 6;
+  void clear_up_speed() ;
+  ::int32_t up_speed() const;
+  void set_up_speed(::int32_t value);
+
+  private:
+  ::int32_t _internal_up_speed() const;
+  void _internal_set_up_speed(::int32_t value);
+
+  public:
+  // int32 down_speed = 7;
+  void clear_down_speed() ;
+  ::int32_t down_speed() const;
+  void set_down_speed(::int32_t value);
+
+  private:
+  ::int32_t _internal_down_speed() const;
+  void _internal_set_down_speed(::int32_t value);
+
+  public:
+  // int32 payload_up_speed = 8;
+  void clear_payload_up_speed() ;
+  ::int32_t payload_up_speed() const;
+  void set_payload_up_speed(::int32_t value);
+
+  private:
+  ::int32_t _internal_payload_up_speed() const;
+  void _internal_set_payload_up_speed(::int32_t value);
+
+  public:
+  // int32 payload_down_speed = 9;
+  void clear_payload_down_speed() ;
+  ::int32_t payload_down_speed() const;
+  void set_payload_down_speed(::int32_t value);
+
+  private:
+  ::int32_t _internal_payload_down_speed() const;
+  void _internal_set_payload_down_speed(::int32_t value);
+
+  public:
+  // int32 queue_bytes = 11;
+  void clear_queue_bytes() ;
+  ::int32_t queue_bytes() const;
+  void set_queue_bytes(::int32_t value);
+
+  private:
+  ::int32_t _internal_queue_bytes() const;
+  void _internal_set_queue_bytes(::int32_t value);
+
+  public:
+  // uint32 connection_type = 12;
+  void clear_connection_type() ;
+  ::uint32_t connection_type() const;
+  void set_connection_type(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_connection_type() const;
+  void _internal_set_connection_type(::uint32_t value);
+
+  public:
+  // int32 download_rate_peak = 13;
+  void clear_download_rate_peak() ;
+  ::int32_t download_rate_peak() const;
+  void set_download_rate_peak(::int32_t value);
+
+  private:
+  ::int32_t _internal_download_rate_peak() const;
+  void _internal_set_download_rate_peak(::int32_t value);
+
+  public:
+  // int32 upload_rate_peak = 14;
+  void clear_upload_rate_peak() ;
+  ::int32_t upload_rate_peak() const;
+  void set_upload_rate_peak(::int32_t value);
+
+  private:
+  ::int32_t _internal_upload_rate_peak() const;
+  void _internal_set_upload_rate_peak(::int32_t value);
+
+  public:
+  // int32 num_pieces = 16;
+  void clear_num_pieces() ;
+  ::int32_t num_pieces() const;
+  void set_num_pieces(::int32_t value);
+
+  private:
+  ::int32_t _internal_num_pieces() const;
+  void _internal_set_num_pieces(::int32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.PeerInfo)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<4, 16, 0, 53, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr client_;
+    ::google::protobuf::internal::ArenaStringPtr pid_;
+    ::google::protobuf::internal::ArenaStringPtr peer_addr_;
+    ::int64_t total_download_;
+    ::int64_t total_upload_;
+    ::uint64_t flags_;
+    ::uint32_t source_;
+    ::int32_t up_speed_;
+    ::int32_t down_speed_;
+    ::int32_t payload_up_speed_;
+    ::int32_t payload_down_speed_;
+    ::int32_t queue_bytes_;
+    ::uint32_t connection_type_;
+    ::int32_t download_rate_peak_;
+    ::int32_t upload_rate_peak_;
+    ::int32_t num_pieces_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_bt_2eproto;
+};// -------------------------------------------------------------------
+
 class TorrentStatus final :
     public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.TorrentStatus) */ {
  public:
@@ -1513,7 +1878,7 @@ class TorrentStatus final :
                &_TorrentStatus_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   friend void swap(TorrentStatus& a, TorrentStatus& b) {
     a.Swap(&b);
@@ -1767,7 +2132,7 @@ class DownloadRequest final :
                &_DownloadRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    8;
 
   friend void swap(DownloadRequest& a, DownloadRequest& b) {
     a.Swap(&b);
@@ -2024,7 +2389,7 @@ class InfoHash final :
                &_InfoHash_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    9;
 
   friend void swap(InfoHash& a, InfoHash& b) {
     a.Swap(&b);
@@ -2200,7 +2565,7 @@ class DownloadRespone final :
                &_DownloadRespone_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    10;
 
   friend void swap(DownloadRespone& a, DownloadRespone& b) {
     a.Swap(&b);
@@ -2364,7 +2729,7 @@ class GetMagnetUriReq final :
                &_GetMagnetUriReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    11;
 
   friend void swap(GetMagnetUriReq& a, GetMagnetUriReq& b) {
     a.Swap(&b);
@@ -2578,7 +2943,7 @@ class GetMagnetUriRsp final :
                &_GetMagnetUriRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   friend void swap(GetMagnetUriRsp& a, GetMagnetUriRsp& b) {
     a.Swap(&b);
@@ -2760,7 +3125,7 @@ class GetResumeDataReq final :
                &_GetResumeDataReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(GetResumeDataReq& a, GetResumeDataReq& b) {
     a.Swap(&b);
@@ -2924,7 +3289,7 @@ class GetResumeDataRsp final :
                &_GetResumeDataRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   friend void swap(GetResumeDataRsp& a, GetResumeDataRsp& b) {
     a.Swap(&b);
@@ -3088,7 +3453,7 @@ class GetTorrentInfoReq final :
                &_GetTorrentInfoReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   friend void swap(GetTorrentInfoReq& a, GetTorrentInfoReq& b) {
     a.Swap(&b);
@@ -3252,7 +3617,7 @@ class GetTorrentInfoRsp final :
                &_GetTorrentInfoRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    16;
 
   friend void swap(GetTorrentInfoRsp& a, GetTorrentInfoRsp& b) {
     a.Swap(&b);
@@ -3415,7 +3780,7 @@ class GetSessionParamsReq final :
                &_GetSessionParamsReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    17;
 
   friend void swap(GetSessionParamsReq& a, GetSessionParamsReq& b) {
     a.Swap(&b);
@@ -3541,7 +3906,7 @@ class GetSessionParamsRsp final :
                &_GetSessionParamsRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    18;
 
   friend void swap(GetSessionParamsRsp& a, GetSessionParamsRsp& b) {
     a.Swap(&b);
@@ -3705,7 +4070,7 @@ class GetBtStatusReq final :
                &_GetBtStatusReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    19;
 
   friend void swap(GetBtStatusReq& a, GetBtStatusReq& b) {
     a.Swap(&b);
@@ -3869,7 +4234,7 @@ class GetBtStatusRsp final :
                &_GetBtStatusRsp_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    20;
 
   friend void swap(GetBtStatusRsp& a, GetBtStatusRsp& b) {
     a.Swap(&b);
@@ -4033,7 +4398,7 @@ class BtStatusRequest final :
                &_BtStatusRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    21;
 
   friend void swap(BtStatusRequest& a, BtStatusRequest& b) {
     a.Swap(&b);
@@ -4199,7 +4564,7 @@ class BtStatusRespone final :
                &_BtStatusRespone_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    22;
 
   friend void swap(BtStatusRespone& a, BtStatusRespone& b) {
     a.Swap(&b);
@@ -4365,7 +4730,7 @@ class TorrentInfoReq final :
                &_TorrentInfoReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    23;
 
   friend void swap(TorrentInfoReq& a, TorrentInfoReq& b) {
     a.Swap(&b);
@@ -4531,7 +4896,7 @@ class TorrentInfoRes final :
                &_TorrentInfoRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    24;
 
   friend void swap(TorrentInfoRes& a, TorrentInfoRes& b) {
     a.Swap(&b);
@@ -4695,7 +5060,7 @@ class RemoveTorrentReq final :
                &_RemoveTorrentReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    25;
 
   friend void swap(RemoveTorrentReq& a, RemoveTorrentReq& b) {
     a.Swap(&b);
@@ -4858,7 +5223,7 @@ class RemoveTorrentRes final :
                &_RemoveTorrentRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    26;
 
   friend void swap(RemoveTorrentRes& a, RemoveTorrentRes& b) {
     a.Swap(&b);
@@ -4984,7 +5349,7 @@ class FileProgressReq final :
                &_FileProgressReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    26;
+    27;
 
   friend void swap(FileProgressReq& a, FileProgressReq& b) {
     a.Swap(&b);
@@ -5148,7 +5513,7 @@ class FileProgressRes final :
                &_FileProgressRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    27;
+    28;
 
   friend void swap(FileProgressRes& a, FileProgressRes& b) {
     a.Swap(&b);
@@ -5331,7 +5696,7 @@ class FileCompletedReq final :
                &_FileCompletedReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    28;
+    29;
 
   friend void swap(FileCompletedReq& a, FileCompletedReq& b) {
     a.Swap(&b);
@@ -5457,7 +5822,7 @@ class FileCompletedRes final :
                &_FileCompletedRes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    29;
+    30;
 
   friend void swap(FileCompletedRes& a, FileCompletedRes& b) {
     a.Swap(&b);
@@ -5571,6 +5936,336 @@ class FileCompletedRes final :
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     ::prpc::InfoHash* info_hash_;
     ::int32_t file_index_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_bt_2eproto;
+};// -------------------------------------------------------------------
+
+class GetPeerInfoReq final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.GetPeerInfoReq) */ {
+ public:
+  inline GetPeerInfoReq() : GetPeerInfoReq(nullptr) {}
+  ~GetPeerInfoReq() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR GetPeerInfoReq(::google::protobuf::internal::ConstantInitialized);
+
+  GetPeerInfoReq(const GetPeerInfoReq& from);
+  GetPeerInfoReq(GetPeerInfoReq&& from) noexcept
+    : GetPeerInfoReq() {
+    *this = ::std::move(from);
+  }
+
+  inline GetPeerInfoReq& operator=(const GetPeerInfoReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetPeerInfoReq& operator=(GetPeerInfoReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetPeerInfoReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetPeerInfoReq* internal_default_instance() {
+    return reinterpret_cast<const GetPeerInfoReq*>(
+               &_GetPeerInfoReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    31;
+
+  friend void swap(GetPeerInfoReq& a, GetPeerInfoReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetPeerInfoReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetPeerInfoReq* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetPeerInfoReq* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetPeerInfoReq>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const GetPeerInfoReq& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const GetPeerInfoReq& from) {
+    GetPeerInfoReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetPeerInfoReq* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.GetPeerInfoReq";
+  }
+  protected:
+  explicit GetPeerInfoReq(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kInfoHashFieldNumber = 1,
+  };
+  // .prpc.InfoHash info_hash = 1;
+  bool has_info_hash() const;
+  void clear_info_hash() ;
+  const ::prpc::InfoHash& info_hash() const;
+  PROTOBUF_NODISCARD ::prpc::InfoHash* release_info_hash();
+  ::prpc::InfoHash* mutable_info_hash();
+  void set_allocated_info_hash(::prpc::InfoHash* value);
+  void unsafe_arena_set_allocated_info_hash(::prpc::InfoHash* value);
+  ::prpc::InfoHash* unsafe_arena_release_info_hash();
+
+  private:
+  const ::prpc::InfoHash& _internal_info_hash() const;
+  ::prpc::InfoHash* _internal_mutable_info_hash();
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.GetPeerInfoReq)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<0, 1, 1, 0, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    ::prpc::InfoHash* info_hash_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_bt_2eproto;
+};// -------------------------------------------------------------------
+
+class GetPeerInfoRsp final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.GetPeerInfoRsp) */ {
+ public:
+  inline GetPeerInfoRsp() : GetPeerInfoRsp(nullptr) {}
+  ~GetPeerInfoRsp() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR GetPeerInfoRsp(::google::protobuf::internal::ConstantInitialized);
+
+  GetPeerInfoRsp(const GetPeerInfoRsp& from);
+  GetPeerInfoRsp(GetPeerInfoRsp&& from) noexcept
+    : GetPeerInfoRsp() {
+    *this = ::std::move(from);
+  }
+
+  inline GetPeerInfoRsp& operator=(const GetPeerInfoRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetPeerInfoRsp& operator=(GetPeerInfoRsp&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetPeerInfoRsp& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetPeerInfoRsp* internal_default_instance() {
+    return reinterpret_cast<const GetPeerInfoRsp*>(
+               &_GetPeerInfoRsp_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    32;
+
+  friend void swap(GetPeerInfoRsp& a, GetPeerInfoRsp& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetPeerInfoRsp* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetPeerInfoRsp* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetPeerInfoRsp* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetPeerInfoRsp>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const GetPeerInfoRsp& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const GetPeerInfoRsp& from) {
+    GetPeerInfoRsp::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetPeerInfoRsp* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.GetPeerInfoRsp";
+  }
+  protected:
+  explicit GetPeerInfoRsp(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPeerInfosFieldNumber = 1,
+  };
+  // repeated .prpc.PeerInfo peer_infos = 1;
+  int peer_infos_size() const;
+  private:
+  int _internal_peer_infos_size() const;
+
+  public:
+  void clear_peer_infos() ;
+  ::prpc::PeerInfo* mutable_peer_infos(int index);
+  ::google::protobuf::RepeatedPtrField< ::prpc::PeerInfo >*
+      mutable_peer_infos();
+  private:
+  const ::google::protobuf::RepeatedPtrField<::prpc::PeerInfo>& _internal_peer_infos() const;
+  ::google::protobuf::RepeatedPtrField<::prpc::PeerInfo>* _internal_mutable_peer_infos();
+  public:
+  const ::prpc::PeerInfo& peer_infos(int index) const;
+  ::prpc::PeerInfo* add_peer_infos();
+  const ::google::protobuf::RepeatedPtrField< ::prpc::PeerInfo >&
+      peer_infos() const;
+  // @@protoc_insertion_point(class_scope:prpc.GetPeerInfoRsp)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<0, 1, 1, 0, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::RepeatedPtrField< ::prpc::PeerInfo > peer_infos_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -6371,6 +7066,449 @@ inline ::int32_t TorrentInfo::_internal_num_pieces() const {
   return _impl_.num_pieces_;
 }
 inline void TorrentInfo::_internal_set_num_pieces(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.num_pieces_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// PeerInfo
+
+// string client = 1;
+inline void PeerInfo::clear_client() {
+  _impl_.client_.ClearToEmpty();
+}
+inline const std::string& PeerInfo::client() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.client)
+  return _internal_client();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void PeerInfo::set_client(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.client_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.client)
+}
+inline std::string* PeerInfo::mutable_client() {
+  std::string* _s = _internal_mutable_client();
+  // @@protoc_insertion_point(field_mutable:prpc.PeerInfo.client)
+  return _s;
+}
+inline const std::string& PeerInfo::_internal_client() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.client_.Get();
+}
+inline void PeerInfo::_internal_set_client(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.client_.Set(value, GetArenaForAllocation());
+}
+inline std::string* PeerInfo::_internal_mutable_client() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.client_.Mutable( GetArenaForAllocation());
+}
+inline std::string* PeerInfo::release_client() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.PeerInfo.client)
+  return _impl_.client_.Release();
+}
+inline void PeerInfo::set_allocated_client(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.client_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.client_.IsDefault()) {
+          _impl_.client_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.PeerInfo.client)
+}
+
+// int64 total_download = 2;
+inline void PeerInfo::clear_total_download() {
+  _impl_.total_download_ = ::int64_t{0};
+}
+inline ::int64_t PeerInfo::total_download() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.total_download)
+  return _internal_total_download();
+}
+inline void PeerInfo::set_total_download(::int64_t value) {
+  _internal_set_total_download(value);
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.total_download)
+}
+inline ::int64_t PeerInfo::_internal_total_download() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.total_download_;
+}
+inline void PeerInfo::_internal_set_total_download(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.total_download_ = value;
+}
+
+// int64 total_upload = 3;
+inline void PeerInfo::clear_total_upload() {
+  _impl_.total_upload_ = ::int64_t{0};
+}
+inline ::int64_t PeerInfo::total_upload() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.total_upload)
+  return _internal_total_upload();
+}
+inline void PeerInfo::set_total_upload(::int64_t value) {
+  _internal_set_total_upload(value);
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.total_upload)
+}
+inline ::int64_t PeerInfo::_internal_total_upload() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.total_upload_;
+}
+inline void PeerInfo::_internal_set_total_upload(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.total_upload_ = value;
+}
+
+// uint64 flags = 4;
+inline void PeerInfo::clear_flags() {
+  _impl_.flags_ = ::uint64_t{0u};
+}
+inline ::uint64_t PeerInfo::flags() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.flags)
+  return _internal_flags();
+}
+inline void PeerInfo::set_flags(::uint64_t value) {
+  _internal_set_flags(value);
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.flags)
+}
+inline ::uint64_t PeerInfo::_internal_flags() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.flags_;
+}
+inline void PeerInfo::_internal_set_flags(::uint64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.flags_ = value;
+}
+
+// uint32 source = 5;
+inline void PeerInfo::clear_source() {
+  _impl_.source_ = 0u;
+}
+inline ::uint32_t PeerInfo::source() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.source)
+  return _internal_source();
+}
+inline void PeerInfo::set_source(::uint32_t value) {
+  _internal_set_source(value);
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.source)
+}
+inline ::uint32_t PeerInfo::_internal_source() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.source_;
+}
+inline void PeerInfo::_internal_set_source(::uint32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.source_ = value;
+}
+
+// int32 up_speed = 6;
+inline void PeerInfo::clear_up_speed() {
+  _impl_.up_speed_ = 0;
+}
+inline ::int32_t PeerInfo::up_speed() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.up_speed)
+  return _internal_up_speed();
+}
+inline void PeerInfo::set_up_speed(::int32_t value) {
+  _internal_set_up_speed(value);
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.up_speed)
+}
+inline ::int32_t PeerInfo::_internal_up_speed() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.up_speed_;
+}
+inline void PeerInfo::_internal_set_up_speed(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.up_speed_ = value;
+}
+
+// int32 down_speed = 7;
+inline void PeerInfo::clear_down_speed() {
+  _impl_.down_speed_ = 0;
+}
+inline ::int32_t PeerInfo::down_speed() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.down_speed)
+  return _internal_down_speed();
+}
+inline void PeerInfo::set_down_speed(::int32_t value) {
+  _internal_set_down_speed(value);
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.down_speed)
+}
+inline ::int32_t PeerInfo::_internal_down_speed() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.down_speed_;
+}
+inline void PeerInfo::_internal_set_down_speed(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.down_speed_ = value;
+}
+
+// int32 payload_up_speed = 8;
+inline void PeerInfo::clear_payload_up_speed() {
+  _impl_.payload_up_speed_ = 0;
+}
+inline ::int32_t PeerInfo::payload_up_speed() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.payload_up_speed)
+  return _internal_payload_up_speed();
+}
+inline void PeerInfo::set_payload_up_speed(::int32_t value) {
+  _internal_set_payload_up_speed(value);
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.payload_up_speed)
+}
+inline ::int32_t PeerInfo::_internal_payload_up_speed() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.payload_up_speed_;
+}
+inline void PeerInfo::_internal_set_payload_up_speed(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.payload_up_speed_ = value;
+}
+
+// int32 payload_down_speed = 9;
+inline void PeerInfo::clear_payload_down_speed() {
+  _impl_.payload_down_speed_ = 0;
+}
+inline ::int32_t PeerInfo::payload_down_speed() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.payload_down_speed)
+  return _internal_payload_down_speed();
+}
+inline void PeerInfo::set_payload_down_speed(::int32_t value) {
+  _internal_set_payload_down_speed(value);
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.payload_down_speed)
+}
+inline ::int32_t PeerInfo::_internal_payload_down_speed() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.payload_down_speed_;
+}
+inline void PeerInfo::_internal_set_payload_down_speed(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.payload_down_speed_ = value;
+}
+
+// bytes pid = 10;
+inline void PeerInfo::clear_pid() {
+  _impl_.pid_.ClearToEmpty();
+}
+inline const std::string& PeerInfo::pid() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.pid)
+  return _internal_pid();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void PeerInfo::set_pid(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.pid_.SetBytes(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.pid)
+}
+inline std::string* PeerInfo::mutable_pid() {
+  std::string* _s = _internal_mutable_pid();
+  // @@protoc_insertion_point(field_mutable:prpc.PeerInfo.pid)
+  return _s;
+}
+inline const std::string& PeerInfo::_internal_pid() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.pid_.Get();
+}
+inline void PeerInfo::_internal_set_pid(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.pid_.Set(value, GetArenaForAllocation());
+}
+inline std::string* PeerInfo::_internal_mutable_pid() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.pid_.Mutable( GetArenaForAllocation());
+}
+inline std::string* PeerInfo::release_pid() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.PeerInfo.pid)
+  return _impl_.pid_.Release();
+}
+inline void PeerInfo::set_allocated_pid(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.pid_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.pid_.IsDefault()) {
+          _impl_.pid_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.PeerInfo.pid)
+}
+
+// int32 queue_bytes = 11;
+inline void PeerInfo::clear_queue_bytes() {
+  _impl_.queue_bytes_ = 0;
+}
+inline ::int32_t PeerInfo::queue_bytes() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.queue_bytes)
+  return _internal_queue_bytes();
+}
+inline void PeerInfo::set_queue_bytes(::int32_t value) {
+  _internal_set_queue_bytes(value);
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.queue_bytes)
+}
+inline ::int32_t PeerInfo::_internal_queue_bytes() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.queue_bytes_;
+}
+inline void PeerInfo::_internal_set_queue_bytes(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.queue_bytes_ = value;
+}
+
+// uint32 connection_type = 12;
+inline void PeerInfo::clear_connection_type() {
+  _impl_.connection_type_ = 0u;
+}
+inline ::uint32_t PeerInfo::connection_type() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.connection_type)
+  return _internal_connection_type();
+}
+inline void PeerInfo::set_connection_type(::uint32_t value) {
+  _internal_set_connection_type(value);
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.connection_type)
+}
+inline ::uint32_t PeerInfo::_internal_connection_type() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.connection_type_;
+}
+inline void PeerInfo::_internal_set_connection_type(::uint32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.connection_type_ = value;
+}
+
+// int32 download_rate_peak = 13;
+inline void PeerInfo::clear_download_rate_peak() {
+  _impl_.download_rate_peak_ = 0;
+}
+inline ::int32_t PeerInfo::download_rate_peak() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.download_rate_peak)
+  return _internal_download_rate_peak();
+}
+inline void PeerInfo::set_download_rate_peak(::int32_t value) {
+  _internal_set_download_rate_peak(value);
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.download_rate_peak)
+}
+inline ::int32_t PeerInfo::_internal_download_rate_peak() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.download_rate_peak_;
+}
+inline void PeerInfo::_internal_set_download_rate_peak(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.download_rate_peak_ = value;
+}
+
+// int32 upload_rate_peak = 14;
+inline void PeerInfo::clear_upload_rate_peak() {
+  _impl_.upload_rate_peak_ = 0;
+}
+inline ::int32_t PeerInfo::upload_rate_peak() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.upload_rate_peak)
+  return _internal_upload_rate_peak();
+}
+inline void PeerInfo::set_upload_rate_peak(::int32_t value) {
+  _internal_set_upload_rate_peak(value);
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.upload_rate_peak)
+}
+inline ::int32_t PeerInfo::_internal_upload_rate_peak() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.upload_rate_peak_;
+}
+inline void PeerInfo::_internal_set_upload_rate_peak(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.upload_rate_peak_ = value;
+}
+
+// string peer_addr = 15;
+inline void PeerInfo::clear_peer_addr() {
+  _impl_.peer_addr_.ClearToEmpty();
+}
+inline const std::string& PeerInfo::peer_addr() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.peer_addr)
+  return _internal_peer_addr();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void PeerInfo::set_peer_addr(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.peer_addr_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.peer_addr)
+}
+inline std::string* PeerInfo::mutable_peer_addr() {
+  std::string* _s = _internal_mutable_peer_addr();
+  // @@protoc_insertion_point(field_mutable:prpc.PeerInfo.peer_addr)
+  return _s;
+}
+inline const std::string& PeerInfo::_internal_peer_addr() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.peer_addr_.Get();
+}
+inline void PeerInfo::_internal_set_peer_addr(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.peer_addr_.Set(value, GetArenaForAllocation());
+}
+inline std::string* PeerInfo::_internal_mutable_peer_addr() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.peer_addr_.Mutable( GetArenaForAllocation());
+}
+inline std::string* PeerInfo::release_peer_addr() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.PeerInfo.peer_addr)
+  return _impl_.peer_addr_.Release();
+}
+inline void PeerInfo::set_allocated_peer_addr(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.peer_addr_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.peer_addr_.IsDefault()) {
+          _impl_.peer_addr_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.PeerInfo.peer_addr)
+}
+
+// int32 num_pieces = 16;
+inline void PeerInfo::clear_num_pieces() {
+  _impl_.num_pieces_ = 0;
+}
+inline ::int32_t PeerInfo::num_pieces() const {
+  // @@protoc_insertion_point(field_get:prpc.PeerInfo.num_pieces)
+  return _internal_num_pieces();
+}
+inline void PeerInfo::set_num_pieces(::int32_t value) {
+  _internal_set_num_pieces(value);
+  // @@protoc_insertion_point(field_set:prpc.PeerInfo.num_pieces)
+}
+inline ::int32_t PeerInfo::_internal_num_pieces() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.num_pieces_;
+}
+inline void PeerInfo::_internal_set_num_pieces(::int32_t value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   _impl_.num_pieces_ = value;
@@ -8744,6 +9882,156 @@ inline void FileCompletedRes::_internal_set_file_index(::int32_t value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   _impl_.file_index_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// GetPeerInfoReq
+
+// .prpc.InfoHash info_hash = 1;
+inline bool GetPeerInfoReq::has_info_hash() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.info_hash_ != nullptr);
+  return value;
+}
+inline void GetPeerInfoReq::clear_info_hash() {
+  if (_impl_.info_hash_ != nullptr) _impl_.info_hash_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::prpc::InfoHash& GetPeerInfoReq::_internal_info_hash() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::InfoHash* p = _impl_.info_hash_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::InfoHash&>(::prpc::_InfoHash_default_instance_);
+}
+inline const ::prpc::InfoHash& GetPeerInfoReq::info_hash() const {
+  // @@protoc_insertion_point(field_get:prpc.GetPeerInfoReq.info_hash)
+  return _internal_info_hash();
+}
+inline void GetPeerInfoReq::unsafe_arena_set_allocated_info_hash(::prpc::InfoHash* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.info_hash_);
+  }
+  _impl_.info_hash_ = reinterpret_cast<::prpc::InfoHash*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.GetPeerInfoReq.info_hash)
+}
+inline ::prpc::InfoHash* GetPeerInfoReq::release_info_hash() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::InfoHash* released = _impl_.info_hash_;
+  _impl_.info_hash_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::InfoHash* GetPeerInfoReq::unsafe_arena_release_info_hash() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.GetPeerInfoReq.info_hash)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::prpc::InfoHash* temp = _impl_.info_hash_;
+  _impl_.info_hash_ = nullptr;
+  return temp;
+}
+inline ::prpc::InfoHash* GetPeerInfoReq::_internal_mutable_info_hash() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  if (_impl_.info_hash_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::InfoHash>(GetArenaForAllocation());
+    _impl_.info_hash_ = reinterpret_cast<::prpc::InfoHash*>(p);
+  }
+  return _impl_.info_hash_;
+}
+inline ::prpc::InfoHash* GetPeerInfoReq::mutable_info_hash() {
+  ::prpc::InfoHash* _msg = _internal_mutable_info_hash();
+  // @@protoc_insertion_point(field_mutable:prpc.GetPeerInfoReq.info_hash)
+  return _msg;
+}
+inline void GetPeerInfoReq::set_allocated_info_hash(::prpc::InfoHash* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::InfoHash*>(_impl_.info_hash_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::InfoHash*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.info_hash_ = reinterpret_cast<::prpc::InfoHash*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.GetPeerInfoReq.info_hash)
+}
+
+// -------------------------------------------------------------------
+
+// GetPeerInfoRsp
+
+// repeated .prpc.PeerInfo peer_infos = 1;
+inline int GetPeerInfoRsp::_internal_peer_infos_size() const {
+  return _internal_peer_infos().size();
+}
+inline int GetPeerInfoRsp::peer_infos_size() const {
+  return _internal_peer_infos_size();
+}
+inline void GetPeerInfoRsp::clear_peer_infos() {
+  _internal_mutable_peer_infos()->Clear();
+}
+inline ::prpc::PeerInfo* GetPeerInfoRsp::mutable_peer_infos(int index) {
+  // @@protoc_insertion_point(field_mutable:prpc.GetPeerInfoRsp.peer_infos)
+  return _internal_mutable_peer_infos()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::prpc::PeerInfo >*
+GetPeerInfoRsp::mutable_peer_infos() {
+  // @@protoc_insertion_point(field_mutable_list:prpc.GetPeerInfoRsp.peer_infos)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  return _internal_mutable_peer_infos();
+}
+inline const ::prpc::PeerInfo& GetPeerInfoRsp::peer_infos(int index) const {
+  // @@protoc_insertion_point(field_get:prpc.GetPeerInfoRsp.peer_infos)
+    return _internal_peer_infos().Get(index);
+}
+inline ::prpc::PeerInfo* GetPeerInfoRsp::add_peer_infos() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::prpc::PeerInfo* _add = _internal_mutable_peer_infos()->Add();
+  // @@protoc_insertion_point(field_add:prpc.GetPeerInfoRsp.peer_infos)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::prpc::PeerInfo >&
+GetPeerInfoRsp::peer_infos() const {
+  // @@protoc_insertion_point(field_list:prpc.GetPeerInfoRsp.peer_infos)
+  return _internal_peer_infos();
+}
+inline const ::google::protobuf::RepeatedPtrField<::prpc::PeerInfo>&
+GetPeerInfoRsp::_internal_peer_infos() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.peer_infos_;
+}
+inline ::google::protobuf::RepeatedPtrField<::prpc::PeerInfo>*
+GetPeerInfoRsp::_internal_mutable_peer_infos() {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return &_impl_.peer_infos_;
 }
 
 #ifdef __GNUC__

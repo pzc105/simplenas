@@ -32,6 +32,7 @@ static const char* BtService_method_names[] = {
   "/prpc.BtService/GetTorrentInfo",
   "/prpc.BtService/GetBtStatus",
   "/prpc.BtService/GetSessionParams",
+  "/prpc.BtService/GetPeerInfo",
   "/prpc.BtService/OnBtStatus",
   "/prpc.BtService/OnFileCompleted",
 };
@@ -53,8 +54,9 @@ BtService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel,
   , rpcmethod_GetTorrentInfo_(BtService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetBtStatus_(BtService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetSessionParams_(BtService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_OnBtStatus_(BtService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
-  , rpcmethod_OnFileCompleted_(BtService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
+  , rpcmethod_GetPeerInfo_(BtService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_OnBtStatus_(BtService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
+  , rpcmethod_OnFileCompleted_(BtService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
   {}
 
 ::grpc::Status BtService::Stub::InitedSession(::grpc::ClientContext* context, const ::prpc::InitedSessionReq& request, ::prpc::InitedSessionRsp* response) {
@@ -287,6 +289,29 @@ void BtService::Stub::async::GetSessionParams(::grpc::ClientContext* context, co
   return result;
 }
 
+::grpc::Status BtService::Stub::GetPeerInfo(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq& request, ::prpc::GetPeerInfoRsp* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::prpc::GetPeerInfoReq, ::prpc::GetPeerInfoRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetPeerInfo_, context, request, response);
+}
+
+void BtService::Stub::async::GetPeerInfo(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq* request, ::prpc::GetPeerInfoRsp* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::prpc::GetPeerInfoReq, ::prpc::GetPeerInfoRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPeerInfo_, context, request, response, std::move(f));
+}
+
+void BtService::Stub::async::GetPeerInfo(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq* request, ::prpc::GetPeerInfoRsp* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPeerInfo_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::GetPeerInfoRsp>* BtService::Stub::PrepareAsyncGetPeerInfoRaw(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::prpc::GetPeerInfoRsp, ::prpc::GetPeerInfoReq, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetPeerInfo_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::prpc::GetPeerInfoRsp>* BtService::Stub::AsyncGetPeerInfoRaw(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetPeerInfoRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ::grpc::ClientReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* BtService::Stub::OnBtStatusRaw(::grpc::ClientContext* context) {
   return ::grpc::internal::ClientReaderWriterFactory< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>::Create(channel_.get(), rpcmethod_OnBtStatus_, context);
 }
@@ -422,6 +447,16 @@ BtService::Service::Service() {
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       BtService_method_names[10],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< BtService::Service, ::prpc::GetPeerInfoReq, ::prpc::GetPeerInfoRsp, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](BtService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::prpc::GetPeerInfoReq* req,
+             ::prpc::GetPeerInfoRsp* resp) {
+               return service->GetPeerInfo(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      BtService_method_names[11],
       ::grpc::internal::RpcMethod::BIDI_STREAMING,
       new ::grpc::internal::BidiStreamingHandler< BtService::Service, ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>(
           [](BtService::Service* service,
@@ -431,7 +466,7 @@ BtService::Service::Service() {
                return service->OnBtStatus(ctx, stream);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      BtService_method_names[11],
+      BtService_method_names[12],
       ::grpc::internal::RpcMethod::BIDI_STREAMING,
       new ::grpc::internal::BidiStreamingHandler< BtService::Service, ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>(
           [](BtService::Service* service,
@@ -509,6 +544,13 @@ BtService::Service::~Service() {
 }
 
 ::grpc::Status BtService::Service::GetSessionParams(::grpc::ServerContext* context, const ::prpc::GetSessionParamsReq* request, ::prpc::GetSessionParamsRsp* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status BtService::Service::GetPeerInfo(::grpc::ServerContext* context, const ::prpc::GetPeerInfoReq* request, ::prpc::GetPeerInfoRsp* response) {
   (void) context;
   (void) request;
   (void) response;

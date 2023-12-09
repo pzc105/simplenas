@@ -105,6 +105,13 @@ class BtService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetSessionParamsRsp>> PrepareAsyncGetSessionParams(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetSessionParamsRsp>>(PrepareAsyncGetSessionParamsRaw(context, request, cq));
     }
+    virtual ::grpc::Status GetPeerInfo(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq& request, ::prpc::GetPeerInfoRsp* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetPeerInfoRsp>> AsyncGetPeerInfo(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetPeerInfoRsp>>(AsyncGetPeerInfoRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetPeerInfoRsp>> PrepareAsyncGetPeerInfo(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetPeerInfoRsp>>(PrepareAsyncGetPeerInfoRaw(context, request, cq));
+    }
     std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>> OnBtStatus(::grpc::ClientContext* context) {
       return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>>(OnBtStatusRaw(context));
     }
@@ -146,6 +153,8 @@ class BtService final {
       virtual void GetBtStatus(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void GetSessionParams(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq* request, ::prpc::GetSessionParamsRsp* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetSessionParams(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq* request, ::prpc::GetSessionParamsRsp* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetPeerInfo(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq* request, ::prpc::GetPeerInfoRsp* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetPeerInfo(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq* request, ::prpc::GetPeerInfoRsp* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void OnBtStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::BtStatusRequest,::prpc::BtStatusRespone>* reactor) = 0;
       virtual void OnFileCompleted(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::FileCompletedReq,::prpc::FileCompletedRes>* reactor) = 0;
     };
@@ -173,6 +182,8 @@ class BtService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetBtStatusRsp>* PrepareAsyncGetBtStatusRaw(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetSessionParamsRsp>* AsyncGetSessionParamsRaw(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetSessionParamsRsp>* PrepareAsyncGetSessionParamsRaw(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetPeerInfoRsp>* AsyncGetPeerInfoRaw(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::prpc::GetPeerInfoRsp>* PrepareAsyncGetPeerInfoRaw(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* OnBtStatusRaw(::grpc::ClientContext* context) = 0;
     virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* AsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderWriterInterface< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* PrepareAsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
@@ -253,6 +264,13 @@ class BtService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GetSessionParamsRsp>> PrepareAsyncGetSessionParams(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GetSessionParamsRsp>>(PrepareAsyncGetSessionParamsRaw(context, request, cq));
     }
+    ::grpc::Status GetPeerInfo(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq& request, ::prpc::GetPeerInfoRsp* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GetPeerInfoRsp>> AsyncGetPeerInfo(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GetPeerInfoRsp>>(AsyncGetPeerInfoRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GetPeerInfoRsp>> PrepareAsyncGetPeerInfo(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::prpc::GetPeerInfoRsp>>(PrepareAsyncGetPeerInfoRaw(context, request, cq));
+    }
     std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>> OnBtStatus(::grpc::ClientContext* context) {
       return std::unique_ptr< ::grpc::ClientReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>>(OnBtStatusRaw(context));
     }
@@ -294,6 +312,8 @@ class BtService final {
       void GetBtStatus(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetSessionParams(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq* request, ::prpc::GetSessionParamsRsp* response, std::function<void(::grpc::Status)>) override;
       void GetSessionParams(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq* request, ::prpc::GetSessionParamsRsp* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetPeerInfo(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq* request, ::prpc::GetPeerInfoRsp* response, std::function<void(::grpc::Status)>) override;
+      void GetPeerInfo(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq* request, ::prpc::GetPeerInfoRsp* response, ::grpc::ClientUnaryReactor* reactor) override;
       void OnBtStatus(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::BtStatusRequest,::prpc::BtStatusRespone>* reactor) override;
       void OnFileCompleted(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::prpc::FileCompletedReq,::prpc::FileCompletedRes>* reactor) override;
      private:
@@ -327,6 +347,8 @@ class BtService final {
     ::grpc::ClientAsyncResponseReader< ::prpc::GetBtStatusRsp>* PrepareAsyncGetBtStatusRaw(::grpc::ClientContext* context, const ::prpc::GetBtStatusReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::GetSessionParamsRsp>* AsyncGetSessionParamsRaw(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::prpc::GetSessionParamsRsp>* PrepareAsyncGetSessionParamsRaw(::grpc::ClientContext* context, const ::prpc::GetSessionParamsReq& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::prpc::GetPeerInfoRsp>* AsyncGetPeerInfoRaw(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::prpc::GetPeerInfoRsp>* PrepareAsyncGetPeerInfoRaw(::grpc::ClientContext* context, const ::prpc::GetPeerInfoReq& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* OnBtStatusRaw(::grpc::ClientContext* context) override;
     ::grpc::ClientAsyncReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* AsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReaderWriter< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>* PrepareAsyncOnBtStatusRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
@@ -343,6 +365,7 @@ class BtService final {
     const ::grpc::internal::RpcMethod rpcmethod_GetTorrentInfo_;
     const ::grpc::internal::RpcMethod rpcmethod_GetBtStatus_;
     const ::grpc::internal::RpcMethod rpcmethod_GetSessionParams_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetPeerInfo_;
     const ::grpc::internal::RpcMethod rpcmethod_OnBtStatus_;
     const ::grpc::internal::RpcMethod rpcmethod_OnFileCompleted_;
   };
@@ -362,6 +385,7 @@ class BtService final {
     virtual ::grpc::Status GetTorrentInfo(::grpc::ServerContext* context, const ::prpc::GetTorrentInfoReq* request, ::prpc::GetTorrentInfoRsp* response);
     virtual ::grpc::Status GetBtStatus(::grpc::ServerContext* context, const ::prpc::GetBtStatusReq* request, ::prpc::GetBtStatusRsp* response);
     virtual ::grpc::Status GetSessionParams(::grpc::ServerContext* context, const ::prpc::GetSessionParamsReq* request, ::prpc::GetSessionParamsRsp* response);
+    virtual ::grpc::Status GetPeerInfo(::grpc::ServerContext* context, const ::prpc::GetPeerInfoReq* request, ::prpc::GetPeerInfoRsp* response);
     virtual ::grpc::Status OnBtStatus(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::BtStatusRespone, ::prpc::BtStatusRequest>* stream);
     virtual ::grpc::Status OnFileCompleted(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::prpc::FileCompletedRes, ::prpc::FileCompletedReq>* stream);
   };
@@ -566,12 +590,32 @@ class BtService final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_GetPeerInfo : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetPeerInfo() {
+      ::grpc::Service::MarkMethodAsync(10);
+    }
+    ~WithAsyncMethod_GetPeerInfo() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetPeerInfo(::grpc::ServerContext* /*context*/, const ::prpc::GetPeerInfoReq* /*request*/, ::prpc::GetPeerInfoRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetPeerInfo(::grpc::ServerContext* context, ::prpc::GetPeerInfoReq* request, ::grpc::ServerAsyncResponseWriter< ::prpc::GetPeerInfoRsp>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_OnBtStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_OnBtStatus() {
-      ::grpc::Service::MarkMethodAsync(10);
+      ::grpc::Service::MarkMethodAsync(11);
     }
     ~WithAsyncMethod_OnBtStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -582,7 +626,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnBtStatus(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::prpc::BtStatusRespone, ::prpc::BtStatusRequest>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(10, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(11, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -591,7 +635,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodAsync(11);
+      ::grpc::Service::MarkMethodAsync(12);
     }
     ~WithAsyncMethod_OnFileCompleted() override {
       BaseClassMustBeDerivedFromService(this);
@@ -602,10 +646,10 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnFileCompleted(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::prpc::FileCompletedRes, ::prpc::FileCompletedReq>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(11, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(12, context, stream, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_InitedSession<WithAsyncMethod_InitSession<WithAsyncMethod_Parse<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_GetMagnetUri<WithAsyncMethod_GetResumeData<WithAsyncMethod_GetTorrentInfo<WithAsyncMethod_GetBtStatus<WithAsyncMethod_GetSessionParams<WithAsyncMethod_OnBtStatus<WithAsyncMethod_OnFileCompleted<Service > > > > > > > > > > > > AsyncService;
+  typedef WithAsyncMethod_InitedSession<WithAsyncMethod_InitSession<WithAsyncMethod_Parse<WithAsyncMethod_Download<WithAsyncMethod_RemoveTorrent<WithAsyncMethod_GetMagnetUri<WithAsyncMethod_GetResumeData<WithAsyncMethod_GetTorrentInfo<WithAsyncMethod_GetBtStatus<WithAsyncMethod_GetSessionParams<WithAsyncMethod_GetPeerInfo<WithAsyncMethod_OnBtStatus<WithAsyncMethod_OnFileCompleted<Service > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_InitedSession : public BaseClass {
    private:
@@ -877,12 +921,39 @@ class BtService final {
       ::grpc::CallbackServerContext* /*context*/, const ::prpc::GetSessionParamsReq* /*request*/, ::prpc::GetSessionParamsRsp* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithCallbackMethod_GetPeerInfo : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetPeerInfo() {
+      ::grpc::Service::MarkMethodCallback(10,
+          new ::grpc::internal::CallbackUnaryHandler< ::prpc::GetPeerInfoReq, ::prpc::GetPeerInfoRsp>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::prpc::GetPeerInfoReq* request, ::prpc::GetPeerInfoRsp* response) { return this->GetPeerInfo(context, request, response); }));}
+    void SetMessageAllocatorFor_GetPeerInfo(
+        ::grpc::MessageAllocator< ::prpc::GetPeerInfoReq, ::prpc::GetPeerInfoRsp>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(10);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::prpc::GetPeerInfoReq, ::prpc::GetPeerInfoRsp>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetPeerInfo() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetPeerInfo(::grpc::ServerContext* /*context*/, const ::prpc::GetPeerInfoReq* /*request*/, ::prpc::GetPeerInfoRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetPeerInfo(
+      ::grpc::CallbackServerContext* /*context*/, const ::prpc::GetPeerInfoReq* /*request*/, ::prpc::GetPeerInfoRsp* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithCallbackMethod_OnBtStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_OnBtStatus() {
-      ::grpc::Service::MarkMethodCallback(10,
+      ::grpc::Service::MarkMethodCallback(11,
           new ::grpc::internal::CallbackBidiHandler< ::prpc::BtStatusRequest, ::prpc::BtStatusRespone>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnBtStatus(context); }));
@@ -905,7 +976,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodCallback(11,
+      ::grpc::Service::MarkMethodCallback(12,
           new ::grpc::internal::CallbackBidiHandler< ::prpc::FileCompletedReq, ::prpc::FileCompletedRes>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnFileCompleted(context); }));
@@ -922,7 +993,7 @@ class BtService final {
       ::grpc::CallbackServerContext* /*context*/)
       { return nullptr; }
   };
-  typedef WithCallbackMethod_InitedSession<WithCallbackMethod_InitSession<WithCallbackMethod_Parse<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_GetMagnetUri<WithCallbackMethod_GetResumeData<WithCallbackMethod_GetTorrentInfo<WithCallbackMethod_GetBtStatus<WithCallbackMethod_GetSessionParams<WithCallbackMethod_OnBtStatus<WithCallbackMethod_OnFileCompleted<Service > > > > > > > > > > > > CallbackService;
+  typedef WithCallbackMethod_InitedSession<WithCallbackMethod_InitSession<WithCallbackMethod_Parse<WithCallbackMethod_Download<WithCallbackMethod_RemoveTorrent<WithCallbackMethod_GetMagnetUri<WithCallbackMethod_GetResumeData<WithCallbackMethod_GetTorrentInfo<WithCallbackMethod_GetBtStatus<WithCallbackMethod_GetSessionParams<WithCallbackMethod_GetPeerInfo<WithCallbackMethod_OnBtStatus<WithCallbackMethod_OnFileCompleted<Service > > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_InitedSession : public BaseClass {
@@ -1095,12 +1166,29 @@ class BtService final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_GetPeerInfo : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetPeerInfo() {
+      ::grpc::Service::MarkMethodGeneric(10);
+    }
+    ~WithGenericMethod_GetPeerInfo() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetPeerInfo(::grpc::ServerContext* /*context*/, const ::prpc::GetPeerInfoReq* /*request*/, ::prpc::GetPeerInfoRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_OnBtStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_OnBtStatus() {
-      ::grpc::Service::MarkMethodGeneric(10);
+      ::grpc::Service::MarkMethodGeneric(11);
     }
     ~WithGenericMethod_OnBtStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1117,7 +1205,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodGeneric(11);
+      ::grpc::Service::MarkMethodGeneric(12);
     }
     ~WithGenericMethod_OnFileCompleted() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1329,12 +1417,32 @@ class BtService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_GetPeerInfo : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetPeerInfo() {
+      ::grpc::Service::MarkMethodRaw(10);
+    }
+    ~WithRawMethod_GetPeerInfo() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetPeerInfo(::grpc::ServerContext* /*context*/, const ::prpc::GetPeerInfoReq* /*request*/, ::prpc::GetPeerInfoRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetPeerInfo(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_OnBtStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_OnBtStatus() {
-      ::grpc::Service::MarkMethodRaw(10);
+      ::grpc::Service::MarkMethodRaw(11);
     }
     ~WithRawMethod_OnBtStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1345,7 +1453,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnBtStatus(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(10, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(11, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1354,7 +1462,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodRaw(11);
+      ::grpc::Service::MarkMethodRaw(12);
     }
     ~WithRawMethod_OnFileCompleted() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1365,7 +1473,7 @@ class BtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestOnFileCompleted(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(11, context, stream, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncBidiStreaming(12, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1589,12 +1697,34 @@ class BtService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_GetPeerInfo : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetPeerInfo() {
+      ::grpc::Service::MarkMethodRawCallback(10,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetPeerInfo(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetPeerInfo() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetPeerInfo(::grpc::ServerContext* /*context*/, const ::prpc::GetPeerInfoReq* /*request*/, ::prpc::GetPeerInfoRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetPeerInfo(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_OnBtStatus : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_OnBtStatus() {
-      ::grpc::Service::MarkMethodRawCallback(10,
+      ::grpc::Service::MarkMethodRawCallback(11,
           new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnBtStatus(context); }));
@@ -1617,7 +1747,7 @@ class BtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_OnFileCompleted() {
-      ::grpc::Service::MarkMethodRawCallback(11,
+      ::grpc::Service::MarkMethodRawCallback(12,
           new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->OnFileCompleted(context); }));
@@ -1904,9 +2034,36 @@ class BtService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetSessionParams(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::GetSessionParamsReq,::prpc::GetSessionParamsRsp>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_InitedSession<WithStreamedUnaryMethod_InitSession<WithStreamedUnaryMethod_Parse<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithStreamedUnaryMethod_GetResumeData<WithStreamedUnaryMethod_GetTorrentInfo<WithStreamedUnaryMethod_GetBtStatus<WithStreamedUnaryMethod_GetSessionParams<Service > > > > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetPeerInfo : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetPeerInfo() {
+      ::grpc::Service::MarkMethodStreamed(10,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::prpc::GetPeerInfoReq, ::prpc::GetPeerInfoRsp>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::prpc::GetPeerInfoReq, ::prpc::GetPeerInfoRsp>* streamer) {
+                       return this->StreamedGetPeerInfo(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetPeerInfo() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetPeerInfo(::grpc::ServerContext* /*context*/, const ::prpc::GetPeerInfoReq* /*request*/, ::prpc::GetPeerInfoRsp* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetPeerInfo(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::prpc::GetPeerInfoReq,::prpc::GetPeerInfoRsp>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_InitedSession<WithStreamedUnaryMethod_InitSession<WithStreamedUnaryMethod_Parse<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithStreamedUnaryMethod_GetResumeData<WithStreamedUnaryMethod_GetTorrentInfo<WithStreamedUnaryMethod_GetBtStatus<WithStreamedUnaryMethod_GetSessionParams<WithStreamedUnaryMethod_GetPeerInfo<Service > > > > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_InitedSession<WithStreamedUnaryMethod_InitSession<WithStreamedUnaryMethod_Parse<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithStreamedUnaryMethod_GetResumeData<WithStreamedUnaryMethod_GetTorrentInfo<WithStreamedUnaryMethod_GetBtStatus<WithStreamedUnaryMethod_GetSessionParams<Service > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_InitedSession<WithStreamedUnaryMethod_InitSession<WithStreamedUnaryMethod_Parse<WithStreamedUnaryMethod_Download<WithStreamedUnaryMethod_RemoveTorrent<WithStreamedUnaryMethod_GetMagnetUri<WithStreamedUnaryMethod_GetResumeData<WithStreamedUnaryMethod_GetTorrentInfo<WithStreamedUnaryMethod_GetBtStatus<WithStreamedUnaryMethod_GetSessionParams<WithStreamedUnaryMethod_GetPeerInfo<Service > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace prpc

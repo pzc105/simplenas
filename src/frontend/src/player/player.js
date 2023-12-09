@@ -132,9 +132,9 @@ export default function PlyrWrap() {
     videoRef.current.onseeking = () => {
       saveStartOffset()
     }
-    setInterval(saveStartOffset, 3000)
+    let myInterval = setInterval(saveStartOffset, 3000)
     return () => {
-      clearInterval(saveStartOffset);
+      clearInterval(myInterval);
     };
   }, [videoRef, shareid])
 

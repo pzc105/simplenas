@@ -238,9 +238,9 @@ export function ProgressLists() {
       </FormControl>
       {
         sortedTorrents.map((t) =>
-          <List key={t.infoHash.hash}>
+          <Box key={t.infoHash.hash}>
             <ProgressBar infoHash={t.infoHash} key={t.infoHash.hash} />
-          </List>
+          </Box>
         )
       }
     </Paper >

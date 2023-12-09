@@ -469,5 +469,48 @@ export class BtServiceClient {
     this.methodDescriptorGetSessionParams);
   }
 
+  methodDescriptorGetPeerInfo = new grpcWeb.MethodDescriptor(
+    '/prpc.BtService/GetPeerInfo',
+    grpcWeb.MethodType.UNARY,
+    bt_pb.GetPeerInfoReq,
+    bt_pb.GetPeerInfoRsp,
+    (request: bt_pb.GetPeerInfoReq) => {
+      return request.serializeBinary();
+    },
+    bt_pb.GetPeerInfoRsp.deserializeBinary
+  );
+
+  getPeerInfo(
+    request: bt_pb.GetPeerInfoReq,
+    metadata: grpcWeb.Metadata | null): Promise<bt_pb.GetPeerInfoRsp>;
+
+  getPeerInfo(
+    request: bt_pb.GetPeerInfoReq,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: bt_pb.GetPeerInfoRsp) => void): grpcWeb.ClientReadableStream<bt_pb.GetPeerInfoRsp>;
+
+  getPeerInfo(
+    request: bt_pb.GetPeerInfoReq,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: bt_pb.GetPeerInfoRsp) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/prpc.BtService/GetPeerInfo',
+        request,
+        metadata || {},
+        this.methodDescriptorGetPeerInfo,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/prpc.BtService/GetPeerInfo',
+    request,
+    metadata || {},
+    this.methodDescriptorGetPeerInfo);
+  }
+
 }
 

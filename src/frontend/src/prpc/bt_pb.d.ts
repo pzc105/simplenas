@@ -182,6 +182,86 @@ export namespace TorrentInfo {
   }
 }
 
+export class PeerInfo extends jspb.Message {
+  getClient(): string;
+  setClient(value: string): PeerInfo;
+
+  getTotalDownload(): number;
+  setTotalDownload(value: number): PeerInfo;
+
+  getTotalUpload(): number;
+  setTotalUpload(value: number): PeerInfo;
+
+  getFlags(): number;
+  setFlags(value: number): PeerInfo;
+
+  getSource(): number;
+  setSource(value: number): PeerInfo;
+
+  getUpSpeed(): number;
+  setUpSpeed(value: number): PeerInfo;
+
+  getDownSpeed(): number;
+  setDownSpeed(value: number): PeerInfo;
+
+  getPayloadUpSpeed(): number;
+  setPayloadUpSpeed(value: number): PeerInfo;
+
+  getPayloadDownSpeed(): number;
+  setPayloadDownSpeed(value: number): PeerInfo;
+
+  getPid(): Uint8Array | string;
+  getPid_asU8(): Uint8Array;
+  getPid_asB64(): string;
+  setPid(value: Uint8Array | string): PeerInfo;
+
+  getQueueBytes(): number;
+  setQueueBytes(value: number): PeerInfo;
+
+  getConnectionType(): number;
+  setConnectionType(value: number): PeerInfo;
+
+  getDownloadRatePeak(): number;
+  setDownloadRatePeak(value: number): PeerInfo;
+
+  getUploadRatePeak(): number;
+  setUploadRatePeak(value: number): PeerInfo;
+
+  getPeerAddr(): string;
+  setPeerAddr(value: string): PeerInfo;
+
+  getNumPieces(): number;
+  setNumPieces(value: number): PeerInfo;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): PeerInfo.AsObject;
+  static toObject(includeInstance: boolean, msg: PeerInfo): PeerInfo.AsObject;
+  static serializeBinaryToWriter(message: PeerInfo, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): PeerInfo;
+  static deserializeBinaryFromReader(message: PeerInfo, reader: jspb.BinaryReader): PeerInfo;
+}
+
+export namespace PeerInfo {
+  export type AsObject = {
+    client: string,
+    totalDownload: number,
+    totalUpload: number,
+    flags: number,
+    source: number,
+    upSpeed: number,
+    downSpeed: number,
+    payloadUpSpeed: number,
+    payloadDownSpeed: number,
+    pid: Uint8Array | string,
+    queueBytes: number,
+    connectionType: number,
+    downloadRatePeak: number,
+    uploadRatePeak: number,
+    peerAddr: string,
+    numPieces: number,
+  }
+}
+
 export class TorrentStatus extends jspb.Message {
   getInfoHash(): InfoHash | undefined;
   setInfoHash(value?: InfoHash): TorrentStatus;
@@ -726,6 +806,46 @@ export namespace FileCompletedRes {
   export type AsObject = {
     infoHash?: InfoHash.AsObject,
     fileIndex: number,
+  }
+}
+
+export class GetPeerInfoReq extends jspb.Message {
+  getInfoHash(): InfoHash | undefined;
+  setInfoHash(value?: InfoHash): GetPeerInfoReq;
+  hasInfoHash(): boolean;
+  clearInfoHash(): GetPeerInfoReq;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetPeerInfoReq.AsObject;
+  static toObject(includeInstance: boolean, msg: GetPeerInfoReq): GetPeerInfoReq.AsObject;
+  static serializeBinaryToWriter(message: GetPeerInfoReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetPeerInfoReq;
+  static deserializeBinaryFromReader(message: GetPeerInfoReq, reader: jspb.BinaryReader): GetPeerInfoReq;
+}
+
+export namespace GetPeerInfoReq {
+  export type AsObject = {
+    infoHash?: InfoHash.AsObject,
+  }
+}
+
+export class GetPeerInfoRsp extends jspb.Message {
+  getPeerInfosList(): Array<PeerInfo>;
+  setPeerInfosList(value: Array<PeerInfo>): GetPeerInfoRsp;
+  clearPeerInfosList(): GetPeerInfoRsp;
+  addPeerInfos(value?: PeerInfo, index?: number): PeerInfo;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetPeerInfoRsp.AsObject;
+  static toObject(includeInstance: boolean, msg: GetPeerInfoRsp): GetPeerInfoRsp.AsObject;
+  static serializeBinaryToWriter(message: GetPeerInfoRsp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetPeerInfoRsp;
+  static deserializeBinaryFromReader(message: GetPeerInfoRsp, reader: jspb.BinaryReader): GetPeerInfoRsp;
+}
+
+export namespace GetPeerInfoRsp {
+  export type AsObject = {
+    peerInfosList: Array<PeerInfo.AsObject>,
   }
 }
 

@@ -11,4 +11,5 @@ namespace prpc
   TorrentStatus get_status_respone(lt::torrent_status const &ts);
   std::unique_ptr<TorrentInfo> get_torrent_info(lt::torrent_handle const &th);
   FileCompletedRes get_filecompleted(lt::file_completed_alert const &params);
+  PeerInfo get_rsp(lt::peer_info const& p);
 }

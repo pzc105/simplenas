@@ -104,3 +104,10 @@ export function secondsToHHMMSS(seconds) {
 
   return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }
+
+export function isAdmin(userInfo) {
+  if (userInfo === undefined || userInfo === null || userInfo.id !== 1) {
+    return false
+  }
+  return true
+}
