@@ -198,6 +198,12 @@ func ParseEpisode2(name string) (int, error) {
 			if err == nil && checkEp(n) {
 				return n, nil
 			}
+		} else if strings.HasPrefix(t, "ep") || strings.HasPrefix(t, "EP") {
+			t = t[len("ep"):]
+			n, err := getNum(t)
+			if err == nil && checkEp(n) {
+				return n, nil
+			}
 		}
 	}
 	for _, t := range tokens {
