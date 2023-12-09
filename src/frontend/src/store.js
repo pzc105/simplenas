@@ -325,6 +325,9 @@ const selectSubDirectory = (state, parentId) => {
 }
 
 const selectDisplayItems = (state) => {
+  if (state.category.displayItems === undefined) {
+    return []
+  }
   return state.category.displayItems
 }
 

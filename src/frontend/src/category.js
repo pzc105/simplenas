@@ -22,26 +22,7 @@ import { serverAddress } from './rpcClient.js'
 const CategoryItems = ({ shareid, onRefresh }) => {
   const navigate = useNavigate()
   const items = useSelector((state) => store.selectDisplayItems(state))
-  let sortedItems = []
   const dispatch = useDispatch()
-
-  const sortitems = () => {
-    if (!items || items.length === 0) {
-      return
-    }
-    let tmp = [...items]
-    tmp.sort((a, b) => {
-      if (a.name < b.name) {
-        return -1;
-      }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
-    })
-    sortedItems = tmp
-  }
-  sortitems()
 
   const onClick = (item) => {
     if (item.typeId === Category.CategoryItem.Type.VIDEO) {
