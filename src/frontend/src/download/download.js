@@ -20,6 +20,7 @@ import FileUpload from '../uploadTorrent.js'
 import { ProgressLists } from './downloadlist.js'
 import { FloatingChat, DraggableDialog } from '../chat/chat.js';
 import BtHlsTaskPanel from '../newBtHlsTask.js'
+import { DownloadRequest } from './downloadReq.js'
 
 const DownloadContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -112,10 +113,9 @@ export default function Download() {
       onMouseDown={handleListItemMouseDown}
       onMouseUp={handleListItemMouseUp}>
       <CssBaseline />
-      <SideUtils name="下载" child={DownloadRequest()} />
       <LeftColumn>
         <TopLeftArea sx={{ backgroundColor: 'background.default' }}>
-          <TorrentNavigation />
+          <DownloadRequest />
           <PeerInfoList />
         </TopLeftArea>
       </LeftColumn>
@@ -173,77 +173,6 @@ const TorrentNavigation = () => {
           https://1337x.to/home/
         </Link>
       </Typography>
-    </Container >
-  )
-}
-
-function DownloadRequest(props) {
-  const [magnetUri, setMagnetUri] = useState('')
-  const [downloadReq, setDownloadReq] = useState(null)
-
-  function handleChange(e) {
-    let uri = e.target.value
-    setMagnetUri(uri)
-    if (uri.length === 0) {
-      return
-    }
-    const fileInput = document.getElementById('fileInput')
-    if (fileInput) {
-      fileInput.value = ''
-    }
-    var dr = new Bt.DownloadRequest()
-    dr.setType(Bt.DownloadRequest.ReqType.MagnetUri)
-    const encoder = new TextEncoder();
-    dr.setContent(encoder.encode(uri))
-    setDownloadReq(dr)
-  }
-
-  const handleFileSelect = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setMagnetUri('')
-        var dr = new Bt.DownloadRequest()
-        dr.setType(Bt.DownloadRequest.ReqType.TORRENT)
-        dr.setContent(new Uint8Array(reader.result))
-        setDownloadReq(dr)
-      };
-      reader.readAsArrayBuffer(file);
-    }
-  };
-
-  return (
-    <Container sx={{ width: "30vw" }}>
-      <Grid >
-        输入MagnetUri
-        <Grid item>
-          <TextField
-            margin="normal"
-            fullWidth
-            id="uri"
-            label="magnet uri"
-            value={magnetUri}
-            onChange={handleChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <CloudDownloadIcon />
-                </InputAdornment>
-              ),
-            }}
-            autoFocus />
-        </Grid>
-        或者选择种子文件
-        <Grid item sx={{ marginTop: "1em" }}>
-          <FormControl fullWidth>
-            <Input id="fileInput" type="file" onChange={handleFileSelect} accept="image/*" />
-          </FormControl>
-        </Grid>
-        <Grid item mt={'3em'}>
-          <BtHlsTaskPanel downloadReq={downloadReq} />
-        </Grid>
-      </Grid>
     </Container >
   )
 }

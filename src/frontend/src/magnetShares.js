@@ -351,7 +351,7 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
                           </Grid>
                           <Grid item xs={6} onContextMenu={(e) => handleContextMenu(e, item.id)}>
                             <div>
-                              <CopyToClipboard text={item.other.magnetUri}>
+                              <CopyToClipboard text={item.other.magnetUri} onCopy={() => setCopyDialogOpen(true)}>
                                 <Tooltip
                                   title={
                                     <div>
@@ -363,7 +363,6 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
                                   }>
                                   <Typography
                                     style={{ cursor: "pointer" }}
-                                    onClick={() => setCopyDialogOpen(true)}
                                     variant="button"
                                     component="div"
                                     noWrap>
