@@ -7,7 +7,7 @@ import Plyr from 'plyr_p';
 import 'plyr_p/dist/plyr.css';
 import Hls from 'hls.js'
 
-import { queryItem, querySubItems, navigateToItem } from '../category.js'
+import { queryItem, querySubItems, navigateToItem } from '../category/utils.js'
 import { serverAddress } from '../rpcClient.js'
 import * as store from '../store.js'
 import * as utils from '../utils.js';

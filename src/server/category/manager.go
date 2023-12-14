@@ -105,7 +105,7 @@ func (m *Manager) AddItem(params *NewCategoryParams) (*CategoryItem, error) {
 	if err == nil {
 		log.Debugf("[category] user %d add item %d type: %d name: %s", params.Creator, item.base.Id, params.TypeId, params.Name)
 		item.base.Other = params.Other
-		parentItem.addedSubItem(item.base.Id)
+		parentItem._initSubItemIds()
 		m.addItem(item)
 	}
 	return item, err

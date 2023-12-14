@@ -8,7 +8,7 @@ import SignIn from './user/signIn';
 import SignUp from './user/signUp';
 import Download from './download/download';
 import GlobalSidebar from './globalSidebar.js'
-import CategoryItemPage from './category.js'
+import CategoryItemPage from './category/category.js'
 import MagnetSharesPage from './magnetShares';
 import PlyrWrap from './player/player.js';
 import Player from './player/player2.js';

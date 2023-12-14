@@ -5,7 +5,7 @@ import { Container, Typography, Paper, Button, Grid, CssBaseline } from '@mui/ma
 import userService from '../rpcClient.js'
 import * as User from '../prpc/user_pb.js'
 import * as store from '../store.js'
-import * as category from '../category.js'
+import * as cateutils from '../category/utils.js'
 
 export default function UserInfoPage() {
   const userInfo = useSelector((state) => store.selectUserInfo(state))
@@ -67,7 +67,7 @@ const SharedItems = () => {
       let sharedItemsTmp = []
       res.getSharedItemsList().map((si) => {
         sharedItemsTmp.push(si.toObject())
-        category.queryItem(si.getItemId(), "", dispatch)
+        cateutils.queryItem(si.getItemId(), "", dispatch)
         let tmp = sharedIds
         tmp.push(si.getItemId())
         setSharedIds(tmp)

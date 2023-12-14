@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Hls from 'hls.js'
 import DPlayer from 'dplayer';
 
-import { queryItem, querySubItems, navigateToItem } from '../category.js'
+import { queryItem, querySubItems, navigateToItem } from '../category/utils.js'
 import userService, { serverAddress } from '../rpcClient.js'
 import * as User from '../prpc/user_pb.js'
 import * as store from '../store.js'

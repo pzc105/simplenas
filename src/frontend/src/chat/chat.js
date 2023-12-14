@@ -14,7 +14,7 @@ import * as store from '../store.js'
 import { emojiList } from './emojiList.js';
 import userService from '../rpcClient.js'
 import './chat.css'
-import { navigateToItem } from '../category.js';
+import { navigateToItem } from '../category/category.js';
 
 
 export const FloatingChat = ({ name, itemId, onClose }) => {

@@ -16,7 +16,7 @@ import * as store from './store.js'
 import SideUtils from './sideManager.js';
 import ChatPanel from './chat/chat.js';
 import SubtitleUploader from './uploadSubtitle.js';
-import * as category from './category.js'
+import * as cateutils from './category/utils.js'
 import * as router from './router.js'
 import { FloatingChat } from './chat/chat.js';
 import * as User from './prpc/user_pb.js'
@@ -316,7 +316,7 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
           items.map((item) => (
             <ListItem key={item.id}>
               {
-                category.isDirectory(item) ?
+                cateutils.isDirectory(item) ?
                   <Container>
                     <Grid container sx={{ display: 'flex' }} >
                       <Grid item xs={12}>

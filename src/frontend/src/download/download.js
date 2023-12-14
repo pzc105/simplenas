@@ -31,6 +31,13 @@ const LeftColumn = styled('div')(({ theme }) => ({
   flex: 1,
   display: 'flex',
   flexDirection: 'column',
+  borderRight: '2px solid #ead6e6',
+  [theme.breakpoints.up('md')]: {
+    maxWidth: '25vw',
+  },
+  [theme.breakpoints.down('sm')]: {
+    maxWidth: '40vw',
+  },
 }))
 
 const TopLeftArea = styled('div')(({ theme }) => ({

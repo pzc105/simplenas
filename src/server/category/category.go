@@ -47,27 +47,6 @@ type CategoryItem struct {
 	subItemIds []ptype.CategoryID
 }
 
-func _initSubItemIds(item *CategoryItem) error {
-	sql := `select id from pnas.category_items where parent_id=? order by name`
-	rows, err := db.Query(sql, item.base.Id)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	defer rows.Close()
-	var subIds []ptype.CategoryID
-	for rows.Next() {
-		var itemId ptype.CategoryID
-		err := rows.Scan(&itemId)
-		if err != nil {
-			log.Warn(err)
-			continue
-		}
-		subIds = append(subIds, itemId)
-	}
-	item.subItemIds = subIds
-	return nil
-}
-
 func _initMagnet(item *CategoryItem) error {
 	if item.base.TypeId == prpc.CategoryItem_MagnetUri {
 		sql := `select magnet_uri from torrent where id=?`
@@ -101,7 +80,7 @@ func _loadItem(itemId ptype.CategoryID) (*CategoryItem, error) {
 	item.auth = utils.NewBitSet(AuthMax)
 	item.auth.UnmarshalBinary(byteAuth)
 
-	err = _initSubItemIds(&item)
+	err = item._initSubItemIds()
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +127,7 @@ func _loadItems(itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
 		}
 		item.auth = utils.NewBitSet(AuthMax)
 		item.auth.UnmarshalBinary(byteAuth)
-		err = _initSubItemIds(&item)
+		err = item._initSubItemIds()
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
@@ -205,14 +184,27 @@ func addItem(params *NewCategoryParams) (*CategoryItem, error) {
 	return _loadItem(newId)
 }
 
-func (c *CategoryItem) addedSubItem(subItemId ptype.CategoryID) {
+func (c *CategoryItem) _initSubItemIds() error {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
-	if slices.IndexFunc(c.subItemIds, func(sid ptype.CategoryID) bool { return subItemId == sid }) != -1 {
-		log.Warnf("[category] duplicate added sub id: %d", subItemId)
-		return
+	sql := `select id from pnas.category_items where parent_id=? order by name`
+	rows, err := db.Query(sql, c.base.Id)
+	if err != nil {
+		return errors.WithStack(err)
 	}
-	c.subItemIds = append(c.subItemIds, subItemId)
+	defer rows.Close()
+	var subIds []ptype.CategoryID
+	for rows.Next() {
+		var itemId ptype.CategoryID
+		err := rows.Scan(&itemId)
+		if err != nil {
+			log.Warn(err)
+			continue
+		}
+		subIds = append(subIds, itemId)
+	}
+	c.subItemIds = subIds
+	return nil
 }
 
 func (c *CategoryItem) deletedSubItem(subItemId ptype.CategoryID) {

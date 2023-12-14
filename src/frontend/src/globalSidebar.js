@@ -12,11 +12,10 @@ import { Drawer, Accordion, AccordionSummary, AccordionDetails, List, ListItemBu
 import { useSelector, useDispatch } from 'react-redux';
 import * as store from './store.js'
 
-import { queryItem, querySubItems } from './category.js'
+import { queryItem, querySubItems, navigateToItem } from './category/utils.js'
 import * as utils from './utils.js'
 import * as User from './prpc/user_pb.js'
 import userService from './rpcClient.js'
-import { navigateToItem } from './category.js'
 import { navigate2mgnetshares } from './router.js';
 
 
