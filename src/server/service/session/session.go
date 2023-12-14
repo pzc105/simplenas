@@ -73,10 +73,12 @@ func (ss *Sessions) Init() {
 	}
 
 	ss.idPool.Init()
+retry:
 	result, err := db.GREDIS.Keys(context.Background(), SessionRedisKey+"*").Result()
 	if err != nil {
 		log.Errorf("failed to init id pool, err: %v", err)
-		return
+		<-time.After(time.Second * 5)
+		goto retry
 	}
 	for _, k := range result {
 		id, err := strconv.ParseInt(k[len(SessionRedisKey):], 10, 64)

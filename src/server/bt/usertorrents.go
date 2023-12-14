@@ -78,11 +78,13 @@ func (ut *UserTorrentsImpl) Init() {
 }
 
 func (ut *UserTorrentsImpl) load() {
+retry:
 	sql := `select user_id, torrent_id from user_torrent`
 	rows, err := db.Query(sql)
 	if err != nil {
 		log.Warnf("load user torrent err: %v", err)
-		return
+		<-time.After(time.Second * 5)
+		goto retry
 	}
 	defer rows.Close()
 	for rows.Next() {
