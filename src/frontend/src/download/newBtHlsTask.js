@@ -7,10 +7,10 @@ import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-import * as Bt from './prpc/bt_pb.js'
-import * as User from './prpc/user_pb.js'
-import userService from './rpcClient.js'
-import FolderSelector from './download/folderSelector.js'
+import * as Bt from '../prpc/bt_pb.js'
+import * as User from '../prpc/user_pb.js'
+import userService from '../rpcClient.js'
+import FolderSelector from './folderSelector.js'
 
 export default function BtHlsTaskPanel({ downloadReq, onCreate }) {
   const parentIdRef = useRef(-1)
@@ -19,7 +19,9 @@ export default function BtHlsTaskPanel({ downloadReq, onCreate }) {
     if (!downloadReq) {
       return
     }
-    console.log(downloadReq)
+    if (parentIdRef.current <= 0) {
+      alert("无效目录")
+    }
     var req = new User.NewBtHlsTaskReq()
     req.setReq(downloadReq)
     req.setCategoryParentId(parentIdRef.current)

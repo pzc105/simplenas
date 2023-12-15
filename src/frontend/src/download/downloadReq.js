@@ -19,7 +19,7 @@ import * as router from '../router.js'
 import FileUpload from '../uploadTorrent.js'
 import { ProgressLists } from './downloadlist.js'
 import { FloatingChat, DraggableDialog } from '../chat/chat.js';
-import BtHlsTaskPanel from '../newBtHlsTask.js'
+import BtHlsTaskPanel from './newBtHlsTask.js'
 
 
 export function DownloadRequest(props) {

@@ -20,7 +20,33 @@ export default function FolderSelector({ style, select }) {
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const selectRef = useRef(null);
   const dispatch = useDispatch()
-  select(lastUsedDirId)
+
+  useEffect(() => {
+    if (nowPathItemId <= 0) {
+      return
+    }
+    let req = new User.QuerySubItemsReq()
+    req.setParentId(nowPathItemId)
+    userService.querySubItems(req, {}, (err, respone) => {
+      if (err == null) {
+        select(selectedValue)
+        setPathItem(respone.getParentItem().toObject())
+        let ds = []
+        respone.getItemsList().map((i) => {
+          let item = i.toObject()
+          if (item.typeId === category.CategoryItem.Type.DIRECTORY) {
+            ds.push(item)
+          }
+          return null
+        })
+        setSubDirectories(ds)
+      } else {
+        if (nowPathItemId != userInfo.homeDirectoryId) {
+          setNowPathItemId(userInfo.homeDirectoryId)
+        }
+      }
+    })
+  }, [])
 
   useEffect(() => {
     let req = new User.QuerySubItemsReq()
@@ -37,8 +63,6 @@ export default function FolderSelector({ style, select }) {
           return null
         })
         setSubDirectories(ds)
-      } else {
-        console.log(err)
       }
     })
   }, [nowPathItemId])

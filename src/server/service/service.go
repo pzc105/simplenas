@@ -636,7 +636,7 @@ func (ser *CoreService) AddBtVideos(ctx context.Context, req *prpc.AddBtVideosRe
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
-	if len(req.FileIndexes) == 0 || req.InfoHash == nil {
+	if len(req.FileIndexes) == 0 || req.InfoHash == nil || req.CategoryItemId <= 0 {
 		return nil, status.Error(codes.InvalidArgument, "")
 	}
 	err := ser.um.AddBtVideos(&user.AddBtVideosParams{
@@ -978,7 +978,7 @@ func (ser *CoreService) NewBtHlsTask(ctx context.Context, req *prpc.NewBtHlsTask
 	if ses == nil {
 		return nil, status.Error(codes.PermissionDenied, "not found session")
 	}
-	if req == nil || req.Req == nil {
+	if req == nil || req.Req == nil || req.CategoryParentId <= 0 {
 		return nil, status.Error(codes.InvalidArgument, "")
 	}
 	err := ser.um.GetTasks().NewBtHlsTask(&task.NewBtHlsParams{

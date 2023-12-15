@@ -25,7 +25,7 @@ import * as Category from './prpc/category_pb.js'
 import userService from './rpcClient.js'
 import { serverAddress } from './rpcClient.js'
 import UnifiedPage from './page.js'
-import BtHlsTaskPanel from './newBtHlsTask.js'
+import BtHlsTaskPanel from './download/newBtHlsTask.js'
 
 
 export default function MagnetSharesPage() {

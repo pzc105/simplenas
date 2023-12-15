@@ -42,6 +42,9 @@ const FileListHandler = ({ infoHash }) => {
   }
 
   const saveVideos = () => {
+    if (selectedDirId.current <= 0) {
+      alert("无效目录")
+    }
     var req = new User.AddBtVideosReq()
     var i = new Bt.InfoHash()
     i.setVersion(infoHash.version)
