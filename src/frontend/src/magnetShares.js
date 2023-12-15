@@ -376,9 +376,9 @@ const MagnetItems = ({ onRefresh, setSearchCond }) => {
                                 </div>
                               </Dialog>
                               <Dialog open={sNewBtHlsPanel} onClose={() => setSNewBtHlsPanel(false)}>
-                                <Paper>
+                                <div style={{ margin: "2em" }}>
                                   <BtHlsTaskPanel downloadReq={downloadReq.current} onCreate={() => setSNewBtHlsPanel(false)} />
-                                </Paper>
+                                </div>
                               </Dialog>
                               <Menu
                                 anchorReference="anchorPosition"

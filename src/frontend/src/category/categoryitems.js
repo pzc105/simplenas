@@ -145,7 +145,7 @@ export function CategoryItems({ shareid, onRefresh }) {
               items.map((item) => {
                 return (
                   <Grid key={item.id} item xs={10} sm={5} lg={2} sx={{ ml: "0.5em", mt: "0.5em" }}>
-                    <Tooltip title={<div>{"Name:" + item.name}<br />{"介绍:" + item.introduce}</div>} >
+                    <Tooltip title={<div><ShowItem name="[name]" value={item.name} /><ShowItem name="[introduce]" value={item.introduce} /></div>} >
                       <Card onContextMenu={(e) => handleContextMenu(e, item.id)}>
                         <Box sx={{ display: "flex", justifyContent: "center", height: "4.3em" }}>
                           <img style={{ maxHeight: "5em" }} alt="Movie Poster"
@@ -209,5 +209,18 @@ export function CategoryItems({ shareid, onRefresh }) {
         <SubtitleUploader itemId={subtitleUploadItemId} onClose={() => setPopoverOpen(false)} />
       </Popover>
     </Paper >
+  )
+}
+
+const ShowItem = ({ name, value }) => {
+  return (
+    <div style={{ whiteSpace: 'pre', }}>
+      <span style={{ fontWeight: 'bold', fontSize: '1.1em' }}>
+        {name + ": "}
+      </span>
+      <span style={{ fontSize: '1em' }}>
+        {value}
+      </span>
+    </div>
   )
 }

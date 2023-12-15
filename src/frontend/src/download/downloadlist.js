@@ -217,7 +217,7 @@ export function ProgressLists() {
   }, [torrents, btstatus, searchText, selectedTagValue])
 
   return (
-    <Paper style={{ maxHeight: '90vh', overflow: 'auto', marginLeft: "0.5em" }}>
+    <Paper style={{ maxHeight: '90vh', overflow: 'auto', marginLeft: "1em" }}>
       <TextField
         onChange={onSearchText}
         InputProps={{

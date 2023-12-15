@@ -35,18 +35,15 @@ export default function BtHlsTaskPanel({ downloadReq, onCreate }) {
   }
 
   return (
-    <>
-      <Grid container >
-        <Grid item xs={10} className='draggableWindow'>
-          <Typography sx={{ userSelect: 'none', ml: "1em" }}>
-            {"选择保存目录"}
-          </Typography>
+    <div>
+      <Grid container>
+        <Grid item xs={12}>
+          <FolderSelector select={(id) => parentIdRef.current = id} />
+        </Grid>
+        <Grid item xs={12}>
+          <Button fullWidth variant="contained" color="primary" onClick={newBtHlsTask}>创建任务</Button>
         </Grid>
       </Grid>
-      <Grid container sx={{ display: 'flex' }} alignItems="center" justify="center">
-        <FolderSelector select={(id) => parentIdRef.current = id} />
-        <Button variant="contained" color="primary" onClick={newBtHlsTask}>创建任务</Button>
-      </Grid>
-    </>
+    </div>
   )
 }

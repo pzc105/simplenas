@@ -74,7 +74,7 @@ const FileListHandler = ({ infoHash }) => {
 
   return (
     <Container>
-      <FolderSelector select={(id) => selectedDirId.current = id} />
+      <FolderSelector style={{ maxWidth: '20vw' }} select={(id) => selectedDirId.current = id} />
       <Button
         variant="contained"
         onClick={saveVideos}

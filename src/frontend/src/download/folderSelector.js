@@ -9,7 +9,7 @@ import * as category from '../prpc/category_pb.js'
 import * as User from '../prpc/user_pb.js'
 import userService from '../rpcClient.js'
 
-export default function FolderSelector({ select }) {
+export default function FolderSelector({ style, select }) {
   const userInfo = useSelector((state) => store.selectUserInfo(state))
   const lastUsedParentDirId = useSelector((state) => store.selectlastUsedParentDirId(state))
   const lastUsedDirId = useSelector((state) => store.selectlastUsedDirId(state))
@@ -55,53 +55,57 @@ export default function FolderSelector({ select }) {
   };
 
   return (
-    pathItem ? <FormControl sx={{ m: 1, minWidth: 120 }}>
-      <InputLabel id="select-directory">Select</InputLabel>
-      <Select
-        labelId="select-directory"
-        value={selectedValue}
-        open={isSelectOpen}
-        onClick={handleSelectOpen}
-        inputProps={{ "aria-label": "Without label" }}
-        ref={selectRef}
-      >
-        {nowPathItemId !== userInfo.homeDirectoryId && (
-          <MenuItem key="back"
-            value={0}
-            onClick={
-              (e) => {
-                setNowPathItemId(pathItem.parentId)
-                e.stopPropagation()
-              }
-            }
+    <div style={style}>
+      {
+        pathItem ? <FormControl fullWidth>
+          <InputLabel id="select-directory">选择保存目录</InputLabel>
+          <Select
+            labelId="select-directory"
+            value={selectedValue}
+            open={isSelectOpen}
+            onClick={handleSelectOpen}
+            inputProps={{ "aria-label": "Without label" }}
+            ref={selectRef}
           >
-            返回上一级
-          </MenuItem>
-        )}
-        {subDirectories.map((dir) => (
-          <MenuItem
-            key={dir.id}
-            value={dir.id}
-            onClick={
-              (e) => {
-                setNowPathItemId(dir.id)
-                e.stopPropagation()
-              }
-            }>
-            <Checkbox
-              checked={selectedValue == dir.id}
-              onClick={
-                (e) => {
-                  boxOnClick(dir.id)
-                  e.stopPropagation()
+            {nowPathItemId !== userInfo.homeDirectoryId && (
+              <MenuItem key="back"
+                value={0}
+                onClick={
+                  (e) => {
+                    setNowPathItemId(pathItem.parentId)
+                    e.stopPropagation()
+                  }
                 }
-              } />
-            <label >
-              {dir.name}
-            </label>
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl> : null
+              >
+                返回上一级
+              </MenuItem>
+            )}
+            {subDirectories.map((dir) => (
+              <MenuItem
+                key={dir.id}
+                value={dir.id}
+                onClick={
+                  (e) => {
+                    setNowPathItemId(dir.id)
+                    e.stopPropagation()
+                  }
+                }>
+                <Checkbox
+                  checked={selectedValue == dir.id}
+                  onClick={
+                    (e) => {
+                      boxOnClick(dir.id)
+                      e.stopPropagation()
+                    }
+                  } />
+                <label >
+                  {dir.name}
+                </label>
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl> : null
+      }
+    </div>
   )
 }

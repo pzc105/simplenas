@@ -93,7 +93,7 @@ export function DownloadRequest(props) {
                 }}
                 autoFocus />
             </Grid>
-            <Grid item mt={'3em'}>
+            <Grid item>
               <BtHlsTaskPanel downloadReq={downloadReq} />
             </Grid>
           </Grid> :
@@ -103,7 +103,7 @@ export function DownloadRequest(props) {
                 <Input id="fileInput" type="file" onChange={handleFileSelect} accept="image/*" />
               </FormControl>
             </Grid>
-            <Grid item mt={'3em'}>
+            <Grid item sx={{ marginTop: "1em" }}>
               <BtHlsTaskPanel downloadReq={downloadReq} />
             </Grid>
           </Grid>
