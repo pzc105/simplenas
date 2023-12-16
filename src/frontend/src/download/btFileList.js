@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Button, FormControl, InputLabel, MenuItem, Select, FormControlLabel, FormGroup, Checkbox }
+import { Container, Button, FormControl, InputLabel, MenuItem, Select, FormControlLabel, FormGroup, Checkbox, Grid }
   from "@mui/material";
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -77,13 +77,16 @@ const FileListHandler = ({ infoHash }) => {
 
   return (
     <Container>
-      <FolderSelector style={{ maxWidth: '20vw' }} select={(id) => selectedDirId.current = id} />
-      <Button
-        variant="contained"
-        onClick={saveVideos}
-        color="primary" >
-        保存
-      </Button>
+      <Grid container >
+        <FolderSelector style={{ maxWidth: '20vw' }} select={(id) => selectedDirId.current = id} />
+        <Button
+          style={{ width: "10vw" }}
+          variant="contained"
+          onClick={saveVideos}
+          color="primary" >
+          保存
+        </Button>
+      </Grid>
       <FormGroup>{
         sortedVideos.map((f) => {
           return (
