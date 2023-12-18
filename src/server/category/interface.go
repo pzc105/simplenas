@@ -37,6 +37,7 @@ type NewCategoryParams struct {
 type GetItemsByParentParams struct {
 	Querier  ptype.UserID
 	ParentId ptype.CategoryID
+	Types    *categoryTypes
 	PageNum  int32
 	Rows     int32
 	Desc     bool

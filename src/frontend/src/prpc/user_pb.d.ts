@@ -335,6 +335,11 @@ export class QuerySubItemsReq extends jspb.Message {
   getDesc(): boolean;
   setDesc(value: boolean): QuerySubItemsReq;
 
+  getTypesList(): Array<category_pb.CategoryItem.Type>;
+  setTypesList(value: Array<category_pb.CategoryItem.Type>): QuerySubItemsReq;
+  clearTypesList(): QuerySubItemsReq;
+  addTypes(value: category_pb.CategoryItem.Type, index?: number): QuerySubItemsReq;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): QuerySubItemsReq.AsObject;
   static toObject(includeInstance: boolean, msg: QuerySubItemsReq): QuerySubItemsReq.AsObject;
@@ -350,6 +355,7 @@ export namespace QuerySubItemsReq {
     pageNum: number,
     rows: number,
     desc: boolean,
+    typesList: Array<category_pb.CategoryItem.Type>,
   }
 }
 

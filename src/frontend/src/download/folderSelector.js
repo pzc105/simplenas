@@ -27,6 +27,7 @@ export default function FolderSelector({ style, select }) {
     }
     let req = new User.QuerySubItemsReq()
     req.setParentId(nowPathItemId)
+    req.setTypesList([category.CategoryItem.Type.DIRECTORY])
     userService.querySubItems(req, {}, (err, respone) => {
       if (err == null) {
         select(selectedValue)
@@ -34,9 +35,7 @@ export default function FolderSelector({ style, select }) {
         let ds = []
         respone.getItemsList().map((i) => {
           let item = i.toObject()
-          if (item.typeId === category.CategoryItem.Type.DIRECTORY) {
-            ds.push(item)
-          }
+          ds.push(item)
           return null
         })
         setSubDirectories(ds)
@@ -51,15 +50,14 @@ export default function FolderSelector({ style, select }) {
   useEffect(() => {
     let req = new User.QuerySubItemsReq()
     req.setParentId(nowPathItemId)
+    req.setTypesList([category.CategoryItem.Type.DIRECTORY])
     userService.querySubItems(req, {}, (err, respone) => {
       if (err == null) {
         setPathItem(respone.getParentItem().toObject())
         let ds = []
         respone.getItemsList().map((i) => {
           let item = i.toObject()
-          if (item.typeId === category.CategoryItem.Type.DIRECTORY) {
-            ds.push(item)
-          }
+          ds.push(item)
           return null
         })
         setSubDirectories(ds)

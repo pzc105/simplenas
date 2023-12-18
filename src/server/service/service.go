@@ -555,6 +555,7 @@ func (ser *CoreService) QuerySubItems(ctx context.Context, req *prpc.QuerySubIte
 			PageNum:  req.PageNum,
 			Rows:     req.Rows,
 			Desc:     req.Desc,
+			Types:    category.NewCategoryTypes(req.Types...),
 		})
 	if err != nil {
 		return nil, err

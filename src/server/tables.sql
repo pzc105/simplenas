@@ -68,7 +68,7 @@ create table category_items (
   primary key(id),
   key name (name),
   key resource(creator, type_id, resource_path),
-  key parent(parent_id, name),
+  key parent(parent_id, type_id, name),
   fulltext fulltext_ni(name, introduce) with parser ngram
 ) auto_increment=2;
 

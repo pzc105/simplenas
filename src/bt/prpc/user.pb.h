@@ -2858,12 +2858,32 @@ class QuerySubItemsReq final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kTypesFieldNumber = 6,
     kShareIdFieldNumber = 2,
     kParentIdFieldNumber = 1,
     kPageNumFieldNumber = 3,
     kRowsFieldNumber = 4,
     kDescFieldNumber = 5,
   };
+  // repeated .prpc.CategoryItem.Type types = 6;
+  int types_size() const;
+  private:
+  int _internal_types_size() const;
+
+  public:
+  void clear_types() ;
+  public:
+  ::prpc::CategoryItem_Type types(int index) const;
+  void set_types(int index, ::prpc::CategoryItem_Type value);
+  void add_types(::prpc::CategoryItem_Type value);
+  const ::google::protobuf::RepeatedField<int>& types() const;
+  ::google::protobuf::RepeatedField<int>* mutable_types();
+
+  private:
+  const ::google::protobuf::RepeatedField<int>& _internal_types() const;
+  ::google::protobuf::RepeatedField<int>* _internal_mutable_types();
+
+  public:
   // string share_id = 2;
   void clear_share_id() ;
   const std::string& share_id() const;
@@ -2925,11 +2945,13 @@ class QuerySubItemsReq final :
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 5, 0, 38, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<3, 6, 0, 38, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::google::protobuf::RepeatedField<int> types_;
+    mutable ::google::protobuf::internal::CachedSize _types_cached_byte_size_;
     ::google::protobuf::internal::ArenaStringPtr share_id_;
     ::int64_t parent_id_;
     ::int32_t page_num_;
@@ -10655,6 +10677,47 @@ inline void QuerySubItemsReq::_internal_set_desc(bool value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   _impl_.desc_ = value;
+}
+
+// repeated .prpc.CategoryItem.Type types = 6;
+inline int QuerySubItemsReq::_internal_types_size() const {
+  return _internal_types().size();
+}
+inline int QuerySubItemsReq::types_size() const {
+  return _internal_types_size();
+}
+inline void QuerySubItemsReq::clear_types() {
+  _internal_mutable_types()->Clear();
+}
+inline ::prpc::CategoryItem_Type QuerySubItemsReq::types(int index) const {
+  // @@protoc_insertion_point(field_get:prpc.QuerySubItemsReq.types)
+  return static_cast<::prpc::CategoryItem_Type>(_internal_types().Get(index));
+}
+inline void QuerySubItemsReq::set_types(int index, ::prpc::CategoryItem_Type value) {
+  _internal_mutable_types()->Set(index, value);
+  // @@protoc_insertion_point(field_set:prpc.QuerySubItemsReq.types)
+}
+inline void QuerySubItemsReq::add_types(::prpc::CategoryItem_Type value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_types()->Add(value);
+  // @@protoc_insertion_point(field_add:prpc.QuerySubItemsReq.types)
+}
+inline const ::google::protobuf::RepeatedField<int>& QuerySubItemsReq::types() const {
+  // @@protoc_insertion_point(field_list:prpc.QuerySubItemsReq.types)
+  return _internal_types();
+}
+inline ::google::protobuf::RepeatedField<int>* QuerySubItemsReq::mutable_types() {
+  // @@protoc_insertion_point(field_mutable_list:prpc.QuerySubItemsReq.types)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  return _internal_mutable_types();
+}
+inline const ::google::protobuf::RepeatedField<int>& QuerySubItemsReq::_internal_types() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.types_;
+}
+inline ::google::protobuf::RepeatedField<int>* QuerySubItemsReq::_internal_mutable_types() {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return &_impl_.types_;
 }
 
 // -------------------------------------------------------------------

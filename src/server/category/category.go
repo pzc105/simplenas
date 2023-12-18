@@ -187,7 +187,7 @@ func addItem(params *NewCategoryParams) (*CategoryItem, error) {
 func (c *CategoryItem) _initSubItemIds() error {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
-	sql := `select id from pnas.category_items where parent_id=? order by name`
+	sql := `select id from pnas.category_items where parent_id=? order by type_id, name`
 	rows, err := db.Query(sql, c.base.Id)
 	if err != nil {
 		return errors.WithStack(err)
@@ -312,6 +312,39 @@ func (c *CategoryItem) GetSubItemIds() []ptype.CategoryID {
 	ret := make([]ptype.CategoryID, len(c.subItemIds))
 	copy(ret, c.subItemIds)
 	return ret
+}
+
+func (c *CategoryItem) GetSubItemIdsInTypes(types *categoryTypes) []ptype.CategoryID {
+	if types == nil || types.All() {
+		return c.GetSubItemIds()
+	}
+
+	ids := types.GetTypeIds()
+	idsStrBuilder := strings.Builder{}
+	for _, id := range ids {
+		if idsStrBuilder.Len() > 0 {
+			idsStrBuilder.WriteString(",")
+		}
+		idsStrBuilder.WriteString(strconv.Itoa(int(id)))
+	}
+	sql := fmt.Sprintf(`select id from category_items where parent_id=? and type_id in (%s) order by type_id, name`, idsStrBuilder.String())
+	rows, err := db.Query(sql, c.base.Id)
+	if err != nil {
+		log.Warn(err)
+		return []ptype.CategoryID{}
+	}
+	defer rows.Close()
+	var subIds []ptype.CategoryID
+	for rows.Next() {
+		var itemId ptype.CategoryID
+		err := rows.Scan(&itemId)
+		if err != nil {
+			log.Warn(err)
+			continue
+		}
+		subIds = append(subIds, itemId)
+	}
+	return subIds
 }
 
 func (c *CategoryItem) UpdatePosterPath(path string) error {

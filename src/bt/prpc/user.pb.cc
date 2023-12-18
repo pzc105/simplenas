@@ -300,6 +300,8 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
         template <typename>
 PROTOBUF_CONSTEXPR QuerySubItemsReq::QuerySubItemsReq(::_pbi::ConstantInitialized)
     : _impl_{
+      /*decltype(_impl_.types_)*/ {},
+      /*decltype(_impl_._types_cached_byte_size_)*/ {0},
       /*decltype(_impl_.share_id_)*/ {
           &::_pbi::fixed_address_empty_string,
           ::_pbi::ConstantInitialized{},
@@ -1151,6 +1153,7 @@ const ::uint32_t TableStruct_user_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsReq, _impl_.page_num_),
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsReq, _impl_.rows_),
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsReq, _impl_.desc_),
+    PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsReq, _impl_.types_),
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsRes, _impl_._has_bits_),
     PROTOBUF_FIELD_OFFSET(::prpc::QuerySubItemsRes, _internal_metadata_),
     ~0u,  // no _extensions_
@@ -1560,45 +1563,45 @@ static const ::_pbi::MigrationSchema
         {131, -1, -1, sizeof(::prpc::RenameItemReq)},
         {141, -1, -1, sizeof(::prpc::RenameItemRes)},
         {149, -1, -1, sizeof(::prpc::QuerySubItemsReq)},
-        {162, 173, -1, sizeof(::prpc::QuerySubItemsRes)},
-        {176, 185, -1, sizeof(::prpc::QueryBtVideosReq)},
-        {186, 196, -1, sizeof(::prpc::BtFileMetadata)},
-        {198, -1, -1, sizeof(::prpc::QueryBtVideosRes)},
-        {207, 218, -1, sizeof(::prpc::AddBtVideosReq)},
-        {221, -1, -1, sizeof(::prpc::AddBtVideosRes)},
-        {229, -1, -1, sizeof(::prpc::QueryItemInfoReq)},
-        {239, 249, -1, sizeof(::prpc::QueryItemInfoRes)},
-        {251, -1, -1, sizeof(::prpc::ShareItemReq)},
-        {260, -1, -1, sizeof(::prpc::ShareItemRes)},
-        {270, -1, -1, sizeof(::prpc::QuerySharedItemsReq)},
-        {279, -1, -1, sizeof(::prpc::QuerySharedItemsRes)},
-        {288, -1, -1, sizeof(::prpc::DelSharedItemReq)},
-        {297, -1, -1, sizeof(::prpc::DelSharedItemRes)},
-        {305, -1, -1, sizeof(::prpc::SubtitleFile)},
-        {315, -1, -1, sizeof(::prpc::UploadSubtitleReq)},
-        {325, -1, -1, sizeof(::prpc::UploadSubtitleRes)},
-        {333, 342, -1, sizeof(::prpc::GetBtMetaReq)},
-        {343, 352, -1, sizeof(::prpc::GetBtMetaRsp)},
-        {353, 364, -1, sizeof(::prpc::NewBtHlsTaskReq)},
-        {367, -1, -1, sizeof(::prpc::NewBtHlsTaskRsp)},
-        {375, -1, -1, sizeof(::prpc::Room)},
-        {385, 394, -1, sizeof(::prpc::JoinChatRoomReq)},
-        {395, -1, -1, sizeof(::prpc::ChatMessage)},
-        {407, 417, -1, sizeof(::prpc::JoinChatRoomRes)},
-        {419, 429, -1, sizeof(::prpc::SendMsg2ChatRoomReq)},
-        {431, -1, -1, sizeof(::prpc::SendMsg2ChatRoomRes)},
-        {439, -1, -1, sizeof(::prpc::AddMagnetCategoryReq)},
-        {450, -1, -1, sizeof(::prpc::AddMagnetCategoryRsp)},
-        {458, -1, -1, sizeof(::prpc::AddMagnetUriReq)},
-        {469, -1, -1, sizeof(::prpc::AddMagnetUriRsp)},
-        {477, -1, -1, sizeof(::prpc::QueryMagnetReq)},
-        {489, -1, -1, sizeof(::prpc::QueryMagnetRsp)},
-        {499, -1, -1, sizeof(::prpc::DelMagnetCategoryReq)},
-        {508, -1, -1, sizeof(::prpc::DelMagnetCategoryRsp)},
-        {516, -1, -1, sizeof(::prpc::GetTorrentsReq)},
-        {524, -1, -1, sizeof(::prpc::GetTorrentsRsp)},
-        {533, -1, -1, sizeof(::prpc::RenameBtVideoNameReq)},
-        {543, -1, -1, sizeof(::prpc::RenameBtVideoNameRsp)},
+        {163, 174, -1, sizeof(::prpc::QuerySubItemsRes)},
+        {177, 186, -1, sizeof(::prpc::QueryBtVideosReq)},
+        {187, 197, -1, sizeof(::prpc::BtFileMetadata)},
+        {199, -1, -1, sizeof(::prpc::QueryBtVideosRes)},
+        {208, 219, -1, sizeof(::prpc::AddBtVideosReq)},
+        {222, -1, -1, sizeof(::prpc::AddBtVideosRes)},
+        {230, -1, -1, sizeof(::prpc::QueryItemInfoReq)},
+        {240, 250, -1, sizeof(::prpc::QueryItemInfoRes)},
+        {252, -1, -1, sizeof(::prpc::ShareItemReq)},
+        {261, -1, -1, sizeof(::prpc::ShareItemRes)},
+        {271, -1, -1, sizeof(::prpc::QuerySharedItemsReq)},
+        {280, -1, -1, sizeof(::prpc::QuerySharedItemsRes)},
+        {289, -1, -1, sizeof(::prpc::DelSharedItemReq)},
+        {298, -1, -1, sizeof(::prpc::DelSharedItemRes)},
+        {306, -1, -1, sizeof(::prpc::SubtitleFile)},
+        {316, -1, -1, sizeof(::prpc::UploadSubtitleReq)},
+        {326, -1, -1, sizeof(::prpc::UploadSubtitleRes)},
+        {334, 343, -1, sizeof(::prpc::GetBtMetaReq)},
+        {344, 353, -1, sizeof(::prpc::GetBtMetaRsp)},
+        {354, 365, -1, sizeof(::prpc::NewBtHlsTaskReq)},
+        {368, -1, -1, sizeof(::prpc::NewBtHlsTaskRsp)},
+        {376, -1, -1, sizeof(::prpc::Room)},
+        {386, 395, -1, sizeof(::prpc::JoinChatRoomReq)},
+        {396, -1, -1, sizeof(::prpc::ChatMessage)},
+        {408, 418, -1, sizeof(::prpc::JoinChatRoomRes)},
+        {420, 430, -1, sizeof(::prpc::SendMsg2ChatRoomReq)},
+        {432, -1, -1, sizeof(::prpc::SendMsg2ChatRoomRes)},
+        {440, -1, -1, sizeof(::prpc::AddMagnetCategoryReq)},
+        {451, -1, -1, sizeof(::prpc::AddMagnetCategoryRsp)},
+        {459, -1, -1, sizeof(::prpc::AddMagnetUriReq)},
+        {470, -1, -1, sizeof(::prpc::AddMagnetUriRsp)},
+        {478, -1, -1, sizeof(::prpc::QueryMagnetReq)},
+        {490, -1, -1, sizeof(::prpc::QueryMagnetRsp)},
+        {500, -1, -1, sizeof(::prpc::DelMagnetCategoryReq)},
+        {509, -1, -1, sizeof(::prpc::DelMagnetCategoryRsp)},
+        {517, -1, -1, sizeof(::prpc::GetTorrentsReq)},
+        {525, -1, -1, sizeof(::prpc::GetTorrentsRsp)},
+        {534, -1, -1, sizeof(::prpc::RenameBtVideoNameReq)},
+        {544, -1, -1, sizeof(::prpc::RenameBtVideoNameRsp)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -1679,116 +1682,117 @@ const char descriptor_table_protodef_user_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
     "wCategoryItemRes\"%\n\022DelCategoryItemReq\022\017"
     "\n\007item_id\030\001 \001(\003\"\024\n\022DelCategoryItemRes\"2\n"
     "\rRenameItemReq\022\017\n\007item_id\030\001 \001(\003\022\020\n\010new_n"
-    "ame\030\002 \001(\t\"\017\n\rRenameItemRes\"e\n\020QuerySubIt"
-    "emsReq\022\021\n\tparent_id\030\001 \001(\003\022\020\n\010share_id\030\002 "
-    "\001(\t\022\020\n\010page_num\030\003 \001(\005\022\014\n\004rows\030\004 \001(\005\022\014\n\004d"
-    "esc\030\005 \001(\010\"w\n\020QuerySubItemsRes\022\'\n\013parent_"
-    "item\030\001 \001(\0132\022.prpc.CategoryItem\022!\n\005items\030"
-    "\002 \003(\0132\022.prpc.CategoryItem\022\027\n\017total_row_c"
-    "ount\030\003 \001(\005\"5\n\020QueryBtVideosReq\022!\n\tinfo_h"
-    "ash\030\001 \001(\0132\016.prpc.InfoHash\"G\n\016BtFileMetad"
-    "ata\022\022\n\nfile_index\030\001 \001(\005\022!\n\004meta\030\002 \001(\0132\023."
-    "prpc.VideoMetadata\"6\n\020QueryBtVideosRes\022\""
-    "\n\004data\030\001 \003(\0132\024.prpc.BtFileMetadata\"c\n\016Ad"
-    "dBtVideosReq\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc.I"
-    "nfoHash\022\024\n\014file_indexes\030\002 \003(\005\022\030\n\020categor"
-    "y_item_id\030\003 \001(\003\"\020\n\016AddBtVideosRes\"5\n\020Que"
-    "ryItemInfoReq\022\017\n\007item_id\030\001 \001(\003\022\020\n\010share_"
-    "id\030\002 \001(\t\"Z\n\020QueryItemInfoRes\022%\n\titem_inf"
-    "o\030\001 \001(\0132\022.prpc.CategoryItem\022\037\n\nvideo_inf"
-    "o\030\002 \001(\0132\013.prpc.Video\"\037\n\014ShareItemReq\022\017\n\007"
-    "item_id\030\001 \001(\003\"1\n\014ShareItemRes\022\017\n\007item_id"
-    "\030\001 \001(\003\022\020\n\010share_id\030\002 \001(\t\"&\n\023QuerySharedI"
-    "temsReq\022\017\n\007user_id\030\001 \001(\003\"=\n\023QuerySharedI"
-    "temsRes\022&\n\014shared_items\030\001 \003(\0132\020.prpc.Sha"
-    "redItem\"$\n\020DelSharedItemReq\022\020\n\010share_id\030"
-    "\001 \001(\t\"\022\n\020DelSharedItemRes\"-\n\014SubtitleFil"
-    "e\022\014\n\004name\030\001 \001(\t\022\017\n\007content\030\002 \001(\014\"K\n\021Uplo"
-    "adSubtitleReq\022\017\n\007item_id\030\001 \001(\003\022%\n\tsubtit"
-    "les\030\002 \003(\0132\022.prpc.SubtitleFile\"\023\n\021UploadS"
-    "ubtitleRes\"2\n\014GetBtMetaReq\022\"\n\003req\030\001 \001(\0132"
-    "\025.prpc.DownloadRequest\"7\n\014GetBtMetaRsp\022\'"
-    "\n\014torrent_info\030\001 \001(\0132\021.prpc.TorrentInfo\""
-    "m\n\017NewBtHlsTaskReq\022\"\n\003req\030\001 \001(\0132\025.prpc.D"
-    "ownloadRequest\022\032\n\022category_parent_id\030\002 \001"
-    "(\003\022\032\n\022recursive_new_path\030\003 \001(\010\"\021\n\017NewBtH"
-    "lsTaskRsp\"a\n\004Room\022\035\n\004type\030\001 \001(\0162\017.prpc.R"
-    "oom.Type\022\n\n\002id\030\002 \001(\003\".\n\004Type\022\013\n\007Unknown\020"
-    "\000\022\014\n\010Category\020\001\022\013\n\007Danmaku\020\002\"+\n\017JoinChat"
-    "RoomReq\022\030\n\004room\030\001 \001(\0132\n.prpc.Room\"Q\n\013Cha"
-    "tMessage\022\017\n\007user_id\030\001 \001(\003\022\021\n\tuser_name\030\002"
-    " \001(\t\022\021\n\tsent_time\030\003 \001(\003\022\013\n\003msg\030\004 \001(\t\"Q\n\017"
-    "JoinChatRoomRes\022\030\n\004room\030\001 \001(\0132\n.prpc.Roo"
-    "m\022$\n\tchat_msgs\030\002 \003(\0132\021.prpc.ChatMessage\""
-    "T\n\023SendMsg2ChatRoomReq\022\030\n\004room\030\001 \001(\0132\n.p"
-    "rpc.Room\022#\n\010chat_msg\030\002 \001(\0132\021.prpc.ChatMe"
-    "ssage\"\025\n\023SendMsg2ChatRoomRes\"S\n\024AddMagne"
-    "tCategoryReq\022\021\n\tparent_id\030\001 \001(\003\022\025\n\rcateg"
-    "ory_name\030\002 \001(\t\022\021\n\tintroduce\030\003 \001(\t\"\026\n\024Add"
-    "MagnetCategoryRsp\"M\n\017AddMagnetUriReq\022\023\n\013"
-    "category_id\030\001 \001(\003\022\022\n\nmagnet_uri\030\002 \001(\t\022\021\n"
-    "\tintroduce\030\003 \001(\t\"\021\n\017AddMagnetUriRsp\"X\n\016Q"
-    "ueryMagnetReq\022\021\n\tparent_id\030\001 \001(\003\022\023\n\013sear"
-    "ch_cond\030\002 \001(\t\022\020\n\010page_num\030\003 \001(\005\022\014\n\004rows\030"
-    "\004 \001(\005\"L\n\016QueryMagnetRsp\022!\n\005items\030\001 \003(\0132\022"
-    ".prpc.CategoryItem\022\027\n\017total_row_count\030\002 "
-    "\001(\005\"\"\n\024DelMagnetCategoryReq\022\n\n\002id\030\001 \001(\003\""
-    "\026\n\024DelMagnetCategoryRsp\"\020\n\016GetTorrentsRe"
-    "q\"9\n\016GetTorrentsRsp\022\'\n\014torrent_info\030\001 \003("
-    "\0132\021.prpc.TorrentInfo\"9\n\024RenameBtVideoNam"
-    "eReq\022\017\n\007item_id\030\001 \001(\003\022\020\n\010ref_name\030\002 \001(\t\""
-    "\026\n\024RenameBtVideoNameRsp2\322\017\n\013UserService\022"
-    "1\n\010Register\022\022.prpc.RegisterInfo\032\021.prpc.R"
-    "egisterRet\0224\n\013IsUsedEmail\022\017.prpc.EmailIn"
-    "fo\032\024.prpc.IsUsedEmailRet\022(\n\005Login\022\017.prpc"
-    ".LoginInfo\032\016.prpc.LoginRet\022,\n\tFastLogin\022"
-    "\017.prpc.LoginInfo\032\016.prpc.LoginRet\022,\n\tIsLo"
-    "gined\022\017.prpc.LoginInfo\032\016.prpc.LoginRet\022B"
-    "\n\016ChangePassword\022\027.prpc.ChangePasswordRe"
-    "q\032\027.prpc.ChangePasswordRsp\0228\n\010Download\022\025"
-    ".prpc.DownloadRequest\032\025.prpc.DownloadRes"
-    "pone\022\?\n\rRemoveTorrent\022\026.prpc.RemoveTorre"
-    "ntReq\032\026.prpc.RemoveTorrentRes\022<\n\014GetMagn"
-    "etUri\022\025.prpc.GetMagnetUriReq\032\025.prpc.GetM"
-    "agnetUriRsp\0229\n\013GetTorrents\022\024.prpc.GetTor"
-    "rentsReq\032\024.prpc.GetTorrentsRsp\0229\n\013GetPee"
-    "rInfo\022\024.prpc.GetPeerInfoReq\032\024.prpc.GetPe"
-    "erInfoRsp\022<\n\nOnBtStatus\022\025.prpc.BtStatusR"
-    "equest\032\025.prpc.BtStatusRespone0\001\022\?\n\rQuery"
-    "BtVideos\022\026.prpc.QueryBtVideosReq\032\026.prpc."
-    "QueryBtVideosRes\022E\n\017NewCategoryItem\022\030.pr"
-    "pc.NewCategoryItemReq\032\030.prpc.NewCategory"
-    "ItemRes\022E\n\017DelCategoryItem\022\030.prpc.DelCat"
-    "egoryItemReq\032\030.prpc.DelCategoryItemRes\0226"
-    "\n\nRenameItem\022\023.prpc.RenameItemReq\032\023.prpc"
-    ".RenameItemRes\0229\n\013AddBtVideos\022\024.prpc.Add"
-    "BtVideosReq\032\024.prpc.AddBtVideosRes\0223\n\tSha"
-    "reItem\022\022.prpc.ShareItemReq\032\022.prpc.ShareI"
-    "temRes\022H\n\020QuerySharedItems\022\031.prpc.QueryS"
-    "haredItemsReq\032\031.prpc.QuerySharedItemsRes"
-    "\022\?\n\rDelSharedItem\022\026.prpc.DelSharedItemRe"
-    "q\032\026.prpc.DelSharedItemRes\022\?\n\rQuerySubIte"
-    "ms\022\026.prpc.QuerySubItemsReq\032\026.prpc.QueryS"
-    "ubItemsRes\022\?\n\rQueryItemInfo\022\026.prpc.Query"
-    "ItemInfoReq\032\026.prpc.QueryItemInfoRes\022B\n\016U"
-    "ploadSubtitle\022\027.prpc.UploadSubtitleReq\032\027"
-    ".prpc.UploadSubtitleRes\022K\n\021RenameBtVideo"
-    "Name\022\032.prpc.RenameBtVideoNameReq\032\032.prpc."
-    "RenameBtVideoNameRsp\0223\n\tGetBtMeta\022\022.prpc"
-    ".GetBtMetaReq\032\022.prpc.GetBtMetaRsp\022<\n\014New"
-    "BtHlsTask\022\025.prpc.NewBtHlsTaskReq\032\025.prpc."
-    "NewBtHlsTaskRsp\022>\n\014JoinChatRoom\022\025.prpc.J"
-    "oinChatRoomReq\032\025.prpc.JoinChatRoomRes0\001\022"
-    "H\n\020SendMsg2ChatRoom\022\031.prpc.SendMsg2ChatR"
-    "oomReq\032\031.prpc.SendMsg2ChatRoomRes\022K\n\021Add"
-    "MagnetCategory\022\032.prpc.AddMagnetCategoryR"
-    "eq\032\032.prpc.AddMagnetCategoryRsp\022<\n\014AddMag"
-    "netUri\022\025.prpc.AddMagnetUriReq\032\025.prpc.Add"
-    "MagnetUriRsp\0229\n\013QueryMagnet\022\024.prpc.Query"
-    "MagnetReq\032\024.prpc.QueryMagnetRsp\022K\n\021DelMa"
-    "gnetCategory\022\032.prpc.DelMagnetCategoryReq"
-    "\032\032.prpc.DelMagnetCategoryRspB\010Z\006./prpcb\006"
-    "proto3"
+    "ame\030\002 \001(\t\"\017\n\rRenameItemRes\"\215\001\n\020QuerySubI"
+    "temsReq\022\021\n\tparent_id\030\001 \001(\003\022\020\n\010share_id\030\002"
+    " \001(\t\022\020\n\010page_num\030\003 \001(\005\022\014\n\004rows\030\004 \001(\005\022\014\n\004"
+    "desc\030\005 \001(\010\022&\n\005types\030\006 \003(\0162\027.prpc.Categor"
+    "yItem.Type\"w\n\020QuerySubItemsRes\022\'\n\013parent"
+    "_item\030\001 \001(\0132\022.prpc.CategoryItem\022!\n\005items"
+    "\030\002 \003(\0132\022.prpc.CategoryItem\022\027\n\017total_row_"
+    "count\030\003 \001(\005\"5\n\020QueryBtVideosReq\022!\n\tinfo_"
+    "hash\030\001 \001(\0132\016.prpc.InfoHash\"G\n\016BtFileMeta"
+    "data\022\022\n\nfile_index\030\001 \001(\005\022!\n\004meta\030\002 \001(\0132\023"
+    ".prpc.VideoMetadata\"6\n\020QueryBtVideosRes\022"
+    "\"\n\004data\030\001 \003(\0132\024.prpc.BtFileMetadata\"c\n\016A"
+    "ddBtVideosReq\022!\n\tinfo_hash\030\001 \001(\0132\016.prpc."
+    "InfoHash\022\024\n\014file_indexes\030\002 \003(\005\022\030\n\020catego"
+    "ry_item_id\030\003 \001(\003\"\020\n\016AddBtVideosRes\"5\n\020Qu"
+    "eryItemInfoReq\022\017\n\007item_id\030\001 \001(\003\022\020\n\010share"
+    "_id\030\002 \001(\t\"Z\n\020QueryItemInfoRes\022%\n\titem_in"
+    "fo\030\001 \001(\0132\022.prpc.CategoryItem\022\037\n\nvideo_in"
+    "fo\030\002 \001(\0132\013.prpc.Video\"\037\n\014ShareItemReq\022\017\n"
+    "\007item_id\030\001 \001(\003\"1\n\014ShareItemRes\022\017\n\007item_i"
+    "d\030\001 \001(\003\022\020\n\010share_id\030\002 \001(\t\"&\n\023QueryShared"
+    "ItemsReq\022\017\n\007user_id\030\001 \001(\003\"=\n\023QueryShared"
+    "ItemsRes\022&\n\014shared_items\030\001 \003(\0132\020.prpc.Sh"
+    "aredItem\"$\n\020DelSharedItemReq\022\020\n\010share_id"
+    "\030\001 \001(\t\"\022\n\020DelSharedItemRes\"-\n\014SubtitleFi"
+    "le\022\014\n\004name\030\001 \001(\t\022\017\n\007content\030\002 \001(\014\"K\n\021Upl"
+    "oadSubtitleReq\022\017\n\007item_id\030\001 \001(\003\022%\n\tsubti"
+    "tles\030\002 \003(\0132\022.prpc.SubtitleFile\"\023\n\021Upload"
+    "SubtitleRes\"2\n\014GetBtMetaReq\022\"\n\003req\030\001 \001(\013"
+    "2\025.prpc.DownloadRequest\"7\n\014GetBtMetaRsp\022"
+    "\'\n\014torrent_info\030\001 \001(\0132\021.prpc.TorrentInfo"
+    "\"m\n\017NewBtHlsTaskReq\022\"\n\003req\030\001 \001(\0132\025.prpc."
+    "DownloadRequest\022\032\n\022category_parent_id\030\002 "
+    "\001(\003\022\032\n\022recursive_new_path\030\003 \001(\010\"\021\n\017NewBt"
+    "HlsTaskRsp\"a\n\004Room\022\035\n\004type\030\001 \001(\0162\017.prpc."
+    "Room.Type\022\n\n\002id\030\002 \001(\003\".\n\004Type\022\013\n\007Unknown"
+    "\020\000\022\014\n\010Category\020\001\022\013\n\007Danmaku\020\002\"+\n\017JoinCha"
+    "tRoomReq\022\030\n\004room\030\001 \001(\0132\n.prpc.Room\"Q\n\013Ch"
+    "atMessage\022\017\n\007user_id\030\001 \001(\003\022\021\n\tuser_name\030"
+    "\002 \001(\t\022\021\n\tsent_time\030\003 \001(\003\022\013\n\003msg\030\004 \001(\t\"Q\n"
+    "\017JoinChatRoomRes\022\030\n\004room\030\001 \001(\0132\n.prpc.Ro"
+    "om\022$\n\tchat_msgs\030\002 \003(\0132\021.prpc.ChatMessage"
+    "\"T\n\023SendMsg2ChatRoomReq\022\030\n\004room\030\001 \001(\0132\n."
+    "prpc.Room\022#\n\010chat_msg\030\002 \001(\0132\021.prpc.ChatM"
+    "essage\"\025\n\023SendMsg2ChatRoomRes\"S\n\024AddMagn"
+    "etCategoryReq\022\021\n\tparent_id\030\001 \001(\003\022\025\n\rcate"
+    "gory_name\030\002 \001(\t\022\021\n\tintroduce\030\003 \001(\t\"\026\n\024Ad"
+    "dMagnetCategoryRsp\"M\n\017AddMagnetUriReq\022\023\n"
+    "\013category_id\030\001 \001(\003\022\022\n\nmagnet_uri\030\002 \001(\t\022\021"
+    "\n\tintroduce\030\003 \001(\t\"\021\n\017AddMagnetUriRsp\"X\n\016"
+    "QueryMagnetReq\022\021\n\tparent_id\030\001 \001(\003\022\023\n\013sea"
+    "rch_cond\030\002 \001(\t\022\020\n\010page_num\030\003 \001(\005\022\014\n\004rows"
+    "\030\004 \001(\005\"L\n\016QueryMagnetRsp\022!\n\005items\030\001 \003(\0132"
+    "\022.prpc.CategoryItem\022\027\n\017total_row_count\030\002"
+    " \001(\005\"\"\n\024DelMagnetCategoryReq\022\n\n\002id\030\001 \001(\003"
+    "\"\026\n\024DelMagnetCategoryRsp\"\020\n\016GetTorrentsR"
+    "eq\"9\n\016GetTorrentsRsp\022\'\n\014torrent_info\030\001 \003"
+    "(\0132\021.prpc.TorrentInfo\"9\n\024RenameBtVideoNa"
+    "meReq\022\017\n\007item_id\030\001 \001(\003\022\020\n\010ref_name\030\002 \001(\t"
+    "\"\026\n\024RenameBtVideoNameRsp2\322\017\n\013UserService"
+    "\0221\n\010Register\022\022.prpc.RegisterInfo\032\021.prpc."
+    "RegisterRet\0224\n\013IsUsedEmail\022\017.prpc.EmailI"
+    "nfo\032\024.prpc.IsUsedEmailRet\022(\n\005Login\022\017.prp"
+    "c.LoginInfo\032\016.prpc.LoginRet\022,\n\tFastLogin"
+    "\022\017.prpc.LoginInfo\032\016.prpc.LoginRet\022,\n\tIsL"
+    "ogined\022\017.prpc.LoginInfo\032\016.prpc.LoginRet\022"
+    "B\n\016ChangePassword\022\027.prpc.ChangePasswordR"
+    "eq\032\027.prpc.ChangePasswordRsp\0228\n\010Download\022"
+    "\025.prpc.DownloadRequest\032\025.prpc.DownloadRe"
+    "spone\022\?\n\rRemoveTorrent\022\026.prpc.RemoveTorr"
+    "entReq\032\026.prpc.RemoveTorrentRes\022<\n\014GetMag"
+    "netUri\022\025.prpc.GetMagnetUriReq\032\025.prpc.Get"
+    "MagnetUriRsp\0229\n\013GetTorrents\022\024.prpc.GetTo"
+    "rrentsReq\032\024.prpc.GetTorrentsRsp\0229\n\013GetPe"
+    "erInfo\022\024.prpc.GetPeerInfoReq\032\024.prpc.GetP"
+    "eerInfoRsp\022<\n\nOnBtStatus\022\025.prpc.BtStatus"
+    "Request\032\025.prpc.BtStatusRespone0\001\022\?\n\rQuer"
+    "yBtVideos\022\026.prpc.QueryBtVideosReq\032\026.prpc"
+    ".QueryBtVideosRes\022E\n\017NewCategoryItem\022\030.p"
+    "rpc.NewCategoryItemReq\032\030.prpc.NewCategor"
+    "yItemRes\022E\n\017DelCategoryItem\022\030.prpc.DelCa"
+    "tegoryItemReq\032\030.prpc.DelCategoryItemRes\022"
+    "6\n\nRenameItem\022\023.prpc.RenameItemReq\032\023.prp"
+    "c.RenameItemRes\0229\n\013AddBtVideos\022\024.prpc.Ad"
+    "dBtVideosReq\032\024.prpc.AddBtVideosRes\0223\n\tSh"
+    "areItem\022\022.prpc.ShareItemReq\032\022.prpc.Share"
+    "ItemRes\022H\n\020QuerySharedItems\022\031.prpc.Query"
+    "SharedItemsReq\032\031.prpc.QuerySharedItemsRe"
+    "s\022\?\n\rDelSharedItem\022\026.prpc.DelSharedItemR"
+    "eq\032\026.prpc.DelSharedItemRes\022\?\n\rQuerySubIt"
+    "ems\022\026.prpc.QuerySubItemsReq\032\026.prpc.Query"
+    "SubItemsRes\022\?\n\rQueryItemInfo\022\026.prpc.Quer"
+    "yItemInfoReq\032\026.prpc.QueryItemInfoRes\022B\n\016"
+    "UploadSubtitle\022\027.prpc.UploadSubtitleReq\032"
+    "\027.prpc.UploadSubtitleRes\022K\n\021RenameBtVide"
+    "oName\022\032.prpc.RenameBtVideoNameReq\032\032.prpc"
+    ".RenameBtVideoNameRsp\0223\n\tGetBtMeta\022\022.prp"
+    "c.GetBtMetaReq\032\022.prpc.GetBtMetaRsp\022<\n\014Ne"
+    "wBtHlsTask\022\025.prpc.NewBtHlsTaskReq\032\025.prpc"
+    ".NewBtHlsTaskRsp\022>\n\014JoinChatRoom\022\025.prpc."
+    "JoinChatRoomReq\032\025.prpc.JoinChatRoomRes0\001"
+    "\022H\n\020SendMsg2ChatRoom\022\031.prpc.SendMsg2Chat"
+    "RoomReq\032\031.prpc.SendMsg2ChatRoomRes\022K\n\021Ad"
+    "dMagnetCategory\022\032.prpc.AddMagnetCategory"
+    "Req\032\032.prpc.AddMagnetCategoryRsp\022<\n\014AddMa"
+    "gnetUri\022\025.prpc.AddMagnetUriReq\032\025.prpc.Ad"
+    "dMagnetUriRsp\0229\n\013QueryMagnet\022\024.prpc.Quer"
+    "yMagnetReq\032\024.prpc.QueryMagnetRsp\022K\n\021DelM"
+    "agnetCategory\022\032.prpc.DelMagnetCategoryRe"
+    "q\032\032.prpc.DelMagnetCategoryRspB\010Z\006./prpcb"
+    "\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_user_2eproto_deps[3] =
     {
@@ -1800,7 +1804,7 @@ static ::absl::once_flag descriptor_table_user_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_user_2eproto = {
     false,
     false,
-    5166,
+    5207,
     descriptor_table_protodef_user_2eproto,
     "user.proto",
     &descriptor_table_user_2eproto_once,
@@ -4383,6 +4387,8 @@ QuerySubItemsReq::QuerySubItemsReq(const QuerySubItemsReq& from) : ::google::pro
   QuerySubItemsReq* const _this = this;
   (void)_this;
   new (&_impl_) Impl_{
+      decltype(_impl_.types_){from._internal_types()},
+      /*decltype(_impl_._types_cached_byte_size_)*/ {0},
       decltype(_impl_.share_id_){},
       decltype(_impl_.parent_id_){},
       decltype(_impl_.page_num_){},
@@ -4408,6 +4414,8 @@ QuerySubItemsReq::QuerySubItemsReq(const QuerySubItemsReq& from) : ::google::pro
 inline void QuerySubItemsReq::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
+      decltype(_impl_.types_){arena},
+      /*decltype(_impl_._types_cached_byte_size_)*/ {0},
       decltype(_impl_.share_id_){},
       decltype(_impl_.parent_id_){::int64_t{0}},
       decltype(_impl_.page_num_){0},
@@ -4427,6 +4435,7 @@ QuerySubItemsReq::~QuerySubItemsReq() {
 }
 inline void QuerySubItemsReq::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _internal_mutable_types()->~RepeatedField();
   _impl_.share_id_.Destroy();
 }
 void QuerySubItemsReq::SetCachedSize(int size) const {
@@ -4439,6 +4448,7 @@ PROTOBUF_NOINLINE void QuerySubItemsReq::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  _internal_mutable_types()->Clear();
   _impl_.share_id_.ClearToEmpty();
   ::memset(&_impl_.parent_id_, 0, static_cast<::size_t>(
       reinterpret_cast<char*>(&_impl_.desc_) -
@@ -4454,15 +4464,15 @@ const char* QuerySubItemsReq::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 5, 0, 38, 2> QuerySubItemsReq::_table_ = {
+const ::_pbi::TcParseTable<3, 6, 0, 38, 2> QuerySubItemsReq::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    5, 56,  // max_field_number, fast_idx_mask
+    6, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967264,  // skipmap
+    4294967232,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    5,  // num_field_entries
+    6,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     &_QuerySubItemsReq_default_instance_._instance,
@@ -4484,7 +4494,9 @@ const ::_pbi::TcParseTable<3, 5, 0, 38, 2> QuerySubItemsReq::_table_ = {
     // bool desc = 5;
     {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(QuerySubItemsReq, _impl_.desc_), 63>(),
      {40, 63, 0, PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.desc_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+    // repeated .prpc.CategoryItem.Type types = 6;
+    {::_pbi::TcParser::FastV32P1,
+     {50, 63, 0, PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.types_)}},
     {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
@@ -4504,6 +4516,9 @@ const ::_pbi::TcParseTable<3, 5, 0, 38, 2> QuerySubItemsReq::_table_ = {
     // bool desc = 5;
     {PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.desc_), 0, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kBool)},
+    // repeated .prpc.CategoryItem.Type types = 6;
+    {PROTOBUF_FIELD_OFFSET(QuerySubItemsReq, _impl_.types_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kPackedOpenEnum)},
   }},
   // no aux_entries
   {{
@@ -4556,6 +4571,15 @@ const ::_pbi::TcParseTable<3, 5, 0, 38, 2> QuerySubItemsReq::_table_ = {
         5, this->_internal_desc(), target);
   }
 
+  // repeated .prpc.CategoryItem.Type types = 6;
+  {
+    int byte_size = _impl_._types_cached_byte_size_.Get();
+    if (byte_size > 0) {
+      target = stream->WriteEnumPacked(6, _internal_types(),
+                                       byte_size, target);
+    }
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -4573,6 +4597,23 @@ const ::_pbi::TcParseTable<3, 5, 0, 38, 2> QuerySubItemsReq::_table_ = {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  // repeated .prpc.CategoryItem.Type types = 6;
+  {
+    std::size_t data_size = 0;
+    auto count = static_cast<std::size_t>(this->_internal_types_size());
+
+    for (std::size_t i = 0; i < count; ++i) {
+      data_size += ::_pbi::WireFormatLite::EnumSize(
+          this->_internal_types().Get(static_cast<int>(i)));
+    }
+    total_size += data_size;
+    if (data_size > 0) {
+      total_size += 1;
+      total_size += ::_pbi::WireFormatLite::Int32Size(
+          static_cast<int32_t>(data_size));
+    }
+    _impl_._types_cached_byte_size_.Set(::_pbi::ToCachedSize(data_size));
+  }
   // string share_id = 2;
   if (!this->_internal_share_id().empty()) {
     total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -4620,6 +4661,7 @@ void QuerySubItemsReq::MergeImpl(::google::protobuf::Message& to_msg, const ::go
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  _this->_internal_mutable_types()->MergeFrom(from._internal_types());
   if (!from._internal_share_id().empty()) {
     _this->_internal_set_share_id(from._internal_share_id());
   }
@@ -4654,6 +4696,7 @@ void QuerySubItemsReq::InternalSwap(QuerySubItemsReq* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.types_.InternalSwap(&other->_impl_.types_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.share_id_, lhs_arena,
                                        &other->_impl_.share_id_, rhs_arena);
   ::google::protobuf::internal::memswap<

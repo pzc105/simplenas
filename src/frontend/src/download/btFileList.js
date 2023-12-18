@@ -77,15 +77,19 @@ const FileListHandler = ({ infoHash }) => {
 
   return (
     <Container>
-      <Grid container >
-        <FolderSelector style={{ maxWidth: '20vw' }} select={(id) => selectedDirId.current = id} />
-        <Button
-          style={{ width: "10vw" }}
-          variant="contained"
-          onClick={saveVideos}
-          color="primary" >
-          保存
-        </Button>
+      <Grid container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Grid item xs={6}>
+          <FolderSelector style={{ maxWidth: '20vw' }} select={(id) => selectedDirId.current = id} />
+        </Grid>
+        <Grid item xs={6}>
+          <Button
+            style={{ width: "10vw" }}
+            variant="contained"
+            onClick={saveVideos}
+            color="primary" >
+            保存
+          </Button>
+        </Grid>
       </Grid>
       <FormGroup>{
         sortedVideos.map((f) => {
@@ -102,7 +106,7 @@ const FileListHandler = ({ infoHash }) => {
         })
       }
       </FormGroup>
-    </Container>
+    </Container >
   )
 }
 

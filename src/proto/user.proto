@@ -139,6 +139,7 @@ message QuerySubItemsReq {
   int32 page_num = 3;
   int32 rows = 4;
   bool desc = 5;
+  repeated CategoryItem.Type types = 6;
 }
 
 message QuerySubItemsRes {

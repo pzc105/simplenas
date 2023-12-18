@@ -179,7 +179,7 @@ func (m *Manager) GetItemsByParent(params *GetItemsByParentParams) ([]*CategoryI
 		return nil, err
 	}
 	if params.PageNum >= 0 && params.Rows > 0 {
-		subIds := item.GetSubItemIds()
+		subIds := item.GetSubItemIdsInTypes(params.Types)
 		if len(subIds) == 0 {
 			return []*CategoryItem{}, nil
 		}
@@ -204,13 +204,11 @@ func (m *Manager) GetItemsByParent(params *GetItemsByParentParams) ([]*CategoryI
 		}
 		return m.GetItems(params.Querier, ids...)
 	}
+	subIds := item.GetSubItemIdsInTypes(params.Types)
 	if params.Desc {
-		ids := make([]ptype.CategoryID, len(item.subItemIds))
-		copy(ids, item.subItemIds)
-		utils.Reverse[[]ptype.CategoryID](ids)
-		return m.GetItems(params.Querier, ids...)
+		utils.Reverse[[]ptype.CategoryID](subIds)
 	}
-	return m.GetItems(params.Querier, item.subItemIds...)
+	return m.GetItems(params.Querier, subIds...)
 }
 
 func (m *Manager) GetItems(querier ptype.UserID, itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {

@@ -13,13 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
+var global = (function() {
+  if (this) { return this; }
+  if (typeof window !== 'undefined') { return window; }
+  if (typeof global !== 'undefined') { return global; }
+  if (typeof self !== 'undefined') { return self; }
+  return Function('return this')();
+}.call(null));
 
 var category_pb = require('./category_pb.js');
 goog.object.extend(proto, category_pb);
@@ -409,7 +409,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.prpc.QuerySubItemsReq = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.prpc.QuerySubItemsReq.repeatedFields_, null);
 };
 goog.inherits(proto.prpc.QuerySubItemsReq, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -3537,6 +3537,13 @@ proto.prpc.RenameItemRes.serializeBinaryToWriter = function(message, writer) {
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.prpc.QuerySubItemsReq.repeatedFields_ = [6];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -3572,7 +3579,8 @@ proto.prpc.QuerySubItemsReq.toObject = function(includeInstance, msg) {
     shareId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     pageNum: jspb.Message.getFieldWithDefault(msg, 3, 0),
     rows: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    desc: jspb.Message.getBooleanFieldWithDefault(msg, 5, false)
+    desc: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
+    typesList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -3628,6 +3636,12 @@ proto.prpc.QuerySubItemsReq.deserializeBinaryFromReader = function(msg, reader) 
     case 5:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setDesc(value);
+      break;
+    case 6:
+      var values = /** @type {!Array<!proto.prpc.CategoryItem.Type>} */ (reader.isDelimited() ? reader.readPackedEnum() : [reader.readEnum()]);
+      for (var i = 0; i < values.length; i++) {
+        msg.addTypes(values[i]);
+      }
       break;
     default:
       reader.skipField();
@@ -3690,6 +3704,13 @@ proto.prpc.QuerySubItemsReq.serializeBinaryToWriter = function(message, writer) 
   if (f) {
     writer.writeBool(
       5,
+      f
+    );
+  }
+  f = message.getTypesList();
+  if (f.length > 0) {
+    writer.writePackedEnum(
+      6,
       f
     );
   }
@@ -3783,6 +3804,43 @@ proto.prpc.QuerySubItemsReq.prototype.getDesc = function() {
  */
 proto.prpc.QuerySubItemsReq.prototype.setDesc = function(value) {
   return jspb.Message.setProto3BooleanField(this, 5, value);
+};
+
+
+/**
+ * repeated CategoryItem.Type types = 6;
+ * @return {!Array<!proto.prpc.CategoryItem.Type>}
+ */
+proto.prpc.QuerySubItemsReq.prototype.getTypesList = function() {
+  return /** @type {!Array<!proto.prpc.CategoryItem.Type>} */ (jspb.Message.getRepeatedField(this, 6));
+};
+
+
+/**
+ * @param {!Array<!proto.prpc.CategoryItem.Type>} value
+ * @return {!proto.prpc.QuerySubItemsReq} returns this
+ */
+proto.prpc.QuerySubItemsReq.prototype.setTypesList = function(value) {
+  return jspb.Message.setField(this, 6, value || []);
+};
+
+
+/**
+ * @param {!proto.prpc.CategoryItem.Type} value
+ * @param {number=} opt_index
+ * @return {!proto.prpc.QuerySubItemsReq} returns this
+ */
+proto.prpc.QuerySubItemsReq.prototype.addTypes = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 6, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.prpc.QuerySubItemsReq} returns this
+ */
+proto.prpc.QuerySubItemsReq.prototype.clearTypesList = function() {
+  return this.setTypesList([]);
 };
 
 
