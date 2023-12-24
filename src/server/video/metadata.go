@@ -37,6 +37,7 @@ type Tags struct {
 	Encoder                     string    `json:"encoder"`
 	CreationTime                time.Time `json:"creation_time"`
 	Language                    string    `json:"language"`
+	HandlerName                 string    `json:"handler_name"`
 }
 
 type Stream struct {

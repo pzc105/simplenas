@@ -77,14 +77,18 @@ func mapStreams(params *GenHlsOpts, cmdParams *[]string) (
 	selectAudioStreams := func(i int, meta *Metadata) {
 		aStreams := GetStreams(meta.Streams, IsAudioStream)
 		for _, s := range aStreams {
+			lang := strings.TrimSpace(s.Tags.Language)
+			if len(lang) == 0 || lang == "und" {
+				lang = fmt.Sprintf("audio%d", s.Index)
+			}
 			selectedAudioStreams = append(selectedAudioStreams,
 				pair{
 					findex:   i,
 					sindex:   s.Index,
 					channels: s.Channels,
-					lang:     s.Tags.Language,
+					lang:     lang,
 				})
-			audioLangInGroup = append(audioLangInGroup, s.Tags.Language)
+			audioLangInGroup = append(audioLangInGroup, lang)
 		}
 	}
 	selectAudioStreams(0, meta)
