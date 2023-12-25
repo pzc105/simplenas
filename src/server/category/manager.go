@@ -211,7 +211,7 @@ func (m *Manager) GetItemsByParent(params *GetItemsByParentParams) ([]*CategoryI
 	return m.GetItems(params.Querier, subIds...)
 }
 
-func (m *Manager) GetItems(querier ptype.UserID, itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
+func (m *Manager) getUnorderedItems(querier ptype.UserID, itemIds ...ptype.CategoryID) ([]*CategoryItem, error, bool) {
 	remainIds := make([]ptype.CategoryID, 0, len(itemIds))
 	ret := make([]*CategoryItem, 0, len(itemIds))
 	m.itemsMtx.Lock()
@@ -225,7 +225,7 @@ func (m *Manager) GetItems(querier ptype.UserID, itemIds ...ptype.CategoryID) ([
 	}
 	m.itemsMtx.Unlock()
 	if len(remainIds) == 0 {
-		return ret, nil
+		return ret, nil, true
 	}
 
 	mtxes := make([]*sync.Mutex, 0, len(remainIds))
@@ -262,7 +262,15 @@ func (m *Manager) GetItems(querier ptype.UserID, itemIds ...ptype.CategoryID) ([
 		}
 	}
 
-	return ret, err
+	return ret, err, false
+}
+
+func (m *Manager) GetItems(querier ptype.UserID, itemIds ...ptype.CategoryID) ([]*CategoryItem, error) {
+	items, err, f := m.getUnorderedItems(querier, itemIds...)
+	if !f {
+		items, err, _ = m.getUnorderedItems(querier, itemIds...)
+	}
+	return items, err
 }
 
 func (m *Manager) DelItem(deleter ptype.UserID, itemId ptype.CategoryID) (err error) {
