@@ -33,13 +33,18 @@ type VideoService struct {
 }
 
 func saveStartTime(userId ptype.UserID, vid ptype.VideoID, lastTime string) {
-	db.GREDIS.Set(context.Background(), fmt.Sprintf("video_offset_%d_%d", userId, vid), lastTime, 0)
+	_, err := db.GREDIS.Set(context.Background(), fmt.Sprintf("video_offset_%d_%d", userId, vid), lastTime, 0).Result()
+	if err != nil {
+		log.Warnf("[video] failed to set vid:%d offset time, err:%v", vid, err)
+	}
 }
 
 func loadStartTime(userId ptype.UserID, vid ptype.VideoID) string {
 	startTime, err := db.GREDIS.Get(context.Background(), fmt.Sprintf("video_offset_%d_%d", userId, vid)).Result()
 	if err == nil {
 		return startTime
+	} else {
+		log.Warnf("[video] failed to load vid:%d offset time, err:%v", vid, err)
 	}
 	return "0"
 }
