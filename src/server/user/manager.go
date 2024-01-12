@@ -92,13 +92,13 @@ func (um *UserManger) addUser(user *User) error {
 	return nil
 }
 
-func (um *UserManger) getUser(id ptype.UserID) *User {
+func (um *UserManger) GetUser(id ptype.UserID) *User {
 	u, _ := um.LoadUser(id)
 	return u
 }
 
 func (um *UserManger) ChangeUserName(id ptype.UserID, name string) error {
-	u := um.getUser(id)
+	u := um.GetUser(id)
 	if u == nil {
 		return errors.New("not exist")
 	}
@@ -173,7 +173,7 @@ func (um *UserManger) QueryBtVideoMetadata(userId ptype.UserID, infoHash *bt.Inf
 }
 
 func (um *UserManger) NewCategoryItem(userId ptype.UserID, params *category.NewCategoryParams) error {
-	user := um.getUser(userId)
+	user := um.GetUser(userId)
 	if user == nil {
 		return errors.New("not found user")
 	}

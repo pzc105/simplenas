@@ -29,6 +29,7 @@ export default function Player() {
   const [videoItemList, setVideoItemList] = useState([])
   const videoItemListRef = useRef([])
   const autoContinuedPlay = useSelector((state) => store.selectAutoPlayVideo(state));
+  const userInfo = useSelector((state) => store.selectUserInfo(state))
 
   const [urlRef, setUrl] = useState('')
   const subtitlesRef = useRef([])
@@ -173,13 +174,7 @@ export default function Player() {
       let dans = chatMsgs.map((msg) => {
         try {
           let item = JSON.parse(msg.getMsg())
-          return {
-            time: item[0],
-            type: item[1],
-            color: item[2],
-            author: item[3],
-            text: item[4],
-          }
+          return item
         } catch {
           return {}
         }
@@ -226,7 +221,8 @@ export default function Player() {
       },
       danmaku: {
         api: danmakuUrl,
-        id: 0,
+        userId: userInfo ? userInfo.id : -1,
+        userName: userInfo ? userInfo.userName : "",
         maximum: 10000,
         withCredentials: true,
       },

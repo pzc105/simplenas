@@ -10,25 +10,32 @@ import (
 	"os"
 	"pnas/db"
 	"pnas/log"
+	"pnas/prpc"
 	"pnas/ptype"
 	"pnas/service/session"
 	"pnas/setting"
+	"pnas/user"
 	"strconv"
 	"strings"
 
 	"github.com/gorilla/mux"
 	"github.com/grafov/m3u8"
+
+	"google.golang.org/protobuf/encoding/protojson"
+	"google.golang.org/protobuf/proto"
 )
 
 type UserVideoData interface {
 	HasVideo(userId ptype.UserID, vid ptype.VideoID) bool
+	GetUser(id ptype.UserID) *user.User
 }
 
 type VideoService struct {
-	ud          UserVideoData
-	shares      IItemShares
-	sessions    session.ISessions
-	router      *mux.Router
+	ud       UserVideoData
+	shares   IItemShares
+	sessions session.ISessions
+	router   *mux.Router
+
 	recvDanmaku func(vid ptype.VideoID, danmakuJson string)
 }
 
@@ -312,10 +319,24 @@ func (v *VideoService) handleDanmaku(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	vidstr, ok1 := vars["vid"]
 	if !ok1 {
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	vid, err := strconv.ParseInt(vidstr, 10, 64)
 	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	s, _ := v.sessions.GetSession(r)
+	if s == nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	user := v.ud.GetUser(s.UserId)
+	if user == nil {
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
@@ -327,51 +348,45 @@ func (v *VideoService) handleDanmaku(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		m := make(map[string]interface{})
-		json.Unmarshal(body, &m)
-		var item []interface{}
-		if _, ok := m["time"]; !ok {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		if _, ok := m["type"]; !ok {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		if _, ok := m["color"]; !ok {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		if _, ok := m["author"]; !ok {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		if _, ok := m["text"]; !ok {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		item = append(item, m["time"])
-		item = append(item, m["type"])
-		item = append(item, m["color"])
-		item = append(item, m["author"])
-		item = append(item, m["text"])
-		wd, err := json.Marshal(item)
+		var danmaku prpc.Danmaku
+		json.Unmarshal(body, &danmaku)
+
+		danmaku.UserId = int64(s.UserId)
+		danmaku.UserName = user.GetUserName()
+
+		wd, err := proto.Marshal(&danmaku)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		err = db.GREDIS.LPush(context.Background(), redisKey, wd).Err()
+		err = db.GREDIS.HSet(context.Background(), redisKey, danmaku.Id, wd).Err()
 		if err == nil {
 			w.Write([]byte("{\"code\":0}"))
 			if v.recvDanmaku != nil {
-				v.recvDanmaku(ptype.VideoID(vid), string(wd))
+				marshaler := protojson.MarshalOptions{EmitUnpopulated: true, UseProtoNames: true}
+				dbytes, _ := marshaler.Marshal(&danmaku)
+				v.recvDanmaku(ptype.VideoID(vid), string(dbytes))
 			}
 		}
 	} else if r.Method == http.MethodGet {
-		vals, err := db.GREDIS.LRange(context.Background(), redisKey, 0, -1).Result()
+		mvals, err := db.GREDIS.HGetAll(context.Background(), redisKey).Result()
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
+		}
+		var vals []string
+		for _, v := range mvals {
+			var danmaku prpc.Danmaku
+			err := proto.Unmarshal([]byte(v), &danmaku)
+			if err != nil {
+				continue
+			}
+			marshaler := protojson.MarshalOptions{EmitUnpopulated: true, UseProtoNames: true}
+			dbytes, err := marshaler.Marshal(&danmaku)
+			if err != nil {
+				continue
+			}
+			vals = append(vals, string(dbytes))
 		}
 		w.Write([]byte(fmt.Sprintf("{\"code\":0, \"data\": [%s]}", strings.Join(vals, ","))))
 	}
