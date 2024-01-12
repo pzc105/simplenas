@@ -351,6 +351,12 @@ func (v *VideoService) handleDanmaku(w http.ResponseWriter, r *http.Request) {
 		var danmaku prpc.Danmaku
 		json.Unmarshal(body, &danmaku)
 
+		if danmaku.UserId != int64(s.UserId) {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		danmaku.Id = fmt.Sprintf("%d_%d", s.UserId, danmaku.STime)
 		danmaku.UserId = int64(s.UserId)
 		danmaku.UserName = user.GetUserName()
 
