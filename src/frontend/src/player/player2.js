@@ -40,6 +40,7 @@ export default function Player() {
   const serverOffsetTime = useRef(undefined)
   const lastOffsetTime = useRef(0.0)
   const lastSaveTime = useRef(0)
+  const afterRequestOffsetTime = useRef(false)
 
   const requestVideoTimeOffset = () => {
     if (shareid || serverOffsetTime.current != undefined) {
@@ -57,15 +58,17 @@ export default function Player() {
           serverOffsetTime.current = Number(data)
           dplayerRef.current.seek(serverOffsetTime.current)
         }
+        afterRequestOffsetTime.current = true;
       }).catch(error => {
         if (dplayerRef.current) {
           dplayerRef.current.seek(0)
         }
+        afterRequestOffsetTime.current = true;
       });
   }
 
   const saveVideoTimeOffset = (offset, force) => {
-    if (lastOffsetTime.current === offset) {
+    if (Math.abs(lastOffsetTime.current - offset) < 1.0 || !afterRequestOffsetTime.current) {
       return
     }
     lastOffsetTime.current = offset
