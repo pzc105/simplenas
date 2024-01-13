@@ -58,10 +58,16 @@ export default function Player() {
           serverOffsetTime.current = Number(data)
           dplayerRef.current.seek(serverOffsetTime.current)
         }
+        if (autoContinuedPlay) {
+          dplayerRef.current.play()
+        }
         afterRequestOffsetTime.current = true;
       }).catch(error => {
         if (dplayerRef.current) {
           dplayerRef.current.seek(0)
+        }
+        if (autoContinuedPlay) {
+          dplayerRef.current.play()
         }
         afterRequestOffsetTime.current = true;
       });
@@ -259,16 +265,10 @@ export default function Player() {
     dp.on('canplay', (event) => {
       videoRef.current = event.target
       requestVideoTimeOffset()
-      if (autoContinuedPlay) {
-        dplayerRef.current.play()
-      }
     })
 
     dp.on('timeupdate', (event) => {
-      const isVideoPlaying = videoRef.current.currentTime > 0 && !videoRef.current.paused && !videoRef.current.ended && videoRef.current.readyState > 2;
-      if (isVideoPlaying) {
-        saveVideoTimeOffset(videoRef.current.currentTime)
-      }
+      saveVideoTimeOffset(videoRef.current.currentTime)
     })
 
     dp.on('fullscreen', () => {
