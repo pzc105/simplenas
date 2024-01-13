@@ -105,7 +105,7 @@ retry:
 		}
 		t, ok = ut.torrents[*infoHash]
 		if !ok {
-			t = loadTorrent(&ut.btClient, tid)
+			t = loadTorrent(&ut.btClient, tid, ut)
 			if t == nil {
 				ut.mtx.Unlock()
 				continue
@@ -292,14 +292,14 @@ func (ut *UserTorrentsImpl) NewTorrentByMagnet(magnetUri string) (*Torrent, erro
 	if t, ok := ut.torrents[*infoHash]; ok {
 		return t, errors.New("existed torrent")
 	}
-	t, err := loadTorrentByInfoHash(&ut.btClient, infoHash)
+	t, err := loadTorrentByInfoHash(&ut.btClient, infoHash, ut)
 	if err == nil {
 		if len(t.GetMagnetUri()) == 0 {
 			t.UpdateMagnetUri(magnetUri)
 		}
 		return t, errors.New("existed torrent")
 	}
-	t, err = newTorrent(&ut.btClient, infoHash, magnetUri)
+	t, err = newTorrent(&ut.btClient, infoHash, magnetUri, ut)
 	if err != nil {
 		return nil, err
 	}
@@ -311,9 +311,9 @@ func (ut *UserTorrentsImpl) initTorrentLocked(infoHash *InfoHash, magnetUri stri
 		return t
 	}
 
-	t, err := loadTorrentByInfoHash(&ut.btClient, infoHash)
+	t, err := loadTorrentByInfoHash(&ut.btClient, infoHash, ut)
 	if err != nil {
-		t, err = newTorrent(&ut.btClient, infoHash, magnetUri)
+		t, err = newTorrent(&ut.btClient, infoHash, magnetUri, ut)
 		if err != nil {
 			return nil
 		}
@@ -380,9 +380,6 @@ func (ut *UserTorrentsImpl) Download(params *DownloadParams) (*prpc.DownloadResp
 		if t != nil {
 			t.addUser(ut.getUserDataLocked(params.UserId))
 		}
-		if params.UserId != ptype.AdminId {
-			t.addUser(ut.getUserDataLocked(ptype.AdminId))
-		}
 		return res, nil
 	} else {
 		log.Infof("[bt] uid:%d failed to download %s err: %v", params.UserId, hex.EncodeToString([]byte(infoHash.Hash)), err)
@@ -417,9 +414,6 @@ func (ut *UserTorrentsImpl) NewDownloadTask(params *DownloadTaskParams) (*prpc.D
 		if t != nil {
 			t.addTask(ut.getUserDataLocked(params.UserId), params)
 		}
-		if params.UserId != ptype.AdminId {
-			t.addUser(ut.getUserDataLocked(ptype.AdminId))
-		}
 		return res, nil
 	} else {
 		log.Infof("[bt] uid:%d failed to download %s err: %v", params.UserId, hex.EncodeToString([]byte(infoHash.Hash)), err)
@@ -427,29 +421,36 @@ func (ut *UserTorrentsImpl) NewDownloadTask(params *DownloadTaskParams) (*prpc.D
 	}
 }
 
+func (ut *UserTorrentsImpl) realRemoveTorrentLocked(params *RemoveTorrentParams, infoHash *InfoHash) (*prpc.RemoveTorrentRes, error) {
+	log.Infof("[bt] uid:%d removing %s", params.UserId, hex.EncodeToString([]byte(infoHash.Hash)))
+	res, err := ut.btClient.RemoveTorrent(context.Background(), params.Req)
+	if err != nil {
+		return nil, err
+	}
+	t, ok := ut.torrents[*infoHash]
+	if !ok {
+		return nil, errors.New("not found torrent")
+	}
+	delete(ut.torrents, *infoHash)
+	t.remove()
+	return res, err
+}
+
 func (ut *UserTorrentsImpl) RemoveTorrent(params *RemoveTorrentParams) (*prpc.RemoveTorrentRes, error) {
-	infoHash := *TranInfoHash(params.Req.InfoHash)
+	infoHash := TranInfoHash(params.Req.InfoHash)
 	ut.mtx.Lock()
 	defer ut.mtx.Unlock()
 	if params.UserId == ptype.AdminId {
-		log.Infof("[bt] uid:%d removing %s", params.UserId, hex.EncodeToString([]byte(infoHash.Hash)))
-		res, err := ut.btClient.RemoveTorrent(context.Background(), params.Req)
-		if err != nil {
-			return nil, err
-		}
-		t, ok := ut.torrents[infoHash]
-		if !ok {
-			return nil, errors.New("not found torrent")
-		}
-		delete(ut.torrents, infoHash)
-		t.remove()
-		return res, err
+		ut.realRemoveTorrentLocked(params, infoHash)
 	} else {
-		t, ok := ut.torrents[infoHash]
+		t, ok := ut.torrents[*infoHash]
 		if !ok {
 			return nil, errors.New("not found torrent")
 		}
 		t.removeUser(params.UserId)
+		if t.getUserCount() == 0 {
+			ut.realRemoveTorrentLocked(params, infoHash)
+		}
 	}
 	return &prpc.RemoveTorrentRes{}, nil
 }

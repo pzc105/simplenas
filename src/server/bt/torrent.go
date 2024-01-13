@@ -41,11 +41,13 @@ type Torrent struct {
 	removed         bool
 	lastSt          *prpc.TorrentStatus
 
+	ut *UserTorrentsImpl
+
 	btClient *BtClient
 	lastSave time.Time
 }
 
-func (t *Torrent) init() {
+func (t *Torrent) init(ut *UserTorrentsImpl) {
 	t.whoHas = make(map[ptype.UserID]*userData)
 	t.removed = false
 	t.lastSt = &prpc.TorrentStatus{
@@ -57,6 +59,7 @@ func (t *Torrent) init() {
 	if t.state == prpc.BtStateEnum_seeding {
 		t.lastSt.TotalDone = t.lastSt.Total
 	}
+	t.ut = ut
 }
 
 // must with UserTorrentsImpl.mtx
@@ -111,6 +114,12 @@ func (t *Torrent) removeUser(uid ptype.UserID) error {
 	}
 	log.Debugf("[bt] torrent:%d remove uid:%v", t.base.Id, uid)
 	return ud.removeTorrent(t.base.Id, true)
+}
+
+func (t *Torrent) getUserCount() int {
+	t.mtx.Lock()
+	defer t.mtx.Unlock()
+	return len(t.whoHas)
 }
 
 // must with UserTorrentsImpl.mtx
@@ -254,10 +263,21 @@ func (t *Torrent) updateStatus(s *prpc.TorrentStatus) {
 		t.lastSave = now
 	}
 	uds := []*userData{}
+	hasAdmin := false
 	for _, ud := range t.whoHas {
 		uds = append(uds, ud)
+		if ud.userId == ptype.AdminId {
+			hasAdmin = true
+		}
 	}
 	t.mtx.Unlock()
+
+	if !hasAdmin {
+		ud := t.ut.getUserData(ptype.AdminId)
+		if ud != nil {
+			ud.onBtStatus(t.base.Id, s)
+		}
+	}
 
 	for _, ud := range uds {
 		ud.onBtStatus(t.base.Id, s)
