@@ -54,17 +54,23 @@ export default function Player() {
       },
     }).then(response => response.text())
       .then(data => {
-        if (dplayerRef.current && utils.isNumber(data)) {
+        if (dplayerRef.current && videoRef.current && utils.isNumber(data)) {
           serverOffsetTime.current = Number(data)
-          dplayerRef.current.seek(serverOffsetTime.current)
+          videoRef.current.currentTime = serverOffsetTime.current
+          if (dplayerRef.current.danmaku) {
+            dplayerRef.current.danmaku.seek()
+          }
         }
         if (autoContinuedPlay) {
           dplayerRef.current.play()
         }
         afterRequestOffsetTime.current = true;
       }).catch(error => {
-        if (dplayerRef.current) {
-          dplayerRef.current.seek(0)
+        if (dplayerRef.current && videoRef.current) {
+          videoRef.current.currentTime = 0
+          if (dplayerRef.current.danmaku) {
+            dplayerRef.current.danmaku.seek()
+          }
         }
         if (autoContinuedPlay) {
           dplayerRef.current.play()
@@ -316,8 +322,8 @@ export default function Player() {
   }
   const touchend = (e) => {
     var diffX = touchEndX.current - touchStartX.current;
-    if (videoRef.current && Math.abs(diffX) > 30) {
-      videoRef.current.currentTime += diffX / 10
+    if (videoRef.current && dplayerRef.current && Math.abs(diffX) > 30) {
+      dplayerRef.current.seek(videoRef.current.currentTime + diffX / 10)
     }
   }
 
