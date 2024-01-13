@@ -274,7 +274,9 @@ export default function Player() {
     })
 
     dp.on('timeupdate', (event) => {
-      saveVideoTimeOffset(videoRef.current.currentTime)
+      if (videoRef.current && videoRef.current.currentTime) {
+        saveVideoTimeOffset(videoRef.current.currentTime)
+      }
     })
 
     dp.on('fullscreen', () => {
