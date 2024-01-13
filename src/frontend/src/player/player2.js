@@ -265,7 +265,10 @@ export default function Player() {
     })
 
     dp.on('timeupdate', (event) => {
-      saveVideoTimeOffset(event.target.currentTime)
+      const isVideoPlaying = videoRef.current.currentTime > 0 && !videoRef.current.paused && !videoRef.current.ended && videoRef.current.readyState > 2;
+      if (isVideoPlaying) {
+        saveVideoTimeOffset(videoRef.current.currentTime)
+      }
     })
 
     dp.on('fullscreen', () => {
