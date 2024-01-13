@@ -305,8 +305,24 @@ export default function Player() {
     dispatch(store.userSlice.actions.setOpenGlobalChat(false))
   }
 
+  var touchStartX = useRef(0);
+  var touchEndX = useRef(0);
+  const touchstart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchEndX.current = touchStartX.current
+  }
+  const touchmove = (e) => {
+    touchEndX.current = e.touches[0].clientX;
+  }
+  const touchend = (e) => {
+    var diffX = touchEndX.current - touchStartX.current;
+    if (videoRef.current && Math.abs(diffX) > 30) {
+      videoRef.current.currentTime += diffX / 10
+    }
+  }
+
   return (
-    <Container >
+    <Container onTouchStart={touchstart} onTouchMove={touchmove} onTouchEnd={touchend}>
       <CssBaseline />
       <Grid container spacing={2} sx={{ display: "flex" }}>
         <Grid item sm={12} md={8} >
