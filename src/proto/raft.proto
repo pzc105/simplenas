@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package prpc;
+
+option go_package = "./prpc";
+
+message JoinMsg {
+  string my_id = 1;
+  string my_address = 2;
+  int32 role = 3;
+  bytes slots = 4;
+}
+
+message JoinRet {
+  bool success = 1;
+  uint64 current_epoch = 2;
+}
+
+message SendMsg {
+  enum Type {
+    Unknown = 0;
+    Hello = 1;
+    Join = 2;
+  }
+  Type type = 1;
+  JoinMsg joinMsg = 2;
+}
+
+message SendRet {
+
+}
