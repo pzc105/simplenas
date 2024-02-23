@@ -20,56 +20,108 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type SendMsg_Type int32
+type RaftTransaction_Type int32
 
 const (
-	SendMsg_Unknown SendMsg_Type = 0
-	SendMsg_Hello   SendMsg_Type = 1
-	SendMsg_Join    SendMsg_Type = 2
+	RaftTransaction_Unknown RaftTransaction_Type = 0
+	RaftTransaction_NewNode RaftTransaction_Type = 1
 )
 
-// Enum value maps for SendMsg_Type.
+// Enum value maps for RaftTransaction_Type.
 var (
-	SendMsg_Type_name = map[int32]string{
+	RaftTransaction_Type_name = map[int32]string{
 		0: "Unknown",
-		1: "Hello",
-		2: "Join",
+		1: "NewNode",
 	}
-	SendMsg_Type_value = map[string]int32{
+	RaftTransaction_Type_value = map[string]int32{
 		"Unknown": 0,
-		"Hello":   1,
-		"Join":    2,
+		"NewNode": 1,
 	}
 )
 
-func (x SendMsg_Type) Enum() *SendMsg_Type {
-	p := new(SendMsg_Type)
+func (x RaftTransaction_Type) Enum() *RaftTransaction_Type {
+	p := new(RaftTransaction_Type)
 	*p = x
 	return p
 }
 
-func (x SendMsg_Type) String() string {
+func (x RaftTransaction_Type) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (SendMsg_Type) Descriptor() protoreflect.EnumDescriptor {
+func (RaftTransaction_Type) Descriptor() protoreflect.EnumDescriptor {
 	return file_raft_proto_enumTypes[0].Descriptor()
 }
 
-func (SendMsg_Type) Type() protoreflect.EnumType {
+func (RaftTransaction_Type) Type() protoreflect.EnumType {
 	return &file_raft_proto_enumTypes[0]
 }
 
-func (x SendMsg_Type) Number() protoreflect.EnumNumber {
+func (x RaftTransaction_Type) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use SendMsg_Type.Descriptor instead.
-func (SendMsg_Type) EnumDescriptor() ([]byte, []int) {
-	return file_raft_proto_rawDescGZIP(), []int{2, 0}
+// Deprecated: Use RaftTransaction_Type.Descriptor instead.
+func (RaftTransaction_Type) EnumDescriptor() ([]byte, []int) {
+	return file_raft_proto_rawDescGZIP(), []int{1, 0}
 }
 
-type JoinMsg struct {
+type RaftMsg_Type int32
+
+const (
+	RaftMsg_Unknown    RaftMsg_Type = 0
+	RaftMsg_Action     RaftMsg_Type = 1
+	RaftMsg_SyncAction RaftMsg_Type = 2
+	RaftMsg_Ping       RaftMsg_Type = 3
+	RaftMsg_Pong       RaftMsg_Type = 4
+)
+
+// Enum value maps for RaftMsg_Type.
+var (
+	RaftMsg_Type_name = map[int32]string{
+		0: "Unknown",
+		1: "Action",
+		2: "SyncAction",
+		3: "Ping",
+		4: "Pong",
+	}
+	RaftMsg_Type_value = map[string]int32{
+		"Unknown":    0,
+		"Action":     1,
+		"SyncAction": 2,
+		"Ping":       3,
+		"Pong":       4,
+	}
+)
+
+func (x RaftMsg_Type) Enum() *RaftMsg_Type {
+	p := new(RaftMsg_Type)
+	*p = x
+	return p
+}
+
+func (x RaftMsg_Type) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (RaftMsg_Type) Descriptor() protoreflect.EnumDescriptor {
+	return file_raft_proto_enumTypes[1].Descriptor()
+}
+
+func (RaftMsg_Type) Type() protoreflect.EnumType {
+	return &file_raft_proto_enumTypes[1]
+}
+
+func (x RaftMsg_Type) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use RaftMsg_Type.Descriptor instead.
+func (RaftMsg_Type) EnumDescriptor() ([]byte, []int) {
+	return file_raft_proto_rawDescGZIP(), []int{5, 0}
+}
+
+type NewNodeAction struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -77,11 +129,10 @@ type JoinMsg struct {
 	MyId      string `protobuf:"bytes,1,opt,name=my_id,json=myId,proto3" json:"my_id,omitempty"`
 	MyAddress string `protobuf:"bytes,2,opt,name=my_address,json=myAddress,proto3" json:"my_address,omitempty"`
 	Role      int32  `protobuf:"varint,3,opt,name=role,proto3" json:"role,omitempty"`
-	Slots     []byte `protobuf:"bytes,4,opt,name=slots,proto3" json:"slots,omitempty"`
 }
 
-func (x *JoinMsg) Reset() {
-	*x = JoinMsg{}
+func (x *NewNodeAction) Reset() {
+	*x = NewNodeAction{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_raft_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -89,13 +140,13 @@ func (x *JoinMsg) Reset() {
 	}
 }
 
-func (x *JoinMsg) String() string {
+func (x *NewNodeAction) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*JoinMsg) ProtoMessage() {}
+func (*NewNodeAction) ProtoMessage() {}
 
-func (x *JoinMsg) ProtoReflect() protoreflect.Message {
+func (x *NewNodeAction) ProtoReflect() protoreflect.Message {
 	mi := &file_raft_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -107,50 +158,46 @@ func (x *JoinMsg) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use JoinMsg.ProtoReflect.Descriptor instead.
-func (*JoinMsg) Descriptor() ([]byte, []int) {
+// Deprecated: Use NewNodeAction.ProtoReflect.Descriptor instead.
+func (*NewNodeAction) Descriptor() ([]byte, []int) {
 	return file_raft_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *JoinMsg) GetMyId() string {
+func (x *NewNodeAction) GetMyId() string {
 	if x != nil {
 		return x.MyId
 	}
 	return ""
 }
 
-func (x *JoinMsg) GetMyAddress() string {
+func (x *NewNodeAction) GetMyAddress() string {
 	if x != nil {
 		return x.MyAddress
 	}
 	return ""
 }
 
-func (x *JoinMsg) GetRole() int32 {
+func (x *NewNodeAction) GetRole() int32 {
 	if x != nil {
 		return x.Role
 	}
 	return 0
 }
 
-func (x *JoinMsg) GetSlots() []byte {
-	if x != nil {
-		return x.Slots
-	}
-	return nil
-}
-
-type JoinRet struct {
+type RaftTransaction struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Success      bool   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
-	CurrentEpoch uint64 `protobuf:"varint,2,opt,name=current_epoch,json=currentEpoch,proto3" json:"current_epoch,omitempty"`
+	MyId    string               `protobuf:"bytes,1,opt,name=my_id,json=myId,proto3" json:"my_id,omitempty"`
+	Type    RaftTransaction_Type `protobuf:"varint,2,opt,name=type,proto3,enum=prpc.RaftTransaction_Type" json:"type,omitempty"`
+	Epoch   uint64               `protobuf:"varint,3,opt,name=epoch,proto3" json:"epoch,omitempty"`
+	UserRef string               `protobuf:"bytes,4,opt,name=user_ref,json=userRef,proto3" json:"user_ref,omitempty"`
+	NewNode *NewNodeAction       `protobuf:"bytes,5,opt,name=new_node,json=newNode,proto3" json:"new_node,omitempty"`
 }
 
-func (x *JoinRet) Reset() {
-	*x = JoinRet{}
+func (x *RaftTransaction) Reset() {
+	*x = RaftTransaction{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_raft_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -158,13 +205,13 @@ func (x *JoinRet) Reset() {
 	}
 }
 
-func (x *JoinRet) String() string {
+func (x *RaftTransaction) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*JoinRet) ProtoMessage() {}
+func (*RaftTransaction) ProtoMessage() {}
 
-func (x *JoinRet) ProtoReflect() protoreflect.Message {
+func (x *RaftTransaction) ProtoReflect() protoreflect.Message {
 	mi := &file_raft_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -176,36 +223,58 @@ func (x *JoinRet) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use JoinRet.ProtoReflect.Descriptor instead.
-func (*JoinRet) Descriptor() ([]byte, []int) {
+// Deprecated: Use RaftTransaction.ProtoReflect.Descriptor instead.
+func (*RaftTransaction) Descriptor() ([]byte, []int) {
 	return file_raft_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *JoinRet) GetSuccess() bool {
+func (x *RaftTransaction) GetMyId() string {
 	if x != nil {
-		return x.Success
+		return x.MyId
 	}
-	return false
+	return ""
 }
 
-func (x *JoinRet) GetCurrentEpoch() uint64 {
+func (x *RaftTransaction) GetType() RaftTransaction_Type {
 	if x != nil {
-		return x.CurrentEpoch
+		return x.Type
+	}
+	return RaftTransaction_Unknown
+}
+
+func (x *RaftTransaction) GetEpoch() uint64 {
+	if x != nil {
+		return x.Epoch
 	}
 	return 0
 }
 
-type SendMsg struct {
+func (x *RaftTransaction) GetUserRef() string {
+	if x != nil {
+		return x.UserRef
+	}
+	return ""
+}
+
+func (x *RaftTransaction) GetNewNode() *NewNodeAction {
+	if x != nil {
+		return x.NewNode
+	}
+	return nil
+}
+
+type RaftActionRet struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Type    SendMsg_Type `protobuf:"varint,1,opt,name=type,proto3,enum=prpc.SendMsg_Type" json:"type,omitempty"`
-	JoinMsg *JoinMsg     `protobuf:"bytes,2,opt,name=joinMsg,proto3" json:"joinMsg,omitempty"`
+	MyId    string `protobuf:"bytes,1,opt,name=my_id,json=myId,proto3" json:"my_id,omitempty"`
+	Epoch   uint64 `protobuf:"varint,2,opt,name=epoch,proto3" json:"epoch,omitempty"`
+	Success bool   `protobuf:"varint,3,opt,name=success,proto3" json:"success,omitempty"`
 }
 
-func (x *SendMsg) Reset() {
-	*x = SendMsg{}
+func (x *RaftActionRet) Reset() {
+	*x = RaftActionRet{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_raft_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -213,13 +282,13 @@ func (x *SendMsg) Reset() {
 	}
 }
 
-func (x *SendMsg) String() string {
+func (x *RaftActionRet) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SendMsg) ProtoMessage() {}
+func (*RaftActionRet) ProtoMessage() {}
 
-func (x *SendMsg) ProtoReflect() protoreflect.Message {
+func (x *RaftActionRet) ProtoReflect() protoreflect.Message {
 	mi := &file_raft_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -231,33 +300,44 @@ func (x *SendMsg) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SendMsg.ProtoReflect.Descriptor instead.
-func (*SendMsg) Descriptor() ([]byte, []int) {
+// Deprecated: Use RaftActionRet.ProtoReflect.Descriptor instead.
+func (*RaftActionRet) Descriptor() ([]byte, []int) {
 	return file_raft_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *SendMsg) GetType() SendMsg_Type {
+func (x *RaftActionRet) GetMyId() string {
 	if x != nil {
-		return x.Type
+		return x.MyId
 	}
-	return SendMsg_Unknown
+	return ""
 }
 
-func (x *SendMsg) GetJoinMsg() *JoinMsg {
+func (x *RaftActionRet) GetEpoch() uint64 {
 	if x != nil {
-		return x.JoinMsg
+		return x.Epoch
 	}
-	return nil
+	return 0
 }
 
-type SendRet struct {
+func (x *RaftActionRet) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+type RaftPing struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
+
+	MyId  string `protobuf:"bytes,1,opt,name=my_id,json=myId,proto3" json:"my_id,omitempty"`
+	Role  int32  `protobuf:"varint,2,opt,name=role,proto3" json:"role,omitempty"`
+	Epoch uint64 `protobuf:"varint,3,opt,name=epoch,proto3" json:"epoch,omitempty"`
 }
 
-func (x *SendRet) Reset() {
-	*x = SendRet{}
+func (x *RaftPing) Reset() {
+	*x = RaftPing{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_raft_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -265,13 +345,13 @@ func (x *SendRet) Reset() {
 	}
 }
 
-func (x *SendRet) String() string {
+func (x *RaftPing) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SendRet) ProtoMessage() {}
+func (*RaftPing) ProtoMessage() {}
 
-func (x *SendRet) ProtoReflect() protoreflect.Message {
+func (x *RaftPing) ProtoReflect() protoreflect.Message {
 	mi := &file_raft_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -283,41 +363,183 @@ func (x *SendRet) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SendRet.ProtoReflect.Descriptor instead.
-func (*SendRet) Descriptor() ([]byte, []int) {
+// Deprecated: Use RaftPing.ProtoReflect.Descriptor instead.
+func (*RaftPing) Descriptor() ([]byte, []int) {
 	return file_raft_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *RaftPing) GetMyId() string {
+	if x != nil {
+		return x.MyId
+	}
+	return ""
+}
+
+func (x *RaftPing) GetRole() int32 {
+	if x != nil {
+		return x.Role
+	}
+	return 0
+}
+
+func (x *RaftPing) GetEpoch() uint64 {
+	if x != nil {
+		return x.Epoch
+	}
+	return 0
+}
+
+type RaftPong struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RaftPong) Reset() {
+	*x = RaftPong{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_raft_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RaftPong) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RaftPong) ProtoMessage() {}
+
+func (x *RaftPong) ProtoReflect() protoreflect.Message {
+	mi := &file_raft_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RaftPong.ProtoReflect.Descriptor instead.
+func (*RaftPong) Descriptor() ([]byte, []int) {
+	return file_raft_proto_rawDescGZIP(), []int{4}
+}
+
+type RaftMsg struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Type        RaftMsg_Type       `protobuf:"varint,1,opt,name=type,proto3,enum=prpc.RaftMsg_Type" json:"type,omitempty"`
+	Action      *RaftTransaction   `protobuf:"bytes,2,opt,name=action,proto3" json:"action,omitempty"`
+	SyncActions []*RaftTransaction `protobuf:"bytes,3,rep,name=sync_actions,json=syncActions,proto3" json:"sync_actions,omitempty"`
+}
+
+func (x *RaftMsg) Reset() {
+	*x = RaftMsg{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_raft_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RaftMsg) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RaftMsg) ProtoMessage() {}
+
+func (x *RaftMsg) ProtoReflect() protoreflect.Message {
+	mi := &file_raft_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RaftMsg.ProtoReflect.Descriptor instead.
+func (*RaftMsg) Descriptor() ([]byte, []int) {
+	return file_raft_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *RaftMsg) GetType() RaftMsg_Type {
+	if x != nil {
+		return x.Type
+	}
+	return RaftMsg_Unknown
+}
+
+func (x *RaftMsg) GetAction() *RaftTransaction {
+	if x != nil {
+		return x.Action
+	}
+	return nil
+}
+
+func (x *RaftMsg) GetSyncActions() []*RaftTransaction {
+	if x != nil {
+		return x.SyncActions
+	}
+	return nil
 }
 
 var File_raft_proto protoreflect.FileDescriptor
 
 var file_raft_proto_rawDesc = []byte{
 	0x0a, 0x0a, 0x72, 0x61, 0x66, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x04, 0x70, 0x72,
-	0x70, 0x63, 0x22, 0x67, 0x0a, 0x07, 0x4a, 0x6f, 0x69, 0x6e, 0x4d, 0x73, 0x67, 0x12, 0x13, 0x0a,
-	0x05, 0x6d, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6d, 0x79,
-	0x49, 0x64, 0x12, 0x1d, 0x0a, 0x0a, 0x6d, 0x79, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6d, 0x79, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73,
-	0x73, 0x12, 0x12, 0x0a, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52,
-	0x04, 0x72, 0x6f, 0x6c, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x6c, 0x6f, 0x74, 0x73, 0x18, 0x04,
-	0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x73, 0x6c, 0x6f, 0x74, 0x73, 0x22, 0x48, 0x0a, 0x07, 0x4a,
-	0x6f, 0x69, 0x6e, 0x52, 0x65, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73,
-	0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73,
-	0x12, 0x23, 0x0a, 0x0d, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x5f, 0x65, 0x70, 0x6f, 0x63,
-	0x68, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0c, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74,
-	0x45, 0x70, 0x6f, 0x63, 0x68, 0x22, 0x84, 0x01, 0x0a, 0x07, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x73,
-	0x67, 0x12, 0x26, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32,
-	0x12, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x73, 0x67, 0x2e, 0x54,
-	0x79, 0x70, 0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x27, 0x0a, 0x07, 0x6a, 0x6f, 0x69,
-	0x6e, 0x4d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x70, 0x72, 0x70,
-	0x63, 0x2e, 0x4a, 0x6f, 0x69, 0x6e, 0x4d, 0x73, 0x67, 0x52, 0x07, 0x6a, 0x6f, 0x69, 0x6e, 0x4d,
-	0x73, 0x67, 0x22, 0x28, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x6e,
-	0x6b, 0x6e, 0x6f, 0x77, 0x6e, 0x10, 0x00, 0x12, 0x09, 0x0a, 0x05, 0x48, 0x65, 0x6c, 0x6c, 0x6f,
-	0x10, 0x01, 0x12, 0x08, 0x0a, 0x04, 0x4a, 0x6f, 0x69, 0x6e, 0x10, 0x02, 0x22, 0x09, 0x0a, 0x07,
-	0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x74, 0x32, 0x37, 0x0a, 0x0b, 0x4e, 0x6f, 0x64, 0x65, 0x53,
-	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x28, 0x0a, 0x04, 0x53, 0x65, 0x6e, 0x64, 0x12, 0x0d,
-	0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x73, 0x67, 0x1a, 0x0d, 0x2e,
-	0x70, 0x72, 0x70, 0x63, 0x2e, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x74, 0x28, 0x01, 0x30, 0x01,
-	0x42, 0x08, 0x5a, 0x06, 0x2e, 0x2f, 0x70, 0x72, 0x70, 0x63, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x70, 0x63, 0x22, 0x57, 0x0a, 0x0d, 0x4e, 0x65, 0x77, 0x4e, 0x6f, 0x64, 0x65, 0x41, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x12, 0x13, 0x0a, 0x05, 0x6d, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x6d, 0x79, 0x49, 0x64, 0x12, 0x1d, 0x0a, 0x0a, 0x6d, 0x79, 0x5f, 0x61,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6d, 0x79,
+	0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x22, 0xd9, 0x01, 0x0a, 0x0f,
+	0x52, 0x61, 0x66, 0x74, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12,
+	0x13, 0x0a, 0x05, 0x6d, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x6d, 0x79, 0x49, 0x64, 0x12, 0x2e, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x0e, 0x32, 0x1a, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x52, 0x61, 0x66, 0x74, 0x54, 0x72,
+	0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04,
+	0x74, 0x79, 0x70, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x04, 0x52, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73,
+	0x65, 0x72, 0x5f, 0x72, 0x65, 0x66, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x75, 0x73,
+	0x65, 0x72, 0x52, 0x65, 0x66, 0x12, 0x2e, 0x0a, 0x08, 0x6e, 0x65, 0x77, 0x5f, 0x6e, 0x6f, 0x64,
+	0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x4e,
+	0x65, 0x77, 0x4e, 0x6f, 0x64, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x07, 0x6e, 0x65,
+	0x77, 0x4e, 0x6f, 0x64, 0x65, 0x22, 0x20, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a,
+	0x07, 0x55, 0x6e, 0x6b, 0x6e, 0x6f, 0x77, 0x6e, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x4e, 0x65,
+	0x77, 0x4e, 0x6f, 0x64, 0x65, 0x10, 0x01, 0x22, 0x54, 0x0a, 0x0d, 0x52, 0x61, 0x66, 0x74, 0x41,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x74, 0x12, 0x13, 0x0a, 0x05, 0x6d, 0x79, 0x5f, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6d, 0x79, 0x49, 0x64, 0x12, 0x14, 0x0a,
+	0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x65, 0x70,
+	0x6f, 0x63, 0x68, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0x49, 0x0a,
+	0x08, 0x52, 0x61, 0x66, 0x74, 0x50, 0x69, 0x6e, 0x67, 0x12, 0x13, 0x0a, 0x05, 0x6d, 0x79, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6d, 0x79, 0x49, 0x64, 0x12, 0x12,
+	0x0a, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x72, 0x6f,
+	0x6c, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x04, 0x52, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x22, 0x0a, 0x0a, 0x08, 0x52, 0x61, 0x66, 0x74,
+	0x50, 0x6f, 0x6e, 0x67, 0x22, 0xdf, 0x01, 0x0a, 0x07, 0x52, 0x61, 0x66, 0x74, 0x4d, 0x73, 0x67,
+	0x12, 0x26, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x12,
+	0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e, 0x52, 0x61, 0x66, 0x74, 0x4d, 0x73, 0x67, 0x2e, 0x54, 0x79,
+	0x70, 0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x2d, 0x0a, 0x06, 0x61, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x70, 0x72, 0x70, 0x63, 0x2e,
+	0x52, 0x61, 0x66, 0x74, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52,
+	0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x38, 0x0a, 0x0c, 0x73, 0x79, 0x6e, 0x63, 0x5f,
+	0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e,
+	0x70, 0x72, 0x70, 0x63, 0x2e, 0x52, 0x61, 0x66, 0x74, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0b, 0x73, 0x79, 0x6e, 0x63, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x73, 0x22, 0x43, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x6e, 0x6b,
+	0x6e, 0x6f, 0x77, 0x6e, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x10, 0x01, 0x12, 0x0e, 0x0a, 0x0a, 0x53, 0x79, 0x6e, 0x63, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x10, 0x02, 0x12, 0x08, 0x0a, 0x04, 0x50, 0x69, 0x6e, 0x67, 0x10, 0x03, 0x12, 0x08, 0x0a, 0x04,
+	0x50, 0x6f, 0x6e, 0x67, 0x10, 0x04, 0x42, 0x08, 0x5a, 0x06, 0x2e, 0x2f, 0x70, 0x72, 0x70, 0x63,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -332,25 +554,29 @@ func file_raft_proto_rawDescGZIP() []byte {
 	return file_raft_proto_rawDescData
 }
 
-var file_raft_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_raft_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_raft_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_raft_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_raft_proto_goTypes = []interface{}{
-	(SendMsg_Type)(0), // 0: prpc.SendMsg.Type
-	(*JoinMsg)(nil),   // 1: prpc.JoinMsg
-	(*JoinRet)(nil),   // 2: prpc.JoinRet
-	(*SendMsg)(nil),   // 3: prpc.SendMsg
-	(*SendRet)(nil),   // 4: prpc.SendRet
+	(RaftTransaction_Type)(0), // 0: prpc.RaftTransaction.Type
+	(RaftMsg_Type)(0),         // 1: prpc.RaftMsg.Type
+	(*NewNodeAction)(nil),     // 2: prpc.NewNodeAction
+	(*RaftTransaction)(nil),   // 3: prpc.RaftTransaction
+	(*RaftActionRet)(nil),     // 4: prpc.RaftActionRet
+	(*RaftPing)(nil),          // 5: prpc.RaftPing
+	(*RaftPong)(nil),          // 6: prpc.RaftPong
+	(*RaftMsg)(nil),           // 7: prpc.RaftMsg
 }
 var file_raft_proto_depIdxs = []int32{
-	0, // 0: prpc.SendMsg.type:type_name -> prpc.SendMsg.Type
-	1, // 1: prpc.SendMsg.joinMsg:type_name -> prpc.JoinMsg
-	3, // 2: prpc.NodeService.Send:input_type -> prpc.SendMsg
-	4, // 3: prpc.NodeService.Send:output_type -> prpc.SendRet
-	3, // [3:4] is the sub-list for method output_type
-	2, // [2:3] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	0, // 0: prpc.RaftTransaction.type:type_name -> prpc.RaftTransaction.Type
+	2, // 1: prpc.RaftTransaction.new_node:type_name -> prpc.NewNodeAction
+	1, // 2: prpc.RaftMsg.type:type_name -> prpc.RaftMsg.Type
+	3, // 3: prpc.RaftMsg.action:type_name -> prpc.RaftTransaction
+	3, // 4: prpc.RaftMsg.sync_actions:type_name -> prpc.RaftTransaction
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_raft_proto_init() }
@@ -360,7 +586,7 @@ func file_raft_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_raft_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*JoinMsg); i {
+			switch v := v.(*NewNodeAction); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -372,7 +598,7 @@ func file_raft_proto_init() {
 			}
 		}
 		file_raft_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*JoinRet); i {
+			switch v := v.(*RaftTransaction); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -384,7 +610,7 @@ func file_raft_proto_init() {
 			}
 		}
 		file_raft_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SendMsg); i {
+			switch v := v.(*RaftActionRet); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -396,7 +622,31 @@ func file_raft_proto_init() {
 			}
 		}
 		file_raft_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SendRet); i {
+			switch v := v.(*RaftPing); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_raft_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RaftPong); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_raft_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RaftMsg); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -413,10 +663,10 @@ func file_raft_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_raft_proto_rawDesc,
-			NumEnums:      1,
-			NumMessages:   4,
+			NumEnums:      2,
+			NumMessages:   6,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   0,
 		},
 		GoTypes:           file_raft_proto_goTypes,
 		DependencyIndexes: file_raft_proto_depIdxs,

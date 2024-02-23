@@ -4,28 +4,49 @@ package prpc;
 
 option go_package = "./prpc";
 
-message JoinMsg {
+message NewNodeAction {
   string my_id = 1;
   string my_address = 2;
   int32 role = 3;
-  bytes slots = 4;
 }
 
-message JoinRet {
-  bool success = 1;
-  uint64 current_epoch = 2;
-}
-
-message SendMsg {
+message RaftTransaction {
   enum Type {
     Unknown = 0;
-    Hello = 1;
-    Join = 2;
+    NewNode = 1;
   }
-  Type type = 1;
-  JoinMsg joinMsg = 2;
+  string my_id = 1;
+  Type type = 2;
+  uint64 epoch = 3;
+  string user_ref = 4;
+  NewNodeAction new_node = 5;
 }
 
-message SendRet {
+message RaftActionRet {
+  string my_id = 1;
+  uint64 epoch = 2;
+  bool success = 3;
+}
 
+message RaftPing {
+  string my_id = 1;
+  int32 role = 2;
+  uint64 epoch = 3;
+}
+
+message RaftPong {
+
+}
+
+message RaftMsg {
+  enum Type {
+    Unknown = 0;
+    SyncAction = 1;
+    CommitedAction = 2;
+    Ping = 3;
+    Pong = 4;
+  }
+  Type type = 1;
+  RaftTransaction action = 2;
+  repeated RaftTransaction sync_actions = 3;
 }
