@@ -10,43 +10,101 @@ message NewNodeAction {
   int32 role = 3;
 }
 
+message HashSlotAction {
+  string my_id = 1;
+  int32 step = 2;
+  bytes slots = 3;
+}
+
 message RaftTransaction {
   enum Type {
     Unknown = 0;
     NewNode = 1;
+    HashSlotAction = 2;
   }
   string my_id = 1;
   Type type = 2;
-  uint64 epoch = 3;
+  int64 epoch = 3;
   string user_ref = 4;
   NewNodeAction new_node = 5;
+  HashSlotAction hash_slot = 6;
 }
 
-message RaftActionRet {
+message NodeState {
   string my_id = 1;
-  uint64 epoch = 2;
-  bool success = 3;
+  int32 state = 2;
 }
 
 message RaftPing {
   string my_id = 1;
   int32 role = 2;
-  uint64 epoch = 3;
+  int64 current_epoch = 3;
+  int64 commited_epoch = 4;
+  int64 vote_epoch = 5;
+  repeated NodeState node_states = 6;
+  string master_address = 7;
 }
 
 message RaftPong {
+  string my_id = 1;
+  int32 role = 2;
+}
 
+message RaftElection {
+  string my_id = 1;
+  int64 vote_epoch = 2;
+}
+
+message RaftElectionRet {
+  string my_id = 1;
+  string got_vote_id = 2;
+  int64 vote_epoch = 3;
+  bool success = 4;
+}
+
+message RaftSyncActions {
+  string my_id = 1;
+  int64 current_epoch = 2;
+  int64 commited_epoch = 3;
+  repeated RaftTransaction actions = 4;
+}
+
+message RaftSyncActionsRet {
+  string my_id = 1;
+  int64 current_epoch = 2;
+}
+
+message RaftReqActions {
+  string my_id = 1;
+  int64 commited_epoch = 2;
+}
+
+message SlotMsg {
+  int32 slot = 1;
+  string msg = 2;
 }
 
 message RaftMsg {
   enum Type {
     Unknown = 0;
-    SyncAction = 1;
-    CommitedAction = 2;
-    Ping = 3;
-    Pong = 4;
+    Action = 1;
+    SyncAction = 2;
+    SyncActionRet = 3;
+    Ping = 4;
+    Pong = 5;
+    Election = 6;
+    ElectionRet = 7;
+    ReqActions = 8;
+    SendMsg2Slot = 9;
   }
   Type type = 1;
   RaftTransaction action = 2;
-  repeated RaftTransaction sync_actions = 3;
+  RaftSyncActions sync_actions = 3;
+  RaftSyncActionsRet sync_actions_ret = 4;
+  RaftPing ping = 5;
+  RaftPong pong = 6;
+  RaftElection election = 7;
+  RaftElectionRet election_ret = 8;
+  RaftReqActions req_actions = 9;
+  SlotMsg slot_msg = 10; 
 }

@@ -24,7 +24,6 @@
 #include "google/protobuf/io/coded_stream.h"
 #include "google/protobuf/arena.h"
 #include "google/protobuf/arenastring.h"
-#include "google/protobuf/generated_message_bases.h"
 #include "google/protobuf/generated_message_tctable_decl.h"
 #include "google/protobuf/generated_message_util.h"
 #include "google/protobuf/metadata_lite.h"
@@ -56,12 +55,21 @@ struct TableStruct_raft_2eproto {
 extern const ::google::protobuf::internal::DescriptorTable
     descriptor_table_raft_2eproto;
 namespace prpc {
+class HashSlotAction;
+struct HashSlotActionDefaultTypeInternal;
+extern HashSlotActionDefaultTypeInternal _HashSlotAction_default_instance_;
 class NewNodeAction;
 struct NewNodeActionDefaultTypeInternal;
 extern NewNodeActionDefaultTypeInternal _NewNodeAction_default_instance_;
-class RaftActionRet;
-struct RaftActionRetDefaultTypeInternal;
-extern RaftActionRetDefaultTypeInternal _RaftActionRet_default_instance_;
+class NodeState;
+struct NodeStateDefaultTypeInternal;
+extern NodeStateDefaultTypeInternal _NodeState_default_instance_;
+class RaftElection;
+struct RaftElectionDefaultTypeInternal;
+extern RaftElectionDefaultTypeInternal _RaftElection_default_instance_;
+class RaftElectionRet;
+struct RaftElectionRetDefaultTypeInternal;
+extern RaftElectionRetDefaultTypeInternal _RaftElectionRet_default_instance_;
 class RaftMsg;
 struct RaftMsgDefaultTypeInternal;
 extern RaftMsgDefaultTypeInternal _RaftMsg_default_instance_;
@@ -71,9 +79,21 @@ extern RaftPingDefaultTypeInternal _RaftPing_default_instance_;
 class RaftPong;
 struct RaftPongDefaultTypeInternal;
 extern RaftPongDefaultTypeInternal _RaftPong_default_instance_;
+class RaftReqActions;
+struct RaftReqActionsDefaultTypeInternal;
+extern RaftReqActionsDefaultTypeInternal _RaftReqActions_default_instance_;
+class RaftSyncActions;
+struct RaftSyncActionsDefaultTypeInternal;
+extern RaftSyncActionsDefaultTypeInternal _RaftSyncActions_default_instance_;
+class RaftSyncActionsRet;
+struct RaftSyncActionsRetDefaultTypeInternal;
+extern RaftSyncActionsRetDefaultTypeInternal _RaftSyncActionsRet_default_instance_;
 class RaftTransaction;
 struct RaftTransactionDefaultTypeInternal;
 extern RaftTransactionDefaultTypeInternal _RaftTransaction_default_instance_;
+class SlotMsg;
+struct SlotMsgDefaultTypeInternal;
+extern SlotMsgDefaultTypeInternal _SlotMsg_default_instance_;
 }  // namespace prpc
 namespace google {
 namespace protobuf {
@@ -84,6 +104,7 @@ namespace prpc {
 enum RaftTransaction_Type : int {
   RaftTransaction_Type_Unknown = 0,
   RaftTransaction_Type_NewNode = 1,
+  RaftTransaction_Type_HashSlotAction = 2,
   RaftTransaction_Type_RaftTransaction_Type_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
   RaftTransaction_Type_RaftTransaction_Type_INT_MAX_SENTINEL_DO_NOT_USE_ =
@@ -92,8 +113,8 @@ enum RaftTransaction_Type : int {
 
 bool RaftTransaction_Type_IsValid(int value);
 constexpr RaftTransaction_Type RaftTransaction_Type_Type_MIN = static_cast<RaftTransaction_Type>(0);
-constexpr RaftTransaction_Type RaftTransaction_Type_Type_MAX = static_cast<RaftTransaction_Type>(1);
-constexpr int RaftTransaction_Type_Type_ARRAYSIZE = 1 + 1;
+constexpr RaftTransaction_Type RaftTransaction_Type_Type_MAX = static_cast<RaftTransaction_Type>(2);
+constexpr int RaftTransaction_Type_Type_ARRAYSIZE = 2 + 1;
 const ::google::protobuf::EnumDescriptor*
 RaftTransaction_Type_descriptor();
 template <typename T>
@@ -106,7 +127,7 @@ const std::string& RaftTransaction_Type_Name(T value) {
 template <>
 inline const std::string& RaftTransaction_Type_Name(RaftTransaction_Type value) {
   return ::google::protobuf::internal::NameOfDenseEnum<RaftTransaction_Type_descriptor,
-                                                 0, 1>(
+                                                 0, 2>(
       static_cast<int>(value));
 }
 inline bool RaftTransaction_Type_Parse(absl::string_view name, RaftTransaction_Type* value) {
@@ -117,8 +138,13 @@ enum RaftMsg_Type : int {
   RaftMsg_Type_Unknown = 0,
   RaftMsg_Type_Action = 1,
   RaftMsg_Type_SyncAction = 2,
-  RaftMsg_Type_Ping = 3,
-  RaftMsg_Type_Pong = 4,
+  RaftMsg_Type_SyncActionRet = 3,
+  RaftMsg_Type_Ping = 4,
+  RaftMsg_Type_Pong = 5,
+  RaftMsg_Type_Election = 6,
+  RaftMsg_Type_ElectionRet = 7,
+  RaftMsg_Type_ReqActions = 8,
+  RaftMsg_Type_SendMsg2Slot = 9,
   RaftMsg_Type_RaftMsg_Type_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
   RaftMsg_Type_RaftMsg_Type_INT_MAX_SENTINEL_DO_NOT_USE_ =
@@ -127,8 +153,8 @@ enum RaftMsg_Type : int {
 
 bool RaftMsg_Type_IsValid(int value);
 constexpr RaftMsg_Type RaftMsg_Type_Type_MIN = static_cast<RaftMsg_Type>(0);
-constexpr RaftMsg_Type RaftMsg_Type_Type_MAX = static_cast<RaftMsg_Type>(4);
-constexpr int RaftMsg_Type_Type_ARRAYSIZE = 4 + 1;
+constexpr RaftMsg_Type RaftMsg_Type_Type_MAX = static_cast<RaftMsg_Type>(9);
+constexpr int RaftMsg_Type_Type_ARRAYSIZE = 9 + 1;
 const ::google::protobuf::EnumDescriptor*
 RaftMsg_Type_descriptor();
 template <typename T>
@@ -141,7 +167,7 @@ const std::string& RaftMsg_Type_Name(T value) {
 template <>
 inline const std::string& RaftMsg_Type_Name(RaftMsg_Type value) {
   return ::google::protobuf::internal::NameOfDenseEnum<RaftMsg_Type_descriptor,
-                                                 0, 4>(
+                                                 0, 9>(
       static_cast<int>(value));
 }
 inline bool RaftMsg_Type_Parse(absl::string_view name, RaftMsg_Type* value) {
@@ -348,6 +374,200 @@ class NewNodeAction final :
   friend struct ::TableStruct_raft_2eproto;
 };// -------------------------------------------------------------------
 
+class HashSlotAction final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.HashSlotAction) */ {
+ public:
+  inline HashSlotAction() : HashSlotAction(nullptr) {}
+  ~HashSlotAction() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR HashSlotAction(::google::protobuf::internal::ConstantInitialized);
+
+  HashSlotAction(const HashSlotAction& from);
+  HashSlotAction(HashSlotAction&& from) noexcept
+    : HashSlotAction() {
+    *this = ::std::move(from);
+  }
+
+  inline HashSlotAction& operator=(const HashSlotAction& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline HashSlotAction& operator=(HashSlotAction&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const HashSlotAction& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const HashSlotAction* internal_default_instance() {
+    return reinterpret_cast<const HashSlotAction*>(
+               &_HashSlotAction_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  friend void swap(HashSlotAction& a, HashSlotAction& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(HashSlotAction* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(HashSlotAction* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  HashSlotAction* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<HashSlotAction>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const HashSlotAction& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const HashSlotAction& from) {
+    HashSlotAction::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(HashSlotAction* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.HashSlotAction";
+  }
+  protected:
+  explicit HashSlotAction(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMyIdFieldNumber = 1,
+    kSlotsFieldNumber = 3,
+    kStepFieldNumber = 2,
+  };
+  // string my_id = 1;
+  void clear_my_id() ;
+  const std::string& my_id() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_my_id(Arg_&& arg, Args_... args);
+  std::string* mutable_my_id();
+  PROTOBUF_NODISCARD std::string* release_my_id();
+  void set_allocated_my_id(std::string* ptr);
+
+  private:
+  const std::string& _internal_my_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_my_id(
+      const std::string& value);
+  std::string* _internal_mutable_my_id();
+
+  public:
+  // bytes slots = 3;
+  void clear_slots() ;
+  const std::string& slots() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_slots(Arg_&& arg, Args_... args);
+  std::string* mutable_slots();
+  PROTOBUF_NODISCARD std::string* release_slots();
+  void set_allocated_slots(std::string* ptr);
+
+  private:
+  const std::string& _internal_slots() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_slots(
+      const std::string& value);
+  std::string* _internal_mutable_slots();
+
+  public:
+  // int32 step = 2;
+  void clear_step() ;
+  ::int32_t step() const;
+  void set_step(::int32_t value);
+
+  private:
+  ::int32_t _internal_step() const;
+  void _internal_set_step(::int32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.HashSlotAction)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 3, 0, 33, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr my_id_;
+    ::google::protobuf::internal::ArenaStringPtr slots_;
+    ::int32_t step_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_raft_2eproto;
+};// -------------------------------------------------------------------
+
 class RaftTransaction final :
     public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.RaftTransaction) */ {
  public:
@@ -404,7 +624,7 @@ class RaftTransaction final :
                &_RaftTransaction_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
   friend void swap(RaftTransaction& a, RaftTransaction& b) {
     a.Swap(&b);
@@ -476,6 +696,7 @@ class RaftTransaction final :
   using Type = RaftTransaction_Type;
   static constexpr Type Unknown = RaftTransaction_Type_Unknown;
   static constexpr Type NewNode = RaftTransaction_Type_NewNode;
+  static constexpr Type HashSlotAction = RaftTransaction_Type_HashSlotAction;
   static inline bool Type_IsValid(int value) {
     return RaftTransaction_Type_IsValid(value);
   }
@@ -499,6 +720,7 @@ class RaftTransaction final :
     kMyIdFieldNumber = 1,
     kUserRefFieldNumber = 4,
     kNewNodeFieldNumber = 5,
+    kHashSlotFieldNumber = 6,
     kEpochFieldNumber = 3,
     kTypeFieldNumber = 2,
   };
@@ -549,14 +771,29 @@ class RaftTransaction final :
   ::prpc::NewNodeAction* _internal_mutable_new_node();
 
   public:
-  // uint64 epoch = 3;
-  void clear_epoch() ;
-  ::uint64_t epoch() const;
-  void set_epoch(::uint64_t value);
+  // .prpc.HashSlotAction hash_slot = 6;
+  bool has_hash_slot() const;
+  void clear_hash_slot() ;
+  const ::prpc::HashSlotAction& hash_slot() const;
+  PROTOBUF_NODISCARD ::prpc::HashSlotAction* release_hash_slot();
+  ::prpc::HashSlotAction* mutable_hash_slot();
+  void set_allocated_hash_slot(::prpc::HashSlotAction* value);
+  void unsafe_arena_set_allocated_hash_slot(::prpc::HashSlotAction* value);
+  ::prpc::HashSlotAction* unsafe_arena_release_hash_slot();
 
   private:
-  ::uint64_t _internal_epoch() const;
-  void _internal_set_epoch(::uint64_t value);
+  const ::prpc::HashSlotAction& _internal_hash_slot() const;
+  ::prpc::HashSlotAction* _internal_mutable_hash_slot();
+
+  public:
+  // int64 epoch = 3;
+  void clear_epoch() ;
+  ::int64_t epoch() const;
+  void set_epoch(::int64_t value);
+
+  private:
+  ::int64_t _internal_epoch() const;
+  void _internal_set_epoch(::int64_t value);
 
   public:
   // .prpc.RaftTransaction.Type type = 2;
@@ -574,7 +811,7 @@ class RaftTransaction final :
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 5, 1, 42, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<3, 6, 2, 42, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
@@ -584,7 +821,8 @@ class RaftTransaction final :
     ::google::protobuf::internal::ArenaStringPtr my_id_;
     ::google::protobuf::internal::ArenaStringPtr user_ref_;
     ::prpc::NewNodeAction* new_node_;
-    ::uint64_t epoch_;
+    ::prpc::HashSlotAction* hash_slot_;
+    ::int64_t epoch_;
     int type_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -592,25 +830,25 @@ class RaftTransaction final :
   friend struct ::TableStruct_raft_2eproto;
 };// -------------------------------------------------------------------
 
-class RaftActionRet final :
-    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.RaftActionRet) */ {
+class NodeState final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.NodeState) */ {
  public:
-  inline RaftActionRet() : RaftActionRet(nullptr) {}
-  ~RaftActionRet() override;
+  inline NodeState() : NodeState(nullptr) {}
+  ~NodeState() override;
   template<typename = void>
-  explicit PROTOBUF_CONSTEXPR RaftActionRet(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR NodeState(::google::protobuf::internal::ConstantInitialized);
 
-  RaftActionRet(const RaftActionRet& from);
-  RaftActionRet(RaftActionRet&& from) noexcept
-    : RaftActionRet() {
+  NodeState(const NodeState& from);
+  NodeState(NodeState&& from) noexcept
+    : NodeState() {
     *this = ::std::move(from);
   }
 
-  inline RaftActionRet& operator=(const RaftActionRet& from) {
+  inline NodeState& operator=(const NodeState& from) {
     CopyFrom(from);
     return *this;
   }
-  inline RaftActionRet& operator=(RaftActionRet&& from) noexcept {
+  inline NodeState& operator=(NodeState&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -640,20 +878,20 @@ class RaftActionRet final :
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const RaftActionRet& default_instance() {
+  static const NodeState& default_instance() {
     return *internal_default_instance();
   }
-  static inline const RaftActionRet* internal_default_instance() {
-    return reinterpret_cast<const RaftActionRet*>(
-               &_RaftActionRet_default_instance_);
+  static inline const NodeState* internal_default_instance() {
+    return reinterpret_cast<const NodeState*>(
+               &_NodeState_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
-  friend void swap(RaftActionRet& a, RaftActionRet& b) {
+  friend void swap(NodeState& a, NodeState& b) {
     a.Swap(&b);
   }
-  inline void Swap(RaftActionRet* other) {
+  inline void Swap(NodeState* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -666,7 +904,7 @@ class RaftActionRet final :
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(RaftActionRet* other) {
+  void UnsafeArenaSwap(NodeState* other) {
     if (other == this) return;
     ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -674,14 +912,14 @@ class RaftActionRet final :
 
   // implements Message ----------------------------------------------
 
-  RaftActionRet* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<RaftActionRet>(arena);
+  NodeState* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<NodeState>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const RaftActionRet& from);
+  void CopyFrom(const NodeState& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom( const RaftActionRet& from) {
-    RaftActionRet::MergeImpl(*this, from);
+  void MergeFrom( const NodeState& from) {
+    NodeState::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
@@ -699,15 +937,15 @@ class RaftActionRet final :
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(RaftActionRet* other);
+  void InternalSwap(NodeState* other);
 
   private:
   friend class ::google::protobuf::internal::AnyMetadata;
   static ::absl::string_view FullMessageName() {
-    return "prpc.RaftActionRet";
+    return "prpc.NodeState";
   }
   protected:
-  explicit RaftActionRet(::google::protobuf::Arena* arena);
+  explicit NodeState(::google::protobuf::Arena* arena);
   public:
 
   static const ClassData _class_data_;
@@ -721,8 +959,7 @@ class RaftActionRet final :
 
   enum : int {
     kMyIdFieldNumber = 1,
-    kEpochFieldNumber = 2,
-    kSuccessFieldNumber = 3,
+    kStateFieldNumber = 2,
   };
   // string my_id = 1;
   void clear_my_id() ;
@@ -740,39 +977,28 @@ class RaftActionRet final :
   std::string* _internal_mutable_my_id();
 
   public:
-  // uint64 epoch = 2;
-  void clear_epoch() ;
-  ::uint64_t epoch() const;
-  void set_epoch(::uint64_t value);
+  // int32 state = 2;
+  void clear_state() ;
+  ::int32_t state() const;
+  void set_state(::int32_t value);
 
   private:
-  ::uint64_t _internal_epoch() const;
-  void _internal_set_epoch(::uint64_t value);
+  ::int32_t _internal_state() const;
+  void _internal_set_state(::int32_t value);
 
   public:
-  // bool success = 3;
-  void clear_success() ;
-  bool success() const;
-  void set_success(bool value);
-
-  private:
-  bool _internal_success() const;
-  void _internal_set_success(bool value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:prpc.RaftActionRet)
+  // @@protoc_insertion_point(class_scope:prpc.NodeState)
  private:
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3, 0, 32, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<1, 2, 0, 28, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::google::protobuf::internal::ArenaStringPtr my_id_;
-    ::uint64_t epoch_;
-    bool success_;
+    ::int32_t state_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -836,7 +1062,7 @@ class RaftPing final :
                &_RaftPing_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(RaftPing& a, RaftPing& b) {
     a.Swap(&b);
@@ -908,10 +1134,32 @@ class RaftPing final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kNodeStatesFieldNumber = 6,
     kMyIdFieldNumber = 1,
-    kEpochFieldNumber = 3,
+    kMasterAddressFieldNumber = 7,
+    kCurrentEpochFieldNumber = 3,
+    kCommitedEpochFieldNumber = 4,
+    kVoteEpochFieldNumber = 5,
     kRoleFieldNumber = 2,
   };
+  // repeated .prpc.NodeState node_states = 6;
+  int node_states_size() const;
+  private:
+  int _internal_node_states_size() const;
+
+  public:
+  void clear_node_states() ;
+  ::prpc::NodeState* mutable_node_states(int index);
+  ::google::protobuf::RepeatedPtrField< ::prpc::NodeState >*
+      mutable_node_states();
+  private:
+  const ::google::protobuf::RepeatedPtrField<::prpc::NodeState>& _internal_node_states() const;
+  ::google::protobuf::RepeatedPtrField<::prpc::NodeState>* _internal_mutable_node_states();
+  public:
+  const ::prpc::NodeState& node_states(int index) const;
+  ::prpc::NodeState* add_node_states();
+  const ::google::protobuf::RepeatedPtrField< ::prpc::NodeState >&
+      node_states() const;
   // string my_id = 1;
   void clear_my_id() ;
   const std::string& my_id() const;
@@ -928,14 +1176,50 @@ class RaftPing final :
   std::string* _internal_mutable_my_id();
 
   public:
-  // uint64 epoch = 3;
-  void clear_epoch() ;
-  ::uint64_t epoch() const;
-  void set_epoch(::uint64_t value);
+  // string master_address = 7;
+  void clear_master_address() ;
+  const std::string& master_address() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_master_address(Arg_&& arg, Args_... args);
+  std::string* mutable_master_address();
+  PROTOBUF_NODISCARD std::string* release_master_address();
+  void set_allocated_master_address(std::string* ptr);
 
   private:
-  ::uint64_t _internal_epoch() const;
-  void _internal_set_epoch(::uint64_t value);
+  const std::string& _internal_master_address() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_master_address(
+      const std::string& value);
+  std::string* _internal_mutable_master_address();
+
+  public:
+  // int64 current_epoch = 3;
+  void clear_current_epoch() ;
+  ::int64_t current_epoch() const;
+  void set_current_epoch(::int64_t value);
+
+  private:
+  ::int64_t _internal_current_epoch() const;
+  void _internal_set_current_epoch(::int64_t value);
+
+  public:
+  // int64 commited_epoch = 4;
+  void clear_commited_epoch() ;
+  ::int64_t commited_epoch() const;
+  void set_commited_epoch(::int64_t value);
+
+  private:
+  ::int64_t _internal_commited_epoch() const;
+  void _internal_set_commited_epoch(::int64_t value);
+
+  public:
+  // int64 vote_epoch = 5;
+  void clear_vote_epoch() ;
+  ::int64_t vote_epoch() const;
+  void set_vote_epoch(::int64_t value);
+
+  private:
+  ::int64_t _internal_vote_epoch() const;
+  void _internal_set_vote_epoch(::int64_t value);
 
   public:
   // int32 role = 2;
@@ -953,13 +1237,17 @@ class RaftPing final :
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3, 0, 27, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<3, 7, 1, 41, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::google::protobuf::RepeatedPtrField< ::prpc::NodeState > node_states_;
     ::google::protobuf::internal::ArenaStringPtr my_id_;
-    ::uint64_t epoch_;
+    ::google::protobuf::internal::ArenaStringPtr master_address_;
+    ::int64_t current_epoch_;
+    ::int64_t commited_epoch_;
+    ::int64_t vote_epoch_;
     ::int32_t role_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
@@ -969,9 +1257,10 @@ class RaftPing final :
 };// -------------------------------------------------------------------
 
 class RaftPong final :
-    public ::google::protobuf::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:prpc.RaftPong) */ {
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.RaftPong) */ {
  public:
   inline RaftPong() : RaftPong(nullptr) {}
+  ~RaftPong() override;
   template<typename = void>
   explicit PROTOBUF_CONSTEXPR RaftPong(::google::protobuf::internal::ConstantInitialized);
 
@@ -1023,7 +1312,7 @@ class RaftPong final :
                &_RaftPong_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(RaftPong& a, RaftPong& b) {
     a.Swap(&b);
@@ -1052,15 +1341,29 @@ class RaftPong final :
   RaftPong* New(::google::protobuf::Arena* arena = nullptr) const final {
     return CreateMaybeMessage<RaftPong>(arena);
   }
-  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const RaftPong& from) {
-    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const RaftPong& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const RaftPong& from) {
+    RaftPong::MergeImpl(*this, from);
   }
-  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const RaftPong& from) {
-    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
-  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
   public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RaftPong* other);
 
   private:
   friend class ::google::protobuf::internal::AnyMetadata;
@@ -1080,16 +1383,1170 @@ class RaftPong final :
 
   // accessors -------------------------------------------------------
 
+  enum : int {
+    kMyIdFieldNumber = 1,
+    kRoleFieldNumber = 2,
+  };
+  // string my_id = 1;
+  void clear_my_id() ;
+  const std::string& my_id() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_my_id(Arg_&& arg, Args_... args);
+  std::string* mutable_my_id();
+  PROTOBUF_NODISCARD std::string* release_my_id();
+  void set_allocated_my_id(std::string* ptr);
+
+  private:
+  const std::string& _internal_my_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_my_id(
+      const std::string& value);
+  std::string* _internal_mutable_my_id();
+
+  public:
+  // int32 role = 2;
+  void clear_role() ;
+  ::int32_t role() const;
+  void set_role(::int32_t value);
+
+  private:
+  ::int32_t _internal_role() const;
+  void _internal_set_role(::int32_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:prpc.RaftPong)
  private:
   class _Internal;
 
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<1, 2, 0, 27, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr my_id_;
+    ::int32_t role_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_raft_2eproto;
+};// -------------------------------------------------------------------
+
+class RaftElection final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.RaftElection) */ {
+ public:
+  inline RaftElection() : RaftElection(nullptr) {}
+  ~RaftElection() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR RaftElection(::google::protobuf::internal::ConstantInitialized);
+
+  RaftElection(const RaftElection& from);
+  RaftElection(RaftElection&& from) noexcept
+    : RaftElection() {
+    *this = ::std::move(from);
+  }
+
+  inline RaftElection& operator=(const RaftElection& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RaftElection& operator=(RaftElection&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RaftElection& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RaftElection* internal_default_instance() {
+    return reinterpret_cast<const RaftElection*>(
+               &_RaftElection_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  friend void swap(RaftElection& a, RaftElection& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RaftElection* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RaftElection* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RaftElection* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RaftElection>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const RaftElection& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const RaftElection& from) {
+    RaftElection::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RaftElection* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.RaftElection";
+  }
+  protected:
+  explicit RaftElection(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMyIdFieldNumber = 1,
+    kVoteEpochFieldNumber = 2,
+  };
+  // string my_id = 1;
+  void clear_my_id() ;
+  const std::string& my_id() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_my_id(Arg_&& arg, Args_... args);
+  std::string* mutable_my_id();
+  PROTOBUF_NODISCARD std::string* release_my_id();
+  void set_allocated_my_id(std::string* ptr);
+
+  private:
+  const std::string& _internal_my_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_my_id(
+      const std::string& value);
+  std::string* _internal_mutable_my_id();
+
+  public:
+  // int64 vote_epoch = 2;
+  void clear_vote_epoch() ;
+  ::int64_t vote_epoch() const;
+  void set_vote_epoch(::int64_t value);
+
+  private:
+  ::int64_t _internal_vote_epoch() const;
+  void _internal_set_vote_epoch(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.RaftElection)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<1, 2, 0, 31, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr my_id_;
+    ::int64_t vote_epoch_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_raft_2eproto;
+};// -------------------------------------------------------------------
+
+class RaftElectionRet final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.RaftElectionRet) */ {
+ public:
+  inline RaftElectionRet() : RaftElectionRet(nullptr) {}
+  ~RaftElectionRet() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR RaftElectionRet(::google::protobuf::internal::ConstantInitialized);
+
+  RaftElectionRet(const RaftElectionRet& from);
+  RaftElectionRet(RaftElectionRet&& from) noexcept
+    : RaftElectionRet() {
+    *this = ::std::move(from);
+  }
+
+  inline RaftElectionRet& operator=(const RaftElectionRet& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RaftElectionRet& operator=(RaftElectionRet&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RaftElectionRet& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RaftElectionRet* internal_default_instance() {
+    return reinterpret_cast<const RaftElectionRet*>(
+               &_RaftElectionRet_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    7;
+
+  friend void swap(RaftElectionRet& a, RaftElectionRet& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RaftElectionRet* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RaftElectionRet* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RaftElectionRet* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RaftElectionRet>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const RaftElectionRet& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const RaftElectionRet& from) {
+    RaftElectionRet::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RaftElectionRet* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.RaftElectionRet";
+  }
+  protected:
+  explicit RaftElectionRet(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMyIdFieldNumber = 1,
+    kGotVoteIdFieldNumber = 2,
+    kVoteEpochFieldNumber = 3,
+    kSuccessFieldNumber = 4,
+  };
+  // string my_id = 1;
+  void clear_my_id() ;
+  const std::string& my_id() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_my_id(Arg_&& arg, Args_... args);
+  std::string* mutable_my_id();
+  PROTOBUF_NODISCARD std::string* release_my_id();
+  void set_allocated_my_id(std::string* ptr);
+
+  private:
+  const std::string& _internal_my_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_my_id(
+      const std::string& value);
+  std::string* _internal_mutable_my_id();
+
+  public:
+  // string got_vote_id = 2;
+  void clear_got_vote_id() ;
+  const std::string& got_vote_id() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_got_vote_id(Arg_&& arg, Args_... args);
+  std::string* mutable_got_vote_id();
+  PROTOBUF_NODISCARD std::string* release_got_vote_id();
+  void set_allocated_got_vote_id(std::string* ptr);
+
+  private:
+  const std::string& _internal_got_vote_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_got_vote_id(
+      const std::string& value);
+  std::string* _internal_mutable_got_vote_id();
+
+  public:
+  // int64 vote_epoch = 3;
+  void clear_vote_epoch() ;
+  ::int64_t vote_epoch() const;
+  void set_vote_epoch(::int64_t value);
+
+  private:
+  ::int64_t _internal_vote_epoch() const;
+  void _internal_set_vote_epoch(::int64_t value);
+
+  public:
+  // bool success = 4;
+  void clear_success() ;
+  bool success() const;
+  void set_success(bool value);
+
+  private:
+  bool _internal_success() const;
+  void _internal_set_success(bool value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.RaftElectionRet)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 4, 0, 45, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr my_id_;
+    ::google::protobuf::internal::ArenaStringPtr got_vote_id_;
+    ::int64_t vote_epoch_;
+    bool success_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_raft_2eproto;
+};// -------------------------------------------------------------------
+
+class RaftSyncActions final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.RaftSyncActions) */ {
+ public:
+  inline RaftSyncActions() : RaftSyncActions(nullptr) {}
+  ~RaftSyncActions() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR RaftSyncActions(::google::protobuf::internal::ConstantInitialized);
+
+  RaftSyncActions(const RaftSyncActions& from);
+  RaftSyncActions(RaftSyncActions&& from) noexcept
+    : RaftSyncActions() {
+    *this = ::std::move(from);
+  }
+
+  inline RaftSyncActions& operator=(const RaftSyncActions& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RaftSyncActions& operator=(RaftSyncActions&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RaftSyncActions& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RaftSyncActions* internal_default_instance() {
+    return reinterpret_cast<const RaftSyncActions*>(
+               &_RaftSyncActions_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  friend void swap(RaftSyncActions& a, RaftSyncActions& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RaftSyncActions* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RaftSyncActions* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RaftSyncActions* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RaftSyncActions>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const RaftSyncActions& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const RaftSyncActions& from) {
+    RaftSyncActions::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RaftSyncActions* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.RaftSyncActions";
+  }
+  protected:
+  explicit RaftSyncActions(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kActionsFieldNumber = 4,
+    kMyIdFieldNumber = 1,
+    kCurrentEpochFieldNumber = 2,
+    kCommitedEpochFieldNumber = 3,
+  };
+  // repeated .prpc.RaftTransaction actions = 4;
+  int actions_size() const;
+  private:
+  int _internal_actions_size() const;
+
+  public:
+  void clear_actions() ;
+  ::prpc::RaftTransaction* mutable_actions(int index);
+  ::google::protobuf::RepeatedPtrField< ::prpc::RaftTransaction >*
+      mutable_actions();
+  private:
+  const ::google::protobuf::RepeatedPtrField<::prpc::RaftTransaction>& _internal_actions() const;
+  ::google::protobuf::RepeatedPtrField<::prpc::RaftTransaction>* _internal_mutable_actions();
+  public:
+  const ::prpc::RaftTransaction& actions(int index) const;
+  ::prpc::RaftTransaction* add_actions();
+  const ::google::protobuf::RepeatedPtrField< ::prpc::RaftTransaction >&
+      actions() const;
+  // string my_id = 1;
+  void clear_my_id() ;
+  const std::string& my_id() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_my_id(Arg_&& arg, Args_... args);
+  std::string* mutable_my_id();
+  PROTOBUF_NODISCARD std::string* release_my_id();
+  void set_allocated_my_id(std::string* ptr);
+
+  private:
+  const std::string& _internal_my_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_my_id(
+      const std::string& value);
+  std::string* _internal_mutable_my_id();
+
+  public:
+  // int64 current_epoch = 2;
+  void clear_current_epoch() ;
+  ::int64_t current_epoch() const;
+  void set_current_epoch(::int64_t value);
+
+  private:
+  ::int64_t _internal_current_epoch() const;
+  void _internal_set_current_epoch(::int64_t value);
+
+  public:
+  // int64 commited_epoch = 3;
+  void clear_commited_epoch() ;
+  ::int64_t commited_epoch() const;
+  void set_commited_epoch(::int64_t value);
+
+  private:
+  ::int64_t _internal_commited_epoch() const;
+  void _internal_set_commited_epoch(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.RaftSyncActions)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 4, 1, 34, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::RepeatedPtrField< ::prpc::RaftTransaction > actions_;
+    ::google::protobuf::internal::ArenaStringPtr my_id_;
+    ::int64_t current_epoch_;
+    ::int64_t commited_epoch_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_raft_2eproto;
+};// -------------------------------------------------------------------
+
+class RaftSyncActionsRet final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.RaftSyncActionsRet) */ {
+ public:
+  inline RaftSyncActionsRet() : RaftSyncActionsRet(nullptr) {}
+  ~RaftSyncActionsRet() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR RaftSyncActionsRet(::google::protobuf::internal::ConstantInitialized);
+
+  RaftSyncActionsRet(const RaftSyncActionsRet& from);
+  RaftSyncActionsRet(RaftSyncActionsRet&& from) noexcept
+    : RaftSyncActionsRet() {
+    *this = ::std::move(from);
+  }
+
+  inline RaftSyncActionsRet& operator=(const RaftSyncActionsRet& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RaftSyncActionsRet& operator=(RaftSyncActionsRet&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RaftSyncActionsRet& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RaftSyncActionsRet* internal_default_instance() {
+    return reinterpret_cast<const RaftSyncActionsRet*>(
+               &_RaftSyncActionsRet_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
+
+  friend void swap(RaftSyncActionsRet& a, RaftSyncActionsRet& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RaftSyncActionsRet* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RaftSyncActionsRet* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RaftSyncActionsRet* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RaftSyncActionsRet>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const RaftSyncActionsRet& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const RaftSyncActionsRet& from) {
+    RaftSyncActionsRet::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RaftSyncActionsRet* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.RaftSyncActionsRet";
+  }
+  protected:
+  explicit RaftSyncActionsRet(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMyIdFieldNumber = 1,
+    kCurrentEpochFieldNumber = 2,
+  };
+  // string my_id = 1;
+  void clear_my_id() ;
+  const std::string& my_id() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_my_id(Arg_&& arg, Args_... args);
+  std::string* mutable_my_id();
+  PROTOBUF_NODISCARD std::string* release_my_id();
+  void set_allocated_my_id(std::string* ptr);
+
+  private:
+  const std::string& _internal_my_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_my_id(
+      const std::string& value);
+  std::string* _internal_mutable_my_id();
+
+  public:
+  // int64 current_epoch = 2;
+  void clear_current_epoch() ;
+  ::int64_t current_epoch() const;
+  void set_current_epoch(::int64_t value);
+
+  private:
+  ::int64_t _internal_current_epoch() const;
+  void _internal_set_current_epoch(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.RaftSyncActionsRet)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<1, 2, 0, 37, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr my_id_;
+    ::int64_t current_epoch_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_raft_2eproto;
+};// -------------------------------------------------------------------
+
+class RaftReqActions final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.RaftReqActions) */ {
+ public:
+  inline RaftReqActions() : RaftReqActions(nullptr) {}
+  ~RaftReqActions() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR RaftReqActions(::google::protobuf::internal::ConstantInitialized);
+
+  RaftReqActions(const RaftReqActions& from);
+  RaftReqActions(RaftReqActions&& from) noexcept
+    : RaftReqActions() {
+    *this = ::std::move(from);
+  }
+
+  inline RaftReqActions& operator=(const RaftReqActions& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RaftReqActions& operator=(RaftReqActions&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RaftReqActions& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RaftReqActions* internal_default_instance() {
+    return reinterpret_cast<const RaftReqActions*>(
+               &_RaftReqActions_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  friend void swap(RaftReqActions& a, RaftReqActions& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RaftReqActions* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RaftReqActions* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RaftReqActions* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RaftReqActions>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const RaftReqActions& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const RaftReqActions& from) {
+    RaftReqActions::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RaftReqActions* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.RaftReqActions";
+  }
+  protected:
+  explicit RaftReqActions(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMyIdFieldNumber = 1,
+    kCommitedEpochFieldNumber = 2,
+  };
+  // string my_id = 1;
+  void clear_my_id() ;
+  const std::string& my_id() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_my_id(Arg_&& arg, Args_... args);
+  std::string* mutable_my_id();
+  PROTOBUF_NODISCARD std::string* release_my_id();
+  void set_allocated_my_id(std::string* ptr);
+
+  private:
+  const std::string& _internal_my_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_my_id(
+      const std::string& value);
+  std::string* _internal_mutable_my_id();
+
+  public:
+  // int64 commited_epoch = 2;
+  void clear_commited_epoch() ;
+  ::int64_t commited_epoch() const;
+  void set_commited_epoch(::int64_t value);
+
+  private:
+  ::int64_t _internal_commited_epoch() const;
+  void _internal_set_commited_epoch(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.RaftReqActions)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<1, 2, 0, 33, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr my_id_;
+    ::int64_t commited_epoch_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_raft_2eproto;
+};// -------------------------------------------------------------------
+
+class SlotMsg final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:prpc.SlotMsg) */ {
+ public:
+  inline SlotMsg() : SlotMsg(nullptr) {}
+  ~SlotMsg() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR SlotMsg(::google::protobuf::internal::ConstantInitialized);
+
+  SlotMsg(const SlotMsg& from);
+  SlotMsg(SlotMsg&& from) noexcept
+    : SlotMsg() {
+    *this = ::std::move(from);
+  }
+
+  inline SlotMsg& operator=(const SlotMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SlotMsg& operator=(SlotMsg&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SlotMsg& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SlotMsg* internal_default_instance() {
+    return reinterpret_cast<const SlotMsg*>(
+               &_SlotMsg_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
+
+  friend void swap(SlotMsg& a, SlotMsg& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SlotMsg* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SlotMsg* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SlotMsg* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SlotMsg>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const SlotMsg& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const SlotMsg& from) {
+    SlotMsg::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SlotMsg* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "prpc.SlotMsg";
+  }
+  protected:
+  explicit SlotMsg(::google::protobuf::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMsgFieldNumber = 2,
+    kSlotFieldNumber = 1,
+  };
+  // string msg = 2;
+  void clear_msg() ;
+  const std::string& msg() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_msg(Arg_&& arg, Args_... args);
+  std::string* mutable_msg();
+  PROTOBUF_NODISCARD std::string* release_msg();
+  void set_allocated_msg(std::string* ptr);
+
+  private:
+  const std::string& _internal_msg() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg(
+      const std::string& value);
+  std::string* _internal_mutable_msg();
+
+  public:
+  // int32 slot = 1;
+  void clear_slot() ;
+  ::int32_t slot() const;
+  void set_slot(::int32_t value);
+
+  private:
+  ::int32_t _internal_slot() const;
+  void _internal_set_slot(::int32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:prpc.SlotMsg)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<1, 2, 0, 24, 2> _table_;
+  template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::google::protobuf::internal::ArenaStringPtr msg_;
+    ::int32_t slot_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
   friend struct ::TableStruct_raft_2eproto;
 };// -------------------------------------------------------------------
 
@@ -1149,7 +2606,7 @@ class RaftMsg final :
                &_RaftMsg_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    12;
 
   friend void swap(RaftMsg& a, RaftMsg& b) {
     a.Swap(&b);
@@ -1222,8 +2679,13 @@ class RaftMsg final :
   static constexpr Type Unknown = RaftMsg_Type_Unknown;
   static constexpr Type Action = RaftMsg_Type_Action;
   static constexpr Type SyncAction = RaftMsg_Type_SyncAction;
+  static constexpr Type SyncActionRet = RaftMsg_Type_SyncActionRet;
   static constexpr Type Ping = RaftMsg_Type_Ping;
   static constexpr Type Pong = RaftMsg_Type_Pong;
+  static constexpr Type Election = RaftMsg_Type_Election;
+  static constexpr Type ElectionRet = RaftMsg_Type_ElectionRet;
+  static constexpr Type ReqActions = RaftMsg_Type_ReqActions;
+  static constexpr Type SendMsg2Slot = RaftMsg_Type_SendMsg2Slot;
   static inline bool Type_IsValid(int value) {
     return RaftMsg_Type_IsValid(value);
   }
@@ -1244,28 +2706,17 @@ class RaftMsg final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kSyncActionsFieldNumber = 3,
     kActionFieldNumber = 2,
+    kSyncActionsFieldNumber = 3,
+    kSyncActionsRetFieldNumber = 4,
+    kPingFieldNumber = 5,
+    kPongFieldNumber = 6,
+    kElectionFieldNumber = 7,
+    kElectionRetFieldNumber = 8,
+    kReqActionsFieldNumber = 9,
+    kSlotMsgFieldNumber = 10,
     kTypeFieldNumber = 1,
   };
-  // repeated .prpc.RaftTransaction sync_actions = 3;
-  int sync_actions_size() const;
-  private:
-  int _internal_sync_actions_size() const;
-
-  public:
-  void clear_sync_actions() ;
-  ::prpc::RaftTransaction* mutable_sync_actions(int index);
-  ::google::protobuf::RepeatedPtrField< ::prpc::RaftTransaction >*
-      mutable_sync_actions();
-  private:
-  const ::google::protobuf::RepeatedPtrField<::prpc::RaftTransaction>& _internal_sync_actions() const;
-  ::google::protobuf::RepeatedPtrField<::prpc::RaftTransaction>* _internal_mutable_sync_actions();
-  public:
-  const ::prpc::RaftTransaction& sync_actions(int index) const;
-  ::prpc::RaftTransaction* add_sync_actions();
-  const ::google::protobuf::RepeatedPtrField< ::prpc::RaftTransaction >&
-      sync_actions() const;
   // .prpc.RaftTransaction action = 2;
   bool has_action() const;
   void clear_action() ;
@@ -1279,6 +2730,126 @@ class RaftMsg final :
   private:
   const ::prpc::RaftTransaction& _internal_action() const;
   ::prpc::RaftTransaction* _internal_mutable_action();
+
+  public:
+  // .prpc.RaftSyncActions sync_actions = 3;
+  bool has_sync_actions() const;
+  void clear_sync_actions() ;
+  const ::prpc::RaftSyncActions& sync_actions() const;
+  PROTOBUF_NODISCARD ::prpc::RaftSyncActions* release_sync_actions();
+  ::prpc::RaftSyncActions* mutable_sync_actions();
+  void set_allocated_sync_actions(::prpc::RaftSyncActions* value);
+  void unsafe_arena_set_allocated_sync_actions(::prpc::RaftSyncActions* value);
+  ::prpc::RaftSyncActions* unsafe_arena_release_sync_actions();
+
+  private:
+  const ::prpc::RaftSyncActions& _internal_sync_actions() const;
+  ::prpc::RaftSyncActions* _internal_mutable_sync_actions();
+
+  public:
+  // .prpc.RaftSyncActionsRet sync_actions_ret = 4;
+  bool has_sync_actions_ret() const;
+  void clear_sync_actions_ret() ;
+  const ::prpc::RaftSyncActionsRet& sync_actions_ret() const;
+  PROTOBUF_NODISCARD ::prpc::RaftSyncActionsRet* release_sync_actions_ret();
+  ::prpc::RaftSyncActionsRet* mutable_sync_actions_ret();
+  void set_allocated_sync_actions_ret(::prpc::RaftSyncActionsRet* value);
+  void unsafe_arena_set_allocated_sync_actions_ret(::prpc::RaftSyncActionsRet* value);
+  ::prpc::RaftSyncActionsRet* unsafe_arena_release_sync_actions_ret();
+
+  private:
+  const ::prpc::RaftSyncActionsRet& _internal_sync_actions_ret() const;
+  ::prpc::RaftSyncActionsRet* _internal_mutable_sync_actions_ret();
+
+  public:
+  // .prpc.RaftPing ping = 5;
+  bool has_ping() const;
+  void clear_ping() ;
+  const ::prpc::RaftPing& ping() const;
+  PROTOBUF_NODISCARD ::prpc::RaftPing* release_ping();
+  ::prpc::RaftPing* mutable_ping();
+  void set_allocated_ping(::prpc::RaftPing* value);
+  void unsafe_arena_set_allocated_ping(::prpc::RaftPing* value);
+  ::prpc::RaftPing* unsafe_arena_release_ping();
+
+  private:
+  const ::prpc::RaftPing& _internal_ping() const;
+  ::prpc::RaftPing* _internal_mutable_ping();
+
+  public:
+  // .prpc.RaftPong pong = 6;
+  bool has_pong() const;
+  void clear_pong() ;
+  const ::prpc::RaftPong& pong() const;
+  PROTOBUF_NODISCARD ::prpc::RaftPong* release_pong();
+  ::prpc::RaftPong* mutable_pong();
+  void set_allocated_pong(::prpc::RaftPong* value);
+  void unsafe_arena_set_allocated_pong(::prpc::RaftPong* value);
+  ::prpc::RaftPong* unsafe_arena_release_pong();
+
+  private:
+  const ::prpc::RaftPong& _internal_pong() const;
+  ::prpc::RaftPong* _internal_mutable_pong();
+
+  public:
+  // .prpc.RaftElection election = 7;
+  bool has_election() const;
+  void clear_election() ;
+  const ::prpc::RaftElection& election() const;
+  PROTOBUF_NODISCARD ::prpc::RaftElection* release_election();
+  ::prpc::RaftElection* mutable_election();
+  void set_allocated_election(::prpc::RaftElection* value);
+  void unsafe_arena_set_allocated_election(::prpc::RaftElection* value);
+  ::prpc::RaftElection* unsafe_arena_release_election();
+
+  private:
+  const ::prpc::RaftElection& _internal_election() const;
+  ::prpc::RaftElection* _internal_mutable_election();
+
+  public:
+  // .prpc.RaftElectionRet election_ret = 8;
+  bool has_election_ret() const;
+  void clear_election_ret() ;
+  const ::prpc::RaftElectionRet& election_ret() const;
+  PROTOBUF_NODISCARD ::prpc::RaftElectionRet* release_election_ret();
+  ::prpc::RaftElectionRet* mutable_election_ret();
+  void set_allocated_election_ret(::prpc::RaftElectionRet* value);
+  void unsafe_arena_set_allocated_election_ret(::prpc::RaftElectionRet* value);
+  ::prpc::RaftElectionRet* unsafe_arena_release_election_ret();
+
+  private:
+  const ::prpc::RaftElectionRet& _internal_election_ret() const;
+  ::prpc::RaftElectionRet* _internal_mutable_election_ret();
+
+  public:
+  // .prpc.RaftReqActions req_actions = 9;
+  bool has_req_actions() const;
+  void clear_req_actions() ;
+  const ::prpc::RaftReqActions& req_actions() const;
+  PROTOBUF_NODISCARD ::prpc::RaftReqActions* release_req_actions();
+  ::prpc::RaftReqActions* mutable_req_actions();
+  void set_allocated_req_actions(::prpc::RaftReqActions* value);
+  void unsafe_arena_set_allocated_req_actions(::prpc::RaftReqActions* value);
+  ::prpc::RaftReqActions* unsafe_arena_release_req_actions();
+
+  private:
+  const ::prpc::RaftReqActions& _internal_req_actions() const;
+  ::prpc::RaftReqActions* _internal_mutable_req_actions();
+
+  public:
+  // .prpc.SlotMsg slot_msg = 10;
+  bool has_slot_msg() const;
+  void clear_slot_msg() ;
+  const ::prpc::SlotMsg& slot_msg() const;
+  PROTOBUF_NODISCARD ::prpc::SlotMsg* release_slot_msg();
+  ::prpc::SlotMsg* mutable_slot_msg();
+  void set_allocated_slot_msg(::prpc::SlotMsg* value);
+  void unsafe_arena_set_allocated_slot_msg(::prpc::SlotMsg* value);
+  ::prpc::SlotMsg* unsafe_arena_release_slot_msg();
+
+  private:
+  const ::prpc::SlotMsg& _internal_slot_msg() const;
+  ::prpc::SlotMsg* _internal_mutable_slot_msg();
 
   public:
   // .prpc.RaftMsg.Type type = 1;
@@ -1296,15 +2867,22 @@ class RaftMsg final :
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3, 2, 0, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<4, 10, 9, 0, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::RepeatedPtrField< ::prpc::RaftTransaction > sync_actions_;
     ::prpc::RaftTransaction* action_;
+    ::prpc::RaftSyncActions* sync_actions_;
+    ::prpc::RaftSyncActionsRet* sync_actions_ret_;
+    ::prpc::RaftPing* ping_;
+    ::prpc::RaftPong* pong_;
+    ::prpc::RaftElection* election_;
+    ::prpc::RaftElectionRet* election_ret_;
+    ::prpc::RaftReqActions* req_actions_;
+    ::prpc::SlotMsg* slot_msg_;
     int type_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -1454,6 +3032,134 @@ inline void NewNodeAction::_internal_set_role(::int32_t value) {
 
 // -------------------------------------------------------------------
 
+// HashSlotAction
+
+// string my_id = 1;
+inline void HashSlotAction::clear_my_id() {
+  _impl_.my_id_.ClearToEmpty();
+}
+inline const std::string& HashSlotAction::my_id() const {
+  // @@protoc_insertion_point(field_get:prpc.HashSlotAction.my_id)
+  return _internal_my_id();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void HashSlotAction::set_my_id(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.HashSlotAction.my_id)
+}
+inline std::string* HashSlotAction::mutable_my_id() {
+  std::string* _s = _internal_mutable_my_id();
+  // @@protoc_insertion_point(field_mutable:prpc.HashSlotAction.my_id)
+  return _s;
+}
+inline const std::string& HashSlotAction::_internal_my_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.my_id_.Get();
+}
+inline void HashSlotAction::_internal_set_my_id(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* HashSlotAction::_internal_mutable_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.my_id_.Mutable( GetArenaForAllocation());
+}
+inline std::string* HashSlotAction::release_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.HashSlotAction.my_id)
+  return _impl_.my_id_.Release();
+}
+inline void HashSlotAction::set_allocated_my_id(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.my_id_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.my_id_.IsDefault()) {
+          _impl_.my_id_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.HashSlotAction.my_id)
+}
+
+// int32 step = 2;
+inline void HashSlotAction::clear_step() {
+  _impl_.step_ = 0;
+}
+inline ::int32_t HashSlotAction::step() const {
+  // @@protoc_insertion_point(field_get:prpc.HashSlotAction.step)
+  return _internal_step();
+}
+inline void HashSlotAction::set_step(::int32_t value) {
+  _internal_set_step(value);
+  // @@protoc_insertion_point(field_set:prpc.HashSlotAction.step)
+}
+inline ::int32_t HashSlotAction::_internal_step() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.step_;
+}
+inline void HashSlotAction::_internal_set_step(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.step_ = value;
+}
+
+// bytes slots = 3;
+inline void HashSlotAction::clear_slots() {
+  _impl_.slots_.ClearToEmpty();
+}
+inline const std::string& HashSlotAction::slots() const {
+  // @@protoc_insertion_point(field_get:prpc.HashSlotAction.slots)
+  return _internal_slots();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void HashSlotAction::set_slots(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.slots_.SetBytes(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.HashSlotAction.slots)
+}
+inline std::string* HashSlotAction::mutable_slots() {
+  std::string* _s = _internal_mutable_slots();
+  // @@protoc_insertion_point(field_mutable:prpc.HashSlotAction.slots)
+  return _s;
+}
+inline const std::string& HashSlotAction::_internal_slots() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.slots_.Get();
+}
+inline void HashSlotAction::_internal_set_slots(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.slots_.Set(value, GetArenaForAllocation());
+}
+inline std::string* HashSlotAction::_internal_mutable_slots() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.slots_.Mutable( GetArenaForAllocation());
+}
+inline std::string* HashSlotAction::release_slots() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.HashSlotAction.slots)
+  return _impl_.slots_.Release();
+}
+inline void HashSlotAction::set_allocated_slots(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.slots_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.slots_.IsDefault()) {
+          _impl_.slots_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.HashSlotAction.slots)
+}
+
+// -------------------------------------------------------------------
+
 // RaftTransaction
 
 // string my_id = 1;
@@ -1529,23 +3235,23 @@ inline void RaftTransaction::_internal_set_type(::prpc::RaftTransaction_Type val
   _impl_.type_ = value;
 }
 
-// uint64 epoch = 3;
+// int64 epoch = 3;
 inline void RaftTransaction::clear_epoch() {
-  _impl_.epoch_ = ::uint64_t{0u};
+  _impl_.epoch_ = ::int64_t{0};
 }
-inline ::uint64_t RaftTransaction::epoch() const {
+inline ::int64_t RaftTransaction::epoch() const {
   // @@protoc_insertion_point(field_get:prpc.RaftTransaction.epoch)
   return _internal_epoch();
 }
-inline void RaftTransaction::set_epoch(::uint64_t value) {
+inline void RaftTransaction::set_epoch(::int64_t value) {
   _internal_set_epoch(value);
   // @@protoc_insertion_point(field_set:prpc.RaftTransaction.epoch)
 }
-inline ::uint64_t RaftTransaction::_internal_epoch() const {
+inline ::int64_t RaftTransaction::_internal_epoch() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.epoch_;
 }
-inline void RaftTransaction::_internal_set_epoch(::uint64_t value) {
+inline void RaftTransaction::_internal_set_epoch(::int64_t value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   _impl_.epoch_ = value;
@@ -1698,51 +3404,147 @@ inline void RaftTransaction::set_allocated_new_node(::prpc::NewNodeAction* value
   // @@protoc_insertion_point(field_set_allocated:prpc.RaftTransaction.new_node)
 }
 
+// .prpc.HashSlotAction hash_slot = 6;
+inline bool RaftTransaction::has_hash_slot() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.hash_slot_ != nullptr);
+  return value;
+}
+inline void RaftTransaction::clear_hash_slot() {
+  if (_impl_.hash_slot_ != nullptr) _impl_.hash_slot_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000002u;
+}
+inline const ::prpc::HashSlotAction& RaftTransaction::_internal_hash_slot() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::HashSlotAction* p = _impl_.hash_slot_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::HashSlotAction&>(::prpc::_HashSlotAction_default_instance_);
+}
+inline const ::prpc::HashSlotAction& RaftTransaction::hash_slot() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftTransaction.hash_slot)
+  return _internal_hash_slot();
+}
+inline void RaftTransaction::unsafe_arena_set_allocated_hash_slot(::prpc::HashSlotAction* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.hash_slot_);
+  }
+  _impl_.hash_slot_ = reinterpret_cast<::prpc::HashSlotAction*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.RaftTransaction.hash_slot)
+}
+inline ::prpc::HashSlotAction* RaftTransaction::release_hash_slot() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  ::prpc::HashSlotAction* released = _impl_.hash_slot_;
+  _impl_.hash_slot_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::HashSlotAction* RaftTransaction::unsafe_arena_release_hash_slot() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftTransaction.hash_slot)
+
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  ::prpc::HashSlotAction* temp = _impl_.hash_slot_;
+  _impl_.hash_slot_ = nullptr;
+  return temp;
+}
+inline ::prpc::HashSlotAction* RaftTransaction::_internal_mutable_hash_slot() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000002u;
+  if (_impl_.hash_slot_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::HashSlotAction>(GetArenaForAllocation());
+    _impl_.hash_slot_ = reinterpret_cast<::prpc::HashSlotAction*>(p);
+  }
+  return _impl_.hash_slot_;
+}
+inline ::prpc::HashSlotAction* RaftTransaction::mutable_hash_slot() {
+  ::prpc::HashSlotAction* _msg = _internal_mutable_hash_slot();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftTransaction.hash_slot)
+  return _msg;
+}
+inline void RaftTransaction::set_allocated_hash_slot(::prpc::HashSlotAction* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::HashSlotAction*>(_impl_.hash_slot_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::HashSlotAction*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+
+  _impl_.hash_slot_ = reinterpret_cast<::prpc::HashSlotAction*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftTransaction.hash_slot)
+}
+
 // -------------------------------------------------------------------
 
-// RaftActionRet
+// NodeState
 
 // string my_id = 1;
-inline void RaftActionRet::clear_my_id() {
+inline void NodeState::clear_my_id() {
   _impl_.my_id_.ClearToEmpty();
 }
-inline const std::string& RaftActionRet::my_id() const {
-  // @@protoc_insertion_point(field_get:prpc.RaftActionRet.my_id)
+inline const std::string& NodeState::my_id() const {
+  // @@protoc_insertion_point(field_get:prpc.NodeState.my_id)
   return _internal_my_id();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void RaftActionRet::set_my_id(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void NodeState::set_my_id(Arg_&& arg,
                                                      Args_... args) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   _impl_.my_id_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:prpc.RaftActionRet.my_id)
+  // @@protoc_insertion_point(field_set:prpc.NodeState.my_id)
 }
-inline std::string* RaftActionRet::mutable_my_id() {
+inline std::string* NodeState::mutable_my_id() {
   std::string* _s = _internal_mutable_my_id();
-  // @@protoc_insertion_point(field_mutable:prpc.RaftActionRet.my_id)
+  // @@protoc_insertion_point(field_mutable:prpc.NodeState.my_id)
   return _s;
 }
-inline const std::string& RaftActionRet::_internal_my_id() const {
+inline const std::string& NodeState::_internal_my_id() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.my_id_.Get();
 }
-inline void RaftActionRet::_internal_set_my_id(const std::string& value) {
+inline void NodeState::_internal_set_my_id(const std::string& value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   _impl_.my_id_.Set(value, GetArenaForAllocation());
 }
-inline std::string* RaftActionRet::_internal_mutable_my_id() {
+inline std::string* NodeState::_internal_mutable_my_id() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
   return _impl_.my_id_.Mutable( GetArenaForAllocation());
 }
-inline std::string* RaftActionRet::release_my_id() {
+inline std::string* NodeState::release_my_id() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:prpc.RaftActionRet.my_id)
+  // @@protoc_insertion_point(field_release:prpc.NodeState.my_id)
   return _impl_.my_id_.Release();
 }
-inline void RaftActionRet::set_allocated_my_id(std::string* value) {
+inline void NodeState::set_allocated_my_id(std::string* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.my_id_.SetAllocated(value, GetArenaForAllocation());
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -1750,51 +3552,29 @@ inline void RaftActionRet::set_allocated_my_id(std::string* value) {
           _impl_.my_id_.Set("", GetArenaForAllocation());
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:prpc.RaftActionRet.my_id)
+  // @@protoc_insertion_point(field_set_allocated:prpc.NodeState.my_id)
 }
 
-// uint64 epoch = 2;
-inline void RaftActionRet::clear_epoch() {
-  _impl_.epoch_ = ::uint64_t{0u};
+// int32 state = 2;
+inline void NodeState::clear_state() {
+  _impl_.state_ = 0;
 }
-inline ::uint64_t RaftActionRet::epoch() const {
-  // @@protoc_insertion_point(field_get:prpc.RaftActionRet.epoch)
-  return _internal_epoch();
+inline ::int32_t NodeState::state() const {
+  // @@protoc_insertion_point(field_get:prpc.NodeState.state)
+  return _internal_state();
 }
-inline void RaftActionRet::set_epoch(::uint64_t value) {
-  _internal_set_epoch(value);
-  // @@protoc_insertion_point(field_set:prpc.RaftActionRet.epoch)
+inline void NodeState::set_state(::int32_t value) {
+  _internal_set_state(value);
+  // @@protoc_insertion_point(field_set:prpc.NodeState.state)
 }
-inline ::uint64_t RaftActionRet::_internal_epoch() const {
+inline ::int32_t NodeState::_internal_state() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.epoch_;
+  return _impl_.state_;
 }
-inline void RaftActionRet::_internal_set_epoch(::uint64_t value) {
+inline void NodeState::_internal_set_state(::int32_t value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
-  _impl_.epoch_ = value;
-}
-
-// bool success = 3;
-inline void RaftActionRet::clear_success() {
-  _impl_.success_ = false;
-}
-inline bool RaftActionRet::success() const {
-  // @@protoc_insertion_point(field_get:prpc.RaftActionRet.success)
-  return _internal_success();
-}
-inline void RaftActionRet::set_success(bool value) {
-  _internal_set_success(value);
-  // @@protoc_insertion_point(field_set:prpc.RaftActionRet.success)
-}
-inline bool RaftActionRet::_internal_success() const {
-  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.success_;
-}
-inline void RaftActionRet::_internal_set_success(bool value) {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ;
-  _impl_.success_ = value;
+  _impl_.state_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -1874,31 +3654,848 @@ inline void RaftPing::_internal_set_role(::int32_t value) {
   _impl_.role_ = value;
 }
 
-// uint64 epoch = 3;
-inline void RaftPing::clear_epoch() {
-  _impl_.epoch_ = ::uint64_t{0u};
+// int64 current_epoch = 3;
+inline void RaftPing::clear_current_epoch() {
+  _impl_.current_epoch_ = ::int64_t{0};
 }
-inline ::uint64_t RaftPing::epoch() const {
-  // @@protoc_insertion_point(field_get:prpc.RaftPing.epoch)
-  return _internal_epoch();
+inline ::int64_t RaftPing::current_epoch() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftPing.current_epoch)
+  return _internal_current_epoch();
 }
-inline void RaftPing::set_epoch(::uint64_t value) {
-  _internal_set_epoch(value);
-  // @@protoc_insertion_point(field_set:prpc.RaftPing.epoch)
+inline void RaftPing::set_current_epoch(::int64_t value) {
+  _internal_set_current_epoch(value);
+  // @@protoc_insertion_point(field_set:prpc.RaftPing.current_epoch)
 }
-inline ::uint64_t RaftPing::_internal_epoch() const {
+inline ::int64_t RaftPing::_internal_current_epoch() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.epoch_;
+  return _impl_.current_epoch_;
 }
-inline void RaftPing::_internal_set_epoch(::uint64_t value) {
+inline void RaftPing::_internal_set_current_epoch(::int64_t value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
-  _impl_.epoch_ = value;
+  _impl_.current_epoch_ = value;
+}
+
+// int64 commited_epoch = 4;
+inline void RaftPing::clear_commited_epoch() {
+  _impl_.commited_epoch_ = ::int64_t{0};
+}
+inline ::int64_t RaftPing::commited_epoch() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftPing.commited_epoch)
+  return _internal_commited_epoch();
+}
+inline void RaftPing::set_commited_epoch(::int64_t value) {
+  _internal_set_commited_epoch(value);
+  // @@protoc_insertion_point(field_set:prpc.RaftPing.commited_epoch)
+}
+inline ::int64_t RaftPing::_internal_commited_epoch() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.commited_epoch_;
+}
+inline void RaftPing::_internal_set_commited_epoch(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.commited_epoch_ = value;
+}
+
+// int64 vote_epoch = 5;
+inline void RaftPing::clear_vote_epoch() {
+  _impl_.vote_epoch_ = ::int64_t{0};
+}
+inline ::int64_t RaftPing::vote_epoch() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftPing.vote_epoch)
+  return _internal_vote_epoch();
+}
+inline void RaftPing::set_vote_epoch(::int64_t value) {
+  _internal_set_vote_epoch(value);
+  // @@protoc_insertion_point(field_set:prpc.RaftPing.vote_epoch)
+}
+inline ::int64_t RaftPing::_internal_vote_epoch() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.vote_epoch_;
+}
+inline void RaftPing::_internal_set_vote_epoch(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.vote_epoch_ = value;
+}
+
+// repeated .prpc.NodeState node_states = 6;
+inline int RaftPing::_internal_node_states_size() const {
+  return _internal_node_states().size();
+}
+inline int RaftPing::node_states_size() const {
+  return _internal_node_states_size();
+}
+inline void RaftPing::clear_node_states() {
+  _internal_mutable_node_states()->Clear();
+}
+inline ::prpc::NodeState* RaftPing::mutable_node_states(int index) {
+  // @@protoc_insertion_point(field_mutable:prpc.RaftPing.node_states)
+  return _internal_mutable_node_states()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::prpc::NodeState >*
+RaftPing::mutable_node_states() {
+  // @@protoc_insertion_point(field_mutable_list:prpc.RaftPing.node_states)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  return _internal_mutable_node_states();
+}
+inline const ::prpc::NodeState& RaftPing::node_states(int index) const {
+  // @@protoc_insertion_point(field_get:prpc.RaftPing.node_states)
+    return _internal_node_states().Get(index);
+}
+inline ::prpc::NodeState* RaftPing::add_node_states() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::prpc::NodeState* _add = _internal_mutable_node_states()->Add();
+  // @@protoc_insertion_point(field_add:prpc.RaftPing.node_states)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::prpc::NodeState >&
+RaftPing::node_states() const {
+  // @@protoc_insertion_point(field_list:prpc.RaftPing.node_states)
+  return _internal_node_states();
+}
+inline const ::google::protobuf::RepeatedPtrField<::prpc::NodeState>&
+RaftPing::_internal_node_states() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.node_states_;
+}
+inline ::google::protobuf::RepeatedPtrField<::prpc::NodeState>*
+RaftPing::_internal_mutable_node_states() {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return &_impl_.node_states_;
+}
+
+// string master_address = 7;
+inline void RaftPing::clear_master_address() {
+  _impl_.master_address_.ClearToEmpty();
+}
+inline const std::string& RaftPing::master_address() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftPing.master_address)
+  return _internal_master_address();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void RaftPing::set_master_address(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.master_address_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.RaftPing.master_address)
+}
+inline std::string* RaftPing::mutable_master_address() {
+  std::string* _s = _internal_mutable_master_address();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftPing.master_address)
+  return _s;
+}
+inline const std::string& RaftPing::_internal_master_address() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.master_address_.Get();
+}
+inline void RaftPing::_internal_set_master_address(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.master_address_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RaftPing::_internal_mutable_master_address() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.master_address_.Mutable( GetArenaForAllocation());
+}
+inline std::string* RaftPing::release_master_address() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftPing.master_address)
+  return _impl_.master_address_.Release();
+}
+inline void RaftPing::set_allocated_master_address(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.master_address_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.master_address_.IsDefault()) {
+          _impl_.master_address_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftPing.master_address)
 }
 
 // -------------------------------------------------------------------
 
 // RaftPong
+
+// string my_id = 1;
+inline void RaftPong::clear_my_id() {
+  _impl_.my_id_.ClearToEmpty();
+}
+inline const std::string& RaftPong::my_id() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftPong.my_id)
+  return _internal_my_id();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void RaftPong::set_my_id(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.RaftPong.my_id)
+}
+inline std::string* RaftPong::mutable_my_id() {
+  std::string* _s = _internal_mutable_my_id();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftPong.my_id)
+  return _s;
+}
+inline const std::string& RaftPong::_internal_my_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.my_id_.Get();
+}
+inline void RaftPong::_internal_set_my_id(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RaftPong::_internal_mutable_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.my_id_.Mutable( GetArenaForAllocation());
+}
+inline std::string* RaftPong::release_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftPong.my_id)
+  return _impl_.my_id_.Release();
+}
+inline void RaftPong::set_allocated_my_id(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.my_id_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.my_id_.IsDefault()) {
+          _impl_.my_id_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftPong.my_id)
+}
+
+// int32 role = 2;
+inline void RaftPong::clear_role() {
+  _impl_.role_ = 0;
+}
+inline ::int32_t RaftPong::role() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftPong.role)
+  return _internal_role();
+}
+inline void RaftPong::set_role(::int32_t value) {
+  _internal_set_role(value);
+  // @@protoc_insertion_point(field_set:prpc.RaftPong.role)
+}
+inline ::int32_t RaftPong::_internal_role() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.role_;
+}
+inline void RaftPong::_internal_set_role(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.role_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// RaftElection
+
+// string my_id = 1;
+inline void RaftElection::clear_my_id() {
+  _impl_.my_id_.ClearToEmpty();
+}
+inline const std::string& RaftElection::my_id() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftElection.my_id)
+  return _internal_my_id();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void RaftElection::set_my_id(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.RaftElection.my_id)
+}
+inline std::string* RaftElection::mutable_my_id() {
+  std::string* _s = _internal_mutable_my_id();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftElection.my_id)
+  return _s;
+}
+inline const std::string& RaftElection::_internal_my_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.my_id_.Get();
+}
+inline void RaftElection::_internal_set_my_id(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RaftElection::_internal_mutable_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.my_id_.Mutable( GetArenaForAllocation());
+}
+inline std::string* RaftElection::release_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftElection.my_id)
+  return _impl_.my_id_.Release();
+}
+inline void RaftElection::set_allocated_my_id(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.my_id_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.my_id_.IsDefault()) {
+          _impl_.my_id_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftElection.my_id)
+}
+
+// int64 vote_epoch = 2;
+inline void RaftElection::clear_vote_epoch() {
+  _impl_.vote_epoch_ = ::int64_t{0};
+}
+inline ::int64_t RaftElection::vote_epoch() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftElection.vote_epoch)
+  return _internal_vote_epoch();
+}
+inline void RaftElection::set_vote_epoch(::int64_t value) {
+  _internal_set_vote_epoch(value);
+  // @@protoc_insertion_point(field_set:prpc.RaftElection.vote_epoch)
+}
+inline ::int64_t RaftElection::_internal_vote_epoch() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.vote_epoch_;
+}
+inline void RaftElection::_internal_set_vote_epoch(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.vote_epoch_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// RaftElectionRet
+
+// string my_id = 1;
+inline void RaftElectionRet::clear_my_id() {
+  _impl_.my_id_.ClearToEmpty();
+}
+inline const std::string& RaftElectionRet::my_id() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftElectionRet.my_id)
+  return _internal_my_id();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void RaftElectionRet::set_my_id(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.RaftElectionRet.my_id)
+}
+inline std::string* RaftElectionRet::mutable_my_id() {
+  std::string* _s = _internal_mutable_my_id();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftElectionRet.my_id)
+  return _s;
+}
+inline const std::string& RaftElectionRet::_internal_my_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.my_id_.Get();
+}
+inline void RaftElectionRet::_internal_set_my_id(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RaftElectionRet::_internal_mutable_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.my_id_.Mutable( GetArenaForAllocation());
+}
+inline std::string* RaftElectionRet::release_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftElectionRet.my_id)
+  return _impl_.my_id_.Release();
+}
+inline void RaftElectionRet::set_allocated_my_id(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.my_id_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.my_id_.IsDefault()) {
+          _impl_.my_id_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftElectionRet.my_id)
+}
+
+// string got_vote_id = 2;
+inline void RaftElectionRet::clear_got_vote_id() {
+  _impl_.got_vote_id_.ClearToEmpty();
+}
+inline const std::string& RaftElectionRet::got_vote_id() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftElectionRet.got_vote_id)
+  return _internal_got_vote_id();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void RaftElectionRet::set_got_vote_id(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.got_vote_id_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.RaftElectionRet.got_vote_id)
+}
+inline std::string* RaftElectionRet::mutable_got_vote_id() {
+  std::string* _s = _internal_mutable_got_vote_id();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftElectionRet.got_vote_id)
+  return _s;
+}
+inline const std::string& RaftElectionRet::_internal_got_vote_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.got_vote_id_.Get();
+}
+inline void RaftElectionRet::_internal_set_got_vote_id(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.got_vote_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RaftElectionRet::_internal_mutable_got_vote_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.got_vote_id_.Mutable( GetArenaForAllocation());
+}
+inline std::string* RaftElectionRet::release_got_vote_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftElectionRet.got_vote_id)
+  return _impl_.got_vote_id_.Release();
+}
+inline void RaftElectionRet::set_allocated_got_vote_id(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.got_vote_id_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.got_vote_id_.IsDefault()) {
+          _impl_.got_vote_id_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftElectionRet.got_vote_id)
+}
+
+// int64 vote_epoch = 3;
+inline void RaftElectionRet::clear_vote_epoch() {
+  _impl_.vote_epoch_ = ::int64_t{0};
+}
+inline ::int64_t RaftElectionRet::vote_epoch() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftElectionRet.vote_epoch)
+  return _internal_vote_epoch();
+}
+inline void RaftElectionRet::set_vote_epoch(::int64_t value) {
+  _internal_set_vote_epoch(value);
+  // @@protoc_insertion_point(field_set:prpc.RaftElectionRet.vote_epoch)
+}
+inline ::int64_t RaftElectionRet::_internal_vote_epoch() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.vote_epoch_;
+}
+inline void RaftElectionRet::_internal_set_vote_epoch(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.vote_epoch_ = value;
+}
+
+// bool success = 4;
+inline void RaftElectionRet::clear_success() {
+  _impl_.success_ = false;
+}
+inline bool RaftElectionRet::success() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftElectionRet.success)
+  return _internal_success();
+}
+inline void RaftElectionRet::set_success(bool value) {
+  _internal_set_success(value);
+  // @@protoc_insertion_point(field_set:prpc.RaftElectionRet.success)
+}
+inline bool RaftElectionRet::_internal_success() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.success_;
+}
+inline void RaftElectionRet::_internal_set_success(bool value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.success_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// RaftSyncActions
+
+// string my_id = 1;
+inline void RaftSyncActions::clear_my_id() {
+  _impl_.my_id_.ClearToEmpty();
+}
+inline const std::string& RaftSyncActions::my_id() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftSyncActions.my_id)
+  return _internal_my_id();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void RaftSyncActions::set_my_id(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.RaftSyncActions.my_id)
+}
+inline std::string* RaftSyncActions::mutable_my_id() {
+  std::string* _s = _internal_mutable_my_id();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftSyncActions.my_id)
+  return _s;
+}
+inline const std::string& RaftSyncActions::_internal_my_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.my_id_.Get();
+}
+inline void RaftSyncActions::_internal_set_my_id(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RaftSyncActions::_internal_mutable_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.my_id_.Mutable( GetArenaForAllocation());
+}
+inline std::string* RaftSyncActions::release_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftSyncActions.my_id)
+  return _impl_.my_id_.Release();
+}
+inline void RaftSyncActions::set_allocated_my_id(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.my_id_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.my_id_.IsDefault()) {
+          _impl_.my_id_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftSyncActions.my_id)
+}
+
+// int64 current_epoch = 2;
+inline void RaftSyncActions::clear_current_epoch() {
+  _impl_.current_epoch_ = ::int64_t{0};
+}
+inline ::int64_t RaftSyncActions::current_epoch() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftSyncActions.current_epoch)
+  return _internal_current_epoch();
+}
+inline void RaftSyncActions::set_current_epoch(::int64_t value) {
+  _internal_set_current_epoch(value);
+  // @@protoc_insertion_point(field_set:prpc.RaftSyncActions.current_epoch)
+}
+inline ::int64_t RaftSyncActions::_internal_current_epoch() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.current_epoch_;
+}
+inline void RaftSyncActions::_internal_set_current_epoch(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.current_epoch_ = value;
+}
+
+// int64 commited_epoch = 3;
+inline void RaftSyncActions::clear_commited_epoch() {
+  _impl_.commited_epoch_ = ::int64_t{0};
+}
+inline ::int64_t RaftSyncActions::commited_epoch() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftSyncActions.commited_epoch)
+  return _internal_commited_epoch();
+}
+inline void RaftSyncActions::set_commited_epoch(::int64_t value) {
+  _internal_set_commited_epoch(value);
+  // @@protoc_insertion_point(field_set:prpc.RaftSyncActions.commited_epoch)
+}
+inline ::int64_t RaftSyncActions::_internal_commited_epoch() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.commited_epoch_;
+}
+inline void RaftSyncActions::_internal_set_commited_epoch(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.commited_epoch_ = value;
+}
+
+// repeated .prpc.RaftTransaction actions = 4;
+inline int RaftSyncActions::_internal_actions_size() const {
+  return _internal_actions().size();
+}
+inline int RaftSyncActions::actions_size() const {
+  return _internal_actions_size();
+}
+inline void RaftSyncActions::clear_actions() {
+  _internal_mutable_actions()->Clear();
+}
+inline ::prpc::RaftTransaction* RaftSyncActions::mutable_actions(int index) {
+  // @@protoc_insertion_point(field_mutable:prpc.RaftSyncActions.actions)
+  return _internal_mutable_actions()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::prpc::RaftTransaction >*
+RaftSyncActions::mutable_actions() {
+  // @@protoc_insertion_point(field_mutable_list:prpc.RaftSyncActions.actions)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  return _internal_mutable_actions();
+}
+inline const ::prpc::RaftTransaction& RaftSyncActions::actions(int index) const {
+  // @@protoc_insertion_point(field_get:prpc.RaftSyncActions.actions)
+    return _internal_actions().Get(index);
+}
+inline ::prpc::RaftTransaction* RaftSyncActions::add_actions() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::prpc::RaftTransaction* _add = _internal_mutable_actions()->Add();
+  // @@protoc_insertion_point(field_add:prpc.RaftSyncActions.actions)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::prpc::RaftTransaction >&
+RaftSyncActions::actions() const {
+  // @@protoc_insertion_point(field_list:prpc.RaftSyncActions.actions)
+  return _internal_actions();
+}
+inline const ::google::protobuf::RepeatedPtrField<::prpc::RaftTransaction>&
+RaftSyncActions::_internal_actions() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.actions_;
+}
+inline ::google::protobuf::RepeatedPtrField<::prpc::RaftTransaction>*
+RaftSyncActions::_internal_mutable_actions() {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return &_impl_.actions_;
+}
+
+// -------------------------------------------------------------------
+
+// RaftSyncActionsRet
+
+// string my_id = 1;
+inline void RaftSyncActionsRet::clear_my_id() {
+  _impl_.my_id_.ClearToEmpty();
+}
+inline const std::string& RaftSyncActionsRet::my_id() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftSyncActionsRet.my_id)
+  return _internal_my_id();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void RaftSyncActionsRet::set_my_id(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.RaftSyncActionsRet.my_id)
+}
+inline std::string* RaftSyncActionsRet::mutable_my_id() {
+  std::string* _s = _internal_mutable_my_id();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftSyncActionsRet.my_id)
+  return _s;
+}
+inline const std::string& RaftSyncActionsRet::_internal_my_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.my_id_.Get();
+}
+inline void RaftSyncActionsRet::_internal_set_my_id(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RaftSyncActionsRet::_internal_mutable_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.my_id_.Mutable( GetArenaForAllocation());
+}
+inline std::string* RaftSyncActionsRet::release_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftSyncActionsRet.my_id)
+  return _impl_.my_id_.Release();
+}
+inline void RaftSyncActionsRet::set_allocated_my_id(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.my_id_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.my_id_.IsDefault()) {
+          _impl_.my_id_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftSyncActionsRet.my_id)
+}
+
+// int64 current_epoch = 2;
+inline void RaftSyncActionsRet::clear_current_epoch() {
+  _impl_.current_epoch_ = ::int64_t{0};
+}
+inline ::int64_t RaftSyncActionsRet::current_epoch() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftSyncActionsRet.current_epoch)
+  return _internal_current_epoch();
+}
+inline void RaftSyncActionsRet::set_current_epoch(::int64_t value) {
+  _internal_set_current_epoch(value);
+  // @@protoc_insertion_point(field_set:prpc.RaftSyncActionsRet.current_epoch)
+}
+inline ::int64_t RaftSyncActionsRet::_internal_current_epoch() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.current_epoch_;
+}
+inline void RaftSyncActionsRet::_internal_set_current_epoch(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.current_epoch_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// RaftReqActions
+
+// string my_id = 1;
+inline void RaftReqActions::clear_my_id() {
+  _impl_.my_id_.ClearToEmpty();
+}
+inline const std::string& RaftReqActions::my_id() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftReqActions.my_id)
+  return _internal_my_id();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void RaftReqActions::set_my_id(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.RaftReqActions.my_id)
+}
+inline std::string* RaftReqActions::mutable_my_id() {
+  std::string* _s = _internal_mutable_my_id();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftReqActions.my_id)
+  return _s;
+}
+inline const std::string& RaftReqActions::_internal_my_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.my_id_.Get();
+}
+inline void RaftReqActions::_internal_set_my_id(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.my_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RaftReqActions::_internal_mutable_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.my_id_.Mutable( GetArenaForAllocation());
+}
+inline std::string* RaftReqActions::release_my_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftReqActions.my_id)
+  return _impl_.my_id_.Release();
+}
+inline void RaftReqActions::set_allocated_my_id(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.my_id_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.my_id_.IsDefault()) {
+          _impl_.my_id_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftReqActions.my_id)
+}
+
+// int64 commited_epoch = 2;
+inline void RaftReqActions::clear_commited_epoch() {
+  _impl_.commited_epoch_ = ::int64_t{0};
+}
+inline ::int64_t RaftReqActions::commited_epoch() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftReqActions.commited_epoch)
+  return _internal_commited_epoch();
+}
+inline void RaftReqActions::set_commited_epoch(::int64_t value) {
+  _internal_set_commited_epoch(value);
+  // @@protoc_insertion_point(field_set:prpc.RaftReqActions.commited_epoch)
+}
+inline ::int64_t RaftReqActions::_internal_commited_epoch() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.commited_epoch_;
+}
+inline void RaftReqActions::_internal_set_commited_epoch(::int64_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.commited_epoch_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// SlotMsg
+
+// int32 slot = 1;
+inline void SlotMsg::clear_slot() {
+  _impl_.slot_ = 0;
+}
+inline ::int32_t SlotMsg::slot() const {
+  // @@protoc_insertion_point(field_get:prpc.SlotMsg.slot)
+  return _internal_slot();
+}
+inline void SlotMsg::set_slot(::int32_t value) {
+  _internal_set_slot(value);
+  // @@protoc_insertion_point(field_set:prpc.SlotMsg.slot)
+}
+inline ::int32_t SlotMsg::_internal_slot() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.slot_;
+}
+inline void SlotMsg::_internal_set_slot(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.slot_ = value;
+}
+
+// string msg = 2;
+inline void SlotMsg::clear_msg() {
+  _impl_.msg_.ClearToEmpty();
+}
+inline const std::string& SlotMsg::msg() const {
+  // @@protoc_insertion_point(field_get:prpc.SlotMsg.msg)
+  return _internal_msg();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void SlotMsg::set_msg(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.msg_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:prpc.SlotMsg.msg)
+}
+inline std::string* SlotMsg::mutable_msg() {
+  std::string* _s = _internal_mutable_msg();
+  // @@protoc_insertion_point(field_mutable:prpc.SlotMsg.msg)
+  return _s;
+}
+inline const std::string& SlotMsg::_internal_msg() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.msg_.Get();
+}
+inline void SlotMsg::_internal_set_msg(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.msg_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SlotMsg::_internal_mutable_msg() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.msg_.Mutable( GetArenaForAllocation());
+}
+inline std::string* SlotMsg::release_msg() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.SlotMsg.msg)
+  return _impl_.msg_.Release();
+}
+inline void SlotMsg::set_allocated_msg(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.msg_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.msg_.IsDefault()) {
+          _impl_.msg_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:prpc.SlotMsg.msg)
+}
 
 // -------------------------------------------------------------------
 
@@ -2022,50 +4619,772 @@ inline void RaftMsg::set_allocated_action(::prpc::RaftTransaction* value) {
   // @@protoc_insertion_point(field_set_allocated:prpc.RaftMsg.action)
 }
 
-// repeated .prpc.RaftTransaction sync_actions = 3;
-inline int RaftMsg::_internal_sync_actions_size() const {
-  return _internal_sync_actions().size();
-}
-inline int RaftMsg::sync_actions_size() const {
-  return _internal_sync_actions_size();
+// .prpc.RaftSyncActions sync_actions = 3;
+inline bool RaftMsg::has_sync_actions() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.sync_actions_ != nullptr);
+  return value;
 }
 inline void RaftMsg::clear_sync_actions() {
-  _internal_mutable_sync_actions()->Clear();
+  if (_impl_.sync_actions_ != nullptr) _impl_.sync_actions_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000002u;
 }
-inline ::prpc::RaftTransaction* RaftMsg::mutable_sync_actions(int index) {
-  // @@protoc_insertion_point(field_mutable:prpc.RaftMsg.sync_actions)
-  return _internal_mutable_sync_actions()->Mutable(index);
+inline const ::prpc::RaftSyncActions& RaftMsg::_internal_sync_actions() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::RaftSyncActions* p = _impl_.sync_actions_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::RaftSyncActions&>(::prpc::_RaftSyncActions_default_instance_);
 }
-inline ::google::protobuf::RepeatedPtrField< ::prpc::RaftTransaction >*
-RaftMsg::mutable_sync_actions() {
-  // @@protoc_insertion_point(field_mutable_list:prpc.RaftMsg.sync_actions)
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  return _internal_mutable_sync_actions();
-}
-inline const ::prpc::RaftTransaction& RaftMsg::sync_actions(int index) const {
+inline const ::prpc::RaftSyncActions& RaftMsg::sync_actions() const {
   // @@protoc_insertion_point(field_get:prpc.RaftMsg.sync_actions)
-    return _internal_sync_actions().Get(index);
-}
-inline ::prpc::RaftTransaction* RaftMsg::add_sync_actions() {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ::prpc::RaftTransaction* _add = _internal_mutable_sync_actions()->Add();
-  // @@protoc_insertion_point(field_add:prpc.RaftMsg.sync_actions)
-  return _add;
-}
-inline const ::google::protobuf::RepeatedPtrField< ::prpc::RaftTransaction >&
-RaftMsg::sync_actions() const {
-  // @@protoc_insertion_point(field_list:prpc.RaftMsg.sync_actions)
   return _internal_sync_actions();
 }
-inline const ::google::protobuf::RepeatedPtrField<::prpc::RaftTransaction>&
-RaftMsg::_internal_sync_actions() const {
-  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+inline void RaftMsg::unsafe_arena_set_allocated_sync_actions(::prpc::RaftSyncActions* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.sync_actions_);
+  }
+  _impl_.sync_actions_ = reinterpret_cast<::prpc::RaftSyncActions*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.RaftMsg.sync_actions)
+}
+inline ::prpc::RaftSyncActions* RaftMsg::release_sync_actions() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  ::prpc::RaftSyncActions* released = _impl_.sync_actions_;
+  _impl_.sync_actions_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::RaftSyncActions* RaftMsg::unsafe_arena_release_sync_actions() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftMsg.sync_actions)
+
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  ::prpc::RaftSyncActions* temp = _impl_.sync_actions_;
+  _impl_.sync_actions_ = nullptr;
+  return temp;
+}
+inline ::prpc::RaftSyncActions* RaftMsg::_internal_mutable_sync_actions() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000002u;
+  if (_impl_.sync_actions_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::RaftSyncActions>(GetArenaForAllocation());
+    _impl_.sync_actions_ = reinterpret_cast<::prpc::RaftSyncActions*>(p);
+  }
   return _impl_.sync_actions_;
 }
-inline ::google::protobuf::RepeatedPtrField<::prpc::RaftTransaction>*
-RaftMsg::_internal_mutable_sync_actions() {
+inline ::prpc::RaftSyncActions* RaftMsg::mutable_sync_actions() {
+  ::prpc::RaftSyncActions* _msg = _internal_mutable_sync_actions();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftMsg.sync_actions)
+  return _msg;
+}
+inline void RaftMsg::set_allocated_sync_actions(::prpc::RaftSyncActions* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::RaftSyncActions*>(_impl_.sync_actions_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::RaftSyncActions*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+
+  _impl_.sync_actions_ = reinterpret_cast<::prpc::RaftSyncActions*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftMsg.sync_actions)
+}
+
+// .prpc.RaftSyncActionsRet sync_actions_ret = 4;
+inline bool RaftMsg::has_sync_actions_ret() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.sync_actions_ret_ != nullptr);
+  return value;
+}
+inline void RaftMsg::clear_sync_actions_ret() {
+  if (_impl_.sync_actions_ret_ != nullptr) _impl_.sync_actions_ret_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000004u;
+}
+inline const ::prpc::RaftSyncActionsRet& RaftMsg::_internal_sync_actions_ret() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return &_impl_.sync_actions_;
+  const ::prpc::RaftSyncActionsRet* p = _impl_.sync_actions_ret_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::RaftSyncActionsRet&>(::prpc::_RaftSyncActionsRet_default_instance_);
+}
+inline const ::prpc::RaftSyncActionsRet& RaftMsg::sync_actions_ret() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftMsg.sync_actions_ret)
+  return _internal_sync_actions_ret();
+}
+inline void RaftMsg::unsafe_arena_set_allocated_sync_actions_ret(::prpc::RaftSyncActionsRet* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.sync_actions_ret_);
+  }
+  _impl_.sync_actions_ret_ = reinterpret_cast<::prpc::RaftSyncActionsRet*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000004u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000004u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.RaftMsg.sync_actions_ret)
+}
+inline ::prpc::RaftSyncActionsRet* RaftMsg::release_sync_actions_ret() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000004u;
+  ::prpc::RaftSyncActionsRet* released = _impl_.sync_actions_ret_;
+  _impl_.sync_actions_ret_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::RaftSyncActionsRet* RaftMsg::unsafe_arena_release_sync_actions_ret() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftMsg.sync_actions_ret)
+
+  _impl_._has_bits_[0] &= ~0x00000004u;
+  ::prpc::RaftSyncActionsRet* temp = _impl_.sync_actions_ret_;
+  _impl_.sync_actions_ret_ = nullptr;
+  return temp;
+}
+inline ::prpc::RaftSyncActionsRet* RaftMsg::_internal_mutable_sync_actions_ret() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  if (_impl_.sync_actions_ret_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::RaftSyncActionsRet>(GetArenaForAllocation());
+    _impl_.sync_actions_ret_ = reinterpret_cast<::prpc::RaftSyncActionsRet*>(p);
+  }
+  return _impl_.sync_actions_ret_;
+}
+inline ::prpc::RaftSyncActionsRet* RaftMsg::mutable_sync_actions_ret() {
+  ::prpc::RaftSyncActionsRet* _msg = _internal_mutable_sync_actions_ret();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftMsg.sync_actions_ret)
+  return _msg;
+}
+inline void RaftMsg::set_allocated_sync_actions_ret(::prpc::RaftSyncActionsRet* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::RaftSyncActionsRet*>(_impl_.sync_actions_ret_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::RaftSyncActionsRet*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000004u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000004u;
+  }
+
+  _impl_.sync_actions_ret_ = reinterpret_cast<::prpc::RaftSyncActionsRet*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftMsg.sync_actions_ret)
+}
+
+// .prpc.RaftPing ping = 5;
+inline bool RaftMsg::has_ping() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.ping_ != nullptr);
+  return value;
+}
+inline void RaftMsg::clear_ping() {
+  if (_impl_.ping_ != nullptr) _impl_.ping_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000008u;
+}
+inline const ::prpc::RaftPing& RaftMsg::_internal_ping() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::RaftPing* p = _impl_.ping_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::RaftPing&>(::prpc::_RaftPing_default_instance_);
+}
+inline const ::prpc::RaftPing& RaftMsg::ping() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftMsg.ping)
+  return _internal_ping();
+}
+inline void RaftMsg::unsafe_arena_set_allocated_ping(::prpc::RaftPing* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.ping_);
+  }
+  _impl_.ping_ = reinterpret_cast<::prpc::RaftPing*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000008u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000008u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.RaftMsg.ping)
+}
+inline ::prpc::RaftPing* RaftMsg::release_ping() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000008u;
+  ::prpc::RaftPing* released = _impl_.ping_;
+  _impl_.ping_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::RaftPing* RaftMsg::unsafe_arena_release_ping() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftMsg.ping)
+
+  _impl_._has_bits_[0] &= ~0x00000008u;
+  ::prpc::RaftPing* temp = _impl_.ping_;
+  _impl_.ping_ = nullptr;
+  return temp;
+}
+inline ::prpc::RaftPing* RaftMsg::_internal_mutable_ping() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000008u;
+  if (_impl_.ping_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::RaftPing>(GetArenaForAllocation());
+    _impl_.ping_ = reinterpret_cast<::prpc::RaftPing*>(p);
+  }
+  return _impl_.ping_;
+}
+inline ::prpc::RaftPing* RaftMsg::mutable_ping() {
+  ::prpc::RaftPing* _msg = _internal_mutable_ping();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftMsg.ping)
+  return _msg;
+}
+inline void RaftMsg::set_allocated_ping(::prpc::RaftPing* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::RaftPing*>(_impl_.ping_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::RaftPing*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000008u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000008u;
+  }
+
+  _impl_.ping_ = reinterpret_cast<::prpc::RaftPing*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftMsg.ping)
+}
+
+// .prpc.RaftPong pong = 6;
+inline bool RaftMsg::has_pong() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000010u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.pong_ != nullptr);
+  return value;
+}
+inline void RaftMsg::clear_pong() {
+  if (_impl_.pong_ != nullptr) _impl_.pong_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000010u;
+}
+inline const ::prpc::RaftPong& RaftMsg::_internal_pong() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::RaftPong* p = _impl_.pong_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::RaftPong&>(::prpc::_RaftPong_default_instance_);
+}
+inline const ::prpc::RaftPong& RaftMsg::pong() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftMsg.pong)
+  return _internal_pong();
+}
+inline void RaftMsg::unsafe_arena_set_allocated_pong(::prpc::RaftPong* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.pong_);
+  }
+  _impl_.pong_ = reinterpret_cast<::prpc::RaftPong*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000010u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000010u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.RaftMsg.pong)
+}
+inline ::prpc::RaftPong* RaftMsg::release_pong() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000010u;
+  ::prpc::RaftPong* released = _impl_.pong_;
+  _impl_.pong_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::RaftPong* RaftMsg::unsafe_arena_release_pong() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftMsg.pong)
+
+  _impl_._has_bits_[0] &= ~0x00000010u;
+  ::prpc::RaftPong* temp = _impl_.pong_;
+  _impl_.pong_ = nullptr;
+  return temp;
+}
+inline ::prpc::RaftPong* RaftMsg::_internal_mutable_pong() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000010u;
+  if (_impl_.pong_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::RaftPong>(GetArenaForAllocation());
+    _impl_.pong_ = reinterpret_cast<::prpc::RaftPong*>(p);
+  }
+  return _impl_.pong_;
+}
+inline ::prpc::RaftPong* RaftMsg::mutable_pong() {
+  ::prpc::RaftPong* _msg = _internal_mutable_pong();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftMsg.pong)
+  return _msg;
+}
+inline void RaftMsg::set_allocated_pong(::prpc::RaftPong* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::RaftPong*>(_impl_.pong_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::RaftPong*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000010u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000010u;
+  }
+
+  _impl_.pong_ = reinterpret_cast<::prpc::RaftPong*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftMsg.pong)
+}
+
+// .prpc.RaftElection election = 7;
+inline bool RaftMsg::has_election() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000020u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.election_ != nullptr);
+  return value;
+}
+inline void RaftMsg::clear_election() {
+  if (_impl_.election_ != nullptr) _impl_.election_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000020u;
+}
+inline const ::prpc::RaftElection& RaftMsg::_internal_election() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::RaftElection* p = _impl_.election_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::RaftElection&>(::prpc::_RaftElection_default_instance_);
+}
+inline const ::prpc::RaftElection& RaftMsg::election() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftMsg.election)
+  return _internal_election();
+}
+inline void RaftMsg::unsafe_arena_set_allocated_election(::prpc::RaftElection* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.election_);
+  }
+  _impl_.election_ = reinterpret_cast<::prpc::RaftElection*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000020u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000020u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.RaftMsg.election)
+}
+inline ::prpc::RaftElection* RaftMsg::release_election() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000020u;
+  ::prpc::RaftElection* released = _impl_.election_;
+  _impl_.election_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::RaftElection* RaftMsg::unsafe_arena_release_election() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftMsg.election)
+
+  _impl_._has_bits_[0] &= ~0x00000020u;
+  ::prpc::RaftElection* temp = _impl_.election_;
+  _impl_.election_ = nullptr;
+  return temp;
+}
+inline ::prpc::RaftElection* RaftMsg::_internal_mutable_election() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000020u;
+  if (_impl_.election_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::RaftElection>(GetArenaForAllocation());
+    _impl_.election_ = reinterpret_cast<::prpc::RaftElection*>(p);
+  }
+  return _impl_.election_;
+}
+inline ::prpc::RaftElection* RaftMsg::mutable_election() {
+  ::prpc::RaftElection* _msg = _internal_mutable_election();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftMsg.election)
+  return _msg;
+}
+inline void RaftMsg::set_allocated_election(::prpc::RaftElection* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::RaftElection*>(_impl_.election_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::RaftElection*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000020u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000020u;
+  }
+
+  _impl_.election_ = reinterpret_cast<::prpc::RaftElection*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftMsg.election)
+}
+
+// .prpc.RaftElectionRet election_ret = 8;
+inline bool RaftMsg::has_election_ret() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000040u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.election_ret_ != nullptr);
+  return value;
+}
+inline void RaftMsg::clear_election_ret() {
+  if (_impl_.election_ret_ != nullptr) _impl_.election_ret_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000040u;
+}
+inline const ::prpc::RaftElectionRet& RaftMsg::_internal_election_ret() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::RaftElectionRet* p = _impl_.election_ret_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::RaftElectionRet&>(::prpc::_RaftElectionRet_default_instance_);
+}
+inline const ::prpc::RaftElectionRet& RaftMsg::election_ret() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftMsg.election_ret)
+  return _internal_election_ret();
+}
+inline void RaftMsg::unsafe_arena_set_allocated_election_ret(::prpc::RaftElectionRet* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.election_ret_);
+  }
+  _impl_.election_ret_ = reinterpret_cast<::prpc::RaftElectionRet*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000040u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000040u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.RaftMsg.election_ret)
+}
+inline ::prpc::RaftElectionRet* RaftMsg::release_election_ret() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000040u;
+  ::prpc::RaftElectionRet* released = _impl_.election_ret_;
+  _impl_.election_ret_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::RaftElectionRet* RaftMsg::unsafe_arena_release_election_ret() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftMsg.election_ret)
+
+  _impl_._has_bits_[0] &= ~0x00000040u;
+  ::prpc::RaftElectionRet* temp = _impl_.election_ret_;
+  _impl_.election_ret_ = nullptr;
+  return temp;
+}
+inline ::prpc::RaftElectionRet* RaftMsg::_internal_mutable_election_ret() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000040u;
+  if (_impl_.election_ret_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::RaftElectionRet>(GetArenaForAllocation());
+    _impl_.election_ret_ = reinterpret_cast<::prpc::RaftElectionRet*>(p);
+  }
+  return _impl_.election_ret_;
+}
+inline ::prpc::RaftElectionRet* RaftMsg::mutable_election_ret() {
+  ::prpc::RaftElectionRet* _msg = _internal_mutable_election_ret();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftMsg.election_ret)
+  return _msg;
+}
+inline void RaftMsg::set_allocated_election_ret(::prpc::RaftElectionRet* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::RaftElectionRet*>(_impl_.election_ret_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::RaftElectionRet*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000040u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000040u;
+  }
+
+  _impl_.election_ret_ = reinterpret_cast<::prpc::RaftElectionRet*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftMsg.election_ret)
+}
+
+// .prpc.RaftReqActions req_actions = 9;
+inline bool RaftMsg::has_req_actions() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000080u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.req_actions_ != nullptr);
+  return value;
+}
+inline void RaftMsg::clear_req_actions() {
+  if (_impl_.req_actions_ != nullptr) _impl_.req_actions_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000080u;
+}
+inline const ::prpc::RaftReqActions& RaftMsg::_internal_req_actions() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::RaftReqActions* p = _impl_.req_actions_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::RaftReqActions&>(::prpc::_RaftReqActions_default_instance_);
+}
+inline const ::prpc::RaftReqActions& RaftMsg::req_actions() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftMsg.req_actions)
+  return _internal_req_actions();
+}
+inline void RaftMsg::unsafe_arena_set_allocated_req_actions(::prpc::RaftReqActions* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.req_actions_);
+  }
+  _impl_.req_actions_ = reinterpret_cast<::prpc::RaftReqActions*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000080u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000080u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.RaftMsg.req_actions)
+}
+inline ::prpc::RaftReqActions* RaftMsg::release_req_actions() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000080u;
+  ::prpc::RaftReqActions* released = _impl_.req_actions_;
+  _impl_.req_actions_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::RaftReqActions* RaftMsg::unsafe_arena_release_req_actions() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftMsg.req_actions)
+
+  _impl_._has_bits_[0] &= ~0x00000080u;
+  ::prpc::RaftReqActions* temp = _impl_.req_actions_;
+  _impl_.req_actions_ = nullptr;
+  return temp;
+}
+inline ::prpc::RaftReqActions* RaftMsg::_internal_mutable_req_actions() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000080u;
+  if (_impl_.req_actions_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::RaftReqActions>(GetArenaForAllocation());
+    _impl_.req_actions_ = reinterpret_cast<::prpc::RaftReqActions*>(p);
+  }
+  return _impl_.req_actions_;
+}
+inline ::prpc::RaftReqActions* RaftMsg::mutable_req_actions() {
+  ::prpc::RaftReqActions* _msg = _internal_mutable_req_actions();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftMsg.req_actions)
+  return _msg;
+}
+inline void RaftMsg::set_allocated_req_actions(::prpc::RaftReqActions* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::RaftReqActions*>(_impl_.req_actions_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::RaftReqActions*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000080u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000080u;
+  }
+
+  _impl_.req_actions_ = reinterpret_cast<::prpc::RaftReqActions*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftMsg.req_actions)
+}
+
+// .prpc.SlotMsg slot_msg = 10;
+inline bool RaftMsg::has_slot_msg() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000100u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.slot_msg_ != nullptr);
+  return value;
+}
+inline void RaftMsg::clear_slot_msg() {
+  if (_impl_.slot_msg_ != nullptr) _impl_.slot_msg_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000100u;
+}
+inline const ::prpc::SlotMsg& RaftMsg::_internal_slot_msg() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::prpc::SlotMsg* p = _impl_.slot_msg_;
+  return p != nullptr ? *p : reinterpret_cast<const ::prpc::SlotMsg&>(::prpc::_SlotMsg_default_instance_);
+}
+inline const ::prpc::SlotMsg& RaftMsg::slot_msg() const {
+  // @@protoc_insertion_point(field_get:prpc.RaftMsg.slot_msg)
+  return _internal_slot_msg();
+}
+inline void RaftMsg::unsafe_arena_set_allocated_slot_msg(::prpc::SlotMsg* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.slot_msg_);
+  }
+  _impl_.slot_msg_ = reinterpret_cast<::prpc::SlotMsg*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000100u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000100u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:prpc.RaftMsg.slot_msg)
+}
+inline ::prpc::SlotMsg* RaftMsg::release_slot_msg() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000100u;
+  ::prpc::SlotMsg* released = _impl_.slot_msg_;
+  _impl_.slot_msg_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArenaForAllocation() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::prpc::SlotMsg* RaftMsg::unsafe_arena_release_slot_msg() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:prpc.RaftMsg.slot_msg)
+
+  _impl_._has_bits_[0] &= ~0x00000100u;
+  ::prpc::SlotMsg* temp = _impl_.slot_msg_;
+  _impl_.slot_msg_ = nullptr;
+  return temp;
+}
+inline ::prpc::SlotMsg* RaftMsg::_internal_mutable_slot_msg() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_._has_bits_[0] |= 0x00000100u;
+  if (_impl_.slot_msg_ == nullptr) {
+    auto* p = CreateMaybeMessage<::prpc::SlotMsg>(GetArenaForAllocation());
+    _impl_.slot_msg_ = reinterpret_cast<::prpc::SlotMsg*>(p);
+  }
+  return _impl_.slot_msg_;
+}
+inline ::prpc::SlotMsg* RaftMsg::mutable_slot_msg() {
+  ::prpc::SlotMsg* _msg = _internal_mutable_slot_msg();
+  // @@protoc_insertion_point(field_mutable:prpc.RaftMsg.slot_msg)
+  return _msg;
+}
+inline void RaftMsg::set_allocated_slot_msg(::prpc::SlotMsg* value) {
+  ::google::protobuf::Arena* message_arena = GetArenaForAllocation();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::prpc::SlotMsg*>(_impl_.slot_msg_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena =
+        ::google::protobuf::Arena::InternalGetOwningArena(reinterpret_cast<::prpc::SlotMsg*>(value));
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000100u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000100u;
+  }
+
+  _impl_.slot_msg_ = reinterpret_cast<::prpc::SlotMsg*>(value);
+  // @@protoc_insertion_point(field_set_allocated:prpc.RaftMsg.slot_msg)
 }
 
 #ifdef __GNUC__

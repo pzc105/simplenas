@@ -26,3 +26,4 @@ build
 tmp
 server.yml
 bt.yml
+src/server/service/distributedChat/main/main

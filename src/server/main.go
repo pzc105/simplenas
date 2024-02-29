@@ -10,6 +10,7 @@ import (
 
 func main() {
 	var configPath = flag.String("c", "", "path of config file")
+	flag.Parse()
 	setting.Init(*configPath)
 	log.Init()
 	db.Init()
