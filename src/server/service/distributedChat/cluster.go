@@ -26,6 +26,7 @@ type Cluster struct {
 	slots2Node       []*raftNode
 	actions          map[int64]*prpc.RaftTransaction
 	voteEpoch        atomic.Int64
+	nextVoteEpoch    int64
 	isMaster         atomic.Bool
 	lastAckTime      time.Time
 	maxMasterTimeout time.Duration
@@ -74,6 +75,7 @@ func (c *Cluster) Start(params *StartParams) {
 	c.nodes = make(map[string]*raftNode)
 	c.nodes[params.MyId] = c.myself
 	c.voteEpoch.Store(0)
+	c.nextVoteEpoch = 1
 	c.maxMasterTimeout = time.Second * 3
 	c.rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 	c.externalAddress = params.ListenAddress
@@ -92,6 +94,7 @@ func (c *Cluster) Start(params *StartParams) {
 	} else {
 		c.isMaster.Store(true)
 		c.voteEpoch.Store(1)
+		c.nextVoteEpoch = 2
 		c.master = c.myself
 		c.myself.role = MasterRole
 		action := prpc.RaftTransaction{
@@ -542,6 +545,7 @@ func (c *Cluster) handlePingLocked(msg *prpc.RaftMsg) {
 			c.lastAckTime = time.Now()
 		}
 		c.voteEpoch.Store(pingMsg.VoteEpoch)
+		c.nextVoteEpoch = pingMsg.VoteEpoch + 1
 	}
 
 	if node.lastCommitedEpoch.Load() != pingMsg.CommitedEpoch {
@@ -638,6 +642,7 @@ func (c *Cluster) handleCommitedActionLocked(commitedEpoch int64) {
 }
 
 func (c *Cluster) handleNewNodeActionLocked(action *prpc.NewNodeAction) {
+	fmt.Printf("[action] new node:%v\n", action)
 	if action.MyId == c.myself.id {
 		return
 	}
@@ -765,7 +770,7 @@ func (c *Cluster) getNextElectionDuration() time.Duration {
 
 func (c *Cluster) startElectionLocked() {
 	if c.isMaster.Load() || c.myself.role != ActorRole || c.myself.getOtherNodeState(c.master.id) != DownNodeState {
-		fmt.Printf("exit election. master id:%s myrole:%d masterState:%d\n", c.master.id, c.myself.role, c.myself.getOtherNodeState(c.master.id))
+		fmt.Printf("[election] exit election. master id:%s myrole:%d masterState:%d\n", c.master.id, c.myself.role, c.myself.getOtherNodeState(c.master.id))
 		return
 	}
 
@@ -774,7 +779,7 @@ func (c *Cluster) startElectionLocked() {
 		go func() {
 			defer c.wg.Add(-1)
 			d := c.getNextElectionDuration()
-			fmt.Printf("set election time out:%d\n", d)
+			fmt.Printf("[election] set election time out:%d\n", d)
 			t := time.NewTimer(d)
 			select {
 			case <-t.C:
@@ -787,20 +792,21 @@ func (c *Cluster) startElectionLocked() {
 		}()
 	}()
 
-	voteEpoch := utils.FetchAndAdd(&c.voteEpoch, int64(1)) + 1
-	if c.myself.lastVoteEpoch >= voteEpoch {
-		c.voteEpoch.Store(c.myself.lastVoteEpoch)
+	if c.myself.lastVoteEpoch >= c.nextVoteEpoch {
+		c.nextVoteEpoch = c.myself.lastVoteEpoch + 1
 		return
 	}
-	fmt.Printf("start election my:%s epoch:%d\n", c.myself.id, voteEpoch)
+	nextVoteEpoch := c.nextVoteEpoch
+	c.nextVoteEpoch++
+	fmt.Printf("[election] start election my:%s epoch:%d\n", c.myself.id, nextVoteEpoch)
 	c.state = ElectionCluster
-	c.myself.lastVoteEpoch = voteEpoch
+	c.myself.lastVoteEpoch = nextVoteEpoch
 	c.myself.voteId = c.myself.id
 	electionMsg := prpc.RaftMsg{
 		Type: prpc.RaftMsg_Election,
 		Election: &prpc.RaftElection{
 			MyId:      c.myself.id,
-			VoteEpoch: voteEpoch,
+			VoteEpoch: nextVoteEpoch,
 		},
 	}
 	for _, n := range c.actors {
@@ -846,16 +852,16 @@ func (c *Cluster) handleElectionRetMsgLocked(msg *prpc.RaftMsg) {
 	if !ok {
 		return
 	}
-	fmt.Printf("recv vote, from:%s obj:%s epoch:%d\n", er.MyId, er.GotVoteId, er.VoteEpoch)
+	fmt.Printf("[election] recv vote, from:%s obj:%s epoch:%d\n", er.MyId, er.GotVoteId, er.VoteEpoch)
 	if hisNode.lastVoteEpoch < er.VoteEpoch {
 		hisNode.lastVoteEpoch = er.VoteEpoch
 		hisNode.voteId = er.GotVoteId
 
-		if hisNode.voteId == c.myself.id && c.state == ElectionCluster {
+		if hisNode.voteId == c.myself.id && c.state == ElectionCluster && c.myself.voteId == c.myself.id {
 			majority := len(c.actors)/2 + 1
 			count := 0
 			for _, n := range c.actors {
-				if n.lastVoteEpoch == c.voteEpoch.Load() && n.voteId == c.myself.id {
+				if n.lastVoteEpoch == c.myself.lastVoteEpoch && n.voteId == c.myself.id {
 					count++
 				}
 			}
@@ -867,11 +873,13 @@ func (c *Cluster) handleElectionRetMsgLocked(msg *prpc.RaftMsg) {
 }
 
 func (c *Cluster) becomeMasterLocked() {
-	fmt.Printf("my:%s become master\n", c.myself.id)
+	fmt.Printf("myself:%s become master\n", c.myself.id)
 	c.master = c.myself
 	c.isMaster.Store(true)
 	c.myself.role = MasterRole
 	c.state = NormalCluster
+	c.voteEpoch.Store(c.myself.lastVoteEpoch)
+	c.nextVoteEpoch = c.myself.lastVoteEpoch + 1
 	msg := c.newPingMsg()
 	for _, n := range c.nodes {
 		n.send(msg)
