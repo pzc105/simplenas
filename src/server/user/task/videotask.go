@@ -114,6 +114,13 @@ func (v *videoTask) Start() {
 				Suffix:        "vtt",
 			})
 		}
+		video.GenSubtitle(&video.GenSubtitleOpts{
+			InputFileName: fullName,
+			OutDir:        outDir,
+			SubtitleName:  utils.GetFileName(fullName),
+			Format:        "webvtt",
+			Suffix:        "vtt",
+		})
 		rfileName := fmt.Sprintf("vid_%d.jpg", vid)
 		posterFileName := setting.GS().Server.PosterPath + "/" + rfileName
 		err := video.GenPoster(&video.GenPosterParams{
