@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package prpc;
+
+option go_package = "./prpc";
+
+service ChatService {
+  rpc QueryChatRoomServer(QueryChatRoomServerReq) returns (QueryChatRoomServerRes);
+  rpc CreateChatRoom(CreateChatRoomReq) returns (CreateChatRoomRes);
+  rpc QueryChatRoomInfo(QueryChatRoomInfoReq) returns (QueryChatRoomInfoRes);
+  rpc JoinRoom(JoinRoomReq) returns (JoinRoomRes);
+  rpc LeaveRoom(LeaveRoomReq) returns (LeaveRoomRes);
+  rpc Send2ChatRoom(Send2ChatRoomReq) returns (Send2ChatRoomRes);
+}
+
+message ChatError {
+  enum ErrorId {
+    None = 0;
+    InvalidIdentity = 1;
+    NotSupported = 2;
+  }
+  ErrorId error_id = 1;
+}
+
+message ChatUserInfo {
+  int64 user_id = 1;
+  string token = 2;
+}
+
+message QueryChatRoomServerReq {
+  string room_key = 1;
+}
+
+message QueryChatRoomServerRes {
+  repeated string addresses = 1;
+}
+
+message CreateChatRoomReq {
+  ChatUserInfo user_info = 1;
+  string room_key = 2;
+}
+
+message CreateChatRoomRes {
+  ChatError error = 1;
+}
+
+message QueryChatRoomInfoReq {
+  ChatUserInfo user_info = 1;
+  string room_key = 2;
+}
+
+message QueryChatRoomInfoRes {
+  ChatError error = 1;
+}
+
+message JoinRoomReq {
+  ChatUserInfo user_info = 1;
+  string room_key = 2;
+}
+
+message JoinRoomRes {
+  ChatError error = 1;
+}
+
+message LeaveRoomReq {
+  ChatUserInfo user_info = 1;
+  string room_key = 2;
+}
+
+message LeaveRoomRes {
+  ChatError error = 1;
+}
+
+message Send2ChatRoomReq {
+  ChatUserInfo user_info = 1;
+  string room_key = 2;
+  string msg = 3;
+}
+
+message Send2ChatRoomRes {
+  ChatUserInfo user_info = 1;
+}
