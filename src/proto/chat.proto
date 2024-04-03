@@ -17,9 +17,8 @@ message ChatError {
   enum ErrorId {
     None = 0;
     InvalidIdentity = 1;
-    NotSupported = 2;
+    NotAvailabled = 2;
   }
-  ErrorId error_id = 1;
 }
 
 message ChatUserInfo {
@@ -28,7 +27,8 @@ message ChatUserInfo {
 }
 
 message QueryChatRoomServerReq {
-  string room_key = 1;
+  ChatUserInfo user_info = 1;
+  string room_key = 2;
 }
 
 message QueryChatRoomServerRes {
@@ -41,7 +41,6 @@ message CreateChatRoomReq {
 }
 
 message CreateChatRoomRes {
-  ChatError error = 1;
 }
 
 message QueryChatRoomInfoReq {
@@ -50,7 +49,6 @@ message QueryChatRoomInfoReq {
 }
 
 message QueryChatRoomInfoRes {
-  ChatError error = 1;
 }
 
 message JoinRoomReq {
@@ -59,7 +57,6 @@ message JoinRoomReq {
 }
 
 message JoinRoomRes {
-  ChatError error = 1;
 }
 
 message LeaveRoomReq {
@@ -68,7 +65,6 @@ message LeaveRoomReq {
 }
 
 message LeaveRoomRes {
-  ChatError error = 1;
 }
 
 message Send2ChatRoomReq {
@@ -78,5 +74,4 @@ message Send2ChatRoomReq {
 }
 
 message Send2ChatRoomRes {
-  ChatUserInfo user_info = 1;
 }

@@ -1,4 +1,4 @@
-package distributedchat
+package room
 
 import (
 	"sync"
@@ -13,7 +13,8 @@ type ChatMessage struct {
 	Msg      string
 }
 
-type room struct {
+type Room struct {
+	roomKey       string
 	mtx           sync.Mutex
 	users         map[int64]bool
 	msgBuffers    []*ChatMessage
